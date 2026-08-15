@@ -614,11 +614,13 @@ def analyze_tone(articles: list[ArticleRecord]) -> str:
         article = articles[0]
         label = SOURCE_LABELS.get(article.source, article.source)
         return (
-            f"{label}는 {_tone_focus(article)} 단일 매체 보도이므로 당사자·단체와 "
+            f"{label}{_korean_particle(label, '은', '는')} {_tone_focus(article)} "
+            "단일 매체 보도이므로 당사자·단체와 "
             "정부·지자체·사용자 측의 원자료와 후속 입장을 함께 확인할 필요가 있다."
         )
     descriptions = [
-        f"{SOURCE_LABELS.get(article.source, article.source)}는 {_tone_focus(article).rstrip('.')}"
+        f"{(label := SOURCE_LABELS.get(article.source, article.source))}"
+        f"{_korean_particle(label, '은', '는')} {_tone_focus(article).rstrip('.')}"
         for article in articles
     ]
     return " ".join(f"{description}." for description in descriptions) + (
@@ -791,10 +793,12 @@ def build_telegram_summary(sections: list[BriefingSection]) -> str:
         )
     labor = by_title.get("II. 노동·돌봄·빈곤")
     if labor and labor.issues:
+        labor_titles = _issue_titles(labor.issues, 3)
         sentences.append(
             "노동·돌봄·빈곤 의제에서는 "
-            + _issue_titles(labor.issues, 3)
-            + "을 중심으로 생명·고용·생존권을 살폈다."
+            + labor_titles
+            + _korean_particle(labor_titles, "을", "를")
+            + " 중심으로 생명·고용·생존권을 살폈다."
         )
     if not sentences:
         sentences.append(
@@ -907,6 +911,8 @@ def _clean_summary(value: str | None) -> str | None:
         return None
     cleaned = re.sub(r"^【[^】]+】\s*", "", value).strip()
     cleaned = re.sub(r"^\[[^\]]{1,40}\]\s*", "", cleaned).strip()
+    if "지역사 채널의 동영상 링크" in cleaned and "무단 전재" in cleaned:
+        return None
     cleaned = cleaned.replace("...", "…")
     cleaned = re.sub(r"""(?<=[.!?])(?=[가-힣A-Z0-9"'])""", " ", cleaned)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
@@ -1064,6 +1070,13 @@ def _issue_titles(issues: list[BriefingIssue], limit: int) -> str:
         title = re.sub(r"\s*\(\d{4}\.\d{2}\.\d{2}/[^)]*\)$", "", issue.title)
         labels.append(short_text(title, 65) or title)
     return "·".join(labels)
+
+
+def _korean_particle(value: str, consonant: str, vowel: str) -> str:
+    hangul = next((char for char in reversed(value) if "가" <= char <= "힣"), None)
+    if hangul is None:
+        return vowel
+    return consonant if (ord(hangul) - ord("가")) % 28 else vowel
 
 
 def _is_crpd_anniversary_event(articles: list[ArticleRecord]) -> bool:

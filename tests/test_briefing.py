@@ -3,11 +3,13 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from news_topic_monitor.briefing import (
+    analyze_tone,
     build_briefing,
     crpd_articles,
     is_opinion,
     previous_coverage_for,
     render_briefing_markdown,
+    summarize_articles,
 )
 from news_topic_monitor.models import (
     ArticleRecord,
@@ -142,6 +144,20 @@ def test_crpd_mapping_avoids_incidental_school_and_tour_bus_words() -> None:
     assert not any(item.startswith("제24조") for item in mapped)
     assert not any(item.startswith("제30조") for item in mapped)
     assert any(item.startswith("제14조") for item in mapped)
+
+
+def test_korean_particles_and_mbc_boilerplate_summary() -> None:
+    column = _article("khan", "장애인 이동권 보도")
+    assert analyze_tone([column]).startswith("경향신문은 ")
+
+    video = _article("mbc", "선수 명의로 보조금 챙긴 임원 벌금 약식기소")
+    video.summary = (
+        "지역사 채널의 동영상 링크 https://youtu.be/example "
+        "#제주MBC #장애인체육회 무단 전재, 재배포 금지"
+    )
+    summary = summarize_articles([video])
+    assert "무단 전재" not in summary
+    assert video.title in summary
 
 
 def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, topics_path) -> None:
