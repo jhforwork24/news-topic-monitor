@@ -26,7 +26,7 @@ def child_text(element: ElementTree.Element, *names: str) -> str | None:
     wanted = {name.lower() for name in names}
     for child in list(element):
         if local_name(child.tag) in wanted and child.text:
-            return child.text.strip()
+            return clean_xml_text(child.text)
     return None
 
 
@@ -34,8 +34,19 @@ def descendant_text(element: ElementTree.Element, *names: str) -> str | None:
     wanted = {name.lower() for name in names}
     for child in element.iter():
         if local_name(child.tag) in wanted and child.text:
-            return child.text.strip()
+            return clean_xml_text(child.text)
     return None
+
+
+def clean_xml_text(value: str) -> str:
+    """Normalize escaped feed text, including broken literal CDATA wrappers."""
+
+    cleaned = value.strip()
+    for _ in range(2):
+        cleaned = unescape(cleaned)
+    if cleaned.startswith("<![CDATA[") and cleaned.endswith("]]>"):
+        cleaned = cleaned[9:-3]
+    return normalize_text(unescape(cleaned))
 
 
 def parse_xml_feed(content: bytes, source: str) -> DiscoveryPage:
@@ -64,7 +75,7 @@ def parse_xml_feed(content: bytes, source: str) -> DiscoveryPage:
                     ArticleDiscovery(
                         source=source,
                         article_id=child_text(item, "guid"),
-                        canonical_url=normalize_url(link),
+                        canonical_url=normalize_url(unescape(unescape(link))),
                         title=normalize_text(title),
                         section=child_text(item, "category"),
                         published_at=parse_datetime(published_raw) if published_raw else None,
@@ -96,7 +107,7 @@ def parse_xml_feed(content: bytes, source: str) -> DiscoveryPage:
                     ArticleDiscovery(
                         source=source,
                         article_id=_article_id_from_url(link),
-                        canonical_url=normalize_url(link),
+                        canonical_url=normalize_url(unescape(unescape(link))),
                         title=normalize_text(title),
                         section=descendant_text(element, "keywords"),
                         published_at=parse_datetime(published_raw) if published_raw else None,
@@ -112,7 +123,7 @@ def parse_xml_feed(content: bytes, source: str) -> DiscoveryPage:
             if local_name(element.tag) == "sitemap":
                 link = child_text(element, "loc")
                 if link:
-                    child_urls.append(normalize_url(link))
+                    child_urls.append(normalize_url(unescape(unescape(link))))
         if not child_urls:
             raise StructureChangedError("sitemap index contains no child sitemap URLs")
     else:
@@ -190,6 +201,8 @@ class SourceAdapter(ABC):
     source: str
     allowed_discovery_hosts: frozenset[str]
     allowed_article_hosts: frozenset[str]
+    media_group: str = "general"
+    supports_opinion_scan: bool = False
 
     @abstractmethod
     def initial_discovery_urls(self, start: datetime, end: datetime) -> list[str]:

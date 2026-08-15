@@ -11,6 +11,8 @@ from .base import SourceAdapter, StructureChangedError, parse_xml_feed
 
 class JoongangAdapter(SourceAdapter):
     source = "joongang"
+    media_group = "general"
+    supports_opinion_scan = True
     allowed_discovery_hosts = frozenset({"www.joongang.co.kr"})
     allowed_article_hosts = frozenset({"www.joongang.co.kr"})
     LATEST_URL = "https://www.joongang.co.kr/sitemap/latest-articles"

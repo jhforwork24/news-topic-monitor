@@ -19,7 +19,8 @@ flowchart LR
     H --> I["원문·HTML 즉시 폐기"]
     I --> G
     G --> J["JSONL 저장·검토 목록"]
-    J --> K["KST 일일보고·health"]
+    J --> K["KST 일일보고·4절 브리핑·health"]
+    K --> L["선택적 Notion REST 발행"]
 ```
 
 ## 모듈 책임
@@ -33,7 +34,10 @@ flowchart LR
 - `pipeline.py`: 출처 격리, 시간창 필터, 1·2차 판별, 본문 폐기, health 집계
 - `storage.py`: 멱등 JSONL upsert, review 동기화, state·health 원자적 쓰기
 - `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
-- `cli.py`: collect, backfill, report 명령
+- `briefing.py`: I~IV 절 선정, 장애 칼럼 전수선별, 이슈 연결 칼럼 역검색, CRPD 매핑
+- `notion_publish.py`: exact title/date 멱등 발행, 관리 표식 충돌 방지, 발행 health
+- `sources.py`: 16개 출처명과 종합·노동대안·장애언론·방송 매체군 정의
+- `cli.py`: collect, backfill, report, briefing, publish-notion 명령
 
 ## robots.txt와 요청 흐름
 
@@ -62,6 +66,11 @@ origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 �
 발행시각에 도달하면 이후 페이지 요청을 중단한다. `HANI_MAX_PAGES`는 구조 오류나 무한 순회를 막는
 추가 상한이다.
 
+XML 기반 매체는 공용 `XmlSyndicationAdapter` 계약을 재사용하되 출처별 모듈이 공식 URL,
+허용 host와 live 검증 선택자를 독립적으로 선언한다. 더인디고는 본문 필드를 요청하지 않는
+WordPress REST 어댑터를 사용한다. 참세상·MBC는 우회 경로를 두지 않는 fail-closed 어댑터이다.
+JTBC는 공식 news sitemap 메타데이터만 처리하며 확인하지 않은 클라이언트 API를 추정하지 않는다.
+
 ## 판별 모델
 
 `config/topics.yml`은 여러 주제를 담을 수 있고 현재 `disability_rights`를 기본으로 한다. 각
@@ -76,6 +85,17 @@ origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 �
 `SemanticClassifier`는 유료 의미판별기를 위한 추상 경계이다. 현재 기본
 `DisabledSemanticClassifier`는 입력을 그대로 반환하며 네트워크를 사용하지 않는다. 향후
 구현도 review 기사만 정제하도록 제한하고, 원문 보관 금지와 사용자 사전 승인을 지켜야 한다.
+
+## 브리핑과 노션 발행
+
+브리핑은 저장 메타데이터의 실제 발행시각으로 09:00 KST 반개방 구간을 다시 계산한다. I·III는
+장애 판별, II는 별도 `labor_care_poverty` 규칙, IV는 오피니언 구조 판별과 선정 이슈 제목의
+희소 토큰 역검색을 사용한다. 이는 본문을 다시 읽지 않는 무료 결정론적 후처리이다.
+
+노션 발행은 data source에서 정확한 제목과 날짜를 조회한다. 같은 관리 페이지가 있으면 상위
+블록 안의 `KCILNewsMonitor managed publication` 표식을 확인한 뒤에만 내용을 교체한다. 표식이
+없거나 같은 후보가 복수이면 사용자 문서를 보호하기 위해 실패한다. 토큰은 secret으로만 받고
+로그·health에 기록하지 않는다. Notion 연결이 없어도 수집·저장·Markdown 브리핑은 정상 작동한다.
 
 ## 저장과 멱등성
 

@@ -175,7 +175,14 @@ class RuleClassifier:
             classification = Classification.IRRELEVANT
 
         candidate = strong_positive or total >= self.topic.thresholds.candidate
-        reason = self._reason(classification, total, matched_terms, excluded_terms, strong_positive)
+        reason = self._reason(
+            classification,
+            total,
+            matched_terms,
+            excluded_terms,
+            strong_positive,
+            self.topic.label,
+        )
         result = ClassificationResult(
             topic=self.topic_name,
             classification=classification,
@@ -196,19 +203,22 @@ class RuleClassifier:
         matches: list[str],
         excluded: list[str],
         strong_positive: bool,
+        topic_label: str,
     ) -> str:
-        positive_text = ", ".join(matches[:6]) if matches else "뚜렷한 장애인권 관련 표현 없음"
+        positive_text = (
+            ", ".join(matches[:6]) if matches else f"뚜렷한 {topic_label} 관련 표현 없음"
+        )
         if excluded and not strong_positive:
             return (
-                f"비인권적 '장애' 용례({', '.join(excluded[:4])})가 확인되고 장애인 관련 "
+                f"제외 문맥({', '.join(excluded[:4])})이 확인되고 {topic_label} 관련 "
                 f"강한 문맥이 없어 irrelevant로 판정함(점수 {score:.2f})."
             )
         if classification == Classification.RELEVANT:
-            return f"장애인권 관련 표현({positive_text})이 충분히 확인됨(점수 {score:.2f})."
+            return f"{topic_label} 관련 표현({positive_text})이 충분히 확인됨(점수 {score:.2f})."
         if classification == Classification.REVIEW:
             return (
                 f"관련 표현({positive_text})이 있으나 자동 확정 임계값에는 미달하여 "
                 f"사람의 검토가 필요함(점수 {score:.2f})."
             )
         suffix = f" 제외 문맥: {', '.join(excluded[:4])}." if excluded else ""
-        return f"장애인권 관련성이 낮아 irrelevant로 판정함(점수 {score:.2f}).{suffix}"
+        return f"{topic_label} 관련성이 낮아 irrelevant로 판정함(점수 {score:.2f}).{suffix}"

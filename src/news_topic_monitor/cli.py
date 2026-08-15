@@ -9,9 +9,16 @@ from pathlib import Path
 
 from .adapters import ALL_ADAPTERS
 from .adapters.hani import HaniAdapter
+from .briefing import build_briefing, write_briefing
 from .classifier import RuleClassifier
 from .constants import project_root
 from .http import SafeHttpClient
+from .notion_publish import (
+    NotionConfigurationError,
+    NotionPublisher,
+    NotionPublishSettings,
+    write_notion_health,
+)
 from .pipeline import Collector
 from .reporting import generate_report
 from .settings import ContactRequiredError, Settings
@@ -51,6 +58,17 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--date", help="KST report end date YYYY-MM-DD; default today")
     report.add_argument("--start", help="inclusive ISO-8601 override")
     report.add_argument("--end", help="exclusive ISO-8601 override")
+
+    briefing = subparsers.add_parser("briefing", help="generate the four-section briefing")
+    _add_report_window_arguments(briefing)
+
+    publish = subparsers.add_parser(
+        "publish-notion", help="publish a managed four-section briefing to Notion"
+    )
+    _add_report_window_arguments(publish)
+    publish.add_argument(
+        "--dry-run", action="store_true", help="render the briefing without calling Notion"
+    )
     return parser
 
 
@@ -63,6 +81,8 @@ def main(argv: list[str] | None = None) -> int:
     root = (args.root or project_root()).resolve()
     if args.command == "report":
         return _report(args, root)
+    if args.command in {"briefing", "publish-notion"}:
+        return _briefing(args, root)
     try:
         settings = Settings.from_env(root)
     except ContactRequiredError as exc:
@@ -106,6 +126,79 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
 
 
 def _report(args: argparse.Namespace, root: Path) -> int:
+    date_value, start, end = _report_window(args)
+    path = generate_report(
+        JsonlStorage(root), start=start, end=end, report_date=date_value.isoformat()
+    )
+    print(path)
+    return 0
+
+
+def _briefing(args: argparse.Namespace, root: Path) -> int:
+    date_value, start, end = _report_window(args)
+    storage = JsonlStorage(root)
+    document = build_briefing(
+        storage,
+        topics_path=root / "config" / "topics.yml",
+        start=start,
+        end=end,
+        report_date=date_value.isoformat(),
+    )
+    path = write_briefing(
+        document,
+        output_path=root / "reports" / "briefings" / f"{date_value.isoformat()}.md",
+        # The repository may be public. The private reference URL is injected only
+        # into Notion blocks by NotionPublisher, never into committed Markdown.
+        crpd_url=None,
+    )
+    print(path)
+    if args.command == "briefing" or args.dry_run:
+        return 0
+    try:
+        settings = NotionPublishSettings.from_env()
+        with NotionPublisher(settings) as publisher:
+            try:
+                result = publisher.publish(document)
+            except Exception as exc:
+                try:
+                    report_url = publisher.record_failure(date_value.isoformat(), str(exc))
+                except Exception as report_exc:
+                    LOGGER.error("could not record Notion failure report: %s", report_exc)
+                    report_url = None
+                write_notion_health(
+                    root,
+                    report_date=date_value.isoformat(),
+                    status="failed",
+                    page_url=report_url,
+                    error=str(exc),
+                )
+                raise
+        write_notion_health(
+            root,
+            report_date=date_value.isoformat(),
+            status=result.status,
+            page_url=result.page_url,
+        )
+        print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
+        return 0
+    except NotionConfigurationError as exc:
+        LOGGER.error("%s", exc)
+        write_notion_health(
+            root,
+            report_date=date_value.isoformat(),
+            status="configuration_error",
+            error=str(exc),
+        )
+        return 2
+
+
+def _add_report_window_arguments(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--date", help="KST report end date YYYY-MM-DD; default today")
+    parser.add_argument("--start", help="inclusive ISO-8601 override")
+    parser.add_argument("--end", help="exclusive ISO-8601 override")
+
+
+def _report_window(args: argparse.Namespace):
     now_kst = datetime.now(KST)
     date_value = datetime.strptime(args.date, "%Y-%m-%d").date() if args.date else now_kst.date()
     default_end = datetime.combine(date_value, time(hour=9), tzinfo=KST).astimezone(UTC)
@@ -114,11 +207,7 @@ def _report(args: argparse.Namespace, root: Path) -> int:
     assert start is not None and end is not None
     if start >= end:
         raise SystemExit("start must be earlier than end")
-    path = generate_report(
-        JsonlStorage(root), start=start, end=end, report_date=date_value.isoformat()
-    )
-    print(path)
-    return 0
+    return date_value, start, end
 
 
 if __name__ == "__main__":

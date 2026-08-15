@@ -46,3 +46,20 @@ def test_irrelevant_boundary(topics_path) -> None:
     result = RuleClassifier(topics_path).classify(title="오늘의 날씨와 주말 나들이")
     assert result.classification == Classification.IRRELEVANT
     assert result.topic_score == 0
+
+
+def test_labor_care_poverty_topic_is_independently_configured(topics_path) -> None:
+    result = RuleClassifier(topics_path, topic="labor_care_poverty").classify(
+        title="공공돌봄 노동자 임금과 고용 보장 촉구",
+        summary="돌봄노동자의 노동권을 보장하라는 요구가 제기됐다.",
+    )
+    assert result.classification == Classification.RELEVANT
+    assert result.topic == "labor_care_poverty"
+
+
+def test_labor_topic_excludes_north_korean_party_usage(topics_path) -> None:
+    result = RuleClassifier(topics_path, topic="labor_care_poverty").classify(
+        title="조선노동당 기관지 노동신문 보도"
+    )
+    assert result.classification == Classification.IRRELEVANT
+    assert result.excluded_terms

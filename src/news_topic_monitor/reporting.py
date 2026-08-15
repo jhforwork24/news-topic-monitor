@@ -6,15 +6,9 @@ from datetime import datetime
 from pathlib import Path
 
 from .models import ArticleRecord, Classification
+from .sources import SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import kst_display
-
-SOURCE_LABELS = {
-    "chosun": "조선일보",
-    "joongang": "중앙일보",
-    "donga": "동아일보",
-    "hani": "한겨레",
-}
 
 
 def generate_report(

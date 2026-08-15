@@ -16,6 +16,8 @@ from .base import (
 
 class ChosunAdapter(SourceAdapter):
     source = "chosun"
+    media_group = "general"
+    supports_opinion_scan = True
     allowed_discovery_hosts = frozenset({"www.chosun.com"})
     allowed_article_hosts = frozenset({"www.chosun.com"})
     RSS_URL = "https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"

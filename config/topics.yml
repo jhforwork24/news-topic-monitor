@@ -48,6 +48,14 @@ topics:
       - {term: 수어통역, score: 3.0}
       - {term: 점자, score: 2.5}
       - {term: 보조기기, score: 2.5}
+      - {term: 쉬운정보, score: 4.0}
+      - {term: 화면해설방송, score: 4.0}
+      - {term: 농아인, score: 6.0}
+      - {term: 거주인, score: 3.5}
+      - {term: 자립지원, score: 4.0}
+      - {term: 파라아이스하키, score: 5.0}
+      - {term: 파라스포츠, score: 5.0}
+      - {term: ADHD, score: 3.5}
       - {term: 소득보장, score: 2.5}
       - {term: 거주시설, score: 3.0}
       - {term: 시설 인권침해, score: 6.0}
@@ -75,6 +83,9 @@ topics:
       - {term: 한국장애인자립생활센터협의회, score: 9.0}
       - {term: 한자협, score: 8.0}
       - {term: 장애인자립생활센터, score: 7.0}
+      - {term: 농아인협회, score: 7.0}
+      - {term: 색동원, score: 8.0}
+      - {term: 소소한소통, score: 5.0}
       - {term: 한국장애인고용공단, score: 6.0}
       - {term: 국가인권위원회, score: 2.0}
       - {term: 유엔장애인권리위원회, score: 9.0}
@@ -117,3 +128,83 @@ topics:
       - {all: [발달장애, 가족], score: 3.0}
       - {all: [정신장애, 인권], score: 5.0}
       - {all: [거주시설, 인권], score: 5.0}
+      - {all: [거주인, 자립], score: 6.0}
+      - {all: [정신의료기관, 입원환자], score: 6.0}
+      - {all: [화면해설, 방송], score: 4.0}
+  labor_care_poverty:
+    label: 노동·돌봄·빈곤
+    description: >-
+      노동자의 권리와 노동조합 활동, 산업재해, 임금·고용·해고, 공공돌봄과
+      돌봄노동, 빈곤·주거·소득보장 의제를 포괄한다.
+    thresholds:
+      candidate: 3.0
+      review: 5.0
+      relevant: 9.0
+    field_weights:
+      title: 1.5
+      summary: 1.0
+      section: 0.6
+      body: 1.0
+    core_terms:
+      - {term: 노동자, score: 5.0}
+      - {term: 노동권, score: 6.0}
+      - {term: 노동조합, score: 6.0}
+      - {term: 비정규직, score: 6.0}
+      - {term: 이주노동자, score: 7.0}
+      - {term: 외국인 노동자, score: 7.0}
+      - {term: 돌봄노동, score: 7.0}
+      - {term: 빈곤, score: 6.0}
+      - {term: 산업재해, score: 7.0}
+      - {term: 산재, score: 6.0}
+    supporting_terms:
+      - {term: 노조, score: 5.0}
+      - {term: 파업, score: 5.0}
+      - {term: 해고, score: 5.0}
+      - {term: 임금, score: 4.0}
+      - {term: 체불, score: 5.0}
+      - {term: 고용, score: 3.0, ambiguous: true}
+      - {term: 중대재해, score: 6.0}
+      - {term: 작업중지, score: 5.0}
+      - {term: 끼임 사고, score: 5.0}
+      - {term: 돌봄, score: 5.0}
+      - {term: 요양보호사, score: 6.0}
+      - {term: 활동지원사, score: 6.0}
+      - {term: 간병, score: 4.0}
+      - {term: 공공돌봄, score: 6.0}
+      - {term: 생계, score: 4.0}
+      - {term: 주거권, score: 5.0}
+      - {term: 소득보장, score: 5.0}
+      - {term: 기초생활보장, score: 6.0}
+      - {term: 노숙, score: 5.0}
+    laws:
+      - {term: 노동조합 및 노동관계조정법, score: 8.0}
+      - {term: 근로기준법, score: 7.0}
+      - {term: 산업안전보건법, score: 7.0}
+      - {term: 중대재해처벌법, score: 8.0}
+      - {term: 국민기초생활 보장법, score: 8.0}
+    policies:
+      - {term: 최저임금, score: 6.0}
+      - {term: 고용보험, score: 5.0}
+      - {term: 실업급여, score: 5.0}
+      - {term: 생계급여, score: 6.0}
+      - {term: 주거급여, score: 6.0}
+      - {term: 돌봄서비스, score: 5.0}
+      - {term: 사회서비스원, score: 6.0}
+    organizations:
+      - {term: 민주노총, score: 7.0}
+      - {term: 한국노총, score: 6.0}
+      - {term: 공공운수노조, score: 7.0}
+      - {term: 금속노조, score: 7.0}
+      - {term: 서비스연맹, score: 6.0}
+    excluded_terms:
+      - {term: 조선노동당, score: -9.0}
+      - {term: 노동신문, score: -9.0}
+      - {term: 노동당 기관지, score: -9.0}
+    combinations:
+      - {all: [노동자, 사망], score: 5.0}
+      - {all: [노동자, 안전], score: 4.0}
+      - {all: [노동자, 기계], score: 4.0}
+      - {all: [노조, 교섭], score: 4.0}
+      - {all: [돌봄, 임금], score: 5.0}
+      - {all: [돌봄, 고용], score: 4.0}
+      - {all: [빈곤, 주거], score: 4.0}

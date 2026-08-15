@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <item>
+      <title>장애인 이동권 보도</title>
+      <link>SOURCE_URL</link>
+      <description>공개 피드가 제공한 짧은 요약</description>
+      <dc:date>2026-08-15T00:30:00+09:00</dc:date>
+      <category>사회</category>
+    </item>
+  </channel>
+</rss>
