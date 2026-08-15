@@ -1,7 +1,9 @@
 {
   "report_date": "2026-08-15",
-  "checked_at": "2026-08-15T09:41:17.512526+00:00",
-  "status": "updated",
+  "checked_at": "2026-08-15T10:22:28.885873+00:00",
+  "status": "created",
   "page_url": null,
-  "error": null
+  "error": null,
+  "fingerprint": "c603f25d75853ea1bf9a75e4756b6066a26f54638b2091867b08eca77c85f115",
+  "version": 4
 }
