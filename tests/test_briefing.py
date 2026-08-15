@@ -306,10 +306,19 @@ def test_editorial_exclusions_section_assignment_and_crpd_order(tmp_path, topics
         if "일반논평" in reference.label
     )
     assert all(
-        reference.category != "참고 연구·문서"
+        reference.category != "참고 연구 및 문서"
         for reference in color_issue.references
         if "일반논평" in reference.label
     )
+    categories = list(dict.fromkeys(reference.category for reference in color_issue.references))
+    requested_order = [
+        "이전 주요 핵심 기사",
+        "관련 단체 입장",
+        "참고 연구 및 문서",
+        "현행 제도",
+        "국제 규범",
+    ]
+    assert categories == [category for category in requested_order if category in categories]
 
 
 def test_column_scope_and_mandatory_authors(tmp_path, topics_path) -> None:

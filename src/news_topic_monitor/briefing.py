@@ -255,6 +255,14 @@ STRONG_PREVIOUS_CONCEPTS = frozenset(
     }
 )
 
+REFERENCE_CATEGORY_ORDER = {
+    "이전 주요 핵심 기사": 1,
+    "관련 단체 입장": 2,
+    "참고 연구 및 문서": 3,
+    "현행 제도": 4,
+    "국제 규범": 5,
+}
+
 RESEARCH_REFERENCES = {
     "탈시설": (
         "한국보건사회연구원, 탈시설 장애인의 지역사회 정착 경로에 관한 연구",
@@ -725,7 +733,7 @@ def reference_rows(
     else:
         rows.extend(_labor_norms(text))
     rows.extend(_mapped_references("현행 제도", text, law_references))
-    rows.extend(_mapped_references("참고 연구·문서", text, research_references, limit=2))
+    rows.extend(_mapped_references("참고 연구 및 문서", text, research_references, limit=2))
     rows.extend(_organization_positions(articles))
     rows.extend(
         BriefingReference(
@@ -736,7 +744,11 @@ def reference_rows(
         )
         for item in previous
     )
-    return _unique_references(rows)
+    unique = _unique_references(rows)
+    return sorted(
+        unique,
+        key=lambda row: REFERENCE_CATEGORY_ORDER.get(row.category, 99),
+    )
 
 
 def crpd_articles(text: str) -> list[str]:
