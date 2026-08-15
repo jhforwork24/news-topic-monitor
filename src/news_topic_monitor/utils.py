@@ -28,6 +28,16 @@ TRACKING_PREFIXES = ("utm_",)
 
 def normalize_url(url: str) -> str:
     raw = html.unescape(url.strip())
+    # Some official feeds emit a tracking query as ``&ref=`` without a preceding
+    # question mark after double entity escaping. Repair only known tracking keys.
+    if "?" not in raw:
+        raw = re.sub(
+            r"&((?:utm_[^=]+)|ref|source)=",
+            r"?\1=",
+            raw,
+            count=1,
+            flags=re.IGNORECASE,
+        )
     parts = urlsplit(raw)
     if parts.scheme.lower() not in {"http", "https"} or not parts.hostname:
         raise ValueError(f"invalid HTTP(S) URL: {url!r}")
@@ -118,8 +128,10 @@ def kst_date(value: datetime) -> str:
 def normalize_text(value: str | None) -> str:
     if not value:
         return ""
-    soup = BeautifulSoup(html.unescape(value), "html.parser")
-    return re.sub(r"\s+", " ", soup.get_text(" ", strip=True)).strip()
+    decoded = html.unescape(value)
+    if "<" in decoded or ">" in decoded:
+        decoded = BeautifulSoup(decoded, "html.parser").get_text(" ", strip=True)
+    return re.sub(r"\s+", " ", decoded).strip()
 
 
 def short_text(value: str | None, limit: int = MAX_SUMMARY_CHARS) -> str | None:

@@ -59,6 +59,18 @@
 4. 날짜별 파일, review 파일, state와 health를 재생성한 뒤 멱등성 시험을 실행한다.
 5. 강제 push는 사용하지 않는다.
 
+## Notion 발행 실패
+
+1. `NOTION_PUBLISH_ENABLED`, `NOTION_DATA_SOURCE_ID`, `NOTION_TOKEN`의 등록 위치를 확인한다.
+   토큰 값은 로그에 출력하지 않는다.
+2. 내부 통합이 대상 브리핑 data source와 보고사항 data source에 연결되어 있는지 확인한다.
+3. `health/notion/latest.json`의 `configuration_error`, `failed`, `created`, `updated` 상태를 본다.
+4. exact title/date 페이지가 있으나 관리 표식이 없다는 오류이면 그 페이지를 삭제·덮어쓰지 않는다.
+   제목을 구분하거나 사람이 명시적으로 이전해야 한다.
+5. API 버전·속성명이 바뀌면 공식 Notion API 문서와 실제 data source schema를 먼저 확인하고
+   MockTransport 시험을 갱신한다.
+6. 발행 실패는 수집 데이터 실패가 아니다. `reports/briefings/` Markdown을 보존한 채 수동 재실행한다.
+
 ## 오탐·누락 조정
 
 ### 오탐

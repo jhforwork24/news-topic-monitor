@@ -13,6 +13,8 @@ from .base import SourceAdapter, StructureChangedError, parse_xml_feed
 
 class HaniAdapter(SourceAdapter):
     source = "hani"
+    media_group = "general"
+    supports_opinion_scan = True
     allowed_discovery_hosts = frozenset({"www.hani.co.kr"})
     allowed_article_hosts = frozenset({"www.hani.co.kr"})
     LIST_URL = "https://www.hani.co.kr/arti?page={page}"

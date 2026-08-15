@@ -10,6 +10,8 @@ from .base import SourceAdapter, StructureChangedError, parse_xml_feed
 
 class DongaAdapter(SourceAdapter):
     source = "donga"
+    media_group = "general"
+    supports_opinion_scan = True
     allowed_discovery_hosts = frozenset({"rss.donga.com", "www.donga.com"})
     allowed_article_hosts = frozenset({"www.donga.com"})
     RSS_URL = "https://rss.donga.com/total.xml"

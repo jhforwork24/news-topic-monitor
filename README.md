@@ -1,9 +1,9 @@
 # KCIL News Topic Monitor
 
-조선일보·중앙일보·동아일보·한겨레의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록을
-주기적으로 확인하고, 모든 발견 기사 메타데이터를 중복 없이 기록한 뒤 장애·장애인권·
-장애정책·장애인노동 관련성을 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를
-켜 두거나 화면을 원격 조작하지 않으며, GitHub Actions만으로 무료 초기 운영이 가능하다.
+12개 인쇄·디지털 매체와 KBS·MBC·SBS·JTBC의 공식 공개 RSS·뉴스 사이트맵·최신기사
+목록을 주기적으로 확인하고, 모든 발견 기사 메타데이터를 중복 없이 기록한 뒤 장애인권과
+노동·돌봄·빈곤 의제를 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를 켜 두거나
+화면을 원격 조작하지 않으며, GitHub Actions만으로 무료 초기 운영이 가능하다.
 
 이 시스템은 장애인을 시혜와 보호의 대상으로 환원하지 않고 권리의 주체이자 동등한 시민,
 노동자로 보는 관점에서 관련 의제를 포괄적으로 발견하기 위해 설계되었다. 자동 판별은 운동과
@@ -11,7 +11,7 @@
 
 ## “전체 기사 모니터링”의 정확한 의미
 
-여기서 “전체 기사”란 네 언론사의 **robots.txt가 허용하는 공식 RSS·사이트맵·최신기사
+여기서 “전체 기사”란 대상 매체의 **robots.txt가 허용하는 공식 RSS·사이트맵·최신기사
 목록에 현재 노출되는 모든 기사 URL**을 뜻한다. 유료기사·로그인 영역·robots.txt 금지 경로를
 우회해 사이트 전체를 긁는다는 뜻이 아니다. 발견 기사에는 가능한 범위에서 URL, 제목, 섹션,
 발행·수정 시각, 공개 요약과 판별 결과만 저장한다.
@@ -29,6 +29,18 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 중앙일보 | 최신기사 사이트맵, 조사기간의 날짜별 사이트맵 | `#article_body` |
 | 동아일보 | 통합 RSS, 뉴스맵 | `.news_view` |
 | 한겨레 | `https://www.hani.co.kr/arti?page=N` | `article#renewal2023` |
+| 경향신문 | 최신기사 news sitemap | `#articleBody` |
+| 오마이뉴스 | 공식 최신기사 news sitemap | `[itemprop='articleBody']` |
+| 프레시안 | 공식 최신뉴스 RSS API | `.article_body` |
+| 참세상 | robots.txt 확인 실패로 안전 중단 | 요청하지 않음 |
+| 매일노동뉴스 | news sitemap | `#article-view-content-div` |
+| 비마이너 | news sitemap | `#article-view-content-div` |
+| 에이블뉴스 | news sitemap | `#article-view-content-div` |
+| 더인디고 | 본문을 제외한 공식 WordPress posts API | `.td-post-content` |
+| KBS | recentNewsList news sitemap | `.detail-body` |
+| MBC | `User-agent: *` 전면 금지 | 요청하지 않음 |
+| SBS | 공식 sitemap RSS | `[itemprop='articleBody']` |
+| JTBC | latest-articles news sitemap | 서버 렌더링 선택자 미확인, 메타데이터만 저장 |
 
 선택자는 코드에 구현되어 있지만 실제 사이트 구조는 바뀔 수 있다. `tests/fixtures/`는 파서의
 최소 계약을 검증하고, 현재 구조 여부는 연락처를 설정한 live smoke test로만 확인한다.
@@ -67,6 +79,8 @@ User-Agent는 `KCILNewsMonitor/0.1 (+${MONITOR_CONTACT})`이다. 값이 없거�
 MONITOR_CONTACT='monitor@example.org' news-topic-monitor collect --since-hours 6
 MONITOR_CONTACT='monitor@example.org' news-topic-monitor backfill --hours 48
 news-topic-monitor report --date 2026-08-15
+news-topic-monitor briefing --date 2026-08-15
+news-topic-monitor publish-notion --date 2026-08-15 --dry-run
 ```
 
 수동 조사기간은 UTC 오프셋을 포함한 ISO 8601로 지정한다. 시작은 포함하고 종료는 제외한다.
@@ -90,6 +104,8 @@ news-topic-monitor report \
 3. Actions 탭에서 `Collect news metadata`를 한 번 수동 실행하고 `health/latest.json`과
    `data/articles/` 변경이 커밋되는지 확인한다.
 4. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
+5. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
+   `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
 
 워크플로는 다음과 같다.
 
@@ -97,6 +113,8 @@ news-topic-monitor report \
 - `.github/workflows/backfill.yml`: `20 23 * * *`(UTC), 매일 08:20 KST에 최근 48시간 재확인
 - `.github/workflows/report.yml`: `10 0 * * *`(UTC), 매일 09:10 KST에 전날 09:00부터
   당일 09:00 KST까지 보고
+- `.github/workflows/publish-notion.yml`: `25 0 * * *`(UTC), 매일 09:25 KST에 4개 절
+  브리핑을 멱등 발행. 관리 표식이 없는 기존 페이지는 덮어쓰지 않음
 - `.github/workflows/ci.yml`: push·PR에서 오프라인 pytest와 ruff 실행
 
 세 데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
@@ -120,6 +138,14 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `MAX_RETRIES` | 아니오 | `2` | 제한적 재시도 횟수 |
 | `MAX_DISCOVERY_CHILDREN` | 아니오 | `20` | sitemap index 하위 요청 상한 |
 | `HANI_MAX_PAGES` | 아니오 | `50` | 한겨레 최신기사 최대 순회 페이지 |
+| `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
+| `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 실패 보고사항 data source UUID |
+| `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
+| `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
+
+`NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
+저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
+명시적으로 연결해야 한다.
 
 OpenAI API 의미 판별을 붙일 수 있도록 `SemanticClassifier` 인터페이스를 분리했지만 초기 버전의
 기본 구현은 항상 비활성화되어 있으며 API를 호출하지 않는다. `OPENAI_API_KEY`가 없어도 모든
@@ -129,7 +155,8 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 
 ## 주제 키워드 수정
 
-`config/topics.yml`의 `topics.disability_rights`에서 핵심어, 보조어, 법률, 정책, 단체, 인물·
+`config/topics.yml`의 `topics.disability_rights`와 `topics.labor_care_poverty`에서 핵심어,
+보조어, 법률, 정책, 단체, 인물·
 별칭, 국제협약, 제외어, 조합 규칙과 점수를 수정한다. 임계값은 다음 세 값이다.
 
 - `candidate`: 본문 2차 판별 후보가 되는 넓은 기준
@@ -146,7 +173,15 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 - `data/review/YYYY-MM-DD.jsonl`: `review` 기사만 모은 사람 검토 목록
 - `data/state/source_state.json`: 출처별 마지막 실행 상태
 - `reports/YYYY-MM-DD.md`: 09:00 KST 경계 일일보고
+- `reports/briefings/YYYY-MM-DD.md`: 총평과 I~IV 절로 구성한 노션 발행 원본
 - `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·오류 집계
+- `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
+
+브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스, IV절은
+주요 칼럼이다. 장애 관련 칼럼은 7개 종합매체에서 전수선별하고, I~III 최종 이슈와 직접
+연결되는 칼럼은 12개 인쇄·디지털 매체에서 제목 핵심어를 역검색한다. 장애언론에서 확인된
+장애 관련 칼럼도 IV절에 포함한다. 각 의제에는 기사 링크, 짧은 자체 평가, 참고자료 toggle과
+해당하는 경우 CRPD 참조표 링크가 붙는다.
 
 날짜·시간 필드는 UTC ISO 8601로 직렬화하고 화면 보고서만 KST로 표시한다. 파일 분할 날짜는
 기사 발행시각의 KST 날짜를 쓴다. canonical URL을 최우선 중복키로 사용하며, URL이 없을 때는
@@ -176,6 +211,9 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 - 규칙 기반 판별은 풍자·은유·복합 맥락을 완전히 이해하지 못하므로 `review`가 필요하다.
 - 사이트 구조나 robots.txt가 바뀌면 해당 출처는 안전하게 중단되며 파서 갱신 전까지 공백이 생긴다.
 - 본문 접근이 금지되거나 robots.txt 확인에 실패하면 공개 메타데이터만으로 판별한다.
+- 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단하며, MBC는 현재 `User-agent: *`
+  전면 금지 때문에 발견 경로 자체를 요청하지 않는다.
+- 16개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
 
 이 한계 때문에 **수집 실패를 기사 부재로 해석해서는 안 된다.** 장애인권 의제의 언론 비가시성을
 기술적 0건과 혼동하지 않도록 보고서의 건강상태를 함께 검토해야 한다.

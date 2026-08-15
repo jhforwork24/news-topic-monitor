@@ -1,86 +1,75 @@
 # 출처별 공개 경로 검증 기록
 
-검증 기준일은 2026-08-15(Asia/Seoul)이다. 사전 웹 조사 뒤
-`KCILNewsMonitor/0.1 (+jhforwork24@gmail.com)` User-Agent로 프로젝트 live smoke와 최근
-6시간 정식 수집을 실행했다. 연락처가 설정되기 전에는 프로젝트 수집기로 기사 본문을 요청하지
-않았으며, 설정 후에도 robots 허용 표본만 확인했다.
+검증일은 2026-08-15(Asia/Seoul)이다. 모든 요청은
+`KCILNewsMonitor/0.1 (+jhforwork24@gmail.com)`을 사용했고, origin별 robots.txt를 먼저
+확인했다. live smoke는 16개 출처 모두 기대 조건을 통과했으며 기사 본문은 저장하지 않았다.
 
-| 출처 | 공식 경로 실제 결과 | `KCILNewsMonitor` live smoke | 본문 선택자 live 검증 |
+| 출처 | 공식 발견 경로 | robots·발견 결과 | 본문 live 검증 |
 |---|---|---|---|
-| 조선일보 | robots·RSS·뉴스 sitemap 모두 200 | 통과: 두 발견 경로에서 URL 발견, 표본 기사 robots 허용 | 통과: `Fusion.globalContent.content_elements` |
-| 중앙일보 | robots·최신·날짜별 sitemap 모두 200 | 통과: 두 sitemap에서 URL 발견, 표본 기사 robots 허용 | 통과: `#article_body` |
-| 동아일보 | rss/www robots·통합 RSS·newsmap 모두 200 | 통과: 두 발견 경로에서 URL 발견, 표본 기사 robots 허용 | 통과: `.news_view` |
-| 한겨레 | robots 200, `/rss/` 308→`/rss` 200, 최신기사 목록 200 | 통과: RSS 보조 경로·최신 목록에서 URL 발견, 표본 기사 robots 허용 | 통과: `article#renewal2023` |
+| 조선일보 | 통합 RSS, news sitemap | 허용·URL 발견 | `Fusion.globalContent.content_elements` |
+| 중앙일보 | latest 및 날짜별 sitemap | 허용·URL 발견 | `#article_body` |
+| 동아일보 | 통합 RSS, newsmap | 두 origin 허용·URL 발견 | `.news_view` |
+| 한겨레 | `/arti?page=N`, 보조 RSS | 허용·URL 발견 | `article#renewal2023` |
+| 경향신문 | `/sitemap/latest-articles.xml` | 허용·URL 발견 | `#articleBody` |
+| 오마이뉴스 | `/NWS_Web/View/latestnews.aspx` news sitemap | 허용·URL 발견 | `[itemprop='articleBody']` |
+| 프레시안 | `/api/v3/site/rss/news` | 허용·URL 발견 | `.article_body` |
+| 참세상 | 공식 origin | robots.txt HTTP 404, 전체 요청 안전 중단 | 요청하지 않음 |
+| 매일노동뉴스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
+| 비마이너 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
+| 에이블뉴스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
+| 더인디고 | `/wp-json/wp/v2/posts` metadata fields | 허용·URL 발견 | `.td-post-content` |
+| KBS | `/sitemap/recentNewsList.xml` | 허용·URL 발견 | redirect 재검사 후 `.detail-body` |
+| MBC | `imnews.imbc.com` | `User-agent: * Disallow: /`, 발견 요청 차단 | 요청하지 않음 |
+| SBS | `/news/sitemapRSS.do` | 허용·URL 발견 | `[itemprop='articleBody']` |
+| JTBC | `/sitemaps/latest-articles` | 허용·URL 발견 | 서버 본문 구조 미확인, 메타데이터만 |
 
-프로젝트 live smoke는 2026-08-15 15:16~15:17 KST에 실행했으며 4건 모두 통과했다. 실제
-최근 6시간 수집은 15:19~15:20 KST에 네 출처 모두 성공했다. 해당 실행의 발견 건수는 조선
-149, 중앙 196, 동아 537, 한겨레 30이었고, 고정 시간창 안의 고유 기사 230건을 저장했다.
+2026-08-15 live smoke 결과는 `16 passed`(75.94초)였다. MBC는 금지 판정, 참세상은 robots
+확인 실패 중단, JTBC는 본문 미추정이 각각 기대 성공 조건이었다.
 
-## 사전 조사에서 확인한 robots 정책
+## 48시간 실제 백필
 
-### 조선일보
+같은 날 16개 출처 전체 48시간 백필은 5분 13초가 걸렸고 14개 출처가 성공했다. 저장소 전체
+고유 메타데이터는 3,756건이 되었으며, 실행 구간의 주요 수치는 다음과 같았다.
 
-공식 [`robots.txt`](https://www.chosun.com/robots.txt)의 `User-agent: *` 그룹은
-`/main/bosi*`, `/test*`, `/search`, `/nsearch`, `/earlybird`, `/economy/realty/`를 금지하고
-뉴스 sitemap을 선언한다. 별도 `GPTBot` 전면 금지 그룹은 우리 수집기 User-Agent에 적용되는
-것으로 추정하지 않고, 실행 시 표준 robots 파서가 현재 User-Agent로 다시 판정한다.
+| 출처 | 발견 | 기간 내 처리 | 신규 | 관련 | 검토 | 본문 확인 |
+|---|---:|---:|---:|---:|---:|---:|
+| 조선일보 | 149 | 149 | 28 | 0 | 0 | 0 |
+| 중앙일보 | 674 | 452 | 428 | 3 | 0 | 3 |
+| 동아일보 | 541 | 541 | 498 | 0 | 0 | 0 |
+| 한겨레 | 285 | 273 | 255 | 0 | 1 | 1 |
+| 경향신문 | 176 | 176 | 176 | 2 | 0 | 2 |
+| 오마이뉴스 | 174 | 174 | 174 | 0 | 0 | 0 |
+| 프레시안 | 25 | 25 | 25 | 0 | 0 | 0 |
+| 참세상 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 매일노동뉴스 | 100 | 28 | 28 | 0 | 0 | 0 |
+| 비마이너 | 100 | 8 | 8 | 4* | 0 | 4* |
+| 에이블뉴스 | 100 | 33 | 33 | 31* | 0 | 31* |
+| 더인디고 | 9 | 9 | 9 | 8 | 0 | 8 |
+| KBS | 3,317 | 1,644 | 1,644 | 5 | 0 | 4 |
+| MBC | 0 | 0 | 0 | 0 | 0 | 0 |
+| SBS | 100 | 99 | 99 | 0 | 0 | 0 |
+| JTBC | 117 | 116 | 116 | 0 | 0 | 0 |
 
-- `https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml`
-- `https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml`
+별표 수치는 장애언론 암묵 표현 회귀규칙을 보완한 뒤 세 장애언론만 재실행한 최종 판정이다.
+KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 판정과 구조 경고만 남겼다.
+오마이뉴스 sitemap의 `star.ohmynews.com` URL은 허용 host 목록 밖이라 요청하지 않고 구조 경고를
+기록했다.
 
-### 중앙일보
+## robots 때문에 수행하지 않은 접근
 
-공식 경로 후보는 다음과 같다.
+- MBC는 robots의 `User-agent: * Disallow: /` 때문에 홈페이지·발견 경로·기사 URL을 요청하지 않았다.
+- 참세상은 `/robots.txt`가 404여서 허용으로 추정하지 않고 홈페이지·기사 URL을 요청하지 않았다.
+- 각 매체 robots에 명시된 검색·로그인·구매·관리·API 금지 경로는 사용하지 않았다.
+- JTBC의 클라이언트 API나 브라우저 렌더링을 추정·호출하지 않았다.
+- 오마이뉴스의 별도 `star.ohmynews.com` origin은 어댑터 허용 host 밖이므로 요청하지 않았다.
 
-- `https://www.joongang.co.kr/sitemap/latest-articles`
-- `https://www.joongang.co.kr/sitemap/articles/YYYY/YYYYMMDD`
-
-현재 robots는 여러 명시적 AI·수집 User-Agent에 `/`를 금지하고, 그 뒤 `User-agent: *`에
-검색·구매·제보·일부 개별 기사 등 금지 경로를 둔다. `KCILNewsMonitor`는 별도 명시 그룹이
-없어 `*` 그룹으로 판정되었고 공식 sitemap 및 smoke 표본 기사 URL은 허용되었다.
-
-### 동아일보
-
-공식 [`robots.txt`](https://www.donga.com/robots.txt)의 `User-agent: *` 그룹은
-`/search`, `/news/search`, `/news/View`와 여러 대문자 서비스 경로 등을 금지하고
-`https://www.donga.com/sitemap/donga-newsmap.xml`을 선언한다.
-
-- `https://rss.donga.com/total.xml`
-- `https://www.donga.com/sitemap/donga-newsmap.xml`
-
-RSS host는 별도 origin이므로 프로젝트는 `https://rss.donga.com/robots.txt`도 독립적으로
-확인한다. 가져오지 못하면 RSS 요청 자체를 중단하고 www origin의 newsmap은 별도로 처리한다.
-
-### 한겨레
-
-공식 [`robots.txt`](https://www.hani.co.kr/robots.txt)의 `User-agent: *` 그룹은
-`/arti/PRINT/`, `/fortunes/result`, `/arti/PREVIEW/`, `/api/`, `/test/`를 금지한다.
-
-- `https://www.hani.co.kr/arti?page=N`
-- 보조 경로 후보: `https://www.hani.co.kr/rss/`
-
-우리 정직한 User-Agent에는 최신기사 목록이 200을 반환했다. 실제 `__NEXT_DATA__`는
-`props.pageProps.list` 배열이며 발행·수정시각 key는 `createDate`·`updateDate`, 섹션은
-`section.name` 구조임을 확인해 파서와 fixture에 반영했다.
-
-## robots 때문에 요청하지 않은 경로
-
-smoke와 정식 수집은 발견된 허용 URL만 요청했다. 다음과 같은 현재 금지 경로는 요청하지 않았다.
-
-- 조선일보: `/search`, `/nsearch`, `/economy/realty/` 등
-- 중앙일보: `/search`, `/aisearch`, `/purchase/`, `/jebo/` 및 robots에 열거된 개별 기사 등
-- 동아일보: `/search`, `/news/search`, `/news/View`, 대문자 서비스 경로 등
-- 한겨레: `/arti/PRINT/`, `/arti/PREVIEW/`, `/api/`, `/test/` 등
-
-이번 표본 기사 4건은 모두 robots 허용 경로였으므로 `blocked_by_robots` 표본은 없었다.
-
-## live smoke 갱신 절차
+## 갱신 절차
 
 ```bash
 export MONITOR_CONTACT='monitor@example.org'
 pytest -m smoke -vv
 ```
 
-각 출처에 대해 발견 URL 수, robots 판정, 본문 요청 여부, 선택자 검증 결과를 이 문서 표에
-기록한다. 금지 또는 robots 확인 실패이면 기사 URL을 요청하지 않았음을 명시한다. 응답 HTML이나
-기사 본문은 문서·fixture·로그에 복제하지 않는다.
+선택자를 바꾸기 전에는 실제 허용 기사에서 존재·비어 있지 않음을 다시 확인한다. 금지 또는
+robots 확인 실패이면 기사 URL을 요청하지 않았음을 명시한다. 응답 HTML이나 기사 본문은
+문서·fixture·로그에 복제하지 않는다.
