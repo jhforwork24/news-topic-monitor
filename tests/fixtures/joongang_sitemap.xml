@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <url>
+    <loc>https://www.joongang.co.kr/article/25300001?utm_campaign=test</loc>
+    <lastmod>2026-08-15T01:15:00+09:00</lastmod>
+    <news:news>
+      <news:publication>
+        <news:name>중앙일보</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-15T01:00:00+09:00</news:publication_date>
+      <news:title>장애인 활동지원 제도 개선 촉구</news:title>
+      <news:keywords>사회, 복지</news:keywords>
+    </news:news>
+  </url>
+</urlset>

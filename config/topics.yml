@@ -1,0 +1,119 @@
+version: 1
+topics:
+  disability_rights:
+    label: 장애·장애인권·장애정책·장애인노동
+    description: >-
+      장애인의 권리와 시민권, 탈시설·지역사회 자립, 노동권과 소득보장,
+      반차별 및 장애인운동을 포괄한다.
+    thresholds:
+      candidate: 2.0
+      review: 3.0
+      relevant: 8.0
+    field_weights:
+      title: 1.5
+      summary: 1.0
+      section: 0.6
+      body: 1.0
+    core_terms:
+      - {term: 장애인, score: 6.0}
+      - {term: 장애인권, score: 7.0}
+      - {term: 장애차별, score: 7.0}
+      - {term: 장애인 차별, score: 7.0}
+      - {term: 장애인 노동, score: 7.0}
+      - {term: 중증장애인, score: 6.0}
+      - {term: 발달장애, score: 6.0}
+      - {term: 정신장애, score: 6.0}
+      - {term: 시각장애인, score: 6.0}
+      - {term: 청각장애인, score: 6.0}
+      - {term: 지체장애인, score: 6.0}
+      - {term: 장애여성, score: 6.0}
+      - {term: 장애아동, score: 6.0}
+      - {term: 고령장애인, score: 6.0}
+      - {term: 장애, score: 1.0, ambiguous: true}
+    supporting_terms:
+      - {term: 이동권, score: 4.0}
+      - {term: 접근권, score: 4.0}
+      - {term: 교육권, score: 3.0}
+      - {term: 건강권, score: 3.0}
+      - {term: 노동권, score: 3.0}
+      - {term: 활동지원, score: 5.0}
+      - {term: 활동보조, score: 4.0}
+      - {term: 탈시설, score: 6.0}
+      - {term: 지역사회 자립, score: 5.0}
+      - {term: 자립생활, score: 4.0}
+      - {term: 권리중심, score: 5.0}
+      - {term: 편의시설, score: 3.0}
+      - {term: 정당한 편의, score: 5.0}
+      - {term: 의사소통 지원, score: 3.0}
+      - {term: 수어통역, score: 3.0}
+      - {term: 점자, score: 2.5}
+      - {term: 보조기기, score: 2.5}
+      - {term: 소득보장, score: 2.5}
+      - {term: 거주시설, score: 3.0}
+      - {term: 시설 인권침해, score: 6.0}
+    laws:
+      - {term: 장애인복지법, score: 7.0}
+      - {term: 장애인차별금지법, score: 8.0}
+      - {term: 장애인고용촉진 및 직업재활법, score: 8.0}
+      - {term: 발달장애인 권리보장 및 지원에 관한 법률, score: 8.0}
+      - {term: 장애인 건강권 및 의료접근성 보장에 관한 법률, score: 8.0}
+      - {term: 교통약자의 이동편의 증진법, score: 6.0}
+    policies:
+      - {term: 장애인연금, score: 6.0}
+      - {term: 장애인 활동지원, score: 7.0}
+      - {term: 장애인 의무고용, score: 6.0}
+      - {term: 장애인고용부담금, score: 6.0}
+      - {term: 중증장애인생산품, score: 5.0}
+      - {term: 권리중심 중증장애인맞춤형 공공일자리, score: 10.0}
+      - {term: 권리중심공공일자리, score: 9.0}
+      - {term: 장애인일자리사업, score: 6.0}
+      - {term: 개인예산제, score: 4.0}
+      - {term: 장애인 탈시설 로드맵, score: 8.0}
+    organizations:
+      - {term: 전국장애인차별철폐연대, score: 9.0}
+      - {term: 전장연, score: 8.0}
+      - {term: 한국장애인자립생활센터협의회, score: 9.0}
+      - {term: 한자협, score: 8.0}
+      - {term: 장애인자립생활센터, score: 7.0}
+      - {term: 한국장애인고용공단, score: 6.0}
+      - {term: 국가인권위원회, score: 2.0}
+      - {term: 유엔장애인권리위원회, score: 9.0}
+    people_aliases:
+      - {term: 박경석, score: 5.0}
+      - {term: 장애인권활동가, score: 6.0}
+      - {term: 장애해방운동, score: 8.0}
+    conventions:
+      - {term: 유엔장애인권리협약, score: 9.0}
+      - {term: 장애인권리협약, score: 8.0}
+      - {term: CRPD, score: 7.0}
+    excluded_terms:
+      - {term: 서버 장애, score: -8.0}
+      - {term: 전산 장애, score: -8.0}
+      - {term: 통신 장애, score: -8.0}
+      - {term: 시스템 장애, score: -8.0}
+      - {term: 접속 장애, score: -8.0}
+      - {term: 운행 장애, score: -7.0}
+      - {term: 업무 장애, score: -7.0}
+      - {term: 서비스 장애, score: -7.0}
+      - {term: 네트워크 장애, score: -8.0}
+      - {term: 장애물, score: -6.0}
+      - {term: 장애 요인, score: -6.0}
+      - {term: 성장의 장애, score: -6.0}
+      - {term: 경제성장의 장애, score: -7.0}
+      - {term: 경기 장애, score: -6.0}
+    combinations:
+      - {all: [장애, 인권], score: 5.0}
+      - {all: [장애, 차별], score: 5.0}
+      - {all: [장애, 정책], score: 4.0}
+      - {all: [장애, 복지], score: 4.0}
+      - {all: [장애, 고용], score: 5.0}
+      - {all: [장애, 노동], score: 5.0}
+      - {all: [장애, 연금], score: 5.0}
+      - {all: [장애, 시설], score: 4.0}
+      - {all: [장애, 자립], score: 5.0}
+      - {all: [장애, 교육], score: 4.0}
+      - {all: [장애, 의료], score: 4.0}
+      - {all: [장애, 이동], score: 4.0}
+      - {all: [발달장애, 가족], score: 3.0}
+      - {all: [정신장애, 인권], score: 5.0}
+      - {all: [거주시설, 인권], score: 5.0}

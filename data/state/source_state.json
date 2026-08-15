@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "sources": {
+    "chosun": {
+      "last_run_at": "2026-08-15T06:20:40.968419Z",
+      "success": true,
+      "discovered": 149,
+      "errors": [],
+      "last_success_at": "2026-08-15T06:20:40.968419Z"
+    },
+    "joongang": {
+      "last_run_at": "2026-08-15T06:20:45.299093Z",
+      "success": true,
+      "discovered": 194,
+      "errors": [],
+      "last_success_at": "2026-08-15T06:20:45.299093Z"
+    },
+    "donga": {
+      "last_run_at": "2026-08-15T06:20:49.933714Z",
+      "success": true,
+      "discovered": 537,
+      "errors": [],
+      "last_success_at": "2026-08-15T06:20:49.933714Z"
+    },
+    "hani": {
+      "last_run_at": "2026-08-15T06:20:58.264905Z",
+      "success": true,
+      "discovered": 30,
+      "errors": [],
+      "last_success_at": "2026-08-15T06:20:58.264905Z"
+    }
+  }
+}
