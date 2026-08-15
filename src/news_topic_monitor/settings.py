@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -44,6 +44,7 @@ def validate_contact(value: str | None) -> str:
 class Settings:
     root: Path
     contact: str
+    youtube_api_key: str | None = field(default=None, repr=False)
     request_interval_seconds: float = DEFAULT_REQUEST_INTERVAL_SECONDS
     connect_timeout_seconds: float = DEFAULT_CONNECT_TIMEOUT_SECONDS
     read_timeout_seconds: float = DEFAULT_READ_TIMEOUT_SECONDS
@@ -60,6 +61,7 @@ class Settings:
         return cls(
             root=root or project_root(),
             contact=validate_contact(os.getenv("MONITOR_CONTACT")),
+            youtube_api_key=(os.getenv("YOUTUBE_API_KEY") or "").strip() or None,
             request_interval_seconds=max(
                 DEFAULT_REQUEST_INTERVAL_SECONDS,
                 float(os.getenv("REQUEST_INTERVAL_SECONDS", DEFAULT_REQUEST_INTERVAL_SECONDS)),

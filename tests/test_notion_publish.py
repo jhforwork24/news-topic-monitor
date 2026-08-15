@@ -23,7 +23,7 @@ def _document() -> BriefingDocument:
         end=datetime(2026, 8, 16, tzinfo=UTC),
         overview="총평",
         sections=[BriefingSection("I. 장애정책·장애인운동", [])],
-        source_failures=["MBC: robots.txt 전면 금지"],
+        source_failures=["참세상: robots.txt 확인 불능"],
     )
 
 
@@ -59,6 +59,9 @@ def test_notion_publish_creates_page_and_children() -> None:
     )
     assert create["parent"]["data_source_id"] == "ds-1"
     assert create["properties"]["유형"]["select"]["name"] == "일간"
+    telegram = create["properties"]["텔레그램 요약"]["rich_text"][0]["text"]["content"]
+    assert telegram == "총평"
+    assert "주요 칼럼" not in telegram
 
 
 def test_notion_publish_refuses_unmanaged_collision() -> None:

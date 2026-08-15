@@ -8,6 +8,7 @@ import pytest
 from news_topic_monitor.adapters import ALL_ADAPTERS
 from news_topic_monitor.adapters.base import StructureChangedError, metadata_from_html
 from news_topic_monitor.adapters.hani import HaniAdapter
+from news_topic_monitor.adapters.mbc import MbcAdapter
 from news_topic_monitor.http import RobotsDeniedError, RobotsUnavailableError, SafeHttpClient
 from news_topic_monitor.settings import ContactRequiredError, Settings
 
@@ -22,7 +23,14 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
         settings = Settings.from_env(tmp_path)
     except ContactRequiredError as exc:
         pytest.skip(str(exc))
-    adapter = HaniAdapter(max_pages=1) if adapter_type is HaniAdapter else adapter_type()
+    if adapter_type is HaniAdapter:
+        adapter = HaniAdapter(max_pages=1)
+    elif adapter_type is MbcAdapter:
+        if not settings.youtube_api_key:
+            pytest.skip("YOUTUBE_API_KEY is required for the MBC live smoke test")
+        adapter = MbcAdapter(settings.youtube_api_key)
+    else:
+        adapter = adapter_type()
     end = datetime.now(UTC)
     start = end - timedelta(hours=48)
     discovered = []
@@ -30,7 +38,11 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
     with SafeHttpClient(settings) as http:
         for url in adapter.initial_discovery_urls(start, end)[:2]:
             try:
-                response = http.get(url, purpose="smoke discovery")
+                response = http.get(
+                    url,
+                    purpose="smoke discovery",
+                    headers=adapter.discovery_headers(url),
+                )
                 page = adapter.parse_discovery(response.content, str(response.url))
                 discovered.extend(page.articles)
                 discovery_outcomes.append((url, "allowed"))
@@ -38,8 +50,7 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
                 discovery_outcomes.append((url, type(exc).__name__))
         assert discovery_outcomes
         if adapter.source == "mbc":
-            assert all(outcome == "RobotsDeniedError" for _url, outcome in discovery_outcomes)
-            assert not discovered
+            assert all(outcome == "allowed" for _url, outcome in discovery_outcomes)
             return
         if adapter.source == "newscham":
             assert all(outcome == "RobotsUnavailableError" for _url, outcome in discovery_outcomes)

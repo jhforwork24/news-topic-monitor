@@ -144,14 +144,21 @@ def build_briefing(
         article for section in sections for issue in section.issues for article in issue.articles
     ]
     opinions = select_opinions(articles, selected)
-    sections.append(BriefingSection("IV. 주요 칼럼", cluster_issues(opinions, max_issues=12)))
+    opinion_issues = cluster_issues(opinions, max_issues=12)
+    if opinion_issues:
+        sections.append(BriefingSection("IV. 주요 칼럼", opinion_issues))
     failures = _source_failures(storage)
-    counts = [len(section.issues) for section in sections]
+    core_counts = [len(section.issues) for section in sections[:3]]
+    selected_counts = (
+        f"장애 의제 {core_counts[0]}개, 노동·돌봄·빈곤 의제 {core_counts[1]}개, "
+        f"방송 장애 의제 {core_counts[2]}개"
+    )
+    if opinion_issues:
+        selected_counts += f"와 주요 칼럼 {len(opinion_issues)}개"
     overview = (
         f"{kst_display(start)}부터 {kst_display(end)}까지 공개 발견 경로에 나타난 "
-        f"{len(articles)}건의 기사 메타데이터를 비교하였다. 장애 의제 {counts[0]}개, "
-        f"노동·돌봄·빈곤 의제 {counts[1]}개, 방송 장애 의제 {counts[2]}개와 주요 칼럼 "
-        f"{counts[3]}개를 선별하였다. 자동 선별은 운동의 판단을 대체하지 않으며, "
+        f"{len(articles)}건의 기사 메타데이터를 비교하였다. {selected_counts}를 선별하였다. "
+        "자동 선별은 운동의 판단을 대체하지 않으며, "
         "수집 실패나 robots.txt 차단은 기사 부재가 아니라 확인 불능으로 해석해야 한다."
     )
     return BriefingDocument(

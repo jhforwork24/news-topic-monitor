@@ -1,0 +1,29 @@
+{
+  "nextPageToken": "UPLOAD_NEXT",
+  "items": [
+    {
+      "snippet": {
+        "videoOwnerChannelId": "UCF4Wxdo3inmxP-Y59wXDsFw",
+        "title": "휠체어 이용자 이동권 현장 보도",
+        "description": "공개 영상 설명",
+        "publishedAt": "2026-08-15T01:00:00Z"
+      },
+      "contentDetails": {
+        "videoId": "uploadXYZ01",
+        "videoPublishedAt": "2026-08-15T01:00:00Z"
+      }
+    },
+    {
+      "snippet": {
+        "videoOwnerChannelId": "UCF4Wxdo3inmxP-Y59wXDsFw",
+        "title": "오늘의 날씨",
+        "description": "전국 기온과 강수 전망을 전하는 공개 영상 설명",
+        "publishedAt": "2026-08-15T00:30:00Z"
+      },
+      "contentDetails": {
+        "videoId": "weatherXYZ1",
+        "videoPublishedAt": "2026-08-15T00:30:00Z"
+      }
+    }
+  ]
+}

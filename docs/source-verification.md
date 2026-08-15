@@ -19,12 +19,32 @@
 | 에이블뉴스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
 | 더인디고 | `/wp-json/wp/v2/posts` metadata fields | 허용·URL 발견 | `.td-post-content` |
 | KBS | `/sitemap/recentNewsList.xml` | 허용·URL 발견 | redirect 재검사 후 `.detail-body` |
-| MBC | `imnews.imbc.com` | `User-agent: * Disallow: /`, 발견 요청 차단 | 요청하지 않음 |
+| MBC | `imnews.imbc.com` | `User-agent: * Disallow: /`, 웹 발견·본문 요청 차단 | 요청하지 않음 |
 | SBS | `/news/sitemapRSS.do` | 허용·URL 발견 | `[itemprop='articleBody']` |
 | JTBC | `/sitemaps/latest-articles` | 허용·URL 발견 | 서버 본문 구조 미확인, 메타데이터만 |
 
 2026-08-15 live smoke 결과는 `16 passed`(75.94초)였다. MBC는 금지 판정, 참세상은 robots
 확인 실패 중단, JTBC는 본문 미추정이 각각 기대 성공 조건이었다.
+
+## MBC 공식 YouTube 보완 경로
+
+위 live smoke와 48시간 수치는 YouTube API 보완 어댑터 도입 전의 기준선이다. 이후 MBC 웹
+경로는 계속 요청하지 않되, [MBCNEWS 공식 채널](https://www.youtube.com/channel/UCF4Wxdo3inmxP-Y59wXDsFw)을
+대상으로 다음 두 [YouTube Data API](https://developers.google.com/youtube/v3/docs) 발견 경로를
+결합하였다.
+
+- 조사기간을 지정한 `search.list` 장애 의제 키워드 묶음 검색
+- `channels.list`로 공식 업로드 playlist를 확인한 뒤 `playlistItems.list`를 최신순으로 순회하고,
+  제목·공개 설명에서 넓은 장애 의제 표현을 로컬 교차확인
+
+API 키는 URL 매개변수가 아니라 `x-goog-api-key` 헤더로만 전달하며, robots.txt 확인 요청과
+cross-origin 리다이렉트에는 붙이지 않는다. API 응답에서는 공식 채널 ID가 일치하는 영상의
+ID·제목·공개 설명 일부·발행시각·공개 watch URL만 사용하고 영상·자막·웹 본문은 요청하지 않는다.
+마지막 API 확인 후 28일이 지난 저장 레코드는 `videos.list`로 갱신하고, 성공 응답에서 더는
+반환되지 않는 정확한 ID의 현재 캐시는 제거한다.
+오프라인 합성 fixture와 헤더 유출 방지 시험은 완료했으나, repository secret은 로컬에서 읽을
+수 없으므로 API live smoke는 변경사항을 GitHub Actions에서 실행한 뒤 이 문서에 별도로 결과를
+추가해야 한다.
 
 ## 48시간 실제 백필
 
@@ -57,7 +77,9 @@ KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 �
 
 ## robots 때문에 수행하지 않은 접근
 
-- MBC는 robots의 `User-agent: * Disallow: /` 때문에 홈페이지·발견 경로·기사 URL을 요청하지 않았다.
+- MBC는 robots의 `User-agent: * Disallow: /` 때문에 iMBC 홈페이지·발견 경로·기사 URL을
+  요청하지 않았다. 별도 Google API origin에서는 MBCNEWS 공식 채널의 문서화된 메타데이터
+  엔드포인트만 사용한다.
 - 참세상은 `/robots.txt`가 404여서 허용으로 추정하지 않고 홈페이지·기사 URL을 요청하지 않았다.
 - 각 매체 robots에 명시된 검색·로그인·구매·관리·API 금지 경로는 사용하지 않았다.
 - JTBC의 클라이언트 API나 브라우저 렌더링을 추정·호출하지 않았다.
@@ -67,6 +89,7 @@ KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 �
 
 ```bash
 export MONITOR_CONTACT='monitor@example.org'
+export YOUTUBE_API_KEY='로컬에 별도로 발급·보관한 키'
 pytest -m smoke -vv
 ```
 

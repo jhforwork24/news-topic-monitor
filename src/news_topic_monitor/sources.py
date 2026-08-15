@@ -14,7 +14,7 @@ SOURCE_LABELS = {
     "ablenews": "에이블뉴스",
     "theindigo": "더인디고",
     "kbs": "KBS",
-    "mbc": "MBC",
+    "mbc": "MBCNEWS (YouTube)",
     "sbs": "SBS",
     "jtbc": "JTBC",
 }

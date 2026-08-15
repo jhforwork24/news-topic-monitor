@@ -98,6 +98,28 @@ def test_opinion_detection() -> None:
     assert not is_opinion(_article("donga", "이동권 집회 현장 보도"))
 
 
+def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, topics_path) -> None:
+    storage = JsonlStorage(tmp_path)
+    storage.upsert(_article("hani", "장애인 이동권 보장 촉구"))
+    document = build_briefing(
+        storage,
+        topics_path=topics_path,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    assert [section.title for section in document.sections] == [
+        "I. 장애정책·장애인운동",
+        "II. 노동·돌봄·빈곤",
+        "III. 방송 뉴스 중 장애 주제",
+    ]
+    assert "주요 칼럼" not in document.overview
+    assert "칼럼 0" not in document.overview
+    text = render_briefing_markdown(document, crpd_url=None)
+    assert "IV. 주요 칼럼" not in text
+    assert "주요 칼럼" not in text
+
+
 def test_markdown_article_link_escapes_brackets(tmp_path, topics_path) -> None:
     storage = JsonlStorage(tmp_path)
     storage.upsert(_article("hani", "[현장] 장애인 이동권 | 보도"))

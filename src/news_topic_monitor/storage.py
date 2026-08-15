@@ -62,6 +62,40 @@ class JsonlStorage(ArticleStorage):
         probe = stable_article_key(source, canonical_url, None, "", None)
         return probe in self._ensure_index()
 
+    def stale_article_ids(self, source: str, *, before: datetime) -> list[str]:
+        return sorted(
+            {
+                record.article_id
+                for _path, record in self._ensure_index().values()
+                if record.source == source and record.article_id and record.last_seen_at < before
+            }
+        )
+
+    def delete_by_source_article_ids(self, source: str, article_ids: list[str]) -> int:
+        """Delete exact API cache records confirmed absent by a refresh response."""
+
+        wanted = frozenset(article_ids)
+        if not wanted:
+            return 0
+        index = self._ensure_index()
+        targets = {
+            key: (path, record)
+            for key, (path, record) in index.items()
+            if record.source == source and record.article_id in wanted
+        }
+        affected = {path for path, _record in targets.values()}
+        for path in affected:
+            records = [
+                record
+                for record in self._read_records(path)
+                if not (record.source == source and record.article_id in wanted)
+            ]
+            self._write_records(path, records)
+            self._rebuild_review(path.stem, records)
+        for key in targets:
+            index.pop(key, None)
+        return len(targets)
+
     def upsert(self, article: ArticleRecord) -> StoreResult:
         index = self._ensure_index()
         key = self._key(article)

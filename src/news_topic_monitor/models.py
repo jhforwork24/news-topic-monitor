@@ -29,6 +29,15 @@ class VerificationStatus(StrEnum):
     EXTRACTION_FAILED = "extraction_failed"
 
 
+class DiscoveryStatus(StrEnum):
+    PENDING = "pending"
+    COMPLETE = "complete"
+    PARTIAL = "partial"
+    CONFIGURATION_MISSING = "configuration_missing"
+    QUOTA_EXCEEDED = "quota_exceeded"
+    UNAVAILABLE = "unavailable"
+
+
 class ArticleDiscovery(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -40,6 +49,7 @@ class ArticleDiscovery(BaseModel):
     published_at: datetime | None = None
     updated_at: datetime | None = None
     summary: str | None = None
+    refresh_only: bool = False
 
     @field_validator("canonical_url", "title")
     @classmethod
@@ -114,12 +124,14 @@ class ArticleRecord(BaseModel):
 class DiscoveryPage(BaseModel):
     articles: list[ArticleDiscovery] = Field(default_factory=list)
     child_urls: list[str] = Field(default_factory=list)
+    removed_article_ids: list[str] = Field(default_factory=list)
     stop_pagination: bool = False
 
 
 class SourceHealth(BaseModel):
     source: str
     success: bool = False
+    discovery_status: DiscoveryStatus = DiscoveryStatus.PENDING
     started_at: datetime
     finished_at: datetime | None = None
     discovered: int = 0
@@ -132,6 +144,8 @@ class SourceHealth(BaseModel):
     irrelevant: int = 0
     bodies_checked: int = 0
     bodies_blocked: int = 0
+    refreshed: int = 0
+    removed: int = 0
     errors: list[str] = Field(default_factory=list)
     structure_warnings: list[str] = Field(default_factory=list)
 

@@ -1,7 +1,8 @@
 # KCIL News Topic Monitor
 
-12개 인쇄·디지털 매체와 KBS·MBC·SBS·JTBC의 공식 공개 RSS·뉴스 사이트맵·최신기사
-목록을 주기적으로 확인하고, 모든 발견 기사 메타데이터를 중복 없이 기록한 뒤 장애인권과
+12개 인쇄·디지털 매체와 KBS·MBC·SBS·JTBC의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록,
+MBCNEWS 공식 YouTube 채널 API를 주기적으로 확인하고, 발견 기사·영상 메타데이터를 중복 없이
+기록한 뒤 장애인권과
 노동·돌봄·빈곤 의제를 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를 켜 두거나
 화면을 원격 조작하지 않으며, GitHub Actions만으로 무료 초기 운영이 가능하다.
 
@@ -38,7 +39,7 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 에이블뉴스 | news sitemap | `#article-view-content-div` |
 | 더인디고 | 본문을 제외한 공식 WordPress posts API | `.td-post-content` |
 | KBS | recentNewsList news sitemap | `.detail-body` |
-| MBC | `User-agent: *` 전면 금지 | 요청하지 않음 |
+| MBC | YouTube Data API의 MBCNEWS 공식 채널 키워드 검색 + 업로드 목록 교차확인 | 영상 메타데이터만 저장, iMBC 본문은 요청하지 않음 |
 | SBS | 공식 sitemap RSS | `[itemprop='articleBody']` |
 | JTBC | latest-articles news sitemap | 서버 렌더링 선택자 미확인, 메타데이터만 저장 |
 
@@ -62,7 +63,8 @@ ruff format --check .
 ```
 
 일반 시험은 네트워크를 사용하지 않는다. live smoke test는 실제 공식 경로에 요청하므로 공개
-연락처를 반드시 지정해야 한다.
+연락처를 반드시 지정해야 한다. MBC live smoke test까지 실행하려면 `YOUTUBE_API_KEY`도
+환경변수로 지정한다.
 
 ```bash
 export MONITOR_CONTACT='monitor@example.org'
@@ -101,10 +103,12 @@ news-topic-monitor report \
 2. 저장소 **Settings → Secrets and variables → Actions → Variables**에
    `MONITOR_CONTACT`를 등록한다. 비밀값이 아니라 공개 연락처이므로 Repository variable을
    사용한다.
-3. Actions 탭에서 `Collect news metadata`를 한 번 수동 실행하고 `health/latest.json`과
+3. 같은 화면의 **Secrets**에 `YOUTUBE_API_KEY`를 Repository secret으로 등록한다. 키는
+   URL·로그·저장 데이터에 쓰지 않고 `x-goog-api-key` 요청 헤더로만 전달한다.
+4. Actions 탭에서 `Collect news metadata`를 한 번 수동 실행하고 `health/latest.json`과
    `data/articles/` 변경이 커밋되는지 확인한다.
-4. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
-5. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
+5. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
+6. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
 
 워크플로는 다음과 같다.
@@ -113,8 +117,8 @@ news-topic-monitor report \
 - `.github/workflows/backfill.yml`: `20 23 * * *`(UTC), 매일 08:20 KST에 최근 48시간 재확인
 - `.github/workflows/report.yml`: `10 0 * * *`(UTC), 매일 09:10 KST에 전날 09:00부터
   당일 09:00 KST까지 보고
-- `.github/workflows/publish-notion.yml`: `25 0 * * *`(UTC), 매일 09:25 KST에 4개 절
-  브리핑을 멱등 발행. 관리 표식이 없는 기존 페이지는 덮어쓰지 않음
+- `.github/workflows/publish-notion.yml`: `25 0 * * *`(UTC), 매일 09:25 KST에 브리핑을
+  멱등 발행. IV절은 선정 칼럼이 있을 때만 생성하며, 관리 표식이 없는 기존 페이지는 덮어쓰지 않음
 - `.github/workflows/ci.yml`: push·PR에서 오프라인 pytest와 ruff 실행
 
 세 데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
@@ -138,6 +142,7 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `MAX_RETRIES` | 아니오 | `2` | 제한적 재시도 횟수 |
 | `MAX_DISCOVERY_CHILDREN` | 아니오 | `20` | sitemap index 하위 요청 상한 |
 | `HANI_MAX_PAGES` | 아니오 | `50` | 한겨레 최신기사 최대 순회 페이지 |
+| `YOUTUBE_API_KEY` | MBC 확인 시 | 없음 | YouTube Data API 키. GitHub Actions repository secret으로만 저장 |
 | `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
 | `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 실패 보고사항 data source UUID |
 | `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
@@ -146,6 +151,18 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 `NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
 저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
 명시적으로 연결해야 한다.
+
+`YOUTUBE_API_KEY`도 repository secret으로만 저장한다. MBC 어댑터는 이 키를 쿼리 문자열에
+넣지 않고 `youtube.googleapis.com` 동일 origin 요청 헤더에만 전달한다. robots.txt 요청과
+cross-origin 리다이렉트에는 키를 전달하지 않는다. 키가 없으면 MBC만
+`configuration_missing`, API 할당량이 소진되면 `quota_exceeded`, 일부 발견 경로만 실패하면
+`partial`로 기록하며 이를 보도 부재로 처리하지 않는다.
+
+[YouTube API 개발자 정책](https://developers.google.com/youtube/terms/developer-policies)의
+비인가 API 데이터 30일 제한을 지키기 위해 MBC 현재 메타데이터 캐시는 마지막 확인 후 28일이
+지나기 전에 `videos.list`로 자동 갱신한다. API가 더는 돌려주지 않는 정확한 영상 ID의 현재 캐시
+레코드는 제거하고, 당시 시점이 명시된 과거 일일보고는 역사 자료로 유지한다. 저장·표시·삭제
+범위와 배포 운영자의 의무는 [`docs/youtube-api-use.md`](docs/youtube-api-use.md)에 정리한다.
 
 OpenAI API 의미 판별을 붙일 수 있도록 `SemanticClassifier` 인터페이스를 분리했지만 초기 버전의
 기본 구현은 항상 비활성화되어 있으며 API를 호출하지 않는다. `OPENAI_API_KEY`가 없어도 모든
@@ -173,12 +190,13 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 - `data/review/YYYY-MM-DD.jsonl`: `review` 기사만 모은 사람 검토 목록
 - `data/state/source_state.json`: 출처별 마지막 실행 상태
 - `reports/YYYY-MM-DD.md`: 09:00 KST 경계 일일보고
-- `reports/briefings/YYYY-MM-DD.md`: 총평과 I~IV 절로 구성한 노션 발행 원본
-- `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·오류 집계
+- `reports/briefings/YYYY-MM-DD.md`: 총평과 I~III 절, 선정 칼럼이 있을 때만 IV절을 덧붙인 노션 발행 원본
+- `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·API 갱신·제거·오류 집계
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
 
-브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스, IV절은
-주요 칼럼이다. 장애 관련 칼럼은 7개 종합매체에서 전수선별하고, I~III 최종 이슈와 직접
+브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스다. IV절
+주요 칼럼은 실제 선정 칼럼이 있을 때만 생성한다. 0건이면 절 제목·빈 절 설명·총평과 텔레그램
+요약의 0건 문구까지 모두 생략한다. 장애 관련 칼럼은 7개 종합매체에서 전수선별하고, I~III 최종 이슈와 직접
 연결되는 칼럼은 12개 인쇄·디지털 매체에서 제목 핵심어를 역검색한다. 장애언론에서 확인된
 장애 관련 칼럼도 IV절에 포함한다. 각 의제에는 기사 링크, 짧은 자체 평가, 참고자료 toggle과
 해당하는 경우 CRPD 참조표 링크가 붙는다.
@@ -211,8 +229,11 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 - 규칙 기반 판별은 풍자·은유·복합 맥락을 완전히 이해하지 못하므로 `review`가 필요하다.
 - 사이트 구조나 robots.txt가 바뀌면 해당 출처는 안전하게 중단되며 파서 갱신 전까지 공백이 생긴다.
 - 본문 접근이 금지되거나 robots.txt 확인에 실패하면 공개 메타데이터만으로 판별한다.
-- 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단하며, MBC는 현재 `User-agent: *`
-  전면 금지 때문에 발견 경로 자체를 요청하지 않는다.
+- 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단한다. MBC의 iMBC 웹 경로도
+  `User-agent: *` 전면 금지를 준수해 요청하지 않으며, 별도로 MBCNEWS 공식 YouTube 채널의
+  문서화된 Data API에서 키워드 검색과 시간순 업로드 목록을 교차확인한다.
+- YouTube API 키 누락·할당량 소진·검색 또는 업로드 경로의 부분 실패는 확인 불능 또는 부분
+  확인으로 기록하며 MBC 보도 0건으로 해석하지 않는다.
 - 16개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
 
 이 한계 때문에 **수집 실패를 기사 부재로 해석해서는 안 된다.** 장애인권 의제의 언론 비가시성을

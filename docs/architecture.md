@@ -34,7 +34,7 @@ flowchart LR
 - `pipeline.py`: 출처 격리, 시간창 필터, 1·2차 판별, 본문 폐기, health 집계
 - `storage.py`: 멱등 JSONL upsert, review 동기화, state·health 원자적 쓰기
 - `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
-- `briefing.py`: I~IV 절 선정, 장애 칼럼 전수선별, 이슈 연결 칼럼 역검색, CRPD 매핑
+- `briefing.py`: I~III 절 선정, 결과가 있을 때만 IV절 칼럼 선정, 이슈 연결 칼럼 역검색, CRPD 매핑
 - `notion_publish.py`: exact title/date 멱등 발행, 관리 표식 충돌 방지, 발행 health
 - `sources.py`: 16개 출처명과 종합·노동대안·장애언론·방송 매체군 정의
 - `cli.py`: collect, backfill, report, briefing, publish-notion 명령
@@ -68,7 +68,12 @@ origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 �
 
 XML 기반 매체는 공용 `XmlSyndicationAdapter` 계약을 재사용하되 출처별 모듈이 공식 URL,
 허용 host와 live 검증 선택자를 독립적으로 선언한다. 더인디고는 본문 필드를 요청하지 않는
-WordPress REST 어댑터를 사용한다. 참세상·MBC는 우회 경로를 두지 않는 fail-closed 어댑터이다.
+WordPress REST 어댑터를 사용한다. 참세상은 우회 경로를 두지 않는 fail-closed 어댑터이다.
+MBC는 iMBC의 robots.txt 전면 금지를 그대로 준수하고, 공식 MBCNEWS YouTube 채널에 한해
+YouTube Data API 키워드 검색과 업로드 목록을 교차확인하는 메타데이터 전용 어댑터를 사용한다.
+API 키는 URL이 아니라 동일 origin 요청 헤더로만 전달한다. 저장된 MBC API 메타데이터는
+28일 경과 전에 `videos.list`로 갱신하고, 성공 응답에서 사라진 정확한 영상 ID의 현재 캐시
+레코드는 제거한다.
 JTBC는 공식 news sitemap 메타데이터만 처리하며 확인하지 않은 클라이언트 API를 추정하지 않는다.
 
 ## 판별 모델

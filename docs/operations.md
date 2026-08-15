@@ -2,8 +2,9 @@
 
 ## 공통 원칙
 
-`health/latest.json`의 `success`, `errors`, `structure_warnings`, `discovered`, `new`,
-`duplicates`, `bodies_checked`, `bodies_blocked`를 먼저 확인한다. 기사 0건을 곧바로 보도 부재로
+`health/latest.json`의 `success`, `discovery_status`, `errors`, `structure_warnings`,
+`discovered`, `new`, `duplicates`, `bodies_checked`, `bodies_blocked`, `refreshed`, `removed`를
+먼저 확인한다. 기사 0건을 곧바로 보도 부재로
 해석하지 않는다. 장애인권 의제가 실제로 배제된 것인지, 수집 기반이 끊긴 것인지를 반드시
 구분한다.
 
@@ -36,8 +37,9 @@
 
 ## GitHub Actions 실패
 
-1. 세 워크플로에 `MONITOR_CONTACT` Repository variable이 노출되는지 확인한다. 값 자체를 로그에
-   출력하지 않는다.
+1. 세 워크플로에 `MONITOR_CONTACT` Repository variable이 노출되는지 확인한다. MBC 확인이
+   필요하면 collect·backfill 워크플로에 `YOUTUBE_API_KEY` Repository secret이 연결되었는지도
+   확인한다. 두 값 자체를 로그에 출력하지 않는다.
 2. Actions의 job conclusion과 `health/latest.json`을 비교한다. 모든 출처 실패인지, 테스트·설치·
    push 단계 실패인지 분리한다.
 3. 예약 누락이면 Collect를 수동으로 최근 6시간보다 넓게 실행하고 Daily backfill을 48시간으로
@@ -46,6 +48,23 @@
    제거하지 않는다.
 5. 전체 출처 실패는 실패로 유지한다. 성공으로 가장하기 위해 `continue-on-error`를 파이프라인
    전체에 적용하지 않는다.
+
+## MBC YouTube API 상태
+
+1. `configuration_missing`이면 `YOUTUBE_API_KEY`가 Repository variable이 아니라 Repository
+   secret으로 정확히 등록되었고 collect·backfill job env에 연결되었는지 확인한다.
+2. `quota_exceeded`이면 MBC 0건으로 보고하지 않는다. 같은 키를 공유하는 다른 작업과 Google
+   Cloud Console의 당일 할당량 사용량을 확인하고 다음 할당량 갱신 뒤 재실행한다. 키를 바꾸거나
+   새 프로젝트로 우회해 제한을 회피하지 않는다.
+3. `partial`이면 키워드 검색·공식 업로드 목록 중 성공한 경로와 실패한 URL의 endpoint 이름을
+   구분한다. 성공 결과는 쓰되 해당 시간대 MBC 확인이 완전하다고 서술하지 않는다.
+4. `unavailable`이면 Google API robots·HTTP 상태와 공식 채널 ID 응답을 확인한다. iMBC 웹의
+   robots 전면 금지를 이유로 웹 페이지나 브라우저 자동화 경로를 대신 호출하지 않는다.
+5. API 키는 URL, exception, health, report, fixture에 기록하지 않는다. 동일 origin redirect를
+   벗어나면 헤더가 제거되는 회귀시험을 유지한다.
+6. `refreshed`는 마지막 확인 후 28일이 지난 현재 캐시 레코드의 재확인 수다. `removed`는
+   `videos.list` 성공 응답에서 더는 반환되지 않아 현재 캐시에서 제거한 정확한 ID 수다. 과거
+   보고서의 시점 명시 기록과 혼동하지 않는다.
 
 ## 데이터 push 충돌
 

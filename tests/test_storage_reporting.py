@@ -53,14 +53,40 @@ def test_storage_is_idempotent_and_writes_review(tmp_path) -> None:
     assert "article body" not in review_files[0].read_text(encoding="utf-8")
 
 
+def test_stale_api_record_can_be_refreshed_or_exactly_removed(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path)
+    item = record()
+    item.source = "mbc"
+    item.article_id = "gone123XYZ0"
+    item.canonical_url = "https://www.youtube.com/watch?v=gone123XYZ0"
+    item.first_seen_at = datetime(2026, 7, 1, tzinfo=UTC)
+    item.last_seen_at = datetime(2026, 7, 1, tzinfo=UTC)
+    storage.upsert(item)
+
+    assert storage.stale_article_ids("mbc", before=datetime(2026, 8, 1, tzinfo=UTC)) == [
+        "gone123XYZ0"
+    ]
+    assert storage.delete_by_source_article_ids("mbc", ["different01"]) == 0
+    assert storage.delete_by_source_article_ids("mbc", ["gone123XYZ0"]) == 1
+    assert list(storage.iter_articles()) == []
+
+
 def test_report_uses_half_open_window_and_contains_no_body(tmp_path) -> None:
     storage = JsonlStorage(tmp_path)
     storage.upsert(record(classification=Classification.RELEVANT))
     storage.write_health(
         {
             "sources": {
-                "hani": {"success": True, "errors": []},
-                "chosun": {"success": False, "errors": ["robots unavailable"]},
+                "hani": {
+                    "success": True,
+                    "discovery_status": "complete",
+                    "errors": [],
+                },
+                "chosun": {
+                    "success": False,
+                    "discovery_status": "unavailable",
+                    "errors": ["robots unavailable"],
+                },
             }
         }
     )
@@ -74,4 +100,6 @@ def test_report_uses_half_open_window_and_contains_no_body(tmp_path) -> None:
     assert "장애인 이동권 논의" in text
     assert "모니터 자체 요약" in text
     assert "robots unavailable" in text
+    assert "완전 확인" in text
+    assert "확인 불능" in text
     assert "원문 보관: 하지 않음" in text

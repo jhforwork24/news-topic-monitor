@@ -95,6 +95,36 @@ def test_non_retryable_http_status_is_not_retried(tmp_path) -> None:
     assert requested == ["/robots.txt", "/missing"]
 
 
+def test_json_api_error_reason_is_exposed_without_response_body(tmp_path) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nAllow: /\n")
+        return httpx.Response(
+            403,
+            json={"error": {"errors": [{"reason": "quotaExceeded"}]}},
+        )
+
+    with (
+        SafeHttpClient(
+            settings(tmp_path), transport=httpx.MockTransport(handler), sleeper=lambda _: None
+        ) as client,
+        pytest.raises(HttpRequestError, match="quotaExceeded") as caught,
+    ):
+        client.get("https://youtube.googleapis.test/youtube/v3/search")
+    assert caught.value.status_code == 403
+    assert caught.value.api_error_reason == "quotaExceeded"
+    assert "error" not in str(caught.value)
+
+
+def test_settings_repr_does_not_expose_youtube_api_key(tmp_path) -> None:
+    configured = Settings(
+        root=tmp_path,
+        contact="monitor@example.org",
+        youtube_api_key="test-secret-key",
+    )
+    assert "test-secret-key" not in repr(configured)
+
+
 @pytest.mark.parametrize(
     "contact",
     ["bad", "a@example.org\r\nX-Test: bad", "ftp://example.org", "https://example.org/a b"],
@@ -151,4 +181,38 @@ def test_redirect_target_robots_is_rechecked(tmp_path) -> None:
         "example.test/robots.txt",
         "example.test/start",
         "other.test/robots.txt",
+    ]
+
+
+def test_sensitive_request_header_skips_robots_and_cross_origin_redirect(tmp_path) -> None:
+    observed: list[tuple[str, str | None]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        observed.append(
+            (
+                f"{request.url.host}{request.url.path}",
+                request.headers.get("x-goog-api-key"),
+            )
+        )
+        if request.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nAllow: /\n")
+        if request.url.host == "example.test" and request.url.path == "/start":
+            return httpx.Response(302, headers={"Location": "https://other.test/result"})
+        return httpx.Response(200, text="ok")
+
+    with SafeHttpClient(
+        settings(tmp_path), transport=httpx.MockTransport(handler), sleeper=lambda _: None
+    ) as client:
+        assert (
+            client.get(
+                "https://example.test/start",
+                headers={"x-goog-api-key": "test-secret-key"},
+            ).text
+            == "ok"
+        )
+    assert observed == [
+        ("example.test/robots.txt", None),
+        ("example.test/start", "test-secret-key"),
+        ("other.test/robots.txt", None),
+        ("other.test/result", None),
     ]

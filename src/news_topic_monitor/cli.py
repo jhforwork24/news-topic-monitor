@@ -9,6 +9,7 @@ from pathlib import Path
 
 from .adapters import ALL_ADAPTERS
 from .adapters.hani import HaniAdapter
+from .adapters.mbc import MbcAdapter
 from .briefing import build_briefing, write_briefing
 from .classifier import RuleClassifier
 from .constants import project_root
@@ -26,6 +27,7 @@ from .storage import JsonlStorage
 from .utils import KST, parse_datetime
 
 LOGGER = logging.getLogger(__name__)
+YOUTUBE_REFRESH_AFTER = timedelta(days=28)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -59,12 +61,12 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("--start", help="inclusive ISO-8601 override")
     report.add_argument("--end", help="exclusive ISO-8601 override")
 
-    briefing = subparsers.add_parser("briefing", help="generate the four-section briefing")
+    briefing = subparsers.add_parser(
+        "briefing", help="generate the briefing (section IV is conditional)"
+    )
     _add_report_window_arguments(briefing)
 
-    publish = subparsers.add_parser(
-        "publish-notion", help="publish a managed four-section briefing to Notion"
-    )
+    publish = subparsers.add_parser("publish-notion", help="publish a managed briefing to Notion")
     _add_report_window_arguments(publish)
     publish.add_argument(
         "--dry-run", action="store_true", help="render the briefing without calling Notion"
@@ -103,15 +105,20 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
     if start >= end:
         raise SystemExit("start must be earlier than end")
     selected = set(args.sources or [])
+    storage = JsonlStorage(settings.root)
     adapters = []
     for adapter_type in ALL_ADAPTERS:
         if selected and adapter_type.source not in selected:
             continue
         if adapter_type is HaniAdapter:
             adapters.append(HaniAdapter(settings.hani_max_pages))
+        elif adapter_type is MbcAdapter:
+            stale_ids = storage.stale_article_ids(
+                "mbc", before=datetime.now(UTC) - YOUTUBE_REFRESH_AFTER
+            )
+            adapters.append(MbcAdapter(settings.youtube_api_key, refresh_video_ids=stale_ids))
         else:
             adapters.append(adapter_type())
-    storage = JsonlStorage(settings.root)
     classifier = RuleClassifier(settings.root / "config" / "topics.yml")
     with SafeHttpClient(settings) as http:
         health = Collector(

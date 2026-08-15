@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import time
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
@@ -26,7 +27,17 @@ class RobotsDeniedError(PermissionError):
 
 
 class HttpRequestError(RuntimeError):
-    pass
+    def __init__(
+        self,
+        message: str,
+        *,
+        status_code: int | None = None,
+        api_error_reason: str | None = None,
+    ) -> None:
+        self.status_code = status_code
+        self.api_error_reason = api_error_reason
+        suffix = f" ({api_error_reason})" if api_error_reason else ""
+        super().__init__(message + suffix)
 
 
 @dataclass(frozen=True)
@@ -131,8 +142,15 @@ class SafeHttpClient:
             robots_url=cached.robots_url,
         )
 
-    def get(self, url: str, *, purpose: str = "metadata") -> httpx.Response:
+    def get(
+        self,
+        url: str,
+        *,
+        purpose: str = "metadata",
+        headers: Mapping[str, str] | None = None,
+    ) -> httpx.Response:
         current = url
+        request_origin, _ = self._origin_and_robots(url)
         for _ in range(6):
             decision = self.robots_decision(current)
             if decision.status == "unavailable":
@@ -141,7 +159,9 @@ class SafeHttpClient:
                 )
             if not decision.allowed:
                 raise RobotsDeniedError(f"robots.txt blocks {purpose} URL: {current}")
-            response = self._request_with_retries(current)
+            current_origin, _ = self._origin_and_robots(current)
+            request_headers = headers if current_origin == request_origin else None
+            response = self._request_with_retries(current, headers=request_headers)
             if not response.is_redirect:
                 return response
             location = response.headers.get("Location")
@@ -188,13 +208,15 @@ class SafeHttpClient:
                 robots_url=robots_url,
             )
 
-    def _request_with_retries(self, url: str) -> httpx.Response:
+    def _request_with_retries(
+        self, url: str, *, headers: Mapping[str, str] | None = None
+    ) -> httpx.Response:
         host = urlsplit(url).netloc.lower()
         last_error: Exception | None = None
         for attempt in range(self.settings.max_retries + 1):
             self.limiter.wait(host)
             try:
-                response = self.client.get(url)
+                response = self.client.get(url, headers=headers)
             except httpx.TransportError as exc:
                 last_error = exc
                 if attempt >= self.settings.max_retries:
@@ -215,9 +237,36 @@ class SafeHttpClient:
             try:
                 response.raise_for_status()
             except httpx.HTTPStatusError as exc:
-                raise HttpRequestError(f"GET failed: {url}: HTTP {response.status_code}") from exc
+                raise HttpRequestError(
+                    f"GET failed: {url}: HTTP {response.status_code}",
+                    status_code=response.status_code,
+                    api_error_reason=self._json_api_error_reason(response),
+                ) from exc
             return response
         raise HttpRequestError(f"GET failed after retries: {url}: {last_error}") from last_error
+
+    @staticmethod
+    def _json_api_error_reason(response: httpx.Response) -> str | None:
+        """Extract a short machine error reason without logging response HTML."""
+
+        if "json" not in response.headers.get("Content-Type", "").lower():
+            return None
+        try:
+            payload = response.json()
+        except ValueError:
+            return None
+        if not isinstance(payload, dict):
+            return None
+        error = payload.get("error")
+        if not isinstance(error, dict):
+            return None
+        errors = error.get("errors")
+        if isinstance(errors, list):
+            for item in errors:
+                if isinstance(item, dict) and isinstance(item.get("reason"), str):
+                    return item["reason"][:80]
+        status = error.get("status")
+        return status[:80] if isinstance(status, str) else None
 
     @staticmethod
     def _retry_delay(response: httpx.Response, attempt: int) -> float:

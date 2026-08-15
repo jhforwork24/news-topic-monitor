@@ -18,6 +18,10 @@ class StructureChangedError(ValueError):
     pass
 
 
+class SourceConfigurationError(RuntimeError):
+    """Required source configuration is absent or invalid."""
+
+
 def local_name(tag: str) -> str:
     return tag.rsplit("}", 1)[-1].lower()
 
@@ -203,6 +207,7 @@ class SourceAdapter(ABC):
     allowed_article_hosts: frozenset[str]
     media_group: str = "general"
     supports_opinion_scan: bool = False
+    fetch_candidate_bodies: bool = True
 
     @abstractmethod
     def initial_discovery_urls(self, start: datetime, end: datetime) -> list[str]:
@@ -221,6 +226,15 @@ class SourceAdapter(ABC):
 
     def validate_article_url(self, url: str) -> bool:
         return urlsplit(url).hostname in self.allowed_article_hosts
+
+    def discovery_headers(self, url: str) -> dict[str, str]:
+        """Return narrowly scoped headers for a discovery request.
+
+        Adapters must not put credentials in discovery URLs. SafeHttpClient removes
+        these headers if a request redirects to a different origin.
+        """
+
+        return {}
 
 
 def decode_script_json_assignment(script: str, marker: str) -> dict[str, object]:

@@ -49,7 +49,7 @@ def generate_report(
     latest_sources = health.get("sources", {}) if isinstance(health, dict) else {}
     for source in SOURCE_LABELS:
         latest = latest_sources.get(source, {}) if isinstance(latest_sources, dict) else {}
-        status = "성공" if latest.get("success") else "실패 또는 미확인"
+        status = _discovery_status_label(latest)
         errors = latest.get("errors") or []
         if errors:
             status += f" — {str(errors[0])[:120]}"
@@ -128,3 +128,18 @@ def _load_health(path: Path) -> dict[str, object]:
         return value if isinstance(value, dict) else {}
     except (OSError, json.JSONDecodeError):
         return {}
+
+
+def _discovery_status_label(latest: dict[str, object]) -> str:
+    status = latest.get("discovery_status")
+    labels = {
+        "complete": "완전 확인",
+        "partial": "부분 확인",
+        "configuration_missing": "설정 누락",
+        "quota_exceeded": "API 할당량 소진",
+        "unavailable": "확인 불능",
+        "pending": "미실행",
+    }
+    if isinstance(status, str) and status in labels:
+        return labels[status]
+    return "성공" if latest.get("success") else "실패 또는 미확인"

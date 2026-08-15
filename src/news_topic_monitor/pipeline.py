@@ -6,7 +6,12 @@ from urllib.parse import urlsplit
 
 from pydantic import ValidationError
 
-from .adapters.base import SourceAdapter, StructureChangedError, metadata_from_html
+from .adapters.base import (
+    SourceAdapter,
+    SourceConfigurationError,
+    StructureChangedError,
+    metadata_from_html,
+)
 from .classifier import RuleClassifier
 from .http import HttpRequestError, RobotsDeniedError, RobotsUnavailableError, SafeHttpClient
 from .models import (
@@ -15,6 +20,7 @@ from .models import (
     BodyStatus,
     Classification,
     ClassificationResult,
+    DiscoveryStatus,
     RunHealth,
     SourceHealth,
     StoreResult,
@@ -59,14 +65,24 @@ class Collector:
             sources[adapter.source] = health
             try:
                 self._run_source(adapter, start, end, health)
+            except SourceConfigurationError as exc:
+                LOGGER.warning("source %s is not configured: %s", adapter.source, exc)
+                health.errors.append(short_error(exc) or "source configuration is missing")
+                health.discovery_status = DiscoveryStatus.CONFIGURATION_MISSING
             except Exception as exc:  # source isolation boundary
                 LOGGER.exception("source %s failed", adapter.source)
                 health.errors.append(short_error(exc) or "unknown error")
+                health.discovery_status = _failure_status(exc)
             finally:
+                if health.success:
+                    health.discovery_status = (
+                        DiscoveryStatus.PARTIAL if health.errors else DiscoveryStatus.COMPLETE
+                    )
                 health.finished_at = datetime.now(UTC)
                 state_values = {
                     "last_run_at": utc_iso(health.finished_at),
                     "success": health.success,
+                    "discovery_status": health.discovery_status.value,
                     "discovered": health.discovered,
                     "errors": health.errors,
                 }
@@ -109,9 +125,16 @@ class Collector:
                 continue
             visited.add(discovery_url)
             try:
-                response = self.http.get(discovery_url, purpose="discovery")
+                response = self.http.get(
+                    discovery_url,
+                    purpose="discovery",
+                    headers=adapter.discovery_headers(discovery_url),
+                )
                 page = adapter.parse_discovery(response.content, str(response.url))
                 successful_pages += 1
+                health.removed += self.storage.delete_by_source_article_ids(
+                    adapter.source, page.removed_article_ids
+                )
                 for article in page.articles:
                     try:
                         article.canonical_url = normalize_url(article.canonical_url)
@@ -164,9 +187,12 @@ class Collector:
         health.errors.extend(page_errors)
         health.discovered = len(discoveries)
         for discovery in discoveries.values():
-            if not in_window(discovery.published_at, start, end):
+            if not discovery.refresh_only and not in_window(discovery.published_at, start, end):
                 continue
-            health.in_window += 1
+            if discovery.refresh_only:
+                health.refreshed += 1
+            else:
+                health.in_window += 1
             self._process_article(adapter, discovery, health)
         health.success = True
 
@@ -180,12 +206,16 @@ class Collector:
             section=discovery.section,
         )
         result = first
-        body_status = BodyStatus.SKIPPED_IRRELEVANT
+        body_status = (
+            BodyStatus.SKIPPED_IRRELEVANT
+            if adapter.fetch_candidate_bodies
+            else BodyStatus.NOT_REQUESTED
+        )
         verification = VerificationStatus.METADATA_ONLY
         body_digest: str | None = None
         error: str | None = None
 
-        if first.candidate:
+        if first.candidate and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")
                 html_text = response.text
@@ -248,6 +278,8 @@ class Collector:
             collection_error=error,
         )
         stored = self.storage.upsert(record)
+        if discovery.refresh_only:
+            return
         if stored == StoreResult.NEW:
             health.new += 1
         elif stored == StoreResult.UPDATED:
@@ -300,3 +332,10 @@ def _monitor_summary(result: ClassificationResult) -> str:
     return (
         f"장애인권 관련 명시적 의제가 확인되지 않아 {result.classification.value}로 분류된 기사다."
     )
+
+
+def _failure_status(exc: Exception) -> DiscoveryStatus:
+    text = str(exc).lower()
+    if "quotaexceeded" in text or "quota exceeded" in text:
+        return DiscoveryStatus.QUOTA_EXCEEDED
+    return DiscoveryStatus.UNAVAILABLE

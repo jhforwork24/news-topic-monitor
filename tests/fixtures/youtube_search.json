@@ -1,0 +1,23 @@
+{
+  "nextPageToken": "SEARCH_NEXT",
+  "items": [
+    {
+      "id": {"videoId": "abc123XYZ01"},
+      "snippet": {
+        "channelId": "UCF4Wxdo3inmxP-Y59wXDsFw",
+        "title": "장애인 이동권 관련 MBC 보도",
+        "description": "장애인 이동권 관련 공개 영상 설명",
+        "publishedAt": "2026-08-15T01:00:00Z"
+      }
+    },
+    {
+      "id": {"videoId": "foreign00001"},
+      "snippet": {
+        "channelId": "not-the-official-channel",
+        "title": "다른 채널 영상",
+        "description": "제외 대상",
+        "publishedAt": "2026-08-15T01:00:00Z"
+      }
+    }
+  ]
+}
