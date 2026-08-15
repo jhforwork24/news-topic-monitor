@@ -9,6 +9,7 @@ from .kbs import KbsAdapter
 from .khan import KhanAdapter
 from .labortoday import LabortodayAdapter
 from .mbc import MbcAdapter
+from .mediaus import MediausAdapter
 from .newscham import NewschamAdapter
 from .ohmynews import OhmynewsAdapter
 from .pressian import PressianAdapter
@@ -25,6 +26,7 @@ ALL_ADAPTERS = (
     PressianAdapter,
     NewschamAdapter,
     LabortodayAdapter,
+    MediausAdapter,
     BeminorAdapter,
     AblenewsAdapter,
     TheindigoAdapter,
@@ -47,6 +49,7 @@ __all__ = [
     "KhanAdapter",
     "LabortodayAdapter",
     "MbcAdapter",
+    "MediausAdapter",
     "NewschamAdapter",
     "OhmynewsAdapter",
     "PressianAdapter",

@@ -1,6 +1,6 @@
 # KCIL News Topic Monitor
 
-12개 인쇄·디지털 매체와 KBS·MBC·SBS·JTBC의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록,
+13개 인쇄·디지털 매체와 KBS·MBC·SBS·JTBC의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록,
 MBCNEWS 공식 YouTube 채널 API를 주기적으로 확인하고, 발견 기사·영상 메타데이터를 중복 없이
 기록한 뒤 장애인권과
 노동·돌봄·빈곤 의제를 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를 켜 두거나
@@ -35,6 +35,7 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 프레시안 | 공식 최신뉴스 RSS API | `.article_body` |
 | 참세상 | robots.txt 확인 실패로 안전 중단 | 요청하지 않음 |
 | 매일노동뉴스 | news sitemap | `#article-view-content-div` |
+| 미디어스 | 공식 sitemap | `#article-view-content-div` |
 | 비마이너 | news sitemap | `#article-view-content-div` |
 | 에이블뉴스 | news sitemap | `#article-view-content-div` |
 | 더인디고 | 본문을 제외한 공식 WordPress posts API | `.td-post-content` |
@@ -118,7 +119,8 @@ news-topic-monitor report \
 - `.github/workflows/report.yml`: `10 0 * * *`(UTC), 매일 09:10 KST에 전날 09:00부터
   당일 09:00 KST까지 보고
 - `.github/workflows/publish-notion.yml`: `25 0 * * *`(UTC), 매일 09:25 KST에 브리핑을
-  멱등 발행. IV절은 선정 칼럼이 있을 때만 생성하며, 관리 표식이 없는 기존 페이지는 덮어쓰지 않음
+  버전 발행. 같은 날짜의 브리핑이 있으면 내용이 같더라도 기존 페이지를 수정하지 않고
+  가장 높은 `vN`의 다음 버전을 새 페이지로 생성함. IV절은 선정 칼럼이 있을 때만 생성함
 - `.github/workflows/ci.yml`: push·PR에서 오프라인 pytest와 ruff 실행
 
 세 데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
@@ -144,7 +146,7 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `HANI_MAX_PAGES` | 아니오 | `50` | 한겨레 최신기사 최대 순회 페이지 |
 | `YOUTUBE_API_KEY` | MBC 확인 시 | 없음 | YouTube Data API 키. GitHub Actions repository secret으로만 저장 |
 | `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
-| `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 실패 보고사항 data source UUID |
+| `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 편집·분류·출처 점검 및 발행 실패 보고사항 data source UUID |
 | `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
 | `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
 
@@ -195,11 +197,16 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
 
 브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스다. IV절
-주요 칼럼은 실제 선정 칼럼이 있을 때만 생성한다. 0건이면 절 제목·빈 절 설명·총평과 텔레그램
-요약의 0건 문구까지 모두 생략한다. 장애 관련 칼럼은 7개 종합매체에서 전수선별하고, I~III 최종 이슈와 직접
-연결되는 칼럼은 12개 인쇄·디지털 매체에서 제목 핵심어를 역검색한다. 장애언론에서 확인된
-장애 관련 칼럼도 IV절에 포함한다. 각 의제에는 기사 링크, 짧은 자체 평가, 참고자료 toggle과
-해당하는 경우 CRPD 참조표 링크가 붙는다.
+주요 칼럼은 한겨레 `세계의 창` 지제크, 미디어스 김민하, 경향신문 `고병권의 묵묵`을 주제와
+관계없이 선정하고, 그 밖에는 조선·중앙·동아·한겨레·경향·오마이뉴스·프레시안의 장애 관련
+칼럼만 다룬다. 선정 결과가 없으면 설명 없이 IV절 전체를 생략한다.
+
+각 의제는 `주요 언론 보도 표 → 기사 요약 → 보도 논조 → (해당할 때) 이전 보도 참고 →
+추가 자료·더 알아보기`로 구성한다. 추가 자료는 `국제 규범·현행 제도·참고 연구·문서·관련 단체
+입장·이전 주요 핵심 기사`의 3열 표로 표시한다. CRPD 조문 전문은 KDF, 일반논평은
+국가인권위원회 색인표의 직접 링크를 사용하고 둘 다 `국제 규범`으로 분류한다. 기술적 설명,
+선정·제외 사유, 출처 장애 정보는 브리핑에 넣지 않고 따로 연결된 보고사항 data source에
+기록한다.
 
 날짜·시간 필드는 UTC ISO 8601로 직렬화하고 화면 보고서만 KST로 표시한다. 파일 분할 날짜는
 기사 발행시각의 KST 날짜를 쓴다. canonical URL을 최우선 중복키로 사용하며, URL이 없을 때는

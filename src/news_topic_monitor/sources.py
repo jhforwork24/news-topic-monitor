@@ -10,6 +10,7 @@ SOURCE_LABELS = {
     "pressian": "프레시안",
     "newscham": "참세상",
     "labortoday": "매일노동뉴스",
+    "mediaus": "미디어스",
     "beminor": "비마이너",
     "ablenews": "에이블뉴스",
     "theindigo": "더인디고",
@@ -23,9 +24,13 @@ PRIMARY_COMPARISON_SOURCES = frozenset(
     {"chosun", "joongang", "donga", "hani", "khan", "ohmynews", "pressian"}
 )
 LABOR_ALTERNATIVE_SOURCES = frozenset({"newscham", "labortoday"})
+DESIGNATED_COLUMN_SOURCES = frozenset({"mediaus"})
 DISABILITY_PRESS_SOURCES = frozenset({"beminor", "ablenews", "theindigo"})
 BROADCAST_SOURCES = frozenset({"kbs", "mbc", "sbs", "jtbc"})
 PRINT_DIGITAL_SOURCES = frozenset(
-    PRIMARY_COMPARISON_SOURCES | LABOR_ALTERNATIVE_SOURCES | DISABILITY_PRESS_SOURCES
+    PRIMARY_COMPARISON_SOURCES
+    | LABOR_ALTERNATIVE_SOURCES
+    | DISABILITY_PRESS_SOURCES
+    | DESIGNATED_COLUMN_SOURCES
 )
 OPINION_FULL_SCAN_SOURCES = PRIMARY_COMPARISON_SOURCES

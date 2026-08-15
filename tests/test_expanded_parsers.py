@@ -12,6 +12,7 @@ from news_topic_monitor.adapters.kbs import KbsAdapter
 from news_topic_monitor.adapters.khan import KhanAdapter
 from news_topic_monitor.adapters.labortoday import LabortodayAdapter
 from news_topic_monitor.adapters.mbc import MbcAdapter
+from news_topic_monitor.adapters.mediaus import MediausAdapter
 from news_topic_monitor.adapters.newscham import NewschamAdapter
 from news_topic_monitor.adapters.ohmynews import OhmynewsAdapter
 from news_topic_monitor.adapters.pressian import PressianAdapter
@@ -40,6 +41,11 @@ from news_topic_monitor.adapters.theindigo import TheindigoAdapter
         (
             LabortodayAdapter(),
             "https://www.labortoday.co.kr/news/articleView.html?idxno=236263",
+            "generic_news_sitemap.xml",
+        ),
+        (
+            MediausAdapter(),
+            "https://www.mediaus.co.kr/news/articleView.html?idxno=317842",
             "generic_news_sitemap.xml",
         ),
         (
@@ -128,6 +134,7 @@ def test_theindigo_empty_window_is_successful_empty_discovery() -> None:
         (OhmynewsAdapter(), "itemprop='articleBody'"),
         (PressianAdapter(), "article_body"),
         (LabortodayAdapter(), "article-view-content-div"),
+        (MediausAdapter(), "article-view-content-div"),
         (BeminorAdapter(), "article-view-content-div"),
         (AblenewsAdapter(), "article-view-content-div"),
         (TheindigoAdapter(), "td-post-content"),

@@ -15,6 +15,7 @@
 | 프레시안 | `/api/v3/site/rss/news` | 허용·URL 발견 | `.article_body` |
 | 참세상 | 공식 origin | robots.txt HTTP 404, 전체 요청 안전 중단 | 요청하지 않음 |
 | 매일노동뉴스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
+| 미디어스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
 | 비마이너 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
 | 에이블뉴스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
 | 더인디고 | `/wp-json/wp/v2/posts` metadata fields | 허용·URL 발견 | `.td-post-content` |
@@ -23,8 +24,10 @@
 | SBS | `/news/sitemapRSS.do` | 허용·URL 발견 | `[itemprop='articleBody']` |
 | JTBC | `/sitemaps/latest-articles` | 허용·URL 발견 | 서버 본문 구조 미확인, 메타데이터만 |
 
-2026-08-15 live smoke 결과는 `16 passed`(75.94초)였다. MBC는 금지 판정, 참세상은 robots
-확인 실패 중단, JTBC는 본문 미추정이 각각 기대 성공 조건이었다.
+2026-08-15 기존 16개 출처 live smoke 결과는 `16 passed`(75.94초)였다. MBC는 금지 판정,
+참세상은 robots 확인 실패 중단, JTBC는 본문 미추정이 각각 기대 성공 조건이었다. 미디어스는
+이후 보완 출처로 추가하고 공식 sitemap, robots 허용, 실제 기사의 본문 선택자를 별도로
+확인했다.
 
 ## MBC 공식 YouTube 보완 경로
 

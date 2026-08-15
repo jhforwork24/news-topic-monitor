@@ -83,12 +83,13 @@
 1. `NOTION_PUBLISH_ENABLED`, `NOTION_DATA_SOURCE_ID`, `NOTION_TOKEN`의 등록 위치를 확인한다.
    토큰 값은 로그에 출력하지 않는다.
 2. 내부 통합이 대상 브리핑 data source와 보고사항 data source에 연결되어 있는지 확인한다.
-3. `health/notion/latest.json`의 `configuration_error`, `failed`, `created`, `updated` 상태를 본다.
-4. exact title/date 페이지가 있으나 관리 표식이 없다는 오류이면 그 페이지를 삭제·덮어쓰지 않는다.
-   제목을 구분하거나 사람이 명시적으로 이전해야 한다.
+3. `health/notion/latest.json`의 `configuration_error`, `failed`, `created` 상태와 `version`을 본다.
+4. 같은 날짜에 여러 페이지가 있다면 제목의 가장 높은 `vN`보다 1 높은 새 페이지가 생성됐는지
+   확인한다. 이전 버전의 block은 수정·삭제하지 않는다.
 5. API 버전·속성명이 바뀌면 공식 Notion API 문서와 실제 data source schema를 먼저 확인하고
    MockTransport 시험을 갱신한다.
 6. 발행 실패는 수집 데이터 실패가 아니다. `reports/briefings/` Markdown을 보존한 채 수동 재실행한다.
+   재실행이 성공하면 기존 페이지 갱신이 아니라 다음 버전이 생성되는 것이 정상이다.
 
 ## 오탐·누락 조정
 

@@ -66,7 +66,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_report_window_arguments(briefing)
 
-    publish = subparsers.add_parser("publish-notion", help="publish a managed briefing to Notion")
+    publish = subparsers.add_parser("publish-notion", help="publish a versioned briefing to Notion")
     _add_report_window_arguments(publish)
     publish.add_argument(
         "--dry-run", action="store_true", help="render the briefing without calling Notion"
@@ -166,6 +166,7 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
         with NotionPublisher(settings) as publisher:
             try:
                 result = publisher.publish(document)
+                publisher.record_report(document, result)
             except Exception as exc:
                 try:
                     report_url = publisher.record_failure(date_value.isoformat(), str(exc))
@@ -185,6 +186,8 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
             report_date=date_value.isoformat(),
             status=result.status,
             page_url=result.page_url,
+            fingerprint=result.fingerprint,
+            version=result.version,
         )
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
         return 0

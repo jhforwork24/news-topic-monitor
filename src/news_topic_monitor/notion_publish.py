@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 import os
+import re
 import time
 from dataclasses import dataclass
 from datetime import datetime
@@ -9,13 +11,13 @@ from typing import Any
 
 import httpx
 
-from .briefing import BriefingDocument, BriefingIssue
+from .briefing import BriefingDocument, BriefingIssue, render_briefing_markdown
 from .sources import SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import kst_display, short_error, short_text
 
 NOTION_VERSION = "2026-03-11"
-MANAGED_MARKER = "KCILNewsMonitor managed publication"
+BRIEFING_TITLE_FRAGMENT = "일간 장애정책·노동 뉴스 브리핑"
 
 
 class NotionConfigurationError(ValueError):
@@ -60,6 +62,8 @@ class NotionPublishResult:
     page_id: str
     page_url: str | None
     created: bool
+    version: int
+    fingerprint: str
 
 
 class NotionPublisher:
@@ -94,39 +98,33 @@ class NotionPublisher:
         if self._owns_client:
             self.client.close()
 
-    def publish(self, document: BriefingDocument) -> NotionPublishResult:
-        title = f"GitHub 자동발행 · 일간 장애정책·노동 뉴스 브리핑 ({document.report_date})"
-        matches = self._query_existing(title, document.report_date)
-        if len(matches) > 1:
-            raise NotionApiError("multiple exact-title managed page candidates found")
+    def publish(
+        self,
+        document: BriefingDocument,
+    ) -> NotionPublishResult:
+        fingerprint = briefing_fingerprint(document)
+        dated_pages = self._query_date(self.settings.data_source_id, document.report_date)
+        briefing_pages = [
+            page for page in dated_pages if BRIEFING_TITLE_FRAGMENT in _page_title(page)
+        ]
+        version = (
+            max((_briefing_version(_page_title(page)) for page in briefing_pages), default=0) + 1
+        )
+        title = f"GitHub 자동발행 v{version} · {BRIEFING_TITLE_FRAGMENT} ({document.report_date})"
         properties = _page_properties(title, document)
-        created = not matches
-        if matches:
-            page = matches[0]
-            page_id = str(page["id"])
-            blocks = self._list_children(page_id)
-            if not _has_managed_marker(blocks):
-                raise NotionApiError(
-                    "matching page is not marked as KCILNewsMonitor-managed; refusing overwrite"
-                )
-            self._request("PATCH", f"/pages/{page_id}", json={"properties": properties})
-            for block in blocks:
-                self._request("PATCH", f"/blocks/{block['id']}", json={"in_trash": True})
-            page_url = page.get("url")
-        else:
-            page = self._request(
-                "POST",
-                "/pages",
-                json={
-                    "parent": {
-                        "type": "data_source_id",
-                        "data_source_id": self.settings.data_source_id,
-                    },
-                    "properties": properties,
+        page = self._request(
+            "POST",
+            "/pages",
+            json={
+                "parent": {
+                    "type": "data_source_id",
+                    "data_source_id": self.settings.data_source_id,
                 },
-            )
-            page_id = str(page["id"])
-            page_url = page.get("url")
+                "properties": properties,
+            },
+        )
+        page_id = str(page["id"])
+        page_url = page.get("url")
         blocks = notion_blocks(document, crpd_url=self.settings.crpd_reference_url)
         for start in range(0, len(blocks), 100):
             self._request(
@@ -135,11 +133,55 @@ class NotionPublisher:
                 json={"children": blocks[start : start + 100]},
             )
         return NotionPublishResult(
-            status="created" if created else "updated",
+            status="created",
             page_id=page_id,
             page_url=str(page_url) if page_url else None,
-            created=created,
+            created=True,
+            version=version,
+            fingerprint=fingerprint,
         )
+
+    def record_report(self, document: BriefingDocument, result: NotionPublishResult) -> str | None:
+        if not self.settings.reports_data_source_id:
+            return None
+        title = f"GitHub 브리핑 보고사항 v{result.version} ({document.report_date})"
+        matches = self._query_exact(
+            self.settings.reports_data_source_id, title, document.report_date
+        )
+        if matches:
+            page_url = matches[0].get("url")
+            return str(page_url) if page_url else None
+        children = [
+            _paragraph(
+                f"자동 발행 브리핑 v{result.version}",
+                href=result.page_url,
+            ),
+            _heading("편집·분류 기록", 2),
+        ]
+        children.extend(
+            _bullet(note) for note in (document.editorial_notes or ["별도 제외·이동 기록 없음"])
+        )
+        children.append(_heading("출처 점검", 2))
+        children.extend(
+            _bullet(failure)
+            for failure in (document.source_failures or ["최근 수집 health에 실패 출처 없음"])
+        )
+        page = self._request(
+            "POST",
+            "/pages",
+            json={
+                "parent": {
+                    "type": "data_source_id",
+                    "data_source_id": self.settings.reports_data_source_id,
+                },
+                "properties": {
+                    "이름": {"title": [_rich_text(title)]},
+                    "날짜": {"date": {"start": document.report_date}},
+                },
+                "children": children,
+            },
+        )
+        return str(page.get("url")) if page.get("url") else None
 
     def record_failure(self, report_date: str, message: str) -> str | None:
         if not self.settings.reports_data_source_id:
@@ -171,9 +213,6 @@ class NotionPublisher:
         )
         return str(page.get("url")) if page.get("url") else None
 
-    def _query_existing(self, title: str, report_date: str) -> list[dict[str, Any]]:
-        return self._query_exact(self.settings.data_source_id, title, report_date)
-
     def _query_exact(
         self, data_source_id: str, title: str, report_date: str
     ) -> list[dict[str, Any]]:
@@ -192,6 +231,28 @@ class NotionPublisher:
         )
         results = payload.get("results", [])
         return [item for item in results if isinstance(item, dict)]
+
+    def _query_date(self, data_source_id: str, report_date: str) -> list[dict[str, Any]]:
+        results: list[dict[str, Any]] = []
+        cursor: str | None = None
+        while True:
+            body: dict[str, Any] = {
+                "filter": {"property": "날짜", "date": {"equals": report_date}},
+                "page_size": 100,
+            }
+            if cursor:
+                body["start_cursor"] = cursor
+            payload = self._request(
+                "POST",
+                f"/data_sources/{data_source_id}/query",
+                json=body,
+            )
+            results.extend(item for item in payload.get("results", []) if isinstance(item, dict))
+            if not payload.get("has_more"):
+                return results
+            cursor = payload.get("next_cursor")
+            if not cursor:
+                raise NotionApiError("Notion pagination reported has_more without next_cursor")
 
     def _list_children(self, block_id: str) -> list[dict[str, Any]]:
         results: list[dict[str, Any]] = []
@@ -248,40 +309,14 @@ class NotionPublisher:
 
 
 def notion_blocks(document: BriefingDocument, *, crpd_url: str | None) -> list[dict[str, Any]]:
-    blocks: list[dict[str, Any]] = [
-        _paragraph(document.overview),
-        {
-            "object": "block",
-            "type": "callout",
-            "callout": {
-                "icon": {"type": "emoji", "emoji": "🤖"},
-                "rich_text": [_rich_text(MANAGED_MARKER)],
-            },
-        },
-    ]
+    del crpd_url
+    blocks: list[dict[str, Any]] = [_paragraph(document.overview)]
     for section in document.sections:
-        blocks.append(_heading(section.title, 1))
-        if not section.issues:
-            blocks.append(
-                _paragraph(
-                    "공개 발견 경로와 현재 판별 규칙에서 선정된 기사가 없다. "
-                    "수집 실패를 기사 부재로 해석해서는 안 된다."
-                )
-            )
+        if section.title == "IV. 주요 칼럼" and not section.issues:
             continue
+        blocks.append(_heading(section.title, 1))
         for index, issue in enumerate(section.issues, start=1):
-            blocks.extend(_issue_blocks(index, issue, crpd_url=crpd_url))
-    blocks.extend([_heading("점검", 1)])
-    if document.source_failures:
-        blocks.append(
-            _paragraph("다음 출처는 실패·차단 상태이므로 해당 매체의 기사 부재를 뜻하지 않는다.")
-        )
-        blocks.extend(_bullet(failure) for failure in document.source_failures)
-    else:
-        blocks.append(_paragraph("최근 건강상태에서 출처별 실패가 기록되지 않았다."))
-    blocks.append(
-        _paragraph("본문 원문은 저장하지 않았으며 제목·URL·공개 요약·판정 근거만 사용하였다.")
-    )
+            blocks.extend(_issue_blocks(index, issue))
     return blocks
 
 
@@ -293,6 +328,8 @@ def write_notion_health(
     page_url: str | None = None,
     error: str | None = None,
     include_page_url: bool = False,
+    fingerprint: str | None = None,
+    version: int | None = None,
 ) -> None:
     JsonlStorage.atomic_write_json(
         root / "health" / "notion" / "latest.json",
@@ -304,13 +341,13 @@ def write_notion_health(
             # while the target Notion database is private.
             "page_url": page_url if include_page_url else None,
             "error": short_error(error),
+            "fingerprint": fingerprint,
+            "version": version,
         },
     )
 
 
-def _issue_blocks(
-    index: int, issue: BriefingIssue, *, crpd_url: str | None
-) -> list[dict[str, Any]]:
+def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
     rows = [_table_row([[_rich_text("언론사")], [_rich_text("기사")], [_rich_text("발행")]])]
     for article in issue.articles:
         rows.append(
@@ -322,11 +359,7 @@ def _issue_blocks(
                 ]
             )
         )
-    references = [_bullet(reference) for reference in issue.references]
-    if issue.crpd_articles:
-        label = "CRPD 조문별 통합참조표: " + ", ".join(issue.crpd_articles)
-        references.append(_bullet(label, href=crpd_url))
-    return [
+    blocks = [
         _heading(f"{index}. {issue.title}", 2),
         _heading("주요 언론 보도", 3),
         {
@@ -339,21 +372,71 @@ def _issue_blocks(
                 "children": rows,
             },
         },
-        _heading("오늘의 변화", 3),
-        _paragraph(issue.assessment),
+        _heading("기사 요약", 3),
+        _paragraph(issue.summary),
+        _heading("보도 논조", 3),
+        _paragraph(issue.tone_analysis),
+    ]
+    if issue.previous_coverage:
+        previous_rows = [
+            _table_row(
+                [[_rich_text("시점")], [_rich_text("비교 자료")], [_rich_text("주요 내용·비교점")]]
+            )
+        ]
+        for item in issue.previous_coverage:
+            previous_rows.append(
+                _table_row(
+                    [
+                        [_rich_text(item.published)],
+                        [_rich_text(item.label, href=item.url)],
+                        [_rich_text(item.comparison)],
+                    ]
+                )
+            )
+        blocks.extend(
+            [
+                _heading("이전 보도 참고", 3),
+                _table(previous_rows, width=3),
+            ]
+        )
+    reference_rows = [
+        _table_row([[_rich_text("범주")], [_rich_text("자료")], [_rich_text("확인 쟁점")]])
+    ]
+    for reference in issue.references:
+        reference_rows.append(
+            _table_row(
+                [
+                    [_rich_text(reference.category)],
+                    [_rich_text(reference.label, href=reference.url)],
+                    [_rich_text(reference.note)],
+                ]
+            )
+        )
+    if not issue.references:
+        reference_rows.append(
+            _table_row(
+                [
+                    [_rich_text("참고 자료")],
+                    [_rich_text("확인된 추가 자료 없음")],
+                    [_rich_text("후속 조사 필요")],
+                ]
+            )
+        )
+    blocks.append(
         {
             "object": "block",
             "type": "toggle",
             "toggle": {
-                "rich_text": [_rich_text("추가 자료 · 더 찾아보기")],
-                "children": references or [_paragraph("추가 자료 없음")],
+                "rich_text": [_rich_text("추가 자료 · 더 알아보기")],
+                "children": [_table(reference_rows, width=3)],
             },
-        },
-    ]
+        }
+    )
+    return blocks
 
 
 def _page_properties(title: str, document: BriefingDocument) -> dict[str, Any]:
-    summary = short_text(document.overview, 1000) or ""
+    summary = short_text(document.telegram_summary, 1000) or ""
     return {
         "이름": {"title": [_rich_text(title)]},
         "날짜": {"date": {"start": document.report_date}},
@@ -363,21 +446,6 @@ def _page_properties(title: str, document: BriefingDocument) -> dict[str, Any]:
     }
 
 
-def _has_managed_marker(blocks: list[dict[str, Any]]) -> bool:
-    if not blocks:
-        return False
-    for block in blocks[:3]:
-        body = block.get(block.get("type", ""), {})
-        rich = body.get("rich_text", []) if isinstance(body, dict) else []
-        if any(
-            MANAGED_MARKER in str(item.get("plain_text", item.get("text", {}).get("content", "")))
-            for item in rich
-            if isinstance(item, dict)
-        ):
-            return True
-    return False
-
-
 def _rich_text(content: str, href: str | None = None) -> dict[str, Any]:
     text: dict[str, Any] = {"content": content[:2000]}
     if href:
@@ -385,11 +453,11 @@ def _rich_text(content: str, href: str | None = None) -> dict[str, Any]:
     return {"type": "text", "text": text, "annotations": {}}
 
 
-def _paragraph(content: str) -> dict[str, Any]:
+def _paragraph(content: str, *, href: str | None = None) -> dict[str, Any]:
     return {
         "object": "block",
         "type": "paragraph",
-        "paragraph": {"rich_text": [_rich_text(content)]},
+        "paragraph": {"rich_text": [_rich_text(content, href=href)]},
     }
 
 
@@ -412,6 +480,38 @@ def _bullet(content: str, *, href: str | None = None) -> dict[str, Any]:
 
 def _table_row(cells: list[list[dict[str, Any]]]) -> dict[str, Any]:
     return {"object": "block", "type": "table_row", "table_row": {"cells": cells}}
+
+
+def _table(rows: list[dict[str, Any]], *, width: int) -> dict[str, Any]:
+    return {
+        "object": "block",
+        "type": "table",
+        "table": {
+            "table_width": width,
+            "has_column_header": True,
+            "has_row_header": False,
+            "children": rows,
+        },
+    }
+
+
+def briefing_fingerprint(document: BriefingDocument) -> str:
+    payload = render_briefing_markdown(document, crpd_url=None).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _page_title(page: dict[str, Any]) -> str:
+    title_items = page.get("properties", {}).get("이름", {}).get("title", [])
+    return "".join(
+        str(item.get("plain_text") or item.get("text", {}).get("content", ""))
+        for item in title_items
+        if isinstance(item, dict)
+    )
+
+
+def _briefing_version(title: str) -> int:
+    match = re.search(r"\bv(\d+)\b", title, re.IGNORECASE)
+    return int(match.group(1)) if match else 1
 
 
 def _notion_retry_delay(response: httpx.Response, attempt: int) -> float:
