@@ -27,7 +27,10 @@ jobs:
   publish:
     # Keep the deterministic publisher as a fallback, but never create a second
     # briefing when the GPT editorial workflow owns publication.
-    if: ${{ vars.NOTION_PUBLISH_ENABLED == 'true' && vars.OPENAI_EDITOR_ENABLED != 'true' }}
+    if: >-
+      ${{ vars.NOTION_PUBLISH_ENABLED == 'true' &&
+          vars.OPENAI_EDITOR_ENABLED != 'true' &&
+          vars.CHAT_EDITORIAL_ENABLED == 'false' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
