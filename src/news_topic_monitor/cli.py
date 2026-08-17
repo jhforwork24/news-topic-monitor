@@ -323,6 +323,8 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         max_discovery_children=settings.max_discovery_children,
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
+                        capture_body_start=start,
+                        capture_body_limit_per_source=(queue_settings.body_fetch_limit_per_source),
                     ).run(collection_start, end)
                 if health.all_sources_failed:
                     raise EditorialQueueValidationError(
