@@ -160,6 +160,10 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `OPENAI_EDITOR_MAX_CANDIDATES` | 아니오 | `360` | GPT에 전달하는 확인 가능 후보 상한 |
 | `OPENAI_EDITOR_FINAL_CANDIDATES` | 아니오 | `80` | 2차 최종 편집 후보 상한 |
 | `OPENAI_EDITOR_EVIDENCE_CHARS` | 아니오 | `5000` | 후보별 일시 전달 근거 글자 상한 |
+| `CHAT_EDITORIAL_ENABLED` | 아니오 | `true` 취급 | `false`일 때만 기존 자동 발행으로 복귀 |
+| `CHAT_EDITORIAL_MAX_CANDIDATES` | 아니오 | `180` | ChatGPT 예약 작업에 제공할 검증 후보 상한 |
+| `CHAT_EDITORIAL_CHUNK_SIZE` | 아니오 | `24` | Notion 임시 대기열 한 페이지의 후보 수(최대 24) |
+| `CHAT_EDITORIAL_EVIDENCE_CHARS` | 아니오 | `1600` | 후보별 임시 확인 근거 글자 상한(최대 1800) |
 
 `NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
 저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
@@ -189,6 +193,15 @@ GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를
 삭제하며 저장소에는 기존 기사 메타데이터·분류 결과, 완성된 브리핑, 후보 수와 모델명 등 최소
 운영 상태만 남긴다. API 비용은 `최대 360개 1차 판별 + 최대 80개 2차 편집` 상한으로 제어한다.
 
+별도 API 비용 없이 ChatGPT 예약 편집을 사용하는 구성이 기본값이다. 기존 자동 발행으로
+되돌릴 때만 `CHAT_EDITORIAL_ENABLED=false`로 설정한다.
+이 경로는 정확한 발행시각과 본문 확인이 있는 일반 기사 및 충분한 공식 메타데이터가 있는 방송
+후보만 골라 `브리핑 보고사항` 데이터 소스에 날짜별 임시 대기열과 매니페스트를 만든다. 기사
+본문은 저장소에 기록하지 않으며, 같은 날짜의 이전 대기열과 이틀 이상 지난 대기열은 보관
+처리한다. 예약 작업은 [`docs/chat-editorial-instructions.md`](docs/chat-editorial-instructions.md)를
+읽고 현재 날짜의 `READY` 매니페스트만 사용해 이 채팅에 검수용 초안을 보고한다. 이 모드가 켜진
+동안 기존 규칙 기반 노션 발행과 OpenAI API 편집 발행은 중복 발행을 막기 위해 실행하지 않는다.
+
 ## 주제 키워드 수정
 
 `config/topics.yml`의 `topics.disability_rights`와 `topics.labor_care_poverty`에서 핵심어,
@@ -213,6 +226,7 @@ GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를
 - `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·API 갱신·제거·오류 집계
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
 - `health/editorial/latest.json`: GPT 편집 후보·선정 수, 모델과 성공·실패 상태(본문·응답은 기록하지 않음)
+- `health/editorial_queue/latest.json`: ChatGPT 임시 대기열의 후보·묶음 수와 성공·실패 상태
 
 브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스다. IV절
 주요 칼럼은 한겨레 `세계의 창` 지제크, 미디어스 김민하, 경향신문 `고병권의 묵묵`을 주제와

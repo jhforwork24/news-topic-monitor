@@ -24,21 +24,27 @@ from .editorial import (
     EditorialValidationError,
     OpenAIEditorialClient,
     OpenAIEditorialSettings,
+    select_chat_editorial_candidates,
     write_editorial_failure,
     write_editorial_health,
 )
 from .http import SafeHttpClient
+from .models import RunHealth
 from .notion_publish import (
+    EditorialQueueSettings,
+    EditorialQueueValidationError,
+    NotionApiError,
     NotionConfigurationError,
     NotionPublisher,
     NotionPublishSettings,
+    write_editorial_queue_health,
     write_notion_health,
 )
 from .pipeline import Collector
 from .reporting import generate_report
 from .settings import ContactRequiredError, Settings
 from .storage import JsonlStorage
-from .utils import KST, parse_datetime
+from .utils import KST, parse_datetime, short_error
 
 LOGGER = logging.getLogger(__name__)
 YOUTUBE_REFRESH_AFTER = timedelta(days=28)
@@ -103,6 +109,22 @@ def build_parser() -> argparse.ArgumentParser:
     editorial.add_argument(
         "--dry-run", action="store_true", help="run GPT editing without calling Notion"
     )
+
+    queue = subparsers.add_parser(
+        "editorial-queue",
+        help="collect verified evidence and export a temporary queue for ChatGPT",
+    )
+    _add_report_window_arguments(queue)
+    queue.add_argument(
+        "--collect-hours",
+        type=float,
+        default=48.0,
+        help="overlapping evidence collection window before the report boundary",
+    )
+    queue.add_argument("--sources", nargs="*", choices=[adapter.source for adapter in ALL_ADAPTERS])
+    queue.add_argument(
+        "--dry-run", action="store_true", help="validate the queue without calling Notion"
+    )
     return parser
 
 
@@ -124,6 +146,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     if args.command == "editorial-publish":
         return _editorial_publish(args, settings)
+    if args.command == "editorial-queue":
+        return _editorial_queue(args, settings)
     return _collect(args, settings)
 
 
@@ -272,6 +296,109 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
         return 3
 
 
+def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
+    date_value, start, end = _report_window(args)
+    report_date = date_value.isoformat()
+    collection_start = end - timedelta(hours=args.collect_hours)
+    if collection_start >= end:
+        raise SystemExit("collect-hours must be greater than zero")
+
+    storage = JsonlStorage(settings.root)
+    adapters = _build_adapters(settings, storage, set(args.sources or []))
+    try:
+        queue_settings = EditorialQueueSettings.from_env()
+        runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
+        with TemporaryDirectory(
+            prefix="news-topic-chat-editorial-", dir=runner_temp
+        ) as temporary_directory:
+            database_path = Path(temporary_directory) / "candidates.sqlite3"
+            with EditorialEvidenceStore(database_path) as evidence_store:
+                classifier = RuleClassifier(settings.root / "config" / "topics.yml")
+                with SafeHttpClient(settings) as http:
+                    health = Collector(
+                        http=http,
+                        storage=storage,
+                        classifier=classifier,
+                        adapters=adapters,
+                        max_discovery_children=settings.max_discovery_children,
+                        evidence_store=evidence_store,
+                        capture_all_bodies=True,
+                    ).run(collection_start, end)
+                if health.all_sources_failed:
+                    raise EditorialQueueValidationError(
+                        "모든 출처 수집에 실패하여 편집 대기열 생성을 중단함"
+                    )
+                candidates = evidence_store.candidates(start=start, end=end)
+                verified = select_chat_editorial_candidates(
+                    candidates, queue_settings.max_candidates
+                )
+                if not verified:
+                    raise EditorialQueueValidationError(
+                        "정확한 발행시각과 확인 가능한 본문이 있는 편집 후보가 없음"
+                    )
+                if args.dry_run:
+                    write_editorial_queue_health(
+                        settings.root,
+                        report_date=report_date,
+                        status="dry_run",
+                        candidate_count=len(verified),
+                        part_count=(len(verified) + queue_settings.chunk_size - 1)
+                        // queue_settings.chunk_size,
+                    )
+                    print(
+                        json.dumps(
+                            {
+                                "status": "dry_run",
+                                "report_date": report_date,
+                                "candidate_count": len(verified),
+                            },
+                            ensure_ascii=False,
+                            indent=2,
+                        )
+                    )
+                    return 0
+
+                notion_settings = NotionPublishSettings.from_queue_env()
+                with NotionPublisher(notion_settings) as publisher:
+                    result = publisher.publish_editorial_queue(
+                        candidates,
+                        report_date=report_date,
+                        start=start,
+                        end=end,
+                        queue_settings=queue_settings,
+                        source_failures=_run_source_failures(health),
+                    )
+
+        write_editorial_queue_health(
+            settings.root,
+            report_date=report_date,
+            status=result.status,
+            candidate_count=result.candidate_count,
+            part_count=result.part_count,
+        )
+        # The manifest URL is intentionally printed only to the private Actions log.
+        print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
+        return 0
+    except NotionConfigurationError as exc:
+        LOGGER.error("%s", exc)
+        write_editorial_queue_health(
+            settings.root,
+            report_date=report_date,
+            status="configuration_error",
+            error=str(exc),
+        )
+        return 2
+    except (NotionApiError, EditorialQueueValidationError) as exc:
+        LOGGER.error("%s", exc)
+        write_editorial_queue_health(
+            settings.root,
+            report_date=report_date,
+            status="failed",
+            error=str(exc),
+        )
+        return 3
+
+
 def _build_adapters(
     settings: Settings,
     storage: JsonlStorage,
@@ -291,6 +418,16 @@ def _build_adapters(
         else:
             adapters.append(adapter_type())
     return adapters
+
+
+def _run_source_failures(health: RunHealth) -> list[str]:
+    failures: list[str] = []
+    for source, detail in health.sources.items():
+        if detail.success:
+            continue
+        message = detail.errors[0] if detail.errors else detail.discovery_status.value
+        failures.append(f"{source}: {short_error(message) or '확인 실패'}")
+    return failures
 
 
 def _publish_to_notion(document: BriefingDocument, root: Path) -> int:

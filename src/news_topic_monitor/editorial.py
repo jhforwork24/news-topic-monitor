@@ -21,7 +21,9 @@ from .models import (
     EditorialPlan,
     EditorialSection,
     EditorialVerdict,
+    VerificationStatus,
 )
+from .sources import BROADCAST_SOURCES
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
 
@@ -83,6 +85,30 @@ class EditorialRun:
     candidates: list[EditorialCandidate]
     assessments: list[EditorialAssessment]
     plan: EditorialPlan
+
+
+def select_chat_editorial_candidates(
+    candidates: Iterable[EditorialCandidate], limit: int
+) -> list[EditorialCandidate]:
+    """Return date-verified candidates suitable for a connected ChatGPT task.
+
+    Print and digital articles must have a successfully extracted body. Broadcast
+    candidates may use the broadcaster's official metadata when it contains enough
+    evidence because video pages do not expose an article body in the same form.
+    """
+
+    eligible: list[EditorialCandidate] = []
+    for candidate in candidates:
+        if candidate.published_at is None or not candidate.selectable:
+            continue
+        body_verified = candidate.verification_status == VerificationStatus.BODY_VERIFIED
+        broadcast_metadata = (
+            candidate.source in BROADCAST_SOURCES
+            and len((candidate.summary or candidate.evidence_text).strip()) >= 80
+        )
+        if body_verified or broadcast_metadata:
+            eligible.append(candidate)
+    return _balanced_candidates(eligible, limit)
 
 
 def article_candidate_id(article: ArticleRecord) -> str:

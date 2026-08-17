@@ -1,8 +1,13 @@
-name: GPT editorial daily briefing
+name: Export ChatGPT editorial queue
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/editorial-queue.yml"
   schedule:
-    # 09:35 Asia/Seoul = 00:35 UTC, after the daily backfill and report jobs.
+    # 09:35 Asia/Seoul = 00:35 UTC, after backfill and the daily report.
     - cron: "35 0 * * *"
   workflow_dispatch:
     inputs:
@@ -20,7 +25,7 @@ on:
         required: false
         default: "48"
       dry_run:
-        description: "Run collection and GPT editing without calling Notion"
+        description: "Validate candidates without writing the Notion queue"
         required: false
         type: boolean
         default: false
@@ -33,26 +38,19 @@ permissions:
   contents: write
 
 jobs:
-  editorial-publish:
-    if: >-
-      ${{ vars.CHAT_EDITORIAL_ENABLED == 'false' &&
-          vars.OPENAI_EDITOR_ENABLED == 'true' &&
-          (github.event_name == 'workflow_dispatch' || vars.NOTION_PUBLISH_ENABLED == 'true') }}
+  editorial-queue:
+    if: ${{ vars.CHAT_EDITORIAL_ENABLED != 'false' }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
       MONITOR_CONTACT: ${{ vars.MONITOR_CONTACT }}
       REQUEST_INTERVAL_SECONDS: "2.0"
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-      OPENAI_EDITOR_ENABLED: ${{ vars.OPENAI_EDITOR_ENABLED }}
-      OPENAI_EDITOR_MODEL: ${{ vars.OPENAI_EDITOR_MODEL }}
-      OPENAI_EDITOR_MAX_CANDIDATES: ${{ vars.OPENAI_EDITOR_MAX_CANDIDATES }}
-      OPENAI_EDITOR_FINAL_CANDIDATES: ${{ vars.OPENAI_EDITOR_FINAL_CANDIDATES }}
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-      NOTION_DATA_SOURCE_ID: ${{ vars.NOTION_DATA_SOURCE_ID }}
-      NOTION_CRPD_REFERENCE_URL: ${{ vars.NOTION_CRPD_REFERENCE_URL }}
       NOTION_REPORTS_DATA_SOURCE_ID: ${{ vars.NOTION_REPORTS_DATA_SOURCE_ID }}
+      CHAT_EDITORIAL_MAX_CANDIDATES: ${{ vars.CHAT_EDITORIAL_MAX_CANDIDATES }}
+      CHAT_EDITORIAL_CHUNK_SIZE: ${{ vars.CHAT_EDITORIAL_CHUNK_SIZE }}
+      CHAT_EDITORIAL_EVIDENCE_CHARS: ${{ vars.CHAT_EDITORIAL_EVIDENCE_CHARS }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -64,7 +62,7 @@ jobs:
           cache-dependency-path: pyproject.toml
       - name: Install
         run: python -m pip install .
-      - name: Collect temporary evidence, edit with GPT, and publish
+      - name: Collect verified evidence and export the temporary queue
         env:
           INPUT_DATE: ${{ inputs.date }}
           INPUT_START: ${{ inputs.start }}
@@ -72,12 +70,12 @@ jobs:
           INPUT_COLLECT_HOURS: ${{ inputs.collect_hours || '48' }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          args=(editorial-publish --collect-hours "$INPUT_COLLECT_HOURS")
+          args=(editorial-queue --collect-hours "$INPUT_COLLECT_HOURS")
           if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
           if test -n "$INPUT_START"; then args+=(--start "$INPUT_START"); fi
           if test -n "$INPUT_END"; then args+=(--end "$INPUT_END"); fi
           if test "$INPUT_DRY_RUN" = "true"; then args+=(--dry-run); fi
           news-topic-monitor "${args[@]}"
-      - name: Commit metadata, briefing, and health outputs
+      - name: Commit metadata and queue health
         if: ${{ always() }}
         run: bash scripts/commit_outputs.sh
