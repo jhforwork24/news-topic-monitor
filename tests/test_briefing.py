@@ -9,8 +9,9 @@ from news_topic_monitor.briefing import (
     is_opinion,
     previous_coverage_for,
     render_briefing_markdown,
-    summarize_articles,
+    summarize_issue,
 )
+from news_topic_monitor.briefing_validation import validate_briefing
 from news_topic_monitor.models import (
     ArticleRecord,
     BodyStatus,
@@ -95,10 +96,14 @@ def test_four_section_briefing_and_reverse_opinion(tmp_path, topics_path) -> Non
     assert "<details>" in text
     assert "추가 자료 · 더 알아보기" in text
     assert "| 범주 | 자료 | 확인 쟁점 |" in text
-    assert "### 기사 요약" in text
-    assert "### 보도 논조" in text
+    assert "### 이슈 요약·보도 논조" in text
+    assert "### 기사 요약" not in text
+    assert "### 보도 논조" not in text
+    assert "| 언론사 | 기사 | 발행 |" not in text
+    assert "KST" not in text
     assert "오늘의 변화" not in text
     assert "# 점검" not in text
+    validate_briefing(document)
 
 
 def test_opinion_detection() -> None:
@@ -148,14 +153,17 @@ def test_crpd_mapping_avoids_incidental_school_and_tour_bus_words() -> None:
 
 def test_korean_particles_and_mbc_boilerplate_summary() -> None:
     column = _article("khan", "장애인 이동권 보도")
-    assert analyze_tone([column]).startswith("경향신문은 ")
+    assert analyze_tone([column]) == ""
+
+    movement = _article("khan", "장애인 이동권 보장 촉구")
+    assert analyze_tone([movement]).startswith("경향신문은 ")
 
     video = _article("mbc", "선수 명의로 보조금 챙긴 임원 벌금 약식기소")
     video.summary = (
         "지역사 채널의 동영상 링크 https://youtu.be/example "
         "#제주MBC #장애인체육회 무단 전재, 재배포 금지"
     )
-    summary = summarize_articles([video])
+    summary = summarize_issue([video])
     assert "무단 전재" not in summary
     assert video.title in summary
 
@@ -306,15 +314,14 @@ def test_editorial_exclusions_section_assignment_and_crpd_order(tmp_path, topics
         if "일반논평" in reference.label
     )
     assert all(
-        reference.category != "참고 연구 및 문서"
+        reference.category != "관련 연구 및 문서"
         for reference in color_issue.references
         if "일반논평" in reference.label
     )
     categories = list(dict.fromkeys(reference.category for reference in color_issue.references))
     requested_order = [
-        "이전 주요 핵심 기사",
         "관련 단체 입장",
-        "참고 연구 및 문서",
+        "관련 연구 및 문서",
         "현행 제도",
         "국제 규범",
     ]
@@ -373,3 +380,112 @@ def test_column_scope_and_mandatory_authors(tmp_path, topics_path) -> None:
     sources = {article.source for issue in columns.issues for article in issue.articles}
     assert {"hani", "mediaus", "khan", "chosun"} <= sources
     assert "ablenews" not in sources
+
+
+def test_review_photo_and_entertainment_articles_are_not_auto_published(
+    tmp_path, topics_path
+) -> None:
+    storage = JsonlStorage(tmp_path)
+    weather = _article(
+        "donga",
+        "거제 사흘간 782.5㎜ 물폭탄…주택 침수·주민 100여명 대피",
+        classification=Classification.REVIEW,
+        article_id="weather",
+    )
+    photo = _article(
+        "khan",
+        "[포토뉴스] 이주노동자들 우리에게도 권리가 있습니다",
+        classification=Classification.IRRELEVANT,
+        article_id="photo",
+    )
+    entertainment = _article(
+        "chosun",
+        "왜 정은채였는지 알겠다…재벌X형사2 대체불가 주혜라",
+        classification=Classification.IRRELEVANT,
+        section="연예",
+        article_id="entertainment",
+    )
+    entertainment.canonical_url = (
+        "https://www.chosun.com/entertainments/broadcast/2026/08/16/example"
+    )
+    music = _article(
+        "chosun",
+        "남규리 산재 되나요…파워풀 안무에 큰일났네 폭소",
+        classification=Classification.IRRELEVANT,
+        section="음악",
+        article_id="music",
+    )
+    music.canonical_url = "https://www.chosun.com/entertainments/music/2026/08/16/example"
+    labor = _article(
+        "labortoday",
+        "공공돌봄 노동자 임금과 고용 보장 촉구",
+        classification=Classification.IRRELEVANT,
+        article_id="labor",
+    )
+    for row in (weather, photo, entertainment, music, labor):
+        storage.upsert(row)
+
+    document = build_briefing(
+        storage,
+        topics_path=topics_path,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    titles = [issue.title for section in document.sections for issue in section.issues]
+    assert not any("782.5" in title for title in titles)
+    assert not any("포토뉴스" in title for title in titles)
+    assert not any("정은채" in title for title in titles)
+    assert not any("남규리" in title for title in titles)
+    assert any("공공돌봄 노동자" in title for title in titles)
+    validate_briefing(document)
+
+
+def test_issue_summary_and_tone_sentence_limits() -> None:
+    single = _article("hani", "장애인 이동권 보장 촉구")
+    single.summary = '단체는 "이동권을 보장하라"고 촉구했다... 후속 발표가 이어졌다.'
+    summary = summarize_issue([single])
+    assert all(marker not in summary for marker in ('"', "...", "…"))
+    assert summary.endswith(".")
+    assert analyze_tone([single]).count(".") <= 1
+
+    other = _article("donga", "장애인 이동권 정책 발표", article_id="other")
+    tone = analyze_tone([single, other])
+    assert 1 <= tone.count(".") <= 4
+
+
+def test_previous_coverage_is_only_inside_toggle_and_limited_to_three(
+    tmp_path, topics_path
+) -> None:
+    storage = JsonlStorage(tmp_path)
+    current = _article(
+        "ablenews",
+        "제주 섭지코지 산책로 이동권 개선 인권위 권고 수용",
+        article_id="current",
+    )
+    current.byline = "홍길동 기자"
+    storage.upsert(current)
+    for index in range(4):
+        previous = _article(
+            "theindigo",
+            f"제주 섭지코지 산책로 이동권 개선 후속 {index}",
+            article_id=f"previous-{index}",
+        )
+        previous.published_at = datetime(2026, 8, 14, index, tzinfo=UTC)
+        previous.first_seen_at = previous.published_at
+        previous.last_seen_at = previous.published_at
+        storage.upsert(previous)
+    document = build_briefing(
+        storage,
+        topics_path=topics_path,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    issue = document.sections[0].issues[0]
+    assert 0 <= len(issue.previous_coverage) <= 3
+    text = render_briefing_markdown(document, crpd_url=None)
+    assert "### 이전 보도 참고" not in text
+    assert text.index("<summary>추가 자료 · 더 알아보기</summary>") < text.index("| 이전 보도 |")
+    assert "홍길동 기자" in text
+    assert "| 언론사 | 기사 | 발행 |" not in text

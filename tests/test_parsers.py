@@ -69,6 +69,7 @@ def test_body_selectors_and_metadata(fixture_dir) -> None:
     metadata = metadata_from_html(html, "https://example.com/article/1")
     assert metadata["title"] == "장애인 활동지원 기사"
     assert metadata["canonical_url"] == "https://example.com/article/1"
+    assert metadata["byline"] == "홍길동 기자"
 
 
 def test_model_rejects_empty_title() -> None:

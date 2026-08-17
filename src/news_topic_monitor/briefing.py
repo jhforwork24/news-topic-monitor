@@ -25,6 +25,22 @@ OPINION_TERMS = (
     "오피니언",
 )
 OPINION_PATHS = ("/opinion", "/column", "/editorial", "/contribution")
+PHOTO_NEWS_TERMS = ("[포토뉴스]", "[사진]", "포토뉴스", "화보")
+ENTERTAINMENT_SECTION_TERMS = (
+    "연예",
+    "방송연예",
+    "연예뉴스",
+    "음악",
+    "스타",
+    "스포츠",
+)
+ENTERTAINMENT_PATHS = (
+    "/entertainments/",
+    "/entertainment/",
+    "/sports/",
+    "/photo/",
+    "/gallery/",
+)
 STOPWORDS = {
     "관련",
     "대한",
@@ -256,9 +272,9 @@ STRONG_PREVIOUS_CONCEPTS = frozenset(
 )
 
 REFERENCE_CATEGORY_ORDER = {
-    "이전 주요 핵심 기사": 1,
+    "이전 보도": 1,
     "관련 단체 입장": 2,
-    "참고 연구 및 문서": 3,
+    "관련 연구 및 문서": 3,
     "현행 제도": 4,
     "국제 규범": 5,
 }
@@ -381,7 +397,10 @@ def build_briefing(
     for item in articles:
         if item.source in BROADCAST_SOURCES or is_opinion(item):
             continue
-        if item.classification not in {Classification.RELEVANT, Classification.REVIEW}:
+        if item.classification == Classification.REVIEW:
+            editorial_notes.append(f"I절 자동발행 제외 — {item.title}: 사람의 검토가 필요한 판정")
+            continue
+        if item.classification != Classification.RELEVANT:
             continue
         disability_candidates.append(item)
 
@@ -404,7 +423,12 @@ def build_briefing(
             continue
         disability.append(item)
     disability.sort(key=_disability_priority, reverse=True)
-    disability_issues = cluster_issues(disability, history=history, max_issues=10)
+    disability_issues = cluster_issues(
+        disability,
+        history=history,
+        max_issues=10,
+        section_kind="disability",
+    )
     disability_urls = {
         article.canonical_url for issue in disability_issues for article in issue.articles
     }
@@ -421,10 +445,14 @@ def build_briefing(
             if "최중증 발달장애인 통합돌봄" in _article_text(item):
                 editorial_notes.append(f"II절 제외·I절 배치 — {item.title}")
             continue
+        reason = labor_editorial_exclusion(item)
+        if reason:
+            editorial_notes.append(f"II절 제외 — {item.title}: {reason}")
+            continue
         result = labor_classifier.classify(
             title=item.title, summary=item.summary, section=item.section
         )
-        if result.classification not in {Classification.RELEVANT, Classification.REVIEW}:
+        if result.classification != Classification.RELEVANT:
             continue
         if "보양식 세트" in _article_text(item):
             editorial_notes.append(f"II절 제외 — {item.title}: 보양식 제공 여부 중심의 단발성 사안")
@@ -435,23 +463,37 @@ def build_briefing(
     broadcast = [
         item
         for item in articles
-        if item.source in BROADCAST_SOURCES
-        and item.classification in {Classification.RELEVANT, Classification.REVIEW}
+        if item.source in BROADCAST_SOURCES and item.classification == Classification.RELEVANT
     ]
 
     sections = [
         BriefingSection("I. 장애정책·장애인운동", disability_issues),
         BriefingSection(
             "II. 노동·돌봄·빈곤",
-            cluster_issues([item for item, _score in labor], history=history, max_issues=10),
+            cluster_issues(
+                [item for item, _score in labor],
+                history=history,
+                max_issues=10,
+                section_kind="labor",
+            ),
         ),
         BriefingSection(
             "III. 방송 뉴스 중 장애 주제",
-            cluster_issues(broadcast, history=history, max_issues=10),
+            cluster_issues(
+                broadcast,
+                history=history,
+                max_issues=10,
+                section_kind="broadcast",
+            ),
         ),
     ]
     opinions = select_opinions(articles)
-    opinion_issues = cluster_issues(opinions, history=history, max_issues=12)
+    opinion_issues = cluster_issues(
+        opinions,
+        history=history,
+        max_issues=12,
+        section_kind="opinion",
+    )
     if opinion_issues:
         sections.append(BriefingSection("IV. 주요 칼럼", opinion_issues))
     else:
@@ -501,11 +543,25 @@ def disability_editorial_exclusion(article: ArticleRecord) -> str | None:
     return None
 
 
+def labor_editorial_exclusion(article: ArticleRecord) -> str | None:
+    title = article.title
+    section = (article.section or "").lower()
+    path = urlsplit(article.canonical_url).path.lower()
+    if any(term.lower() in title.lower() for term in PHOTO_NEWS_TERMS):
+        return "사진·화보 중심 보도"
+    if any(term.lower() in section for term in ENTERTAINMENT_SECTION_TERMS):
+        return "연예·스포츠 섹션 보도"
+    if any(marker in path for marker in ENTERTAINMENT_PATHS):
+        return "연예·스포츠 경로의 보도"
+    return None
+
+
 def cluster_issues(
     articles: list[ArticleRecord],
     *,
     history: list[ArticleRecord] | None = None,
     max_issues: int = 10,
+    section_kind: str = "disability",
 ) -> list[BriefingIssue]:
     anniversary_articles = [
         article for article in articles if _is_crpd_anniversary_event([article])
@@ -515,7 +571,9 @@ def cluster_issues(
     clusters = _cluster_article_groups(regular_articles, max_issues=max_issues - reserved)
     if anniversary_articles:
         clusters.extend(_cluster_article_groups(anniversary_articles, max_issues=1))
-    return [_briefing_issue(cluster, history or []) for cluster in clusters]
+    return [
+        _briefing_issue(cluster, history or [], section_kind=section_kind) for cluster in clusters
+    ]
 
 
 def _cluster_article_groups(
@@ -542,27 +600,30 @@ def _cluster_article_groups(
     return clusters
 
 
-def _briefing_issue(cluster: list[ArticleRecord], history: list[ArticleRecord]) -> BriefingIssue:
+def _briefing_issue(
+    cluster: list[ArticleRecord],
+    history: list[ArticleRecord],
+    *,
+    section_kind: str,
+) -> BriefingIssue:
     lead = max(cluster, key=lambda item: (_disability_priority(item), item.topic_score))
     text = " ".join(_article_text(item) for item in cluster)
     articles = _sort_cluster_articles(cluster)
     previous = previous_coverage_for(articles, history)
-    disability_context = any(
-        article.classification in {Classification.RELEVANT, Classification.REVIEW}
-        for article in cluster
+    disability_context = section_kind in {"disability", "broadcast"} or any(
+        article.classification == Classification.RELEVANT for article in cluster
     )
     linked_crpd = crpd_articles(text) if disability_context else []
     return BriefingIssue(
         title=lead.title,
         articles=articles,
-        summary=summarize_articles(articles),
+        summary=summarize_issue(articles),
         tone_analysis=analyze_tone(articles),
         previous_coverage=previous,
         references=reference_rows(
             articles,
-            previous,
             linked_crpd,
-            disability_context=disability_context,
+            section_kind=section_kind,
         ),
         crpd_articles=linked_crpd,
     )
@@ -591,7 +652,7 @@ def select_opinions(articles: list[ArticleRecord]) -> list[ArticleRecord]:
             continue
         disability_column = (
             article.source in PRIMARY_COMPARISON_SOURCES
-            and article.classification in {Classification.RELEVANT, Classification.REVIEW}
+            and article.classification == Classification.RELEVANT
         )
         if mandatory or disability_column:
             selected.append(article)
@@ -599,41 +660,47 @@ def select_opinions(articles: list[ArticleRecord]) -> list[ArticleRecord]:
     return selected
 
 
-def summarize_articles(articles: list[ArticleRecord]) -> str:
-    summaries: list[str] = []
-    for article in articles[:3]:
-        cleaned = _clean_summary(article.summary)
-        if cleaned and not any(_similar_text(cleaned, existing) for existing in summaries):
-            summaries.append(cleaned)
-    if not summaries:
-        titles = "; ".join(article.title for article in articles[:3])
-        return f"공개된 제목과 메타데이터에 따르면 {titles}에 관한 사안이 제기되었다."
-    if len(summaries) == 1:
-        return summaries[0]
-    outlets = ", ".join(
-        dict.fromkeys(SOURCE_LABELS.get(item.source, item.source) for item in articles)
-    )
-    joined = " ".join(summaries[:2])
-    return f"{outlets}의 공개 보도를 종합하면 {joined}"
+def summarize_issue(articles: list[ArticleRecord]) -> str:
+    facts: list[str] = []
+    for article in articles[:5]:
+        for sentence in _clean_summary_sentences(article.summary):
+            if any(_similar_text(sentence, existing) for existing in facts):
+                continue
+            facts.append(sentence)
+            if len(facts) >= 3:
+                break
+        if len(facts) >= 3:
+            break
+    if facts:
+        while len(" ".join(facts)) > 560 and len(facts) > 1:
+            facts.pop()
+        return " ".join(facts)
+    title = _neutral_text(articles[0].title).rstrip(". ")
+    particle = _korean_particle(title, "과", "와")
+    return f"당일 보도에서는 {title}{particle} 관련한 사실관계와 공적 책임의 쟁점이 다뤄졌다."
 
 
 def analyze_tone(articles: list[ArticleRecord]) -> str:
     if len(articles) == 1:
         article = articles[0]
+        focus = _tone_focus(article)
+        if focus == "사건의 사실관계와 공적 책임을 중심으로 전달하는 논조다.":
+            return ""
         label = SOURCE_LABELS.get(article.source, article.source)
-        return (
-            f"{label}{_korean_particle(label, '은', '는')} {_tone_focus(article)} "
-            "단일 매체 보도이므로 당사자·단체와 "
-            "정부·지자체·사용자 측의 원자료와 후속 입장을 함께 확인할 필요가 있다."
-        )
-    descriptions = [
-        f"{(label := SOURCE_LABELS.get(article.source, article.source))}"
-        f"{_korean_particle(label, '은', '는')} {_tone_focus(article).rstrip('.')}"
-        for article in articles
-    ]
-    return " ".join(f"{description}." for description in descriptions) + (
-        " 매체별 강조점의 차이를 사실관계의 변화와 논조의 차이로 나누어 읽어야 한다."
-    )
+        return f"{label}{_korean_particle(label, '은', '는')} {focus}"
+
+    grouped: dict[str, list[str]] = {}
+    for article in articles:
+        focus = _tone_focus(article)
+        label = SOURCE_LABELS.get(article.source, article.source)
+        labels = grouped.setdefault(focus, [])
+        if label not in labels:
+            labels.append(label)
+    descriptions: list[str] = []
+    for focus, labels in list(grouped.items())[:4]:
+        subject = "·".join(labels)
+        descriptions.append(f"{subject} 보도는 {focus.removeprefix('사건의 ').rstrip('.')}" + ".")
+    return " ".join(descriptions)
 
 
 def previous_coverage_for(
@@ -677,14 +744,13 @@ def previous_coverage_for(
 
 def reference_rows(
     articles: list[ArticleRecord],
-    previous: list[PreviousCoverage],
     linked_crpd: list[str],
     *,
-    disability_context: bool,
+    section_kind: str,
 ) -> list[BriefingReference]:
     text = " ".join(_article_text(article) for article in articles)
     rows: list[BriefingReference] = []
-    if linked_crpd:
+    if linked_crpd and section_kind != "labor":
         rows.append(
             BriefingReference(
                 "국제 규범",
@@ -717,9 +783,16 @@ def reference_rows(
                     "시설 간 이동이 아니라 당사자의 선택과 지역사회 지원을 기준으로 삼는다.",
                 )
             )
-    law_references = LAW_REFERENCES
-    research_references = RESEARCH_REFERENCES
-    if disability_context:
+    if section_kind == "labor":
+        law_references = {
+            key: value for key, value in LAW_REFERENCES.items() if key in LABOR_ONLY_REFERENCE_KEYS
+        }
+        research_references = {
+            key: value
+            for key, value in RESEARCH_REFERENCES.items()
+            if key in LABOR_ONLY_REFERENCE_KEYS
+        }
+    else:
         law_references = {
             key: value
             for key, value in LAW_REFERENCES.items()
@@ -730,20 +803,10 @@ def reference_rows(
             for key, value in RESEARCH_REFERENCES.items()
             if key not in LABOR_ONLY_REFERENCE_KEYS
         }
-    else:
-        rows.extend(_labor_norms(text))
     rows.extend(_mapped_references("현행 제도", text, law_references))
-    rows.extend(_mapped_references("참고 연구 및 문서", text, research_references, limit=2))
-    rows.extend(_organization_positions(articles))
-    rows.extend(
-        BriefingReference(
-            "이전 주요 핵심 기사",
-            item.label,
-            item.url,
-            item.comparison,
-        )
-        for item in previous
-    )
+    rows.extend(_mapped_references("관련 연구 및 문서", text, research_references, limit=2))
+    if section_kind != "labor":
+        rows.extend(_organization_positions(articles))
     unique = _unique_references(rows)
     return sorted(
         unique,
@@ -833,32 +896,20 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
         lines.extend([f"# {section.title}", ""])
         for number, issue in enumerate(section.issues, start=1):
             lines.extend([f"## {number}. {issue.title}", "", "### 주요 언론 보도", ""])
-            lines.extend(["| 언론사 | 기사 | 발행 |", "|---|---|---|"])
             for article in issue.articles:
                 label = _markdown_table_text(article.title)
                 lines.append(
-                    f"| {SOURCE_LABELS.get(article.source, article.source)} | "
-                    f"[{label}]({article.canonical_url}) | "
-                    f"{kst_display(article.published_at)} |"
+                    f"- {article_listing_prefix(article)}[{label}]({article.canonical_url})"
                 )
-            lines.extend(["", "### 기사 요약", "", issue.summary, ""])
-            lines.extend(["### 보도 논조", "", issue.tone_analysis, ""])
-            if issue.previous_coverage:
-                lines.extend(["### 이전 보도 참고", ""])
-                lines.extend(
-                    [
-                        "| 시점 | 비교 자료 | 주요 내용·비교점 |",
-                        "|---|---|---|",
-                    ]
-                )
-                for item in issue.previous_coverage:
-                    label = _markdown_table_text(item.label)
-                    material = f"[{label}]({item.url})" if item.url else label
-                    lines.append(
-                        f"| {item.published} | {material} | "
-                        f"{_markdown_table_text(item.comparison)} |"
-                    )
-                lines.append("")
+            lines.extend(
+                [
+                    "",
+                    "### 이슈 요약·보도 논조",
+                    "",
+                    issue_analysis_text(issue),
+                    "",
+                ]
+            )
             lines.extend(["<details>", "<summary>추가 자료 · 더 알아보기</summary>", ""])
             lines.extend(
                 [
@@ -866,6 +917,11 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                     "|---|---|---|",
                 ]
             )
+            for item in issue.previous_coverage[:3]:
+                label = _markdown_table_text(item.label)
+                material = f"[{label}]({item.url})" if item.url else label
+                note = f"{item.published} · {item.comparison}"
+                lines.append(f"| 이전 보도 | {material} | {_markdown_table_text(note)} |")
             for reference in issue.references:
                 label = _markdown_table_text(reference.label)
                 material = f"[{label}]({reference.url})" if reference.url else label
@@ -873,10 +929,22 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                     f"| {reference.category} | {material} | "
                     f"{_markdown_table_text(reference.note)} |"
                 )
-            if not issue.references:
+            if not issue.previous_coverage and not issue.references:
                 lines.append("| 참고 자료 | 확인된 추가 자료 없음 | 후속 조사 필요 |")
             lines.extend(["", "</details>", ""])
     return "\n".join(lines)
+
+
+def issue_analysis_text(issue: BriefingIssue) -> str:
+    return " ".join(part for part in (issue.summary, issue.tone_analysis) if part)
+
+
+def article_listing_prefix(article: ArticleRecord) -> str:
+    parts = [SOURCE_LABELS.get(article.source, article.source)]
+    if article.byline:
+        parts.append(article.byline)
+    parts.append(kst_display(article.published_at))
+    return " · ".join(parts) + " — "
 
 
 def render_editorial_report(document: BriefingDocument, *, page_url: str | None = None) -> str:
@@ -918,27 +986,98 @@ def issue_tokens(article: ArticleRecord) -> set[str]:
     return tokens
 
 
-def _clean_summary(value: str | None) -> str | None:
+def _clean_summary_sentences(value: str | None) -> list[str]:
     if not value:
-        return None
+        return []
     cleaned = re.sub(r"^【[^】]+】\s*", "", value).strip()
     cleaned = re.sub(r"^\[[^\]]{1,40}\]\s*", "", cleaned).strip()
     if "지역사 채널의 동영상 링크" in cleaned and "무단 전재" in cleaned:
-        return None
-    cleaned = cleaned.replace("...", "…")
+        return []
+    cleaned = re.sub(r"<[^>]+>", " ", cleaned)
+    cleaned = _remove_quoted_spans(cleaned)
     cleaned = re.sub(r"""(?<=[.!?])(?=[가-힣A-Z0-9"'])""", " ", cleaned)
     cleaned = re.sub(r"\s+", " ", cleaned).strip()
     sentences = re.split(r"(?<=[.!?])\s+", cleaned)
     unique: list[str] = []
     for sentence in sentences:
         sentence = sentence.strip()
-        if not sentence or any(_similar_text(sentence, item) for item in unique):
+        if not sentence or "..." in sentence or "…" in sentence or sentence.endswith("?"):
+            continue
+        if sentence.endswith(("인데요.", "는데요.")):
+            continue
+        if any(marker in sentence for marker in ('"', "'", "“", "”", "\u2018", "\u2019")):
+            continue
+        sentence = _neutral_text(sentence)
+        sentence = _conversational_to_plain(sentence)
+        if sentence.startswith("(") and sentence.rstrip(".").endswith(")"):
+            continue
+        if not sentence.endswith("."):
+            if re.search(r"(?:은|는|이|가|을|를|와|과|의|며|고|로|에)$", sentence):
+                continue
+            if len(sentence) > 120 or sentence.count("(") != sentence.count(")"):
+                continue
+            sentence = sentence.rstrip("!? ") + "."
+        if len(sentence) > 260 or any(_similar_text(sentence, item) for item in unique):
             continue
         unique.append(sentence)
         if len(unique) >= 2:
             break
-    excerpt = " ".join(unique)
-    return short_text(excerpt or cleaned, 420)
+    return unique
+
+
+def _neutral_text(value: str) -> str:
+    cleaned = re.sub(r"[\"'“”\u2018\u2019]", "", value)
+    cleaned = re.sub(r"^\[[^\]]{1,40}\]\s*", "", cleaned)
+    cleaned = re.sub(r"\.{3}|…", " ", cleaned)
+    cleaned = cleaned.replace("?", " ").replace("!", " ")
+    return re.sub(r"\s+", " ", cleaned).strip()
+
+
+def _remove_quoted_spans(value: str) -> str:
+    cleaned = value
+    for opening, closing in (("“", "”"),):
+        while opening in cleaned:
+            start = cleaned.find(opening)
+            end = cleaned.find(closing, start + 1)
+            if end < 0:
+                cleaned = cleaned[:start]
+                break
+            cleaned = cleaned[:start] + " " + cleaned[end + 1 :]
+    while '"' in cleaned:
+        start = cleaned.find('"')
+        end = cleaned.find('"', start + 1)
+        if end < 0:
+            cleaned = cleaned[:start]
+            break
+        cleaned = cleaned[:start] + " " + cleaned[end + 1 :]
+    return cleaned
+
+
+def _conversational_to_plain(value: str) -> str:
+    value = re.sub(r"^(?:네|예),?\s*", "", value)
+    replacements = (
+        ("했습니다.", "했다."),
+        ("됐습니다.", "됐다."),
+        ("됩니다.", "된다."),
+        ("있습니다.", "있다."),
+        ("없습니다.", "없다."),
+        ("입니다.", "이다."),
+        ("합니다.", "한다."),
+        ("집니다.", "진다."),
+        ("했습니다죠.", "했다."),
+        ("했죠.", "했다."),
+        ("됐죠.", "됐다."),
+        ("있죠.", "있다."),
+        ("없죠.", "없다."),
+    )
+    for old, new in replacements:
+        if value.endswith(old):
+            return value[: -len(old)] + new
+    if value.endswith("다고요."):
+        return value[: -len("다고요.")] + "다는 지적이 제기됐다."
+    if value.endswith("습니다."):
+        return value[: -len("습니다.")] + "다."
+    return value
 
 
 def _similar_text(left: str, right: str) -> bool:
@@ -988,38 +1127,6 @@ def _mapped_references(
         )
         if len(rows) >= limit:
             break
-    return rows
-
-
-def _labor_norms(text: str) -> list[BriefingReference]:
-    rows: list[BriefingReference] = []
-    if any(term in text for term in ("산업재해", "산재", "사망", "끼임")):
-        rows.append(
-            BriefingReference(
-                "국제 규범",
-                "ILO 산업안전보건협약 제155호",
-                "https://normlex.ilo.org/dyn/nrmlx_en/f?p=NORMLEXPUB:12100:0::NO::P12100_ILO_CODE:C155",
-                "예방의무와 노동자의 생명·건강 보호를 도급계약과 기업 이윤보다 우선한다.",
-            )
-        )
-    if any(term in text for term in ("노조", "파업", "교섭")):
-        rows.append(
-            BriefingReference(
-                "국제 규범",
-                "ILO 결사의 자유 협약 제87호",
-                "https://normlex.ilo.org/dyn/nrmlx_en/f?p=NORMLEXPUB:12100:0::NO::P12100_ILO_CODE:C087",
-                "노동자의 조직·교섭·집단행동을 기본권의 관점에서 확인한다.",
-            )
-        )
-    if any(term in text for term in ("최저임금", "빈곤", "생계", "돌봄")):
-        rows.append(
-            BriefingReference(
-                "국제 규범",
-                "유엔 경제적·사회적·문화적 권리규약",
-                "https://www.ohchr.org/en/instruments-mechanisms/instruments/international-covenant-economic-social-and-cultural-rights",
-                "공정한 노동조건·사회보장·적절한 생활수준을 결합해 해석한다.",
-            )
-        )
     return rows
 
 

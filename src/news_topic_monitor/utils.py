@@ -118,7 +118,7 @@ def utc_iso(value: datetime | None) -> str | None:
 def kst_display(value: datetime | None) -> str:
     if value is None:
         return "시각 미상"
-    return value.astimezone(KST).strftime("%Y-%m-%d %H:%M KST")
+    return value.astimezone(KST).strftime("%Y-%m-%d %H:%M")
 
 
 def kst_date(value: datetime) -> str:

@@ -120,7 +120,7 @@ topics:
       - {all: [장애, 고용], score: 5.0}
       - {all: [장애, 노동], score: 5.0}
       - {all: [장애, 연금], score: 5.0}
-      - {all: [장애, 시설], score: 4.0}
+      - {all: [장애인, 시설], score: 4.0}
       - {all: [장애, 자립], score: 5.0}
       - {all: [장애, 교육], score: 4.0}
       - {all: [장애, 의료], score: 4.0}

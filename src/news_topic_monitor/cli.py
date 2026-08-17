@@ -11,6 +11,7 @@ from .adapters import ALL_ADAPTERS
 from .adapters.hani import HaniAdapter
 from .adapters.mbc import MbcAdapter
 from .briefing import build_briefing, write_briefing
+from .briefing_validation import BriefingValidationError, validate_briefing
 from .classifier import RuleClassifier
 from .constants import project_root
 from .http import SafeHttpClient
@@ -151,6 +152,18 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
         end=end,
         report_date=date_value.isoformat(),
     )
+    try:
+        validate_briefing(document)
+    except BriefingValidationError as exc:
+        LOGGER.error("%s", exc)
+        if args.command == "publish-notion":
+            write_notion_health(
+                root,
+                report_date=date_value.isoformat(),
+                status="validation_failed",
+                error=str(exc),
+            )
+        return 3
     path = write_briefing(
         document,
         output_path=root / "reports" / "briefings" / f"{date_value.isoformat()}.md",

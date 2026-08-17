@@ -11,10 +11,15 @@ from typing import Any
 
 import httpx
 
-from .briefing import BriefingDocument, BriefingIssue, render_briefing_markdown
-from .sources import SOURCE_LABELS
+from .briefing import (
+    BriefingDocument,
+    BriefingIssue,
+    article_listing_prefix,
+    issue_analysis_text,
+    render_briefing_markdown,
+)
 from .storage import JsonlStorage
-from .utils import kst_display, short_error, short_text
+from .utils import short_error, short_text
 
 NOTION_VERSION = "2026-03-11"
 BRIEFING_TITLE_FRAGMENT = "일간 장애정책·노동 뉴스 브리핑"
@@ -348,60 +353,38 @@ def write_notion_health(
 
 
 def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
-    rows = [_table_row([[_rich_text("언론사")], [_rich_text("기사")], [_rich_text("발행")]])]
-    for article in issue.articles:
-        rows.append(
-            _table_row(
-                [
-                    [_rich_text(SOURCE_LABELS.get(article.source, article.source))],
-                    [_rich_text(article.title, href=article.canonical_url)],
-                    [_rich_text(kst_display(article.published_at))],
-                ]
-            )
-        )
     blocks = [
         _heading(f"{index}. {issue.title}", 2),
         _heading("주요 언론 보도", 3),
-        {
-            "object": "block",
-            "type": "table",
-            "table": {
-                "table_width": 3,
-                "has_column_header": True,
-                "has_row_header": False,
-                "children": rows,
-            },
-        },
-        _heading("기사 요약", 3),
-        _paragraph(issue.summary),
-        _heading("보도 논조", 3),
-        _paragraph(issue.tone_analysis),
     ]
-    if issue.previous_coverage:
-        previous_rows = [
-            _table_row(
-                [[_rich_text("시점")], [_rich_text("비교 자료")], [_rich_text("주요 내용·비교점")]]
+    for article in issue.articles:
+        blocks.append(
+            _bullet_rich_text(
+                [
+                    _rich_text(article_listing_prefix(article)),
+                    _rich_text(article.title, href=article.canonical_url),
+                ]
             )
-        ]
-        for item in issue.previous_coverage:
-            previous_rows.append(
-                _table_row(
-                    [
-                        [_rich_text(item.published)],
-                        [_rich_text(item.label, href=item.url)],
-                        [_rich_text(item.comparison)],
-                    ]
-                )
-            )
-        blocks.extend(
-            [
-                _heading("이전 보도 참고", 3),
-                _table(previous_rows, width=3),
-            ]
         )
+    blocks.extend(
+        [
+            _heading("이슈 요약·보도 논조", 3),
+            _paragraph(issue_analysis_text(issue)),
+        ]
+    )
     reference_rows = [
         _table_row([[_rich_text("범주")], [_rich_text("자료")], [_rich_text("확인 쟁점")]])
     ]
+    for item in issue.previous_coverage[:3]:
+        reference_rows.append(
+            _table_row(
+                [
+                    [_rich_text("이전 보도")],
+                    [_rich_text(item.label, href=item.url)],
+                    [_rich_text(f"{item.published} · {item.comparison}")],
+                ]
+            )
+        )
     for reference in issue.references:
         reference_rows.append(
             _table_row(
@@ -412,7 +395,7 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 ]
             )
         )
-    if not issue.references:
+    if not issue.previous_coverage and not issue.references:
         reference_rows.append(
             _table_row(
                 [
@@ -475,6 +458,14 @@ def _bullet(content: str, *, href: str | None = None) -> dict[str, Any]:
         "object": "block",
         "type": "bulleted_list_item",
         "bulleted_list_item": {"rich_text": [_rich_text(content, href=href)]},
+    }
+
+
+def _bullet_rich_text(rich_text: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "object": "block",
+        "type": "bulleted_list_item",
+        "bulleted_list_item": {"rich_text": rich_text},
     }
 
 

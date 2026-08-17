@@ -92,6 +92,7 @@ def test_expanded_xml_parsers(adapter, url, fixture_name, fixture_dir) -> None:
         assert page.articles[0].title == "장애인 접근권 기사"
     else:
         assert page.articles[0].title == "장애인 이동권 보도"
+        assert page.articles[0].byline == "김기자 기자"
     assert page.articles[0].published_at is not None
 
 
