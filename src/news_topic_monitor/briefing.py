@@ -7,10 +7,10 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from .classifier import RuleClassifier
-from .models import ArticleRecord, Classification
+from .models import ArticleRecord, Classification, EditorialPlan, EditorialSection
 from .sources import BROADCAST_SOURCES, PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS
 from .storage import JsonlStorage
-from .utils import KST, kst_display, short_text
+from .utils import KST, kst_display, short_text, stable_article_key
 
 OPINION_TERMS = (
     "사설",
@@ -375,6 +375,7 @@ class BriefingDocument:
     sections: list[BriefingSection]
     source_failures: list[str]
     editorial_notes: list[str] = field(default_factory=list)
+    editorially_selected_ids: list[str] = field(default_factory=list)
 
 
 def build_briefing(
@@ -514,6 +515,97 @@ def build_briefing(
     )
 
 
+def build_editorial_briefing(
+    storage: JsonlStorage,
+    *,
+    plan: EditorialPlan,
+    start: datetime,
+    end: datetime,
+    report_date: str,
+) -> BriefingDocument:
+    all_articles = list(storage.iter_articles())
+    current = [
+        article
+        for article in all_articles
+        if start <= (article.published_at or article.first_seen_at) < end
+    ]
+    history = [
+        article
+        for article in all_articles
+        if (article.published_at or article.first_seen_at) < start
+    ]
+    by_id = {_editorial_candidate_id(article): article for article in current}
+    issues_by_section: dict[EditorialSection, list[BriefingIssue]] = {
+        section: [] for section in EditorialSection
+    }
+    selected_ids: list[str] = []
+
+    for decision in plan.issues:
+        missing = [
+            candidate_id for candidate_id in decision.candidate_ids if candidate_id not in by_id
+        ]
+        if missing:
+            raise ValueError(f"editorial plan contains {len(missing)} unavailable candidate IDs")
+        articles = _sort_cluster_articles(
+            [by_id[candidate_id] for candidate_id in decision.candidate_ids]
+        )
+        selected_ids.extend(decision.candidate_ids)
+        section_kind = decision.section.value
+        text = " ".join(_article_text(article) for article in articles)
+        disability_context = decision.section in {
+            EditorialSection.DISABILITY,
+            EditorialSection.BROADCAST,
+        } or any(article.classification == Classification.RELEVANT for article in articles)
+        linked_crpd = crpd_articles(text) if disability_context else []
+        issues_by_section[decision.section].append(
+            BriefingIssue(
+                title=decision.title,
+                articles=articles,
+                summary=decision.summary,
+                tone_analysis=decision.tone_analysis,
+                previous_coverage=previous_coverage_for(articles, history),
+                references=reference_rows(
+                    articles,
+                    linked_crpd,
+                    section_kind=section_kind,
+                ),
+                crpd_articles=linked_crpd,
+            )
+        )
+
+    sections = [
+        BriefingSection("I. 장애정책·장애인운동", issues_by_section[EditorialSection.DISABILITY]),
+        BriefingSection("II. 노동·돌봄·빈곤", issues_by_section[EditorialSection.LABOR]),
+        BriefingSection(
+            "III. 방송 뉴스 중 장애 주제",
+            issues_by_section[EditorialSection.BROADCAST],
+        ),
+    ]
+    opinion_issues = issues_by_section[EditorialSection.OPINION]
+    if opinion_issues:
+        sections.append(BriefingSection("IV. 주요 칼럼", opinion_issues))
+
+    editorial_notes: list[str] = []
+    for exclusion in plan.exclusions[:20]:
+        article = by_id.get(exclusion.candidate_id)
+        if article is not None:
+            editorial_notes.append(f"GPT 편집 제외 — {article.title}: {exclusion.reason}")
+    if not opinion_issues:
+        editorial_notes.append("IV절 생략 — GPT 편집에서 최종 선정된 칼럼 없음")
+
+    return BriefingDocument(
+        report_date=report_date,
+        start=start,
+        end=end,
+        overview=build_overview(start, end, sections),
+        telegram_summary=build_telegram_summary(sections),
+        sections=sections,
+        source_failures=_source_failures(storage),
+        editorial_notes=editorial_notes,
+        editorially_selected_ids=selected_ids,
+    )
+
+
 def disability_editorial_exclusion(article: ArticleRecord) -> str | None:
     text = _article_text(article)
     title = article.title
@@ -637,6 +729,20 @@ def is_opinion(article: ArticleRecord) -> bool:
     return any(term.lower() in haystack for term in OPINION_TERMS) or any(
         marker in path for marker in OPINION_PATHS
     )
+
+
+def editorial_opinion_allowed(article: ArticleRecord) -> bool:
+    text = " ".join(
+        value
+        for value in (article.title, article.byline, article.section, article.summary)
+        if value
+    )
+    mandatory = (
+        (article.source == "hani" and "세계의 창" in text and "지제크" in text)
+        or (article.source == "mediaus" and "김민하" in text)
+        or (article.source == "khan" and "고병권" in text and "묵묵" in text)
+    )
+    return mandatory or (article.source in PRIMARY_COMPARISON_SOURCES and is_opinion(article))
 
 
 def select_opinions(articles: list[ArticleRecord]) -> list[ArticleRecord]:
@@ -1262,3 +1368,13 @@ def _source_failures(storage: JsonlStorage) -> list[str]:
         label = SOURCE_LABELS.get(source, source)
         failures.append(f"{label}: {errors[0] if errors else '수집 실패'}")
     return failures
+
+
+def _editorial_candidate_id(article: ArticleRecord) -> str:
+    return stable_article_key(
+        article.source,
+        article.canonical_url,
+        article.article_id,
+        article.title,
+        article.published_at,
+    )

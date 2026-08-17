@@ -8,12 +8,14 @@ from news_topic_monitor.adapters.base import (
     StructureChangedError,
 )
 from news_topic_monitor.classifier import RuleClassifier
+from news_topic_monitor.editorial import EditorialEvidenceStore
 from news_topic_monitor.http import HttpRequestError
 from news_topic_monitor.models import (
     ArticleDiscovery,
     BodyStatus,
     DiscoveryPage,
     DiscoveryStatus,
+    VerificationStatus,
 )
 from news_topic_monitor.pipeline import Collector
 from news_topic_monitor.storage import JsonlStorage
@@ -25,6 +27,7 @@ class StubHttp:
 
     class Response:
         content = b"unused"
+        text = "<html><body>synthetic public article text</body></html>"
         url = "https://good.test/feed"
 
     def get(self, url: str, *, purpose: str = "metadata", headers=None) -> Response:
@@ -70,6 +73,14 @@ class BadAdapter(GoodAdapter):
     def initial_discovery_urls(self, start, end):
         del start, end
         return ["https://bad.test/feed"]
+
+
+class BroadEvidenceAdapter(GoodAdapter):
+    source = "broad"
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 기사 본문으로 규칙과 무관한 후보도 임시 편집 근거에 포함되는지 확인한다."
 
 
 class MetadataOnlyAdapter(GoodAdapter):
@@ -182,3 +193,31 @@ def test_api_quota_failure_has_distinct_health_status(tmp_path, topics_path) -> 
         datetime(2026, 8, 15, 2, tzinfo=UTC),
     )
     assert health.sources["good"].discovery_status == DiscoveryStatus.QUOTA_EXCEEDED
+
+
+def test_editorial_collection_temporarily_captures_broad_body_only(tmp_path, topics_path) -> None:
+    storage = JsonlStorage(tmp_path)
+    evidence_path = tmp_path / "temporary" / "candidates.sqlite3"
+    with EditorialEvidenceStore(evidence_path) as evidence_store:
+        Collector(
+            http=StubHttp(),
+            storage=storage,
+            classifier=RuleClassifier(topics_path),
+            adapters=[BroadEvidenceAdapter()],
+            evidence_store=evidence_store,
+            capture_all_bodies=True,
+        ).run(
+            datetime(2026, 8, 15, 0, tzinfo=UTC),
+            datetime(2026, 8, 15, 2, tzinfo=UTC),
+        )
+        candidates = evidence_store.candidates(
+            start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 15, 2, tzinfo=UTC),
+        )
+
+    assert len(candidates) == 1
+    assert "합성 기사 본문" in candidates[0].evidence_text
+    record = next(storage.iter_articles())
+    assert record.verification_status == VerificationStatus.BODY_VERIFIED
+    persisted = next((tmp_path / "data" / "articles").glob("*.jsonl")).read_text()
+    assert "합성 기사 본문" not in persisted

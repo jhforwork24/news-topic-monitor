@@ -111,6 +111,9 @@ news-topic-monitor report \
 5. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
 6. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
+7. GPT 편집 발행을 쓸 때는 repository secret `OPENAI_API_KEY`와 repository variable
+   `OPENAI_EDITOR_ENABLED=true`를 등록한다. 이때 기존 규칙 기반 노션 예약 job은 자동으로
+   건너뛰고 GPT 편집 job만 한 번 발행한다.
 
 워크플로는 다음과 같다.
 
@@ -121,6 +124,8 @@ news-topic-monitor report \
 - `.github/workflows/publish-notion.yml`: `25 0 * * *`(UTC), 매일 09:25 KST에 브리핑을
   버전 발행. 같은 날짜의 브리핑이 있으면 내용이 같더라도 기존 페이지를 수정하지 않고
   가장 높은 `vN`의 다음 버전을 새 페이지로 생성함. IV절은 선정 칼럼이 있을 때만 생성함
+- `.github/workflows/editorial-publish.yml`: `35 0 * * *`(UTC), GPT 편집을 켰을 때 매일
+  09:35에 48시간 공개 기사 접근 결과를 임시 SQLite에 모으고 2단계 편집·검증 후 한 번 발행함
 - `.github/workflows/ci.yml`: push·PR에서 오프라인 pytest와 ruff 실행
 
 세 데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
@@ -149,6 +154,12 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 편집·분류·출처 점검 및 발행 실패 보고사항 data source UUID |
 | `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
 | `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
+| `OPENAI_EDITOR_ENABLED` | 아니오 | `false` 취급 | `true`일 때 임시 증거 수집과 GPT 편집 발행 job 실행 |
+| `OPENAI_EDITOR_MODEL` | 아니오 | `gpt-5.6` | Responses API 편집 모델 |
+| `OPENAI_EDITOR_CHUNK_SIZE` | 아니오 | `20` | 1차 판별 한 요청의 기사 수 |
+| `OPENAI_EDITOR_MAX_CANDIDATES` | 아니오 | `360` | GPT에 전달하는 확인 가능 후보 상한 |
+| `OPENAI_EDITOR_FINAL_CANDIDATES` | 아니오 | `80` | 2차 최종 편집 후보 상한 |
+| `OPENAI_EDITOR_EVIDENCE_CHARS` | 아니오 | `5000` | 후보별 일시 전달 근거 글자 상한 |
 
 `NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
 저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
@@ -166,11 +177,17 @@ cross-origin 리다이렉트에는 키를 전달하지 않는다. 키가 없으�
 레코드는 제거하고, 당시 시점이 명시된 과거 일일보고는 역사 자료로 유지한다. 저장·표시·삭제
 범위와 배포 운영자의 의무는 [`docs/youtube-api-use.md`](docs/youtube-api-use.md)에 정리한다.
 
-OpenAI API 의미 판별을 붙일 수 있도록 `SemanticClassifier` 인터페이스를 분리했지만 초기 버전의
-기본 구현은 항상 비활성화되어 있으며 API를 호출하지 않는다. `OPENAI_API_KEY`가 없어도 모든
-기능과 시험이 정상 작동한다. 향후 유료 판별기를 도입하려면 사용자 사전 승인을 받아야 한다.
-[공식 OpenAI 문서](https://developers.openai.com/api/docs/quickstart)상 서버 측 Python 호출은
-Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경로에 포함하지 않는다.
+GPT 편집 경로는 기본적으로 꺼져 있어 `OPENAI_API_KEY`가 없어도 기존 수집·보고·규칙 기반 발행과
+시험은 정상 작동한다. 활성화하면 GitHub runner의 임시 디렉터리에 SQLite를 만들고, robots.txt가
+허용하는 기사만 넓게 확인한 뒤 본문 또는 충분한 공식 요약이 있는 후보를 OpenAI Responses API에
+전달한다. 1차 요청은 기사별 포함·제외·섹션을 판정하고, 2차 요청은 동일 사안의 복수 보도를
+통합해 최종 이슈 요약과 보도 논조를 만든다. 두 요청 모두 Structured Outputs 스키마와
+`store=false`를 사용한다.
+
+GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를 고르거나, 같은 기사를 중복 배치하거나,
+섹션·요약·논조 규칙을 어기면 브리핑과 노션 발행을 중단한다. 임시 DB와 본문은 명령 종료 때
+삭제하며 저장소에는 기존 기사 메타데이터·분류 결과, 완성된 브리핑, 후보 수와 모델명 등 최소
+운영 상태만 남긴다. API 비용은 `최대 360개 1차 판별 + 최대 80개 2차 편집` 상한으로 제어한다.
 
 ## 주제 키워드 수정
 
@@ -195,6 +212,7 @@ Responses API를 사용할 수 있으나, 이는 현재 무료 초기 운영 경
 - `reports/briefings/YYYY-MM-DD.md`: 총평과 I~III 절, 선정 칼럼이 있을 때만 IV절을 덧붙인 노션 발행 원본
 - `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·API 갱신·제거·오류 집계
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
+- `health/editorial/latest.json`: GPT 편집 후보·선정 수, 모델과 성공·실패 상태(본문·응답은 기록하지 않음)
 
 브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스다. IV절
 주요 칼럼은 한겨레 `세계의 창` 지제크, 미디어스 김민하, 경향신문 `고병권의 묵묵`을 주제와

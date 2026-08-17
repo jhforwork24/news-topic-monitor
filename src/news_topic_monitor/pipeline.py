@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from datetime import UTC, datetime
+from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
 from pydantic import ValidationError
@@ -38,6 +39,9 @@ from .utils import (
     utc_iso,
 )
 
+if TYPE_CHECKING:
+    from .editorial import EditorialEvidenceStore
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -50,12 +54,16 @@ class Collector:
         classifier: RuleClassifier,
         adapters: list[SourceAdapter],
         max_discovery_children: int = 20,
+        evidence_store: EditorialEvidenceStore | None = None,
+        capture_all_bodies: bool = False,
     ) -> None:
         self.http = http
         self.storage = storage
         self.classifier = classifier
         self.adapters = adapters
         self.max_discovery_children = max_discovery_children
+        self.evidence_store = evidence_store
+        self.capture_all_bodies = capture_all_bodies
 
     def run(self, start: datetime, end: datetime) -> RunHealth:
         started = datetime.now(UTC)
@@ -213,14 +221,16 @@ class Collector:
         )
         verification = VerificationStatus.METADATA_ONLY
         body_digest: str | None = None
+        body_text: str | None = None
         error: str | None = None
 
-        if first.candidate and adapter.fetch_candidate_bodies:
+        if (first.candidate or self.capture_all_bodies) and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")
                 html_text = response.text
                 metadata = metadata_from_html(html_text, str(response.url))
                 body = adapter.extract_body(html_text, str(response.url))
+                body_text = body
                 body_digest = content_hash(body)
                 result = self.classifier.classify(
                     title=metadata.get("title") or discovery.title,
@@ -278,6 +288,11 @@ class Collector:
             verification_status=verification,
             collection_error=error,
         )
+        if self.evidence_store is not None:
+            self.evidence_store.upsert(record, body_text)
+        # The evidence store is scoped to the current editorial run. Do not retain
+        # article text in the repository-backed ArticleRecord.
+        body_text = None
         stored = self.storage.upsert(record)
         if discovery.refresh_only:
             return
