@@ -1,6 +1,8 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+pytest-of-root/
+news-topic-editorial-*/
 .ruff_cache/
 .coverage
 htmlcov/

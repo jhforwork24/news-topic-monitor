@@ -1,0 +1,82 @@
+name: GPT editorial daily briefing
+
+on:
+  schedule:
+    # 09:35 Asia/Seoul = 00:35 UTC, after the daily backfill and report jobs.
+    - cron: "35 0 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Optional report end date (YYYY-MM-DD)"
+        required: false
+      start:
+        description: "Optional inclusive ISO-8601 start"
+        required: false
+      end:
+        description: "Optional exclusive ISO-8601 end"
+        required: false
+      collect_hours:
+        description: "Temporary evidence collection window in hours"
+        required: false
+        default: "48"
+      dry_run:
+        description: "Run collection and GPT editing without calling Notion"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: news-topic-monitor-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  editorial-publish:
+    if: >-
+      ${{ vars.OPENAI_EDITOR_ENABLED == 'true' &&
+          (github.event_name == 'workflow_dispatch' || vars.NOTION_PUBLISH_ENABLED == 'true') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MONITOR_CONTACT: ${{ vars.MONITOR_CONTACT }}
+      REQUEST_INTERVAL_SECONDS: "2.0"
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      OPENAI_EDITOR_ENABLED: ${{ vars.OPENAI_EDITOR_ENABLED }}
+      OPENAI_EDITOR_MODEL: ${{ vars.OPENAI_EDITOR_MODEL }}
+      OPENAI_EDITOR_MAX_CANDIDATES: ${{ vars.OPENAI_EDITOR_MAX_CANDIDATES }}
+      OPENAI_EDITOR_FINAL_CANDIDATES: ${{ vars.OPENAI_EDITOR_FINAL_CANDIDATES }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_DATA_SOURCE_ID: ${{ vars.NOTION_DATA_SOURCE_ID }}
+      NOTION_CRPD_REFERENCE_URL: ${{ vars.NOTION_CRPD_REFERENCE_URL }}
+      NOTION_REPORTS_DATA_SOURCE_ID: ${{ vars.NOTION_REPORTS_DATA_SOURCE_ID }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install
+        run: python -m pip install .
+      - name: Collect temporary evidence, edit with GPT, and publish
+        env:
+          INPUT_DATE: ${{ inputs.date }}
+          INPUT_START: ${{ inputs.start }}
+          INPUT_END: ${{ inputs.end }}
+          INPUT_COLLECT_HOURS: ${{ inputs.collect_hours || '48' }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          args=(editorial-publish --collect-hours "$INPUT_COLLECT_HOURS")
+          if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
+          if test -n "$INPUT_START"; then args+=(--start "$INPUT_START"); fi
+          if test -n "$INPUT_END"; then args+=(--end "$INPUT_END"); fi
+          if test "$INPUT_DRY_RUN" = "true"; then args+=(--dry-run); fi
+          news-topic-monitor "${args[@]}"
+      - name: Commit metadata, briefing, and health outputs
+        if: ${{ always() }}
+        run: bash scripts/commit_outputs.sh

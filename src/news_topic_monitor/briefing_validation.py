@@ -2,8 +2,15 @@ from __future__ import annotations
 
 import re
 
-from .briefing import BriefingDocument, labor_editorial_exclusion, render_briefing_markdown
-from .models import Classification
+from .briefing import (
+    BriefingDocument,
+    editorial_opinion_allowed,
+    labor_editorial_exclusion,
+    render_briefing_markdown,
+)
+from .models import ArticleRecord, Classification
+from .sources import BROADCAST_SOURCES
+from .utils import stable_article_key
 
 SECTION_II_ALLOWED_REFERENCE_CATEGORIES = frozenset({"현행 제도", "관련 연구 및 문서"})
 FORBIDDEN_SUMMARY_MARKERS = ('"', "'", "“", "”", "\u2018", "\u2019", "...", "…")
@@ -15,8 +22,11 @@ class BriefingValidationError(ValueError):
 
 def validate_briefing(document: BriefingDocument) -> None:
     errors: list[str] = []
+    editorial_ids = set(document.editorially_selected_ids)
+    rendered_article_ids: set[str] = set()
     for section in document.sections:
         for issue in section.issues:
+            rendered_article_ids.update(_article_id(article) for article in issue.articles)
             if len(issue.previous_coverage) > 3:
                 errors.append(f"{section.title} / {issue.title}: 이전 보도가 3개를 초과함")
             if any(marker in issue.summary for marker in FORBIDDEN_SUMMARY_MARKERS):
@@ -27,8 +37,8 @@ def validate_briefing(document: BriefingDocument) -> None:
                 errors.append(f"{section.title} / {issue.title}: 요약이 중립적 서술체가 아님")
 
             tone_sentences = _sentence_count(issue.tone_analysis)
-            if len(issue.articles) == 1 and tone_sentences > 1:
-                errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 1문장을 초과함")
+            if len(issue.articles) == 1 and issue.tone_analysis.strip() and tone_sentences != 1:
+                errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
             if len(issue.articles) > 1 and not 1 <= tone_sentences <= 4:
                 errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
 
@@ -37,6 +47,7 @@ def validate_briefing(document: BriefingDocument) -> None:
                     article.title
                     for article in issue.articles
                     if article.classification != Classification.RELEVANT
+                    and _article_id(article) not in editorial_ids
                 ]
                 if invalid:
                     errors.append(f"{section.title} / {issue.title}: 자동확정되지 않은 기사 포함")
@@ -54,6 +65,23 @@ def validate_briefing(document: BriefingDocument) -> None:
                     )
                 if any(labor_editorial_exclusion(article) for article in issue.articles):
                     errors.append(f"{section.title} / {issue.title}: 사진·연예·스포츠 보도 포함")
+
+            broadcast_articles = [
+                article for article in issue.articles if article.source in BROADCAST_SOURCES
+            ]
+            if section.title.startswith(("I.", "II.")) and broadcast_articles:
+                errors.append(f"{section.title} / {issue.title}: 방송 보도가 I·II절에 포함됨")
+            if section.title.startswith("III.") and len(broadcast_articles) != len(issue.articles):
+                errors.append(f"{section.title} / {issue.title}: 방송사가 아닌 보도가 포함됨")
+            if section.title.startswith("IV.") and any(
+                not editorial_opinion_allowed(article) for article in issue.articles
+            ):
+                errors.append(f"{section.title} / {issue.title}: 허용 범위 밖의 칼럼이 포함됨")
+
+    if len(document.editorially_selected_ids) != len(editorial_ids):
+        errors.append("GPT 편집 선정 ID가 중복됨")
+    if editorial_ids and editorial_ids != rendered_article_ids:
+        errors.append("GPT 편집 선정 ID와 렌더링된 기사 ID가 일치하지 않음")
 
     rendered = render_briefing_markdown(document, crpd_url=None)
     forbidden_output = {
@@ -75,3 +103,13 @@ def _sentence_count(value: str) -> int:
     if not value.strip():
         return 0
     return len(re.findall(r"[.!?](?=\s|$)", value))
+
+
+def _article_id(article: ArticleRecord) -> str:
+    return stable_article_key(
+        article.source,
+        article.canonical_url,
+        article.article_id,
+        article.title,
+        article.published_at,
+    )

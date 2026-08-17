@@ -25,7 +25,9 @@ permissions:
 
 jobs:
   publish:
-    if: ${{ vars.NOTION_PUBLISH_ENABLED == 'true' }}
+    # Keep the deterministic publisher as a fallback, but never create a second
+    # briefing when the GPT editorial workflow owns publication.
+    if: ${{ vars.NOTION_PUBLISH_ENABLED == 'true' && vars.OPENAI_EDITOR_ENABLED != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:

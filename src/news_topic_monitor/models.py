@@ -165,3 +165,92 @@ class StoreResult(StrEnum):
     NEW = "new"
     UPDATED = "updated"
     DUPLICATE = "duplicate"
+
+
+class EditorialSection(StrEnum):
+    DISABILITY = "disability"
+    LABOR = "labor"
+    BROADCAST = "broadcast"
+    OPINION = "opinion"
+
+
+class EditorialVerdict(StrEnum):
+    INCLUDE = "include"
+    EXCLUDE = "exclude"
+    REVIEW = "review"
+
+
+class EditorialCandidate(BaseModel):
+    """Ephemeral evidence supplied to the editorial model, never repository data."""
+
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    candidate_id: str
+    source: str
+    canonical_url: str
+    title: str
+    byline: str | None
+    section: str | None
+    published_at: datetime | None
+    summary: str | None
+    evidence_text: str
+    body_status: BodyStatus
+    verification_status: VerificationStatus
+    rule_classification: Classification
+    rule_score: float
+
+    @property
+    def selectable(self) -> bool:
+        if self.verification_status == VerificationStatus.BODY_VERIFIED:
+            return len(self.evidence_text.strip()) >= 80
+        return (
+            self.body_status == BodyStatus.NOT_REQUESTED
+            and len((self.summary or self.evidence_text).strip()) >= 80
+        )
+
+
+class EditorialAssessment(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    candidate_id: str
+    verdict: EditorialVerdict
+    section: EditorialSection | None
+    issue_label: str
+    importance: int
+    reason: str
+
+    @model_validator(mode="after")
+    def included_candidate_requires_section(self) -> EditorialAssessment:
+        if self.verdict == EditorialVerdict.INCLUDE and self.section is None:
+            raise ValueError("included editorial assessment requires a section")
+        return self
+
+
+class EditorialAssessmentBatch(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    assessments: list[EditorialAssessment]
+
+
+class EditorialIssueDecision(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    section: EditorialSection
+    title: str
+    candidate_ids: list[str]
+    summary: str
+    tone_analysis: str
+
+
+class EditorialExclusion(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    candidate_id: str
+    reason: str
+
+
+class EditorialPlan(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    issues: list[EditorialIssueDecision]
+    exclusions: list[EditorialExclusion]

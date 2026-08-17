@@ -3,17 +3,30 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from datetime import UTC, datetime, time, timedelta
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from .adapters import ALL_ADAPTERS
+from .adapters.base import SourceAdapter
 from .adapters.hani import HaniAdapter
 from .adapters.mbc import MbcAdapter
-from .briefing import build_briefing, write_briefing
+from .briefing import BriefingDocument, build_briefing, build_editorial_briefing, write_briefing
 from .briefing_validation import BriefingValidationError, validate_briefing
 from .classifier import RuleClassifier
 from .constants import project_root
+from .editorial import (
+    EditorialApiError,
+    EditorialConfigurationError,
+    EditorialEvidenceStore,
+    EditorialValidationError,
+    OpenAIEditorialClient,
+    OpenAIEditorialSettings,
+    write_editorial_failure,
+    write_editorial_health,
+)
 from .http import SafeHttpClient
 from .notion_publish import (
     NotionConfigurationError,
@@ -72,6 +85,24 @@ def build_parser() -> argparse.ArgumentParser:
     publish.add_argument(
         "--dry-run", action="store_true", help="render the briefing without calling Notion"
     )
+
+    editorial = subparsers.add_parser(
+        "editorial-publish",
+        help="collect broad evidence, ask GPT to edit, validate, and publish to Notion",
+    )
+    _add_report_window_arguments(editorial)
+    editorial.add_argument(
+        "--collect-hours",
+        type=float,
+        default=48.0,
+        help="overlapping evidence collection window before the report boundary",
+    )
+    editorial.add_argument(
+        "--sources", nargs="*", choices=[adapter.source for adapter in ALL_ADAPTERS]
+    )
+    editorial.add_argument(
+        "--dry-run", action="store_true", help="run GPT editing without calling Notion"
+    )
     return parser
 
 
@@ -91,6 +122,8 @@ def main(argv: list[str] | None = None) -> int:
     except ContactRequiredError as exc:
         LOGGER.error("%s; no network request was made", exc)
         return 2
+    if args.command == "editorial-publish":
+        return _editorial_publish(args, settings)
     return _collect(args, settings)
 
 
@@ -105,21 +138,8 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
     assert start is not None
     if start >= end:
         raise SystemExit("start must be earlier than end")
-    selected = set(args.sources or [])
     storage = JsonlStorage(settings.root)
-    adapters = []
-    for adapter_type in ALL_ADAPTERS:
-        if selected and adapter_type.source not in selected:
-            continue
-        if adapter_type is HaniAdapter:
-            adapters.append(HaniAdapter(settings.hani_max_pages))
-        elif adapter_type is MbcAdapter:
-            stale_ids = storage.stale_article_ids(
-                "mbc", before=datetime.now(UTC) - YOUTUBE_REFRESH_AFTER
-            )
-            adapters.append(MbcAdapter(settings.youtube_api_key, refresh_video_ids=stale_ids))
-        else:
-            adapters.append(adapter_type())
+    adapters = _build_adapters(settings, storage, set(args.sources or []))
     classifier = RuleClassifier(settings.root / "config" / "topics.yml")
     with SafeHttpClient(settings) as http:
         health = Collector(
@@ -174,6 +194,107 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
     print(path)
     if args.command == "briefing" or args.dry_run:
         return 0
+    return _publish_to_notion(document, root)
+
+
+def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
+    date_value, start, end = _report_window(args)
+    report_date = date_value.isoformat()
+    collection_start = end - timedelta(hours=args.collect_hours)
+    if collection_start >= end:
+        raise SystemExit("collect-hours must be greater than zero")
+
+    storage = JsonlStorage(settings.root)
+    adapters = _build_adapters(settings, storage, set(args.sources or []))
+    try:
+        editorial_settings = OpenAIEditorialSettings.from_env()
+        runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
+        with TemporaryDirectory(
+            prefix="news-topic-editorial-", dir=runner_temp
+        ) as temporary_directory:
+            database_path = Path(temporary_directory) / "candidates.sqlite3"
+            with EditorialEvidenceStore(database_path) as evidence_store:
+                classifier = RuleClassifier(settings.root / "config" / "topics.yml")
+                with SafeHttpClient(settings) as http:
+                    health = Collector(
+                        http=http,
+                        storage=storage,
+                        classifier=classifier,
+                        adapters=adapters,
+                        max_discovery_children=settings.max_discovery_children,
+                        evidence_store=evidence_store,
+                        capture_all_bodies=True,
+                    ).run(collection_start, end)
+                if health.all_sources_failed:
+                    raise EditorialValidationError("모든 출처 수집에 실패하여 편집을 중단함")
+
+                candidates = evidence_store.candidates(start=start, end=end)
+                with OpenAIEditorialClient(editorial_settings) as editor:
+                    run = editor.edit(candidates)
+
+            # The database remains confined to this temporary directory and is
+            # removed automatically before the command returns.
+            document = build_editorial_briefing(
+                storage,
+                plan=run.plan,
+                start=start,
+                end=end,
+                report_date=report_date,
+            )
+            validate_briefing(document)
+            path = write_briefing(
+                document,
+                output_path=(settings.root / "reports" / "briefings" / f"{report_date}.md"),
+                crpd_url=None,
+            )
+            write_editorial_health(settings.root, run, report_date=report_date)
+            print(path)
+            if args.dry_run:
+                return 0
+            return _publish_to_notion(document, settings.root)
+    except EditorialConfigurationError as exc:
+        LOGGER.error("%s", exc)
+        write_editorial_failure(
+            settings.root,
+            report_date=report_date,
+            status="configuration_error",
+            error=str(exc),
+        )
+        return 2
+    except (EditorialApiError, EditorialValidationError, BriefingValidationError) as exc:
+        LOGGER.error("%s", exc)
+        write_editorial_failure(
+            settings.root,
+            report_date=report_date,
+            status="failed",
+            error=str(exc),
+        )
+        return 3
+
+
+def _build_adapters(
+    settings: Settings,
+    storage: JsonlStorage,
+    selected: set[str],
+) -> list[SourceAdapter]:
+    adapters: list[SourceAdapter] = []
+    for adapter_type in ALL_ADAPTERS:
+        if selected and adapter_type.source not in selected:
+            continue
+        if adapter_type is HaniAdapter:
+            adapters.append(HaniAdapter(settings.hani_max_pages))
+        elif adapter_type is MbcAdapter:
+            stale_ids = storage.stale_article_ids(
+                "mbc", before=datetime.now(UTC) - YOUTUBE_REFRESH_AFTER
+            )
+            adapters.append(MbcAdapter(settings.youtube_api_key, refresh_video_ids=stale_ids))
+        else:
+            adapters.append(adapter_type())
+    return adapters
+
+
+def _publish_to_notion(document: BriefingDocument, root: Path) -> int:
+    report_date = document.report_date
     try:
         settings = NotionPublishSettings.from_env()
         with NotionPublisher(settings) as publisher:
@@ -182,13 +303,13 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
                 publisher.record_report(document, result)
             except Exception as exc:
                 try:
-                    report_url = publisher.record_failure(date_value.isoformat(), str(exc))
+                    report_url = publisher.record_failure(report_date, str(exc))
                 except Exception as report_exc:
                     LOGGER.error("could not record Notion failure report: %s", report_exc)
                     report_url = None
                 write_notion_health(
                     root,
-                    report_date=date_value.isoformat(),
+                    report_date=report_date,
                     status="failed",
                     page_url=report_url,
                     error=str(exc),
@@ -196,7 +317,7 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
                 raise
         write_notion_health(
             root,
-            report_date=date_value.isoformat(),
+            report_date=report_date,
             status=result.status,
             page_url=result.page_url,
             fingerprint=result.fingerprint,
@@ -208,7 +329,7 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
         LOGGER.error("%s", exc)
         write_notion_health(
             root,
-            report_date=date_value.isoformat(),
+            report_date=report_date,
             status="configuration_error",
             error=str(exc),
         )
