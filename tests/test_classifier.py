@@ -48,6 +48,15 @@ def test_irrelevant_boundary(topics_path) -> None:
     assert result.topic_score == 0
 
 
+def test_weather_facility_disruption_is_not_disability_context(topics_path) -> None:
+    result = RuleClassifier(topics_path).classify(
+        title="거제 물폭탄으로 주택 침수와 주민 대피",
+        summary="도로 통행 장애와 공공시설 피해가 이어졌다.",
+    )
+    assert result.classification == Classification.IRRELEVANT
+    assert "장애인+시설" not in result.matched_terms
+
+
 def test_labor_care_poverty_topic_is_independently_configured(topics_path) -> None:
     result = RuleClassifier(topics_path, topic="labor_care_poverty").classify(
         title="공공돌봄 노동자 임금과 고용 보장 촉구",

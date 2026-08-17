@@ -5,7 +5,19 @@ from datetime import UTC, datetime
 
 import httpx
 
-from news_topic_monitor.briefing import BriefingDocument, BriefingSection
+from news_topic_monitor.briefing import (
+    BriefingDocument,
+    BriefingIssue,
+    BriefingReference,
+    BriefingSection,
+    PreviousCoverage,
+)
+from news_topic_monitor.models import (
+    ArticleRecord,
+    BodyStatus,
+    Classification,
+    VerificationStatus,
+)
 from news_topic_monitor.notion_publish import (
     NotionPublisher,
     NotionPublishSettings,
@@ -34,6 +46,64 @@ def test_notion_blocks_keep_technical_notes_out_of_briefing() -> None:
     assert "단순 홍보 기사 제외" not in rendered
     assert "참세상" not in rendered
     assert "점검" not in rendered
+
+
+def test_notion_issue_uses_article_bullets_and_one_reference_toggle() -> None:
+    now = datetime(2026, 8, 15, 1, tzinfo=UTC)
+    article = ArticleRecord(
+        source="hani",
+        article_id="1",
+        canonical_url="https://example.com/article",
+        title="장애인 이동권 보장 촉구",
+        byline="홍길동 기자",
+        section="사회",
+        published_at=now,
+        first_seen_at=now,
+        last_seen_at=now,
+        summary="장애인단체가 이동권 보장을 촉구했다.",
+        body_status=BodyStatus.FETCHED,
+        classification=Classification.RELEVANT,
+        topic_score=10.0,
+        classification_reason="규칙 판정",
+        verification_status=VerificationStatus.BODY_VERIFIED,
+    )
+    issue = BriefingIssue(
+        title=article.title,
+        articles=[article],
+        summary="장애인단체는 이동권 보장을 요구했다.",
+        tone_analysis="한겨레는 당사자 요구를 중심으로 보도했다.",
+        previous_coverage=[
+            PreviousCoverage(
+                "2026-08-14",
+                "이전 이동권 보도",
+                "https://example.com/previous",
+                "정책 변화 여부를 대조한다.",
+            )
+        ],
+        references=[
+            BriefingReference(
+                "현행 제도",
+                "교통약자의 이동편의 증진법",
+                "https://example.com/law",
+                "법적 의무를 확인한다.",
+            )
+        ],
+    )
+    document = _document()
+    document.sections = [BriefingSection("I. 장애정책·장애인운동", [issue])]
+    blocks = notion_blocks(document, crpd_url=None)
+    rendered = json.dumps(blocks, ensure_ascii=False)
+    bullets = [block for block in blocks if block["type"] == "bulleted_list_item"]
+    assert len(bullets) == 1
+    assert "홍길동 기자" in rendered
+    assert "이슈 요약·보도 논조" in rendered
+    assert "기사 요약" not in rendered
+    assert "이전 보도 참고" not in rendered
+    assert "KST" not in rendered
+    toggle = next(block for block in blocks if block["type"] == "toggle")
+    toggle_text = json.dumps(toggle, ensure_ascii=False)
+    assert "이전 보도" in toggle_text
+    assert "현행 제도" in toggle_text
 
 
 def test_notion_publish_creates_page_and_children() -> None:

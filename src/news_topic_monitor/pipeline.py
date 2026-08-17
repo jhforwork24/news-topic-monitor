@@ -260,6 +260,7 @@ class Collector:
             article_id=discovery.article_id,
             canonical_url=discovery.canonical_url,
             title=discovery.title,
+            byline=discovery.byline,
             section=discovery.section,
             published_at=discovery.published_at,
             updated_at=discovery.updated_at,
@@ -300,7 +301,7 @@ def _prefer_richer(
     if existing is None:
         return incoming
     values = incoming.model_dump()
-    for field in ("article_id", "section", "published_at", "updated_at", "summary"):
+    for field in ("article_id", "byline", "section", "published_at", "updated_at", "summary"):
         if not values.get(field) and getattr(existing, field):
             values[field] = getattr(existing, field)
     if incoming.title.startswith("[제목 미제공]") and not existing.title.startswith(
@@ -314,7 +315,7 @@ def _merge_html_metadata(
     discovery: ArticleDiscovery, metadata: dict[str, str | None]
 ) -> ArticleDiscovery:
     values = discovery.model_dump()
-    for field in ("canonical_url", "title", "summary", "section"):
+    for field in ("canonical_url", "title", "byline", "summary", "section"):
         if metadata.get(field):
             values[field] = metadata[field]
     for field in ("published_at", "updated_at"):

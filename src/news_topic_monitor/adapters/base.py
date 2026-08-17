@@ -81,6 +81,7 @@ def parse_xml_feed(content: bytes, source: str) -> DiscoveryPage:
                         article_id=child_text(item, "guid"),
                         canonical_url=normalize_url(unescape(unescape(link))),
                         title=normalize_text(title),
+                        byline=child_text(item, "creator", "author"),
                         section=child_text(item, "category"),
                         published_at=parse_datetime(published_raw) if published_raw else None,
                         updated_at=parse_datetime(updated_raw) if updated_raw else None,
@@ -167,6 +168,9 @@ def metadata_from_html(html_text: str, page_url: str) -> dict[str, str | None]:
     canonical = soup.select_one('link[rel="canonical"]')
     title_meta = soup.select_one('meta[property="og:title"]')
     description = soup.select_one('meta[property="og:description"], meta[name="description"]')
+    author_meta = soup.select_one(
+        'meta[name="author"], meta[property="article:author"], meta[name="byl"]'
+    )
     section = soup.select_one('meta[property="article:section"]')
     published = json_ld.get("datePublished") or _meta_content(soup, "article:published_time")
     modified = json_ld.get("dateModified") or _meta_content(soup, "article:modified_time")
@@ -183,12 +187,33 @@ def metadata_from_html(html_text: str, page_url: str) -> dict[str, str | None]:
         "summary": short_text(
             str(json_ld.get("description") or (description.get("content") if description else ""))
         ),
+        "byline": _json_ld_author(json_ld.get("author"))
+        or (
+            normalize_text(str(author_meta.get("content")))
+            if author_meta and author_meta.get("content")
+            else None
+        ),
         "section": normalize_text(section.get("content"))
         if section and section.get("content")
         else None,
         "published_at": str(published) if published else None,
         "updated_at": str(modified) if modified else None,
     }
+
+
+def _json_ld_author(value: object) -> str | None:
+    values = value if isinstance(value, list) else [value]
+    names: list[str] = []
+    for item in values:
+        if isinstance(item, str):
+            name = normalize_text(item)
+        elif isinstance(item, dict):
+            name = normalize_text(str(item.get("name") or ""))
+        else:
+            name = ""
+        if name and name not in names:
+            names.append(name)
+    return ", ".join(names) or None
 
 
 def _meta_content(soup: BeautifulSoup, property_name: str) -> str | None:

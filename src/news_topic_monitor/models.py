@@ -45,6 +45,7 @@ class ArticleDiscovery(BaseModel):
     article_id: str | None = None
     canonical_url: str
     title: str
+    byline: str | None = None
     section: str | None = None
     published_at: datetime | None = None
     updated_at: datetime | None = None
@@ -88,6 +89,7 @@ class ArticleRecord(BaseModel):
     article_id: str | None = None
     canonical_url: str
     title: str
+    byline: str | None = None
     section: str | None = None
     published_at: datetime | None = None
     updated_at: datetime | None = None
