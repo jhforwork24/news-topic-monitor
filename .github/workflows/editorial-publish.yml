@@ -35,7 +35,8 @@ permissions:
 jobs:
   editorial-publish:
     if: >-
-      ${{ vars.OPENAI_EDITOR_ENABLED == 'true' &&
+      ${{ vars.CHAT_EDITORIAL_ENABLED == 'false' &&
+          vars.OPENAI_EDITOR_ENABLED == 'true' &&
           (github.event_name == 'workflow_dispatch' || vars.NOTION_PUBLISH_ENABLED == 'true') }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
