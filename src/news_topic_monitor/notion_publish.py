@@ -105,6 +105,7 @@ class EditorialQueueSettings:
     max_candidates: int = 180
     chunk_size: int = 24
     evidence_chars: int = 1600
+    body_fetch_limit_per_source: int = 60
 
     @classmethod
     def from_env(cls) -> EditorialQueueSettings:
@@ -115,6 +116,10 @@ class EditorialQueueSettings:
             chunk_size=max(5, min(_environment_integer("CHAT_EDITORIAL_CHUNK_SIZE", 24), 24)),
             evidence_chars=max(
                 600, min(_environment_integer("CHAT_EDITORIAL_EVIDENCE_CHARS", 1600), 1800)
+            ),
+            body_fetch_limit_per_source=max(
+                10,
+                min(_environment_integer("CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE", 60), 200),
             ),
         )
 
