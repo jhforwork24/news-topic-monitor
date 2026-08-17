@@ -35,7 +35,9 @@ class StubHttp:
         self.requested.append((url, purpose))
         if "bad.test" in url:
             raise StructureChangedError("synthetic source failure")
-        return self.Response()
+        response = self.Response()
+        response.url = url
+        return response
 
 
 class GoodAdapter(SourceAdapter):
@@ -81,6 +83,24 @@ class BroadEvidenceAdapter(GoodAdapter):
     def extract_body(self, html_text, url):
         del html_text, url
         return "합성 기사 본문으로 규칙과 무관한 후보도 임시 편집 근거에 포함되는지 확인한다."
+
+
+class ManyBroadEvidenceAdapter(BroadEvidenceAdapter):
+    source = "many_broad"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url=f"https://good.test/article/{number}",
+                    title=f"일반 경제 기사 {number}",
+                    published_at=datetime(2026, 8, 15, number, tzinfo=UTC),
+                )
+                for number in (1, 2, 3)
+            ]
+        )
 
 
 class MetadataOnlyAdapter(GoodAdapter):
@@ -221,3 +241,38 @@ def test_editorial_collection_temporarily_captures_broad_body_only(tmp_path, top
     assert record.verification_status == VerificationStatus.BODY_VERIFIED
     persisted = next((tmp_path / "data" / "articles").glob("*.jsonl")).read_text()
     assert "합성 기사 본문" not in persisted
+
+
+def test_editorial_collection_caps_broad_body_requests_per_source(tmp_path, topics_path) -> None:
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    evidence_path = tmp_path / "temporary" / "candidates.sqlite3"
+    with EditorialEvidenceStore(evidence_path) as evidence_store:
+        Collector(
+            http=http,
+            storage=storage,
+            classifier=RuleClassifier(topics_path),
+            adapters=[ManyBroadEvidenceAdapter()],
+            evidence_store=evidence_store,
+            capture_all_bodies=True,
+            capture_body_start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            capture_body_limit_per_source=2,
+        ).run(
+            datetime(2026, 8, 15, 0, tzinfo=UTC),
+            datetime(2026, 8, 15, 4, tzinfo=UTC),
+        )
+        candidates = evidence_store.candidates(
+            start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 15, 4, tzinfo=UTC),
+        )
+
+    body_urls = [url for url, purpose in http.requested if purpose == "article body"]
+    assert body_urls == ["https://good.test/article/2", "https://good.test/article/3"]
+    assert len(candidates) == 3
+    assert (
+        sum(
+            candidate.verification_status == VerificationStatus.BODY_VERIFIED
+            for candidate in candidates
+        )
+        == 2
+    )
