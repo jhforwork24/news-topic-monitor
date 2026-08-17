@@ -164,6 +164,7 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `CHAT_EDITORIAL_MAX_CANDIDATES` | 아니오 | `180` | ChatGPT 예약 작업에 제공할 검증 후보 상한 |
 | `CHAT_EDITORIAL_CHUNK_SIZE` | 아니오 | `24` | Notion 임시 대기열 한 페이지의 후보 수(최대 24) |
 | `CHAT_EDITORIAL_EVIDENCE_CHARS` | 아니오 | `1600` | 후보별 임시 확인 근거 글자 상한(최대 1800) |
+| `CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE` | 아니오 | `60` | 보고 구간에서 출처별로 넓게 확인할 일반 기사 본문 상한. 규칙 후보는 상한 밖에서도 확인 |
 
 `NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
 저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
@@ -201,6 +202,8 @@ GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를
 처리한다. 예약 작업은 [`docs/chat-editorial-instructions.md`](docs/chat-editorial-instructions.md)를
 읽고 현재 날짜의 `READY` 매니페스트만 사용해 이 채팅에 검수용 초안을 보고한다. 이 모드가 켜진
 동안 기존 규칙 기반 노션 발행과 OpenAI API 편집 발행은 중복 발행을 막기 위해 실행하지 않는다.
+임시 SQLite에는 수집 구간의 메타데이터 후보를 모두 기록하되, 본문 요청은 보고 구간의 출처별
+최신 60건과 규칙 후보로 제한해 언론사 부하와 실행 시간을 제어한다.
 
 ## 주제 키워드 수정
 

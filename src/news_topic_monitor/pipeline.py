@@ -56,6 +56,8 @@ class Collector:
         max_discovery_children: int = 20,
         evidence_store: EditorialEvidenceStore | None = None,
         capture_all_bodies: bool = False,
+        capture_body_start: datetime | None = None,
+        capture_body_limit_per_source: int | None = None,
     ) -> None:
         self.http = http
         self.storage = storage
@@ -64,6 +66,8 @@ class Collector:
         self.max_discovery_children = max_discovery_children
         self.evidence_store = evidence_store
         self.capture_all_bodies = capture_all_bodies
+        self.capture_body_start = capture_body_start
+        self.capture_body_limit_per_source = capture_body_limit_per_source
 
     def run(self, start: datetime, end: datetime) -> RunHealth:
         started = datetime.now(UTC)
@@ -194,18 +198,54 @@ class Collector:
             raise RuntimeError("all discovery paths failed: " + "; ".join(page_errors))
         health.errors.extend(page_errors)
         health.discovered = len(discoveries)
-        for discovery in discoveries.values():
+        capture_body_keys = self._capture_body_keys(discoveries, start=start, end=end)
+        for key, discovery in discoveries.items():
             if not discovery.refresh_only and not in_window(discovery.published_at, start, end):
                 continue
             if discovery.refresh_only:
                 health.refreshed += 1
             else:
                 health.in_window += 1
-            self._process_article(adapter, discovery, health)
+            self._process_article(
+                adapter,
+                discovery,
+                health,
+                capture_body=key in capture_body_keys,
+            )
         health.success = True
 
+    def _capture_body_keys(
+        self,
+        discoveries: dict[str, ArticleDiscovery],
+        *,
+        start: datetime,
+        end: datetime,
+    ) -> set[str]:
+        if not self.capture_all_bodies:
+            return set()
+        if self.capture_body_limit_per_source is None and self.capture_body_start is None:
+            return set(discoveries)
+
+        body_start = self.capture_body_start or start
+        eligible = [
+            (key, discovery)
+            for key, discovery in discoveries.items()
+            if not discovery.refresh_only
+            and discovery.published_at is not None
+            and body_start <= discovery.published_at < end
+        ]
+        eligible.sort(key=lambda item: item[1].published_at, reverse=True)
+        if self.capture_body_limit_per_source is not None:
+            eligible = eligible[: self.capture_body_limit_per_source]
+        return {key for key, _ in eligible}
+
     def _process_article(
-        self, adapter: SourceAdapter, discovery: ArticleDiscovery, health: SourceHealth
+        self,
+        adapter: SourceAdapter,
+        discovery: ArticleDiscovery,
+        health: SourceHealth,
+        *,
+        capture_body: bool = False,
     ) -> None:
         now = datetime.now(UTC)
         first = self.classifier.classify(
@@ -224,7 +264,7 @@ class Collector:
         body_text: str | None = None
         error: str | None = None
 
-        if (first.candidate or self.capture_all_bodies) and adapter.fetch_candidate_bodies:
+        if (first.candidate or capture_body) and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")
                 html_text = response.text
