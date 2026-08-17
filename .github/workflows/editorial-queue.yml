@@ -1,11 +1,6 @@
 name: Export ChatGPT editorial queue
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/editorial-queue.yml"
   schedule:
     # 09:35 Asia/Seoul = 00:35 UTC, after backfill and the daily report.
     - cron: "35 0 * * *"
@@ -51,6 +46,7 @@ jobs:
       CHAT_EDITORIAL_MAX_CANDIDATES: ${{ vars.CHAT_EDITORIAL_MAX_CANDIDATES }}
       CHAT_EDITORIAL_CHUNK_SIZE: ${{ vars.CHAT_EDITORIAL_CHUNK_SIZE }}
       CHAT_EDITORIAL_EVIDENCE_CHARS: ${{ vars.CHAT_EDITORIAL_EVIDENCE_CHARS }}
+      CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE: ${{ vars.CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE }}
     steps:
       - uses: actions/checkout@v7
         with:
