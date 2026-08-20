@@ -12,3 +12,11 @@
 - 수집 실패나 robots 차단을 기사 부재로 해석하지 않고 보고서·health에 명시한다.
 - 노션 발행은 정확한 제목·날짜와 관리 표식을 확인하고 사용자 작성 페이지를 덮어쓰지 않는다.
 - 공개 저장소 산출물에 개인 노션 페이지 URL·token·data source ID를 기록하지 않는다.
+- `config/source-registry.yaml`의 장애언론 census 3곳과 지정매체 reverse-search 9곳을 임의로
+  축소하지 않는다. 변경이 필요하면 정책 파일·문서·회귀시험을 함께 갱신한다.
+- Naver API Hub·외부 검색 결과는 누락 탐지와 역검색 상태 확인에만 사용하며 원문 검증 등급을
+  올리는 근거로 사용하지 않는다.
+- 최종 Notion 발행 주체는 `config/briefing-policy.yaml`의 단일 writer만 허용한다. 그림자·수동
+  fallback 워크플로에 예약 발행을 추가하지 않는다.
+- 독립 감사 fatal error, 진행형 사건 final-state 미완료, 미분류 실패가 하나라도 있으면 발행을
+  우회하지 않는다. 실패 원인·대체경로·결과·다음 조치를 보고사항에 남긴다.

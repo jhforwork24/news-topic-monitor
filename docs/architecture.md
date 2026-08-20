@@ -18,9 +18,14 @@ flowchart LR
     F --> H["2차 규칙 판별·본문 해시"]
     H --> I["원문·HTML 즉시 폐기"]
     I --> G
-    G --> J["JSONL 저장·검토 목록"]
-    J --> K["KST 일일보고·4절 브리핑·health"]
-    K --> L["선택적 Notion REST 발행"]
+    G --> J["JSONL 메타데이터·provenance"]
+    J --> K["공식목록 census·Naver gap detection"]
+    K --> M["GPT 판별·초안"]
+    M --> N["독립 GPT 감사"]
+    N --> O["진행형 사건 final-state 재수집"]
+    O --> P["machine-checkable publish gate"]
+    P -->|"PASS"| L["Notion 단일 writer 발행"]
+    P -->|"BLOCK"| Q["브리핑 보고사항"]
 ```
 
 ## 모듈 책임
@@ -32,11 +37,16 @@ flowchart LR
 - `classifier.py`: `topics.yml` 로딩, 필드 가중치·조합·제외 문맥·임계값 계산,
   선택적 의미판별 인터페이스
 - `pipeline.py`: 출처 격리, 시간창 필터, 1·2차 판별, 본문 폐기, health 집계
+- `policy.py`: `source-registry.yaml`과 `briefing-policy.yaml` 스키마 검증
+- `gap_detection.py`: Naver API Hub 원문 URL을 결정론적 수집 URL 집합과 대조한 잠재 누락 탐지,
+  지정 9개 매체 역검색 상태 기록
+- `final_state.py`: 진행형 사건의 발행 직전 공식 출처 재수집 결과 비교
+- `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
 - `storage.py`: 멱등 JSONL upsert, review 동기화, state·health 원자적 쓰기
 - `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
 - `briefing.py`: I~III 절 선정, 결과가 있을 때만 IV절 칼럼 선정, 이슈 연결 칼럼 역검색, CRPD 매핑
 - `notion_publish.py`: exact title/date 멱등 발행, 관리 표식 충돌 방지, 발행 health
-- `sources.py`: 16개 출처명과 종합·노동대안·장애언론·방송 매체군 정의
+- `sources.py`: 17개 출처명과 종합·노동대안·장애언론·방송 매체군 정의
 - `cli.py`: collect, backfill, report, briefing, publish-notion 명령
 
 ## robots.txt와 요청 흐름
@@ -102,13 +112,28 @@ III절은 방송 장애 판별을 사용한다. IV절은 3개 지정 칼럼과 7
 선정하며, 결과가 없으면 절 자체를 생략한다. 생성 문서는 형식·문장·분류 검증을 통과해야만 노션
 발행 단계로 진행한다.
 
-노션 발행은 data source에서 같은 날짜의 브리핑 제목을 모두 조회하고 가장 높은 `vN`에 1을
-더한 새 페이지를 생성한다. 동일한 내용의 재실행이라도 기존 페이지를 갱신·삭제하지 않고
-다음 버전을 새로 발행한다. 브리핑에서 배제한 편집·분류·출처 점검 사항은 같은 버전의
-보고사항 페이지에 기록한다. 토큰은 secret으로만 받고 로그·health에 기록하지 않는다. Notion
-연결이 없어도 수집·저장·Markdown 브리핑은 정상 작동한다.
+노션 발행은 같은 날짜에 이미 브리핑이 있으면 새 페이지를 만들지 않는 날짜 단위 멱등성을
+적용한다. `editorial-publish.yml`만 예약 writer이며 수동 그림자·fallback은 같은 시각에 실행되지
+않는다. 브리핑에서 배제한 편집·분류·출처 점검 사항과 gate의 degraded·차단 사유는 보고사항에
+기록한다. 토큰은 secret으로만 받고 로그·health에 기록하지 않는다.
 
 ## 저장과 멱등성
+
+`evidence/YYYY-MM-DD.json`은 기사 본문을 제외하고 기사별 `canonical_url`, `title`, `outlet`,
+`reporter`, `published_at`, `modified_at`, `discovered_at`, `last_checked_at`, `discovery_route`,
+`full_body_status`, `body_hash`, `verification_grade(A-D)`, `issue_id`,
+`primary_source_validation`을 기록한다. 같은 파일에 장애언론 census, Naver gap detection,
+지정매체 reverse-search, final-state 결과도 함께 둬 최종 gate 판단을 재현할 수 있게 한다.
+독립 검색 결과 중 등록 출처의 원문 URL이 결정론적 수집 집합에 없으면 `potential_gaps`로 남긴다.
+장애언론 3곳의 potential gap은 census COMPLETE와 모순되므로 gate를 차단하고, 다른 출처의 gap은
+명시적 경고와 다음 조치로 보고한다.
+
+검증등급 A는 공식 원문 본문과 해시를 확보한 경우, B는 공식 메타데이터만 확인한 경우, C는
+독립 검색 색인에서만 발견한 경우, D는 검증할 수 없는 경우다. C·D는 핵심기사와 논조 분석의
+근거가 될 수 없다. 정책·법률·통계의 별도 원자료 확인이 필요한 경우
+`primary_source_validation=pending`으로 남기고 확인 전에는 `verified`로 올리지 않는다. 독립 GPT
+감사는 evidence에 없거나 원자료 확인 상태가 없는 법률·통계 주장을 초안이 새로 덧붙이면 fatal로
+판정한다.
 
 저장키 우선순위는 정규화 canonical URL, `source + article_id`,
 `source + title + published_at` SHA-256이다. URL에서 fragment와 알려진 추적 파라미터를 제거하고
@@ -130,5 +155,8 @@ index로 두고 기존 JSONL을 순차 import한다. import 전후 출처별·�
 ## 시간과 실행 복구
 
 내부 값은 모두 UTC timezone-aware datetime이며 구간은 `[start, end)`이다. 보고만
-Asia/Seoul로 변환한다. 3시간 수집이 최근 6시간을 겹쳐 보고 일일 백필이 48시간을 다시 확인하므로,
-예약 지연·한 차례 누락·발행시각 수정은 다음 실행에서 회복될 수 있다.
+Asia/Seoul로 변환한다. 07:20 백필, 08:17 최종 사전 수집, 09:02 결정론적 보고, 09:05 최종 편집·
+감사·gate를 같은 concurrency 그룹에서 순서대로 실행한다. 3시간 수집이 최근 6시간을 겹쳐 보고
+일일 백필이 48시간을 다시 확인하므로, 예약 지연·한 차례 누락·발행시각 수정은 다음 실행에서
+회복될 수 있다. 최종 작업의 48시간 재발견 중 전수 본문 확인은 24시간 보고 구간으로 한정하고,
+규칙 후보는 그 밖의 중복 구간에서도 본문을 재확인한다.

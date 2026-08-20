@@ -2,8 +2,9 @@ name: GPT editorial daily briefing
 
 on:
   schedule:
-    # 09:35 Asia/Seoul = 00:35 UTC, after the daily backfill and report jobs.
-    - cron: "35 0 * * *"
+    # 09:05 Asia/Seoul = 00:05 UTC. The final-state recrawl runs inside this job,
+    # leaving 55 minutes before the 10:00 supervisory ChatGPT task.
+    - cron: "5 0 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -35,9 +36,10 @@ permissions:
 jobs:
   editorial-publish:
     if: >-
-      ${{ vars.CHAT_EDITORIAL_ENABLED == 'false' &&
-          vars.OPENAI_EDITOR_ENABLED == 'true' &&
-          (github.event_name == 'workflow_dispatch' || vars.NOTION_PUBLISH_ENABLED == 'true') }}
+      ${{ vars.OPENAI_EDITOR_ENABLED == 'true' &&
+          (github.event_name == 'workflow_dispatch' ||
+           (vars.PUBLICATION_OWNER == 'github_editorial_publish' &&
+            vars.NOTION_PUBLISH_ENABLED == 'true')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
@@ -46,9 +48,12 @@ jobs:
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       OPENAI_EDITOR_ENABLED: ${{ vars.OPENAI_EDITOR_ENABLED }}
       OPENAI_EDITOR_MODEL: ${{ vars.OPENAI_EDITOR_MODEL }}
+      OPENAI_AUDITOR_MODEL: ${{ vars.OPENAI_AUDITOR_MODEL }}
       OPENAI_EDITOR_MAX_CANDIDATES: ${{ vars.OPENAI_EDITOR_MAX_CANDIDATES }}
       OPENAI_EDITOR_FINAL_CANDIDATES: ${{ vars.OPENAI_EDITOR_FINAL_CANDIDATES }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      NAVER_API_HUB_CLIENT_ID: ${{ secrets.NAVER_API_HUB_CLIENT_ID }}
+      NAVER_API_HUB_CLIENT_SECRET: ${{ secrets.NAVER_API_HUB_CLIENT_SECRET }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       NOTION_DATA_SOURCE_ID: ${{ vars.NOTION_DATA_SOURCE_ID }}
       NOTION_CRPD_REFERENCE_URL: ${{ vars.NOTION_CRPD_REFERENCE_URL }}

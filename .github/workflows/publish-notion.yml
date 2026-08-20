@@ -1,9 +1,6 @@
 name: Publish daily briefing to Notion
 
 on:
-  schedule:
-    # 09:25 Asia/Seoul = 00:25 UTC, after the 09:10 report workflow.
-    - cron: "25 0 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -29,8 +26,7 @@ jobs:
     # briefing when the GPT editorial workflow owns publication.
     if: >-
       ${{ vars.NOTION_PUBLISH_ENABLED == 'true' &&
-          vars.OPENAI_EDITOR_ENABLED != 'true' &&
-          vars.CHAT_EDITORIAL_ENABLED == 'false' }}
+          vars.PUBLICATION_OWNER == 'deterministic_fallback' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:

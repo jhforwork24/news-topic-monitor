@@ -1,0 +1,296 @@
+from __future__ import annotations
+
+from datetime import UTC, datetime, timedelta
+
+from news_topic_monitor.assurance import (
+    CensusCheck,
+    CheckStatus,
+    FinalStateIssueCheck,
+    FinalStateResult,
+    GapDetectionResult,
+    ReverseSearchResult,
+    ReverseSourceCheck,
+    SearchHit,
+    evaluate_census,
+    evaluate_publish_gate,
+)
+from news_topic_monitor.final_state import revalidate_final_state
+from news_topic_monitor.models import (
+    AuditSeverity,
+    BodyStatus,
+    Classification,
+    DiscoveryStatus,
+    EditorialAudit,
+    EditorialAuditFinding,
+    EditorialCandidate,
+    EditorialIssueDecision,
+    EditorialPlan,
+    EditorialSection,
+    RunHealth,
+    SourceHealth,
+    VerificationStatus,
+)
+from news_topic_monitor.policy import load_briefing_policy, load_source_registry
+
+
+def _health(now: datetime) -> RunHealth:
+    sources: dict[str, SourceHealth] = {}
+    for source, discovered, oldest in (
+        ("beminor", 100, now - timedelta(days=2)),
+        ("ablenews", 80, now - timedelta(hours=12)),
+        ("theindigo", 5, now - timedelta(hours=12)),
+        ("hani", 20, now - timedelta(days=1)),
+    ):
+        sources[source] = SourceHealth(
+            source=source,
+            success=True,
+            discovery_status=DiscoveryStatus.COMPLETE,
+            started_at=now,
+            finished_at=now,
+            discovered=discovered,
+            oldest_discovered_at=oldest,
+            discovery_paths_attempted=1,
+            discovery_paths_succeeded=1,
+        )
+    return RunHealth(
+        run_started_at=now,
+        run_finished_at=now,
+        window_start=now - timedelta(days=2),
+        window_end=now,
+        all_sources_failed=False,
+        sources=sources,
+    )
+
+
+def _candidate(candidate_id: str, title: str, published_at: datetime) -> EditorialCandidate:
+    return EditorialCandidate(
+        candidate_id=candidate_id,
+        source="hani",
+        canonical_url=f"https://www.hani.co.kr/arti/{candidate_id}",
+        title=title,
+        byline="기자",
+        section="사회",
+        published_at=published_at,
+        summary="장애인 노동권 보장과 공공의 책임을 다룬 합성 검증용 요약문입니다. " * 3,
+        evidence_text="장애인 노동권 보장과 공공의 책임을 다룬 합성 검증용 본문입니다. " * 5,
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.RELEVANT,
+        rule_score=10,
+    )
+
+
+def _plan(candidate_id: str) -> EditorialPlan:
+    return EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="권리중심공공일자리 농성",
+                candidate_ids=[candidate_id],
+                summary="장애인 노동권 보장을 요구하는 농성이 이어졌다.",
+                tone_analysis="권리 요구와 지방정부의 책임을 함께 다뤘다.",
+            )
+        ],
+        exclusions=[],
+    )
+
+
+def test_disability_press_census_requires_boundary_or_exhaustion(tmp_path) -> None:
+    del tmp_path
+    root = __import__("pathlib").Path(__file__).parents[1]
+    registry = load_source_registry(root / "config" / "source-registry.yaml")
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    health = _health(now)
+
+    checks = evaluate_census(
+        health,
+        window_start=now - timedelta(days=1),
+        registry=registry,
+        policy=policy,
+    )
+    assert [check.source for check in checks] == ["beminor", "ablenews", "theindigo"]
+    assert all(check.status == CheckStatus.COMPLETE for check in checks)
+
+    health.sources["beminor"].oldest_discovered_at = now - timedelta(hours=2)
+    degraded = evaluate_census(
+        health,
+        window_start=now - timedelta(days=1),
+        registry=registry,
+        policy=policy,
+    )
+    assert degraded[0].status == CheckStatus.DEGRADED
+
+
+def test_census_uses_discovery_contract_not_unrelated_body_parser_warning() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    registry = load_source_registry(root / "config" / "source-registry.yaml")
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    health = _health(now)
+    health.sources["beminor"].structure_warnings.append("article body selector changed")
+
+    body_warning_only = evaluate_census(
+        health,
+        window_start=now - timedelta(days=1),
+        registry=registry,
+        policy=policy,
+    )
+    assert body_warning_only[0].status == CheckStatus.COMPLETE
+
+    health.sources["beminor"].discovery_warnings.append("child sitemap limit reached")
+    discovery_warning = evaluate_census(
+        health,
+        window_start=now - timedelta(days=1),
+        registry=registry,
+        policy=policy,
+    )
+    assert discovery_warning[0].status == CheckStatus.DEGRADED
+
+
+def test_final_state_change_is_detected_from_newer_verified_original() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    original = _candidate("old", "권리중심공공일자리 농성 돌입", now - timedelta(hours=3))
+    update = _candidate("new", "권리중심공공일자리 농성 철수", now - timedelta(minutes=10))
+    plan = _plan(original.candidate_id)
+    audit = EditorialAudit(findings=[], progressive_issue_titles=["권리중심공공일자리 농성"])
+
+    result = revalidate_final_state(
+        plan=plan,
+        audit=audit,
+        all_candidates=[original, update],
+        health=_health(now),
+        policy=policy,
+        checked_at=now,
+    )
+    assert result.status == CheckStatus.COMPLETE
+    assert result.checks[0].changed_after_draft is True
+    assert result.checks[0].evidence_urls == [update.canonical_url]
+
+
+def test_publish_gate_is_machine_checkable_and_fail_closed() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    candidate = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    plan = _plan(candidate.candidate_id)
+    census = [
+        CensusCheck(
+            source=source,
+            status=CheckStatus.COMPLETE,
+            reason="complete",
+            discovered=1,
+            oldest_discovered_at=now - timedelta(days=1),
+            discovery_paths_attempted=1,
+            discovery_paths_succeeded=1,
+        )
+        for source in policy.publish_gate.disability_press_census_required
+    ]
+    reverse = ReverseSearchResult(
+        status=CheckStatus.COMPLETE,
+        checks=[
+            ReverseSourceCheck(
+                issue_title=plan.issues[0].title,
+                source=source,
+                status=CheckStatus.COMPLETE,
+                reason="searched",
+            )
+            for source in policy.publish_gate.designated_reverse_search_required
+        ],
+    )
+    final_state = FinalStateResult(
+        status=CheckStatus.COMPLETE,
+        checked_at=now,
+        checks=[
+            FinalStateIssueCheck(
+                issue_title=plan.issues[0].title,
+                status=CheckStatus.COMPLETE,
+                progressive=True,
+                reason="rechecked",
+            )
+        ],
+    )
+    audit = EditorialAudit(findings=[], progressive_issue_titles=[plan.issues[0].title])
+    gap = GapDetectionResult(
+        status=CheckStatus.DEGRADED,
+        route="naver_api_hub",
+        queries_attempted=5,
+        queries_completed=0,
+        errors=["not configured"],
+    )
+    decision = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=gap,
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=audit,
+        plan=plan,
+        candidates=[candidate],
+        health=_health(now),
+    )
+    assert decision.allowed is True
+    assert decision.unclassified_failures == 0
+    assert decision.degraded_warnings
+
+    fatal_audit = EditorialAudit(
+        findings=[
+            EditorialAuditFinding(
+                severity=AuditSeverity.FATAL,
+                issue_title=plan.issues[0].title,
+                candidate_ids=[candidate.candidate_id],
+                code="outside_window",
+                explanation="조사기간 밖 선행보도를 당일 기사로 오인함",
+            )
+        ],
+        progressive_issue_titles=[plan.issues[0].title],
+    )
+    blocked = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=gap,
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=fatal_audit,
+        plan=plan,
+        candidates=[candidate],
+        health=_health(now),
+    )
+    assert blocked.allowed is False
+    assert "validator fatal errors=1" in blocked.fatal_errors
+    assert any("outside_window" in item.cause for item in blocked.reporting_items)
+
+    census_gap = gap.model_copy(
+        update={
+            "potential_gaps": [
+                SearchHit(
+                    query="장애인 정책",
+                    title="공식 목록에서 찾지 못한 장애언론 기사",
+                    original_url="https://www.beminor.com/news/articleView.html?idxno=99999",
+                    naver_url=None,
+                    published_at=now - timedelta(hours=1),
+                    description=None,
+                    matched_source="beminor",
+                    in_deterministic_collection=False,
+                )
+            ]
+        }
+    )
+    blocked_by_census_gap = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=census_gap,
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=audit,
+        plan=plan,
+        candidates=[candidate],
+        health=_health(now),
+    )
+    assert blocked_by_census_gap.allowed is False
+    assert any("census와 모순" in error for error in blocked_by_census_gap.fatal_errors)

@@ -175,6 +175,19 @@ class NotionPublisher:
         briefing_pages = [
             page for page in dated_pages if BRIEFING_TITLE_FRAGMENT in _page_title(page)
         ]
+        if briefing_pages:
+            existing = max(
+                briefing_pages,
+                key=lambda page: _briefing_version(_page_title(page)),
+            )
+            return NotionPublishResult(
+                status="already_published",
+                page_id=str(existing["id"]),
+                page_url=(str(existing["url"]) if existing.get("url") else None),
+                created=False,
+                version=_briefing_version(_page_title(existing)),
+                fingerprint=fingerprint,
+            )
         version = (
             max((_briefing_version(_page_title(page)) for page in briefing_pages), default=0) + 1
         )
@@ -256,8 +269,18 @@ class NotionPublisher:
             return None
         title = f"GitHub 브리핑 자동발행 실패 ({report_date})"
         matches = self._query_exact(self.settings.reports_data_source_id, title, report_date)
+        checked_at = datetime.now(KST).strftime("%Y-%m-%d %H:%M:%S Asia/Seoul")
+        lines = [normalize_text(line)[:1800] for line in message.splitlines() if line.strip()]
+        children = [_heading(f"실행 점검 · {checked_at}", 2)]
+        children.extend(_bullet(line) for line in (lines or ["상세 오류 없음"]))
         if matches:
-            page_url = matches[0].get("url")
+            existing = matches[0]
+            self._request(
+                "PATCH",
+                f"/blocks/{existing['id']}/children",
+                json={"children": children},
+            )
+            page_url = existing.get("url")
             return str(page_url) if page_url else None
         page = self._request(
             "POST",
@@ -272,10 +295,8 @@ class NotionPublisher:
                     "날짜": {"date": {"start": report_date}},
                 },
                 "children": [
-                    _paragraph(
-                        "GitHub Actions 자동발행 점검 필요: "
-                        + (short_error(message) or "상세 오류 없음")
-                    )
+                    _paragraph("GitHub Actions 자동발행 점검 필요"),
+                    *children,
                 ],
             },
         )
@@ -388,7 +409,9 @@ class NotionPublisher:
                     self._request(
                         "PATCH",
                         f"/pages/{page['id']}",
-                        json={"archived": True},
+                        # Notion-Version 2026-03-11 removed the deprecated
+                        # ``archived`` request field in favour of ``in_trash``.
+                        json={"in_trash": True},
                     )
             if not payload.get("has_more"):
                 return

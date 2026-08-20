@@ -9,10 +9,19 @@ from datetime import UTC, datetime, time, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+import httpx
+
 from .adapters import ALL_ADAPTERS
 from .adapters.base import SourceAdapter
 from .adapters.hani import HaniAdapter
 from .adapters.mbc import MbcAdapter
+from .assurance import (
+    PublishGateDecision,
+    build_evidence_manifest,
+    evaluate_census,
+    evaluate_publish_gate,
+    write_assurance_outputs,
+)
 from .briefing import BriefingDocument, build_briefing, build_editorial_briefing, write_briefing
 from .briefing_validation import BriefingValidationError, validate_briefing
 from .classifier import RuleClassifier
@@ -28,6 +37,14 @@ from .editorial import (
     write_editorial_failure,
     write_editorial_health,
 )
+from .final_state import revalidate_final_state
+from .gap_detection import (
+    NaverConfigurationError,
+    NaverSearchClient,
+    NaverSearchSettings,
+    run_gap_detection,
+    run_reverse_search,
+)
 from .http import SafeHttpClient
 from .models import RunHealth
 from .notion_publish import (
@@ -41,6 +58,12 @@ from .notion_publish import (
     write_notion_health,
 )
 from .pipeline import Collector
+from .policy import (
+    PolicyConfigurationError,
+    load_briefing_policy,
+    load_source_registry,
+    validate_policy_contract,
+)
 from .reporting import generate_report
 from .settings import ContactRequiredError, Settings
 from .storage import JsonlStorage
@@ -86,7 +109,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_report_window_arguments(briefing)
 
-    publish = subparsers.add_parser("publish-notion", help="publish a versioned briefing to Notion")
+    publish = subparsers.add_parser(
+        "publish-notion", help="publish a same-date-idempotent briefing to Notion"
+    )
     _add_report_window_arguments(publish)
     publish.add_argument(
         "--dry-run", action="store_true", help="render the briefing without calling Notion"
@@ -228,10 +253,22 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
     if collection_start >= end:
         raise SystemExit("collect-hours must be greater than zero")
 
+    now = datetime.now(UTC)
+    revalidation_end = now if end <= now <= end + timedelta(hours=6) else end
+
     storage = JsonlStorage(settings.root)
     adapters = _build_adapters(settings, storage, set(args.sources or []))
     try:
         editorial_settings = OpenAIEditorialSettings.from_env()
+        source_registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
+        briefing_policy = load_briefing_policy(settings.root / "config" / "briefing-policy.yaml")
+        validate_policy_contract(source_registry, briefing_policy)
+        try:
+            naver_settings = NaverSearchSettings.from_env()
+            naver_configuration_error = None
+        except NaverConfigurationError as exc:
+            naver_settings = None
+            naver_configuration_error = str(exc)
         runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
         with TemporaryDirectory(
             prefix="news-topic-editorial-", dir=runner_temp
@@ -248,16 +285,119 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         max_discovery_children=settings.max_discovery_children,
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
-                    ).run(collection_start, end)
+                        # The 48-hour overlap is for late discovery. Fetching every
+                        # body is limited to the 24-hour report window; rule-matched
+                        # older candidates are still refreshed by Collector.
+                        capture_body_start=start,
+                    ).run(collection_start, revalidation_end)
                 if health.all_sources_failed:
                     raise EditorialValidationError("모든 출처 수집에 실패하여 편집을 중단함")
 
                 candidates = evidence_store.candidates(start=start, end=end)
+                all_candidates = evidence_store.candidates(start=start, end=revalidation_end)
+                known_canonical_urls = {candidate.canonical_url for candidate in all_candidates}
                 with OpenAIEditorialClient(editorial_settings) as editor:
                     run = editor.edit(candidates)
 
+                if naver_settings is None:
+                    gap_detection = run_gap_detection(
+                        client=None,
+                        configuration_error=naver_configuration_error,
+                        policy=briefing_policy,
+                        registry=source_registry,
+                        known_canonical_urls=known_canonical_urls,
+                        start=start,
+                        end=end,
+                    )
+                    reverse_search = run_reverse_search(
+                        client=None,
+                        configuration_error=naver_configuration_error,
+                        plan=run.plan,
+                        policy=briefing_policy,
+                        registry=source_registry,
+                        start=start,
+                        end=end,
+                    )
+                else:
+                    with NaverSearchClient(naver_settings) as naver:
+                        gap_detection = run_gap_detection(
+                            client=naver,
+                            configuration_error=None,
+                            policy=briefing_policy,
+                            registry=source_registry,
+                            known_canonical_urls=known_canonical_urls,
+                            start=start,
+                            end=end,
+                        )
+                        reverse_search = run_reverse_search(
+                            client=naver,
+                            configuration_error=None,
+                            plan=run.plan,
+                            policy=briefing_policy,
+                            registry=source_registry,
+                            start=start,
+                            end=end,
+                        )
+
+                census = evaluate_census(
+                    health,
+                    window_start=start,
+                    registry=source_registry,
+                    policy=briefing_policy,
+                )
+                final_state = revalidate_final_state(
+                    plan=run.plan,
+                    audit=run.audit,
+                    all_candidates=all_candidates,
+                    health=health,
+                    policy=briefing_policy,
+                    checked_at=revalidation_end,
+                )
+                gate = evaluate_publish_gate(
+                    report_date=report_date,
+                    policy=briefing_policy,
+                    census=census,
+                    gap_detection=gap_detection,
+                    reverse_search=reverse_search,
+                    final_state=final_state,
+                    audit=run.audit,
+                    plan=run.plan,
+                    candidates=candidates,
+                    health=health,
+                )
+
             # The database remains confined to this temporary directory and is
             # removed automatically before the command returns.
+            current_articles = [
+                article
+                for article in storage.iter_articles()
+                if start <= (article.published_at or article.first_seen_at) < revalidation_end
+            ]
+            manifest = build_evidence_manifest(
+                report_date=report_date,
+                articles=current_articles,
+                plan=run.plan,
+                census=census,
+                gap_detection=gap_detection,
+                reverse_search=reverse_search,
+                final_state=final_state,
+            )
+            write_assurance_outputs(settings.root, manifest=manifest, gate=gate)
+            if not gate.allowed:
+                _record_gate_failure(settings.root, gate)
+                error = "publish gate blocked publication: " + "; ".join(gate.fatal_errors)
+                write_editorial_health(
+                    settings.root,
+                    run,
+                    report_date=report_date,
+                    status="blocked_by_publish_gate",
+                    error=error,
+                )
+                LOGGER.error("%s", error)
+                return 3
+
+            write_editorial_health(settings.root, run, report_date=report_date)
+
             document = build_editorial_briefing(
                 storage,
                 plan=run.plan,
@@ -265,18 +405,24 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 end=end,
                 report_date=report_date,
             )
+            document.source_failures.extend(
+                (
+                    f"원인={item.cause} · 대체경로={item.fallback} · "
+                    f"결과={item.result} · 다음조치={item.next_action}"
+                )
+                for item in gate.reporting_items
+            )
             validate_briefing(document)
             path = write_briefing(
                 document,
                 output_path=(settings.root / "reports" / "briefings" / f"{report_date}.md"),
                 crpd_url=None,
             )
-            write_editorial_health(settings.root, run, report_date=report_date)
             print(path)
             if args.dry_run:
                 return 0
             return _publish_to_notion(document, settings.root)
-    except EditorialConfigurationError as exc:
+    except (EditorialConfigurationError, PolicyConfigurationError) as exc:
         LOGGER.error("%s", exc)
         write_editorial_failure(
             settings.root,
@@ -473,6 +619,29 @@ def _publish_to_notion(document: BriefingDocument, root: Path) -> int:
             error=str(exc),
         )
         return 2
+
+
+def _record_gate_failure(root: Path, gate: PublishGateDecision) -> None:
+    """Best-effort report to the private reports data source; never publish a briefing."""
+
+    try:
+        settings = NotionPublishSettings.from_env()
+    except NotionConfigurationError:
+        return
+    details = ["publish gate가 최종 발행을 차단함"]
+    details.extend(f"치명적 오류: {error}" for error in gate.fatal_errors)
+    details.extend(
+        (
+            f"원인={item.cause}; 대체경로={item.fallback}; 결과={item.result}; "
+            f"다음조치={item.next_action}"
+        )
+        for item in gate.reporting_items
+    )
+    try:
+        with NotionPublisher(settings) as publisher:
+            publisher.record_failure(gate.report_date, "\n".join(details))
+    except (NotionApiError, httpx.HTTPError):
+        LOGGER.exception("could not write publish-gate failure to Notion reports")
 
 
 def _add_report_window_arguments(parser: argparse.ArgumentParser) -> None:
