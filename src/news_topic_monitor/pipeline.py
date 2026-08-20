@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
@@ -22,6 +23,7 @@ from .models import (
     Classification,
     ClassificationResult,
     DiscoveryStatus,
+    PrimarySourceValidation,
     RunHealth,
     SourceHealth,
     StoreResult,
@@ -43,6 +45,10 @@ if TYPE_CHECKING:
     from .editorial import EditorialEvidenceStore
 
 LOGGER = logging.getLogger(__name__)
+
+
+class DiscoveryPathsFailed(RuntimeError):
+    """Every registered discovery path failed with an already classified cause."""
 
 
 class Collector:
@@ -81,9 +87,14 @@ class Collector:
                 LOGGER.warning("source %s is not configured: %s", adapter.source, exc)
                 health.errors.append(short_error(exc) or "source configuration is missing")
                 health.discovery_status = DiscoveryStatus.CONFIGURATION_MISSING
+            except DiscoveryPathsFailed as exc:
+                LOGGER.warning("source %s discovery failed: %s", adapter.source, exc)
+                health.errors.append(short_error(exc) or "all discovery paths failed")
+                health.discovery_status = _failure_status(exc)
             except Exception as exc:  # source isolation boundary
                 LOGGER.exception("source %s failed", adapter.source)
                 health.errors.append(short_error(exc) or "unknown error")
+                health.unclassified_failures += 1
                 health.discovery_status = _failure_status(exc)
             finally:
                 if health.success:
@@ -124,6 +135,7 @@ class Collector:
         health: SourceHealth,
     ) -> None:
         queue = list(adapter.initial_discovery_urls(start, end))
+        health.discovery_paths_attempted = len(queue)
         visited: set[str] = set()
         discoveries: dict[str, ArticleDiscovery] = {}
         child_count = 0
@@ -144,6 +156,7 @@ class Collector:
                 )
                 page = adapter.parse_discovery(response.content, str(response.url))
                 successful_pages += 1
+                health.discovery_paths_succeeded += 1
                 health.removed += self.storage.delete_by_source_article_ids(
                     adapter.source, page.removed_article_ids
                 )
@@ -153,11 +166,14 @@ class Collector:
                     except ValueError as exc:
                         page_errors.append(short_error(exc) or "invalid article URL")
                         continue
+                    route = f"official:{discovery_url}"
+                    if route not in article.discovery_route:
+                        article.discovery_route.append(route)
                     if not adapter.validate_article_url(article.canonical_url):
                         article_host = urlsplit(article.canonical_url).hostname
-                        health.structure_warnings.append(
-                            f"rejected unapproved article host: {article_host}"
-                        )
+                        warning = f"rejected unapproved article host: {article_host}"
+                        health.structure_warnings.append(warning)
+                        health.discovery_warnings.append(warning)
                         continue
                     key = stable_article_key(
                         article.source,
@@ -169,16 +185,19 @@ class Collector:
                     discoveries[key] = _prefer_richer(discoveries.get(key), article)
                 for child_url in page.child_urls:
                     if child_count >= self.max_discovery_children:
-                        health.structure_warnings.append("child sitemap limit reached")
+                        warning = "child sitemap limit reached"
+                        health.structure_warnings.append(warning)
+                        health.discovery_warnings.append(warning)
                         break
                     if not adapter.validate_child_url(child_url):
                         child_host = urlsplit(child_url).hostname
-                        health.structure_warnings.append(
-                            f"rejected unapproved child sitemap host: {child_host}"
-                        )
+                        warning = f"rejected unapproved child sitemap host: {child_host}"
+                        health.structure_warnings.append(warning)
+                        health.discovery_warnings.append(warning)
                         continue
                     queue.append(child_url)
                     child_count += 1
+                    health.discovery_paths_attempted += 1
                 if adapter.source == "hani" and discovery_url.startswith(
                     "https://www.hani.co.kr/arti?"
                 ):
@@ -195,9 +214,15 @@ class Collector:
             ) as exc:
                 page_errors.append(f"{discovery_url}: {short_error(exc)}")
         if successful_pages == 0:
-            raise RuntimeError("all discovery paths failed: " + "; ".join(page_errors))
+            raise DiscoveryPathsFailed("all discovery paths failed: " + "; ".join(page_errors))
         health.errors.extend(page_errors)
         health.discovered = len(discoveries)
+        discovered_dates = [
+            item.published_at for item in discoveries.values() if item.published_at is not None
+        ]
+        if discovered_dates:
+            health.oldest_discovered_at = min(discovered_dates)
+            health.newest_discovered_at = max(discovered_dates)
         capture_body_keys = self._capture_body_keys(discoveries, start=start, end=end)
         for key, discovery in discoveries.items():
             if not discovery.refresh_only and not in_window(discovery.published_at, start, end):
@@ -326,6 +351,12 @@ class Collector:
             excluded_terms=result.excluded_terms,
             classification_reason=result.classification_reason,
             verification_status=verification,
+            discovery_route=discovery.discovery_route,
+            primary_source_validation=_primary_source_validation(
+                " ".join(
+                    value for value in (discovery.title, discovery.summary, body_text) if value
+                )
+            ),
             collection_error=error,
         )
         if self.evidence_store is not None:
@@ -363,6 +394,9 @@ def _prefer_richer(
         "[제목 미제공]"
     ):
         values["title"] = existing.title
+    values["discovery_route"] = list(
+        dict.fromkeys([*existing.discovery_route, *incoming.discovery_route])
+    )
     return ArticleDiscovery.model_validate(values)
 
 
@@ -388,6 +422,20 @@ def _monitor_summary(result: ClassificationResult) -> str:
     return (
         f"장애인권 관련 명시적 의제가 확인되지 않아 {result.classification.value}로 분류된 기사다."
     )
+
+
+PRIMARY_SOURCE_CLAIM_PATTERN = re.compile(
+    r"(?:\d[\d,.]*\s*(?:명|건|%|퍼센트|원|억원|조원|시간|곳|개))"
+    r"|(?:법률|법|시행령|시행규칙|조례|협약)"
+)
+
+
+def _primary_source_validation(text: str) -> PrimarySourceValidation:
+    """Flag claims that need a separate statute/statistics primary-source pass."""
+
+    if PRIMARY_SOURCE_CLAIM_PATTERN.search(text):
+        return PrimarySourceValidation.PENDING
+    return PrimarySourceValidation.NOT_REQUIRED
 
 
 def _failure_status(exc: Exception) -> DiscoveryStatus:

@@ -29,6 +29,23 @@ class VerificationStatus(StrEnum):
     EXTRACTION_FAILED = "extraction_failed"
 
 
+class VerificationGrade(StrEnum):
+    """Evidence strength, never a substitute for the underlying status fields."""
+
+    A = "A"
+    B = "B"
+    C = "C"
+    D = "D"
+
+
+class PrimarySourceValidation(StrEnum):
+    NOT_REQUIRED = "not_required"
+    PENDING = "pending"
+    VERIFIED = "verified"
+    UNAVAILABLE = "unavailable"
+    MISMATCH = "mismatch"
+
+
 class DiscoveryStatus(StrEnum):
     PENDING = "pending"
     COMPLETE = "complete"
@@ -51,6 +68,7 @@ class ArticleDiscovery(BaseModel):
     updated_at: datetime | None = None
     summary: str | None = None
     refresh_only: bool = False
+    discovery_route: list[str] = Field(default_factory=list)
 
     @field_validator("canonical_url", "title")
     @classmethod
@@ -105,6 +123,10 @@ class ArticleRecord(BaseModel):
     excluded_terms: list[str] = Field(default_factory=list)
     classification_reason: str
     verification_status: VerificationStatus = VerificationStatus.METADATA_ONLY
+    verification_grade: VerificationGrade = VerificationGrade.D
+    discovery_route: list[str] = Field(default_factory=list)
+    issue_id: str | None = None
+    primary_source_validation: PrimarySourceValidation = PrimarySourceValidation.NOT_REQUIRED
     collection_error: str | None = None
 
     @field_validator("published_at", "updated_at", "first_seen_at", "last_seen_at")
@@ -120,6 +142,18 @@ class ArticleRecord(BaseModel):
     def validate_seen_order(self) -> ArticleRecord:
         if self.last_seen_at < self.first_seen_at:
             raise ValueError("last_seen_at precedes first_seen_at")
+        if self.verification_status == VerificationStatus.BODY_VERIFIED:
+            self.verification_grade = VerificationGrade.A
+        elif (
+            self.verification_status == VerificationStatus.METADATA_ONLY
+            and self.published_at is not None
+            and self.canonical_url
+        ):
+            self.verification_grade = VerificationGrade.B
+        elif self.discovery_route and any(
+            route.startswith(("naver_api:", "external_search:")) for route in self.discovery_route
+        ):
+            self.verification_grade = VerificationGrade.C
         return self
 
 
@@ -150,6 +184,15 @@ class SourceHealth(BaseModel):
     removed: int = 0
     errors: list[str] = Field(default_factory=list)
     structure_warnings: list[str] = Field(default_factory=list)
+    # Discovery-only contract warnings are separated from body-parser warnings so
+    # a census is decided by the completeness of the official list, not by an
+    # unrelated article-body selector failure.
+    discovery_warnings: list[str] = Field(default_factory=list)
+    discovery_paths_attempted: int = 0
+    discovery_paths_succeeded: int = 0
+    oldest_discovered_at: datetime | None = None
+    newest_discovered_at: datetime | None = None
+    unclassified_failures: int = 0
 
 
 class RunHealth(BaseModel):
@@ -198,6 +241,7 @@ class EditorialCandidate(BaseModel):
     verification_status: VerificationStatus
     rule_classification: Classification
     rule_score: float
+    primary_source_validation: PrimarySourceValidation = PrimarySourceValidation.NOT_REQUIRED
 
     @property
     def selectable(self) -> bool:
@@ -254,3 +298,29 @@ class EditorialPlan(BaseModel):
 
     issues: list[EditorialIssueDecision]
     exclusions: list[EditorialExclusion]
+
+
+class AuditSeverity(StrEnum):
+    FATAL = "fatal"
+    WARNING = "warning"
+
+
+class EditorialAuditFinding(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    severity: AuditSeverity
+    issue_title: str | None
+    candidate_ids: list[str]
+    code: str
+    explanation: str
+
+
+class EditorialAudit(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    findings: list[EditorialAuditFinding]
+    progressive_issue_titles: list[str]
+
+    @property
+    def fatal_error_count(self) -> int:
+        return sum(finding.severity == AuditSeverity.FATAL for finding in self.findings)

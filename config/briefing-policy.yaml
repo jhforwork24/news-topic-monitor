@@ -1,0 +1,69 @@
+version: 1
+
+publication:
+  owner: github_editorial_publish
+  notion_single_writer: true
+  publish_empty_briefing: false
+
+report_window:
+  timezone: Asia/Seoul
+  start_hour: 9
+  duration_hours: 24
+
+gap_detection:
+  queries:
+    - 장애인 정책
+    - 장애인 이동권 탈시설 자립생활
+    - 장애인 노동권 권리중심공공일자리
+    - 노동 파업 교섭 산업재해
+    - 돌봄 빈곤 사회보장 공공서비스
+  maximum_results_per_query: 100
+
+progressive_events:
+  detection_terms:
+    - 농성
+    - 파업
+    - 교섭
+    - 지하철 행동
+    - 집회
+    - 시위
+    - 단식
+    - 점거
+    - 요구
+    - 투쟁
+  final_state_terms:
+    - 철수
+    - 종료
+    - 해산
+    - 합의
+    - 타결
+    - 답변
+    - 수용
+    - 철회
+    - 보류
+    - 재개
+    - 속보
+    - 후속
+
+publish_gate:
+  disability_press_census_required: [beminor, ablenews, theindigo]
+  designated_reverse_search_required:
+    - labortoday
+    - newscham
+    - chosun
+    - joongang
+    - donga
+    - khan
+    - hani
+    - ohmynews
+    - pressian
+  allow_explicit_reverse_search_degraded: true
+  require_core_article_body: true
+  broadcast_metadata_exception: true
+  require_final_state_complete: true
+  validator_fatal_errors_max: 0
+  unclassified_failures_max: 0
+
+failure_reporting:
+  notion_section: 브리핑 보고사항
+  required_fields: [원인, 대체경로, 결과, 다음조치]

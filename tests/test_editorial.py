@@ -100,7 +100,7 @@ def _response(payload: dict) -> httpx.Response:
     )
 
 
-def test_two_pass_editor_uses_strict_non_stored_responses() -> None:
+def test_editor_and_independent_auditor_use_strict_non_stored_responses() -> None:
     candidate = _candidate(_article())
     requests: list[dict] = []
 
@@ -122,23 +122,27 @@ def test_two_pass_editor_uses_strict_non_stored_responses() -> None:
                     ]
                 }
             )
-        return _response(
-            {
-                "issues": [
-                    {
-                        "section": "disability",
-                        "title": "활동지원 제도 개편 요구",
-                        "candidate_ids": [candidate.candidate_id],
-                        "summary": (
-                            "장애인단체가 지역사회 생활을 보장하기 위한 활동지원 예산과 "
-                            "인정조사 제도의 개편을 요구했다."
-                        ),
-                        "tone_analysis": "당사자의 요구와 정부의 제도 개선 책임을 중심으로 전했다.",
-                    }
-                ],
-                "exclusions": [],
-            }
-        )
+        if len(requests) == 2:
+            return _response(
+                {
+                    "issues": [
+                        {
+                            "section": "disability",
+                            "title": "활동지원 제도 개편 요구",
+                            "candidate_ids": [candidate.candidate_id],
+                            "summary": (
+                                "장애인단체가 지역사회 생활을 보장하기 위한 활동지원 예산과 "
+                                "인정조사 제도의 개편을 요구했다."
+                            ),
+                            "tone_analysis": (
+                                "당사자의 요구와 정부의 제도 개선 책임을 중심으로 전했다."
+                            ),
+                        }
+                    ],
+                    "exclusions": [],
+                }
+            )
+        return _response({"findings": [], "progressive_issue_titles": []})
 
     client = httpx.Client(
         transport=httpx.MockTransport(handler),
@@ -148,11 +152,13 @@ def test_two_pass_editor_uses_strict_non_stored_responses() -> None:
     run = OpenAIEditorialClient(settings, client=client).edit([candidate])
 
     assert len(run.plan.issues) == 1
-    assert len(requests) == 2
+    assert run.audit.fatal_error_count == 0
+    assert len(requests) == 3
     assert all(request["store"] is False for request in requests)
     assert all(request["text"]["format"]["strict"] is True for request in requests)
     assert requests[0]["text"]["format"]["name"] == "news_editorial_assessments"
     assert requests[1]["text"]["format"]["name"] == "news_editorial_plan"
+    assert requests[2]["text"]["format"]["name"] == "news_editorial_independent_audit"
 
 
 def test_editor_rejects_unrecognized_candidate_id() -> None:

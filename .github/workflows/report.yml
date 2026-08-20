@@ -2,8 +2,9 @@ name: Daily report
 
 on:
   schedule:
-    # 09:10 Asia/Seoul = 00:10 UTC.
-    - cron: "10 0 * * *"
+    # 09:02 Asia/Seoul = 00:02 UTC. The last overlap run starts at 08:17,
+    # so this deterministic report does not delay the final editorial job.
+    - cron: "2 0 * * *"
   workflow_dispatch:
     inputs:
       date:

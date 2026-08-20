@@ -1,0 +1,127 @@
+version: 1
+
+# 전수성은 "접근 가능한 공식 공개 목록이 조사 구간의 시작 경계까지 확인됐는가"로 판정한다.
+# 검색 API 결과는 누락 탐지 자료일 뿐 원문 확인을 대신하지 않는다.
+sources:
+  beminor:
+    label: 비마이너
+    tier: disability_press_census
+    domains: [www.beminor.com, beminor.com]
+    census:
+      mode: rolling_official_list
+      page_size: 100
+      requires_window_boundary: true
+    discovery_routes: [official_sitemap]
+    fallbacks: [naver_gap_detection]
+  ablenews:
+    label: 에이블뉴스
+    tier: disability_press_census
+    domains: [www.ablenews.co.kr, ablenews.co.kr]
+    census:
+      mode: rolling_official_list
+      page_size: 100
+      requires_window_boundary: true
+    discovery_routes: [official_sitemap]
+    fallbacks: [naver_gap_detection]
+  theindigo:
+    label: 더인디고
+    tier: disability_press_census
+    domains: [theindigo.co.kr, www.theindigo.co.kr]
+    census:
+      mode: bounded_official_api
+      page_size: 100
+      requires_window_boundary: false
+    discovery_routes: [official_wordpress_metadata_api]
+    fallbacks: [naver_gap_detection]
+
+  labortoday:
+    label: 매일노동뉴스
+    tier: designated_reverse_search
+    domains: [www.labortoday.co.kr, labortoday.co.kr]
+    discovery_routes: [official_sitemap]
+    fallbacks: [naver_gap_detection]
+  newscham:
+    label: 참세상
+    tier: designated_reverse_search
+    domains: [www.newscham.net, newscham.net]
+    discovery_routes: [official_origin_fail_closed]
+    fallbacks: [naver_gap_detection]
+  chosun:
+    label: 조선일보
+    tier: designated_reverse_search
+    domains: [www.chosun.com, chosun.com]
+    discovery_routes: [official_rss, official_news_sitemap]
+    fallbacks: [naver_gap_detection]
+  joongang:
+    label: 중앙일보
+    tier: designated_reverse_search
+    domains: [www.joongang.co.kr, joongang.co.kr]
+    discovery_routes: [official_news_sitemap]
+    fallbacks: [naver_gap_detection]
+  donga:
+    label: 동아일보
+    tier: designated_reverse_search
+    domains: [www.donga.com, donga.com]
+    discovery_routes: [official_rss, official_newsmap]
+    fallbacks: [naver_gap_detection]
+  khan:
+    label: 경향신문
+    tier: designated_reverse_search
+    domains: [www.khan.co.kr, khan.co.kr]
+    discovery_routes: [official_news_sitemap]
+    fallbacks: [naver_gap_detection]
+  hani:
+    label: 한겨레
+    tier: designated_reverse_search
+    domains: [www.hani.co.kr, hani.co.kr]
+    discovery_routes: [official_latest_list, official_rss]
+    fallbacks: [naver_gap_detection]
+  ohmynews:
+    label: 오마이뉴스
+    tier: designated_reverse_search
+    domains: [www.ohmynews.com, ohmynews.com]
+    discovery_routes: [official_news_sitemap]
+    fallbacks: [naver_gap_detection]
+  pressian:
+    label: 프레시안
+    tier: designated_reverse_search
+    domains: [www.pressian.com, pressian.com]
+    discovery_routes: [official_rss_api]
+    fallbacks: [naver_gap_detection]
+
+  mediaus:
+    label: 미디어스
+    tier: monitored
+    domains: [www.mediaus.co.kr, mediaus.co.kr]
+    discovery_routes: [official_sitemap]
+  kbs:
+    label: KBS
+    tier: broadcast
+    domains: [news.kbs.co.kr]
+    discovery_routes: [official_news_sitemap]
+  mbc:
+    label: MBCNEWS
+    tier: broadcast
+    domains: [youtube.com, www.youtube.com, youtu.be]
+    discovery_routes: [official_youtube_data_api]
+  sbs:
+    label: SBS
+    tier: broadcast
+    domains: [news.sbs.co.kr]
+    discovery_routes: [official_sitemap_rss]
+  jtbc:
+    label: JTBC
+    tier: broadcast
+    domains: [news.jtbc.co.kr]
+    discovery_routes: [official_news_sitemap]
+
+gap_detectors:
+  naver_api_hub:
+    role: gap_detection_only
+    endpoint: https://naverapihub.apigw.ntruss.com/search/v1/news
+    original_validation_replacement: false
+    required_for_publication: false
+  direct_source_union:
+    role: independent_baseline
+    original_validation_replacement: true
+    required_for_publication: true

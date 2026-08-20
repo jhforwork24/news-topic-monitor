@@ -1,9 +1,6 @@
 name: Export ChatGPT editorial queue
 
 on:
-  schedule:
-    # 09:35 Asia/Seoul = 00:35 UTC, after backfill and the daily report.
-    - cron: "35 0 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -34,7 +31,7 @@ permissions:
 
 jobs:
   editorial-queue:
-    if: ${{ vars.CHAT_EDITORIAL_ENABLED != 'false' }}
+    if: ${{ vars.CHAT_EDITORIAL_SHADOW_ENABLED == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:

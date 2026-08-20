@@ -109,6 +109,9 @@ class JsonlStorage(ArticleStorage):
             old_path, existing = existing_pair
             affected.add(old_path)
             article.first_seen_at = min(existing.first_seen_at, article.first_seen_at)
+            article.discovery_route = list(
+                dict.fromkeys([*existing.discovery_route, *article.discovery_route])
+            )
             semantic_changed = self._semantic_payload(existing) != self._semantic_payload(article)
             result = StoreResult.UPDATED if semantic_changed else StoreResult.DUPLICATE
 

@@ -111,24 +111,30 @@ news-topic-monitor report \
 5. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
 6. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
-7. GPT 편집 발행을 쓸 때는 repository secret `OPENAI_API_KEY`와 repository variable
-   `OPENAI_EDITOR_ENABLED=true`를 등록한다. 이때 기존 규칙 기반 노션 예약 job은 자동으로
-   건너뛰고 GPT 편집 job만 한 번 발행한다.
+7. production 발행에는 repository secret `OPENAI_API_KEY`, repository variable
+   `OPENAI_EDITOR_ENABLED=true`, `PUBLICATION_OWNER=github_editorial_publish`를 등록한다.
+   독립 누락 탐지를 활성화하려면 `NAVER_API_HUB_CLIENT_ID`와
+   `NAVER_API_HUB_CLIENT_SECRET`도 secret으로 등록한다. Naver 미설정은 명시적
+   `DEGRADED`로 남지만 원문 검증 등급을 올리지 않는다.
 
 워크플로는 다음과 같다.
 
-- `.github/workflows/collect.yml`: `17 */3 * * *`(UTC), 3시간마다 17분에 최근 6시간 재확인
-- `.github/workflows/backfill.yml`: `20 23 * * *`(UTC), 매일 08:20 KST에 최근 48시간 재확인
-- `.github/workflows/report.yml`: `10 0 * * *`(UTC), 매일 09:10 KST에 전날 09:00부터
+- `.github/workflows/collect.yml`: `17 2-23/3 * * *`(UTC), 3시간 간격으로 최근 6시간을
+  재확인하며 최종 사전 실행은 08:17 KST에 시작
+- `.github/workflows/backfill.yml`: `20 22 * * *`(UTC), 매일 07:20 KST에 최근 48시간 재확인
+- `.github/workflows/report.yml`: `2 0 * * *`(UTC), 매일 09:02 KST에 전날 09:00부터
   당일 09:00 KST까지 보고
-- `.github/workflows/publish-notion.yml`: `25 0 * * *`(UTC), 매일 09:25 KST에 브리핑을
-  버전 발행. 같은 날짜의 브리핑이 있으면 내용이 같더라도 기존 페이지를 수정하지 않고
-  가장 높은 `vN`의 다음 버전을 새 페이지로 생성함. IV절은 선정 칼럼이 있을 때만 생성함
-- `.github/workflows/editorial-publish.yml`: `35 0 * * *`(UTC), GPT 편집을 켰을 때 매일
-  09:35에 48시간 공개 기사 접근 결과를 임시 SQLite에 모으고 2단계 편집·검증 후 한 번 발행함
+- `.github/workflows/editorial-publish.yml`: `5 0 * * *`(UTC), 매일 09:05에 48시간
+  증거를 재수집하고 GPT 판별·편집·독립 감사, 진행형 사건 최종상태 재검증, publish gate를
+  거쳐 유일하게 Notion 최종 발행을 수행함. 48시간은 지연 발견 범위이고, 전수 본문 확인은
+  24시간 보고 구간으로 제한하여 10:00 감독 작업 전 완료 여유를 확보함
+- `.github/workflows/editorial-queue.yml`: 예약 없음. 사용자가 명시적으로
+  `CHAT_EDITORIAL_SHADOW_ENABLED=true`로 둔 수동 그림자 시험에서만 실행함
+- `.github/workflows/publish-notion.yml`: 예약 없음. `PUBLICATION_OWNER=deterministic_fallback`인
+  수동 복구 실행에서만 사용함
 - `.github/workflows/ci.yml`: push·PR에서 오프라인 pytest와 ruff 실행
 
-세 데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
+데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
 `contents: write`만 부여한다. 변경이 있을 때만 커밋하며 push 실패 시 최신 브랜치를 rebase한
 뒤 최대 3회 제한적으로 재시도한다. 충돌을 자동 덮어쓰지는 않는다.
 
@@ -154,13 +160,17 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 편집·분류·출처 점검 및 발행 실패 보고사항 data source UUID |
 | `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
 | `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
+| `PUBLICATION_OWNER` | production | 없음 | `github_editorial_publish`일 때만 예약 최종 발행 |
 | `OPENAI_EDITOR_ENABLED` | 아니오 | `false` 취급 | `true`일 때 임시 증거 수집과 GPT 편집 발행 job 실행 |
 | `OPENAI_EDITOR_MODEL` | 아니오 | `gpt-5.6` | Responses API 편집 모델 |
+| `OPENAI_AUDITOR_MODEL` | 아니오 | 편집 모델 | 편집 근거를 받지 않는 독립 감사 모델 |
 | `OPENAI_EDITOR_CHUNK_SIZE` | 아니오 | `20` | 1차 판별 한 요청의 기사 수 |
 | `OPENAI_EDITOR_MAX_CANDIDATES` | 아니오 | `360` | GPT에 전달하는 확인 가능 후보 상한 |
 | `OPENAI_EDITOR_FINAL_CANDIDATES` | 아니오 | `80` | 2차 최종 편집 후보 상한 |
 | `OPENAI_EDITOR_EVIDENCE_CHARS` | 아니오 | `5000` | 후보별 일시 전달 근거 글자 상한 |
-| `CHAT_EDITORIAL_ENABLED` | 아니오 | `true` 취급 | `false`일 때만 기존 자동 발행으로 복귀 |
+| `NAVER_API_HUB_CLIENT_ID` | gap detector | 없음 | Naver API Hub client ID, repository secret |
+| `NAVER_API_HUB_CLIENT_SECRET` | gap detector | 없음 | Naver API Hub client secret, repository secret |
+| `CHAT_EDITORIAL_SHADOW_ENABLED` | 아니오 | `false` | 수동 ChatGPT 대기열 그림자 시험만 허용 |
 | `CHAT_EDITORIAL_MAX_CANDIDATES` | 아니오 | `180` | ChatGPT 예약 작업에 제공할 검증 후보 상한 |
 | `CHAT_EDITORIAL_CHUNK_SIZE` | 아니오 | `24` | Notion 임시 대기열 한 페이지의 후보 수(최대 24) |
 | `CHAT_EDITORIAL_EVIDENCE_CHARS` | 아니오 | `1600` | 후보별 임시 확인 근거 글자 상한(최대 1800) |
@@ -182,28 +192,26 @@ cross-origin 리다이렉트에는 키를 전달하지 않는다. 키가 없으�
 레코드는 제거하고, 당시 시점이 명시된 과거 일일보고는 역사 자료로 유지한다. 저장·표시·삭제
 범위와 배포 운영자의 의무는 [`docs/youtube-api-use.md`](docs/youtube-api-use.md)에 정리한다.
 
-GPT 편집 경로는 기본적으로 꺼져 있어 `OPENAI_API_KEY`가 없어도 기존 수집·보고·규칙 기반 발행과
-시험은 정상 작동한다. 활성화하면 GitHub runner의 임시 디렉터리에 SQLite를 만들고, robots.txt가
-허용하는 기사만 넓게 확인한 뒤 본문 또는 충분한 공식 요약이 있는 후보를 OpenAI Responses API에
-전달한다. 1차 요청은 기사별 포함·제외·섹션을 판정하고, 2차 요청은 동일 사안의 복수 보도를
-통합해 최종 이슈 요약과 보도 논조를 만든다. 두 요청 모두 Structured Outputs 스키마와
-`store=false`를 사용한다.
+GPT 편집 경로는 GitHub runner의 임시 SQLite에만 본문 근거를 보관한다. 1차 요청은 기사별
+포함·제외·섹션을 판정하고, 2차 요청은 동일 사안을 통합해 초안을 만든다. 3차 독립 감사는
+1차 편집기의 판정 이유를 받지 않고 초안과 원근거만 대조한다. 세 요청 모두 Structured Outputs와
+`store=false`를 사용한다. 이어 공식 출처를 발행 직전에 다시 수집해 진행형 사건의 철수·종료·
+합의·타결·답변·수용·철회·보류·재개·속보·후속 상태를 검사한다.
 
 GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를 고르거나, 같은 기사를 중복 배치하거나,
 섹션·요약·논조 규칙을 어기면 브리핑과 노션 발행을 중단한다. 임시 DB와 본문은 명령 종료 때
-삭제하며 저장소에는 기존 기사 메타데이터·분류 결과, 완성된 브리핑, 후보 수와 모델명 등 최소
-운영 상태만 남긴다. API 비용은 `최대 360개 1차 판별 + 최대 80개 2차 편집` 상한으로 제어한다.
+삭제하며 저장소에는 기사 본문 없이 `evidence/YYYY-MM-DD.json` provenance와 health만 남긴다.
+publish gate는 장애언론 census 3/3 COMPLETE, 각 이슈의 지정매체 역검색 9/9 또는 명시적
+DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal error 0, 미분류 실패 0을
+검사한다. 하나라도 충족하지 못하면 Notion 최종 브리핑을 만들지 않고 `브리핑 보고사항`에 원인·
+대체경로·결과·다음 조치를 남긴다. Naver 원문 URL은 결정론적 수집 URL 집합과 대조하며, 장애언론
+census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간주하지 않고 gate를 차단한다.
 
-별도 API 비용 없이 ChatGPT 예약 편집을 사용하는 구성이 기본값이다. 기존 자동 발행으로
-되돌릴 때만 `CHAT_EDITORIAL_ENABLED=false`로 설정한다.
-이 경로는 정확한 발행시각과 본문 확인이 있는 일반 기사 및 충분한 공식 메타데이터가 있는 방송
-후보만 골라 `브리핑 보고사항` 데이터 소스에 날짜별 임시 대기열과 매니페스트를 만든다. 기사
-본문은 저장소에 기록하지 않으며, 같은 날짜의 이전 대기열과 이틀 이상 지난 대기열은 보관
-처리한다. 예약 작업은 [`docs/chat-editorial-instructions.md`](docs/chat-editorial-instructions.md)를
-읽고 현재 날짜의 `READY` 매니페스트만 사용해 이 채팅에 검수용 초안을 보고한다. 이 모드가 켜진
-동안 기존 규칙 기반 노션 발행과 OpenAI API 편집 발행은 중복 발행을 막기 위해 실행하지 않는다.
-임시 SQLite에는 수집 구간의 메타데이터 후보를 모두 기록하되, 본문 요청은 보고 구간의 출처별
-최신 60건과 규칙 후보로 제한해 언론사 부하와 실행 시간을 제어한다.
+10:00 ChatGPT 예약 작업은 production 전환 뒤 수집·편집·Notion 발행을 반복하지 않는다. 전환
+기간에는 오늘자 GitHub gate와 Notion 발행 성공이 확인되면 즉시 감독 모드로 끝내고, 새 writer가
+아직 활성화되지 않은 날에만 기존 발행을 유지한다. 전환이 끝나면
+[`docs/chatgpt-supervisory-task.md`](docs/chatgpt-supervisory-task.md)에 따라 GitHub 결과와 gate만
+감사·보고하는 감독자로 고정한다. 수동 대기열은 회귀 비교가 필요할 때만 사용한다.
 
 ## 주제 키워드 수정
 
@@ -230,6 +238,8 @@ GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
 - `health/editorial/latest.json`: GPT 편집 후보·선정 수, 모델과 성공·실패 상태(본문·응답은 기록하지 않음)
 - `health/editorial_queue/latest.json`: ChatGPT 임시 대기열의 후보·묶음 수와 성공·실패 상태
+- `health/publish_gate/latest.json`: 기계 판정 가능한 최종 발행 허용·차단 사유
+- `evidence/YYYY-MM-DD.json`: 기사별 provenance, census, gap, reverse-search, final-state 결과
 
 브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스다. IV절
 주요 칼럼은 한겨레 `세계의 창` 지제크, 미디어스 김민하, 경향신문 `고병권의 묵묵`을 주제와

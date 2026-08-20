@@ -49,6 +49,22 @@
 5. 전체 출처 실패는 실패로 유지한다. 성공으로 가장하기 위해 `continue-on-error`를 파이프라인
    전체에 적용하지 않는다.
 
+## Publish gate 차단
+
+1. `health/publish_gate/latest.json`에서 `allowed`, `fatal_errors`, `degraded_warnings`,
+   `reporting_items`를 확인한다. `allowed=false`인 실행은 Notion 최종 브리핑이 없어야 정상이다.
+2. 장애언론 census는 비마이너·에이블뉴스·더인디고 3곳 모두 `complete`여야 한다. rolling 목록이
+   100건 상한에 닿았으면 가장 오래된 발견시각이 조사 시작시각 이전인지 확인한다. 경계에 닿지
+   않았으면 검색 API 결과와 무관하게 census를 COMPLETE로 수동 변경하지 않는다.
+3. 지정매체 역검색은 이슈마다 정확히 9개 상태가 있어야 한다. Naver API Hub 미설정·일시 실패는
+   `degraded`로 분류할 수 있지만, 해당 결과를 원문 본문 확인으로 승격하지 않는다.
+4. `validator_fatal_errors`가 1 이상이면 evidence와 초안을 대조해 조사기간 밖 선행보도 오인,
+   행위자·수치·현재상태 오류, 잘못된 이슈 통합을 먼저 해결한다.
+5. `final_state`에 `changed_after_draft=true`가 있으면 새 원문을 반영해 재편집·재감사하기 전까지
+   발행하지 않는다. 발견 URL을 지우거나 상태를 우회하지 않는다.
+6. 모든 실패는 `원인·대체경로·결과·다음조치` 네 항목으로 보고사항에 남긴다. 재실행 전
+   `evidence/YYYY-MM-DD.json`과 새 health가 이전 실행을 조용히 덮어써 원인을 잃지 않는지 확인한다.
+
 ## MBC YouTube API 상태
 
 1. `configuration_missing`이면 `YOUTUBE_API_KEY`가 Repository variable이 아니라 Repository
@@ -84,12 +100,16 @@
    토큰 값은 로그에 출력하지 않는다.
 2. 내부 통합이 대상 브리핑 data source와 보고사항 data source에 연결되어 있는지 확인한다.
 3. `health/notion/latest.json`의 `configuration_error`, `failed`, `created` 상태와 `version`을 본다.
-4. 같은 날짜에 여러 페이지가 있다면 제목의 가장 높은 `vN`보다 1 높은 새 페이지가 생성됐는지
-   확인한다. 이전 버전의 block은 수정·삭제하지 않는다.
+4. 같은 날짜에 브리핑 제목을 포함한 페이지가 이미 있으면 상태가 `already_published`이고 새 페이지가
+   없어야 정상이다. 이는 GitHub 재시도와 전환기 ChatGPT 작업이 동시에 같은 날짜를 발행하는 것을
+   막는 날짜 단위 멱등성이다.
 5. API 버전·속성명이 바뀌면 공식 Notion API 문서와 실제 data source schema를 먼저 확인하고
    MockTransport 시험을 갱신한다.
 6. 발행 실패는 수집 데이터 실패가 아니다. `reports/briefings/` Markdown을 보존한 채 수동 재실행한다.
-   재실행이 성공하면 기존 페이지 갱신이 아니라 다음 버전이 생성되는 것이 정상이다.
+   이미 같은 날짜 브리핑이 있으면 재실행은 그 페이지를 덮어쓰거나 새 버전을 만들지 않는다.
+7. `Notion-Version: 2026-03-11`에서 임시 큐 페이지를 정리할 때는 `archived`가 아니라
+   `in_trash=true`를 사용한다. 400 validation error가 보이면 배포 코드와 MockTransport 시험이 이
+   필드를 사용하는지 확인한다.
 
 ## 오탐·누락 조정
 

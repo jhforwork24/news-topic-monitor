@@ -139,7 +139,7 @@ def test_notion_publish_creates_page_and_children() -> None:
     assert title.startswith("GitHub 자동발행 v1")
 
 
-def test_notion_publish_creates_next_version_instead_of_overwriting() -> None:
+def test_notion_publish_does_not_duplicate_an_existing_manual_briefing() -> None:
     requests: list[tuple[str, str, dict]] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -181,20 +181,14 @@ def test_notion_publish_creates_next_version_instead_of_overwriting() -> None:
         NotionPublishSettings(token="test", data_source_id="ds-1"), client=client
     )
     result = publisher.publish(_document())
-    assert result.status == "created"
-    assert result.version == 4
-    create = next(
-        body for method, path, body in requests if method == "POST" and path == "/v1/pages"
-    )
-    title = create["properties"]["이름"]["title"][0]["text"]["content"]
-    assert title.startswith("GitHub 자동발행 v4")
-    assert not any(
-        method == "PATCH" and path.startswith("/v1/blocks/manual-v3")
-        for method, path, _body in requests
-    )
+    assert result.status == "already_published"
+    assert result.created is False
+    assert result.version == 3
+    assert result.page_id == "manual-v3"
+    assert not any(method == "POST" and path == "/v1/pages" for method, path, _ in requests)
 
 
-def test_identical_rerun_creates_next_version_without_overwriting() -> None:
+def test_identical_rerun_returns_existing_page_without_creating_a_version() -> None:
     requests: list[tuple[str, str, dict]] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -236,13 +230,59 @@ def test_identical_rerun_creates_next_version_without_overwriting() -> None:
         NotionPublishSettings(token="test", data_source_id="ds-1"), client=client
     )
     result = publisher.publish(_document())
-    assert result.status == "created"
-    assert result.version == 5
-    assert any(method == "POST" and path == "/v1/pages" for method, path, _ in requests)
+    assert result.status == "already_published"
+    assert result.created is False
+    assert result.version == 4
+    assert result.page_id == "auto-v4"
+    assert not any(method == "POST" and path == "/v1/pages" for method, path, _ in requests)
     assert not any(
         method == "PATCH" and path.startswith("/v1/blocks/auto-v4")
         for method, path, _body in requests
     )
+
+
+def test_failure_report_preserves_structured_lines_and_appends_on_retry() -> None:
+    requests: list[tuple[str, str, dict]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content) if request.content else {}
+        requests.append((request.method, request.url.path, body))
+        if request.url.path.endswith("/query"):
+            return httpx.Response(
+                200,
+                json={
+                    "results": [{"id": "failure-page", "url": "https://notion.so/failure"}],
+                    "has_more": False,
+                },
+            )
+        if request.method == "PATCH" and request.url.path.endswith("/children"):
+            return httpx.Response(200, json={"object": "list", "results": []})
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(
+            token="test",
+            data_source_id="briefing-ds",
+            reports_data_source_id="reports-ds",
+        ),
+        client=client,
+    )
+    result = publisher.record_failure(
+        "2026-08-20",
+        "원인=공식 목록 실패; 대체경로=Naver; 결과=degraded; 다음조치=재수집\n"
+        "원인=감사 오류; 대체경로=발행 차단; 결과=failed; 다음조치=재편집",
+    )
+
+    assert result == "https://notion.so/failure"
+    append = next(
+        body
+        for method, path, body in requests
+        if method == "PATCH" and path == "/v1/blocks/failure-page/children"
+    )
+    rendered = json.dumps(append, ensure_ascii=False)
+    assert "원인=공식 목록 실패" in rendered
+    assert "다음조치=재편집" in rendered
 
 
 def test_notion_query_retries_retry_after() -> None:

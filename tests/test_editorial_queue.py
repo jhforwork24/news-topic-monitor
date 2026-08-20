@@ -74,7 +74,7 @@ def test_chat_queue_requires_exact_date_and_verified_evidence() -> None:
     assert {item.candidate_id for item in selected} == {"verified", "broadcast"}
 
 
-def test_notion_queue_archives_old_pages_and_creates_manifest_without_kst() -> None:
+def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> None:
     requests: list[tuple[str, str, dict]] = []
     create_count = 0
 
@@ -91,7 +91,7 @@ def test_notion_queue_archives_old_pages_and_creates_manifest_without_kst() -> N
                 },
             )
         if request.method == "PATCH" and request.url.path == "/v1/pages/old-queue":
-            return httpx.Response(200, json={"id": "old-queue", "archived": True})
+            return httpx.Response(200, json={"id": "old-queue", "in_trash": True})
         if request.method == "POST" and request.url.path == "/v1/pages":
             create_count += 1
             return httpx.Response(
@@ -132,7 +132,7 @@ def test_notion_queue_archives_old_pages_and_creates_manifest_without_kst() -> N
     assert result.candidate_count == 2
     assert result.part_count == 1
     assert any(
-        method == "PATCH" and path == "/v1/pages/old-queue" and body == {"archived": True}
+        method == "PATCH" and path == "/v1/pages/old-queue" and body == {"in_trash": True}
         for method, path, body in requests
     )
     creates = [body for method, path, body in requests if method == "POST" and path == "/v1/pages"]

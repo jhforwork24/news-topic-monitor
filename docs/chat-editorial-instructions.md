@@ -1,6 +1,10 @@
-# ChatGPT 일간 뉴스 편집 지침
+# ChatGPT 일간 뉴스 편집 지침 — 수동 그림자 전용
 
-이 문서는 예약된 ChatGPT 작업이 Notion의 임시 편집 대기열을 검토해 이 채팅에 검수용
+이 문서는 production 예약 작업에서 사용하지 않는다. 2026-08-20부터 production 최종 writer는
+`editorial-publish.yml` 하나이며, 이 대기열 절차는 사용자가 명시적으로 요청한 수동 회귀 비교에서만
+사용한다. 10:00 예약 작업에는 `docs/chatgpt-supervisory-task.md`를 적용한다.
+
+이 문서는 수동 ChatGPT 작업이 Notion의 임시 편집 대기열을 검토해 이 채팅에 검수용
 브리핑을 보고할 때 적용하는 기준이다. ChatGPT는 브리핑을 작성하되 검수 단계에서는 Notion이나
 GitHub에 발행·수정하지 않는다.
 
