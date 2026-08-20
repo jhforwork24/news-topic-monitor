@@ -1,8 +1,8 @@
 {
-  "report_date": "2026-08-19",
-  "checked_at": "2026-08-19T02:38:59.731571Z",
+  "report_date": "2026-08-20",
+  "checked_at": "2026-08-20T02:44:19.696200Z",
   "status": "failed",
   "candidate_count": null,
   "part_count": null,
-  "error": "Notion API PATCH /pages/3bfbda0e-a772-8153-8b44-ca6f0f217a7a returned HTTP 400: {\"object\":\"error\",\"status\":400,\"code\":\"validation_error\",\"message\":\"body failed validation: body.archived should be not present, instead was `true`.\",\"request_id\":\"e7576dcd-a20e-44e5-80a9-a2cec80af8a9\"}"
+  "error": "Notion API PATCH /pages/3c0bda0e-a772-81a6-b8fa-dae752206486 returned HTTP 400: {\"object\":\"error\",\"status\":400,\"code\":\"validation_error\",\"message\":\"body failed validation: body.archived should be not present, instead was `true`.\",\"request_id\":\"51cba6da-c8fa-42fe-91bf-74cdbc7aa910\"}"
 }
