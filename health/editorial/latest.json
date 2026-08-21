@@ -3,9 +3,10 @@
   "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.471,
-    "total": 8.073
+    "api_preflight": 1.356,
+    "bridge_import_validation": 7.713,
+    "total": 9.174
   },
-  "error": "ChatGPT bridge validation failed: queue, draft, and audit queue_id values do not match; draft predates the verified editorial queue",
-  "completed_at": "2026-08-21T13:10:23.664267Z"
+  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
+  "completed_at": "2026-08-21T13:31:11.396570Z"
 }
