@@ -972,14 +972,15 @@ def _rich_text_chunks(content: str, *, chunk_size: int = 1900) -> list[dict[str,
 def _code_json(payload: dict[str, Any]) -> dict[str, Any]:
     content = json.dumps(
         payload,
-        ensure_ascii=False,
+        ensure_ascii=True,
         sort_keys=True,
         separators=(",", ":"),
     )
-    # Notion may trim whitespace at rich-text item boundaries.  Machine JSON is
-    # intentionally compact, so every remaining Unicode whitespace character is
-    # part of a JSON string and can be escaped without changing the decoded value.
-    # This keeps the concatenated document byte-stable across Notion chunking.
+    # Notion may normalize non-ASCII rich text and trim whitespace at rich-text
+    # item boundaries.  Keep the machine document ASCII-only, then escape every
+    # remaining Unicode whitespace character.  JSON decoding reconstructs the
+    # original values while the stored representation stays byte-stable across
+    # Notion normalization and chunking.
     content = "".join(
         f"\\u{ord(character):04x}" if character.isspace() else character for character in content
     )
