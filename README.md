@@ -187,6 +187,11 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
 명시적으로 연결해야 한다.
 
+Naver 검색층은 [Search API의 NAVER API HUB 이관 공지](https://developers.naver.com/notice/article/32530)에
+따라 새 API Hub endpoint와 전용 Client ID/Key를 사용한다. 공지 시점의 기본 무료 정책을 전제로
+하지만 향후 유료 정책이 추가될 수 있으므로, 검색층은 독립 gap detector로만 제한하고 호출량과
+요금 정책 변경을 운영 점검 대상에 둔다.
+
 `YOUTUBE_API_KEY`도 repository secret으로만 저장한다. MBC 어댑터는 이 키를 쿼리 문자열에
 넣지 않고 `youtube.googleapis.com` 동일 origin 요청 헤더에만 전달한다. robots.txt 요청과
 cross-origin 리다이렉트에는 키를 전달하지 않는다. 키가 없으면 MBC만
