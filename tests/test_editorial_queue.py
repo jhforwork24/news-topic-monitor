@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import unicodedata
 from datetime import UTC, datetime
 
 import httpx
@@ -161,7 +162,9 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
                 continue
             chunks = [item["text"]["content"] for item in block["code"]["rich_text"]]
             assert all(not any(character.isspace() for character in chunk) for chunk in chunks)
+            assert all(chunk.isascii() for chunk in chunks)
             content = "".join(chunks)
+            assert unicodedata.normalize("NFC", content) == content
             code_documents.append(json.loads(content))
     assert [document["schema_version"] for document in code_documents] == [1, 1]
     part_document = next(document for document in code_documents if "candidates" in document)
