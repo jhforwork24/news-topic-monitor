@@ -115,6 +115,12 @@ def revalidate_final_state(
         for candidate in all_candidates:
             if candidate.candidate_id in selected_ids or candidate.published_at is None:
                 continue
+            # The editorial queue can contain articles that are newer than the
+            # selected evidence but were already available before GPT finished
+            # the draft and audit. They are not post-draft state changes. Only
+            # evidence published after the audited draft can force a re-edit.
+            if candidate.published_at <= draft_completed_at:
+                continue
             if candidate.published_at <= latest_selected:
                 continue
             candidate_text = " ".join(
