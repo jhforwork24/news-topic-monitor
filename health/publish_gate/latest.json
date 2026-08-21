@@ -1,59 +1,15 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-21",
-  "checked_at": "2026-08-21T14:10:29.209707Z",
-  "allowed": false,
-  "fatal_errors": [
-    "초안 작성 뒤 최종상태 변경이 발견되어 재편집이 필요함"
-  ],
+  "checked_at": "2026-08-21T14:16:14.637741Z",
+  "allowed": true,
+  "fatal_errors": [],
   "degraded_warnings": [
     "독립 검색에서 결정론적 수집에 없는 잠재 누락 3건"
   ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
   "reporting_items": [
-    {
-      "cause": "장애인 통합돌봄의 낮은 신청·서비스 연계와 노인 중심 설계 개선 요구: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
-    {
-      "cause": "장애인 직접·통합고용 확대와 표준사업장 중심 인센티브 구조 개선 요구: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
-    {
-      "cause": "장애인평생교육법 시행을 앞둔 국비 지원·전담체계 예산 갈등: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
-    {
-      "cause": "플랫폼·프리랜서 등 비정형노동자를 위한 K-노동복지회의소 설계 착수: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
-    {
-      "cause": "대전·청주 IT·R&D 사업장 포괄임금 오남용 5차 기획감독 추진: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
-    {
-      "cause": "사업주 과실로 취업기간 연장 놓친 이주노동자 재고용 허용 권고: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
-    {
-      "cause": "현대차 전면파업과 부품·하청 노동자의 원청 교섭 요구: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
-      "result": "changed_after_draft",
-      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
-    },
     {
       "cause": "newscham: 결정론적 수집에 없는 검색 후보 학교에서 덜어낸 20조 원, 반도체와 원전 옆에 놓였다",
       "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",

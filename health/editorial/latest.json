@@ -1,21 +1,15 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-21",
-  "status": "blocked_by_publish_gate",
-  "model": "connected_chatgpt_editor",
-  "auditor_model": "connected_chatgpt_independent_auditor",
-  "candidate_count": 180,
-  "included_after_first_pass": 0,
-  "published_issue_count": 8,
-  "validator_fatal_errors": 0,
+  "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 2.739,
-    "assurance": 0.018,
-    "bridge_import_validation": 8.891,
-    "final_state_recrawl": 7.69,
-    "gap_reverse_search": 126.402,
-    "total": 146.931
+    "api_preflight": 1.323,
+    "assurance": 0.001,
+    "bridge_import_validation": 8.276,
+    "final_state_recrawl": 8.467,
+    "gap_reverse_search": 56.743,
+    "total": 82.636
   },
-  "error": "publish gate blocked publication: 초안 작성 뒤 최종상태 변경이 발견되어 재편집이 필요함",
-  "completed_at": "2026-08-21T14:10:30.736619Z"
+  "error": "브리핑 발행 검증 실패: II. 노동·돌봄·빈곤 / 재단법인 ‘대표권 있는 이사’의 임금체불 사용자 책임 판단 기준: 요약에 인용·말줄임 표지가 있음",
+  "completed_at": "2026-08-21T14:16:21.811817Z"
 }
