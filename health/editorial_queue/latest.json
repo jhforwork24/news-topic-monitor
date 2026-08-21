@@ -1,11 +1,11 @@
 {
   "report_date": "2026-08-21",
-  "checked_at": "2026-08-21T08:32:00.247172Z",
-  "status": "failed",
-  "candidate_count": null,
-  "part_count": null,
-  "queue_id": null,
-  "gap_detection_status": null,
-  "gap_potential_count": null,
-  "error": "Notion API POST /pages returned HTTP 400: {\"object\":\"error\",\"status\":400,\"code\":\"validation_error\",\"message\":\"body failed validation: body.children[99].code.rich_text.length should be ≤ `100`, instead was `103`.\",\"request_id\":\"3ec5d59d-f208-45f1-a8e2-dea2ad219bbd\"}"
+  "checked_at": "2026-08-21T13:08:42.460927Z",
+  "status": "ready",
+  "candidate_count": 180,
+  "part_count": 8,
+  "queue_id": "7276a63305fe4636f9040283a22f8e8fa9a1c0768d42ae45f543582e2ffca3c2",
+  "gap_detection_status": "complete",
+  "gap_potential_count": 0,
+  "error": null
 }
