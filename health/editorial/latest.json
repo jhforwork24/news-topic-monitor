@@ -1,12 +1,21 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-21",
-  "status": "failed",
+  "status": "blocked_by_publish_gate",
+  "model": "connected_chatgpt_editor",
+  "auditor_model": "connected_chatgpt_independent_auditor",
+  "candidate_count": 180,
+  "included_after_first_pass": 0,
+  "published_issue_count": 8,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.356,
-    "bridge_import_validation": 7.713,
-    "total": 9.174
+    "api_preflight": 2.739,
+    "assurance": 0.018,
+    "bridge_import_validation": 8.891,
+    "final_state_recrawl": 7.69,
+    "gap_reverse_search": 126.402,
+    "total": 146.931
   },
-  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
-  "completed_at": "2026-08-21T13:31:11.396570Z"
+  "error": "publish gate blocked publication: 초안 작성 뒤 최종상태 변경이 발견되어 재편집이 필요함",
+  "completed_at": "2026-08-21T14:10:30.736619Z"
 }

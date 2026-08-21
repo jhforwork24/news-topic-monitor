@@ -67,19 +67,19 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-08-21T13:42:33.435990Z",
+      "last_run_at": "2026-08-21T14:08:17.123130Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-21T13:42:33.435990Z",
+      "last_success_at": "2026-08-21T14:08:17.123130Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-08-21T13:43:13.060737Z",
+      "last_run_at": "2026-08-21T14:08:19.665909Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-21T13:43:13.060737Z",
+      "last_success_at": "2026-08-21T14:08:19.665909Z",
       "discovery_status": "complete"
     },
     "ablenews": {
@@ -91,11 +91,11 @@
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-08-21T13:45:15.997486Z",
+      "last_run_at": "2026-08-21T14:08:22.255557Z",
       "success": true,
-      "discovered": 8,
+      "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-08-21T13:45:15.997486Z",
+      "last_success_at": "2026-08-21T14:08:22.255557Z",
       "discovery_status": "complete"
     },
     "kbs": {
