@@ -1,16 +1,13 @@
 {
   "report_date": "2026-08-21",
+  "naver_api_hub": {
+    "status": "complete",
+    "error": null
+  },
   "openai": {
     "status": "not_required",
     "error": null,
     "route": "connected_chatgpt_automation"
   },
-  "naver_api_hub": {
-    "status": "complete",
-    "error": null,
-    "queries_attempted": 5,
-    "queries_completed": 5,
-    "potential_gap_count": 0
-  },
-  "checked_at": "2026-08-21T13:08:25.107468Z"
+  "checked_at": "2026-08-21T13:10:17.071019Z"
 }

@@ -3,9 +3,9 @@
   "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.128,
-    "total": 8.33
+    "api_preflight": 1.471,
+    "total": 8.073
   },
-  "error": "편집 대기열 원본 JSON digest가 매니페스트 queue_id와 일치하지 않음",
-  "completed_at": "2026-08-21T08:11:21.153916Z"
+  "error": "ChatGPT bridge validation failed: queue, draft, and audit queue_id values do not match; draft predates the verified editorial queue",
+  "completed_at": "2026-08-21T13:10:23.664267Z"
 }
