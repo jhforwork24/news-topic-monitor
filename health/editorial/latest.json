@@ -3,9 +3,9 @@
   "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 7.31,
-    "total": 7.323
+    "api_preflight": 1.931,
+    "total": 8.887
   },
-  "error": "OpenAI API retries exhausted at HTTP 429 (insufficient_quota)",
-  "completed_at": "2026-08-21T02:35:15.359190Z"
+  "error": "ChatGPT 편집 브리지 JSON이 고정 스키마를 충족하지 않음",
+  "completed_at": "2026-08-21T04:53:46.407480Z"
 }
