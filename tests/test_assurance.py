@@ -163,11 +163,34 @@ def test_final_state_change_is_detected_from_newer_verified_original() -> None:
         all_candidates=[original, update],
         health=_health(now),
         policy=policy,
+        draft_completed_at=now - timedelta(minutes=30),
         checked_at=now,
     )
     assert result.status == CheckStatus.COMPLETE
     assert result.checks[0].changed_after_draft is True
     assert result.checks[0].evidence_urls == [update.canonical_url]
+
+
+def test_final_state_fails_when_recrawl_predates_gpt_draft() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    original = _candidate("old", "권리중심공공일자리 농성 돌입", now - timedelta(hours=3))
+    plan = _plan(original.candidate_id)
+    audit = EditorialAudit(findings=[], progressive_issue_titles=[plan.issues[0].title])
+
+    result = revalidate_final_state(
+        plan=plan,
+        audit=audit,
+        all_candidates=[original],
+        health=_health(now - timedelta(hours=1)),
+        policy=policy,
+        draft_completed_at=now,
+        checked_at=now,
+    )
+
+    assert result.status == CheckStatus.FAILED
+    assert "초안·감사 완료 뒤" in result.checks[0].reason
 
 
 def test_publish_gate_is_machine_checkable_and_fail_closed() -> None:

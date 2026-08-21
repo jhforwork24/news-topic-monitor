@@ -64,6 +64,8 @@ class Collector:
         capture_all_bodies: bool = False,
         capture_body_start: datetime | None = None,
         capture_body_limit_per_source: int | None = None,
+        write_health: bool = True,
+        rolling_window_end: bool = False,
     ) -> None:
         self.http = http
         self.storage = storage
@@ -74,8 +76,14 @@ class Collector:
         self.capture_all_bodies = capture_all_bodies
         self.capture_body_start = capture_body_start
         self.capture_body_limit_per_source = capture_body_limit_per_source
+        self.write_health = write_health
+        self.rolling_window_end = rolling_window_end
 
     def run(self, start: datetime, end: datetime) -> RunHealth:
+        with self.storage.batch():
+            return self._run_batched(start, end)
+
+    def _run_batched(self, start: datetime, end: datetime) -> RunHealth:
         started = datetime.now(UTC)
         sources: dict[str, SourceHealth] = {}
         for adapter in self.adapters:
@@ -120,11 +128,12 @@ class Collector:
             run_started_at=started,
             run_finished_at=finished,
             window_start=start,
-            window_end=end,
+            window_end=finished if self.rolling_window_end else end,
             all_sources_failed=all(not source.success for source in sources.values()),
             sources=sources,
         )
-        self.storage.write_health(run_health.model_dump(mode="json"))
+        if self.write_health:
+            self.storage.write_health(run_health.model_dump(mode="json"))
         return run_health
 
     def _run_source(
@@ -223,9 +232,12 @@ class Collector:
         if discovered_dates:
             health.oldest_discovered_at = min(discovered_dates)
             health.newest_discovered_at = max(discovered_dates)
-        capture_body_keys = self._capture_body_keys(discoveries, start=start, end=end)
+        effective_end = datetime.now(UTC) if self.rolling_window_end else end
+        capture_body_keys = self._capture_body_keys(discoveries, start=start, end=effective_end)
         for key, discovery in discoveries.items():
-            if not discovery.refresh_only and not in_window(discovery.published_at, start, end):
+            if not discovery.refresh_only and not in_window(
+                discovery.published_at, start, effective_end
+            ):
                 continue
             if discovery.refresh_only:
                 health.refreshed += 1

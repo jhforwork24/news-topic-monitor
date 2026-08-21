@@ -53,6 +53,31 @@ def test_storage_is_idempotent_and_writes_review(tmp_path) -> None:
     assert "article body" not in review_files[0].read_text(encoding="utf-8")
 
 
+def test_storage_batch_preserves_results_and_flushes_once_per_date(tmp_path, monkeypatch) -> None:
+    storage = JsonlStorage(tmp_path)
+    first = record()
+    second = record(classification=Classification.RELEVANT)
+    second.article_id = "2"
+    second.canonical_url = "https://www.hani.co.kr/arti/society/456.html"
+    writes: list[str] = []
+    original_write = storage._write_records
+
+    def counted_write(path, records):
+        writes.append(str(path.relative_to(tmp_path)))
+        original_write(path, records)
+
+    monkeypatch.setattr(storage, "_write_records", counted_write)
+    with storage.batch():
+        assert storage.upsert(first) == StoreResult.NEW
+        assert storage.upsert(second) == StoreResult.NEW
+        assert list(storage.iter_articles()) == []
+
+    stored = list(storage.iter_articles())
+    assert {item.article_id for item in stored} == {"1", "2"}
+    assert writes.count("data/articles/2026-08-15.jsonl") == 1
+    assert writes.count("data/review/2026-08-15.jsonl") == 1
+
+
 def test_stale_api_record_can_be_refreshed_or_exactly_removed(tmp_path) -> None:
     storage = JsonlStorage(tmp_path)
     item = record()

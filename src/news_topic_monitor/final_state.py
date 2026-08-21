@@ -30,6 +30,7 @@ def revalidate_final_state(
     all_candidates: list[EditorialCandidate],
     health: RunHealth,
     policy: BriefingPolicy,
+    draft_completed_at: datetime,
     checked_at: datetime | None = None,
 ) -> FinalStateResult:
     now = checked_at or datetime.now(UTC)
@@ -55,6 +56,31 @@ def revalidate_final_state(
                     status=CheckStatus.COMPLETE,
                     progressive=False,
                     reason="진행형 사건 탐지 조건에 해당하지 않음",
+                )
+            )
+            continue
+
+        if not selected:
+            checks.append(
+                FinalStateIssueCheck(
+                    issue_title=issue.title,
+                    status=CheckStatus.FAILED,
+                    progressive=True,
+                    reason="선정 기사 근거가 재검증 후보 집합에 없음",
+                )
+            )
+            continue
+
+        if (
+            health.run_started_at < draft_completed_at
+            or health.run_finished_at < draft_completed_at
+        ):
+            checks.append(
+                FinalStateIssueCheck(
+                    issue_title=issue.title,
+                    status=CheckStatus.FAILED,
+                    progressive=True,
+                    reason="GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
                 )
             )
             continue
@@ -111,7 +137,7 @@ def revalidate_final_state(
                     status=CheckStatus.COMPLETE,
                     progressive=True,
                     changed_after_draft=True,
-                    reason="초안 작성 뒤 공식 원문으로 확인된 최종상태 후속보도가 발견됨",
+                    reason="초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
                     evidence_urls=[candidate.canonical_url for candidate in updates[:5]],
                 )
             )
@@ -121,7 +147,7 @@ def revalidate_final_state(
                     issue_title=issue.title,
                     status=CheckStatus.COMPLETE,
                     progressive=True,
-                    reason="발행 직전 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+                    reason="초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
                 )
             )
     status = (

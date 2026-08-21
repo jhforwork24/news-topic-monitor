@@ -276,3 +276,38 @@ def test_editorial_collection_caps_broad_body_requests_per_source(tmp_path, topi
         )
         == 2
     )
+
+
+def test_targeted_recrawl_does_not_overwrite_primary_collection_health(
+    tmp_path, topics_path
+) -> None:
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=StubHttp(),
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[GoodAdapter()],
+        write_health=False,
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+
+    assert not (tmp_path / "health" / "latest.json").exists()
+
+
+def test_targeted_recrawl_records_rolling_completion_boundary(tmp_path, topics_path) -> None:
+    requested_end = datetime.now(UTC)
+    health = Collector(
+        http=StubHttp(),
+        storage=JsonlStorage(tmp_path),
+        classifier=RuleClassifier(topics_path),
+        adapters=[GoodAdapter()],
+        rolling_window_end=True,
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        requested_end,
+    )
+
+    assert health.window_end == health.run_finished_at
+    assert health.window_end >= requested_end

@@ -62,7 +62,10 @@
    행위자·수치·현재상태 오류, 잘못된 이슈 통합을 먼저 해결한다.
 5. `final_state`에 `changed_after_draft=true`가 있으면 새 원문을 반영해 재편집·재감사하기 전까지
    발행하지 않는다. 발견 URL을 지우거나 상태를 우회하지 않는다.
-6. 모든 실패는 `원인·대체경로·결과·다음조치` 네 항목으로 보고사항에 남긴다. 재실행 전
+6. `health/editorial/latest.json`의 `phase_durations_seconds`에서 `initial_collection`,
+   `gpt_edit_audit`, `final_state_recrawl`, `gap_reverse_search`, `total`을 확인한다. 초안·감사 뒤
+   시작된 `final_state_recrawl` health가 없으면 COMPLETE 상태를 신뢰하지 않는다.
+7. 모든 실패는 `원인·대체경로·결과·다음조치` 네 항목으로 보고사항에 남긴다. 재실행 전
    `evidence/YYYY-MM-DD.json`과 새 health가 이전 실행을 조용히 덮어써 원인을 잃지 않는지 확인한다.
 
 ## MBC YouTube API 상태
