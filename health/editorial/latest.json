@@ -3,13 +3,9 @@
   "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.323,
-    "assurance": 0.001,
-    "bridge_import_validation": 8.276,
-    "final_state_recrawl": 8.467,
-    "gap_reverse_search": 56.743,
-    "total": 82.636
+    "api_preflight": 1.813,
+    "total": 3.878
   },
-  "error": "브리핑 발행 검증 실패: II. 노동·돌봄·빈곤 / 재단법인 ‘대표권 있는 이사’의 임금체불 사용자 책임 판단 기준: 요약에 인용·말줄임 표지가 있음",
-  "completed_at": "2026-08-21T14:16:21.811817Z"
+  "error": "ChatGPT 편집 브리지 JSON이 고정 스키마를 충족하지 않음",
+  "completed_at": "2026-08-21T15:20:08.333546Z"
 }
