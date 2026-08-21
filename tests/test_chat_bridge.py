@@ -16,6 +16,7 @@ from news_topic_monitor.chat_bridge import (
     editorial_queue_id,
     validate_chat_editorial_bridge,
 )
+from news_topic_monitor.cli import _load_bound_initial_health
 from news_topic_monitor.editorial import EditorialValidationError
 from news_topic_monitor.models import (
     BodyStatus,
@@ -25,9 +26,15 @@ from news_topic_monitor.models import (
     EditorialIssueDecision,
     EditorialPlan,
     EditorialSection,
+    RunHealth,
     VerificationStatus,
 )
-from news_topic_monitor.notion_publish import NotionPublisher, NotionPublishSettings
+from news_topic_monitor.notion_publish import (
+    EditorialQueueValidationError,
+    NotionPublisher,
+    NotionPublishSettings,
+)
+from news_topic_monitor.storage import JsonlStorage
 
 
 def _candidate(candidate_id: str = "candidate-1") -> EditorialCandidate:
@@ -202,3 +209,30 @@ def test_notion_bridge_loader_requires_exact_machine_documents() -> None:
     validate_chat_editorial_bridge(loaded)
     assert loaded.queue.manifest.queue_id == bundle.queue.manifest.queue_id
     assert loaded.draft.plan.issues[0].candidate_ids == ["candidate-1"]
+
+
+def test_initial_census_health_is_bound_to_the_queue_manifest(tmp_path) -> None:
+    manifest = _bundle().queue.manifest
+    health = RunHealth(
+        run_started_at=manifest.initial_health_finished_at - timedelta(minutes=5),
+        run_finished_at=manifest.initial_health_finished_at,
+        window_start=manifest.report_start - timedelta(days=1),
+        window_end=manifest.report_end,
+        all_sources_failed=False,
+        sources={},
+    )
+    JsonlStorage.atomic_write_json(
+        tmp_path / "health" / "latest.json", health.model_dump(mode="json")
+    )
+
+    loaded = _load_bound_initial_health(tmp_path, manifest)
+    assert loaded.run_finished_at == manifest.initial_health_finished_at
+
+    stale = health.model_copy(
+        update={"run_finished_at": manifest.initial_health_finished_at + timedelta(seconds=1)}
+    )
+    JsonlStorage.atomic_write_json(
+        tmp_path / "health" / "latest.json", stale.model_dump(mode="json")
+    )
+    with pytest.raises(EditorialQueueValidationError, match="일치하지 않음"):
+        _load_bound_initial_health(tmp_path, manifest)
