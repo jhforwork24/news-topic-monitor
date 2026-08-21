@@ -1,0 +1,11 @@
+{
+  "prompt_version": 1,
+  "report_date": "2026-08-21",
+  "status": "failed",
+  "phase_durations_seconds": {
+    "initial_collection": 956.531,
+    "total": 963.664
+  },
+  "error": "OpenAI API retries exhausted at HTTP 429",
+  "completed_at": "2026-08-21T02:24:08.450526Z"
+}
