@@ -8,6 +8,7 @@ import sys
 from datetime import UTC, datetime, time, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from time import perf_counter
 
 import httpx
 
@@ -253,11 +254,10 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
     if collection_start >= end:
         raise SystemExit("collect-hours must be greater than zero")
 
-    now = datetime.now(UTC)
-    revalidation_end = now if end <= now <= end + timedelta(hours=6) else end
-
     storage = JsonlStorage(settings.root)
     adapters = _build_adapters(settings, storage, set(args.sources or []))
+    command_started = perf_counter()
+    phase_durations: dict[str, float] = {}
     try:
         editorial_settings = OpenAIEditorialSettings.from_env()
         source_registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
@@ -276,6 +276,8 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
             database_path = Path(temporary_directory) / "candidates.sqlite3"
             with EditorialEvidenceStore(database_path) as evidence_store:
                 classifier = RuleClassifier(settings.root / "config" / "topics.yml")
+                LOGGER.info("editorial phase=initial_collection status=started")
+                phase_started = perf_counter()
                 with SafeHttpClient(settings) as http:
                     health = Collector(
                         http=http,
@@ -289,15 +291,87 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         # body is limited to the 24-hour report window; rule-matched
                         # older candidates are still refreshed by Collector.
                         capture_body_start=start,
-                    ).run(collection_start, revalidation_end)
+                        capture_body_limit_per_source=(
+                            editorial_settings.body_fetch_limit_per_source
+                        ),
+                    ).run(collection_start, end)
+                phase_durations["initial_collection"] = perf_counter() - phase_started
+                LOGGER.info(
+                    "editorial phase=initial_collection status=completed duration_seconds=%.3f",
+                    phase_durations["initial_collection"],
+                )
                 if health.all_sources_failed:
                     raise EditorialValidationError("모든 출처 수집에 실패하여 편집을 중단함")
 
                 candidates = evidence_store.candidates(start=start, end=end)
-                all_candidates = evidence_store.candidates(start=start, end=revalidation_end)
-                known_canonical_urls = {candidate.canonical_url for candidate in all_candidates}
+                LOGGER.info(
+                    "editorial phase=gpt_edit_audit status=started candidate_count=%d",
+                    len(candidates),
+                )
+                phase_started = perf_counter()
                 with OpenAIEditorialClient(editorial_settings) as editor:
                     run = editor.edit(candidates)
+                draft_completed_at = datetime.now(UTC)
+                phase_durations["gpt_edit_audit"] = perf_counter() - phase_started
+                LOGGER.info(
+                    "editorial phase=gpt_edit_audit status=completed duration_seconds=%.3f",
+                    phase_durations["gpt_edit_audit"],
+                )
+
+                candidate_by_id = {candidate.candidate_id: candidate for candidate in candidates}
+                selected_sources = {
+                    candidate_by_id[candidate_id].source
+                    for issue in run.plan.issues
+                    for candidate_id in issue.candidate_ids
+                    if candidate_id in candidate_by_id
+                }
+                if not selected_sources:
+                    raise EditorialValidationError(
+                        "최종상태 공식 재수집에 사용할 선정 기사 출처가 없음"
+                    )
+                revalidation_requested_at = datetime.now(UTC)
+                if revalidation_requested_at > end + timedelta(hours=6):
+                    raise EditorialValidationError(
+                        "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음"
+                    )
+                revalidation_start = (
+                    end
+                    if revalidation_requested_at > end
+                    else max(start, revalidation_requested_at - timedelta(hours=1))
+                )
+                LOGGER.info(
+                    "editorial phase=final_state_recrawl status=started sources=%s",
+                    ",".join(sorted(selected_sources)),
+                )
+                phase_started = perf_counter()
+                revalidation_adapters = _build_adapters(settings, storage, selected_sources)
+                with SafeHttpClient(settings) as http:
+                    revalidation_health = Collector(
+                        http=http,
+                        storage=storage,
+                        classifier=classifier,
+                        adapters=revalidation_adapters,
+                        max_discovery_children=settings.max_discovery_children,
+                        evidence_store=evidence_store,
+                        capture_all_bodies=True,
+                        capture_body_start=revalidation_start,
+                        capture_body_limit_per_source=(
+                            editorial_settings.body_fetch_limit_per_source
+                        ),
+                        write_health=False,
+                        rolling_window_end=True,
+                    ).run(revalidation_start, revalidation_requested_at)
+                phase_durations["final_state_recrawl"] = perf_counter() - phase_started
+                LOGGER.info(
+                    "editorial phase=final_state_recrawl status=completed duration_seconds=%.3f",
+                    phase_durations["final_state_recrawl"],
+                )
+
+                revalidation_end = revalidation_health.run_finished_at
+                all_candidates = evidence_store.candidates(start=start, end=revalidation_end)
+                known_canonical_urls = {candidate.canonical_url for candidate in all_candidates}
+                LOGGER.info("editorial phase=gap_reverse_search status=started")
+                phase_started = perf_counter()
 
                 if naver_settings is None:
                     gap_detection = run_gap_detection(
@@ -338,7 +412,13 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                             start=start,
                             end=end,
                         )
+                phase_durations["gap_reverse_search"] = perf_counter() - phase_started
+                LOGGER.info(
+                    "editorial phase=gap_reverse_search status=completed duration_seconds=%.3f",
+                    phase_durations["gap_reverse_search"],
+                )
 
+                phase_started = perf_counter()
                 census = evaluate_census(
                     health,
                     window_start=start,
@@ -349,9 +429,10 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                     plan=run.plan,
                     audit=run.audit,
                     all_candidates=all_candidates,
-                    health=health,
+                    health=revalidation_health,
                     policy=briefing_policy,
-                    checked_at=revalidation_end,
+                    draft_completed_at=draft_completed_at,
+                    checked_at=revalidation_health.run_finished_at,
                 )
                 gate = evaluate_publish_gate(
                     report_date=report_date,
@@ -364,7 +445,9 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                     plan=run.plan,
                     candidates=candidates,
                     health=health,
+                    revalidation_health=revalidation_health,
                 )
+                phase_durations["assurance"] = perf_counter() - phase_started
 
             # The database remains confined to this temporary directory and is
             # removed automatically before the command returns.
@@ -384,6 +467,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
             )
             write_assurance_outputs(settings.root, manifest=manifest, gate=gate)
             if not gate.allowed:
+                phase_durations["total"] = perf_counter() - command_started
                 _record_gate_failure(settings.root, gate)
                 error = "publish gate blocked publication: " + "; ".join(gate.fatal_errors)
                 write_editorial_health(
@@ -392,12 +476,12 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                     report_date=report_date,
                     status="blocked_by_publish_gate",
                     error=error,
+                    phase_durations_seconds=phase_durations,
                 )
                 LOGGER.error("%s", error)
                 return 3
 
-            write_editorial_health(settings.root, run, report_date=report_date)
-
+            phase_started = perf_counter()
             document = build_editorial_briefing(
                 storage,
                 plan=run.plan,
@@ -418,26 +502,38 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 output_path=(settings.root / "reports" / "briefings" / f"{report_date}.md"),
                 crpd_url=None,
             )
+            phase_durations["render_briefing"] = perf_counter() - phase_started
+            phase_durations["total"] = perf_counter() - command_started
+            write_editorial_health(
+                settings.root,
+                run,
+                report_date=report_date,
+                phase_durations_seconds=phase_durations,
+            )
             print(path)
             if args.dry_run:
                 return 0
             return _publish_to_notion(document, settings.root)
     except (EditorialConfigurationError, PolicyConfigurationError) as exc:
         LOGGER.error("%s", exc)
+        phase_durations["total"] = perf_counter() - command_started
         write_editorial_failure(
             settings.root,
             report_date=report_date,
             status="configuration_error",
             error=str(exc),
+            phase_durations_seconds=phase_durations,
         )
         return 2
     except (EditorialApiError, EditorialValidationError, BriefingValidationError) as exc:
         LOGGER.error("%s", exc)
+        phase_durations["total"] = perf_counter() - command_started
         write_editorial_failure(
             settings.root,
             report_date=report_date,
             status="failed",
             error=str(exc),
+            phase_durations_seconds=phase_durations,
         )
         return 3
 

@@ -286,6 +286,7 @@ def evaluate_publish_gate(
     plan: EditorialPlan,
     candidates: list[EditorialCandidate],
     health: RunHealth,
+    revalidation_health: RunHealth | None = None,
 ) -> PublishGateDecision:
     fatal: list[str] = []
     warnings: list[str] = []
@@ -426,20 +427,31 @@ def evaluate_publish_gate(
                     )
                 )
 
-    unclassified = sum(detail.unclassified_failures for detail in health.sources.values())
+    health_runs = [("initial_collection", health)]
+    if revalidation_health is not None:
+        health_runs.append(("final_state_recrawl", revalidation_health))
+    unclassified = sum(
+        detail.unclassified_failures
+        for _, run_health in health_runs
+        for detail in run_health.sources.values()
+    )
     if unclassified > policy.publish_gate.unclassified_failures_max:
         fatal.append(f"미분류 실패={unclassified}")
-        for source, detail in health.sources.items():
-            if not detail.unclassified_failures:
-                continue
-            reporting.append(
-                ReportingItem(
-                    cause=f"{source}: 분류되지 않은 수집 예외 {detail.unclassified_failures}건",
-                    fallback="예외를 성공·무보도로 바꾸지 않고 source isolation 상태로 보존",
-                    result="failed",
-                    next_action="예외 유형을 명시적으로 분류하고 회귀시험을 추가한 뒤 재실행",
+        for phase, run_health in health_runs:
+            for source, detail in run_health.sources.items():
+                if not detail.unclassified_failures:
+                    continue
+                reporting.append(
+                    ReportingItem(
+                        cause=(
+                            f"{phase}/{source}: 분류되지 않은 수집 예외 "
+                            f"{detail.unclassified_failures}건"
+                        ),
+                        fallback="예외를 성공·무보도로 바꾸지 않고 source isolation 상태로 보존",
+                        result="failed",
+                        next_action="예외 유형을 명시적으로 분류하고 회귀시험을 추가한 뒤 재실행",
+                    )
                 )
-            )
 
     if gap_detection.status == CheckStatus.DEGRADED:
         warnings.append("독립 gap detector가 명시적 degraded 상태임")

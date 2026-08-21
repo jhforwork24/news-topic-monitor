@@ -100,6 +100,25 @@ def _response(payload: dict) -> httpx.Response:
     )
 
 
+def test_editorial_operational_defaults_bound_runtime(monkeypatch) -> None:
+    monkeypatch.setenv("OPENAI_EDITOR_ENABLED", "true")
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    for name in (
+        "OPENAI_EDITOR_CHUNK_SIZE",
+        "OPENAI_EDITOR_MAX_CANDIDATES",
+        "OPENAI_EDITOR_FINAL_CANDIDATES",
+        "OPENAI_EDITOR_BODY_FETCH_LIMIT_PER_SOURCE",
+    ):
+        monkeypatch.delenv(name, raising=False)
+
+    settings = OpenAIEditorialSettings.from_env()
+
+    assert settings.chunk_size == 30
+    assert settings.max_candidates == 180
+    assert settings.final_candidate_limit == 60
+    assert settings.body_fetch_limit_per_source == 24
+
+
 def test_editor_and_independent_auditor_use_strict_non_stored_responses() -> None:
     candidate = _candidate(_article())
     requests: list[dict] = []

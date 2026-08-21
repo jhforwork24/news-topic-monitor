@@ -28,3 +28,5 @@ def test_only_editorial_publish_is_a_scheduled_notion_writer() -> None:
     assert "NAVER_API_HUB_CLIENT_ID" in env
     assert "NAVER_API_HUB_CLIENT_SECRET" in env
     assert "OPENAI_AUDITOR_MODEL" in env
+    assert "OPENAI_EDITOR_CHUNK_SIZE" in env
+    assert "OPENAI_EDITOR_BODY_FETCH_LIMIT_PER_SOURCE" in env

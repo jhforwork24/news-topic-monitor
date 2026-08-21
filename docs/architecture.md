@@ -42,7 +42,8 @@ flowchart LR
   지정 9개 매체 역검색 상태 기록
 - `final_state.py`: 진행형 사건의 발행 직전 공식 출처 재수집 결과 비교
 - `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
-- `storage.py`: 멱등 JSONL upsert, review 동기화, state·health 원자적 쓰기
+- `storage.py`: 멱등 JSONL upsert, 수집 실행 단위 배치 flush, review 동기화,
+  state·health 원자적 쓰기
 - `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
 - `briefing.py`: I~III 절 선정, 결과가 있을 때만 IV절 칼럼 선정, 이슈 연결 칼럼 역검색, CRPD 매핑
 - `notion_publish.py`: exact title/date 멱등 발행, 관리 표식 충돌 방지, 발행 health
@@ -158,5 +159,7 @@ index로 두고 기존 JSONL을 순차 import한다. import 전후 출처별·�
 Asia/Seoul로 변환한다. 07:20 백필, 08:17 최종 사전 수집, 09:02 결정론적 보고, 09:05 최종 편집·
 감사·gate를 같은 concurrency 그룹에서 순서대로 실행한다. 3시간 수집이 최근 6시간을 겹쳐 보고
 일일 백필이 48시간을 다시 확인하므로, 예약 지연·한 차례 누락·발행시각 수정은 다음 실행에서
-회복될 수 있다. 최종 작업의 48시간 재발견 중 전수 본문 확인은 24시간 보고 구간으로 한정하고,
-규칙 후보는 그 밖의 중복 구간에서도 본문을 재확인한다.
+회복될 수 있다. 최종 작업의 48시간 재발견은 공식 목록 전체를 확인한다. 규칙 후보 본문은 모두
+확인하고, 그 밖의 일반 기사 본문은 매체별 최신 24건까지 추가 확인한다. GPT 초안·독립 감사가
+끝난 뒤에는 선정 출처를 별도 재수집하며, 이 사후 health의 시작시각이 초안 완료시각보다 빠르면
+final-state를 실패로 판정한다. 단계별 소요시간은 `health/editorial/latest.json`에 기록한다.

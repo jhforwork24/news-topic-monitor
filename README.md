@@ -126,8 +126,9 @@ news-topic-monitor report \
   당일 09:00 KST까지 보고
 - `.github/workflows/editorial-publish.yml`: `5 0 * * *`(UTC), 매일 09:05에 48시간
   증거를 재수집하고 GPT 판별·편집·독립 감사, 진행형 사건 최종상태 재검증, publish gate를
-  거쳐 유일하게 Notion 최종 발행을 수행함. 48시간은 지연 발견 범위이고, 전수 본문 확인은
-  24시간 보고 구간으로 제한하여 10:00 감독 작업 전 완료 여유를 확보함
+  거쳐 유일하게 Notion 최종 발행을 수행함. 48시간은 지연 발견 범위다. 공식 목록은 전수
+  확인하되 규칙상 관련 기사는 모두, 그 밖의 일반 기사는 매체별 최신 상한까지 본문을 확인한다.
+  GPT 초안·감사 뒤에는 선정 출처만 다시 수집해 발행 직전 상태를 별도로 증명함
 - `.github/workflows/editorial-queue.yml`: 예약 없음. 사용자가 명시적으로
   `CHAT_EDITORIAL_SHADOW_ENABLED=true`로 둔 수동 그림자 시험에서만 실행함
 - `.github/workflows/publish-notion.yml`: 예약 없음. `PUBLICATION_OWNER=deterministic_fallback`인
@@ -164,9 +165,10 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `OPENAI_EDITOR_ENABLED` | 아니오 | `false` 취급 | `true`일 때 임시 증거 수집과 GPT 편집 발행 job 실행 |
 | `OPENAI_EDITOR_MODEL` | 아니오 | `gpt-5.6` | Responses API 편집 모델 |
 | `OPENAI_AUDITOR_MODEL` | 아니오 | 편집 모델 | 편집 근거를 받지 않는 독립 감사 모델 |
-| `OPENAI_EDITOR_CHUNK_SIZE` | 아니오 | `20` | 1차 판별 한 요청의 기사 수 |
-| `OPENAI_EDITOR_MAX_CANDIDATES` | 아니오 | `360` | GPT에 전달하는 확인 가능 후보 상한 |
-| `OPENAI_EDITOR_FINAL_CANDIDATES` | 아니오 | `80` | 2차 최종 편집 후보 상한 |
+| `OPENAI_EDITOR_CHUNK_SIZE` | 아니오 | `30` | 1차 판별 한 요청의 기사 수 |
+| `OPENAI_EDITOR_MAX_CANDIDATES` | 아니오 | `180` | GPT에 전달하는 균형 표본의 확인 가능 후보 상한 |
+| `OPENAI_EDITOR_FINAL_CANDIDATES` | 아니오 | `60` | 2차 최종 편집 후보 상한 |
+| `OPENAI_EDITOR_BODY_FETCH_LIMIT_PER_SOURCE` | 아니오 | `24` | 매체별 일반 기사 본문 추가 확인 상한. 규칙상 관련 기사는 상한 밖에서도 확인 |
 | `OPENAI_EDITOR_EVIDENCE_CHARS` | 아니오 | `5000` | 후보별 일시 전달 근거 글자 상한 |
 | `NAVER_API_HUB_CLIENT_ID` | gap detector | 없음 | Naver API Hub client ID, repository secret |
 | `NAVER_API_HUB_CLIENT_SECRET` | gap detector | 없음 | Naver API Hub client secret, repository secret |
@@ -195,8 +197,10 @@ cross-origin 리다이렉트에는 키를 전달하지 않는다. 키가 없으�
 GPT 편집 경로는 GitHub runner의 임시 SQLite에만 본문 근거를 보관한다. 1차 요청은 기사별
 포함·제외·섹션을 판정하고, 2차 요청은 동일 사안을 통합해 초안을 만든다. 3차 독립 감사는
 1차 편집기의 판정 이유를 받지 않고 초안과 원근거만 대조한다. 세 요청 모두 Structured Outputs와
-`store=false`를 사용한다. 이어 공식 출처를 발행 직전에 다시 수집해 진행형 사건의 철수·종료·
-합의·타결·답변·수용·철회·보류·재개·속보·후속 상태를 검사한다.
+`store=false`를 사용한다. 초안·감사가 끝난 시각을 기록한 뒤 선정 기사의 공식 출처만 실제로
+다시 수집한다. 이 사후 재수집 health가 없거나 선정 출처가 실패하면 final-state를 COMPLETE로
+판정하지 않는다. 재수집 결과로 진행형 사건의 철수·종료·합의·타결·답변·수용·철회·보류·재개·
+속보·후속 상태를 검사한다.
 
 GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를 고르거나, 같은 기사를 중복 배치하거나,
 섹션·요약·논조 규칙을 어기면 브리핑과 노션 발행을 중단한다. 임시 DB와 본문은 명령 종료 때

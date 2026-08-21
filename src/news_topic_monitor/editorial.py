@@ -4,7 +4,7 @@ import json
 import os
 import sqlite3
 import time
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -49,9 +49,10 @@ class OpenAIEditorialSettings:
     api_key: str = field(repr=False)
     model: str = "gpt-5.6"
     auditor_model: str = "gpt-5.6"
-    chunk_size: int = 20
-    max_candidates: int = 360
-    final_candidate_limit: int = 80
+    chunk_size: int = 30
+    max_candidates: int = 180
+    final_candidate_limit: int = 60
+    body_fetch_limit_per_source: int = 24
     evidence_chars: int = 5000
     max_retries: int = 2
 
@@ -76,10 +77,13 @@ class OpenAIEditorialSettings:
                 or os.getenv("OPENAI_EDITOR_MODEL", "gpt-5.6").strip()
                 or "gpt-5.6"
             ),
-            chunk_size=max(5, _environment_integer("OPENAI_EDITOR_CHUNK_SIZE", 20)),
-            max_candidates=max(20, _environment_integer("OPENAI_EDITOR_MAX_CANDIDATES", 360)),
+            chunk_size=max(5, _environment_integer("OPENAI_EDITOR_CHUNK_SIZE", 30)),
+            max_candidates=max(20, _environment_integer("OPENAI_EDITOR_MAX_CANDIDATES", 180)),
             final_candidate_limit=max(
-                20, _environment_integer("OPENAI_EDITOR_FINAL_CANDIDATES", 80)
+                20, _environment_integer("OPENAI_EDITOR_FINAL_CANDIDATES", 60)
+            ),
+            body_fetch_limit_per_source=max(
+                1, _environment_integer("OPENAI_EDITOR_BODY_FETCH_LIMIT_PER_SOURCE", 24)
             ),
             evidence_chars=max(1000, _environment_integer("OPENAI_EDITOR_EVIDENCE_CHARS", 5000)),
             max_retries=max(0, _environment_integer("OPENAI_EDITOR_MAX_RETRIES", 2)),
@@ -410,6 +414,7 @@ def write_editorial_health(
     report_date: str,
     status: str = "completed",
     error: str | None = None,
+    phase_durations_seconds: Mapping[str, float] | None = None,
 ) -> None:
     included = sum(item.verdict == EditorialVerdict.INCLUDE for item in run.assessments)
     JsonlStorage.atomic_write_json(
@@ -424,13 +429,24 @@ def write_editorial_health(
             "included_after_first_pass": included,
             "published_issue_count": len(run.plan.issues),
             "validator_fatal_errors": run.audit.fatal_error_count,
+            "phase_durations_seconds": {
+                key: round(value, 3)
+                for key, value in sorted((phase_durations_seconds or {}).items())
+            },
             "error": normalize_text(error)[:500] if error else None,
             "completed_at": datetime.now(UTC),
         },
     )
 
 
-def write_editorial_failure(root: Path, *, report_date: str, status: str, error: str) -> None:
+def write_editorial_failure(
+    root: Path,
+    *,
+    report_date: str,
+    status: str,
+    error: str,
+    phase_durations_seconds: Mapping[str, float] | None = None,
+) -> None:
     """Record a sanitized failure without retaining prompts, responses, or article text."""
 
     JsonlStorage.atomic_write_json(
@@ -439,6 +455,10 @@ def write_editorial_failure(root: Path, *, report_date: str, status: str, error:
             "prompt_version": EDITORIAL_PROMPT_VERSION,
             "report_date": report_date,
             "status": status,
+            "phase_durations_seconds": {
+                key: round(value, 3)
+                for key, value in sorted((phase_durations_seconds or {}).items())
+            },
             "error": normalize_text(error)[:500],
             "completed_at": datetime.now(UTC),
         },

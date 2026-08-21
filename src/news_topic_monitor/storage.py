@@ -3,7 +3,8 @@ from __future__ import annotations
 import json
 import os
 from abc import ABC, abstractmethod
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 from tempfile import NamedTemporaryFile
@@ -45,6 +46,9 @@ class JsonlStorage(ArticleStorage):
         ):
             directory.mkdir(parents=True, exist_ok=True)
         self._index: dict[str, tuple[Path, ArticleRecord]] | None = None
+        self._batch_depth = 0
+        self._pending: dict[str, tuple[Path, ArticleRecord]] = {}
+        self._pending_affected_paths: set[Path] = set()
 
     def _ensure_index(self) -> dict[str, tuple[Path, ArticleRecord]]:
         if self._index is not None:
@@ -115,6 +119,12 @@ class JsonlStorage(ArticleStorage):
             semantic_changed = self._semantic_payload(existing) != self._semantic_payload(article)
             result = StoreResult.UPDATED if semantic_changed else StoreResult.DUPLICATE
 
+        if self._batch_depth:
+            self._pending[key] = (destination, article)
+            self._pending_affected_paths.update(affected)
+            index[key] = (destination, article)
+            return result
+
         records_by_path: dict[Path, list[ArticleRecord]] = {
             path: self._read_records(path) for path in affected
         }
@@ -127,6 +137,39 @@ class JsonlStorage(ArticleStorage):
             self._rebuild_review(path.stem, records)
         index[key] = (destination, article)
         return result
+
+    @contextmanager
+    def batch(self) -> Iterator[JsonlStorage]:
+        """Commit a collection run with at most one rewrite per affected date file."""
+
+        self._batch_depth += 1
+        try:
+            yield self
+        finally:
+            self._batch_depth -= 1
+            if self._batch_depth == 0:
+                self._flush_pending()
+
+    def _flush_pending(self) -> None:
+        if not self._pending:
+            return
+        pending_keys = set(self._pending)
+        records_by_path = {
+            path: [
+                record
+                for record in self._read_records(path)
+                if self._key(record) not in pending_keys
+            ]
+            for path in self._pending_affected_paths
+        }
+        for destination, article in self._pending.values():
+            records_by_path.setdefault(destination, []).append(article)
+        for path, records in records_by_path.items():
+            records.sort(key=self._sort_key)
+            self._write_records(path, records)
+            self._rebuild_review(path.stem, records)
+        self._pending.clear()
+        self._pending_affected_paths.clear()
 
     def iter_articles(self) -> Iterable[ArticleRecord]:
         for path in sorted(self.articles_dir.glob("*.jsonl")):
