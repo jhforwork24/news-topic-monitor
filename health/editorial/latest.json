@@ -3,9 +3,9 @@
   "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.931,
-    "total": 8.887
+    "api_preflight": 1.102,
+    "total": 9.599
   },
-  "error": "ChatGPT 편집 브리지 JSON이 고정 스키마를 충족하지 않음",
-  "completed_at": "2026-08-21T04:53:46.407480Z"
+  "error": "편집 대기열 원본 JSON digest가 매니페스트 queue_id와 일치하지 않음",
+  "completed_at": "2026-08-21T05:46:05.895141Z"
 }
