@@ -41,3 +41,22 @@ def test_connected_chatgpt_bridge_has_one_scheduled_final_writer() -> None:
     assert "NAVER_API_HUB_CLIENT_ID" in finalize_env
     assert "NAVER_API_HUB_CLIENT_SECRET" in finalize_env
     assert "NOTION_REPORTS_DATA_SOURCE_ID" in finalize_env
+
+
+def test_data_writers_checkout_latest_branch_after_concurrency_wait() -> None:
+    job_names = {
+        "collect.yml": "collect",
+        "backfill.yml": "backfill",
+        "report.yml": "report",
+        "editorial-publish.yml": "editorial-publish",
+        "editorial-queue.yml": "editorial-queue",
+        "editorial-finalize.yml": "editorial-finalize",
+        "publish-notion.yml": "publish",
+    }
+
+    for workflow_name, job_name in job_names.items():
+        workflow = _workflow(workflow_name)
+        checkout = workflow["jobs"][job_name]["steps"][0]
+        assert checkout["uses"] == "actions/checkout@v7"
+        assert checkout["with"]["ref"] == "${{ github.ref_name }}"
+        assert checkout["with"]["fetch-depth"] == "0"
