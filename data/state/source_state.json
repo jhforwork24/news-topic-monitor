@@ -2,19 +2,19 @@
   "version": 1,
   "sources": {
     "chosun": {
-      "last_run_at": "2026-08-20T23:44:06.582924Z",
+      "last_run_at": "2026-08-21T00:52:08.292286Z",
       "success": true,
-      "discovered": 150,
+      "discovered": 148,
       "errors": [],
-      "last_success_at": "2026-08-20T23:44:06.582924Z",
+      "last_success_at": "2026-08-21T00:52:08.292286Z",
       "discovery_status": "complete"
     },
     "joongang": {
-      "last_run_at": "2026-08-20T23:44:13.840729Z",
+      "last_run_at": "2026-08-21T01:04:04.398683Z",
       "success": true,
-      "discovered": 311,
+      "discovered": 719,
       "errors": [],
-      "last_success_at": "2026-08-20T23:44:13.840729Z",
+      "last_success_at": "2026-08-21T01:04:04.398683Z",
       "discovery_status": "complete"
     },
     "donga": {
