@@ -5,6 +5,7 @@ import unicodedata
 from datetime import UTC, datetime
 
 import httpx
+import pytest
 
 from news_topic_monitor.assurance import CheckStatus, GapDetectionResult
 from news_topic_monitor.chat_bridge import editorial_queue_payload_id
@@ -17,6 +18,7 @@ from news_topic_monitor.models import (
 )
 from news_topic_monitor.notion_publish import (
     EditorialQueueSettings,
+    NotionApiError,
     NotionPublisher,
     NotionPublishSettings,
     write_editorial_queue_health,
@@ -148,6 +150,17 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
         method == "PATCH" and path == "/v1/pages/old-queue" and body == {"in_trash": True}
         for method, path, body in requests
     )
+    archive_index = next(
+        index
+        for index, (method, path, _body) in enumerate(requests)
+        if method == "PATCH" and path == "/v1/pages/old-queue"
+    )
+    create_indexes = [
+        index
+        for index, (method, path, _body) in enumerate(requests)
+        if method == "POST" and path == "/v1/pages"
+    ]
+    assert archive_index > max(create_indexes)
     creates = [body for method, path, body in requests if method == "POST" and path == "/v1/pages"]
     assert len(creates) == 2
     rendered = json.dumps(creates, ensure_ascii=False)
@@ -170,6 +183,148 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
     part_document = next(document for document in code_documents if "candidates" in document)
     assert editorial_queue_payload_id(part_document["candidates"]) == result.queue_id
     assert result.queue_id in rendered
+
+
+def test_queue_partitions_ascii_machine_json_below_notion_rich_text_limit() -> None:
+    requests: list[tuple[str, str, dict]] = []
+    create_count = 0
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal create_count
+        body = json.loads(request.content) if request.content else {}
+        requests.append((request.method, request.url.path, body))
+        if request.url.path.endswith("/query"):
+            return httpx.Response(
+                200,
+                json={"results": [{"id": "old-queue"}], "has_more": False},
+            )
+        if request.method == "PATCH":
+            return httpx.Response(200, json={"id": request.url.path.rsplit("/", 1)[-1]})
+        if request.method == "POST" and request.url.path == "/v1/pages":
+            create_count += 1
+            return httpx.Response(
+                200,
+                json={
+                    "id": f"page-{create_count}",
+                    "url": f"https://notion.so/page-{create_count}",
+                },
+            )
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    candidates = [
+        _candidate(f"candidate-{index:02d}").model_copy(
+            update={"summary": "가" * 1800, "evidence_text": "나" * 1800}
+        )
+        for index in range(24)
+    ]
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="reports-ds"),
+        client=client,
+    )
+
+    result = publisher.publish_editorial_queue(
+        candidates,
+        report_date="2026-08-17",
+        start=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 17, 0, tzinfo=UTC),
+        initial_health_finished_at=datetime(2026, 8, 17, 0, tzinfo=UTC),
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        queue_settings=EditorialQueueSettings(
+            max_candidates=24,
+            chunk_size=24,
+            evidence_chars=1800,
+        ),
+    )
+
+    documents: list[dict] = []
+    for method, path, body in requests:
+        if method != "POST" or path != "/v1/pages":
+            continue
+        for block in body["children"]:
+            if block.get("type") != "code":
+                continue
+            rich_text = block["code"]["rich_text"]
+            assert len(rich_text) <= 100
+            documents.append(
+                json.loads("".join(item["text"]["content"] for item in rich_text))
+            )
+
+    part_documents = [document for document in documents if "candidates" in document]
+    assert result.part_count == len(part_documents)
+    assert result.part_count > 1
+    assert sum(len(document["candidates"]) for document in part_documents) == 24
+
+
+def test_queue_creation_failure_trashes_only_partial_replacement_pages() -> None:
+    requests: list[tuple[str, str, dict]] = []
+    create_count = 0
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal create_count
+        body = json.loads(request.content) if request.content else {}
+        requests.append((request.method, request.url.path, body))
+        if request.url.path.endswith("/query"):
+            return httpx.Response(
+                200,
+                json={"results": [{"id": "old-queue"}], "has_more": False},
+            )
+        if request.method == "POST" and request.url.path == "/v1/pages":
+            create_count += 1
+            if create_count == 2:
+                return httpx.Response(400, json={"message": "simulated limit"})
+            return httpx.Response(200, json={"id": "new-page-1"})
+        if request.method == "PATCH" and request.url.path == "/v1/pages/new-page-1":
+            return httpx.Response(200, json={"id": "new-page-1", "in_trash": True})
+        if request.method == "PATCH" and request.url.path == "/v1/pages/old-queue":
+            return httpx.Response(200, json={"id": "old-queue", "in_trash": True})
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    candidates = [
+        _candidate(f"candidate-{index:02d}").model_copy(
+            update={"summary": "가" * 1800, "evidence_text": "나" * 1800}
+        )
+        for index in range(24)
+    ]
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="reports-ds"),
+        client=client,
+    )
+
+    with pytest.raises(NotionApiError, match="HTTP 400"):
+        publisher.publish_editorial_queue(
+            candidates,
+            report_date="2026-08-17",
+            start=datetime(2026, 8, 16, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 17, 0, tzinfo=UTC),
+            initial_health_finished_at=datetime(2026, 8, 17, 0, tzinfo=UTC),
+            gap_detection=GapDetectionResult(
+                status=CheckStatus.COMPLETE,
+                route="naver_api_hub",
+                queries_attempted=5,
+                queries_completed=5,
+            ),
+            queue_settings=EditorialQueueSettings(
+                max_candidates=24,
+                chunk_size=24,
+                evidence_chars=1800,
+            ),
+        )
+
+    assert any(
+        method == "PATCH" and path == "/v1/pages/new-page-1"
+        for method, path, _body in requests
+    )
+    assert not any(
+        method == "PATCH" and path == "/v1/pages/old-queue"
+        for method, path, _body in requests
+    )
 
 
 def test_queue_health_never_records_private_page_url(tmp_path) -> None:
