@@ -1,0 +1,12 @@
+{
+  "report_date": "2026-08-21",
+  "naver_api_hub": {
+    "status": "complete",
+    "error": null
+  },
+  "openai": {
+    "status": "failed",
+    "error": "OpenAI API retries exhausted at HTTP 429 (insufficient_quota)"
+  },
+  "checked_at": "2026-08-21T02:35:15.358496Z"
+}

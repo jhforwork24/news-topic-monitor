@@ -3,9 +3,9 @@
   "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "initial_collection": 956.531,
-    "total": 963.664
+    "api_preflight": 7.31,
+    "total": 7.323
   },
-  "error": "OpenAI API retries exhausted at HTTP 429",
-  "completed_at": "2026-08-21T02:24:08.450526Z"
+  "error": "OpenAI API retries exhausted at HTTP 429 (insufficient_quota)",
+  "completed_at": "2026-08-21T02:35:15.359190Z"
 }
