@@ -47,6 +47,9 @@ BRIEFING_TITLE_FRAGMENT = "일간 장애정책·노동 뉴스 브리핑"
 EDITORIAL_QUEUE_TITLE_FRAGMENT = "ChatGPT 편집 대기열"
 EDITORIAL_DRAFT_TITLE_FRAGMENT = "ChatGPT 편집 초안"
 EDITORIAL_AUDIT_TITLE_FRAGMENT = "ChatGPT 독립 감사"
+NOTION_RICH_TEXT_CHUNK_SIZE = 1900
+NOTION_MAX_RICH_TEXT_ITEMS = 100
+NOTION_MACHINE_CODE_MAX_CHARS = NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
 
 
 class NotionConfigurationError(ValueError):
@@ -351,17 +354,41 @@ class NotionPublisher:
         ]
         queue_id = editorial_queue_id(bounded)
         generated_at = datetime.now(UTC)
-        self._archive_queue_pages(report_date)
-        parts = [
-            bounded[index : index + queue_settings.chunk_size]
-            for index in range(0, len(bounded), queue_settings.chunk_size)
-        ]
+        parts = _partition_queue_candidates(
+            bounded,
+            queue_id=queue_id,
+            max_candidates=queue_settings.chunk_size,
+        )
         part_pages: list[dict[str, Any]] = []
-        for index, part in enumerate(parts, start=1):
-            title = (
-                f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · {index:02d}-{len(parts):02d}"
-            )
-            page = self._request(
+        created_page_ids: set[str] = set()
+        try:
+            for index, part in enumerate(parts, start=1):
+                title = (
+                    f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · "
+                    f"{index:02d}-{len(parts):02d}"
+                )
+                page = self._request(
+                    "POST",
+                    "/pages",
+                    json={
+                        "parent": {
+                            "type": "data_source_id",
+                            "data_source_id": self.settings.data_source_id,
+                        },
+                        "properties": _queue_page_properties(title, report_date),
+                        "children": _queue_part_blocks(
+                            part,
+                            queue_id=queue_id,
+                            part_index=index,
+                            part_count=len(parts),
+                        ),
+                    },
+                )
+                created_page_ids.add(_required_page_id(page))
+                part_pages.append(page)
+
+            manifest_title = f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · 매니페스트"
+            manifest = self._request(
                 "POST",
                 "/pages",
                 json={
@@ -369,48 +396,51 @@ class NotionPublisher:
                         "type": "data_source_id",
                         "data_source_id": self.settings.data_source_id,
                     },
-                    "properties": _queue_page_properties(title, report_date),
-                    "children": _queue_part_blocks(
-                        part,
-                        queue_id=queue_id,
-                        part_index=index,
-                        part_count=len(parts),
+                    "properties": _queue_page_properties(manifest_title, report_date),
+                    "children": _queue_manifest_blocks(
+                        manifest=ChatEditorialQueueManifest(
+                            report_date=report_date,
+                            queue_id=queue_id,
+                            generated_at=generated_at,
+                            report_start=start,
+                            report_end=end,
+                            initial_health_finished_at=initial_health_finished_at,
+                            candidate_count=len(bounded),
+                            part_count=len(parts),
+                            gap_detection_status=gap_detection.status.value,
+                            gap_detection_route=gap_detection.route,
+                            gap_queries_attempted=gap_detection.queries_attempted,
+                            gap_queries_completed=gap_detection.queries_completed,
+                            gap_potential_count=len(gap_detection.potential_gaps),
+                        ),
+                        part_pages=part_pages,
+                        source_failures=source_failures or [],
                     ),
                 },
             )
-            part_pages.append(page)
+            created_page_ids.add(_required_page_id(manifest))
+        except Exception as exc:
+            cleanup_errors: list[str] = []
+            for page_id in created_page_ids:
+                try:
+                    self._request(
+                        "PATCH",
+                        f"/pages/{page_id}",
+                        json={"in_trash": True},
+                    )
+                except Exception as cleanup_exc:  # pragma: no cover - defensive API path
+                    cleanup_errors.append(short_error(cleanup_exc))
+            if cleanup_errors:
+                raise NotionApiError(
+                    "새 편집 대기열 작성 실패 후 부분 페이지 정리도 실패함: "
+                    + "; ".join(cleanup_errors)
+                ) from exc
+            raise
 
-        manifest_title = f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · 매니페스트"
-        manifest = self._request(
-            "POST",
-            "/pages",
-            json={
-                "parent": {
-                    "type": "data_source_id",
-                    "data_source_id": self.settings.data_source_id,
-                },
-                "properties": _queue_page_properties(manifest_title, report_date),
-                "children": _queue_manifest_blocks(
-                    manifest=ChatEditorialQueueManifest(
-                        report_date=report_date,
-                        queue_id=queue_id,
-                        generated_at=generated_at,
-                        report_start=start,
-                        report_end=end,
-                        initial_health_finished_at=initial_health_finished_at,
-                        candidate_count=len(bounded),
-                        part_count=len(parts),
-                        gap_detection_status=gap_detection.status.value,
-                        gap_detection_route=gap_detection.route,
-                        gap_queries_attempted=gap_detection.queries_attempted,
-                        gap_queries_completed=gap_detection.queries_completed,
-                        gap_potential_count=len(gap_detection.potential_gaps),
-                    ),
-                    part_pages=part_pages,
-                    source_failures=source_failures or [],
-                ),
-            },
-        )
+        # Preserve the previous complete queue until every replacement part and
+        # its manifest exist. Excluding the new page IDs also cleans up orphaned
+        # pages left by an earlier failed attempt without trashing this queue.
+        self._archive_queue_pages(report_date, exclude_page_ids=created_page_ids)
         return EditorialQueueResult(
             status="ready",
             report_date=report_date,
@@ -544,7 +574,13 @@ class NotionPublisher:
             raise EditorialQueueValidationError("기계 판독용 JSON은 object여야 함")
         return payload
 
-    def _archive_queue_pages(self, report_date: str) -> None:
+    def _archive_queue_pages(
+        self,
+        report_date: str,
+        *,
+        exclude_page_ids: set[str] | None = None,
+    ) -> None:
+        excluded = exclude_page_ids or set()
         cutoff = (datetime.strptime(report_date, "%Y-%m-%d").date() - timedelta(days=2)).isoformat()
         cursor: str | None = None
         while True:
@@ -573,7 +609,7 @@ class NotionPublisher:
                 json=body,
             )
             for page in payload.get("results", []):
-                if isinstance(page, dict) and page.get("id"):
+                if isinstance(page, dict) and page.get("id") and str(page["id"]) not in excluded:
                     self._request(
                         "PATCH",
                         f"/pages/{page['id']}",
@@ -751,6 +787,52 @@ def write_editorial_queue_health(
             "error": short_error(error),
         },
     )
+
+
+def _required_page_id(page: dict[str, Any]) -> str:
+    page_id = str(page.get("id") or "")
+    if not page_id:
+        raise NotionApiError("Notion page creation response did not include an id")
+    return page_id
+
+
+def _partition_queue_candidates(
+    candidates: list[EditorialCandidate],
+    *,
+    queue_id: str,
+    max_candidates: int,
+) -> list[list[EditorialCandidate]]:
+    parts: list[list[EditorialCandidate]] = []
+    current: list[EditorialCandidate] = []
+
+    def machine_document_length(items: list[EditorialCandidate]) -> int:
+        # Four digits are deliberately longer than any supported queue part
+        # index/count, so an accepted partition also fits with its final values.
+        document = ChatEditorialQueuePart(
+            queue_id=queue_id,
+            part_index=9999,
+            part_count=9999,
+            candidates=items,
+        ).model_dump(mode="json")
+        return len(_machine_json_content(document))
+
+    for candidate in candidates:
+        proposed = [*current, candidate]
+        exceeds_count = len(proposed) > max_candidates
+        exceeds_code_limit = machine_document_length(proposed) > NOTION_MACHINE_CODE_MAX_CHARS
+        if current and (exceeds_count or exceeds_code_limit):
+            parts.append(current)
+            current = [candidate]
+        else:
+            current = proposed
+        if machine_document_length(current) > NOTION_MACHINE_CODE_MAX_CHARS:
+            raise EditorialQueueValidationError(
+                "단일 편집 후보의 기계 JSON이 Notion code rich_text 한도를 초과함"
+            )
+
+    if current:
+        parts.append(current)
+    return parts
 
 
 def _queue_page_properties(title: str, report_date: str) -> dict[str, Any]:
@@ -960,7 +1042,11 @@ def _rich_text(content: str, href: str | None = None) -> dict[str, Any]:
     return {"type": "text", "text": text, "annotations": {}}
 
 
-def _rich_text_chunks(content: str, *, chunk_size: int = 1900) -> list[dict[str, Any]]:
+def _rich_text_chunks(
+    content: str,
+    *,
+    chunk_size: int = NOTION_RICH_TEXT_CHUNK_SIZE,
+) -> list[dict[str, Any]]:
     if not content:
         return [_rich_text("")]
     return [
@@ -969,7 +1055,7 @@ def _rich_text_chunks(content: str, *, chunk_size: int = 1900) -> list[dict[str,
     ]
 
 
-def _code_json(payload: dict[str, Any]) -> dict[str, Any]:
+def _machine_json_content(payload: dict[str, Any]) -> str:
     content = json.dumps(
         payload,
         ensure_ascii=True,
@@ -984,6 +1070,11 @@ def _code_json(payload: dict[str, Any]) -> dict[str, Any]:
     content = "".join(
         f"\\u{ord(character):04x}" if character.isspace() else character for character in content
     )
+    return content
+
+
+def _code_json(payload: dict[str, Any]) -> dict[str, Any]:
+    content = _machine_json_content(payload)
     return {
         "object": "block",
         "type": "code",
