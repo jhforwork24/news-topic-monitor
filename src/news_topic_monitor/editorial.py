@@ -673,6 +673,34 @@ def _validate_audit(
         raise EditorialValidationError("GPT 독립 감사 결과 검증 실패: " + "; ".join(errors))
 
 
+def validate_external_editorial(
+    *,
+    plan: EditorialPlan,
+    audit: EditorialAudit,
+    candidates: list[EditorialCandidate],
+) -> None:
+    """Apply the same fail-closed checks to a connected ChatGPT submission."""
+
+    candidate_by_id = {candidate.candidate_id: candidate for candidate in candidates}
+    assessments: list[EditorialAssessment] = []
+    for issue in plan.issues:
+        for candidate_id in issue.candidate_ids:
+            if candidate_id not in candidate_by_id:
+                continue
+            assessments.append(
+                EditorialAssessment(
+                    candidate_id=candidate_id,
+                    verdict=EditorialVerdict.INCLUDE,
+                    section=issue.section,
+                    issue_label=issue.title,
+                    importance=5,
+                    reason="connected ChatGPT structured submission",
+                )
+            )
+    _validate_plan(plan, candidates, assessments)
+    _validate_audit(audit, plan, candidates)
+
+
 def _response_output_text(data: dict[str, Any]) -> str | None:
     for item in data.get("output", []):
         if item.get("type") != "message":

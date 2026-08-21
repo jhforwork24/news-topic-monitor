@@ -1,7 +1,7 @@
 version: 1
 
 publication:
-  owner: github_editorial_publish
+  owner: chatgpt_editorial_bridge
   notion_single_writer: true
   publish_empty_briefing: false
 

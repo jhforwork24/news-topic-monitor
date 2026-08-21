@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 
 import httpx
 
+from news_topic_monitor.assurance import CheckStatus, GapDetectionResult
 from news_topic_monitor.editorial import select_chat_editorial_candidates
 from news_topic_monitor.models import (
     BodyStatus,
@@ -120,6 +121,13 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
         report_date="2026-08-17",
         start=datetime(2026, 8, 16, 0, tzinfo=UTC),
         end=datetime(2026, 8, 17, 0, tzinfo=UTC),
+        initial_health_finished_at=datetime(2026, 8, 17, 0, tzinfo=UTC),
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
         queue_settings=EditorialQueueSettings(
             max_candidates=20,
             chunk_size=2,
@@ -131,6 +139,8 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
     assert result.status == "ready"
     assert result.candidate_count == 2
     assert result.part_count == 1
+    assert len(result.queue_id) == 64
+    assert result.gap_detection_status == "complete"
     assert any(
         method == "PATCH" and path == "/v1/pages/old-queue" and body == {"in_trash": True}
         for method, path, body in requests
@@ -142,6 +152,15 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
     assert "상태=READY" in rendered
     assert "후보 묶음 01" in rendered
     assert "KST" not in rendered
+    code_documents = []
+    for created in creates:
+        for block in created["children"]:
+            if block.get("type") != "code":
+                continue
+            content = "".join(item["text"]["content"] for item in block["code"]["rich_text"])
+            code_documents.append(json.loads(content))
+    assert [document["schema_version"] for document in code_documents] == [1, 1]
+    assert result.queue_id in rendered
 
 
 def test_queue_health_never_records_private_page_url(tmp_path) -> None:
@@ -151,10 +170,13 @@ def test_queue_health_never_records_private_page_url(tmp_path) -> None:
         status="ready",
         candidate_count=20,
         part_count=1,
+        gap_detection_status="complete",
+        gap_potential_count=0,
     )
     payload = json.loads(
         (tmp_path / "health" / "editorial_queue" / "latest.json").read_text(encoding="utf-8")
     )
     assert payload["candidate_count"] == 20
+    assert payload["gap_detection_status"] == "complete"
     assert "page_url" not in payload
     assert "notion" not in json.dumps(payload).lower()

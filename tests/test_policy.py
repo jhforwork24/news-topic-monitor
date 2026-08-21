@@ -13,7 +13,7 @@ def test_stable_policy_files_define_exact_census_and_reverse_search_sets() -> No
     policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
     validate_policy_contract(registry, policy)
 
-    assert policy.publication.owner == "github_editorial_publish"
+    assert policy.publication.owner == "chatgpt_editorial_bridge"
     assert policy.publish_gate.disability_press_census_required == [
         "beminor",
         "ablenews",
