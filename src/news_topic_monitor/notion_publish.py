@@ -976,6 +976,13 @@ def _code_json(payload: dict[str, Any]) -> dict[str, Any]:
         sort_keys=True,
         separators=(",", ":"),
     )
+    # Notion may trim whitespace at rich-text item boundaries.  Machine JSON is
+    # intentionally compact, so every remaining Unicode whitespace character is
+    # part of a JSON string and can be escaped without changing the decoded value.
+    # This keeps the concatenated document byte-stable across Notion chunking.
+    content = "".join(
+        f"\\u{ord(character):04x}" if character.isspace() else character for character in content
+    )
     return {
         "object": "block",
         "type": "code",

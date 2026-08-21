@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 import httpx
 
 from news_topic_monitor.assurance import CheckStatus, GapDetectionResult
+from news_topic_monitor.chat_bridge import editorial_queue_payload_id
 from news_topic_monitor.editorial import select_chat_editorial_candidates
 from news_topic_monitor.models import (
     BodyStatus,
@@ -158,9 +159,13 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
         for block in created["children"]:
             if block.get("type") != "code":
                 continue
-            content = "".join(item["text"]["content"] for item in block["code"]["rich_text"])
+            chunks = [item["text"]["content"] for item in block["code"]["rich_text"]]
+            assert all(not any(character.isspace() for character in chunk) for chunk in chunks)
+            content = "".join(chunks)
             code_documents.append(json.loads(content))
     assert [document["schema_version"] for document in code_documents] == [1, 1]
+    part_document = next(document for document in code_documents if "candidates" in document)
+    assert editorial_queue_payload_id(part_document["candidates"]) == result.queue_id
     assert result.queue_id in rendered
 
 

@@ -17,9 +17,10 @@ access failure into “no coverage.” Preserve the classified failure, attempte
 action. Naver API Hub results may detect a gap or complete an independent reverse-search check, but may
 not upgrade an article to original-body verified.
 
-The normal production owner is `editorial-publish.yml`. Do not enable another scheduled Notion writer.
-`editorial-queue.yml` and `publish-notion.yml` are manual shadow/fallback tools and must remain non-scheduled
-unless the user explicitly changes the migration policy.
+The normal production owner is `editorial-finalize.yml`; it is the only workflow allowed to create the
+public daily Notion briefing. `editorial-queue.yml` may run on schedule only when the free ChatGPT bridge
+is enabled. `editorial-publish.yml` is a manual paid-API fallback, and `publish-notion.yml` is a manual
+diagnostic/fallback tool. Never schedule either fallback writer or enable two production writers.
 
 For a failed daily run:
 
