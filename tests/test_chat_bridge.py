@@ -13,7 +13,9 @@ from news_topic_monitor.chat_bridge import (
     ChatEditorialQueue,
     ChatEditorialQueueManifest,
     ChatEditorialQueuePart,
+    bounded_queue_candidate,
     editorial_queue_id,
+    editorial_queue_payload_id,
     validate_chat_editorial_bridge,
 )
 from news_topic_monitor.cli import _load_bound_initial_health
@@ -153,6 +155,10 @@ def test_notion_bridge_loader_requires_exact_machine_documents() -> None:
         "audit-page": bundle.audit.model_dump(mode="json"),
         "part-page": part.model_dump(mode="json"),
     }
+    documents["part-page"]["candidates"][0]["evidence_text"] += " "
+    legacy_queue_id = editorial_queue_payload_id(documents["part-page"]["candidates"])
+    for page_id in ("manifest-page", "draft-page", "audit-page", "part-page"):
+        documents[page_id]["queue_id"] = legacy_queue_id
 
     def page(title: str, page_id: str) -> dict:
         return {
@@ -207,8 +213,23 @@ def test_notion_bridge_loader_requires_exact_machine_documents() -> None:
 
     loaded = publisher.load_chat_editorial_bridge("2026-08-21")
     validate_chat_editorial_bridge(loaded)
-    assert loaded.queue.manifest.queue_id == bundle.queue.manifest.queue_id
+    assert loaded.queue.manifest.queue_id == legacy_queue_id
+    assert not loaded.queue.candidates[0].evidence_text.endswith(" ")
     assert loaded.draft.plan.issues[0].candidate_ids == ["candidate-1"]
+
+    documents["part-page"]["candidates"][0]["evidence_text"] += "tampered"
+    with pytest.raises(EditorialQueueValidationError, match="digest"):
+        publisher.load_chat_editorial_bridge("2026-08-21")
+
+
+def test_bounded_candidate_revalidates_a_whitespace_truncation_boundary() -> None:
+    candidate = _candidate().model_copy(update={"evidence_text": "가" * 10 + " " + "나" * 10})
+
+    bounded = bounded_queue_candidate(candidate, 11)
+    round_tripped = EditorialCandidate.model_validate(bounded.model_dump(mode="json"))
+
+    assert bounded.evidence_text == "가" * 10
+    assert editorial_queue_id([bounded]) == editorial_queue_id([round_tripped])
 
 
 def test_initial_census_health_is_bound_to_the_queue_manifest(tmp_path) -> None:

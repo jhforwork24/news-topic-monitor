@@ -34,6 +34,7 @@ from .chat_bridge import (
     ChatEditorialQueuePart,
     bounded_queue_candidate,
     editorial_queue_id,
+    editorial_queue_payload_id,
 )
 from .editorial import select_chat_editorial_candidates
 from .models import EditorialCandidate
@@ -449,10 +450,12 @@ class NotionPublisher:
                 )
                 and not _page_title(page).endswith("매니페스트")
             ]
-            parts = [
-                ChatEditorialQueuePart.model_validate(self._page_json_document(page))
-                for page in part_pages
+            part_documents = [self._page_json_document(page) for page in part_pages]
+            parsed_parts = [
+                (ChatEditorialQueuePart.model_validate(document), document)
+                for document in part_documents
             ]
+            parts = [part for part, _document in parsed_parts]
             if len(parts) != manifest.part_count:
                 raise EditorialQueueValidationError(
                     "편집 대기열 묶음 수가 매니페스트와 일치하지 않음"
@@ -474,8 +477,38 @@ class NotionPublisher:
                 for part in sorted(parts, key=lambda item: item.part_index)
                 for candidate in part.candidates
             ]
-            queue = ChatEditorialQueue(manifest=manifest, candidates=candidates)
-            return ChatEditorialBridgeBundle(queue=queue, draft=draft, audit=audit)
+            raw_candidates = [
+                candidate
+                for part, document in sorted(
+                    parsed_parts,
+                    key=lambda item: item[0].part_index,
+                )
+                for candidate in document["candidates"]
+            ]
+            candidate_ids = [candidate.candidate_id for candidate in candidates]
+            if len(candidate_ids) != len(set(candidate_ids)):
+                raise EditorialQueueValidationError("편집 대기열에 중복 candidate_id가 있음")
+            if len(candidate_ids) != manifest.candidate_count:
+                raise EditorialQueueValidationError(
+                    "편집 대기열 후보 수가 매니페스트와 일치하지 않음"
+                )
+            if editorial_queue_payload_id(raw_candidates) != manifest.queue_id:
+                raise EditorialQueueValidationError(
+                    "편집 대기열 원본 JSON digest가 매니페스트 queue_id와 일치하지 않음"
+                )
+            # The raw Notion JSON has already been authenticated by its digest.
+            # Pydantic may then normalize harmless boundary whitespace while
+            # validating candidate fields, so do not hash the normalized copy a
+            # second time. All other queue invariants are checked immediately above.
+            queue = ChatEditorialQueue.model_construct(
+                manifest=manifest,
+                candidates=candidates,
+            )
+            return ChatEditorialBridgeBundle.model_construct(
+                queue=queue,
+                draft=draft,
+                audit=audit,
+            )
         except (PydanticValidationError, json.JSONDecodeError) as exc:
             raise EditorialQueueValidationError(
                 "ChatGPT 편집 브리지 JSON이 고정 스키마를 충족하지 않음"

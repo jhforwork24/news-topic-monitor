@@ -4,7 +4,7 @@ import hashlib
 import json
 import re
 from datetime import UTC, datetime
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -184,19 +184,20 @@ def bounded_queue_candidate(
     candidate: EditorialCandidate, evidence_chars: int
 ) -> EditorialCandidate:
     summary = candidate.summary
-    return candidate.model_copy(
-        update={
+    payload = candidate.model_dump(mode="json")
+    payload.update(
+        {
             "summary": summary[:evidence_chars] if summary else None,
             "evidence_text": candidate.evidence_text[:evidence_chars],
         }
     )
+    # model_copy(update=...) bypasses validation. Revalidate after truncation so a
+    # boundary that lands on whitespace cannot change when Notion JSON is loaded.
+    return EditorialCandidate.model_validate(payload)
 
 
-def editorial_queue_id(candidates: list[EditorialCandidate]) -> str:
-    payload = [
-        candidate.model_dump(mode="json")
-        for candidate in sorted(candidates, key=lambda item: item.candidate_id)
-    ]
+def editorial_queue_payload_id(candidates: list[dict[str, Any]]) -> str:
+    payload = sorted(candidates, key=lambda item: str(item["candidate_id"]))
     canonical = json.dumps(
         payload,
         ensure_ascii=False,
@@ -204,6 +205,12 @@ def editorial_queue_id(candidates: list[EditorialCandidate]) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(canonical).hexdigest()
+
+
+def editorial_queue_id(candidates: list[EditorialCandidate]) -> str:
+    return editorial_queue_payload_id(
+        [candidate.model_dump(mode="json") for candidate in candidates]
+    )
 
 
 def validate_chat_editorial_bridge(bundle: ChatEditorialBridgeBundle) -> None:
