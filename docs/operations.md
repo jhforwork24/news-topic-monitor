@@ -68,6 +68,16 @@
 7. 모든 실패는 `원인·대체경로·결과·다음조치` 네 항목으로 보고사항에 남긴다. 재실행 전
    `evidence/YYYY-MM-DD.json`과 새 health가 이전 실행을 조용히 덮어써 원인을 잃지 않는지 확인한다.
 
+## API preflight 실패
+
+1. `health/api_preflight/latest.json`에서 OpenAI와 Naver API Hub 상태를 분리해 확인한다.
+2. OpenAI HTTP 429의 `insufficient_quota`는 API billing·project budget·credits를 확인하고,
+   `rate_limit_exceeded`는 프로젝트 rate limit과 후보 묶음 크기를 확인한다. 두 상태를 API key
+   미등록이나 기사 부재로 바꾸지 않는다.
+3. Naver preflight가 degraded이면 API HUB client ID·secret의 등록 위치, migration endpoint와
+   할당량을 확인한다. 검색 결과를 공식 원문 확인으로 승격하지 않는다.
+4. health와 로그에는 공급자 응답 message, 요청 본문, key를 복제하지 않는다.
+
 ## MBC YouTube API 상태
 
 1. `configuration_missing`이면 `YOUTUBE_API_KEY`가 Repository variable이 아니라 Repository

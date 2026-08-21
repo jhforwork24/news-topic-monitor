@@ -40,6 +40,7 @@ from .editorial import (
 )
 from .final_state import revalidate_final_state
 from .gap_detection import (
+    NaverApiError,
     NaverConfigurationError,
     NaverSearchClient,
     NaverSearchSettings,
@@ -269,6 +270,41 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
         except NaverConfigurationError as exc:
             naver_settings = None
             naver_configuration_error = str(exc)
+        preflight_started = perf_counter()
+        preflight_health: dict[str, object] = {
+            "report_date": report_date,
+            "naver_api_hub": {"status": "pending", "error": None},
+            "openai": {"status": "pending", "error": None},
+        }
+        if naver_settings is None:
+            preflight_health["naver_api_hub"] = {
+                "status": "degraded",
+                "error": naver_configuration_error,
+            }
+        else:
+            try:
+                with NaverSearchClient(naver_settings) as naver:
+                    naver.search("장애인", display=1)
+                preflight_health["naver_api_hub"] = {
+                    "status": "complete",
+                    "error": None,
+                }
+            except NaverApiError as exc:
+                preflight_health["naver_api_hub"] = {
+                    "status": "degraded",
+                    "error": str(exc),
+                }
+        try:
+            with OpenAIEditorialClient(editorial_settings) as preflight_editor:
+                preflight_editor.preflight()
+            preflight_health["openai"] = {"status": "complete", "error": None}
+        except (EditorialApiError, EditorialValidationError) as exc:
+            preflight_health["openai"] = {"status": "failed", "error": str(exc)}
+            phase_durations["api_preflight"] = perf_counter() - preflight_started
+            _write_api_preflight_health(settings.root, preflight_health)
+            raise
+        phase_durations["api_preflight"] = perf_counter() - preflight_started
+        _write_api_preflight_health(settings.root, preflight_health)
         runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
         with TemporaryDirectory(
             prefix="news-topic-editorial-", dir=runner_temp
@@ -672,6 +708,13 @@ def _run_source_failures(health: RunHealth) -> list[str]:
         message = detail.errors[0] if detail.errors else detail.discovery_status.value
         failures.append(f"{source}: {short_error(message) or '확인 실패'}")
     return failures
+
+
+def _write_api_preflight_health(root: Path, payload: dict[str, object]) -> None:
+    JsonlStorage.atomic_write_json(
+        root / "health" / "api_preflight" / "latest.json",
+        {**payload, "checked_at": datetime.now(UTC)},
+    )
 
 
 def _publish_to_notion(document: BriefingDocument, root: Path) -> int:

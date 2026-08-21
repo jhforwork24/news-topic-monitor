@@ -128,7 +128,8 @@ news-topic-monitor report \
   증거를 재수집하고 GPT 판별·편집·독립 감사, 진행형 사건 최종상태 재검증, publish gate를
   거쳐 유일하게 Notion 최종 발행을 수행함. 48시간은 지연 발견 범위다. 공식 목록은 전수
   확인하되 규칙상 관련 기사는 모두, 그 밖의 일반 기사는 매체별 최신 상한까지 본문을 확인한다.
-  GPT 초안·감사 뒤에는 선정 출처만 다시 수집해 발행 직전 상태를 별도로 증명함
+  본수집 전에 OpenAI·Naver API Hub를 소량 preflight하며, GPT 초안·감사 뒤에는 선정 출처만
+  다시 수집해 발행 직전 상태를 별도로 증명함
 - `.github/workflows/editorial-queue.yml`: 예약 없음. 사용자가 명시적으로
   `CHAT_EDITORIAL_SHADOW_ENABLED=true`로 둔 수동 그림자 시험에서만 실행함
 - `.github/workflows/publish-notion.yml`: 예약 없음. `PUBLICATION_OWNER=deterministic_fallback`인
@@ -205,6 +206,9 @@ GPT 편집 경로는 GitHub runner의 임시 SQLite에만 본문 근거를 보�
 GPT가 입력에 없는 기사 ID를 만들거나, 확인하지 못한 기사를 고르거나, 같은 기사를 중복 배치하거나,
 섹션·요약·논조 규칙을 어기면 브리핑과 노션 발행을 중단한다. 임시 DB와 본문은 명령 종료 때
 삭제하며 저장소에는 기사 본문 없이 `evidence/YYYY-MM-DD.json` provenance와 health만 남긴다.
+API preflight 결과는 `health/api_preflight/latest.json`에 `complete/degraded/failed`와 안전한
+기계 오류 코드만 남긴다. OpenAI preflight 실패는 비용이 큰 전체 수집 전에 실행을 중단하고,
+Naver 실패는 독립 검색층의 명시적 degraded 상태로 이어진다.
 publish gate는 장애언론 census 3/3 COMPLETE, 각 이슈의 지정매체 역검색 9/9 또는 명시적
 DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal error 0, 미분류 실패 0을
 검사한다. 하나라도 충족하지 못하면 Notion 최종 브리핑을 만들지 않고 `브리핑 보고사항`에 원인·

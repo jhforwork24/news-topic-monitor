@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sqlite3
 import time
 from collections.abc import Iterable, Mapping
@@ -241,6 +242,26 @@ class OpenAIEditorialClient:
         if self._owns_client:
             self.client.close()
 
+    def preflight(self) -> None:
+        response_text = self._request_structured(
+            name="news_editorial_preflight",
+            schema={
+                "type": "object",
+                "properties": {"ok": {"type": "boolean"}},
+                "required": ["ok"],
+                "additionalProperties": False,
+            },
+            developer_prompt="Return the requested health-check object without commentary.",
+            user_payload={"operation": "api_preflight"},
+            max_output_tokens=64,
+        )
+        try:
+            payload = json.loads(response_text)
+        except ValueError as exc:
+            raise EditorialValidationError("OpenAI preflight response was not JSON") from exc
+        if payload != {"ok": True}:
+            raise EditorialValidationError("OpenAI preflight response failed validation")
+
     def edit(self, candidates: Iterable[EditorialCandidate]) -> EditorialRun:
         eligible = [candidate for candidate in candidates if candidate.selectable]
         eligible = _balanced_candidates(eligible, self.settings.max_candidates)
@@ -342,6 +363,7 @@ class OpenAIEditorialClient:
         developer_prompt: str,
         user_payload: dict[str, Any],
         model: str | None = None,
+        max_output_tokens: int = 16000,
     ) -> str:
         request = {
             "model": model or self.settings.model,
@@ -369,7 +391,7 @@ class OpenAIEditorialClient:
                     "schema": schema,
                 }
             },
-            "max_output_tokens": 16000,
+            "max_output_tokens": max_output_tokens,
         }
         response: httpx.Response | None = None
         for attempt in range(self.settings.max_retries + 1):
@@ -385,10 +407,12 @@ class OpenAIEditorialClient:
             if response.status_code not in {408, 409, 429, 500, 502, 503, 504}:
                 raise EditorialApiError(
                     f"OpenAI API returned non-retryable HTTP {response.status_code}"
+                    f"{_safe_api_error_suffix(response)}"
                 )
             if attempt >= self.settings.max_retries:
                 raise EditorialApiError(
                     f"OpenAI API retries exhausted at HTTP {response.status_code}"
+                    f"{_safe_api_error_suffix(response)}"
                 )
             retry_after = response.headers.get("retry-after", "")
             delay = float(retry_after) if retry_after.replace(".", "", 1).isdigit() else 2**attempt
@@ -473,6 +497,27 @@ def _environment_integer(name: str, default: int) -> int:
         return int(value)
     except ValueError as exc:
         raise EditorialConfigurationError(f"{name} must be an integer") from exc
+
+
+SAFE_API_ERROR_TOKEN = re.compile(r"[A-Za-z0-9_.-]{1,80}")
+
+
+def _safe_api_error_suffix(response: httpx.Response) -> str:
+    """Expose only machine error type/code, never provider messages or request content."""
+
+    try:
+        payload = response.json()
+    except ValueError:
+        return ""
+    error = payload.get("error") if isinstance(payload, dict) else None
+    if not isinstance(error, dict):
+        return ""
+    tokens = []
+    for key in ("type", "code"):
+        value = str(error.get(key) or "")
+        if SAFE_API_ERROR_TOKEN.fullmatch(value) and value not in tokens:
+            tokens.append(value)
+    return f" ({'/'.join(tokens)})" if tokens else ""
 
 
 def _candidate_payload(candidate: EditorialCandidate, evidence_chars: int) -> dict[str, Any]:
