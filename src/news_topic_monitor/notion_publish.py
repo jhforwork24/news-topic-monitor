@@ -49,9 +49,7 @@ EDITORIAL_DRAFT_TITLE_FRAGMENT = "ChatGPT 편집 초안"
 EDITORIAL_AUDIT_TITLE_FRAGMENT = "ChatGPT 독립 감사"
 NOTION_RICH_TEXT_CHUNK_SIZE = 1900
 NOTION_MAX_RICH_TEXT_ITEMS = 100
-NOTION_MACHINE_CODE_MAX_CHARS = (
-    NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
-)
+NOTION_MACHINE_CODE_MAX_CHARS = NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
 
 
 class NotionConfigurationError(ValueError):
@@ -611,11 +609,7 @@ class NotionPublisher:
                 json=body,
             )
             for page in payload.get("results", []):
-                if (
-                    isinstance(page, dict)
-                    and page.get("id")
-                    and str(page["id"]) not in excluded
-                ):
+                if isinstance(page, dict) and page.get("id") and str(page["id"]) not in excluded:
                     self._request(
                         "PATCH",
                         f"/pages/{page['id']}",
@@ -825,9 +819,7 @@ def _partition_queue_candidates(
     for candidate in candidates:
         proposed = [*current, candidate]
         exceeds_count = len(proposed) > max_candidates
-        exceeds_code_limit = (
-            machine_document_length(proposed) > NOTION_MACHINE_CODE_MAX_CHARS
-        )
+        exceeds_code_limit = machine_document_length(proposed) > NOTION_MACHINE_CODE_MAX_CHARS
         if current and (exceeds_count or exceeds_code_limit):
             parts.append(current)
             current = [candidate]

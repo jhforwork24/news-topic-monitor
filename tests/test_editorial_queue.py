@@ -251,9 +251,7 @@ def test_queue_partitions_ascii_machine_json_below_notion_rich_text_limit() -> N
                 continue
             rich_text = block["code"]["rich_text"]
             assert len(rich_text) <= 100
-            documents.append(
-                json.loads("".join(item["text"]["content"] for item in rich_text))
-            )
+            documents.append(json.loads("".join(item["text"]["content"] for item in rich_text)))
 
     part_documents = [document for document in documents if "candidates" in document]
     assert result.part_count == len(part_documents)
@@ -318,12 +316,10 @@ def test_queue_creation_failure_trashes_only_partial_replacement_pages() -> None
         )
 
     assert any(
-        method == "PATCH" and path == "/v1/pages/new-page-1"
-        for method, path, _body in requests
+        method == "PATCH" and path == "/v1/pages/new-page-1" for method, path, _body in requests
     )
     assert not any(
-        method == "PATCH" and path == "/v1/pages/old-queue"
-        for method, path, _body in requests
+        method == "PATCH" and path == "/v1/pages/old-queue" for method, path, _body in requests
     )
 
 
