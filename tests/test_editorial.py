@@ -9,6 +9,7 @@ import pytest
 from news_topic_monitor.briefing import build_editorial_briefing, render_briefing_markdown
 from news_topic_monitor.briefing_validation import validate_briefing
 from news_topic_monitor.editorial import (
+    EditorialApiError,
     EditorialValidationError,
     OpenAIEditorialClient,
     OpenAIEditorialSettings,
@@ -117,6 +118,53 @@ def test_editorial_operational_defaults_bound_runtime(monkeypatch) -> None:
     assert settings.max_candidates == 180
     assert settings.final_candidate_limit == 60
     assert settings.body_fetch_limit_per_source == 24
+
+
+def test_openai_preflight_uses_small_structured_non_stored_request() -> None:
+    requests: list[dict] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(json.loads(request.content))
+        return _response({"ok": True})
+
+    client = httpx.Client(
+        transport=httpx.MockTransport(handler),
+        base_url="https://api.openai.com",
+    )
+    settings = OpenAIEditorialSettings(enabled=True, api_key="test-key", max_retries=0)
+
+    OpenAIEditorialClient(settings, client=client).preflight()
+
+    assert requests[0]["store"] is False
+    assert requests[0]["max_output_tokens"] == 64
+    assert requests[0]["text"]["format"]["name"] == "news_editorial_preflight"
+
+
+def test_openai_error_reports_safe_type_and_code_without_provider_message() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        del request
+        return httpx.Response(
+            429,
+            json={
+                "error": {
+                    "type": "insufficient_quota",
+                    "code": "insufficient_quota",
+                    "message": "sensitive provider detail must not be retained",
+                }
+            },
+        )
+
+    client = httpx.Client(
+        transport=httpx.MockTransport(handler),
+        base_url="https://api.openai.com",
+    )
+    settings = OpenAIEditorialSettings(enabled=True, api_key="test-key", max_retries=0)
+
+    with pytest.raises(EditorialApiError) as captured:
+        OpenAIEditorialClient(settings, client=client).preflight()
+
+    assert "insufficient_quota" in str(captured.value)
+    assert "sensitive provider detail" not in str(captured.value)
 
 
 def test_editor_and_independent_auditor_use_strict_non_stored_responses() -> None:
