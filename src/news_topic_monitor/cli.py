@@ -728,7 +728,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
             gap_potential_count=result.gap_potential_count,
         )
         # The manifest URL is intentionally printed only to the private Actions log.
-        print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
+        print(json.dumps(result.log_payload(), ensure_ascii=False, indent=2))
         return 0
     except (NotionConfigurationError, PolicyConfigurationError) as exc:
         LOGGER.error("%s", exc)

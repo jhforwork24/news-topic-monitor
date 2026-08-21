@@ -152,6 +152,11 @@ class EditorialQueueResult:
     manifest_page_id: str
     manifest_page_url: str | None
 
+    def log_payload(self) -> dict[str, object]:
+        """Return a JSON-safe representation for the private Actions log."""
+
+        return {**self.__dict__, "generated_at": self.generated_at.isoformat()}
+
 
 class NotionPublisher:
     def __init__(

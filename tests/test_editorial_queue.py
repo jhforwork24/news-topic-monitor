@@ -141,6 +141,7 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
     assert result.part_count == 1
     assert len(result.queue_id) == 64
     assert result.gap_detection_status == "complete"
+    assert json.loads(json.dumps(result.log_payload()))["generated_at"].endswith("+00:00")
     assert any(
         method == "PATCH" and path == "/v1/pages/old-queue" and body == {"in_trash": True}
         for method, path, body in requests
