@@ -1,12 +1,16 @@
 {
   "report_date": "2026-08-21",
+  "openai": {
+    "status": "not_required",
+    "error": null,
+    "route": "connected_chatgpt_automation"
+  },
   "naver_api_hub": {
     "status": "complete",
-    "error": null
+    "error": null,
+    "queries_attempted": 5,
+    "queries_completed": 5,
+    "potential_gap_count": 2
   },
-  "openai": {
-    "status": "failed",
-    "error": "OpenAI API retries exhausted at HTTP 429 (insufficient_quota)"
-  },
-  "checked_at": "2026-08-21T02:35:15.358496Z"
+  "checked_at": "2026-08-21T04:10:04.013352Z"
 }
