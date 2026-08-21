@@ -20,8 +20,9 @@ flowchart LR
     I --> G
     G --> J["JSONL 메타데이터·provenance"]
     J --> K["공식목록 census·Naver gap detection"]
-    K --> M["GPT 판별·초안"]
-    M --> N["독립 GPT 감사"]
+    K --> R["private Notion 구조화 대기열·queue_id"]
+    R --> M["연결형 ChatGPT 판별·초안"]
+    M --> N["별도 연결형 ChatGPT 독립 감사"]
     N --> O["진행형 사건 final-state 재수집"]
     O --> P["machine-checkable publish gate"]
     P -->|"PASS"| L["Notion 단일 writer 발행"]
@@ -42,11 +43,13 @@ flowchart LR
   지정 9개 매체 역검색 상태 기록
 - `final_state.py`: 진행형 사건의 발행 직전 공식 출처 재수집 결과 비교
 - `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
+- `chat_bridge.py`: 대기열·초안·감사의 고정 스키마, SHA-256 queue binding, 제출 순서와 후보 ID 검증
 - `storage.py`: 멱등 JSONL upsert, 수집 실행 단위 배치 flush, review 동기화,
   state·health 원자적 쓰기
 - `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
 - `briefing.py`: I~III 절 선정, 결과가 있을 때만 IV절 칼럼 선정, 이슈 연결 칼럼 역검색, CRPD 매핑
-- `notion_publish.py`: exact title/date 멱등 발행, 관리 표식 충돌 방지, 발행 health
+- `notion_publish.py`: private 구조화 대기열 export/import, exact title/date 멱등 최종 발행,
+  관리 표식 충돌 방지, 발행 health
 - `sources.py`: 17개 출처명과 종합·노동대안·장애언론·방송 매체군 정의
 - `cli.py`: collect, backfill, report, briefing, publish-notion 명령
 
@@ -114,9 +117,16 @@ III절은 방송 장애 판별을 사용한다. IV절은 3개 지정 칼럼과 7
 발행 단계로 진행한다.
 
 노션 발행은 같은 날짜에 이미 브리핑이 있으면 새 페이지를 만들지 않는 날짜 단위 멱등성을
-적용한다. `editorial-publish.yml`만 예약 writer이며 수동 그림자·fallback은 같은 시각에 실행되지
-않는다. 브리핑에서 배제한 편집·분류·출처 점검 사항과 gate의 degraded·차단 사유는 보고사항에
+적용한다. `editorial-finalize.yml`만 production 예약 writer다. 연결된 ChatGPT 편집자와 감사자는
+private 보고사항 data source에 구조화 초안·감사만 쓰며 최종 브리핑을 발행하지 않는다. 이전
+`editorial-publish.yml`은 유료 API 수동 fallback, `publish-notion.yml`은 결정론적 수동 fallback으로
+예약이 없다. 브리핑에서 배제한 편집·분류·출처 점검 사항과 gate의 degraded·차단 사유는 보고사항에
 기록한다. 토큰은 secret으로만 받고 로그·health에 기록하지 않는다.
+
+대기열 후보의 정규화 JSON 전체를 SHA-256으로 계산한 `queue_id`를 매니페스트와 각 묶음에 넣는다.
+finalizer는 같은 날짜의 매니페스트·초안·감사 활성 페이지가 각각 정확히 1개인지, queue_id와
+draft_id가 연결되는지, 감사 제출이 초안보다 늦고 초안이 대기열보다 늦은지, 선정·제외·감사 ID가
+실제 후보 집합 안에 있는지 검사한다. 연결형 모델 출력은 이 검사를 통과하기 전까지 신뢰하지 않는다.
 
 ## 저장과 멱등성
 
@@ -156,8 +166,9 @@ index로 두고 기존 JSONL을 순차 import한다. import 전후 출처별·�
 ## 시간과 실행 복구
 
 내부 값은 모두 UTC timezone-aware datetime이며 구간은 `[start, end)`이다. 보고만
-Asia/Seoul로 변환한다. 07:20 백필, 08:17 최종 사전 수집, 09:02 결정론적 보고, 09:05 최종 편집·
-감사·gate를 같은 concurrency 그룹에서 순서대로 실행한다. 3시간 수집이 최근 6시간을 겹쳐 보고
+Asia/Seoul로 변환한다. 07:20 백필, 08:17 최종 사전 수집, 09:02 결정론적 보고, 09:05 private
+대기열 생성, 09:25 연결형 편집, 09:38 독립 감사, 09:48 final-state·gate·최종 발행, 10:00 감독을
+순서대로 실행한다. GitHub 데이터 작성 작업은 같은 concurrency 그룹으로 직렬화한다. 3시간 수집이 최근 6시간을 겹쳐 보고
 일일 백필이 48시간을 다시 확인하므로, 예약 지연·한 차례 누락·발행시각 수정은 다음 실행에서
 회복될 수 있다. 최종 작업의 48시간 재발견은 공식 목록 전체를 확인한다. 규칙 후보 본문은 모두
 확인하고, 그 밖의 일반 기사 본문은 매체별 최신 24건까지 추가 확인한다. GPT 초안·독립 감사가

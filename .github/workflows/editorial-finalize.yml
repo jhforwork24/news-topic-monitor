@@ -1,10 +1,14 @@
-name: Manual paid GPT editorial fallback
+name: Finalize connected ChatGPT briefing
 
 on:
+  schedule:
+    # 09:48 Asia/Seoul = 00:48 UTC. The editor and independent auditor write
+    # private structured staging pages before this fail-closed finalizer runs.
+    - cron: "48 0 * * *"
   workflow_dispatch:
     inputs:
       date:
-        description: "Optional report end date (YYYY-MM-DD)"
+        description: "Optional report date (YYYY-MM-DD)"
         required: false
       start:
         description: "Optional inclusive ISO-8601 start"
@@ -12,15 +16,11 @@ on:
       end:
         description: "Optional exclusive ISO-8601 end"
         required: false
-      collect_hours:
-        description: "Temporary evidence collection window in hours"
-        required: false
-        default: "48"
       dry_run:
-        description: "Run collection and GPT editing without calling Notion"
+        description: "Validate bridge, recrawl, and gate without calling Notion publication"
         required: false
         type: boolean
-        default: false
+        default: true
 
 concurrency:
   group: news-topic-monitor-data
@@ -30,26 +30,17 @@ permissions:
   contents: write
 
 jobs:
-  editorial-publish:
+  editorial-finalize:
     if: >-
-      ${{ vars.OPENAI_EDITOR_ENABLED == 'true' &&
-          (github.event_name == 'workflow_dispatch' ||
-           (vars.PUBLICATION_OWNER == 'github_editorial_publish' &&
-            vars.NOTION_PUBLISH_ENABLED == 'true')) }}
+      ${{ github.event_name == 'workflow_dispatch' ||
+          (vars.PUBLICATION_OWNER == 'chatgpt_editorial_bridge' &&
+           vars.NOTION_PUBLISH_ENABLED == 'true') }}
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 120
     env:
       MONITOR_CONTACT: ${{ vars.MONITOR_CONTACT }}
       REQUEST_INTERVAL_SECONDS: "2.0"
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-      OPENAI_EDITOR_ENABLED: ${{ vars.OPENAI_EDITOR_ENABLED }}
-      OPENAI_EDITOR_MODEL: ${{ vars.OPENAI_EDITOR_MODEL }}
-      OPENAI_AUDITOR_MODEL: ${{ vars.OPENAI_AUDITOR_MODEL }}
-      OPENAI_EDITOR_CHUNK_SIZE: ${{ vars.OPENAI_EDITOR_CHUNK_SIZE }}
-      OPENAI_EDITOR_MAX_CANDIDATES: ${{ vars.OPENAI_EDITOR_MAX_CANDIDATES }}
-      OPENAI_EDITOR_FINAL_CANDIDATES: ${{ vars.OPENAI_EDITOR_FINAL_CANDIDATES }}
-      OPENAI_EDITOR_BODY_FETCH_LIMIT_PER_SOURCE: ${{ vars.OPENAI_EDITOR_BODY_FETCH_LIMIT_PER_SOURCE }}
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       NAVER_API_HUB_CLIENT_ID: ${{ secrets.NAVER_API_HUB_CLIENT_ID }}
       NAVER_API_HUB_CLIENT_SECRET: ${{ secrets.NAVER_API_HUB_CLIENT_SECRET }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
@@ -67,15 +58,14 @@ jobs:
           cache-dependency-path: pyproject.toml
       - name: Install
         run: python -m pip install .
-      - name: Preflight APIs, collect evidence, edit with GPT, and publish
+      - name: Import ChatGPT draft and audit, recrawl, gate, and publish
         env:
           INPUT_DATE: ${{ inputs.date }}
           INPUT_START: ${{ inputs.start }}
           INPUT_END: ${{ inputs.end }}
-          INPUT_COLLECT_HOURS: ${{ inputs.collect_hours || '48' }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          args=(editorial-publish --collect-hours "$INPUT_COLLECT_HOURS")
+          args=(editorial-finalize)
           if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
           if test -n "$INPUT_START"; then args+=(--start "$INPUT_START"); fi
           if test -n "$INPUT_END"; then args+=(--end "$INPUT_END"); fi

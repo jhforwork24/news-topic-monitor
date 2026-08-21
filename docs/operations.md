@@ -49,6 +49,25 @@
 5. 전체 출처 실패는 실패로 유지한다. 성공으로 가장하기 위해 `continue-on-error`를 파이프라인
    전체에 적용하지 않는다.
 
+## 연결형 ChatGPT 브리지 실패
+
+1. 순서대로 오늘의 `health/editorial_queue/latest.json`, private Notion 대기열 매니페스트와 모든
+   묶음, `ChatGPT 편집 초안 · YYYY-MM-DD`, `ChatGPT 독립 감사 · YYYY-MM-DD`를 확인한다.
+2. 대기열 health의 `queue_id`와 세 종류 페이지의 `queue_id`가 같아야 한다. 후보 묶음 번호가
+   1부터 `part_count`까지 연속이고 후보 합계가 `candidate_count`와 같은지도 확인한다. 값이 다르면
+   과거 초안·감사를 오늘 입력으로 재사용하지 않는다.
+3. 초안과 감사 페이지는 같은 exact title의 활성 페이지가 각각 정확히 1개이고, 기계 판독용 JSON
+   code block도 각각 정확히 1개여야 한다. 중복 페이지를 임의로 선택하지 않는다.
+4. `draft.submitted_at >= manifest.generated_at`, `audit.submitted_at >= draft.submitted_at`, 감사의
+   `draft_id`가 초안과 같은지 확인한다. 시각·ID가 어긋나면 editor부터 새 queue_id에 맞춰 다시
+   실행하고 그 뒤 auditor를 실행한다.
+5. `미확인 candidate_id`, 중복 선정, 비어 있는 이슈, 한 이슈 5개 초과, 한 섹션 10개 초과,
+   확인 불가능 본문 근거는 기계 검증 실패다. 초안 JSON을 손으로 우회 수정하지 않고 편집 작업의
+   근거 선택을 바로잡는다.
+6. 연결형 ChatGPT가 실패해도 `editorial-publish.yml` 유료 API 경로가 자동 시작되지는 않는다.
+   원인·대체경로·결과·다음 조치를 남기고, 사용자가 비용을 명시적으로 승인한 경우에만 수동
+   fallback을 검토한다.
+
 ## Publish gate 차단
 
 1. `health/publish_gate/latest.json`에서 `allowed`, `fatal_errors`, `degraded_warnings`,
@@ -70,8 +89,10 @@
 
 ## API preflight 실패
 
-1. `health/api_preflight/latest.json`에서 OpenAI와 Naver API Hub 상태를 분리해 확인한다.
-2. OpenAI HTTP 429의 `insufficient_quota`는 API billing·project budget·credits를 확인하고,
+1. `health/api_preflight/latest.json`에서 실행 route와 OpenAI·Naver API Hub 상태를 분리해 확인한다.
+   무료 production finalizer에서 OpenAI는 `not_required`, route는
+   `connected_chatgpt_automation`이어야 한다.
+2. 수동 유료 fallback의 OpenAI HTTP 429 `insufficient_quota`는 API billing·project budget·credits를 확인하고,
    `rate_limit_exceeded`는 프로젝트 rate limit과 후보 묶음 크기를 확인한다. 두 상태를 API key
    미등록이나 기사 부재로 바꾸지 않는다.
 3. Naver preflight가 degraded이면 API HUB client ID·secret의 등록 위치, migration endpoint와

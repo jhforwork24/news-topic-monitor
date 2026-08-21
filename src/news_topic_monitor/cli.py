@@ -25,12 +25,14 @@ from .assurance import (
 )
 from .briefing import BriefingDocument, build_briefing, build_editorial_briefing, write_briefing
 from .briefing_validation import BriefingValidationError, validate_briefing
+from .chat_bridge import ChatEditorialQueueManifest, validate_chat_editorial_bridge
 from .classifier import RuleClassifier
 from .constants import project_root
 from .editorial import (
     EditorialApiError,
     EditorialConfigurationError,
     EditorialEvidenceStore,
+    EditorialRun,
     EditorialValidationError,
     OpenAIEditorialClient,
     OpenAIEditorialSettings,
@@ -152,6 +154,15 @@ def build_parser() -> argparse.ArgumentParser:
     queue.add_argument(
         "--dry-run", action="store_true", help="validate the queue without calling Notion"
     )
+
+    finalize = subparsers.add_parser(
+        "editorial-finalize",
+        help="validate connected ChatGPT draft/audit, recrawl, gate, and publish",
+    )
+    _add_report_window_arguments(finalize)
+    finalize.add_argument(
+        "--dry-run", action="store_true", help="run final validation without calling Notion"
+    )
     return parser
 
 
@@ -175,6 +186,8 @@ def main(argv: list[str] | None = None) -> int:
         return _editorial_publish(args, settings)
     if args.command == "editorial-queue":
         return _editorial_queue(args, settings)
+    if args.command == "editorial-finalize":
+        return _editorial_finalize(args, settings)
     return _collect(args, settings)
 
 
@@ -584,6 +597,9 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
     storage = JsonlStorage(settings.root)
     adapters = _build_adapters(settings, storage, set(args.sources or []))
     try:
+        source_registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
+        briefing_policy = load_briefing_policy(settings.root / "config" / "briefing-policy.yaml")
+        validate_policy_contract(source_registry, briefing_policy)
         queue_settings = EditorialQueueSettings.from_env()
         runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
         with TemporaryDirectory(
@@ -616,6 +632,54 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                     raise EditorialQueueValidationError(
                         "정확한 발행시각과 확인 가능한 본문이 있는 편집 후보가 없음"
                     )
+                try:
+                    naver_settings = NaverSearchSettings.from_env()
+                    naver_configuration_error = None
+                except NaverConfigurationError as exc:
+                    naver_settings = None
+                    naver_configuration_error = str(exc)
+                known_canonical_urls = {
+                    article.canonical_url for article in storage.iter_articles()
+                } | {candidate.canonical_url for candidate in candidates}
+                if naver_settings is None:
+                    gap_detection = run_gap_detection(
+                        client=None,
+                        configuration_error=naver_configuration_error,
+                        policy=briefing_policy,
+                        registry=source_registry,
+                        known_canonical_urls=known_canonical_urls,
+                        start=start,
+                        end=end,
+                    )
+                else:
+                    with NaverSearchClient(naver_settings) as naver:
+                        gap_detection = run_gap_detection(
+                            client=naver,
+                            configuration_error=None,
+                            policy=briefing_policy,
+                            registry=source_registry,
+                            known_canonical_urls=known_canonical_urls,
+                            start=start,
+                            end=end,
+                        )
+                _write_api_preflight_health(
+                    settings.root,
+                    {
+                        "report_date": report_date,
+                        "openai": {
+                            "status": "not_required",
+                            "error": None,
+                            "route": "connected_chatgpt_automation",
+                        },
+                        "naver_api_hub": {
+                            "status": gap_detection.status.value,
+                            "error": "; ".join(gap_detection.errors) or None,
+                            "queries_attempted": gap_detection.queries_attempted,
+                            "queries_completed": gap_detection.queries_completed,
+                            "potential_gap_count": len(gap_detection.potential_gaps),
+                        },
+                    },
+                )
                 if args.dry_run:
                     write_editorial_queue_health(
                         settings.root,
@@ -624,6 +688,8 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         candidate_count=len(verified),
                         part_count=(len(verified) + queue_settings.chunk_size - 1)
                         // queue_settings.chunk_size,
+                        gap_detection_status=gap_detection.status.value,
+                        gap_potential_count=len(gap_detection.potential_gaps),
                     )
                     print(
                         json.dumps(
@@ -645,6 +711,8 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         report_date=report_date,
                         start=start,
                         end=end,
+                        initial_health_finished_at=health.run_finished_at,
+                        gap_detection=gap_detection,
                         queue_settings=queue_settings,
                         source_failures=_run_source_failures(health),
                     )
@@ -655,11 +723,14 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
             status=result.status,
             candidate_count=result.candidate_count,
             part_count=result.part_count,
+            queue_id=result.queue_id,
+            gap_detection_status=result.gap_detection_status,
+            gap_potential_count=result.gap_potential_count,
         )
         # The manifest URL is intentionally printed only to the private Actions log.
-        print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
+        print(json.dumps(result.log_payload(), ensure_ascii=False, indent=2))
         return 0
-    except NotionConfigurationError as exc:
+    except (NotionConfigurationError, PolicyConfigurationError) as exc:
         LOGGER.error("%s", exc)
         write_editorial_queue_health(
             settings.root,
@@ -667,6 +738,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
             status="configuration_error",
             error=str(exc),
         )
+        _record_bridge_failure(settings.root, report_date, str(exc), "대기열 생성")
         return 2
     except (NotionApiError, EditorialQueueValidationError) as exc:
         LOGGER.error("%s", exc)
@@ -676,7 +748,325 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
             status="failed",
             error=str(exc),
         )
+        _record_bridge_failure(settings.root, report_date, str(exc), "대기열 생성")
         return 3
+
+
+def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
+    date_value, start, end = _report_window(args)
+    report_date = date_value.isoformat()
+    command_started = perf_counter()
+    phase_durations: dict[str, float] = {}
+    storage = JsonlStorage(settings.root)
+    try:
+        source_registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
+        briefing_policy = load_briefing_policy(settings.root / "config" / "briefing-policy.yaml")
+        validate_policy_contract(source_registry, briefing_policy)
+        try:
+            naver_settings = NaverSearchSettings.from_env()
+            naver_configuration_error = None
+        except NaverConfigurationError as exc:
+            naver_settings = None
+            naver_configuration_error = str(exc)
+
+        phase_started = perf_counter()
+        preflight_health: dict[str, object] = {
+            "report_date": report_date,
+            "naver_api_hub": {"status": "pending", "error": None},
+            "openai": {
+                "status": "not_required",
+                "error": None,
+                "route": "connected_chatgpt_automation",
+            },
+        }
+        if naver_settings is None:
+            preflight_health["naver_api_hub"] = {
+                "status": "degraded",
+                "error": naver_configuration_error,
+            }
+        else:
+            try:
+                with NaverSearchClient(naver_settings) as naver:
+                    naver.search("장애인", display=1)
+                preflight_health["naver_api_hub"] = {"status": "complete", "error": None}
+            except NaverApiError as exc:
+                preflight_health["naver_api_hub"] = {
+                    "status": "degraded",
+                    "error": str(exc),
+                }
+        phase_durations["api_preflight"] = perf_counter() - phase_started
+        _write_api_preflight_health(settings.root, preflight_health)
+
+        phase_started = perf_counter()
+        queue_notion_settings = NotionPublishSettings.from_queue_env()
+        with NotionPublisher(queue_notion_settings) as queue_publisher:
+            bundle = queue_publisher.load_chat_editorial_bridge(report_date)
+        validate_chat_editorial_bridge(bundle)
+        initial_health = _load_bound_initial_health(settings.root, bundle.queue.manifest)
+        phase_durations["bridge_import_validation"] = perf_counter() - phase_started
+
+        run = EditorialRun(
+            model="connected_chatgpt_editor",
+            auditor_model="connected_chatgpt_independent_auditor",
+            candidates=bundle.queue.candidates,
+            assessments=[],
+            plan=bundle.draft.plan,
+            audit=bundle.audit.audit,
+        )
+        candidate_by_id = {
+            candidate.candidate_id: candidate for candidate in bundle.queue.candidates
+        }
+        selected_sources = {
+            candidate_by_id[candidate_id].source
+            for issue in run.plan.issues
+            for candidate_id in issue.candidate_ids
+            if candidate_id in candidate_by_id
+        }
+        if not selected_sources:
+            raise EditorialValidationError("최종상태 공식 재수집에 사용할 선정 기사 출처가 없음")
+
+        revalidation_requested_at = datetime.now(UTC)
+        if revalidation_requested_at > end + timedelta(hours=6):
+            raise EditorialValidationError(
+                "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음"
+            )
+        revalidation_start = (
+            end
+            if revalidation_requested_at > end
+            else max(start, revalidation_requested_at - timedelta(hours=1))
+        )
+        runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
+        with TemporaryDirectory(
+            prefix="news-topic-chat-finalize-", dir=runner_temp
+        ) as temporary_directory:
+            database_path = Path(temporary_directory) / "revalidation.sqlite3"
+            with EditorialEvidenceStore(database_path) as evidence_store:
+                classifier = RuleClassifier(settings.root / "config" / "topics.yml")
+                revalidation_adapters = _build_adapters(settings, storage, selected_sources)
+                LOGGER.info(
+                    "editorial phase=final_state_recrawl status=started sources=%s",
+                    ",".join(sorted(selected_sources)),
+                )
+                phase_started = perf_counter()
+                with SafeHttpClient(settings) as http:
+                    revalidation_health = Collector(
+                        http=http,
+                        storage=storage,
+                        classifier=classifier,
+                        adapters=revalidation_adapters,
+                        max_discovery_children=settings.max_discovery_children,
+                        evidence_store=evidence_store,
+                        capture_all_bodies=True,
+                        capture_body_start=revalidation_start,
+                        capture_body_limit_per_source=24,
+                        write_health=False,
+                        rolling_window_end=True,
+                    ).run(revalidation_start, revalidation_requested_at)
+                phase_durations["final_state_recrawl"] = perf_counter() - phase_started
+                revalidation_end = revalidation_health.run_finished_at
+                recrawled_candidates = evidence_store.candidates(start=start, end=revalidation_end)
+
+            merged_candidates = {
+                candidate.candidate_id: candidate for candidate in bundle.queue.candidates
+            }
+            merged_candidates.update(
+                {candidate.candidate_id: candidate for candidate in recrawled_candidates}
+            )
+            all_candidates = list(merged_candidates.values())
+            known_canonical_urls = {candidate.canonical_url for candidate in all_candidates} | {
+                article.canonical_url for article in storage.iter_articles()
+            }
+
+            phase_started = perf_counter()
+            if naver_settings is None:
+                gap_detection = run_gap_detection(
+                    client=None,
+                    configuration_error=naver_configuration_error,
+                    policy=briefing_policy,
+                    registry=source_registry,
+                    known_canonical_urls=known_canonical_urls,
+                    start=start,
+                    end=end,
+                )
+                reverse_search = run_reverse_search(
+                    client=None,
+                    configuration_error=naver_configuration_error,
+                    plan=run.plan,
+                    policy=briefing_policy,
+                    registry=source_registry,
+                    start=start,
+                    end=end,
+                )
+            else:
+                with NaverSearchClient(naver_settings) as naver:
+                    gap_detection = run_gap_detection(
+                        client=naver,
+                        configuration_error=None,
+                        policy=briefing_policy,
+                        registry=source_registry,
+                        known_canonical_urls=known_canonical_urls,
+                        start=start,
+                        end=end,
+                    )
+                    reverse_search = run_reverse_search(
+                        client=naver,
+                        configuration_error=None,
+                        plan=run.plan,
+                        policy=briefing_policy,
+                        registry=source_registry,
+                        start=start,
+                        end=end,
+                    )
+            phase_durations["gap_reverse_search"] = perf_counter() - phase_started
+
+            phase_started = perf_counter()
+            census = evaluate_census(
+                initial_health,
+                window_start=start,
+                registry=source_registry,
+                policy=briefing_policy,
+            )
+            final_state = revalidate_final_state(
+                plan=run.plan,
+                audit=run.audit,
+                all_candidates=all_candidates,
+                health=revalidation_health,
+                policy=briefing_policy,
+                draft_completed_at=bundle.audit.submitted_at,
+                checked_at=revalidation_health.run_finished_at,
+            )
+            gate = evaluate_publish_gate(
+                report_date=report_date,
+                policy=briefing_policy,
+                census=census,
+                gap_detection=gap_detection,
+                reverse_search=reverse_search,
+                final_state=final_state,
+                audit=run.audit,
+                plan=run.plan,
+                candidates=bundle.queue.candidates,
+                health=initial_health,
+                revalidation_health=revalidation_health,
+            )
+            phase_durations["assurance"] = perf_counter() - phase_started
+
+        current_articles = [
+            article
+            for article in storage.iter_articles()
+            if start <= (article.published_at or article.first_seen_at) < revalidation_end
+        ]
+        manifest = build_evidence_manifest(
+            report_date=report_date,
+            articles=current_articles,
+            plan=run.plan,
+            census=census,
+            gap_detection=gap_detection,
+            reverse_search=reverse_search,
+            final_state=final_state,
+        )
+        write_assurance_outputs(settings.root, manifest=manifest, gate=gate)
+        if not gate.allowed:
+            phase_durations["total"] = perf_counter() - command_started
+            _record_gate_failure(settings.root, gate)
+            error = "publish gate blocked publication: " + "; ".join(gate.fatal_errors)
+            write_editorial_health(
+                settings.root,
+                run,
+                report_date=report_date,
+                status="blocked_by_publish_gate",
+                error=error,
+                phase_durations_seconds=phase_durations,
+            )
+            LOGGER.error("%s", error)
+            return 3
+
+        phase_started = perf_counter()
+        document = build_editorial_briefing(
+            storage,
+            plan=run.plan,
+            start=start,
+            end=end,
+            report_date=report_date,
+        )
+        document.source_failures.extend(
+            (
+                f"원인={item.cause} · 대체경로={item.fallback} · "
+                f"결과={item.result} · 다음조치={item.next_action}"
+            )
+            for item in gate.reporting_items
+        )
+        validate_briefing(document)
+        path = write_briefing(
+            document,
+            output_path=settings.root / "reports" / "briefings" / f"{report_date}.md",
+            crpd_url=None,
+        )
+        phase_durations["render_briefing"] = perf_counter() - phase_started
+        phase_durations["total"] = perf_counter() - command_started
+        write_editorial_health(
+            settings.root,
+            run,
+            report_date=report_date,
+            phase_durations_seconds=phase_durations,
+        )
+        print(path)
+        if args.dry_run:
+            return 0
+        return _publish_to_notion(document, settings.root)
+    except (
+        EditorialConfigurationError,
+        PolicyConfigurationError,
+        NotionConfigurationError,
+    ) as exc:
+        LOGGER.error("%s", exc)
+        phase_durations["total"] = perf_counter() - command_started
+        write_editorial_failure(
+            settings.root,
+            report_date=report_date,
+            status="configuration_error",
+            error=str(exc),
+            phase_durations_seconds=phase_durations,
+        )
+        _record_bridge_failure(settings.root, report_date, str(exc), "최종 검증")
+        return 2
+    except (
+        EditorialValidationError,
+        EditorialQueueValidationError,
+        NotionApiError,
+        BriefingValidationError,
+    ) as exc:
+        LOGGER.error("%s", exc)
+        phase_durations["total"] = perf_counter() - command_started
+        write_editorial_failure(
+            settings.root,
+            report_date=report_date,
+            status="failed",
+            error=str(exc),
+            phase_durations_seconds=phase_durations,
+        )
+        _record_bridge_failure(settings.root, report_date, str(exc), "최종 검증")
+        return 3
+
+
+def _load_bound_initial_health(root: Path, manifest: ChatEditorialQueueManifest) -> RunHealth:
+    path = root / "health" / "latest.json"
+    if not path.exists():
+        raise EditorialQueueValidationError("초기 전수 수집 health/latest.json이 없음")
+    try:
+        health = RunHealth.model_validate_json(path.read_text(encoding="utf-8"))
+    except ValueError as exc:
+        raise EditorialQueueValidationError(
+            "초기 전수 수집 health/latest.json이 유효하지 않음"
+        ) from exc
+    if health.run_finished_at != manifest.initial_health_finished_at:
+        raise EditorialQueueValidationError(
+            "현재 health/latest.json이 편집 대기열 생성에 사용된 수집 실행과 일치하지 않음"
+        )
+    if health.window_start > manifest.report_start or health.window_end < manifest.report_end:
+        raise EditorialQueueValidationError(
+            "초기 전수 수집 health가 편집 대기열의 보고 구간을 포함하지 않음"
+        )
+    return health
 
 
 def _build_adapters(
@@ -764,7 +1154,7 @@ def _record_gate_failure(root: Path, gate: PublishGateDecision) -> None:
     """Best-effort report to the private reports data source; never publish a briefing."""
 
     try:
-        settings = NotionPublishSettings.from_env()
+        settings = NotionPublishSettings.from_queue_env()
     except NotionConfigurationError:
         return
     details = ["publish gate가 최종 발행을 차단함"]
@@ -781,6 +1171,30 @@ def _record_gate_failure(root: Path, gate: PublishGateDecision) -> None:
             publisher.record_failure(gate.report_date, "\n".join(details))
     except (NotionApiError, httpx.HTTPError):
         LOGGER.exception("could not write publish-gate failure to Notion reports")
+
+
+def _record_bridge_failure(root: Path, report_date: str, error: str, phase: str) -> None:
+    """Best-effort structured failure report for queue/import errors."""
+
+    del root  # The private reporting destination is configured only through secrets/env.
+    try:
+        settings = NotionPublishSettings.from_queue_env()
+    except NotionConfigurationError:
+        return
+    detail = short_error(error) or "미분류 오류"
+    message = "\n".join(
+        [
+            f"원인={phase} 실패: {detail}",
+            "대체경로=동일 날짜의 결정론적 수집·health·대기열 상태를 보존하고 자동 발행을 중단함",
+            "결과=최종 Notion 브리핑을 생성하거나 수정하지 않음",
+            "다음조치=오류를 해결한 뒤 같은 queue_id 기준으로 편집과 독립 감사를 순서대로 재실행함",
+        ]
+    )
+    try:
+        with NotionPublisher(settings) as publisher:
+            publisher.record_failure(report_date, message)
+    except (NotionApiError, httpx.HTTPError):
+        LOGGER.exception("could not write connected-bridge failure to Notion reports")
 
 
 def _add_report_window_arguments(parser: argparse.ArgumentParser) -> None:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import re
 import time
@@ -11,7 +12,9 @@ from typing import Any
 from urllib.parse import urlsplit
 
 import httpx
+from pydantic import ValidationError as PydanticValidationError
 
+from .assurance import GapDetectionResult
 from .briefing import (
     ENTERTAINMENT_PATHS,
     ENTERTAINMENT_SECTION_TERMS,
@@ -22,6 +25,16 @@ from .briefing import (
     issue_analysis_text,
     render_briefing_markdown,
 )
+from .chat_bridge import (
+    ChatEditorialAuditSubmission,
+    ChatEditorialBridgeBundle,
+    ChatEditorialDraft,
+    ChatEditorialQueue,
+    ChatEditorialQueueManifest,
+    ChatEditorialQueuePart,
+    bounded_queue_candidate,
+    editorial_queue_id,
+)
 from .editorial import select_chat_editorial_candidates
 from .models import EditorialCandidate
 from .sources import SOURCE_LABELS
@@ -31,6 +44,8 @@ from .utils import KST, normalize_text, short_error, short_text
 NOTION_VERSION = "2026-03-11"
 BRIEFING_TITLE_FRAGMENT = "일간 장애정책·노동 뉴스 브리핑"
 EDITORIAL_QUEUE_TITLE_FRAGMENT = "ChatGPT 편집 대기열"
+EDITORIAL_DRAFT_TITLE_FRAGMENT = "ChatGPT 편집 초안"
+EDITORIAL_AUDIT_TITLE_FRAGMENT = "ChatGPT 독립 감사"
 
 
 class NotionConfigurationError(ValueError):
@@ -105,7 +120,7 @@ class EditorialQueueSettings:
     max_candidates: int = 180
     chunk_size: int = 24
     evidence_chars: int = 1600
-    body_fetch_limit_per_source: int = 60
+    body_fetch_limit_per_source: int = 24
 
     @classmethod
     def from_env(cls) -> EditorialQueueSettings:
@@ -118,8 +133,8 @@ class EditorialQueueSettings:
                 600, min(_environment_integer("CHAT_EDITORIAL_EVIDENCE_CHARS", 1600), 1800)
             ),
             body_fetch_limit_per_source=max(
-                10,
-                min(_environment_integer("CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE", 60), 200),
+                1,
+                min(_environment_integer("CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE", 24), 200),
             ),
         )
 
@@ -130,8 +145,17 @@ class EditorialQueueResult:
     report_date: str
     candidate_count: int
     part_count: int
+    queue_id: str
+    generated_at: datetime
+    gap_detection_status: str
+    gap_potential_count: int
     manifest_page_id: str
     manifest_page_url: str | None
+
+    def log_payload(self) -> dict[str, object]:
+        """Return a JSON-safe representation for the private Actions log."""
+
+        return {**self.__dict__, "generated_at": self.generated_at.isoformat()}
 
 
 class NotionPublisher:
@@ -309,6 +333,8 @@ class NotionPublisher:
         report_date: str,
         start: datetime,
         end: datetime,
+        initial_health_finished_at: datetime,
+        gap_detection: GapDetectionResult,
         queue_settings: EditorialQueueSettings,
         source_failures: list[str] | None = None,
     ) -> EditorialQueueResult:
@@ -318,10 +344,16 @@ class NotionPublisher:
                 "정확한 발행시각과 확인 가능한 본문이 있는 편집 후보가 없음"
             )
 
+        bounded = [
+            bounded_queue_candidate(candidate, queue_settings.evidence_chars)
+            for candidate in selected
+        ]
+        queue_id = editorial_queue_id(bounded)
+        generated_at = datetime.now(UTC)
         self._archive_queue_pages(report_date)
         parts = [
-            selected[index : index + queue_settings.chunk_size]
-            for index in range(0, len(selected), queue_settings.chunk_size)
+            bounded[index : index + queue_settings.chunk_size]
+            for index in range(0, len(bounded), queue_settings.chunk_size)
         ]
         part_pages: list[dict[str, Any]] = []
         for index, part in enumerate(parts, start=1):
@@ -339,9 +371,9 @@ class NotionPublisher:
                     "properties": _queue_page_properties(title, report_date),
                     "children": _queue_part_blocks(
                         part,
+                        queue_id=queue_id,
                         part_index=index,
                         part_count=len(parts),
-                        evidence_chars=queue_settings.evidence_chars,
                     ),
                 },
             )
@@ -358,10 +390,21 @@ class NotionPublisher:
                 },
                 "properties": _queue_page_properties(manifest_title, report_date),
                 "children": _queue_manifest_blocks(
-                    report_date=report_date,
-                    start=start,
-                    end=end,
-                    candidate_count=len(selected),
+                    manifest=ChatEditorialQueueManifest(
+                        report_date=report_date,
+                        queue_id=queue_id,
+                        generated_at=generated_at,
+                        report_start=start,
+                        report_end=end,
+                        initial_health_finished_at=initial_health_finished_at,
+                        candidate_count=len(bounded),
+                        part_count=len(parts),
+                        gap_detection_status=gap_detection.status.value,
+                        gap_detection_route=gap_detection.route,
+                        gap_queries_attempted=gap_detection.queries_attempted,
+                        gap_queries_completed=gap_detection.queries_completed,
+                        gap_potential_count=len(gap_detection.potential_gaps),
+                    ),
                     part_pages=part_pages,
                     source_failures=source_failures or [],
                 ),
@@ -370,11 +413,103 @@ class NotionPublisher:
         return EditorialQueueResult(
             status="ready",
             report_date=report_date,
-            candidate_count=len(selected),
+            candidate_count=len(bounded),
             part_count=len(parts),
+            queue_id=queue_id,
+            generated_at=generated_at,
+            gap_detection_status=gap_detection.status.value,
+            gap_potential_count=len(gap_detection.potential_gaps),
             manifest_page_id=str(manifest["id"]),
             manifest_page_url=(str(manifest["url"]) if manifest.get("url") else None),
         )
+
+    def load_chat_editorial_bridge(self, report_date: str) -> ChatEditorialBridgeBundle:
+        """Load a private queue plus exact structured draft and independent audit."""
+
+        manifest_title = f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · 매니페스트"
+        draft_title = f"{EDITORIAL_DRAFT_TITLE_FRAGMENT} · {report_date}"
+        audit_title = f"{EDITORIAL_AUDIT_TITLE_FRAGMENT} · {report_date}"
+        manifest_page = self._require_exact_page(manifest_title, report_date)
+        draft_page = self._require_exact_page(draft_title, report_date)
+        audit_page = self._require_exact_page(audit_title, report_date)
+        try:
+            manifest = ChatEditorialQueueManifest.model_validate(
+                self._page_json_document(manifest_page)
+            )
+            draft = ChatEditorialDraft.model_validate(self._page_json_document(draft_page))
+            audit = ChatEditorialAuditSubmission.model_validate(
+                self._page_json_document(audit_page)
+            )
+            dated_pages = self._query_date(self.settings.data_source_id, report_date)
+            part_pages = [
+                page
+                for page in dated_pages
+                if _page_title(page).startswith(
+                    f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · "
+                )
+                and not _page_title(page).endswith("매니페스트")
+            ]
+            parts = [
+                ChatEditorialQueuePart.model_validate(self._page_json_document(page))
+                for page in part_pages
+            ]
+            if len(parts) != manifest.part_count:
+                raise EditorialQueueValidationError(
+                    "편집 대기열 묶음 수가 매니페스트와 일치하지 않음"
+                )
+            expected_indexes = list(range(1, manifest.part_count + 1))
+            if sorted(part.part_index for part in parts) != expected_indexes:
+                raise EditorialQueueValidationError(
+                    "편집 대기열 묶음 번호가 완전한 연속 범위가 아님"
+                )
+            if any(
+                part.queue_id != manifest.queue_id or part.part_count != manifest.part_count
+                for part in parts
+            ):
+                raise EditorialQueueValidationError(
+                    "편집 대기열 묶음이 매니페스트 queue_id와 일치하지 않음"
+                )
+            candidates = [
+                candidate
+                for part in sorted(parts, key=lambda item: item.part_index)
+                for candidate in part.candidates
+            ]
+            queue = ChatEditorialQueue(manifest=manifest, candidates=candidates)
+            return ChatEditorialBridgeBundle(queue=queue, draft=draft, audit=audit)
+        except (PydanticValidationError, json.JSONDecodeError) as exc:
+            raise EditorialQueueValidationError(
+                "ChatGPT 편집 브리지 JSON이 고정 스키마를 충족하지 않음"
+            ) from exc
+
+    def _require_exact_page(self, title: str, report_date: str) -> dict[str, Any]:
+        pages = self._query_exact(self.settings.data_source_id, title, report_date)
+        if len(pages) != 1:
+            raise EditorialQueueValidationError(
+                f"활성 Notion 페이지가 정확히 1개여야 함: {title} (found={len(pages)})"
+            )
+        return pages[0]
+
+    def _page_json_document(self, page: dict[str, Any]) -> dict[str, Any]:
+        page_id = str(page.get("id") or "")
+        if not page_id:
+            raise EditorialQueueValidationError("Notion 페이지 ID가 없음")
+        code_blocks = [
+            block
+            for block in self._list_children(page_id)
+            if block.get("type") == "code" and isinstance(block.get("code"), dict)
+        ]
+        if len(code_blocks) != 1:
+            raise EditorialQueueValidationError(
+                "기계 판독용 JSON code block이 정확히 1개여야 함: "
+                f"{_page_title(page)} (found={len(code_blocks)})"
+            )
+        document = "".join(
+            _plain_rich_text(block["code"].get("rich_text", [])) for block in code_blocks
+        )
+        payload = json.loads(document)
+        if not isinstance(payload, dict):
+            raise EditorialQueueValidationError("기계 판독용 JSON은 object여야 함")
+        return payload
 
     def _archive_queue_pages(self, report_date: str) -> None:
         cutoff = (datetime.strptime(report_date, "%Y-%m-%d").date() - timedelta(days=2)).isoformat()
@@ -562,6 +697,9 @@ def write_editorial_queue_health(
     status: str,
     candidate_count: int | None = None,
     part_count: int | None = None,
+    queue_id: str | None = None,
+    gap_detection_status: str | None = None,
+    gap_potential_count: int | None = None,
     error: str | None = None,
 ) -> None:
     """Store queue status without private Notion URLs or article evidence."""
@@ -574,6 +712,9 @@ def write_editorial_queue_health(
             "status": status,
             "candidate_count": candidate_count,
             "part_count": part_count,
+            "queue_id": queue_id,
+            "gap_detection_status": gap_detection_status,
+            "gap_potential_count": gap_potential_count,
             "error": short_error(error),
         },
     )
@@ -589,9 +730,9 @@ def _queue_page_properties(title: str, report_date: str) -> dict[str, Any]:
 def _queue_part_blocks(
     candidates: list[EditorialCandidate],
     *,
+    queue_id: str,
     part_index: int,
     part_count: int,
-    evidence_chars: int,
 ) -> list[dict[str, Any]]:
     blocks = [
         _paragraph(
@@ -614,34 +755,54 @@ def _queue_part_blocks(
                 ),
                 _bullet("원문 링크", href=candidate.canonical_url),
                 _paragraph(
-                    "확인 근거: "
-                    + (normalize_text(candidate.evidence_text)[:evidence_chars] or "근거 없음")
+                    "확인 근거: " + (normalize_text(candidate.evidence_text) or "근거 없음")
                 ),
             ]
         )
+    machine_payload = ChatEditorialQueuePart(
+        queue_id=queue_id,
+        part_index=part_index,
+        part_count=part_count,
+        candidates=candidates,
+    )
+    blocks.extend(
+        [
+            _heading("기계 판독용 입력", 2),
+            _paragraph(
+                "아래 JSON을 수정·요약하지 않는다. ChatGPT 편집자는 같은 queue_id와 "
+                "candidate_id만 구조화 결과에 복사한다."
+            ),
+            _code_json(machine_payload.model_dump(mode="json")),
+        ]
+    )
     return blocks
 
 
 def _queue_manifest_blocks(
     *,
-    report_date: str,
-    start: datetime,
-    end: datetime,
-    candidate_count: int,
+    manifest: ChatEditorialQueueManifest,
     part_pages: list[dict[str, Any]],
     source_failures: list[str],
 ) -> list[dict[str, Any]]:
-    start_text = start.astimezone(KST).strftime("%Y-%m-%d %H:%M")
-    end_text = end.astimezone(KST).strftime("%Y-%m-%d %H:%M")
+    start_text = manifest.report_start.astimezone(KST).strftime("%Y-%m-%d %H:%M")
+    end_text = manifest.report_end.astimezone(KST).strftime("%Y-%m-%d %H:%M")
     blocks = [
         _paragraph(
-            f"상태=READY · 기준일={report_date} · 범위={start_text} 이상 {end_text} 미만 · "
-            f"후보={candidate_count}개 · 시간대=Asia/Seoul"
+            f"상태=READY · 기준일={manifest.report_date} · "
+            f"queue_id={manifest.queue_id} · 범위={start_text} 이상 {end_text} 미만 · "
+            f"후보={manifest.candidate_count}개 · 시간대=Asia/Seoul"
+        ),
+        _paragraph(
+            f"편집 전 gap detection={manifest.gap_detection_status} · "
+            f"경로={manifest.gap_detection_route} · "
+            f"질의={manifest.gap_queries_completed}/{manifest.gap_queries_attempted} · "
+            f"잠재누락={manifest.gap_potential_count}. 검색결과는 원문 검증을 대체하지 않는다."
         ),
         _paragraph(
             "이 매니페스트와 아래 모든 묶음의 candidate_id만 사용한다. 발행시각이 없거나 "
             "본문 확인에 실패한 일반 기사는 대기열 작성 전에 제외했다."
         ),
+        _code_json(manifest.model_dump(mode="json")),
         _heading("후보 묶음", 2),
     ]
     for index, page in enumerate(part_pages, start=1):
@@ -764,6 +925,37 @@ def _rich_text(content: str, href: str | None = None) -> dict[str, Any]:
     if href:
         text["link"] = {"url": href}
     return {"type": "text", "text": text, "annotations": {}}
+
+
+def _rich_text_chunks(content: str, *, chunk_size: int = 1900) -> list[dict[str, Any]]:
+    if not content:
+        return [_rich_text("")]
+    return [
+        _rich_text(content[index : index + chunk_size])
+        for index in range(0, len(content), chunk_size)
+    ]
+
+
+def _code_json(payload: dict[str, Any]) -> dict[str, Any]:
+    content = json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return {
+        "object": "block",
+        "type": "code",
+        "code": {"rich_text": _rich_text_chunks(content), "language": "json"},
+    }
+
+
+def _plain_rich_text(items: list[dict[str, Any]]) -> str:
+    return "".join(
+        str(item.get("plain_text") or item.get("text", {}).get("content", ""))
+        for item in items
+        if isinstance(item, dict)
+    )
 
 
 def _paragraph(content: str, *, href: str | None = None) -> dict[str, Any]:
