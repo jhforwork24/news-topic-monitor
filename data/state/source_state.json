@@ -2,63 +2,65 @@
   "version": 1,
   "sources": {
     "chosun": {
-      "last_run_at": "2026-08-21T05:51:17.923832Z",
+      "last_run_at": "2026-08-21T08:19:51.652738Z",
       "success": true,
-      "discovered": 146,
+      "discovered": 148,
       "errors": [],
-      "last_success_at": "2026-08-21T05:51:17.923832Z",
+      "last_success_at": "2026-08-21T08:19:51.652738Z",
       "discovery_status": "complete"
     },
     "joongang": {
-      "last_run_at": "2026-08-21T05:51:22.319554Z",
+      "last_run_at": "2026-08-21T08:20:56.160984Z",
       "success": true,
-      "discovered": 296,
+      "discovered": 824,
       "errors": [],
-      "last_success_at": "2026-08-21T05:51:22.319554Z",
+      "last_success_at": "2026-08-21T08:20:56.160984Z",
       "discovery_status": "complete"
     },
     "donga": {
-      "last_run_at": "2026-08-21T05:51:29.105317Z",
+      "last_run_at": "2026-08-21T08:21:51.289786Z",
       "success": true,
-      "discovered": 684,
+      "discovered": 741,
       "errors": [],
-      "last_success_at": "2026-08-21T05:51:29.105317Z",
+      "last_success_at": "2026-08-21T08:21:51.289786Z",
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-08-21T05:51:41.392674Z",
+      "last_run_at": "2026-08-21T08:24:01.657808Z",
       "success": true,
-      "discovered": 60,
+      "discovered": 495,
       "errors": [],
-      "last_success_at": "2026-08-21T05:51:41.392674Z",
+      "last_success_at": "2026-08-21T08:24:01.657808Z",
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-08-21T05:51:44.123129Z",
+      "last_run_at": "2026-08-21T08:24:53.277642Z",
       "success": true,
-      "discovered": 331,
+      "discovered": 367,
       "errors": [],
-      "last_success_at": "2026-08-21T05:51:44.123129Z",
+      "last_success_at": "2026-08-21T08:24:53.277642Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-08-21T05:51:48.645664Z",
+      "last_run_at": "2026-08-21T08:25:55.711467Z",
       "success": true,
-      "discovered": 247,
+      "discovered": 255,
       "errors": [],
-      "last_success_at": "2026-08-21T05:51:48.645664Z",
+      "last_success_at": "2026-08-21T08:25:55.711467Z",
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-08-21T05:51:53.122743Z",
-      "success": true,
-      "discovered": 25,
-      "errors": [],
+      "last_run_at": "2026-08-21T08:26:29.561275Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.pressian.com/api/v3/site/rss/news: robots.txt unavailable for www.pressian.com: GET failed after retries: https://www.pressian.com/robots.txt: timed out"
+      ],
       "last_success_at": "2026-08-21T05:51:53.122743Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "newscham": {
-      "last_run_at": "2026-08-21T05:51:54.044003Z",
+      "last_run_at": "2026-08-21T08:26:30.648243Z",
       "success": false,
       "discovered": 0,
       "errors": [
@@ -67,75 +69,83 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-08-21T05:51:57.140994Z",
-      "success": true,
-      "discovered": 100,
-      "errors": [],
+      "last_run_at": "2026-08-21T08:26:32.022114Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.labortoday.co.kr/sitemap.xml: robots.txt unavailable for www.labortoday.co.kr: GET failed: https://www.labortoday.co.kr/robots.txt: HTTP 403"
+      ],
       "last_success_at": "2026-08-21T05:51:57.140994Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "beminor": {
-      "last_run_at": "2026-08-21T05:52:02.251735Z",
-      "success": true,
-      "discovered": 100,
-      "errors": [],
+      "last_run_at": "2026-08-21T08:26:35.241634Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.beminor.com/sitemap.xml: robots.txt unavailable for www.beminor.com: GET failed: https://www.beminor.com/robots.txt: HTTP 403"
+      ],
       "last_success_at": "2026-08-21T05:52:02.251735Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "ablenews": {
-      "last_run_at": "2026-08-21T05:52:34.699327Z",
-      "success": true,
-      "discovered": 100,
-      "errors": [],
+      "last_run_at": "2026-08-21T08:26:36.897563Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.ablenews.co.kr/sitemap.xml: robots.txt unavailable for www.ablenews.co.kr: GET failed: https://www.ablenews.co.kr/robots.txt: HTTP 403"
+      ],
       "last_success_at": "2026-08-21T05:52:34.699327Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "theindigo": {
-      "last_run_at": "2026-08-21T05:52:39.704523Z",
+      "last_run_at": "2026-08-21T08:26:51.670695Z",
       "success": true,
-      "discovered": 1,
+      "discovered": 6,
       "errors": [],
-      "last_success_at": "2026-08-21T05:52:39.704523Z",
+      "last_success_at": "2026-08-21T08:26:51.670695Z",
       "discovery_status": "complete"
     },
     "kbs": {
-      "last_run_at": "2026-08-21T05:52:46.178864Z",
+      "last_run_at": "2026-08-21T08:29:30.054745Z",
       "success": true,
-      "discovered": 3723,
+      "discovered": 3906,
       "errors": [],
-      "last_success_at": "2026-08-21T05:52:46.178864Z",
+      "last_success_at": "2026-08-21T08:29:30.054745Z",
       "discovery_status": "complete"
     },
     "mbc": {
-      "last_run_at": "2026-08-21T05:53:00.378504Z",
+      "last_run_at": "2026-08-21T08:30:04.091408Z",
       "success": true,
-      "discovered": 0,
+      "discovered": 1,
       "errors": [],
       "discovery_status": "complete",
-      "last_success_at": "2026-08-21T05:53:00.378504Z"
+      "last_success_at": "2026-08-21T08:30:04.091408Z"
     },
     "sbs": {
-      "last_run_at": "2026-08-21T05:53:04.717370Z",
+      "last_run_at": "2026-08-21T08:30:54.812738Z",
       "success": true,
       "discovered": 101,
       "errors": [],
-      "last_success_at": "2026-08-21T05:53:04.717370Z",
+      "last_success_at": "2026-08-21T08:30:54.812738Z",
       "discovery_status": "complete"
     },
     "jtbc": {
-      "last_run_at": "2026-08-21T05:53:08.457926Z",
+      "last_run_at": "2026-08-21T08:31:45.231279Z",
       "success": true,
-      "discovered": 195,
+      "discovered": 210,
       "errors": [],
-      "last_success_at": "2026-08-21T05:53:08.457926Z",
+      "last_success_at": "2026-08-21T08:31:45.231279Z",
       "discovery_status": "complete"
     },
     "mediaus": {
-      "last_run_at": "2026-08-21T05:51:59.332940Z",
-      "success": true,
-      "discovery_status": "complete",
-      "discovered": 100,
-      "errors": [],
+      "last_run_at": "2026-08-21T08:26:33.779226Z",
+      "success": false,
+      "discovery_status": "unavailable",
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.mediaus.co.kr/sitemap.xml: robots.txt unavailable for www.mediaus.co.kr: GET failed: https://www.mediaus.co.kr/robots.txt: HTTP 403"
+      ],
       "last_success_at": "2026-08-21T05:51:59.332940Z"
     }
   }
