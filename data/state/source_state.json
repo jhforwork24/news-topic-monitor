@@ -2,63 +2,65 @@
   "version": 1,
   "sources": {
     "chosun": {
-      "last_run_at": "2026-08-21T23:42:37.949348Z",
+      "last_run_at": "2026-08-22T03:10:35.813597Z",
       "success": true,
       "discovered": 149,
       "errors": [],
-      "last_success_at": "2026-08-21T23:42:37.949348Z",
+      "last_success_at": "2026-08-22T03:10:35.813597Z",
       "discovery_status": "complete"
     },
     "joongang": {
-      "last_run_at": "2026-08-21T23:42:42.364853Z",
-      "success": true,
-      "discovered": 243,
-      "errors": [],
+      "last_run_at": "2026-08-22T03:11:09.370123Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.joongang.co.kr/sitemap/latest-articles: robots.txt unavailable for www.joongang.co.kr: GET failed after retries: https://www.joongang.co.kr/robots.txt: timed out; https://www.joongang.co.kr/sitemap/articles/2026/20260822: robots.txt unavailable for www.joongang.co.kr: GET failed after retries: https://www.joongang.co.kr/robots.txt: timed out"
+      ],
       "last_success_at": "2026-08-21T23:42:42.364853Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "donga": {
-      "last_run_at": "2026-08-21T23:42:47.215462Z",
+      "last_run_at": "2026-08-22T03:11:16.254756Z",
       "success": true,
-      "discovered": 449,
+      "discovered": 489,
       "errors": [],
-      "last_success_at": "2026-08-21T23:42:47.215462Z",
+      "last_success_at": "2026-08-22T03:11:16.254756Z",
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-08-21T23:42:53.511923Z",
+      "last_run_at": "2026-08-22T03:11:22.524510Z",
       "success": true,
       "discovered": 30,
       "errors": [],
-      "last_success_at": "2026-08-21T23:42:53.511923Z",
+      "last_success_at": "2026-08-22T03:11:22.524510Z",
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-08-21T23:42:56.303995Z",
+      "last_run_at": "2026-08-22T03:11:25.591224Z",
       "success": true,
-      "discovered": 156,
+      "discovered": 173,
       "errors": [],
-      "last_success_at": "2026-08-21T23:42:56.303995Z",
+      "last_success_at": "2026-08-22T03:11:25.591224Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-08-21T23:42:59.172201Z",
+      "last_run_at": "2026-08-22T03:11:28.180351Z",
       "success": true,
-      "discovered": 235,
+      "discovered": 194,
       "errors": [],
-      "last_success_at": "2026-08-21T23:42:59.172201Z",
+      "last_success_at": "2026-08-22T03:11:28.180351Z",
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-08-21T23:43:03.554020Z",
+      "last_run_at": "2026-08-22T03:11:32.627358Z",
       "success": true,
       "discovered": 25,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:03.554020Z",
+      "last_success_at": "2026-08-22T03:11:32.627358Z",
       "discovery_status": "complete"
     },
     "newscham": {
-      "last_run_at": "2026-08-21T23:43:04.639974Z",
+      "last_run_at": "2026-08-22T03:11:33.653654Z",
       "success": false,
       "discovered": 0,
       "errors": [
@@ -67,76 +69,78 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-08-21T23:43:07.619115Z",
+      "last_run_at": "2026-08-22T03:11:36.530511Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:07.619115Z",
+      "last_success_at": "2026-08-22T03:11:36.530511Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-08-21T23:43:12.918836Z",
+      "last_run_at": "2026-08-22T03:11:41.653357Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:12.918836Z",
+      "last_success_at": "2026-08-22T03:11:41.653357Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-08-21T23:43:15.161669Z",
+      "last_run_at": "2026-08-22T03:11:43.834721Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:15.161669Z",
+      "last_success_at": "2026-08-22T03:11:43.834721Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-08-21T23:43:17.613216Z",
+      "last_run_at": "2026-08-22T03:11:46.260598Z",
       "success": true,
       "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:17.613216Z",
+      "last_success_at": "2026-08-22T03:11:46.260598Z",
       "discovery_status": "complete"
     },
     "kbs": {
-      "last_run_at": "2026-08-21T23:43:20.031996Z",
+      "last_run_at": "2026-08-22T03:11:50.088635Z",
       "success": true,
-      "discovered": 3342,
+      "discovered": 3373,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:20.031996Z",
+      "last_success_at": "2026-08-22T03:11:50.088635Z",
       "discovery_status": "complete"
     },
     "mbc": {
-      "last_run_at": "2026-08-21T23:43:34.275131Z",
+      "last_run_at": "2026-08-22T03:12:04.319802Z",
       "success": true,
       "discovered": 0,
       "errors": [],
       "discovery_status": "complete",
-      "last_success_at": "2026-08-21T23:43:34.275131Z"
+      "last_success_at": "2026-08-22T03:12:04.319802Z"
     },
     "sbs": {
-      "last_run_at": "2026-08-21T23:43:36.328499Z",
+      "last_run_at": "2026-08-22T03:12:06.466826Z",
       "success": true,
       "discovered": 102,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:36.328499Z",
+      "last_success_at": "2026-08-22T03:12:06.466826Z",
       "discovery_status": "complete"
     },
     "jtbc": {
-      "last_run_at": "2026-08-21T23:43:39.309243Z",
-      "success": true,
-      "discovered": 184,
-      "errors": [],
+      "last_run_at": "2026-08-22T03:12:39.795215Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://news.jtbc.co.kr/sitemaps/latest-articles: robots.txt unavailable for news.jtbc.co.kr: GET failed after retries: https://news.jtbc.co.kr/robots.txt: timed out"
+      ],
       "last_success_at": "2026-08-21T23:43:39.309243Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "mediaus": {
-      "last_run_at": "2026-08-21T23:43:09.879288Z",
+      "last_run_at": "2026-08-22T03:11:38.766591Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-21T23:43:09.879288Z"
+      "last_success_at": "2026-08-22T03:11:38.766591Z"
     }
   }
 }
