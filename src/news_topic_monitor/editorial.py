@@ -25,7 +25,6 @@ from .models import (
     EditorialVerdict,
     VerificationStatus,
 )
-from .sources import BROADCAST_SOURCES
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
 
@@ -106,21 +105,14 @@ def select_chat_editorial_candidates(
 ) -> list[EditorialCandidate]:
     """Return date-verified candidates suitable for a connected ChatGPT task.
 
-    Print and digital articles must have a successfully extracted body. Broadcast
-    candidates may use the broadcaster's official metadata when it contains enough
-    evidence because video pages do not expose an article body in the same form.
+    Print and digital articles must have a successfully extracted body.
     """
 
     eligible: list[EditorialCandidate] = []
     for candidate in candidates:
         if candidate.published_at is None or not candidate.selectable:
             continue
-        body_verified = candidate.verification_status == VerificationStatus.BODY_VERIFIED
-        broadcast_metadata = (
-            candidate.source in BROADCAST_SOURCES
-            and len((candidate.summary or candidate.evidence_text).strip()) >= 80
-        )
-        if body_verified or broadcast_metadata:
+        if candidate.verification_status == VerificationStatus.BODY_VERIFIED:
             eligible.append(candidate)
     return _balanced_candidates(eligible, limit)
 
@@ -724,9 +716,8 @@ rule_hint는 검색용 참고값일 뿐 최종 판단을 구속하지 않는다.
 노동 의제에서는 고용 불안, 임금, 산재, 노동조합, 돌봄노동, 빈곤과 사회보장,
 원청·사용자 책임을 중시한다. 단순 포토뉴스·연예·스포츠·홍보·행사 안내는 제외한다.
 
-section 값은 disability, labor, broadcast, opinion 가운데 하나다.
-broadcast는 source가 kbs, mbc, sbs, jtbc인 방송사의 장애 의제에만 사용하고 이 출처의 보도를
-disability나 labor에 배치하지 않는다. opinion은 명시적인 사설·칼럼 중 조선일보·중앙일보·
+section 값은 disability, labor, opinion 가운데 하나다.
+opinion은 명시적인 사설·칼럼 중 조선일보·중앙일보·
 동아일보·한겨레·경향신문·오마이뉴스·프레시안의 장애 관련 칼럼, 한겨레 세계의 창 지제크,
 미디어스 김민하, 경향신문 고병권의 묵묵에만 사용한다.
 기사의 정책적·운동적 중요도를 importance 정수로 표시하되 값의 범위보다 기사 간 상대순위를

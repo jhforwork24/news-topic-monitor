@@ -66,15 +66,6 @@ class JsonlStorage(ArticleStorage):
         probe = stable_article_key(source, canonical_url, None, "", None)
         return probe in self._ensure_index()
 
-    def stale_article_ids(self, source: str, *, before: datetime) -> list[str]:
-        return sorted(
-            {
-                record.article_id
-                for _path, record in self._ensure_index().values()
-                if record.source == source and record.article_id and record.last_seen_at < before
-            }
-        )
-
     def delete_by_source_article_ids(self, source: str, article_ids: list[str]) -> int:
         """Delete exact API cache records confirmed absent by a refresh response."""
 

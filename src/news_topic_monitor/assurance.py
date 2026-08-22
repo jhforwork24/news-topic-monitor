@@ -18,7 +18,6 @@ from .models import (
     VerificationStatus,
 )
 from .policy import BriefingPolicy, SourceRegistry
-from .sources import BROADCAST_SOURCES
 from .storage import JsonlStorage
 
 
@@ -367,12 +366,6 @@ def evaluate_publish_gate(
             missing_body.append(candidate_id)
             continue
         if candidate.verification_status == VerificationStatus.BODY_VERIFIED:
-            continue
-        if (
-            policy.publish_gate.broadcast_metadata_exception
-            and candidate.source in BROADCAST_SOURCES
-            and candidate.selectable
-        ):
             continue
         missing_body.append(candidate_id)
     if policy.publish_gate.require_core_article_body and missing_body:

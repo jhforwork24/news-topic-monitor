@@ -59,7 +59,6 @@ publish_gate:
     - pressian
   allow_explicit_reverse_search_degraded: true
   require_core_article_body: true
-  broadcast_metadata_exception: true
   require_final_state_complete: true
   validator_fatal_errors_max: 0
   unclassified_failures_max: 0

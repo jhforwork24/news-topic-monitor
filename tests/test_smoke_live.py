@@ -6,9 +6,8 @@ from datetime import UTC, datetime, timedelta
 import pytest
 
 from news_topic_monitor.adapters import ALL_ADAPTERS
-from news_topic_monitor.adapters.base import StructureChangedError, metadata_from_html
+from news_topic_monitor.adapters.base import metadata_from_html
 from news_topic_monitor.adapters.hani import HaniAdapter
-from news_topic_monitor.adapters.mbc import MbcAdapter
 from news_topic_monitor.http import RobotsDeniedError, RobotsUnavailableError, SafeHttpClient
 from news_topic_monitor.settings import ContactRequiredError, Settings
 
@@ -23,14 +22,7 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
         settings = Settings.from_env(tmp_path)
     except ContactRequiredError as exc:
         pytest.skip(str(exc))
-    if adapter_type is HaniAdapter:
-        adapter = HaniAdapter(max_pages=1)
-    elif adapter_type is MbcAdapter:
-        if not settings.youtube_api_key:
-            pytest.skip("YOUTUBE_API_KEY is required for the MBC live smoke test")
-        adapter = MbcAdapter(settings.youtube_api_key)
-    else:
-        adapter = adapter_type()
+    adapter = HaniAdapter(max_pages=1) if adapter_type is HaniAdapter else adapter_type()
     end = datetime.now(UTC)
     start = end - timedelta(hours=48)
     discovered = []
@@ -49,9 +41,6 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
             except (RobotsDeniedError, RobotsUnavailableError) as exc:
                 discovery_outcomes.append((url, type(exc).__name__))
         assert discovery_outcomes
-        if adapter.source == "mbc":
-            assert all(outcome == "allowed" for _url, outcome in discovery_outcomes)
-            return
         if adapter.source == "newscham":
             assert all(outcome == "RobotsUnavailableError" for _url, outcome in discovery_outcomes)
             assert not discovered
@@ -65,10 +54,6 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
         response = http.get(article.canonical_url, purpose="smoke article body")
         metadata = metadata_from_html(response.text, str(response.url))
         assert metadata.get("title") or article.title
-        if adapter.source == "jtbc":
-            with pytest.raises(StructureChangedError, match="selector is unavailable"):
-                adapter.extract_body(response.text, str(response.url))
-            return
         body = adapter.extract_body(response.text, str(response.url))
         assert body.strip()
         body = ""  # explicitly discard live copyrighted text

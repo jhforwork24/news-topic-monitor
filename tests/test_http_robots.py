@@ -116,15 +116,6 @@ def test_json_api_error_reason_is_exposed_without_response_body(tmp_path) -> Non
     assert "error" not in str(caught.value)
 
 
-def test_settings_repr_does_not_expose_youtube_api_key(tmp_path) -> None:
-    configured = Settings(
-        root=tmp_path,
-        contact="monitor@example.org",
-        youtube_api_key="test-secret-key",
-    )
-    assert "test-secret-key" not in repr(configured)
-
-
 @pytest.mark.parametrize(
     "contact",
     ["bad", "a@example.org\r\nX-Test: bad", "ftp://example.org", "https://example.org/a b"],

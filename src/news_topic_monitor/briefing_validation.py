@@ -9,7 +9,6 @@ from .briefing import (
     render_briefing_markdown,
 )
 from .models import ArticleRecord, Classification
-from .sources import BROADCAST_SOURCES
 from .utils import stable_article_key
 
 SECTION_II_ALLOWED_REFERENCE_CATEGORIES = frozenset({"현행 제도", "관련 연구 및 문서"})
@@ -42,7 +41,7 @@ def validate_briefing(document: BriefingDocument) -> None:
             if len(issue.articles) > 1 and not 1 <= tone_sentences <= 4:
                 errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
 
-            if section.title.startswith(("I.", "III.")):
+            if section.title.startswith("I."):
                 invalid = [
                     article.title
                     for article in issue.articles
@@ -66,14 +65,7 @@ def validate_briefing(document: BriefingDocument) -> None:
                 if any(labor_editorial_exclusion(article) for article in issue.articles):
                     errors.append(f"{section.title} / {issue.title}: 사진·연예·스포츠 보도 포함")
 
-            broadcast_articles = [
-                article for article in issue.articles if article.source in BROADCAST_SOURCES
-            ]
-            if section.title.startswith(("I.", "II.")) and broadcast_articles:
-                errors.append(f"{section.title} / {issue.title}: 방송 보도가 I·II절에 포함됨")
-            if section.title.startswith("III.") and len(broadcast_articles) != len(issue.articles):
-                errors.append(f"{section.title} / {issue.title}: 방송사가 아닌 보도가 포함됨")
-            if section.title.startswith("IV.") and any(
+            if section.title.startswith("III.") and any(
                 not editorial_opinion_allowed(article) for article in issue.articles
             ):
                 errors.append(f"{section.title} / {issue.title}: 허용 범위 밖의 칼럼이 포함됨")

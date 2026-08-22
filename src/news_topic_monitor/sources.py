@@ -14,10 +14,6 @@ SOURCE_LABELS = {
     "beminor": "비마이너",
     "ablenews": "에이블뉴스",
     "theindigo": "더인디고",
-    "kbs": "KBS",
-    "mbc": "MBCNEWS (YouTube)",
-    "sbs": "SBS",
-    "jtbc": "JTBC",
 }
 
 PRIMARY_COMPARISON_SOURCES = frozenset(
@@ -26,7 +22,6 @@ PRIMARY_COMPARISON_SOURCES = frozenset(
 LABOR_ALTERNATIVE_SOURCES = frozenset({"newscham", "labortoday"})
 DESIGNATED_COLUMN_SOURCES = frozenset({"mediaus"})
 DISABILITY_PRESS_SOURCES = frozenset({"beminor", "ablenews", "theindigo"})
-BROADCAST_SOURCES = frozenset({"kbs", "mbc", "sbs", "jtbc"})
 PRINT_DIGITAL_SOURCES = frozenset(
     PRIMARY_COMPARISON_SOURCES
     | LABOR_ALTERNATIVE_SOURCES

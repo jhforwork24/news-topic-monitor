@@ -47,10 +47,10 @@ flowchart LR
 - `storage.py`: 멱등 JSONL upsert, 수집 실행 단위 배치 flush, review 동기화,
   state·health 원자적 쓰기
 - `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
-- `briefing.py`: I~III 절 선정, 결과가 있을 때만 IV절 칼럼 선정, 이슈 연결 칼럼 역검색, CRPD 매핑
+- `briefing.py`: I~II 절 선정, 결과가 있을 때만 III절 칼럼 선정, 이슈 연결 칼럼 역검색, CRPD 매핑
 - `notion_publish.py`: private 구조화 대기열 export/import, exact title/date 멱등 최종 발행,
   관리 표식 충돌 방지, 발행 health
-- `sources.py`: 17개 출처명과 종합·노동대안·장애언론·방송 매체군 정의
+- `sources.py`: 13개 출처명과 종합·노동대안·장애언론 매체군 정의
 - `cli.py`: collect, backfill, report, briefing, publish-notion 명령
 
 ## robots.txt와 요청 흐름
@@ -83,12 +83,11 @@ origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 �
 XML 기반 매체는 공용 `XmlSyndicationAdapter` 계약을 재사용하되 출처별 모듈이 공식 URL,
 허용 host와 live 검증 선택자를 독립적으로 선언한다. 더인디고는 본문 필드를 요청하지 않는
 WordPress REST 어댑터를 사용한다. 참세상은 우회 경로를 두지 않는 fail-closed 어댑터이다.
-MBC는 iMBC의 robots.txt 전면 금지를 그대로 준수하고, 공식 MBCNEWS YouTube 채널에 한해
-YouTube Data API 키워드 검색과 업로드 목록을 교차확인하는 메타데이터 전용 어댑터를 사용한다.
-API 키는 URL이 아니라 동일 origin 요청 헤더로만 전달한다. 저장된 MBC API 메타데이터는
-28일 경과 전에 `videos.list`로 갱신하고, 성공 응답에서 사라진 정확한 영상 ID의 현재 캐시
-레코드는 제거한다.
-JTBC는 공식 news sitemap 메타데이터만 처리하며 확인하지 않은 클라이언트 API를 추정하지 않는다.
+
+KBS·MBC·SBS·JTBC 방송 4사는 한때 별도 방송 어댑터로 수집했으나, 뉴스9·8시 뉴스·뉴스룸·
+뉴스데스크 같은 특정 프로그램 단위로 장애 보도를 정확히 추릴 방법이 없어 프로젝트에서
+완전히 제거되었다. 방송사 뉴스 사이트는 프로그램 태그 없이 전체 기사를 발행하고, MBC의
+YouTube 업로드도 여러 프로그램이 섞여 있어 신뢰할 수 있는 자동 필터를 만들 수 없었다.
 
 ## 판별 모델
 
@@ -107,14 +106,13 @@ JTBC는 공식 news sitemap 메타데이터만 처리하며 확인하지 않은 
 
 ## 브리핑과 노션 발행
 
-브리핑은 저장 메타데이터의 실제 발행시각으로 09:00 KST 반개방 구간을 다시 계산한다. I절과
-III절은 `relevant` 자동확정 기사만 발행하고 `review` 기사는 사람 검토 목록에만 남긴다. I절은
+브리핑은 저장 메타데이터의 실제 발행시각으로 09:00 KST 반개방 구간을 다시 계산한다. I절은
+`relevant` 자동확정 기사만 발행하고 `review` 기사는 사람 검토 목록에만 남긴다. I절은
 상위 10개 검토군을 먼저 고정하고 단순 홍보·모집·의전성 보도를 제외하며 빈자리를 차순위로
 채우지 않는다. CRPD 20주년 행사는 연간 핵심의제로 보아 예외적으로 최하단에 둔다. II절은 별도
 `labor_care_poverty` 규칙의 `relevant` 기사만 사용하고 사진·화보·연예·스포츠 보도를 제외한다.
-III절은 방송 장애 판별을 사용한다. IV절은 3개 지정 칼럼과 7개 종합매체의 장애 관련 칼럼만
-선정하며, 결과가 없으면 절 자체를 생략한다. 생성 문서는 형식·문장·분류 검증을 통과해야만 노션
-발행 단계로 진행한다.
+III절은 3개 지정 칼럼과 7개 종합매체의 장애 관련 칼럼만 선정하며, 결과가 없으면 절 자체를
+생략한다. 생성 문서는 형식·문장·분류 검증을 통과해야만 노션 발행 단계로 진행한다.
 
 노션 발행은 같은 날짜에 이미 브리핑이 있으면 새 페이지를 만들지 않는 날짜 단위 멱등성을
 적용한다. `editorial-finalize.yml`만 production 예약 writer다. 연결된 ChatGPT 편집자와 감사자는
