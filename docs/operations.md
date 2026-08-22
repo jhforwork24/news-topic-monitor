@@ -51,6 +51,10 @@
 
 ## 연결형 ChatGPT 브리지 실패
 
+대기열·초안·감사는 `NOTION_QUEUE_DATA_SOURCE_ID`가 가리키는 `대기열 초안 감사 등` data
+source에 있다. `NOTION_REPORTS_DATA_SOURCE_ID`(브리핑 보고사항)는 별도이며 발행 성공·실패
+등 특이 보고사항 전용이므로 여기서 대기열·초안·감사를 찾지 않는다.
+
 1. 순서대로 오늘의 `health/editorial_queue/latest.json`, private Notion 대기열 매니페스트와 모든
    묶음, `ChatGPT 편집 초안 · YYYY-MM-DD`, `ChatGPT 독립 감사 · YYYY-MM-DD`를 확인한다.
 2. 대기열 health의 `queue_id`와 세 종류 페이지의 `queue_id`가 같아야 한다. 후보 묶음 번호가
@@ -138,7 +142,9 @@
 
 1. `NOTION_PUBLISH_ENABLED`, `NOTION_DATA_SOURCE_ID`, `NOTION_TOKEN`의 등록 위치를 확인한다.
    토큰 값은 로그에 출력하지 않는다.
-2. 내부 통합이 대상 브리핑 data source와 보고사항 data source에 연결되어 있는지 확인한다.
+2. 내부 통합이 대상 브리핑 data source, `대기열 초안 감사 등` data source
+   (`NOTION_QUEUE_DATA_SOURCE_ID`), 보고사항 data source(`NOTION_REPORTS_DATA_SOURCE_ID`)
+   모두에 연결되어 있는지 확인한다.
 3. `health/notion/latest.json`의 `configuration_error`, `failed`, `created` 상태와 `version`을 본다.
 4. 같은 날짜에 브리핑 제목을 포함한 페이지가 이미 있으면 상태가 `already_published`이고 새 페이지가
    없어야 정상이다. 이는 GitHub 재시도와 전환기 ChatGPT 작업이 동시에 같은 날짜를 발행하는 것을

@@ -4,6 +4,7 @@ import json
 from datetime import UTC, datetime
 
 import httpx
+import pytest
 
 from news_topic_monitor.briefing import (
     BriefingDocument,
@@ -19,6 +20,7 @@ from news_topic_monitor.models import (
     VerificationStatus,
 )
 from news_topic_monitor.notion_publish import (
+    NotionConfigurationError,
     NotionPublisher,
     NotionPublishSettings,
     notion_blocks,
@@ -36,6 +38,38 @@ def _document() -> BriefingDocument:
         source_failures=["참세상: robots.txt 확인 불능"],
         editorial_notes=["단순 홍보 기사 제외"],
     )
+
+
+def test_queue_env_targets_the_staging_database_not_reports(monkeypatch) -> None:
+    monkeypatch.setenv("NOTION_TOKEN", "test-token")
+    monkeypatch.setenv("NOTION_QUEUE_DATA_SOURCE_ID", "collection://queue-ds")
+    monkeypatch.setenv("NOTION_REPORTS_DATA_SOURCE_ID", "reports-ds")
+
+    settings = NotionPublishSettings.from_queue_env()
+
+    assert settings.data_source_id == "queue-ds"
+    assert settings.reports_data_source_id == "reports-ds"
+
+
+def test_queue_env_requires_the_queue_data_source_even_when_reports_is_set(
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("NOTION_TOKEN", "test-token")
+    monkeypatch.delenv("NOTION_QUEUE_DATA_SOURCE_ID", raising=False)
+    monkeypatch.setenv("NOTION_REPORTS_DATA_SOURCE_ID", "reports-ds")
+
+    with pytest.raises(NotionConfigurationError):
+        NotionPublishSettings.from_queue_env()
+
+
+def test_reports_env_does_not_require_the_queue_data_source(monkeypatch) -> None:
+    monkeypatch.setenv("NOTION_TOKEN", "test-token")
+    monkeypatch.delenv("NOTION_QUEUE_DATA_SOURCE_ID", raising=False)
+    monkeypatch.setenv("NOTION_REPORTS_DATA_SOURCE_ID", "reports-ds")
+
+    settings = NotionPublishSettings.from_reports_env()
+
+    assert settings.reports_data_source_id == "reports-ds"
 
 
 def test_notion_blocks_keep_technical_notes_out_of_briefing() -> None:

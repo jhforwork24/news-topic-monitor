@@ -30,6 +30,7 @@ def test_connected_chatgpt_bridge_has_one_scheduled_final_writer() -> None:
     queue_env = queue["jobs"]["editorial-queue"]["env"]
     assert "NAVER_API_HUB_CLIENT_ID" in queue_env
     assert "NAVER_API_HUB_CLIENT_SECRET" in queue_env
+    assert "NOTION_QUEUE_DATA_SOURCE_ID" in queue_env
     env = editorial["jobs"]["editorial-publish"]["env"]
     assert "NAVER_API_HUB_CLIENT_ID" in env
     assert "NAVER_API_HUB_CLIENT_SECRET" in env
@@ -40,6 +41,7 @@ def test_connected_chatgpt_bridge_has_one_scheduled_final_writer() -> None:
     assert "OPENAI_API_KEY" not in finalize_env
     assert "NAVER_API_HUB_CLIENT_ID" in finalize_env
     assert "NAVER_API_HUB_CLIENT_SECRET" in finalize_env
+    assert "NOTION_QUEUE_DATA_SOURCE_ID" in finalize_env
     assert "NOTION_REPORTS_DATA_SOURCE_ID" in finalize_env
 
 

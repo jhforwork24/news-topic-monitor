@@ -166,7 +166,8 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `HANI_MAX_PAGES` | 아니오 | `50` | 한겨레 최신기사 최대 순회 페이지 |
 | `YOUTUBE_API_KEY` | MBC 확인 시 | 없음 | YouTube Data API 키. GitHub Actions repository secret으로만 저장 |
 | `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
-| `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 편집·분류·출처 점검 및 발행 실패 보고사항 data source UUID |
+| `NOTION_QUEUE_DATA_SOURCE_ID` | ChatGPT 편집 브리지 사용 시 | 없음 | 대기열·초안·독립 감사가 쌓이는 `대기열 초안 감사 등` data source UUID(고빈도 기계 판독용, 보고사항과 분리) |
+| `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 성공·실패 등 특이 보고사항만 쌓는 `브리핑 보고사항` data source UUID |
 | `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
 | `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
 | `PUBLICATION_OWNER` | production | 없음 | `chatgpt_editorial_bridge`일 때만 무료 예약 finalizer 발행 |
@@ -187,8 +188,8 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE` | 아니오 | `24` | 보고 구간에서 출처별로 넓게 확인할 일반 기사 본문 상한. 규칙 후보는 상한 밖에서도 확인 |
 
 `NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
-저장한다. 토큰을 만든 내부 통합에 브리핑 테스트 데이터베이스와 보고사항 데이터베이스를
-명시적으로 연결해야 한다.
+저장한다. 토큰을 만든 내부 통합에 브리핑 데이터베이스, `대기열 초안 감사 등` 데이터베이스,
+보고사항 데이터베이스를 모두 명시적으로 연결해야 한다.
 
 Naver 검색층은 [Search API의 NAVER API HUB 이관 공지](https://developers.naver.com/notice/article/32530)에
 따라 새 API Hub endpoint와 전용 Client ID/Key를 사용한다. 공지 시점의 기본 무료 정책을 전제로

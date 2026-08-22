@@ -118,10 +118,13 @@ III절은 방송 장애 판별을 사용한다. IV절은 3개 지정 칼럼과 7
 
 노션 발행은 같은 날짜에 이미 브리핑이 있으면 새 페이지를 만들지 않는 날짜 단위 멱등성을
 적용한다. `editorial-finalize.yml`만 production 예약 writer다. 연결된 ChatGPT 편집자와 감사자는
-private 보고사항 data source에 구조화 초안·감사만 쓰며 최종 브리핑을 발행하지 않는다. 이전
-`editorial-publish.yml`은 유료 API 수동 fallback, `publish-notion.yml`은 결정론적 수동 fallback으로
-예약이 없다. 브리핑에서 배제한 편집·분류·출처 점검 사항과 gate의 degraded·차단 사유는 보고사항에
-기록한다. 토큰은 secret으로만 받고 로그·health에 기록하지 않는다.
+private `대기열 초안 감사 등` data source(`NOTION_QUEUE_DATA_SOURCE_ID`)에 구조화 초안·감사만
+쓰며 최종 브리핑을 발행하지 않는다. 대기열·초안·감사는 고빈도 기계 판독용 staging 데이터이므로
+`브리핑 보고사항` data source(`NOTION_REPORTS_DATA_SOURCE_ID`)와는 분리되어 있으며, 후자는 발행
+성공·실패 등 특이 보고사항 전용이다. 이전 `editorial-publish.yml`은 유료 API 수동 fallback,
+`publish-notion.yml`은 결정론적 수동 fallback으로 예약이 없다. 브리핑에서 배제한 편집·분류·출처
+점검 사항과 gate의 degraded·차단 사유는 보고사항에 기록한다. 토큰은 secret으로만 받고
+로그·health에 기록하지 않는다.
 
 대기열 후보의 정규화 JSON 전체를 SHA-256으로 계산한 `queue_id`를 매니페스트와 각 묶음에 넣는다.
 finalizer는 같은 날짜의 매니페스트·초안·감사 활성 페이지가 각각 정확히 1개인지, queue_id와

@@ -4,10 +4,13 @@
 production 지침이다. ChatGPT는 초안 데이터만 제출하며 최종 브리핑을 직접 만들거나 발행하지
 않는다. 최종 writer는 GitHub Actions의 `editorial-finalize.yml` 하나다.
 
+대기열·초안·독립 감사는 모두 `대기열 초안 감사 등` data source에 있다. `브리핑 보고사항`은
+발행 성공·실패 등 특이 보고사항 전용이므로 이 작업에서 읽거나 쓰지 않는다.
+
 ## 입력 확인과 실패 폐쇄
 
-1. 실행일과 같은 날짜의 `ChatGPT 편집 대기열 · YYYY-MM-DD · 매니페스트`를 보고사항 data
-   source에서 찾는다. 정확히 1개여야 한다.
+1. 실행일과 같은 날짜의 `ChatGPT 편집 대기열 · YYYY-MM-DD · 매니페스트`를 `대기열 초안 감사
+   등` data source에서 찾는다. 정확히 1개여야 한다.
 2. 매니페스트의 기계 판독용 JSON에서 `schema_version=1`, 오늘 `report_date`, 64자리 `queue_id`,
    `candidate_count`, `part_count`를 읽는다. 상태가 READY가 아니거나 일부 필드가 없으면 중단한다.
 3. 같은 날짜·queue_id의 후보 묶음 `01-NN`을 모두 읽는다. 묶음 수, 연속 번호, 전체 후보 수가
@@ -41,8 +44,8 @@ production 지침이다. ChatGPT는 초안 데이터만 제출하며 최종 브�
 
 ## 제출 계약
 
-정확한 제목 `ChatGPT 편집 초안 · YYYY-MM-DD`의 활성 페이지가 없으면 보고사항 data source에
-새로 만들고, 있으면 그 페이지를 갱신한다. 같은 제목의 활성 페이지를 둘 이상 만들지 않는다.
+정확한 제목 `ChatGPT 편집 초안 · YYYY-MM-DD`의 활성 페이지가 없으면 `대기열 초안 감사 등`
+data source에 새로 만들고, 있으면 그 페이지를 갱신한다. 같은 제목의 활성 페이지를 둘 이상 만들지 않는다.
 설명문과 별개로 아래 구조의 **JSON code block을 정확히 하나** 둔다. JSON 밖의 설명은 finalizer가
 읽지 않는다. `submitted_at`은 실제 제출시각의 timezone-aware ISO 8601, `draft_id`는
 `draft-YYYYMMDD-HHMMSS` 형식으로 쓴다.
