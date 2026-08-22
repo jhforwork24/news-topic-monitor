@@ -232,6 +232,17 @@ def test_bounded_candidate_revalidates_a_whitespace_truncation_boundary() -> Non
     assert editorial_queue_id([bounded]) == editorial_queue_id([round_tripped])
 
 
+def _write_initial_health_snapshot(tmp_path, manifest, health) -> None:
+    JsonlStorage.atomic_write_json(
+        tmp_path / "health" / "editorial_queue" / "initial_health" / f"{manifest.report_date}.json",
+        {
+            "report_date": manifest.report_date,
+            "queue_id": manifest.queue_id,
+            "health": health.model_dump(mode="json"),
+        },
+    )
+
+
 def test_initial_census_health_is_bound_to_the_queue_manifest(tmp_path) -> None:
     manifest = _bundle().queue.manifest
     health = RunHealth(
@@ -242,9 +253,7 @@ def test_initial_census_health_is_bound_to_the_queue_manifest(tmp_path) -> None:
         all_sources_failed=False,
         sources={},
     )
-    JsonlStorage.atomic_write_json(
-        tmp_path / "health" / "latest.json", health.model_dump(mode="json")
-    )
+    _write_initial_health_snapshot(tmp_path, manifest, health)
 
     loaded = _load_bound_initial_health(tmp_path, manifest)
     assert loaded.run_finished_at == manifest.initial_health_finished_at
@@ -252,8 +261,66 @@ def test_initial_census_health_is_bound_to_the_queue_manifest(tmp_path) -> None:
     stale = health.model_copy(
         update={"run_finished_at": manifest.initial_health_finished_at + timedelta(seconds=1)}
     )
-    JsonlStorage.atomic_write_json(
-        tmp_path / "health" / "latest.json", stale.model_dump(mode="json")
-    )
+    _write_initial_health_snapshot(tmp_path, manifest, stale)
     with pytest.raises(EditorialQueueValidationError, match="일치하지 않음"):
+        _load_bound_initial_health(tmp_path, manifest)
+
+
+def test_initial_census_health_snapshot_survives_a_later_collect_run(tmp_path) -> None:
+    """Regression test for the observed production failure.
+
+    ``collect.yml`` reruns on its own three-hour schedule (and can drift by
+    tens of minutes, or be re-dispatched manually) independently of the
+    09:05 KST queue export. Every one of those runs overwrites the shared
+    ``health/latest.json`` with a legitimate but different snapshot. That must
+    not invalidate a queue that was already bound to an earlier snapshot.
+    """
+
+    manifest = _bundle().queue.manifest
+    health = RunHealth(
+        run_started_at=manifest.initial_health_finished_at - timedelta(minutes=5),
+        run_finished_at=manifest.initial_health_finished_at,
+        window_start=manifest.report_start - timedelta(days=1),
+        window_end=manifest.report_end,
+        all_sources_failed=False,
+        sources={},
+    )
+    _write_initial_health_snapshot(tmp_path, manifest, health)
+
+    # A routine collect.yml run fires later and overwrites the shared "latest"
+    # pointer with an unrelated, newer health snapshot.
+    later_unrelated_health = health.model_copy(
+        update={
+            "run_started_at": manifest.initial_health_finished_at + timedelta(hours=3),
+            "run_finished_at": manifest.initial_health_finished_at + timedelta(hours=3, minutes=1),
+        }
+    )
+    JsonlStorage.atomic_write_json(
+        tmp_path / "health" / "latest.json", later_unrelated_health.model_dump(mode="json")
+    )
+
+    loaded = _load_bound_initial_health(tmp_path, manifest)
+    assert loaded.run_finished_at == manifest.initial_health_finished_at
+
+
+def test_initial_census_health_snapshot_rejects_a_different_queue_id(tmp_path) -> None:
+    manifest = _bundle().queue.manifest
+    health = RunHealth(
+        run_started_at=manifest.initial_health_finished_at - timedelta(minutes=5),
+        run_finished_at=manifest.initial_health_finished_at,
+        window_start=manifest.report_start - timedelta(days=1),
+        window_end=manifest.report_end,
+        all_sources_failed=False,
+        sources={},
+    )
+    stale_manifest = manifest.model_copy(update={"queue_id": "f" * 64})
+    _write_initial_health_snapshot(tmp_path, stale_manifest, health)
+
+    with pytest.raises(EditorialQueueValidationError, match="다른 queue_id"):
+        _load_bound_initial_health(tmp_path, manifest)
+
+
+def test_initial_census_health_snapshot_missing_fails_closed(tmp_path) -> None:
+    manifest = _bundle().queue.manifest
+    with pytest.raises(EditorialQueueValidationError, match="스냅샷이 없음"):
         _load_bound_initial_health(tmp_path, manifest)

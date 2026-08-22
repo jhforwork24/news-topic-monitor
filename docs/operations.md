@@ -67,6 +67,12 @@
 6. 연결형 ChatGPT가 실패해도 `editorial-publish.yml` 유료 API 경로가 자동 시작되지는 않는다.
    원인·대체경로·결과·다음 조치를 남기고, 사용자가 비용을 명시적으로 승인한 경우에만 수동
    fallback을 검토한다.
+7. finalizer가 "초기 전수 수집 health 스냅샷이 없음" 또는 "…일치하지 않음"으로 실패하면
+   `health/editorial_queue/initial_health/YYYY-MM-DD.json`이 있는지, 그 안의 queue_id가 오늘
+   매니페스트와 같은지 확인한다. 이 스냅샷은 대기열 생성 시 한 번만 기록되며 이후 정기
+   collect·backfill 실행이 `health/latest.json`을 덮어써도 영향받지 않는다. 스냅샷 자체가
+   없으면 대기열을 다시 생성해야 하며, `health/latest.json`만 다시 채워 넣는 방식으로 우회하지
+   않는다.
 
 ## Publish gate 차단
 
