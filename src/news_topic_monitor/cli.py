@@ -608,6 +608,9 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
             database_path = Path(temporary_directory) / "candidates.sqlite3"
             with EditorialEvidenceStore(database_path) as evidence_store:
                 classifier = RuleClassifier(settings.root / "config" / "topics.yml")
+                labor_classifier = RuleClassifier(
+                    settings.root / "config" / "topics.yml", topic="labor_care_poverty"
+                )
                 with SafeHttpClient(settings) as http:
                     health = Collector(
                         http=http,
@@ -714,6 +717,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         initial_health_finished_at=health.run_finished_at,
                         gap_detection=gap_detection,
                         queue_settings=queue_settings,
+                        labor_classifier=labor_classifier,
                         source_failures=_run_source_failures(health),
                     )
 

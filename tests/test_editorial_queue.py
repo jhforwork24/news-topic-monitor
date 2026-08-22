@@ -3,12 +3,14 @@ from __future__ import annotations
 import json
 import unicodedata
 from datetime import UTC, datetime
+from pathlib import Path
 
 import httpx
 import pytest
 
 from news_topic_monitor.assurance import CheckStatus, GapDetectionResult
 from news_topic_monitor.chat_bridge import editorial_queue_payload_id
+from news_topic_monitor.classifier import RuleClassifier
 from news_topic_monitor.editorial import select_chat_editorial_candidates
 from news_topic_monitor.models import (
     BodyStatus,
@@ -23,6 +25,10 @@ from news_topic_monitor.notion_publish import (
     NotionPublishSettings,
     write_editorial_queue_health,
 )
+
+
+def _labor_classifier(topics_path: Path) -> RuleClassifier:
+    return RuleClassifier(topics_path, topic="labor_care_poverty")
 
 
 def _candidate(
@@ -79,7 +85,9 @@ def test_chat_queue_requires_exact_date_and_verified_evidence() -> None:
     assert {item.candidate_id for item in selected} == {"verified", "broadcast"}
 
 
-def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> None:
+def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst(
+    topics_path: Path,
+) -> None:
     requests: list[tuple[str, str, dict]] = []
     create_count = 0
 
@@ -137,6 +145,7 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
             chunk_size=2,
             evidence_chars=1000,
         ),
+        labor_classifier=_labor_classifier(topics_path),
         source_failures=["sbs: robots.txt 확인 실패"],
     )
 
@@ -185,7 +194,93 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst() -> No
     assert result.queue_id in rendered
 
 
-def test_queue_partitions_ascii_machine_json_below_notion_rich_text_limit() -> None:
+def test_queue_flags_labor_relevance_for_candidates_disability_classifier_missed(
+    topics_path: Path,
+) -> None:
+    """Regression test for a real editorial miss: a genuine strike story was scored
+    disability-irrelevant at collection time (only disability_rights is checked
+    there) and looked identical to unrelated news in the queue, so the editor
+    never opened it. The queue must now surface a labor_care_poverty signal for
+    such candidates instead of the same generic "II절 검토 가능" as everything else.
+    """
+
+    requests: list[tuple[str, str, dict]] = []
+    create_count = 0
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal create_count
+        body = json.loads(request.content) if request.content else {}
+        requests.append((request.method, request.url.path, body))
+        if request.url.path.endswith("/query"):
+            return httpx.Response(200, json={"results": [], "has_more": False})
+        if request.method == "POST" and request.url.path == "/v1/pages":
+            create_count += 1
+            return httpx.Response(
+                200,
+                json={
+                    "id": f"page-{create_count}",
+                    "url": f"https://notion.so/page-{create_count}",
+                },
+            )
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    strike_evidence = (
+        "현대자동차 노동조합이 임금 인상과 정년 연장을 요구하며 10년 만에 전면파업에 "
+        "돌입했다. 부품·하청업체 노동자들도 원청과의 공동교섭을 요구하며 함께 행동에 나섰다."
+    )
+    labor_candidate = _candidate(
+        "labor-strike",
+        title="현대차 노조, 10년 만에 전면파업 돌입",
+        section="경제",
+    ).model_copy(update={"summary": strike_evidence, "evidence_text": strike_evidence})
+    weather_evidence = (
+        "이번 주말은 전국이 대체로 맑고 낮 기온이 크게 오르며 나들이하기 좋은 날씨가 "
+        "이어지겠다. 다음 주 초부터는 남부 지방을 중심으로 비가 내릴 가능성이 있다."
+    )
+    unrelated_candidate = _candidate(
+        "unrelated",
+        title="오늘의 날씨와 주말 나들이 정보",
+        section="생활",
+    ).model_copy(
+        update={
+            "summary": weather_evidence,
+            "evidence_text": weather_evidence,
+            "rule_classification": Classification.IRRELEVANT,
+        }
+    )
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="reports-ds"),
+        client=client,
+    )
+    publisher.publish_editorial_queue(
+        [labor_candidate, unrelated_candidate],
+        report_date="2026-08-17",
+        start=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 17, 0, tzinfo=UTC),
+        initial_health_finished_at=datetime(2026, 8, 17, 0, tzinfo=UTC),
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        queue_settings=EditorialQueueSettings(
+            max_candidates=20, chunk_size=20, evidence_chars=1000
+        ),
+        labor_classifier=_labor_classifier(topics_path),
+    )
+
+    creates = [body for method, path, body in requests if method == "POST" and path == "/v1/pages"]
+    rendered = json.dumps(creates, ensure_ascii=False)
+    assert "II절 노동·돌봄·빈곤 관련 가능성" in rendered
+    assert "II절 검토 가능" in rendered
+
+
+def test_queue_partitions_ascii_machine_json_below_notion_rich_text_limit(
+    topics_path: Path,
+) -> None:
     requests: list[tuple[str, str, dict]] = []
     create_count = 0
 
@@ -240,6 +335,7 @@ def test_queue_partitions_ascii_machine_json_below_notion_rich_text_limit() -> N
             chunk_size=24,
             evidence_chars=1800,
         ),
+        labor_classifier=_labor_classifier(topics_path),
     )
 
     documents: list[dict] = []
@@ -259,7 +355,9 @@ def test_queue_partitions_ascii_machine_json_below_notion_rich_text_limit() -> N
     assert sum(len(document["candidates"]) for document in part_documents) == 24
 
 
-def test_queue_creation_failure_trashes_only_partial_replacement_pages() -> None:
+def test_queue_creation_failure_trashes_only_partial_replacement_pages(
+    topics_path: Path,
+) -> None:
     requests: list[tuple[str, str, dict]] = []
     create_count = 0
 
@@ -313,6 +411,7 @@ def test_queue_creation_failure_trashes_only_partial_replacement_pages() -> None
                 chunk_size=24,
                 evidence_chars=1800,
             ),
+            labor_classifier=_labor_classifier(topics_path),
         )
 
     assert any(

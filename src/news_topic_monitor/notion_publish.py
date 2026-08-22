@@ -36,8 +36,9 @@ from .chat_bridge import (
     editorial_queue_id,
     editorial_queue_payload_id,
 )
+from .classifier import RuleClassifier
 from .editorial import select_chat_editorial_candidates
-from .models import EditorialCandidate
+from .models import Classification, EditorialCandidate
 from .sources import SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import KST, normalize_text, short_error, short_text
@@ -340,6 +341,7 @@ class NotionPublisher:
         initial_health_finished_at: datetime,
         gap_detection: GapDetectionResult,
         queue_settings: EditorialQueueSettings,
+        labor_classifier: RuleClassifier,
         source_failures: list[str] | None = None,
     ) -> EditorialQueueResult:
         selected = select_chat_editorial_candidates(candidates, queue_settings.max_candidates)
@@ -380,6 +382,7 @@ class NotionPublisher:
                             part,
                             queue_id=queue_id,
                             part_index=index,
+                            labor_classifier=labor_classifier,
                             part_count=len(parts),
                         ),
                     },
@@ -848,6 +851,7 @@ def _queue_part_blocks(
     queue_id: str,
     part_index: int,
     part_count: int,
+    labor_classifier: RuleClassifier,
 ) -> list[dict[str, Any]]:
     blocks = [
         _paragraph(
@@ -859,8 +863,7 @@ def _queue_part_blocks(
         published = candidate.published_at.astimezone(KST).strftime("%Y-%m-%d %H:%M")
         source = SOURCE_LABELS.get(candidate.source, candidate.source)
         byline = candidate.byline or "기자명 확인 안 됨"
-        labor_exclusion = _labor_queue_exclusion(candidate)
-        labor_guard = labor_exclusion or "II절 검토 가능"
+        labor_guard = _labor_queue_hint(candidate, labor_classifier)
         blocks.extend(
             [
                 _heading(candidate.title, 3),
@@ -933,6 +936,28 @@ def _queue_manifest_blocks(
     else:
         blocks.append(_bullet("수집 실패로 기록된 출처 없음"))
     return blocks
+
+
+def _labor_queue_hint(candidate: EditorialCandidate, labor_classifier: RuleClassifier) -> str:
+    """Surface a per-candidate II절 signal so the editor doesn't have to read every
+    title in a large queue to notice labor/care/poverty stories. The queue's own
+    collection pass only ever scores candidates against disability_rights, so a
+    genuine labor story (e.g. a strike) is stored as disability-irrelevant and looks
+    identical to unrelated general news unless it is scored here, at render time,
+    against labor_care_poverty using the same title/summary/section already on hand.
+    """
+
+    exclusion = _labor_queue_exclusion(candidate)
+    if exclusion:
+        return exclusion
+    result = labor_classifier.classify(
+        title=candidate.title,
+        summary=candidate.summary or candidate.evidence_text,
+        section=candidate.section,
+    )
+    if result.classification in (Classification.RELEVANT, Classification.REVIEW):
+        return f"II절 노동·돌봄·빈곤 관련 가능성(점수 {result.topic_score:.1f})"
+    return "II절 검토 가능"
 
 
 def _labor_queue_exclusion(candidate: EditorialCandidate) -> str | None:
