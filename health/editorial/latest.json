@@ -1,11 +1,12 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-08-22",
+  "report_date": "2026-08-21",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 3.388,
-    "total": 4.006
+    "api_preflight": 1.95,
+    "bridge_import_validation": 7.748,
+    "total": 9.711
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: ChatGPT 편집 초안 · 2026-08-22 (found=0)",
-  "completed_at": "2026-08-22T01:32:13.467516Z"
+  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
+  "completed_at": "2026-08-22T03:02:38.863217Z"
 }

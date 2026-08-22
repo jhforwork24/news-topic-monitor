@@ -1,5 +1,5 @@
 {
-  "report_date": "2026-08-22",
+  "report_date": "2026-08-21",
   "naver_api_hub": {
     "status": "complete",
     "error": null
@@ -9,5 +9,5 @@
     "error": null,
     "route": "connected_chatgpt_automation"
   },
-  "checked_at": "2026-08-22T01:32:12.864196Z"
+  "checked_at": "2026-08-22T03:02:31.114052Z"
 }
