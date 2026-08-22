@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-22",
-  "generated_at": "2026-08-22T03:24:05.835097Z",
+  "generated_at": "2026-08-22T03:29:51.814746Z",
   "articles": [
     {
       "candidate_id": "568e994ea343345cea022993cf6b4e37e036bf944f12b0507d23f91fbb3877f6",
@@ -65308,7 +65308,7 @@
       "published_at": "2026-08-22T00:37:21Z",
       "modified_at": null,
       "discovered_at": "2026-08-22T03:23:11.647766Z",
-      "last_checked_at": "2026-08-22T03:23:11.647766Z",
+      "last_checked_at": "2026-08-22T03:28:56.071492Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -65327,7 +65327,7 @@
       "published_at": "2026-08-22T00:37:21Z",
       "modified_at": null,
       "discovered_at": "2026-08-22T03:23:08.109264Z",
-      "last_checked_at": "2026-08-22T03:23:08.109264Z",
+      "last_checked_at": "2026-08-22T03:28:52.279573Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -65515,21 +65515,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "길종성 고양시의원, 반도체 인재양성과 PM 안전관리 선제 대응 촉구",
-        "original_url": "https://www.job-post.co.kr/news/articleView.html?idxno=224720",
-        "naver_url": "https://www.job-post.co.kr/news/articleView.html?idxno=224720",
-        "published_at": "2026-08-21T14:10:00Z",
-        "description": "정부가 반도체·AI 분야 전문인력 20만 명 양성 방안을 추진하고 있지만 대학생과 취업준비생 중심의 정책 만... 보행자와 장애인 , 어린이 등 보행약자의 안전을 위협하고 있다고 우려했다. 현재 고양시에서 운행되는...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[통하는 충남] 박수현 지사 “공공의료서비스 개선 도민 체감할 수 있도...",
         "original_url": "https://www.kukinews.com/article/view/kuk202608210148",
         "naver_url": "https://www.kukinews.com/article/view/kuk202608210148",
         "published_at": "2026-08-21T14:10:00Z",
         "description": "간담회에서는 충남사회복지협의회를 비롯해 노인복지시설, 사회복지사, 사회복지관, 장애인 복지관, 지역아동센터, 자활센터, 시니어클럽, 정신재활시설 등에서 현장 의견과 정책 건의사항을 전달했다. 주요 건의사항은...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "길종성 고양시의원, 반도체 인재양성과 PM 안전관리 선제 대응 촉구",
+        "original_url": "https://www.job-post.co.kr/news/articleView.html?idxno=224720",
+        "naver_url": "https://www.job-post.co.kr/news/articleView.html?idxno=224720",
+        "published_at": "2026-08-21T14:10:00Z",
+        "description": "정부가 반도체·AI 분야 전문인력 20만 명 양성 방안을 추진하고 있지만 대학생과 취업준비생 중심의 정책 만... 보행자와 장애인 , 어린이 등 보행약자의 안전을 위협하고 있다고 우려했다. 현재 고양시에서 운행되는...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -65745,21 +65745,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "고양시의회 길종성 의원, 반도체 특성화고 유치·PM 안전대책 마련 촉구",
-        "original_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2461865",
-        "naver_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2461865",
-        "published_at": "2026-08-21T08:50:00Z",
-        "description": "시각 장애인 과 어린이 등 보행약자는 물론 시민 전체의 안전을 위협할 수 있다고 우려했다. 현재 고양시에서 운행되는 전동킥보드는 약 5000대, 공유자전거는 약 3700대로 파악된다. 길 의원은 기존 정책 이 방치된 기기를...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "거창군, 2027년 군정 방향 논의…'현장 간담회'로 정책 수렴 시작",
         "original_url": "https://www.newspim.com/news/view/20260821000884",
         "naver_url": "https://www.newspim.com/news/view/20260821000884",
         "published_at": "2026-08-21T08:50:00Z",
         "description": "인구 정책 을 논의한다. 농업·농촌 분야에서는 식량·원예·수출·유통 관련 단체의 의견을 추가로 청취한다. 문화·관광·체육 분야에서는 거창군체육회와 거창군 장애인 체육회, 종목별 협회, 예술단체 등을 만나 관련 분야...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "고양시의회 길종성 의원, 반도체 특성화고 유치·PM 안전대책 마련 촉구",
+        "original_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2461865",
+        "naver_url": "http://www.enewstoday.co.kr/news/articleView.html?idxno=2461865",
+        "published_at": "2026-08-21T08:50:00Z",
+        "description": "시각 장애인 과 어린이 등 보행약자는 물론 시민 전체의 안전을 위협할 수 있다고 우려했다. 현재 고양시에서 운행되는 전동킥보드는 약 5000대, 공유자전거는 약 3700대로 파악된다. 길 의원은 기존 정책 이 방치된 기기를...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -65795,16 +65795,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "장애인 평생교육법 통과됐지만…\"예산 없으면 차별은 그대로\"",
-        "original_url": "https://www.beminor.com/news/articleView.html?idxno=30316",
-        "naver_url": "https://www.beminor.com/news/articleView.html?idxno=30316",
-        "published_at": "2026-08-21T08:38:00Z",
-        "description": "교육부 조직도에 따르면 교육부 내 장애인 평생교육 업무는 평생학습 정책 과가 담당하는데, 이 중 장애인 평생교육을 담당하는 사람은 사무관 1명뿐이다. 이에 전장야협은 교육부 내 장애인 평생교육과를 신설하고...",
-        "matched_source": "beminor",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "학교에서 덜어낸 20조 원, 반도체와 원전 옆에 놓였다",
         "original_url": "https://newscham.net/articles/117097",
         "naver_url": "https://newscham.net/articles/117097",
@@ -65812,6 +65802,16 @@
         "description": "전장연이 시청역 농성을 정리한 다음 날이었고, 중증 장애인 공공일자리를 담은 서울시의회 조례 개정안 표결은 25일이다. 탈시설이라는 정책 용어의 실물은 한 사람의 스무 번째 생일이다. 04 온라인 광장 오늘의 현장...",
         "matched_source": "newscham",
         "in_deterministic_collection": false
+      },
+      {
+        "query": "장애인 정책",
+        "title": "장애인 평생교육법 통과됐지만…\"예산 없으면 차별은 그대로\"",
+        "original_url": "https://www.beminor.com/news/articleView.html?idxno=30316",
+        "naver_url": "https://www.beminor.com/news/articleView.html?idxno=30316",
+        "published_at": "2026-08-21T08:38:00Z",
+        "description": "교육부 조직도에 따르면 교육부 내 장애인 평생교육 업무는 평생학습 정책 과가 담당하는데, 이 중 장애인 평생교육을 담당하는 사람은 사무관 1명뿐이다. 이에 전장야협은 교육부 내 장애인 평생교육과를 신설하고...",
+        "matched_source": "beminor",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -65845,16 +65845,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "장애 등록을 기다리는 동안, 한 사람의 삶은 무너진다",
-        "original_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232732",
-        "naver_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232732",
-        "published_at": "2026-08-21T08:28:00Z",
-        "description": "보조기기 하나를 아끼려다 한 사람의 직업과 소득, 가족의 삶, 지역사회 참여 가능성 전체를 잃는다면 그것은 결코 합리적인 정책 이 아니다. 장애인 등록증이 사람을 움직이게 하는 것이 아니다. 휠체어가 사람을 다시...",
-        "matched_source": "ablenews",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "오산시, 5300번 친환경 2층 전기 저상버스 4대 도입",
         "original_url": "http://www.suwonilbo.kr/news/articleView.html?idxno=317583",
         "naver_url": "http://www.suwonilbo.kr/news/articleView.html?idxno=317583",
@@ -65862,6 +65852,16 @@
         "description": "따라 장애인 , 노인 등 교통약자의 이동 편의가 개선될 것으로도 기대하고 있다. 조용호 시장은 \"이번 친환경... 친환경 대중교통 정책 을 적극 추진해 더욱 안전하고 편리한 광역교통 환경을 만들어 나가겠다\"고 말했다.",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "장애 등록을 기다리는 동안, 한 사람의 삶은 무너진다",
+        "original_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232732",
+        "naver_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232732",
+        "published_at": "2026-08-21T08:28:00Z",
+        "description": "보조기기 하나를 아끼려다 한 사람의 직업과 소득, 가족의 삶, 지역사회 참여 가능성 전체를 잃는다면 그것은 결코 합리적인 정책 이 아니다. 장애인 등록증이 사람을 움직이게 하는 것이 아니다. 휠체어가 사람을 다시...",
+        "matched_source": "ablenews",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -65884,22 +65884,22 @@
         "in_deterministic_collection": null
       },
       {
-        "query": "장애인 노동권 권리중심공공일자리",
-        "title": "2026년 하반기 노동정책 개편 본격화… 안전·고용·노동시장 변화 대응",
-        "original_url": "https://www.ilyoseoul.co.kr/news/articleView.html?idxno=521516",
-        "naver_url": "https://www.ilyoseoul.co.kr/news/articleView.html?idxno=521516",
-        "published_at": "2026-08-21T08:20:00Z",
-        "description": "청년고용과 관련해서는 청년이 원하는 일자리 중심 으로 정책방향을 전환한다. K-뉴딜 아카데미와 K-유스개런티 등 청년의 역량기회를 보장하고 청년의 공공일자리 를 확대한다. 또한 국가책임의 취업지원을 위해 온라인...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
         "query": "장애인 정책",
         "title": "오세훈 시장 항소심 첫 공판 개최 규탄… 노동·시민사회단체 \"즉각 사...",
         "original_url": "http://worknworld.kctu.org/news/articleView.html?idxno=509852",
         "naver_url": "http://worknworld.kctu.org/news/articleView.html?idxno=509852",
         "published_at": "2026-08-21T08:20:00Z",
         "description": "여는 발언으로 김혜정 민주노총 서울본부 수석부본부장은 사회서비스원 해산과 장애인 공공 일자리 폐지... 정당 발언에 나선 전장호 노동당 서울시당 위원장은 \"오 시장의 재건축·재개발 정책 으로 시민들이 고통받고 있다...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 노동권 권리중심공공일자리",
+        "title": "2026년 하반기 노동정책 개편 본격화… 안전·고용·노동시장 변화 대응",
+        "original_url": "https://www.ilyoseoul.co.kr/news/articleView.html?idxno=521516",
+        "naver_url": "https://www.ilyoseoul.co.kr/news/articleView.html?idxno=521516",
+        "published_at": "2026-08-21T08:20:00Z",
+        "description": "청년고용과 관련해서는 청년이 원하는 일자리 중심 으로 정책방향을 전환한다. K-뉴딜 아카데미와 K-유스개런티 등 청년의 역량기회를 보장하고 청년의 공공일자리 를 확대한다. 또한 국가책임의 취업지원을 위해 온라인...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -65975,21 +65975,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "복지부 시범사업 54개 중 한의계 참여 4개…한의계 \"양방 위주\" 비판",
-        "original_url": "https://www.newspim.com/news/view/20260821000853",
-        "naver_url": "https://www.newspim.com/news/view/20260821000853",
-        "published_at": "2026-08-21T08:02:00Z",
-        "description": "재택의료, 장애인 건강주치의, 치매관리주치의, 재활의료기관 수가 시범사업 등에 이르기까지 광범위한... 한의협은 \"54개 중 4개라는 결과는 복지부의 보건의료 정책 이 얼마나 양방 위주로 추진되고 있는지를 단적으로...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "한의계, '복지부 시범사업 편향적이다' 비판",
         "original_url": "https://www.bosa.co.kr/news/articleView.html?idxno=3010620",
         "naver_url": "https://www.bosa.co.kr/news/articleView.html?idxno=3010620",
         "published_at": "2026-08-21T08:02:00Z",
         "description": "만성질환관리, 장애인 건강주치의, 치매관리주치의, 재활의료기관 수가 시범사업 등이 대표적이다. 한의협은 \"54개 중 4개라는 결과는 보건복지부의 보건의료 정책 이 얼마나 양방 위주로 추진되고 있는지를 단적으로...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "복지부 시범사업 54개 중 한의계 참여 4개…한의계 \"양방 위주\" 비판",
+        "original_url": "https://www.newspim.com/news/view/20260821000853",
+        "naver_url": "https://www.newspim.com/news/view/20260821000853",
+        "published_at": "2026-08-21T08:02:00Z",
+        "description": "재택의료, 장애인 건강주치의, 치매관리주치의, 재활의료기관 수가 시범사업 등에 이르기까지 광범위한... 한의협은 \"54개 중 4개라는 결과는 복지부의 보건의료 정책 이 얼마나 양방 위주로 추진되고 있는지를 단적으로...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -66265,16 +66265,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[ 장애인 뉴스] 동대문구 발달 장애인 7명, 전국 장애인 도예 공모전 '은상...",
-        "original_url": "https://www.ibabynews.com/news/articleView.html?idxno=153888",
-        "naver_url": "https://www.ibabynews.com/news/articleView.html?idxno=153888",
-        "published_at": "2026-08-21T06:18:00Z",
-        "description": "장애인 복지 정책 과 교육·고용 지원, 권익 보호 활동, 사회 인식 개선 캠페인 등 다양한 소식 가운데 장애인 의 권리 보장과 삶의 질 향상에 도움이 되는 정보를 선별해 소개한다. -편집자 말 ◇ 동대문구 발달 장애인 7명...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "경기도서관·경기연구원, AI 포럼 'AI 너머 우리는' 담론의 장 마련",
         "original_url": "https://www.m-i.kr/news/articleView.html?idxno=1404618",
         "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=1404618",
@@ -66285,11 +66275,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[위클리오늘] 오산시, 5300번 친환경 2층 전기 저상버스 4대 도입",
-        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=791219",
-        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=791219",
-        "published_at": "2026-08-21T06:14:00Z",
-        "description": "시는 시민의 일상과 맞닿은 다양한 정책 과 사업을 추진하고 있다. 오늘 발표된 주요 소식을 한데 모았다.... 따라 장애인 , 노인 등 교통약자의 이동 편의가 개선될 것으로도 기대하고 있다. 조 시장은 \"이번 친환경 2층버스...",
+        "title": "[ 장애인 뉴스] 동대문구 발달 장애인 7명, 전국 장애인 도예 공모전 '은상...",
+        "original_url": "https://www.ibabynews.com/news/articleView.html?idxno=153888",
+        "naver_url": "https://www.ibabynews.com/news/articleView.html?idxno=153888",
+        "published_at": "2026-08-21T06:18:00Z",
+        "description": "장애인 복지 정책 과 교육·고용 지원, 권익 보호 활동, 사회 인식 개선 캠페인 등 다양한 소식 가운데 장애인 의 권리 보장과 삶의 질 향상에 도움이 되는 정보를 선별해 소개한다. -편집자 말 ◇ 동대문구 발달 장애인 7명...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -66300,6 +66290,16 @@
         "naver_url": "https://biz.newdaily.co.kr/site/data/html/2026/08/21/2026082100209.html",
         "published_at": "2026-08-21T06:14:00Z",
         "description": "한의협에 따르면 ▲협력기관 간 진료의뢰·회송 시범사업 ▲일차의료 만성질환관리 시범사업 ▲ 장애인 ... 한의협은 이를 보건의료 정책 전반의 '의과 편중' 문제로 규정했다. 한의협은 \"54개 중 4개라는 결과는 복지부의...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[위클리오늘] 오산시, 5300번 친환경 2층 전기 저상버스 4대 도입",
+        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=791219",
+        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=791219",
+        "published_at": "2026-08-21T06:14:00Z",
+        "description": "시는 시민의 일상과 맞닿은 다양한 정책 과 사업을 추진하고 있다. 오늘 발표된 주요 소식을 한데 모았다.... 따라 장애인 , 노인 등 교통약자의 이동 편의가 개선될 것으로도 기대하고 있다. 조 시장은 \"이번 친환경 2층버스...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -66762,23 +66762,23 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-08-22T03:23:17.723359Z",
+    "status": "complete",
+    "checked_at": "2026-08-22T03:29:02.309482Z",
     "checks": [
       {
         "issue_title": "장애인 고용정책, 표준사업장 간접고용 쏠림과 직접고용 확대 요구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "장애인평생교육법 시행 앞두고 국비 지원 예산 갈등",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -66791,10 +66791,10 @@
       },
       {
         "issue_title": "반구대병원 수용 장애인, 지역사회 전환 위해 복지부 장관 면담 요구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {

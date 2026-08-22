@@ -1,7 +1,7 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-22",
-  "status": "blocked_by_publish_gate",
+  "status": "completed",
   "model": "connected_chatgpt_editor",
   "auditor_model": "connected_chatgpt_independent_auditor",
   "candidate_count": 180,
@@ -9,13 +9,14 @@
   "published_issue_count": 6,
   "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.926,
-    "assurance": 0.0,
-    "bridge_import_validation": 8.099,
-    "final_state_recrawl": 12.393,
-    "gap_reverse_search": 46.579,
-    "total": 70.74
+    "api_preflight": 1.843,
+    "assurance": 0.001,
+    "bridge_import_validation": 6.736,
+    "final_state_recrawl": 12.931,
+    "gap_reverse_search": 48.121,
+    "render_briefing": 5.221,
+    "total": 76.445
   },
-  "error": "publish gate blocked publication: final-state revalidation이 COMPLETE가 아님",
-  "completed_at": "2026-08-22T03:24:07.103147Z"
+  "error": null,
+  "completed_at": "2026-08-22T03:29:57.229452Z"
 }
