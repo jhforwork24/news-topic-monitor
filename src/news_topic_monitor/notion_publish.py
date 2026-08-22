@@ -93,20 +93,52 @@ class NotionPublishSettings:
 
     @classmethod
     def from_queue_env(cls) -> NotionPublishSettings:
+        """Settings for the private queue/draft/audit staging database.
+
+        This is deliberately a different Notion database from
+        ``NOTION_REPORTS_DATA_SOURCE_ID`` (보고사항): the queue, ChatGPT draft,
+        and independent audit pages are routine, high-volume machine-readable
+        staging data, not noteworthy reports. ``reports_data_source_id`` is
+        still carried through so ``record_failure`` can report a genuine
+        queue/finalize failure to 보고사항 without a second settings object.
+        """
+
         token = os.getenv("NOTION_TOKEN", "").strip()
-        data_source_id = os.getenv("NOTION_REPORTS_DATA_SOURCE_ID", "").strip()
+        data_source_id = os.getenv("NOTION_QUEUE_DATA_SOURCE_ID", "").strip()
         if not token:
             raise NotionConfigurationError("NOTION_TOKEN is required for editorial queue export")
         if not data_source_id:
             raise NotionConfigurationError(
-                "NOTION_REPORTS_DATA_SOURCE_ID is required for editorial queue export"
+                "NOTION_QUEUE_DATA_SOURCE_ID is required for editorial queue export"
             )
-        normalized_id = data_source_id.removeprefix("collection://")
         return cls(
             token=token,
-            data_source_id=normalized_id,
-            reports_data_source_id=normalized_id,
+            data_source_id=data_source_id.removeprefix("collection://"),
+            reports_data_source_id=(
+                os.getenv("NOTION_REPORTS_DATA_SOURCE_ID", "").strip().removeprefix("collection://")
+                or None
+            ),
         )
+
+    @classmethod
+    def from_reports_env(cls) -> NotionPublishSettings:
+        """Settings for recording a noteworthy report to 보고사항 only.
+
+        Used by failure-reporting call sites that do not otherwise touch the
+        queue/draft/audit database or the final briefing database, so they
+        do not need to require ``NOTION_QUEUE_DATA_SOURCE_ID`` to be set.
+        """
+
+        token = os.getenv("NOTION_TOKEN", "").strip()
+        reports_data_source_id = os.getenv("NOTION_REPORTS_DATA_SOURCE_ID", "").strip()
+        if not token:
+            raise NotionConfigurationError("NOTION_TOKEN is required to record a Notion report")
+        if not reports_data_source_id:
+            raise NotionConfigurationError(
+                "NOTION_REPORTS_DATA_SOURCE_ID is required to record a Notion report"
+            )
+        normalized_id = reports_data_source_id.removeprefix("collection://")
+        return cls(token=token, data_source_id=normalized_id, reports_data_source_id=normalized_id)
 
 
 @dataclass(frozen=True)

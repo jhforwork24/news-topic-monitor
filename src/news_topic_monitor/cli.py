@@ -1154,7 +1154,7 @@ def _record_gate_failure(root: Path, gate: PublishGateDecision) -> None:
     """Best-effort report to the private reports data source; never publish a briefing."""
 
     try:
-        settings = NotionPublishSettings.from_queue_env()
+        settings = NotionPublishSettings.from_reports_env()
     except NotionConfigurationError:
         return
     details = ["publish gate가 최종 발행을 차단함"]
@@ -1178,7 +1178,7 @@ def _record_bridge_failure(root: Path, report_date: str, error: str, phase: str)
 
     del root  # The private reporting destination is configured only through secrets/env.
     try:
-        settings = NotionPublishSettings.from_queue_env()
+        settings = NotionPublishSettings.from_reports_env()
     except NotionConfigurationError:
         return
     detail = short_error(error) or "미분류 오류"
