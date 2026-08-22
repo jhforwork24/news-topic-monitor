@@ -1,11 +1,11 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-08-21",
+  "report_date": "2026-08-22",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.618,
-    "total": 8.33
+    "api_preflight": 3.388,
+    "total": 4.006
   },
-  "error": "현재 health/latest.json이 편집 대기열 생성에 사용된 수집 실행과 일치하지 않음",
-  "completed_at": "2026-08-21T15:22:28.452056Z"
+  "error": "활성 Notion 페이지가 정확히 1개여야 함: ChatGPT 편집 초안 · 2026-08-22 (found=0)",
+  "completed_at": "2026-08-22T01:32:13.467516Z"
 }
