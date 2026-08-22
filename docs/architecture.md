@@ -128,6 +128,12 @@ finalizer는 같은 날짜의 매니페스트·초안·감사 활성 페이지�
 draft_id가 연결되는지, 감사 제출이 초안보다 늦고 초안이 대기열보다 늦은지, 선정·제외·감사 ID가
 실제 후보 집합 안에 있는지 검사한다. 연결형 모델 출력은 이 검사를 통과하기 전까지 신뢰하지 않는다.
 
+대기열 생성에 사용한 전수 수집 health는 `health/editorial_queue/initial_health/YYYY-MM-DD.json`에
+queue_id와 함께 고정 스냅샷으로 남긴다. `health/latest.json`은 이후의 정기 collect·backfill
+실행(지연·재시도·수동 재실행 포함)마다 계속 덮어써지므로 대기열 바인딩 검증에 다시 쓰지 않는다.
+finalizer는 이 날짜별 스냅샷을 로드해 queue_id와 `initial_health_finished_at`이 매니페스트와
+일치하는지 확인한다.
+
 ## 저장과 멱등성
 
 `evidence/YYYY-MM-DD.json`은 기사 본문을 제외하고 기사별 `canonical_url`, `title`, `outlet`,
