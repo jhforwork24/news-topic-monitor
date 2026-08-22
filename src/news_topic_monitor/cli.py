@@ -716,6 +716,12 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         queue_settings=queue_settings,
                         source_failures=_run_source_failures(health),
                     )
+                _write_initial_health_snapshot(
+                    settings.root,
+                    report_date=report_date,
+                    queue_id=result.queue_id,
+                    health=health,
+                )
 
         write_editorial_queue_health(
             settings.root,
@@ -1048,19 +1054,52 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
         return 3
 
 
+def _initial_health_snapshot_path(root: Path, report_date: str) -> Path:
+    return root / "health" / "editorial_queue" / "initial_health" / f"{report_date}.json"
+
+
+def _write_initial_health_snapshot(
+    root: Path, *, report_date: str, queue_id: str, health: RunHealth
+) -> None:
+    """Freeze the health used to build today's queue under its own report-date path.
+
+    ``health/latest.json`` is overwritten by every later ``collect``/``backfill``
+    run (including delayed or manually re-dispatched ones), so the queue's
+    ``initial_health_finished_at`` binding cannot be verified against it once
+    time passes. This snapshot is written once per queue and is never touched
+    by unrelated collection runs, so the finalizer can still verify the exact
+    health the queue was built from even if the shared ``latest.json`` moved on.
+    """
+
+    JsonlStorage.atomic_write_json(
+        _initial_health_snapshot_path(root, report_date),
+        {
+            "report_date": report_date,
+            "queue_id": queue_id,
+            "health": health.model_dump(mode="json"),
+        },
+    )
+
+
 def _load_bound_initial_health(root: Path, manifest: ChatEditorialQueueManifest) -> RunHealth:
-    path = root / "health" / "latest.json"
+    path = _initial_health_snapshot_path(root, manifest.report_date)
     if not path.exists():
-        raise EditorialQueueValidationError("초기 전수 수집 health/latest.json이 없음")
+        raise EditorialQueueValidationError("초기 전수 수집 health 스냅샷이 없음")
     try:
-        health = RunHealth.model_validate_json(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8"))
     except ValueError as exc:
+        raise EditorialQueueValidationError("초기 전수 수집 health 스냅샷이 유효하지 않음") from exc
+    if payload.get("queue_id") != manifest.queue_id:
         raise EditorialQueueValidationError(
-            "초기 전수 수집 health/latest.json이 유효하지 않음"
-        ) from exc
+            "초기 전수 수집 health 스냅샷이 다른 queue_id에 바인딩됨"
+        )
+    try:
+        health = RunHealth.model_validate(payload.get("health"))
+    except ValueError as exc:
+        raise EditorialQueueValidationError("초기 전수 수집 health 스냅샷이 유효하지 않음") from exc
     if health.run_finished_at != manifest.initial_health_finished_at:
         raise EditorialQueueValidationError(
-            "현재 health/latest.json이 편집 대기열 생성에 사용된 수집 실행과 일치하지 않음"
+            "초기 전수 수집 health 스냅샷이 편집 대기열 생성에 사용된 수집 실행과 일치하지 않음"
         )
     if health.window_start > manifest.report_start or health.window_end < manifest.report_end:
         raise EditorialQueueValidationError(

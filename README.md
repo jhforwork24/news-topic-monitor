@@ -257,6 +257,9 @@ GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하
 - `health/editorial/latest.json`: 연결형 또는 API 편집의 후보·선정 수, 경로와 성공·실패 상태
   (본문·응답은 기록하지 않음)
 - `health/editorial_queue/latest.json`: private ChatGPT 대기열의 후보·묶음 수·queue_id와 성공·실패 상태
+- `health/editorial_queue/initial_health/YYYY-MM-DD.json`: 그 날짜의 대기열 생성에 실제 사용한
+  전수 수집 health의 고정 스냅샷. `health/latest.json`은 이후의 정기 collect·backfill 실행으로
+  계속 덮어써지므로, finalizer는 이 날짜별 스냅샷과 queue_id를 대조해 대기열 바인딩을 검증한다
 - `health/publish_gate/latest.json`: 기계 판정 가능한 최종 발행 허용·차단 사유
 - `evidence/YYYY-MM-DD.json`: 기사별 provenance, census, gap, reverse-search, final-state 결과
 
