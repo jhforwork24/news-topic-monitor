@@ -116,7 +116,6 @@ class PublishGatePolicy(BaseModel):
     designated_reverse_search_required: list[str]
     allow_explicit_reverse_search_degraded: bool
     require_core_article_body: bool
-    broadcast_metadata_exception: bool
     require_final_state_complete: bool
     validator_fatal_errors_max: int
     unclassified_failures_max: int

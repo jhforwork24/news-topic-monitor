@@ -54,7 +54,7 @@ def _article(
     )
 
 
-def test_four_section_briefing_and_reverse_opinion(tmp_path, topics_path) -> None:
+def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> None:
     storage = JsonlStorage(tmp_path)
     rows = [
         _article("hani", "장애인 이동권 보장 촉구", article_id="1"),
@@ -64,7 +64,6 @@ def test_four_section_briefing_and_reverse_opinion(tmp_path, topics_path) -> Non
             classification=Classification.IRRELEVANT,
             article_id="2",
         ),
-        _article("kbs", "장애인 이동권 현장 리포트", article_id="3"),
         _article("khan", "[칼럼] 장애인 이동권을 시민권으로", section="오피니언", article_id="4"),
     ]
     for row in rows:
@@ -86,13 +85,12 @@ def test_four_section_briefing_and_reverse_opinion(tmp_path, topics_path) -> Non
     assert [section.title for section in document.sections] == [
         "I. 장애정책·장애인운동",
         "II. 노동·돌봄·빈곤",
-        "III. 방송 뉴스 중 장애 주제",
-        "IV. 주요 칼럼",
+        "III. 주요 칼럼",
     ]
     assert document.sections[1].issues
-    assert document.sections[3].issues
+    assert document.sections[2].issues
     text = render_briefing_markdown(document, crpd_url="https://notion.example/crpd")
-    assert text.index("I. 장애정책") < text.index("II. 노동") < text.index("III. 방송")
+    assert text.index("I. 장애정책") < text.index("II. 노동") < text.index("III. 주요 칼럼")
     assert "<details>" in text
     assert "추가 자료 · 더 알아보기" in text
     assert "| 범주 | 자료 | 확인 쟁점 |" in text
@@ -151,21 +149,12 @@ def test_crpd_mapping_avoids_incidental_school_and_tour_bus_words() -> None:
     assert any(item.startswith("제14조") for item in mapped)
 
 
-def test_korean_particles_and_mbc_boilerplate_summary() -> None:
+def test_korean_particles_for_single_and_multi_article_tone() -> None:
     column = _article("khan", "장애인 이동권 보도")
     assert analyze_tone([column]) == ""
 
     movement = _article("khan", "장애인 이동권 보장 촉구")
     assert analyze_tone([movement]).startswith("경향신문은 ")
-
-    video = _article("mbc", "선수 명의로 보조금 챙긴 임원 벌금 약식기소")
-    video.summary = (
-        "지역사 채널의 동영상 링크 https://youtu.be/example "
-        "#제주MBC #장애인체육회 무단 전재, 재배포 금지"
-    )
-    summary = summarize_issue([video])
-    assert "무단 전재" not in summary
-    assert video.title in summary
 
 
 def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, topics_path) -> None:
@@ -181,12 +170,11 @@ def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, to
     assert [section.title for section in document.sections] == [
         "I. 장애정책·장애인운동",
         "II. 노동·돌봄·빈곤",
-        "III. 방송 뉴스 중 장애 주제",
     ]
     assert "주요 칼럼" not in document.overview
     assert "칼럼 0" not in document.overview
     text = render_briefing_markdown(document, crpd_url=None)
-    assert "IV. 주요 칼럼" not in text
+    assert "III. 주요 칼럼" not in text
     assert "주요 칼럼" not in text
 
 
@@ -376,7 +364,7 @@ def test_column_scope_and_mandatory_authors(tmp_path, topics_path) -> None:
         end=datetime(2026, 8, 16, 0, tzinfo=UTC),
         report_date="2026-08-16",
     )
-    columns = next(section for section in document.sections if section.title == "IV. 주요 칼럼")
+    columns = next(section for section in document.sections if section.title == "III. 주요 칼럼")
     sources = {article.source for issue in columns.issues for article in issue.articles}
     assert {"hani", "mediaus", "khan", "chosun"} <= sources
     assert "ablenews" not in sources

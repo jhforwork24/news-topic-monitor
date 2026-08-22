@@ -1,5 +1,10 @@
 # 출처별 공개 경로 검증 기록
 
+이 문서는 2026-08-15 시점의 검증 기록이다. 이후 KBS·MBC·SBS·JTBC 4개 방송사는 방송
+프로그램 단위로 장애 보도를 정확히 추릴 방법이 없어 III절(방송)과 함께 프로젝트에서
+완전히 제거되었다. 아래 표·수치는 당시 기록을 그대로 보존한 것이며 더는 현재 출처
+목록을 반영하지 않는다.
+
 검증일은 2026-08-15(Asia/Seoul)이다. 모든 요청은
 `KCILNewsMonitor/0.1 (+jhforwork24@gmail.com)`을 사용했고, origin별 robots.txt를 먼저
 확인했다. live smoke는 16개 출처 모두 기대 조건을 통과했으며 기사 본문은 저장하지 않았다.
@@ -92,7 +97,6 @@ KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 �
 
 ```bash
 export MONITOR_CONTACT='monitor@example.org'
-export YOUTUBE_API_KEY='로컬에 별도로 발급·보관한 키'
 pytest -m smoke -vv
 ```
 

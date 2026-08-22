@@ -78,21 +78,18 @@ def test_storage_batch_preserves_results_and_flushes_once_per_date(tmp_path, mon
     assert writes.count("data/review/2026-08-15.jsonl") == 1
 
 
-def test_stale_api_record_can_be_refreshed_or_exactly_removed(tmp_path) -> None:
+def test_api_record_confirmed_absent_can_be_exactly_removed(tmp_path) -> None:
     storage = JsonlStorage(tmp_path)
     item = record()
-    item.source = "mbc"
+    item.source = "api_source"
     item.article_id = "gone123XYZ0"
-    item.canonical_url = "https://www.youtube.com/watch?v=gone123XYZ0"
+    item.canonical_url = "https://api.example.test/watch?v=gone123XYZ0"
     item.first_seen_at = datetime(2026, 7, 1, tzinfo=UTC)
     item.last_seen_at = datetime(2026, 7, 1, tzinfo=UTC)
     storage.upsert(item)
 
-    assert storage.stale_article_ids("mbc", before=datetime(2026, 8, 1, tzinfo=UTC)) == [
-        "gone123XYZ0"
-    ]
-    assert storage.delete_by_source_article_ids("mbc", ["different01"]) == 0
-    assert storage.delete_by_source_article_ids("mbc", ["gone123XYZ0"]) == 1
+    assert storage.delete_by_source_article_ids("api_source", ["different01"]) == 0
+    assert storage.delete_by_source_article_ids("api_source", ["gone123XYZ0"]) == 1
     assert list(storage.iter_articles()) == []
 
 

@@ -213,7 +213,6 @@ class StoreResult(StrEnum):
 class EditorialSection(StrEnum):
     DISABILITY = "disability"
     LABOR = "labor"
-    BROADCAST = "broadcast"
     OPINION = "opinion"
 
 

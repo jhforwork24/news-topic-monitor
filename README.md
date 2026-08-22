@@ -1,8 +1,7 @@
 # KCIL News Topic Monitor
 
-13개 인쇄·디지털 매체와 KBS·MBC·SBS·JTBC의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록,
-MBCNEWS 공식 YouTube 채널 API를 주기적으로 확인하고, 발견 기사·영상 메타데이터를 중복 없이
-기록한 뒤 장애인권과
+13개 인쇄·디지털 매체의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록을 주기적으로 확인하고,
+발견 기사 메타데이터를 중복 없이 기록한 뒤 장애인권과
 노동·돌봄·빈곤 의제를 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를 켜 두거나
 화면을 원격 조작하지 않으며, GitHub Actions와 기존 ChatGPT 예약 작업을 연결해 별도 OpenAI API
 과금 없이 운영할 수 있다.
@@ -40,10 +39,6 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 비마이너 | news sitemap | `#article-view-content-div` |
 | 에이블뉴스 | news sitemap | `#article-view-content-div` |
 | 더인디고 | 본문을 제외한 공식 WordPress posts API | `.td-post-content` |
-| KBS | recentNewsList news sitemap | `.detail-body` |
-| MBC | YouTube Data API의 MBCNEWS 공식 채널 키워드 검색 + 업로드 목록 교차확인 | 영상 메타데이터만 저장, iMBC 본문은 요청하지 않음 |
-| SBS | 공식 sitemap RSS | `[itemprop='articleBody']` |
-| JTBC | latest-articles news sitemap | 서버 렌더링 선택자 미확인, 메타데이터만 저장 |
 
 선택자는 코드에 구현되어 있지만 실제 사이트 구조는 바뀔 수 있다. `tests/fixtures/`는 파서의
 최소 계약을 검증하고, 현재 구조 여부는 연락처를 설정한 live smoke test로만 확인한다.
@@ -65,8 +60,7 @@ ruff format --check .
 ```
 
 일반 시험은 네트워크를 사용하지 않는다. live smoke test는 실제 공식 경로에 요청하므로 공개
-연락처를 반드시 지정해야 한다. MBC live smoke test까지 실행하려면 `YOUTUBE_API_KEY`도
-환경변수로 지정한다.
+연락처를 반드시 지정해야 한다.
 
 ```bash
 export MONITOR_CONTACT='monitor@example.org'
@@ -105,14 +99,12 @@ news-topic-monitor report \
 2. 저장소 **Settings → Secrets and variables → Actions → Variables**에
    `MONITOR_CONTACT`를 등록한다. 비밀값이 아니라 공개 연락처이므로 Repository variable을
    사용한다.
-3. 같은 화면의 **Secrets**에 `YOUTUBE_API_KEY`를 Repository secret으로 등록한다. 키는
-   URL·로그·저장 데이터에 쓰지 않고 `x-goog-api-key` 요청 헤더로만 전달한다.
-4. Actions 탭에서 `Collect news metadata`를 한 번 수동 실행하고 `health/latest.json`과
+3. Actions 탭에서 `Collect news metadata`를 한 번 수동 실행하고 `health/latest.json`과
    `data/articles/` 변경이 커밋되는지 확인한다.
-5. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
-6. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
+4. 이어 `Daily backfill`과 `Daily report`를 수동 실행해 권한과 보고서 생성을 확인한다.
+5. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
-7. 무료 production 발행은 repository variable `CHAT_EDITORIAL_BRIDGE_ENABLED=true`,
+6. 무료 production 발행은 repository variable `CHAT_EDITORIAL_BRIDGE_ENABLED=true`,
    `PUBLICATION_OWNER=chatgpt_editorial_bridge`와 09:25 편집·09:38 독립 감사 ChatGPT 예약 작업을
    사용한다. GitHub의 유료 `OPENAI_API_KEY`는 필요하지 않다. 독립 누락 탐지를 활성화하려면
    `NAVER_API_HUB_CLIENT_ID`와 `NAVER_API_HUB_CLIENT_SECRET`을 secret으로 등록한다. Naver
@@ -164,7 +156,6 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `MAX_RETRIES` | 아니오 | `2` | 제한적 재시도 횟수 |
 | `MAX_DISCOVERY_CHILDREN` | 아니오 | `20` | sitemap index 하위 요청 상한 |
 | `HANI_MAX_PAGES` | 아니오 | `50` | 한겨레 최신기사 최대 순회 페이지 |
-| `YOUTUBE_API_KEY` | MBC 확인 시 | 없음 | YouTube Data API 키. GitHub Actions repository secret으로만 저장 |
 | `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
 | `NOTION_QUEUE_DATA_SOURCE_ID` | ChatGPT 편집 브리지 사용 시 | 없음 | 대기열·초안·독립 감사가 쌓이는 `대기열 초안 감사 등` data source UUID(고빈도 기계 판독용, 보고사항과 분리) |
 | `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 성공·실패 등 특이 보고사항만 쌓는 `브리핑 보고사항` data source UUID |
@@ -195,18 +186,6 @@ Naver 검색층은 [Search API의 NAVER API HUB 이관 공지](https://developer
 따라 새 API Hub endpoint와 전용 Client ID/Key를 사용한다. 공지 시점의 기본 무료 정책을 전제로
 하지만 향후 유료 정책이 추가될 수 있으므로, 검색층은 독립 gap detector로만 제한하고 호출량과
 요금 정책 변경을 운영 점검 대상에 둔다.
-
-`YOUTUBE_API_KEY`도 repository secret으로만 저장한다. MBC 어댑터는 이 키를 쿼리 문자열에
-넣지 않고 `youtube.googleapis.com` 동일 origin 요청 헤더에만 전달한다. robots.txt 요청과
-cross-origin 리다이렉트에는 키를 전달하지 않는다. 키가 없으면 MBC만
-`configuration_missing`, API 할당량이 소진되면 `quota_exceeded`, 일부 발견 경로만 실패하면
-`partial`로 기록하며 이를 보도 부재로 처리하지 않는다.
-
-[YouTube API 개발자 정책](https://developers.google.com/youtube/terms/developer-policies)의
-비인가 API 데이터 30일 제한을 지키기 위해 MBC 현재 메타데이터 캐시는 마지막 확인 후 28일이
-지나기 전에 `videos.list`로 자동 갱신한다. API가 더는 돌려주지 않는 정확한 영상 ID의 현재 캐시
-레코드는 제거하고, 당시 시점이 명시된 과거 일일보고는 역사 자료로 유지한다. 저장·표시·삭제
-범위와 배포 운영자의 의무는 [`docs/youtube-api-use.md`](docs/youtube-api-use.md)에 정리한다.
 
 무료 편집 경로는 GitHub runner에서 확인한 제한된 본문 근거를 private Notion 대기열로 옮기고,
 연결된 ChatGPT 편집자와 별도 감사자가 각각 고정 JSON 스키마로 초안과 감사를 제출한다. queue_id는
@@ -255,7 +234,7 @@ GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하
 - `data/review/YYYY-MM-DD.jsonl`: `review` 기사만 모은 사람 검토 목록
 - `data/state/source_state.json`: 출처별 마지막 실행 상태
 - `reports/YYYY-MM-DD.md`: 09:00 KST 경계 일일보고
-- `reports/briefings/YYYY-MM-DD.md`: 총평과 I~III 절, 선정 칼럼이 있을 때만 IV절을 덧붙인 노션 발행 원본
+- `reports/briefings/YYYY-MM-DD.md`: 총평과 I~II 절, 선정 칼럼이 있을 때만 III절을 덧붙인 노션 발행 원본
 - `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·API 갱신·제거·오류 집계
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
 - `health/editorial/latest.json`: 연결형 또는 API 편집의 후보·선정 수, 경로와 성공·실패 상태
@@ -267,10 +246,10 @@ GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하
 - `health/publish_gate/latest.json`: 기계 판정 가능한 최종 발행 허용·차단 사유
 - `evidence/YYYY-MM-DD.json`: 기사별 provenance, census, gap, reverse-search, final-state 결과
 
-브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤, III절은 방송 장애 뉴스다. IV절
-주요 칼럼은 한겨레 `세계의 창` 지제크, 미디어스 김민하, 경향신문 `고병권의 묵묵`을 주제와
-관계없이 선정하고, 그 밖에는 조선·중앙·동아·한겨레·경향·오마이뉴스·프레시안의 장애 관련
-칼럼만 다룬다. 선정 결과가 없으면 설명 없이 IV절 전체를 생략한다.
+브리핑 I절은 장애정책·장애인운동, II절은 노동·돌봄·빈곤이다. III절 주요 칼럼은 한겨레
+`세계의 창` 지제크, 미디어스 김민하, 경향신문 `고병권의 묵묵`을 주제와 관계없이 선정하고,
+그 밖에는 조선·중앙·동아·한겨레·경향·오마이뉴스·프레시안의 장애 관련 칼럼만 다룬다.
+선정 결과가 없으면 설명 없이 III절 전체를 생략한다.
 
 각 의제는 `주요 언론 보도 불릿 → 이슈 요약·보도 논조 → 추가 자료·더 알아보기`로 구성한다.
 기자명이 공개 메타데이터에서 확인되면 보도 불릿에 함께 표시한다. 이전 보도는 별도 항목을 만들지
@@ -310,12 +289,8 @@ KDF, 일반논평은
 - 규칙 기반 판별은 풍자·은유·복합 맥락을 완전히 이해하지 못하므로 `review`가 필요하다.
 - 사이트 구조나 robots.txt가 바뀌면 해당 출처는 안전하게 중단되며 파서 갱신 전까지 공백이 생긴다.
 - 본문 접근이 금지되거나 robots.txt 확인에 실패하면 공개 메타데이터만으로 판별한다.
-- 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단한다. MBC의 iMBC 웹 경로도
-  `User-agent: *` 전면 금지를 준수해 요청하지 않으며, 별도로 MBCNEWS 공식 YouTube 채널의
-  문서화된 Data API에서 키워드 검색과 시간순 업로드 목록을 교차확인한다.
-- YouTube API 키 누락·할당량 소진·검색 또는 업로드 경로의 부분 실패는 확인 불능 또는 부분
-  확인으로 기록하며 MBC 보도 0건으로 해석하지 않는다.
-- 16개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
+- 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단한다.
+- 13개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
 
 이 한계 때문에 **수집 실패를 기사 부재로 해석해서는 안 된다.** 장애인권 의제의 언론 비가시성을
 기술적 0건과 혼동하지 않도록 보고서의 건강상태를 함께 검토해야 한다.

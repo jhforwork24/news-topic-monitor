@@ -94,26 +94,6 @@ sources:
     tier: monitored
     domains: [www.mediaus.co.kr, mediaus.co.kr]
     discovery_routes: [official_sitemap]
-  kbs:
-    label: KBS
-    tier: broadcast
-    domains: [news.kbs.co.kr]
-    discovery_routes: [official_news_sitemap]
-  mbc:
-    label: MBCNEWS
-    tier: broadcast
-    domains: [youtube.com, www.youtube.com, youtu.be]
-    discovery_routes: [official_youtube_data_api]
-  sbs:
-    label: SBS
-    tier: broadcast
-    domains: [news.sbs.co.kr]
-    discovery_routes: [official_sitemap_rss]
-  jtbc:
-    label: JTBC
-    tier: broadcast
-    domains: [news.jtbc.co.kr]
-    discovery_routes: [official_news_sitemap]
 
 gap_detectors:
   naver_api_hub:

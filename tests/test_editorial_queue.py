@@ -72,17 +72,10 @@ def test_chat_queue_requires_exact_date_and_verified_evidence() -> None:
     metadata_only = _candidate(
         "metadata-only", verification_status=VerificationStatus.METADATA_ONLY
     )
-    broadcast = _candidate(
-        "broadcast",
-        source="mbc",
-        verification_status=VerificationStatus.METADATA_ONLY,
-    )
 
-    selected = select_chat_editorial_candidates(
-        [verified, missing_date, metadata_only, broadcast], 20
-    )
+    selected = select_chat_editorial_candidates([verified, missing_date, metadata_only], 20)
 
-    assert {item.candidate_id for item in selected} == {"verified", "broadcast"}
+    assert {item.candidate_id for item in selected} == {"verified"}
 
 
 def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst(
@@ -146,7 +139,7 @@ def test_notion_queue_trashes_old_pages_and_creates_manifest_without_kst(
             evidence_chars=1000,
         ),
         labor_classifier=_labor_classifier(topics_path),
-        source_failures=["sbs: robots.txt 확인 실패"],
+        source_failures=["chosun: robots.txt 확인 실패"],
     )
 
     assert result.status == "ready"

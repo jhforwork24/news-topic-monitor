@@ -759,7 +759,7 @@ def notion_blocks(document: BriefingDocument, *, crpd_url: str | None) -> list[d
     del crpd_url
     blocks: list[dict[str, Any]] = [_paragraph(document.overview)]
     for section in document.sections:
-        if section.title == "IV. 주요 칼럼" and not section.issues:
+        if section.title == "III. 주요 칼럼" and not section.issues:
             continue
         blocks.append(_heading(section.title, 1))
         for index, issue in enumerate(section.issues, start=1):

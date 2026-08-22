@@ -37,9 +37,8 @@
 
 ## GitHub Actions 실패
 
-1. 세 워크플로에 `MONITOR_CONTACT` Repository variable이 노출되는지 확인한다. MBC 확인이
-   필요하면 collect·backfill 워크플로에 `YOUTUBE_API_KEY` Repository secret이 연결되었는지도
-   확인한다. 두 값 자체를 로그에 출력하지 않는다.
+1. 세 워크플로에 `MONITOR_CONTACT` Repository variable이 노출되는지 확인한다. 값 자체를
+   로그에 출력하지 않는다.
 2. Actions의 job conclusion과 `health/latest.json`을 비교한다. 모든 출처 실패인지, 테스트·설치·
    push 단계 실패인지 분리한다.
 3. 예약 누락이면 Collect를 수동으로 최근 6시간보다 넓게 실행하고 Daily backfill을 48시간으로
@@ -108,23 +107,6 @@ source에 있다. `NOTION_REPORTS_DATA_SOURCE_ID`(브리핑 보고사항)는 별
 3. Naver preflight가 degraded이면 API HUB client ID·secret의 등록 위치, migration endpoint와
    할당량을 확인한다. 검색 결과를 공식 원문 확인으로 승격하지 않는다.
 4. health와 로그에는 공급자 응답 message, 요청 본문, key를 복제하지 않는다.
-
-## MBC YouTube API 상태
-
-1. `configuration_missing`이면 `YOUTUBE_API_KEY`가 Repository variable이 아니라 Repository
-   secret으로 정확히 등록되었고 collect·backfill job env에 연결되었는지 확인한다.
-2. `quota_exceeded`이면 MBC 0건으로 보고하지 않는다. 같은 키를 공유하는 다른 작업과 Google
-   Cloud Console의 당일 할당량 사용량을 확인하고 다음 할당량 갱신 뒤 재실행한다. 키를 바꾸거나
-   새 프로젝트로 우회해 제한을 회피하지 않는다.
-3. `partial`이면 키워드 검색·공식 업로드 목록 중 성공한 경로와 실패한 URL의 endpoint 이름을
-   구분한다. 성공 결과는 쓰되 해당 시간대 MBC 확인이 완전하다고 서술하지 않는다.
-4. `unavailable`이면 Google API robots·HTTP 상태와 공식 채널 ID 응답을 확인한다. iMBC 웹의
-   robots 전면 금지를 이유로 웹 페이지나 브라우저 자동화 경로를 대신 호출하지 않는다.
-5. API 키는 URL, exception, health, report, fixture에 기록하지 않는다. 동일 origin redirect를
-   벗어나면 헤더가 제거되는 회귀시험을 유지한다.
-6. `refreshed`는 마지막 확인 후 28일이 지난 현재 캐시 레코드의 재확인 수다. `removed`는
-   `videos.list` 성공 응답에서 더는 반환되지 않아 현재 캐시에서 제거한 정확한 ID 수다. 과거
-   보고서의 시점 명시 기록과 혼동하지 않는다.
 
 ## 데이터 push 충돌
 

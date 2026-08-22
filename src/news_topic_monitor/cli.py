@@ -15,7 +15,6 @@ import httpx
 from .adapters import ALL_ADAPTERS
 from .adapters.base import SourceAdapter
 from .adapters.hani import HaniAdapter
-from .adapters.mbc import MbcAdapter
 from .assurance import (
     PublishGateDecision,
     build_evidence_manifest,
@@ -74,7 +73,6 @@ from .storage import JsonlStorage
 from .utils import KST, parse_datetime, short_error
 
 LOGGER = logging.getLogger(__name__)
-YOUTUBE_REFRESH_AFTER = timedelta(days=28)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1123,11 +1121,6 @@ def _build_adapters(
             continue
         if adapter_type is HaniAdapter:
             adapters.append(HaniAdapter(settings.hani_max_pages))
-        elif adapter_type is MbcAdapter:
-            stale_ids = storage.stale_article_ids(
-                "mbc", before=datetime.now(UTC) - YOUTUBE_REFRESH_AFTER
-            )
-            adapters.append(MbcAdapter(settings.youtube_api_key, refresh_video_ids=stale_ids))
         else:
             adapters.append(adapter_type())
     return adapters

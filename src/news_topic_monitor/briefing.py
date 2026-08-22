@@ -8,7 +8,7 @@ from urllib.parse import urlsplit
 
 from .classifier import RuleClassifier
 from .models import ArticleRecord, Classification, EditorialPlan, EditorialSection
-from .sources import BROADCAST_SOURCES, PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS
+from .sources import PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import KST, kst_display, short_text, stable_article_key
 
@@ -396,7 +396,7 @@ def build_briefing(
 
     disability_candidates: list[ArticleRecord] = []
     for item in articles:
-        if item.source in BROADCAST_SOURCES or is_opinion(item):
+        if is_opinion(item):
             continue
         if item.classification == Classification.REVIEW:
             editorial_notes.append(f"I절 자동발행 제외 — {item.title}: 사람의 검토가 필요한 판정")
@@ -437,7 +437,7 @@ def build_briefing(
     labor_classifier = RuleClassifier(topics_path, topic="labor_care_poverty")
     labor: list[tuple[ArticleRecord, float]] = []
     for item in articles:
-        if item.source in BROADCAST_SOURCES or is_opinion(item):
+        if is_opinion(item):
             continue
         if item.canonical_url in disability_urls or item.classification in {
             Classification.RELEVANT,
@@ -461,12 +461,6 @@ def build_briefing(
         labor.append((item, result.topic_score))
     labor.sort(key=lambda pair: pair[1], reverse=True)
 
-    broadcast = [
-        item
-        for item in articles
-        if item.source in BROADCAST_SOURCES and item.classification == Classification.RELEVANT
-    ]
-
     sections = [
         BriefingSection("I. 장애정책·장애인운동", disability_issues),
         BriefingSection(
@@ -478,15 +472,6 @@ def build_briefing(
                 section_kind="labor",
             ),
         ),
-        BriefingSection(
-            "III. 방송 뉴스 중 장애 주제",
-            cluster_issues(
-                broadcast,
-                history=history,
-                max_issues=10,
-                section_kind="broadcast",
-            ),
-        ),
     ]
     opinions = select_opinions(articles)
     opinion_issues = cluster_issues(
@@ -496,9 +481,9 @@ def build_briefing(
         section_kind="opinion",
     )
     if opinion_issues:
-        sections.append(BriefingSection("IV. 주요 칼럼", opinion_issues))
+        sections.append(BriefingSection("III. 주요 칼럼", opinion_issues))
     else:
-        editorial_notes.append("IV절 생략 — 지정 칼럼과 지정 7개 매체 장애 관련 칼럼 없음")
+        editorial_notes.append("III절 생략 — 지정 칼럼과 지정 7개 매체 장애 관련 칼럼 없음")
 
     overview = build_overview(start, end, sections)
     telegram_summary = build_telegram_summary(sections)
@@ -552,10 +537,9 @@ def build_editorial_briefing(
         selected_ids.extend(decision.candidate_ids)
         section_kind = decision.section.value
         text = " ".join(_article_text(article) for article in articles)
-        disability_context = decision.section in {
-            EditorialSection.DISABILITY,
-            EditorialSection.BROADCAST,
-        } or any(article.classification == Classification.RELEVANT for article in articles)
+        disability_context = decision.section == EditorialSection.DISABILITY or any(
+            article.classification == Classification.RELEVANT for article in articles
+        )
         linked_crpd = crpd_articles(text) if disability_context else []
         issues_by_section[decision.section].append(
             BriefingIssue(
@@ -576,14 +560,10 @@ def build_editorial_briefing(
     sections = [
         BriefingSection("I. 장애정책·장애인운동", issues_by_section[EditorialSection.DISABILITY]),
         BriefingSection("II. 노동·돌봄·빈곤", issues_by_section[EditorialSection.LABOR]),
-        BriefingSection(
-            "III. 방송 뉴스 중 장애 주제",
-            issues_by_section[EditorialSection.BROADCAST],
-        ),
     ]
     opinion_issues = issues_by_section[EditorialSection.OPINION]
     if opinion_issues:
-        sections.append(BriefingSection("IV. 주요 칼럼", opinion_issues))
+        sections.append(BriefingSection("III. 주요 칼럼", opinion_issues))
 
     editorial_notes: list[str] = []
     for exclusion in plan.exclusions[:20]:
@@ -591,7 +571,7 @@ def build_editorial_briefing(
         if article is not None:
             editorial_notes.append(f"GPT 편집 제외 — {article.title}: {exclusion.reason}")
     if not opinion_issues:
-        editorial_notes.append("IV절 생략 — GPT 편집에서 최종 선정된 칼럼 없음")
+        editorial_notes.append("III절 생략 — GPT 편집에서 최종 선정된 칼럼 없음")
 
     return BriefingDocument(
         report_date=report_date,
@@ -702,7 +682,7 @@ def _briefing_issue(
     text = " ".join(_article_text(item) for item in cluster)
     articles = _sort_cluster_articles(cluster)
     previous = previous_coverage_for(articles, history)
-    disability_context = section_kind in {"disability", "broadcast"} or any(
+    disability_context = section_kind == "disability" or any(
         article.classification == Classification.RELEVANT for article in cluster
     )
     linked_crpd = crpd_articles(text) if disability_context else []
@@ -945,12 +925,7 @@ def build_overview(start: datetime, end: datetime, sections: list[BriefingSectio
             + _issue_titles(labor.issues, 4)
             + " 등을 통해 원청·사용자와 국가의 책임을 점검하였다."
         )
-    broadcast = by_title.get("III. 방송 뉴스 중 장애 주제")
-    if broadcast and broadcast.issues:
-        sentences.append(
-            "방송 뉴스에서는 " + _issue_titles(broadcast.issues, 2) + " 등 관련 보도를 확인하였다."
-        )
-    columns = by_title.get("IV. 주요 칼럼")
+    columns = by_title.get("III. 주요 칼럼")
     if columns and columns.issues:
         sentences.append(
             "주요 칼럼으로는 " + _issue_titles(columns.issues, 3) + "을 함께 소개한다."
@@ -997,7 +972,7 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
         "",
     ]
     for section in document.sections:
-        if section.title == "IV. 주요 칼럼" and not section.issues:
+        if section.title == "III. 주요 칼럼" and not section.issues:
             continue
         lines.extend([f"# {section.title}", ""])
         for number, issue in enumerate(section.issues, start=1):
@@ -1097,8 +1072,6 @@ def _clean_summary_sentences(value: str | None) -> list[str]:
         return []
     cleaned = re.sub(r"^【[^】]+】\s*", "", value).strip()
     cleaned = re.sub(r"^\[[^\]]{1,40}\]\s*", "", cleaned).strip()
-    if "지역사 채널의 동영상 링크" in cleaned and "무단 전재" in cleaned:
-        return []
     cleaned = re.sub(r"<[^>]+>", " ", cleaned)
     cleaned = _remove_quoted_spans(cleaned)
     cleaned = re.sub(r"""(?<=[.!?])(?=[가-힣A-Z0-9"'])""", " ", cleaned)
