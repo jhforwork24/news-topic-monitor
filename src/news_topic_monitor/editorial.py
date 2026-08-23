@@ -103,7 +103,7 @@ class EditorialRun:
 def select_chat_editorial_candidates(
     candidates: Iterable[EditorialCandidate], limit: int
 ) -> list[EditorialCandidate]:
-    """Return date-verified candidates suitable for a connected ChatGPT task.
+    """Return date-verified candidates suitable for a connected Claude task.
 
     Print and digital articles must have a successfully extracted body.
     """
@@ -671,7 +671,7 @@ def validate_external_editorial(
     audit: EditorialAudit,
     candidates: list[EditorialCandidate],
 ) -> None:
-    """Apply the same fail-closed checks to a connected ChatGPT submission."""
+    """Apply the same fail-closed checks to a connected Claude submission."""
 
     candidate_by_id = {candidate.candidate_id: candidate for candidate in candidates}
     assessments: list[EditorialAssessment] = []
@@ -686,7 +686,7 @@ def validate_external_editorial(
                     section=issue.section,
                     issue_label=issue.title,
                     importance=5,
-                    reason="connected ChatGPT structured submission",
+                    reason="connected Claude structured submission",
                 )
             )
     _validate_plan(plan, candidates, assessments)

@@ -1,9 +1,9 @@
-name: Prepare connected ChatGPT editorial queue
+name: Prepare connected Claude editorial queue
 
 on:
   schedule:
     # 09:05 Asia/Seoul = 00:05 UTC. The bounded 48-hour collection normally
-    # finishes before the 09:25 connected ChatGPT editor automation.
+    # finishes before the 09:25 connected Claude editor automation.
     - cron: "5 0 * * *"
   workflow_dispatch:
     inputs:
