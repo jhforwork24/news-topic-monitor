@@ -29,3 +29,20 @@ PRINT_DIGITAL_SOURCES = frozenset(
     | DESIGNATED_COLUMN_SOURCES
 )
 OPINION_FULL_SCAN_SOURCES = PRIMARY_COMPARISON_SOURCES
+
+# 논조 비교에서 실제 기사 텍스트를 읽은 뒤 결과를 묶어 설명하는 용도로만 쓴다.
+# 매체 내용을 읽지 않고 이 라벨만으로 논조를 추정하는 데 쓰지 않는다.
+SOURCE_CAMP = {
+    "chosun": "보수",
+    "joongang": "보수",
+    "donga": "보수",
+    "newscham": "진보",
+    "pressian": "진보",
+    "ohmynews": "진보",
+    "khan": "진보",
+    "hani": "진보",
+    "beminor": "전문지",
+    "ablenews": "전문지",
+    "theindigo": "전문지",
+    "labortoday": "전문지",
+}

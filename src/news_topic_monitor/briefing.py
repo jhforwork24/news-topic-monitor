@@ -7,7 +7,13 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from .classifier import RuleClassifier
-from .models import ArticleRecord, Classification, EditorialPlan, EditorialSection
+from .models import (
+    ArticleRecord,
+    Classification,
+    EditorialPlan,
+    EditorialSection,
+    VerificationStatus,
+)
 from .sources import PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import KST, kst_display, short_text, stable_article_key
@@ -120,136 +126,9 @@ MAJOR_EVENT_TERMS = (
     "인권침해",
 )
 
-CRPD_TERMS = {
-    "제4조 일반의무": ("당사자 참여", "장애인단체", "정책 결정", "협의"),
-    "제5조 평등과 비차별": ("차별", "평등", "혐오"),
-    "제6조 장애여성": ("장애여성", "여성장애"),
-    "제7조 장애아동": ("장애아동", "발달장애 아동"),
-    "제8조 인식제고": ("인식개선", "권리중심공공일자리"),
-    "제9조 접근성": ("접근", "편의시설", "정보접근", "섭지코지"),
-    "제14조 개인의 자유와 안전": ("강제입원", "비자의 입원", "집단 전원"),
-    "제16조 착취·폭력·학대로부터의 자유": ("학대", "폭력", "인권침해", "성폭력"),
-    "제19조 자립생활 및 지역사회 통합": (
-        "탈시설",
-        "자립생활",
-        "지역사회",
-        "전원 자립",
-        "집단 전원",
-    ),
-    "제20조 개인의 이동": ("이동권", "교통약자", "휠체어"),
-    "제24조 교육": ("교육권", "특수교육", "통합교육"),
-    "제25조 건강": ("건강권", "의료접근", "병원", "정신의료기관"),
-    "제27조 근로 및 고용": ("노동", "고용", "일자리", "해고"),
-    "제28조 적절한 생활수준과 사회적 보호": ("연금", "소득", "빈곤", "생계"),
-    "제29조 정치 및 공적 생활 참여": ("참정권", "선거", "정치참여"),
-    "제30조 문화·여가·스포츠 참여": (
-        "장애인 관광",
-        "문화 향유",
-        "장애인 스포츠",
-        "장애인체육",
-    ),
-    "제32조 국제협력": ("ODA", "국제개발협력", "국제장애인권컨퍼런스"),
-    "제33조 국내 이행과 모니터링": ("국가인권위원회", "인권위 권고", "모니터링"),
-}
-
-CRPD_FULL_TEXT = (
-    "장애인권리협약 및 선택의정서 전문(KDF)",
-    "https://thekdf.org/un/?q=YToyOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt"
-    "zOjQ6InBhZ2UiO2k6MTt9&bmode=view&idx=171135234&t=board",
-)
-GENERAL_COMMENTS = {
-    "제4조": (
-        "일반논평 제7호 — 장애인 참여·포용",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/380",
-    ),
-    "제5조": (
-        "일반논평 제6호 — 평등과 비차별",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/375",
-    ),
-    "제6조": (
-        "일반논평 제3호 — 장애 여성·여아",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/368",
-    ),
-    "제9조": (
-        "일반논평 제2호 — 접근성",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/366",
-    ),
-    "제12조": (
-        "일반논평 제1호 — 법 앞의 평등",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/363",
-    ),
-    "제19조": (
-        "일반논평 제5호 — 자립생활·지역사회 포용",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/373",
-    ),
-    "제24조": (
-        "일반논평 제4호 — 포용적 교육",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/371",
-    ),
-    "제27조": (
-        "일반논평 제8호 — 노동과 고용",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/834",
-    ),
-    "제33조": (
-        "일반논평 제7호 — 장애인 참여·포용",
-        "https://uhr.humanrights.go.kr/pub/uhrstd/380",
-    ),
-}
-DEINSTITUTIONALIZATION_GUIDELINES = (
-    "유엔장애인권리위원회 탈시설 가이드라인(KDF)",
-    "https://thekdf.org/un/?q=YToyOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt"
-    "zOjQ6InBhZ2UiO2k6MTt9&bmode=view&idx=171135757&t=board",
-)
-
 # 일간 브리핑의 상위 검토군을 먼저 고정한 뒤 홍보·의전성 보도를
 # 제외한다. 제외된 자리를 차순위 홍보 보도로 다시 채우지 않는다.
 DISABILITY_REVIEW_POOL_SIZE = 10
-
-LAW_REFERENCES = {
-    "이동권": ("교통약자의 이동편의 증진법", "https://www.law.go.kr/법령/교통약자의이동편의증진법"),
-    "접근성": (
-        "장애인차별금지 및 권리구제 등에 관한 법률",
-        "https://www.law.go.kr/법령/장애인차별금지및권리구제등에관한법률",
-    ),
-    "활동지원": (
-        "장애인활동 지원에 관한 법률",
-        "https://www.law.go.kr/법령/장애인활동지원에관한법률",
-    ),
-    "거주시설": ("장애인복지법", "https://www.law.go.kr/법령/장애인복지법"),
-    "정신의료기관": (
-        "정신건강증진 및 정신질환자 복지서비스 지원에 관한 법률",
-        "https://www.law.go.kr/법령/정신건강증진및정신질환자복지서비스지원에관한법률",
-    ),
-    "교육권": (
-        "장애인 등에 대한 특수교육법",
-        "https://www.law.go.kr/법령/장애인등에대한특수교육법",
-    ),
-    "권리중심": (
-        "장애인고용촉진 및 직업재활법",
-        "https://www.law.go.kr/법령/장애인고용촉진및직업재활법",
-    ),
-    "장애아동": (
-        "장애아동 복지지원법",
-        "https://www.law.go.kr/법령/장애아동복지지원법",
-    ),
-    "발달장애": (
-        "발달장애인 권리보장 및 지원에 관한 법률",
-        "https://www.law.go.kr/법령/발달장애인권리보장및지원에관한법률",
-    ),
-    "최저임금": ("최저임금법", "https://www.law.go.kr/법령/최저임금법"),
-    "산업재해": ("산업안전보건법", "https://www.law.go.kr/법령/산업안전보건법"),
-    "중대재해": (
-        "중대재해 처벌 등에 관한 법률",
-        "https://www.law.go.kr/법령/중대재해처벌등에관한법률",
-    ),
-    "노조": ("노동조합 및 노동관계조정법", "https://www.law.go.kr/법령/노동조합및노동관계조정법"),
-    "돌봄": ("근로기준법", "https://www.law.go.kr/법령/근로기준법"),
-    "홈플러스": ("고용보험법", "https://www.law.go.kr/법령/고용보험법"),
-}
-
-LABOR_ONLY_REFERENCE_KEYS = frozenset(
-    {"최저임금", "산업재해", "중대재해", "노조", "돌봄", "홈플러스"}
-)
 
 STRONG_PREVIOUS_CONCEPTS = frozenset(
     {
@@ -270,49 +149,6 @@ STRONG_PREVIOUS_CONCEPTS = frozenset(
         "현대차",
     }
 )
-
-REFERENCE_CATEGORY_ORDER = {
-    "이전 보도": 1,
-    "관련 단체 입장": 2,
-    "관련 연구 및 문서": 3,
-    "현행 제도": 4,
-    "국제 규범": 5,
-}
-
-RESEARCH_REFERENCES = {
-    "탈시설": (
-        "한국보건사회연구원, 탈시설 장애인의 지역사회 정착 경로에 관한 연구",
-        "https://www.kihasa.re.kr/publish/report/view?page=19&seq=27968&type=research",
-    ),
-    "이동권": (
-        "국회입법조사처, 장애인의 지역 간 이동 편의 증진을 위한 교통 서비스 실태 및 개선방안",
-        "https://www.nars.go.kr/report/view.do?brdSeq=26775&cmsCode=CM0156",
-    ),
-    "권리중심": (
-        "한국장애인개발원, 중증장애인 자립지원과 장애인일자리사업 연계 연구",
-        "https://www.koddi.or.kr/data/news_view.jsp?brdNum=7429361",
-    ),
-    "정신의료기관": (
-        "한국장애인개발원, 정신장애인 자립생활 지원 방안 연구",
-        "https://www.koddi.or.kr/system/download.jsp?filePath=%2Fhp_board%2FATT1%2F20230106161839001.pdf",
-    ),
-    "발달장애": (
-        "한국장애인개발원 발달장애인 정책 연구자료",
-        "https://www.koddi.or.kr/data/research.jsp",
-    ),
-    "산업재해": (
-        "산업안전보건공단 산업재해 통계·사례",
-        "https://www.kosha.or.kr/kosha/data/industrialAccidentStatus.do",
-    ),
-    "최저임금": (
-        "최저임금위원회 심의·영향률 원자료",
-        "https://www.minimumwage.go.kr/minWage/policy/influenceMain.do?division=E",
-    ),
-    "돌봄": (
-        "육아정책연구소·여성가족부 아이돌봄서비스 실태조사",
-        "https://repo.kicce.re.kr/handle/2019.oak/5639",
-    ),
-}
 
 KNOWN_PREVIOUS_COVERAGE = (
     (
@@ -340,14 +176,6 @@ class PreviousCoverage:
     comparison: str
 
 
-@dataclass(frozen=True)
-class BriefingReference:
-    category: str
-    label: str
-    url: str | None
-    note: str
-
-
 @dataclass
 class BriefingIssue:
     title: str
@@ -355,8 +183,6 @@ class BriefingIssue:
     summary: str
     tone_analysis: str
     previous_coverage: list[PreviousCoverage] = field(default_factory=list)
-    references: list[BriefingReference] = field(default_factory=list)
-    crpd_articles: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -428,7 +254,6 @@ def build_briefing(
         disability,
         history=history,
         max_issues=10,
-        section_kind="disability",
     )
     disability_urls = {
         article.canonical_url for issue in disability_issues for article in issue.articles
@@ -469,7 +294,6 @@ def build_briefing(
                 [item for item, _score in labor],
                 history=history,
                 max_issues=10,
-                section_kind="labor",
             ),
         ),
     ]
@@ -478,7 +302,6 @@ def build_briefing(
         opinions,
         history=history,
         max_issues=12,
-        section_kind="opinion",
     )
     if opinion_issues:
         sections.append(BriefingSection("III. 주요 칼럼", opinion_issues))
@@ -535,12 +358,6 @@ def build_editorial_briefing(
             [by_id[candidate_id] for candidate_id in decision.candidate_ids]
         )
         selected_ids.extend(decision.candidate_ids)
-        section_kind = decision.section.value
-        text = " ".join(_article_text(article) for article in articles)
-        disability_context = decision.section == EditorialSection.DISABILITY or any(
-            article.classification == Classification.RELEVANT for article in articles
-        )
-        linked_crpd = crpd_articles(text) if disability_context else []
         issues_by_section[decision.section].append(
             BriefingIssue(
                 title=decision.title,
@@ -548,12 +365,6 @@ def build_editorial_briefing(
                 summary=decision.summary,
                 tone_analysis=decision.tone_analysis,
                 previous_coverage=previous_coverage_for(articles, history),
-                references=reference_rows(
-                    articles,
-                    linked_crpd,
-                    section_kind=section_kind,
-                ),
-                crpd_articles=linked_crpd,
             )
         )
 
@@ -633,7 +444,6 @@ def cluster_issues(
     *,
     history: list[ArticleRecord] | None = None,
     max_issues: int = 10,
-    section_kind: str = "disability",
 ) -> list[BriefingIssue]:
     anniversary_articles = [
         article for article in articles if _is_crpd_anniversary_event([article])
@@ -643,9 +453,7 @@ def cluster_issues(
     clusters = _cluster_article_groups(regular_articles, max_issues=max_issues - reserved)
     if anniversary_articles:
         clusters.extend(_cluster_article_groups(anniversary_articles, max_issues=1))
-    return [
-        _briefing_issue(cluster, history or [], section_kind=section_kind) for cluster in clusters
-    ]
+    return [_briefing_issue(cluster, history or []) for cluster in clusters]
 
 
 def _cluster_article_groups(
@@ -675,29 +483,16 @@ def _cluster_article_groups(
 def _briefing_issue(
     cluster: list[ArticleRecord],
     history: list[ArticleRecord],
-    *,
-    section_kind: str,
 ) -> BriefingIssue:
     lead = max(cluster, key=lambda item: (_disability_priority(item), item.topic_score))
-    text = " ".join(_article_text(item) for item in cluster)
     articles = _sort_cluster_articles(cluster)
     previous = previous_coverage_for(articles, history)
-    disability_context = section_kind == "disability" or any(
-        article.classification == Classification.RELEVANT for article in cluster
-    )
-    linked_crpd = crpd_articles(text) if disability_context else []
     return BriefingIssue(
         title=lead.title,
         articles=articles,
         summary=summarize_issue(articles),
         tone_analysis=analyze_tone(articles),
         previous_coverage=previous,
-        references=reference_rows(
-            articles,
-            linked_crpd,
-            section_kind=section_kind,
-        ),
-        crpd_articles=linked_crpd,
     )
 
 
@@ -792,6 +587,14 @@ def analyze_tone(articles: list[ArticleRecord]) -> str:
 def previous_coverage_for(
     articles: list[ArticleRecord], history: list[ArticleRecord]
 ) -> list[PreviousCoverage]:
+    """Pick 1-3 prior articles on the same topic, ranked by relevance then detail.
+
+    Relevance is the shared-token overlap with the current issue. Detail is a proxy
+    for how substantive the earlier article was — body text is never retained past
+    the collection run, so verification status, designated-source membership, and
+    summary length stand in for "was this a thorough report or a short notice".
+    """
+
     text = " ".join(_article_text(article) for article in articles)
     result: list[PreviousCoverage] = []
     for triggers, published, label, url, comparison in KNOWN_PREVIOUS_COVERAGE:
@@ -801,17 +604,24 @@ def previous_coverage_for(
     tokens = set().union(*(issue_tokens(article) for article in articles))
     strong_tokens = {term.lower() for term in STRONG_PREVIOUS_CONCEPTS} & tokens
     current_urls = {article.canonical_url for article in articles}
-    candidates: list[tuple[int, datetime, ArticleRecord]] = []
+    candidates: list[tuple[int, float, datetime, ArticleRecord]] = []
     for article in history:
         if article.canonical_url in current_urls or is_opinion(article):
             continue
         overlap = tokens & issue_tokens(article)
         if not overlap & strong_tokens and len(overlap) < 4:
             continue
-        candidates.append((len(overlap), article.published_at or article.first_seen_at, article))
-    candidates.sort(key=lambda item: (item[0], item[1]), reverse=True)
+        candidates.append(
+            (
+                len(overlap),
+                _detail_score(article),
+                article.published_at or article.first_seen_at,
+                article,
+            )
+        )
+    candidates.sort(key=lambda item: (item[0], item[1], item[2]), reverse=True)
     known_urls = {item.url for item in result}
-    for _score, published, article in candidates:
+    for _relevance, _detail, published, article in candidates:
         if article.canonical_url in known_urls:
             continue
         result.append(
@@ -828,80 +638,14 @@ def previous_coverage_for(
     return result[:3]
 
 
-def reference_rows(
-    articles: list[ArticleRecord],
-    linked_crpd: list[str],
-    *,
-    section_kind: str,
-) -> list[BriefingReference]:
-    text = " ".join(_article_text(article) for article in articles)
-    rows: list[BriefingReference] = []
-    if linked_crpd and section_kind != "labor":
-        rows.append(
-            BriefingReference(
-                "국제 규범",
-                f"{CRPD_FULL_TEXT[0]} — {', '.join(linked_crpd)}",
-                CRPD_FULL_TEXT[1],
-                "장애인의 권리를 임의적 복지사업이 아니라 국가와 지방정부의 이행의무로 확인한다.",
-            )
-        )
-        seen_comments: set[str] = set()
-        for article_name in linked_crpd:
-            article_number = article_name.split(" ", 1)[0]
-            comment = GENERAL_COMMENTS.get(article_number)
-            if not comment or comment[1] in seen_comments:
-                continue
-            rows.append(
-                BriefingReference(
-                    "국제 규범",
-                    comment[0],
-                    comment[1],
-                    "유엔장애인권리위원회의 권위 있는 협약 해석기준으로 적용한다.",
-                )
-            )
-            seen_comments.add(comment[1])
-        if any(number in text for number in ("탈시설", "집단 전원", "전원 자립", "색동원")):
-            rows.append(
-                BriefingReference(
-                    "국제 규범",
-                    DEINSTITUTIONALIZATION_GUIDELINES[0],
-                    DEINSTITUTIONALIZATION_GUIDELINES[1],
-                    "시설 간 이동이 아니라 당사자의 선택과 지역사회 지원을 기준으로 삼는다.",
-                )
-            )
-    if section_kind == "labor":
-        law_references = {
-            key: value for key, value in LAW_REFERENCES.items() if key in LABOR_ONLY_REFERENCE_KEYS
-        }
-        research_references = {
-            key: value
-            for key, value in RESEARCH_REFERENCES.items()
-            if key in LABOR_ONLY_REFERENCE_KEYS
-        }
-    else:
-        law_references = {
-            key: value
-            for key, value in LAW_REFERENCES.items()
-            if key not in LABOR_ONLY_REFERENCE_KEYS
-        }
-        research_references = {
-            key: value
-            for key, value in RESEARCH_REFERENCES.items()
-            if key not in LABOR_ONLY_REFERENCE_KEYS
-        }
-    rows.extend(_mapped_references("현행 제도", text, law_references))
-    rows.extend(_mapped_references("관련 연구 및 문서", text, research_references, limit=2))
-    if section_kind != "labor":
-        rows.extend(_organization_positions(articles))
-    unique = _unique_references(rows)
-    return sorted(
-        unique,
-        key=lambda row: REFERENCE_CATEGORY_ORDER.get(row.category, 99),
-    )
-
-
-def crpd_articles(text: str) -> list[str]:
-    return [article for article, terms in CRPD_TERMS.items() if any(term in text for term in terms)]
+def _detail_score(article: ArticleRecord) -> float:
+    score = 0.0
+    if article.verification_status == VerificationStatus.BODY_VERIFIED:
+        score += 3.0
+    if article.source in PRIMARY_COMPARISON_SOURCES:
+        score += 1.0
+    score += min(len(article.summary or ""), 400) / 400.0
+    return score
 
 
 def build_overview(start: datetime, end: datetime, sections: list[BriefingSection]) -> str:
@@ -991,26 +735,19 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                     "",
                 ]
             )
-            if issue.previous_coverage or issue.references:
-                lines.extend(["<details>", "<summary>추가 자료 · 더 알아보기</summary>", ""])
+            if issue.previous_coverage:
+                lines.extend(["<details>", "<summary>동일 주제 이전 보도</summary>", ""])
                 lines.extend(
                     [
-                        "| 범주 | 자료 | 확인 쟁점 |",
-                        "|---|---|---|",
+                        "| 자료 | 확인 쟁점 |",
+                        "|---|---|",
                     ]
                 )
                 for item in issue.previous_coverage[:3]:
                     label = _markdown_table_text(item.label)
                     material = f"[{label}]({item.url})" if item.url else label
                     note = f"{item.published} · {item.comparison}"
-                    lines.append(f"| 이전 보도 | {material} | {_markdown_table_text(note)} |")
-                for reference in issue.references:
-                    label = _markdown_table_text(reference.label)
-                    material = f"[{label}]({reference.url})" if reference.url else label
-                    lines.append(
-                        f"| {reference.category} | {material} | "
-                        f"{_markdown_table_text(reference.note)} |"
-                    )
+                    lines.append(f"| {material} | {_markdown_table_text(note)} |")
                 lines.extend(["", "</details>", ""])
     return "\n".join(lines)
 
@@ -1182,61 +919,6 @@ def _tone_focus(article: ArticleRecord) -> str:
     if article.source in {"chosun", "joongang", "donga"}:
         return "정책의 비용·갈등·행정 영향을 상대적으로 강조하는 보수 종합지의 논조다."
     return "사건의 사실관계와 공적 책임을 중심으로 전달하는 논조다."
-
-
-def _mapped_references(
-    category: str,
-    text: str,
-    mapping: dict[str, tuple[str, str]],
-    *,
-    limit: int = 3,
-) -> list[BriefingReference]:
-    rows: list[BriefingReference] = []
-    for trigger, (label, url) in mapping.items():
-        if trigger not in text:
-            continue
-        rows.append(
-            BriefingReference(
-                category,
-                label,
-                url,
-                "기사의 주장과 정책·법적 의무를 원자료에서 대조한다.",
-            )
-        )
-        if len(rows) >= limit:
-            break
-    return rows
-
-
-def _organization_positions(articles: list[ArticleRecord]) -> list[BriefingReference]:
-    rows: list[BriefingReference] = []
-    for article in articles:
-        text = _article_text(article)
-        if not any(
-            term in text for term in ("공대위", "장차연", "장애인단체", "노조", "노동조합", "성명")
-        ):
-            continue
-        rows.append(
-            BriefingReference(
-                "관련 단체 입장",
-                f"{article.title}에 담긴 당사자·관련 단체 입장",
-                article.canonical_url,
-                "기사에 인용된 요구를 확인하되 가능하면 단체의 성명·요구안 원문과 다시 대조한다.",
-            )
-        )
-    return rows[:2]
-
-
-def _unique_references(rows: list[BriefingReference]) -> list[BriefingReference]:
-    unique: list[BriefingReference] = []
-    seen: set[tuple[str, str | None]] = set()
-    for row in rows:
-        key = row.label, row.url
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(row)
-    return unique
 
 
 def _sort_cluster_articles(cluster: list[ArticleRecord]) -> list[ArticleRecord]:
