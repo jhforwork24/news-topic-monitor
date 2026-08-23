@@ -185,7 +185,7 @@ def validate_policy_contract(registry: SourceRegistry, policy: BriefingPolicy) -
         elif source_policy.tier != "designated_reverse_search":
             errors.append(f"reverse-search source has the wrong tier: {source}")
     if policy.publication.owner not in {
-        "chatgpt_editorial_bridge",
+        "claude_editorial_bridge",
         "github_editorial_publish",
         "deterministic_fallback",
     }:

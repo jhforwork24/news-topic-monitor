@@ -229,7 +229,7 @@ def validate_chat_editorial_bridge(bundle: ChatEditorialBridgeBundle) -> None:
     if audit.submitted_at < draft.submitted_at:
         errors.append("audit predates the editorial draft")
     if errors:
-        raise EditorialValidationError("ChatGPT bridge validation failed: " + "; ".join(errors))
+        raise EditorialValidationError("Claude bridge validation failed: " + "; ".join(errors))
     validate_external_editorial(
         plan=draft.plan,
         audit=audit.audit,

@@ -47,9 +47,9 @@ from .utils import KST, normalize_text, short_error, short_text
 NOTION_VERSION = "2026-03-11"
 BRIEFING_TITLE_FRAGMENT = "일간 장애·노동 뉴스 브리핑"
 BRIEFING_ICON = "📙"
-EDITORIAL_QUEUE_TITLE_FRAGMENT = "ChatGPT 편집 대기열"
-EDITORIAL_DRAFT_TITLE_FRAGMENT = "ChatGPT 편집 초안"
-EDITORIAL_AUDIT_TITLE_FRAGMENT = "ChatGPT 독립 감사"
+EDITORIAL_QUEUE_TITLE_FRAGMENT = "Claude 편집 대기열"
+EDITORIAL_DRAFT_TITLE_FRAGMENT = "Claude 편집 초안"
+EDITORIAL_AUDIT_TITLE_FRAGMENT = "Claude 독립 감사"
 NOTION_RICH_TEXT_CHUNK_SIZE = 1900
 NOTION_MAX_RICH_TEXT_ITEMS = 100
 NOTION_MACHINE_CODE_MAX_CHARS = NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
@@ -99,7 +99,7 @@ class NotionPublishSettings:
         """Settings for the private queue/draft/audit staging database.
 
         This is deliberately a different Notion database from
-        ``NOTION_REPORTS_DATA_SOURCE_ID`` (보고사항): the queue, ChatGPT draft,
+        ``NOTION_REPORTS_DATA_SOURCE_ID`` (보고사항): the queue, Claude draft,
         and independent audit pages are routine, high-volume machine-readable
         staging data, not noteworthy reports. ``reports_data_source_id`` is
         still carried through so ``record_failure`` can report a genuine
@@ -621,7 +621,7 @@ class NotionPublisher:
             )
         except (PydanticValidationError, json.JSONDecodeError) as exc:
             raise EditorialQueueValidationError(
-                "ChatGPT 편집 브리지 JSON이 고정 스키마를 충족하지 않음"
+                "Claude 편집 브리지 JSON이 고정 스키마를 충족하지 않음"
             ) from exc
 
     def _require_exact_page(self, title: str, report_date: str) -> dict[str, Any]:
@@ -964,7 +964,7 @@ def _queue_part_blocks(
         [
             _heading("기계 판독용 입력", 2),
             _paragraph(
-                "아래 JSON을 수정·요약하지 않는다. ChatGPT 편집자는 같은 queue_id와 "
+                "아래 JSON을 수정·요약하지 않는다. Claude 편집자는 같은 queue_id와 "
                 "candidate_id만 구조화 결과에 복사한다."
             ),
             _code_json(machine_payload.model_dump(mode="json")),

@@ -147,7 +147,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     queue = subparsers.add_parser(
         "editorial-queue",
-        help="collect verified evidence and export a temporary queue for ChatGPT",
+        help="collect verified evidence and export a temporary queue for Claude",
     )
     _add_report_window_arguments(queue)
     queue.add_argument(
@@ -163,7 +163,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     finalize = subparsers.add_parser(
         "editorial-finalize",
-        help="validate connected ChatGPT draft/audit, recrawl, gate, and publish",
+        help="validate connected Claude draft/audit, recrawl, gate, and publish",
     )
     _add_report_window_arguments(finalize)
     finalize.add_argument(
@@ -680,7 +680,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         "openai": {
                             "status": "not_required",
                             "error": None,
-                            "route": "connected_chatgpt_automation",
+                            "route": "connected_claude_automation",
                         },
                         "naver_api_hub": {
                             "status": gap_detection.status.value,
@@ -794,7 +794,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             "openai": {
                 "status": "not_required",
                 "error": None,
-                "route": "connected_chatgpt_automation",
+                "route": "connected_claude_automation",
             },
         }
         if naver_settings is None:
@@ -824,8 +824,8 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
         phase_durations["bridge_import_validation"] = perf_counter() - phase_started
 
         run = EditorialRun(
-            model="connected_chatgpt_editor",
-            auditor_model="connected_chatgpt_independent_auditor",
+            model="connected_claude_editor",
+            auditor_model="connected_claude_independent_auditor",
             candidates=bundle.queue.candidates,
             assessments=[],
             plan=bundle.draft.plan,

@@ -9,7 +9,7 @@ def _workflow(name: str) -> dict:
         return yaml.load(handle, Loader=yaml.BaseLoader)
 
 
-def test_connected_chatgpt_bridge_has_one_scheduled_final_writer() -> None:
+def test_connected_claude_bridge_has_one_scheduled_final_writer() -> None:
     collect = _workflow("collect.yml")
     backfill = _workflow("backfill.yml")
     report = _workflow("report.yml")
