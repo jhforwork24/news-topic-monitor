@@ -49,7 +49,7 @@ from .gap_detection import (
     run_reverse_search,
 )
 from .http import SafeHttpClient
-from .models import RunHealth
+from .models import ArticleRecord, EditorialCandidate, EditorialPlan, RunHealth
 from .notion_publish import (
     EditorialQueueSettings,
     EditorialQueueValidationError,
@@ -68,6 +68,7 @@ from .policy import (
     validate_policy_contract,
 )
 from .reporting import generate_report
+from .selection_review import build_selection_review
 from .settings import ContactRequiredError, Settings
 from .storage import JsonlStorage
 from .utils import KST, parse_datetime, short_error
@@ -1020,7 +1021,16 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
         print(path)
         if args.dry_run:
             return 0
-        return _publish_to_notion(document, settings.root)
+        publish_status = _publish_to_notion(document, settings.root)
+        if publish_status == 0:
+            _record_selection_review(
+                settings.root,
+                report_date=report_date,
+                articles=current_articles,
+                plan=run.plan,
+                candidates=bundle.queue.candidates,
+            )
+        return publish_status
     except (
         EditorialConfigurationError,
         PolicyConfigurationError,
@@ -1207,6 +1217,39 @@ def _record_gate_failure(root: Path, gate: PublishGateDecision) -> None:
             publisher.record_failure(gate.report_date, "\n".join(details))
     except (NotionApiError, httpx.HTTPError):
         LOGGER.exception("could not write publish-gate failure to Notion reports")
+
+
+def _record_selection_review(
+    root: Path,
+    *,
+    report_date: str,
+    articles: list[ArticleRecord],
+    plan: EditorialPlan,
+    candidates: list[EditorialCandidate],
+) -> None:
+    """Best-effort: publish the day's full-pool selection-review report to 보고사항.
+
+    This is a supplementary record for editorial oversight, not part of the
+    publish gate, so a failure here must never block or fail the day's
+    already-successful briefing publication.
+    """
+
+    try:
+        settings = NotionPublishSettings.from_reports_env()
+    except NotionConfigurationError:
+        return
+    try:
+        review = build_selection_review(
+            articles=articles,
+            plan=plan,
+            candidates=candidates,
+            topics_path=root / "config" / "topics.yml",
+            report_date=report_date,
+        )
+        with NotionPublisher(settings) as publisher:
+            publisher.record_selection_report(review)
+    except (NotionApiError, httpx.HTTPError):
+        LOGGER.exception("could not write selection-review report to Notion")
 
 
 def _record_bridge_failure(root: Path, report_date: str, error: str, phase: str) -> None:
