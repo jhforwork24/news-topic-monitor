@@ -1,11 +1,11 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-08-21",
+  "report_date": "2026-08-23",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.618,
-    "total": 8.33
+    "api_preflight": 2.043,
+    "total": 2.23
   },
-  "error": "현재 health/latest.json이 편집 대기열 생성에 사용된 수집 실행과 일치하지 않음",
-  "completed_at": "2026-08-21T15:22:28.452056Z"
+  "error": "Notion API POST /data_sources/3c4bda0e-a772-80e3-9bb8-000b471fc681/query returned HTTP 404: {\"object\":\"error\",\"status\":404,\"code\":\"object_not_found\",\"message\":\"Could not find data_source with ID: 3c4bda0e-a772-80e3-9bb8-000b471fc681. Make sure the relevant pages and databases are shared with your integration \\\"KCIL 일간 브리핑 GitHub 발행\\\".\",\"additional_data\":{\"integration_id\":\"3bdbda0e-a772-8190-96d8-0027a26350a4\"},\"request_id\":\"d7dae601-e3ce-4437-bb68-1cceaec8e7fc\"}",
+  "completed_at": "2026-08-23T02:14:46.958548Z"
 }
