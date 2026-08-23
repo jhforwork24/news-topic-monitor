@@ -165,12 +165,13 @@ def test_notion_publish_creates_page_and_children() -> None:
         body for method, path, body in requests if method == "POST" and path == "/v1/pages"
     )
     assert create["parent"]["data_source_id"] == "ds-1"
+    assert create["icon"] == {"type": "emoji", "emoji": "📙"}
     assert create["properties"]["유형"]["select"]["name"] == "일간"
     telegram = create["properties"]["텔레그램 요약"]["rich_text"][0]["text"]["content"]
     assert telegram == "텔레그램 총평"
     assert "주요 칼럼" not in telegram
     title = create["properties"]["이름"]["title"][0]["text"]["content"]
-    assert title.startswith("GitHub 자동발행 v1")
+    assert title == "일간 장애·노동 뉴스 브리핑 (2026-08-16)"
 
 
 def test_notion_publish_does_not_duplicate_an_existing_manual_briefing() -> None:
@@ -192,7 +193,7 @@ def test_notion_publish_does_not_duplicate_an_existing_manual_briefing() -> None
                                     "title": [
                                         {
                                             "plain_text": (
-                                                "편집 검수판 v3 · 일간 장애정책·노동 뉴스 "
+                                                "편집 검수판 v3 · 일간 장애·노동 뉴스 "
                                                 "브리핑 (2026-08-16)"
                                             )
                                         }
@@ -241,7 +242,7 @@ def test_identical_rerun_returns_existing_page_without_creating_a_version() -> N
                                     "title": [
                                         {
                                             "plain_text": (
-                                                "GitHub 자동발행 v4 · 일간 장애정책·노동 뉴스 "
+                                                "편집 검수판 v4 · 일간 장애·노동 뉴스 "
                                                 "브리핑 (2026-08-16)"
                                             )
                                         }
