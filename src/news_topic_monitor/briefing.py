@@ -991,28 +991,27 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                     "",
                 ]
             )
-            lines.extend(["<details>", "<summary>추가 자료 · 더 알아보기</summary>", ""])
-            lines.extend(
-                [
-                    "| 범주 | 자료 | 확인 쟁점 |",
-                    "|---|---|---|",
-                ]
-            )
-            for item in issue.previous_coverage[:3]:
-                label = _markdown_table_text(item.label)
-                material = f"[{label}]({item.url})" if item.url else label
-                note = f"{item.published} · {item.comparison}"
-                lines.append(f"| 이전 보도 | {material} | {_markdown_table_text(note)} |")
-            for reference in issue.references:
-                label = _markdown_table_text(reference.label)
-                material = f"[{label}]({reference.url})" if reference.url else label
-                lines.append(
-                    f"| {reference.category} | {material} | "
-                    f"{_markdown_table_text(reference.note)} |"
+            if issue.previous_coverage or issue.references:
+                lines.extend(["<details>", "<summary>추가 자료 · 더 알아보기</summary>", ""])
+                lines.extend(
+                    [
+                        "| 범주 | 자료 | 확인 쟁점 |",
+                        "|---|---|---|",
+                    ]
                 )
-            if not issue.previous_coverage and not issue.references:
-                lines.append("| 참고 자료 | 확인된 추가 자료 없음 | 후속 조사 필요 |")
-            lines.extend(["", "</details>", ""])
+                for item in issue.previous_coverage[:3]:
+                    label = _markdown_table_text(item.label)
+                    material = f"[{label}]({item.url})" if item.url else label
+                    note = f"{item.published} · {item.comparison}"
+                    lines.append(f"| 이전 보도 | {material} | {_markdown_table_text(note)} |")
+                for reference in issue.references:
+                    label = _markdown_table_text(reference.label)
+                    material = f"[{label}]({reference.url})" if reference.url else label
+                    lines.append(
+                        f"| {reference.category} | {material} | "
+                        f"{_markdown_table_text(reference.note)} |"
+                    )
+                lines.extend(["", "</details>", ""])
     return "\n".join(lines)
 
 

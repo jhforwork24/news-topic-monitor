@@ -3,6 +3,9 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from news_topic_monitor.briefing import (
+    BriefingDocument,
+    BriefingIssue,
+    BriefingSection,
     analyze_tone,
     build_briefing,
     crpd_articles,
@@ -477,3 +480,27 @@ def test_previous_coverage_is_only_inside_toggle_and_limited_to_three(
     assert text.index("<summary>추가 자료 · 더 알아보기</summary>") < text.index("| 이전 보도 |")
     assert "홍길동 기자" in text
     assert "| 언론사 | 기사 | 발행 |" not in text
+
+
+def test_markdown_omits_reference_toggle_when_nothing_to_show() -> None:
+    issue = BriefingIssue(
+        title="장애인 이동권 보장 촉구",
+        articles=[_article("hani", "장애인 이동권 보장 촉구")],
+        summary="장애인단체는 이동권 보장을 요구했다.",
+        tone_analysis="한겨레는 당사자 요구를 중심으로 보도했다.",
+        previous_coverage=[],
+        references=[],
+    )
+    document = BriefingDocument(
+        report_date="2026-08-16",
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        overview="총평",
+        telegram_summary="텔레그램 총평",
+        sections=[BriefingSection("I. 장애정책·장애인운동", [issue])],
+        source_failures=[],
+    )
+    text = render_briefing_markdown(document, crpd_url=None)
+    assert "<details>" not in text
+    assert "추가 자료 · 더 알아보기" not in text
+    assert "확인된 추가 자료 없음" not in text

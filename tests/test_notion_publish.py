@@ -140,6 +140,42 @@ def test_notion_issue_uses_article_bullets_and_one_reference_toggle() -> None:
     assert "현행 제도" in toggle_text
 
 
+def test_notion_issue_omits_reference_toggle_when_nothing_to_show() -> None:
+    now = datetime(2026, 8, 15, 1, tzinfo=UTC)
+    article = ArticleRecord(
+        source="hani",
+        article_id="1",
+        canonical_url="https://example.com/article",
+        title="장애인 이동권 보장 촉구",
+        byline="홍길동 기자",
+        section="사회",
+        published_at=now,
+        first_seen_at=now,
+        last_seen_at=now,
+        summary="장애인단체가 이동권 보장을 촉구했다.",
+        body_status=BodyStatus.FETCHED,
+        classification=Classification.RELEVANT,
+        topic_score=10.0,
+        classification_reason="규칙 판정",
+        verification_status=VerificationStatus.BODY_VERIFIED,
+    )
+    issue = BriefingIssue(
+        title=article.title,
+        articles=[article],
+        summary="장애인단체는 이동권 보장을 요구했다.",
+        tone_analysis="한겨레는 당사자 요구를 중심으로 보도했다.",
+        previous_coverage=[],
+        references=[],
+    )
+    document = _document()
+    document.sections = [BriefingSection("I. 장애정책·장애인운동", [issue])]
+    blocks = notion_blocks(document, crpd_url=None)
+    assert not any(block["type"] == "toggle" for block in blocks)
+    rendered = json.dumps(blocks, ensure_ascii=False)
+    assert "확인된 추가 자료 없음" not in rendered
+    assert "추가 자료 · 더 알아보기" not in rendered
+
+
 def test_notion_publish_creates_page_and_children() -> None:
     requests: list[tuple[str, str, dict]] = []
 
