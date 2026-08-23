@@ -44,7 +44,8 @@ from .storage import JsonlStorage
 from .utils import KST, normalize_text, short_error, short_text
 
 NOTION_VERSION = "2026-03-11"
-BRIEFING_TITLE_FRAGMENT = "일간 장애정책·노동 뉴스 브리핑"
+BRIEFING_TITLE_FRAGMENT = "일간 장애·노동 뉴스 브리핑"
+BRIEFING_ICON = "📙"
 EDITORIAL_QUEUE_TITLE_FRAGMENT = "ChatGPT 편집 대기열"
 EDITORIAL_DRAFT_TITLE_FRAGMENT = "ChatGPT 편집 초안"
 EDITORIAL_AUDIT_TITLE_FRAGMENT = "ChatGPT 독립 감사"
@@ -252,7 +253,7 @@ class NotionPublisher:
         version = (
             max((_briefing_version(_page_title(page)) for page in briefing_pages), default=0) + 1
         )
-        title = f"GitHub 자동발행 v{version} · {BRIEFING_TITLE_FRAGMENT} ({document.report_date})"
+        title = f"{BRIEFING_TITLE_FRAGMENT} ({document.report_date})"
         properties = _page_properties(title, document)
         page = self._request(
             "POST",
@@ -262,6 +263,7 @@ class NotionPublisher:
                     "type": "data_source_id",
                     "data_source_id": self.settings.data_source_id,
                 },
+                "icon": {"type": "emoji", "emoji": BRIEFING_ICON},
                 "properties": properties,
             },
         )
