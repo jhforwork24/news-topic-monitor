@@ -21,8 +21,8 @@ flowchart LR
     G --> J["JSONL 메타데이터·provenance"]
     J --> K["공식목록 census·Naver gap detection"]
     K --> R["private Notion 구조화 대기열·queue_id"]
-    R --> M["연결형 ChatGPT 판별·초안"]
-    M --> N["별도 연결형 ChatGPT 독립 감사"]
+    R --> M["연결형 Claude 판별·초안"]
+    M --> N["별도 연결형 Claude 독립 감사"]
     N --> O["진행형 사건 final-state 재수집"]
     O --> P["machine-checkable publish gate"]
     P -->|"PASS"| L["Notion 단일 writer 발행"]
@@ -125,7 +125,7 @@ III절은 3개 지정 칼럼과 7개 종합매체의 장애 관련 칼럼만 선
 성향만으로 논조를 추정하면 독립 감사에서 fatal로 판정한다.
 
 노션 발행은 같은 날짜에 이미 브리핑이 있으면 새 페이지를 만들지 않는 날짜 단위 멱등성을
-적용한다. `editorial-finalize.yml`만 production 예약 writer다. 연결된 ChatGPT 편집자와 감사자는
+적용한다. `editorial-finalize.yml`만 production 예약 writer다. 연결된 Claude 편집자와 감사자는
 private `대기열 초안 감사 등` data source(`NOTION_QUEUE_DATA_SOURCE_ID`)에 구조화 초안·감사만
 쓰며 최종 브리핑을 발행하지 않는다. 대기열·초안·감사는 고빈도 기계 판독용 staging 데이터이므로
 `브리핑 보고사항` data source(`NOTION_REPORTS_DATA_SOURCE_ID`)와는 분리되어 있으며, 후자는 발행

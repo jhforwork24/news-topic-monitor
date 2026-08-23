@@ -3,7 +3,7 @@
 13개 인쇄·디지털 매체의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록을 주기적으로 확인하고,
 발견 기사 메타데이터를 중복 없이 기록한 뒤 장애인권과
 노동·돌봄·빈곤 의제를 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를 켜 두거나
-화면을 원격 조작하지 않으며, GitHub Actions와 기존 ChatGPT 예약 작업을 연결해 별도 OpenAI API
+화면을 원격 조작하지 않으며, GitHub Actions와 연결형 Claude 예약 작업을 연결해 별도 OpenAI API
 과금 없이 운영할 수 있다.
 
 이 시스템은 장애인을 시혜와 보호의 대상으로 환원하지 않고 권리의 주체이자 동등한 시민,
@@ -105,7 +105,7 @@ news-topic-monitor report \
 5. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
 6. 무료 production 발행은 repository variable `CHAT_EDITORIAL_BRIDGE_ENABLED=true`,
-   `PUBLICATION_OWNER=chatgpt_editorial_bridge`와 09:25 편집·09:38 독립 감사 ChatGPT 예약 작업을
+   `PUBLICATION_OWNER=claude_editorial_bridge`와 09:25 편집·09:38 독립 감사 Claude 예약 작업을
    사용한다. GitHub의 유료 `OPENAI_API_KEY`는 필요하지 않다. 독립 누락 탐지를 활성화하려면
    `NAVER_API_HUB_CLIENT_ID`와 `NAVER_API_HUB_CLIENT_SECRET`을 secret으로 등록한다. Naver
    미설정은 명시적 `DEGRADED`로 남지만 원문 검증 등급을 올리지 않는다.
@@ -123,7 +123,7 @@ news-topic-monitor report \
   `disability_rights` 토픽만 적용하므로, 대기열의 각 후보 옆에는 `labor_care_poverty` 토픽으로
   다시 계산한 힌트(`II절 노동·돌봄·빈곤 관련 가능성(점수 N.N)` 또는 `II절 검토 가능`)를 함께
   표시해 장애 의제로는 걸러지지 않는 노동·돌봄·빈곤 기사를 편집자가 놓치지 않도록 함
-- 연결된 ChatGPT 예약 작업: 09:25에 대기열을 편집해 구조화 초안을 쓰고, 별도 09:38 작업이
+- 연결된 Claude 예약 작업: 09:25에 대기열을 편집해 구조화 초안을 쓰고, 별도 09:38 작업이
   같은 원근거와 초안을 독립 감사함. 두 작업 모두 최종 브리핑을 직접 발행하지 않음
 - `.github/workflows/editorial-finalize.yml`: `48 0 * * *`(UTC), 매일 09:48에 대기열·초안·감사의
   날짜·queue_id·draft_id·후보 ID·스키마·제출순서를 검증하고, 선정 출처 final-state 재수집,
@@ -157,11 +157,11 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `MAX_DISCOVERY_CHILDREN` | 아니오 | `20` | sitemap index 하위 요청 상한 |
 | `HANI_MAX_PAGES` | 아니오 | `50` | 한겨레 최신기사 최대 순회 페이지 |
 | `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
-| `NOTION_QUEUE_DATA_SOURCE_ID` | ChatGPT 편집 브리지 사용 시 | 없음 | 대기열·초안·독립 감사가 쌓이는 `대기열 초안 감사 등` data source UUID(고빈도 기계 판독용, 보고사항과 분리) |
+| `NOTION_QUEUE_DATA_SOURCE_ID` | Claude 편집 브리지 사용 시 | 없음 | 대기열·초안·독립 감사가 쌓이는 `대기열 초안 감사 등` data source UUID(고빈도 기계 판독용, 보고사항과 분리) |
 | `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 성공·실패 등 특이 보고사항만 쌓는 `브리핑 보고사항` data source UUID |
 | `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
 | `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
-| `PUBLICATION_OWNER` | production | 없음 | `chatgpt_editorial_bridge`일 때만 무료 예약 finalizer 발행 |
+| `PUBLICATION_OWNER` | production | 없음 | `claude_editorial_bridge`일 때만 무료 예약 finalizer 발행 |
 | `OPENAI_EDITOR_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 수동 유료 API fallback 허용 |
 | `OPENAI_EDITOR_MODEL` | 아니오 | `gpt-5.6` | Responses API 편집 모델 |
 | `OPENAI_AUDITOR_MODEL` | 아니오 | 편집 모델 | 편집 근거를 받지 않는 독립 감사 모델 |
@@ -172,8 +172,8 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `OPENAI_EDITOR_EVIDENCE_CHARS` | 아니오 | `5000` | 후보별 일시 전달 근거 글자 상한 |
 | `NAVER_API_HUB_CLIENT_ID` | gap detector | 없음 | Naver API Hub client ID, repository secret |
 | `NAVER_API_HUB_CLIENT_SECRET` | gap detector | 없음 | Naver API Hub client secret, repository secret |
-| `CHAT_EDITORIAL_BRIDGE_ENABLED` | production | `false` | `true`일 때 private ChatGPT 편집 대기열 예약 생성 |
-| `CHAT_EDITORIAL_MAX_CANDIDATES` | 아니오 | `180` | ChatGPT 예약 작업에 제공할 검증 후보 상한 |
+| `CHAT_EDITORIAL_BRIDGE_ENABLED` | production | `false` | `true`일 때 private Claude 편집 대기열 예약 생성 |
+| `CHAT_EDITORIAL_MAX_CANDIDATES` | 아니오 | `180` | Claude 예약 작업에 제공할 검증 후보 상한 |
 | `CHAT_EDITORIAL_CHUNK_SIZE` | 아니오 | `24` | Notion 임시 대기열 한 페이지의 후보 수(최대 24) |
 | `CHAT_EDITORIAL_EVIDENCE_CHARS` | 아니오 | `1600` | 후보별 임시 확인 근거 글자 상한(최대 1800) |
 | `CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE` | 아니오 | `24` | 보고 구간에서 출처별로 넓게 확인할 일반 기사 본문 상한. 규칙 후보는 상한 밖에서도 확인 |
@@ -188,7 +188,7 @@ Naver 검색층은 [Search API의 NAVER API HUB 이관 공지](https://developer
 요금 정책 변경을 운영 점검 대상에 둔다.
 
 무료 편집 경로는 GitHub runner에서 확인한 제한된 본문 근거를 private Notion 대기열로 옮기고,
-연결된 ChatGPT 편집자와 별도 감사자가 각각 고정 JSON 스키마로 초안과 감사를 제출한다. queue_id는
+연결된 Claude 편집자와 별도 감사자가 각각 고정 JSON 스키마로 초안과 감사를 제출한다. queue_id는
 후보 전체의 정규화 JSON SHA-256이며 finalizer는 정확한 날짜·queue_id·draft_id·후보 ID·제출순서를
 검사한다. 원문은 공개 저장소에 저장하지 않고 대기열은 이전 실행과 같은 날짜 또는 2일이 지난
 임시 페이지를 정리한다. 초안·감사가 끝난 뒤 선정 기사의 공식 출처만 실제로 다시 수집하며,
@@ -210,8 +210,8 @@ DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal 
 census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간주하지 않고 gate를 차단한다.
 
 09:25 편집 작업은 [`docs/chat-editorial-instructions.md`](docs/chat-editorial-instructions.md),
-09:38 감사 작업은 [`docs/chatgpt-auditor-task.md`](docs/chatgpt-auditor-task.md)를 따른다. 10:00
-기존 예약 작업은 [`docs/chatgpt-supervisory-task.md`](docs/chatgpt-supervisory-task.md)에 따라
+09:38 감사 작업은 [`docs/claude-auditor-task.md`](docs/claude-auditor-task.md)를 따른다. 10:00
+기존 예약 작업은 [`docs/claude-supervisory-task.md`](docs/claude-supervisory-task.md)에 따라
 GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하지 않는다.
 
 ## 주제 키워드 수정
@@ -239,7 +239,7 @@ GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)
 - `health/editorial/latest.json`: 연결형 또는 API 편집의 후보·선정 수, 경로와 성공·실패 상태
   (본문·응답은 기록하지 않음)
-- `health/editorial_queue/latest.json`: private ChatGPT 대기열의 후보·묶음 수·queue_id와 성공·실패 상태
+- `health/editorial_queue/latest.json`: private Claude 대기열의 후보·묶음 수·queue_id와 성공·실패 상태
 - `health/editorial_queue/initial_health/YYYY-MM-DD.json`: 그 날짜의 대기열 생성에 실제 사용한
   전수 수집 health의 고정 스냅샷. `health/latest.json`은 이후의 정기 collect·backfill 실행으로
   계속 덮어써지므로, finalizer는 이 날짜별 스냅샷과 queue_id를 대조해 대기열 바인딩을 검증한다

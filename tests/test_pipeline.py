@@ -103,6 +103,18 @@ class ManyBroadEvidenceAdapter(BroadEvidenceAdapter):
         )
 
 
+class EmptyDiscoveryAdapter(GoodAdapter):
+    source = "empty_discovery"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        return DiscoveryPage(articles=[])
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 기사 본문으로 씨드된 후보의 재수집을 확인한다 " * 3
+
+
 class MetadataOnlyAdapter(GoodAdapter):
     source = "metadata_only"
     fetch_candidate_bodies = False
@@ -275,6 +287,126 @@ def test_editorial_collection_caps_broad_body_requests_per_source(tmp_path, topi
             for candidate in candidates
         )
         == 2
+    )
+
+
+def test_seed_discovery_refreshes_article_missed_by_fresh_recrawl(tmp_path, topics_path) -> None:
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    evidence_path = tmp_path / "temporary" / "candidates.sqlite3"
+    seed = ArticleDiscovery(
+        source="empty_discovery",
+        canonical_url="https://good.test/seed-article",
+        title="일반 기사 제목",
+        published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+        refresh_only=True,
+    )
+    with EditorialEvidenceStore(evidence_path) as evidence_store:
+        health = Collector(
+            http=http,
+            storage=storage,
+            classifier=RuleClassifier(topics_path),
+            adapters=[EmptyDiscoveryAdapter()],
+            evidence_store=evidence_store,
+            capture_all_bodies=True,
+            capture_body_start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            capture_body_limit_per_source=1,
+            seed_discoveries={"empty_discovery": [seed]},
+        ).run(
+            datetime(2026, 8, 15, 0, tzinfo=UTC),
+            datetime(2026, 8, 15, 2, tzinfo=UTC),
+        )
+        candidates = evidence_store.candidates(
+            start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 15, 2, tzinfo=UTC),
+        )
+
+    assert health.sources["empty_discovery"].discovered == 0
+    assert health.sources["empty_discovery"].refreshed == 1
+    assert len(candidates) == 1
+    assert candidates[0].canonical_url == "https://good.test/seed-article"
+    assert candidates[0].verification_status == VerificationStatus.BODY_VERIFIED
+    assert "씨드된 후보" in candidates[0].evidence_text
+
+
+def test_seed_discovery_does_not_duplicate_a_freshly_rediscovered_article(
+    tmp_path, topics_path
+) -> None:
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    evidence_path = tmp_path / "temporary" / "candidates.sqlite3"
+    seed = ArticleDiscovery(
+        source="broad",
+        canonical_url="https://good.test/article/1",
+        title="일반 경제 기사",
+        published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+        refresh_only=True,
+    )
+    with EditorialEvidenceStore(evidence_path) as evidence_store:
+        health = Collector(
+            http=http,
+            storage=storage,
+            classifier=RuleClassifier(topics_path),
+            adapters=[BroadEvidenceAdapter()],
+            evidence_store=evidence_store,
+            capture_all_bodies=True,
+            seed_discoveries={"broad": [seed]},
+        ).run(
+            datetime(2026, 8, 15, 0, tzinfo=UTC),
+            datetime(2026, 8, 15, 2, tzinfo=UTC),
+        )
+        candidates = evidence_store.candidates(
+            start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 15, 2, tzinfo=UTC),
+        )
+
+    body_urls = [url for url, purpose in http.requested if purpose == "article body"]
+    assert body_urls == ["https://good.test/article/1"]
+    assert len(candidates) == 1
+    assert health.sources["broad"].discovered == 1
+    assert health.sources["broad"].refreshed == 0
+
+
+def test_seed_discovery_bypasses_the_per_source_body_cap(tmp_path, topics_path) -> None:
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    evidence_path = tmp_path / "temporary" / "candidates.sqlite3"
+    seed = ArticleDiscovery(
+        source="many_broad",
+        canonical_url="https://good.test/article/missed",
+        title="일반 기사 제목",
+        published_at=datetime(2026, 8, 15, 0, 30, tzinfo=UTC),
+        refresh_only=True,
+    )
+    with EditorialEvidenceStore(evidence_path) as evidence_store:
+        Collector(
+            http=http,
+            storage=storage,
+            classifier=RuleClassifier(topics_path),
+            adapters=[ManyBroadEvidenceAdapter()],
+            evidence_store=evidence_store,
+            capture_all_bodies=True,
+            capture_body_start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            capture_body_limit_per_source=2,
+            seed_discoveries={"many_broad": [seed]},
+        ).run(
+            datetime(2026, 8, 15, 0, tzinfo=UTC),
+            datetime(2026, 8, 15, 4, tzinfo=UTC),
+        )
+        candidates = evidence_store.candidates(
+            start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 15, 4, tzinfo=UTC),
+        )
+
+    body_urls = [url for url, purpose in http.requested if purpose == "article body"]
+    assert "https://good.test/article/missed" in body_urls
+    assert len(candidates) == 4
+    assert (
+        sum(
+            candidate.verification_status == VerificationStatus.BODY_VERIFIED
+            for candidate in candidates
+        )
+        == 3
     )
 
 

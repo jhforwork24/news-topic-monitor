@@ -145,9 +145,9 @@ def test_notion_bridge_loader_requires_exact_machine_documents() -> None:
         candidates=bundle.queue.candidates,
     )
     pages = {
-        "ChatGPT 편집 대기열 · 2026-08-21 · 매니페스트": "manifest-page",
-        "ChatGPT 편집 초안 · 2026-08-21": "draft-page",
-        "ChatGPT 독립 감사 · 2026-08-21": "audit-page",
+        "Claude 편집 대기열 · 2026-08-21 · 매니페스트": "manifest-page",
+        "Claude 편집 초안 · 2026-08-21": "draft-page",
+        "Claude 독립 감사 · 2026-08-21": "audit-page",
     }
     documents = {
         "manifest-page": bundle.queue.manifest.model_dump(mode="json"),
@@ -179,7 +179,7 @@ def test_notion_bridge_loader_requires_exact_machine_documents() -> None:
             return httpx.Response(
                 200,
                 json={
-                    "results": [page("ChatGPT 편집 대기열 · 2026-08-21 · 01-01", "part-page")],
+                    "results": [page("Claude 편집 대기열 · 2026-08-21 · 01-01", "part-page")],
                     "has_more": False,
                 },
             )

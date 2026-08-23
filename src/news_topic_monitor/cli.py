@@ -49,7 +49,14 @@ from .gap_detection import (
     run_reverse_search,
 )
 from .http import SafeHttpClient
-from .models import ArticleRecord, EditorialCandidate, EditorialPlan, RunHealth
+from .models import (
+    ArticleDiscovery,
+    ArticleRecord,
+    Classification,
+    EditorialCandidate,
+    EditorialPlan,
+    RunHealth,
+)
 from .notion_publish import (
     EditorialQueueSettings,
     EditorialQueueValidationError,
@@ -140,7 +147,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     queue = subparsers.add_parser(
         "editorial-queue",
-        help="collect verified evidence and export a temporary queue for ChatGPT",
+        help="collect verified evidence and export a temporary queue for Claude",
     )
     _add_report_window_arguments(queue)
     queue.add_argument(
@@ -156,7 +163,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     finalize = subparsers.add_parser(
         "editorial-finalize",
-        help="validate connected ChatGPT draft/audit, recrawl, gate, and publish",
+        help="validate connected Claude draft/audit, recrawl, gate, and publish",
     )
     _add_report_window_arguments(finalize)
     finalize.add_argument(
@@ -610,6 +617,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                 labor_classifier = RuleClassifier(
                     settings.root / "config" / "topics.yml", topic="labor_care_poverty"
                 )
+                seed_discoveries = _known_relevant_seed_discoveries(storage, start=start, end=end)
                 with SafeHttpClient(settings) as http:
                     health = Collector(
                         http=http,
@@ -621,6 +629,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         capture_all_bodies=True,
                         capture_body_start=start,
                         capture_body_limit_per_source=(queue_settings.body_fetch_limit_per_source),
+                        seed_discoveries=seed_discoveries,
                     ).run(collection_start, end)
                 if health.all_sources_failed:
                     raise EditorialQueueValidationError(
@@ -671,7 +680,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         "openai": {
                             "status": "not_required",
                             "error": None,
-                            "route": "connected_chatgpt_automation",
+                            "route": "connected_claude_automation",
                         },
                         "naver_api_hub": {
                             "status": gap_detection.status.value,
@@ -785,7 +794,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             "openai": {
                 "status": "not_required",
                 "error": None,
-                "route": "connected_chatgpt_automation",
+                "route": "connected_claude_automation",
             },
         }
         if naver_settings is None:
@@ -815,8 +824,8 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
         phase_durations["bridge_import_validation"] = perf_counter() - phase_started
 
         run = EditorialRun(
-            model="connected_chatgpt_editor",
-            auditor_model="connected_chatgpt_independent_auditor",
+            model="connected_claude_editor",
+            auditor_model="connected_claude_independent_auditor",
             candidates=bundle.queue.candidates,
             assessments=[],
             plan=bundle.draft.plan,
@@ -1134,6 +1143,40 @@ def _build_adapters(
         else:
             adapters.append(adapter_type())
     return adapters
+
+
+def _known_relevant_seed_discoveries(
+    storage: JsonlStorage, *, start: datetime, end: datetime
+) -> dict[str, list[ArticleDiscovery]]:
+    """Seed the editorial queue's recrawl with already-collected candidate-worthy
+    articles, so one a source's listing page no longer surfaces (because it has
+    scrolled past the page the recrawl fetches) is still refreshed and offered
+    to the editor instead of silently disappearing from the candidate pool.
+    """
+
+    seeds: dict[str, list[ArticleDiscovery]] = {}
+    for article in storage.iter_articles():
+        published = article.published_at or article.first_seen_at
+        if not start <= published < end:
+            continue
+        if article.classification not in (Classification.RELEVANT, Classification.REVIEW):
+            continue
+        seeds.setdefault(article.source, []).append(
+            ArticleDiscovery(
+                source=article.source,
+                article_id=article.article_id,
+                canonical_url=article.canonical_url,
+                title=article.title,
+                byline=article.byline,
+                section=article.section,
+                published_at=article.published_at,
+                updated_at=article.updated_at,
+                summary=article.summary,
+                refresh_only=True,
+                discovery_route=list(article.discovery_route),
+            )
+        )
+    return seeds
 
 
 def _run_source_failures(health: RunHealth) -> list[str]:

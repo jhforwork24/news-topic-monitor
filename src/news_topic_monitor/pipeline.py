@@ -66,6 +66,7 @@ class Collector:
         capture_body_limit_per_source: int | None = None,
         write_health: bool = True,
         rolling_window_end: bool = False,
+        seed_discoveries: dict[str, list[ArticleDiscovery]] | None = None,
     ) -> None:
         self.http = http
         self.storage = storage
@@ -78,6 +79,7 @@ class Collector:
         self.capture_body_limit_per_source = capture_body_limit_per_source
         self.write_health = write_health
         self.rolling_window_end = rolling_window_end
+        self.seed_discoveries = seed_discoveries or {}
 
     def run(self, start: datetime, end: datetime) -> RunHealth:
         with self.storage.batch():
@@ -226,6 +228,11 @@ class Collector:
             raise DiscoveryPathsFailed("all discovery paths failed: " + "; ".join(page_errors))
         health.errors.extend(page_errors)
         health.discovered = len(discoveries)
+        for seed in self.seed_discoveries.get(adapter.source, []):
+            key = stable_article_key(
+                seed.source, seed.canonical_url, seed.article_id, seed.title, seed.published_at
+            )
+            discoveries.setdefault(key, seed)
         discovered_dates = [
             item.published_at for item in discoveries.values() if item.published_at is not None
         ]
@@ -260,6 +267,10 @@ class Collector:
     ) -> set[str]:
         if not self.capture_all_bodies:
             return set()
+        # Seeded (refresh-only) discoveries are known-relevant articles the caller
+        # explicitly asked to refresh, so their body capture is never subject to
+        # the per-source cap below.
+        refresh_keys = {key for key, discovery in discoveries.items() if discovery.refresh_only}
         if self.capture_body_limit_per_source is None and self.capture_body_start is None:
             return set(discoveries)
 
@@ -274,7 +285,7 @@ class Collector:
         eligible.sort(key=lambda item: item[1].published_at, reverse=True)
         if self.capture_body_limit_per_source is not None:
             eligible = eligible[: self.capture_body_limit_per_source]
-        return {key for key, _ in eligible}
+        return {key for key, _ in eligible} | refresh_keys
 
     def _process_article(
         self,

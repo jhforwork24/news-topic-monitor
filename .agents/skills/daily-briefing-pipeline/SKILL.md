@@ -18,7 +18,7 @@ action. Naver API Hub results may detect a gap or complete an independent revers
 not upgrade an article to original-body verified.
 
 The normal production owner is `editorial-finalize.yml`; it is the only workflow allowed to create the
-public daily Notion briefing. `editorial-queue.yml` may run on schedule only when the free ChatGPT bridge
+public daily Notion briefing. `editorial-queue.yml` may run on schedule only when the free Claude bridge
 is enabled. `editorial-publish.yml` is a manual paid-API fallback, and `publish-notion.yml` is a manual
 diagnostic/fallback tool. Never schedule either fallback writer or enable two production writers.
 
