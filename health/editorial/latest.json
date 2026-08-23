@@ -3,9 +3,13 @@
   "report_date": "2026-08-23",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.918,
-    "total": 2.319
+    "api_preflight": 1.643,
+    "assurance": 0.001,
+    "bridge_import_validation": 8.834,
+    "final_state_recrawl": 50.642,
+    "gap_reverse_search": 45.611,
+    "total": 114.298
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: ChatGPT 편집 대기열 · 2026-08-23 · 매니페스트 (found=0)",
-  "completed_at": "2026-08-23T02:57:43.000425Z"
+  "error": "브리핑 발행 검증 실패: II. 노동·돌봄·빈곤 / 게임업계 노동자성 인정과 노조 결성을 둘러싼 국제 비교: 요약에 인용·말줄임 표지가 있음",
+  "completed_at": "2026-08-23T04:20:35.238689Z"
 }
