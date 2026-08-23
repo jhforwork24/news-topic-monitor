@@ -33,8 +33,7 @@ jobs:
   editorial-finalize:
     if: >-
       ${{ github.event_name == 'workflow_dispatch' ||
-          ((vars.PUBLICATION_OWNER == 'claude_editorial_bridge' ||
-            vars.PUBLICATION_OWNER == 'chatgpt_editorial_bridge') &&
+          (vars.PUBLICATION_OWNER == 'claude_editorial_bridge' &&
            vars.NOTION_PUBLISH_ENABLED == 'true') }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
