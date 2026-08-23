@@ -109,7 +109,14 @@ def revalidate_final_state(
             (candidate.published_at for candidate in selected if candidate.published_at),
             default=health.window_start,
         )
-        issue_tokens = _tokens(issue_text)
+        # Overlap is checked against the issue's own title tokens (entity-dense:
+        # organization/place/event names), not the full title+summary+candidate
+        # text. A follow-up must reference the same named subject in its own
+        # headline. Matching against long body text instead let unrelated
+        # articles that merely happened to share two ordinary words (over a
+        # full article's worth of tokens, coincidental overlap is common) get
+        # mistaken for a follow-up on a completely different story.
+        issue_title_tokens = _tokens(issue.title)
         updates: list[EditorialCandidate] = []
         selected_ids = set(issue.candidate_ids)
         for candidate in all_candidates:
@@ -132,7 +139,7 @@ def revalidate_final_state(
                 continue
             if candidate.verification_status != VerificationStatus.BODY_VERIFIED:
                 continue
-            if _overlap(issue_tokens, _tokens(candidate_text)) < 2:
+            if _overlap(issue_title_tokens, _tokens(candidate.title)) < 1:
                 continue
             updates.append(candidate)
 

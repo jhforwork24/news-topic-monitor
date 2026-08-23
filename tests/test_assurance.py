@@ -221,6 +221,117 @@ def test_final_state_fails_when_recrawl_predates_gpt_draft() -> None:
     assert "초안·감사 완료 뒤" in result.checks[0].reason
 
 
+def test_final_state_ignores_unrelated_article_with_only_incidental_body_overlap() -> None:
+    # Regression test: a real editorial-finalize run flagged four unrelated
+    # labor issues as "changed after draft" because three completely
+    # unrelated long articles (about an industrial park investment, a party
+    # reshuffle, and a supercomputing project) each happened to share a
+    # couple of ordinary words with the issues' summaries and contained a
+    # final_state_terms substring somewhere in their body. None of them
+    # actually mentioned the issue's subject (HL만도, 평택공장, 유가족...).
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    original = _candidate(
+        "old", "HL만도 평택공장 비정규직 노동자 끼임 사망", now - timedelta(hours=3)
+    )
+    unrelated = EditorialCandidate(
+        candidate_id="unrelated",
+        source="hani",
+        canonical_url="https://www.hani.co.kr/arti/unrelated",
+        title="새만금 산업단지 대규모 투자 계획 발표",
+        byline="기자",
+        section="경제",
+        published_at=now - timedelta(minutes=10),
+        summary="정부는 이번 사업 관리 방안에 합의했으며 책임 소재를 재개 검토하기로 했다. " * 2,
+        evidence_text=(
+            "정부는 이번 사업 관리 방안에 합의했으며 책임 소재를 재개 검토하기로 했다. " * 5
+        ),
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.RELEVANT,
+        rule_score=10,
+    )
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="HL만도 평택공장 비정규직 노동자 끼임 사망, 유가족 원청 책임 촉구",
+                candidate_ids=[original.candidate_id],
+                summary="유가족과 노동단체는 책임 규명과 관리 강화를 요구했다.",
+                tone_analysis="원청의 안전관리 부실 책임을 강조하는 논조를 보인다.",
+            )
+        ],
+        exclusions=[],
+    )
+    audit = EditorialAudit(findings=[], progressive_issue_titles=[plan.issues[0].title])
+
+    result = revalidate_final_state(
+        plan=plan,
+        audit=audit,
+        all_candidates=[original, unrelated],
+        health=_health(now),
+        policy=policy,
+        draft_completed_at=now - timedelta(minutes=30),
+        checked_at=now,
+    )
+
+    assert result.status == CheckStatus.COMPLETE
+    assert result.checks[0].changed_after_draft is False
+    assert result.checks[0].evidence_urls == []
+
+
+def test_final_state_still_detects_follow_up_that_names_the_same_subject() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    original = _candidate(
+        "old", "HL만도 평택공장 비정규직 노동자 끼임 사망", now - timedelta(hours=3)
+    )
+    follow_up = EditorialCandidate(
+        candidate_id="follow-up",
+        source="hani",
+        canonical_url="https://www.hani.co.kr/arti/follow-up",
+        title="HL만도 평택공장 사고 원청 합의 타결",
+        byline="기자",
+        section="사회",
+        published_at=now - timedelta(minutes=10),
+        summary="HL만도와 유가족은 원청 책임을 인정하는 합의에 타결했다고 밝혔다. " * 2,
+        evidence_text="HL만도와 유가족은 원청 책임을 인정하는 합의에 타결했다고 밝혔다. " * 5,
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.RELEVANT,
+        rule_score=10,
+    )
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="HL만도 평택공장 비정규직 노동자 끼임 사망, 유가족 원청 책임 촉구",
+                candidate_ids=[original.candidate_id],
+                summary="유가족과 노동단체는 책임 규명과 관리 강화를 요구했다.",
+                tone_analysis="원청의 안전관리 부실 책임을 강조하는 논조를 보인다.",
+            )
+        ],
+        exclusions=[],
+    )
+    audit = EditorialAudit(findings=[], progressive_issue_titles=[plan.issues[0].title])
+
+    result = revalidate_final_state(
+        plan=plan,
+        audit=audit,
+        all_candidates=[original, follow_up],
+        health=_health(now),
+        policy=policy,
+        draft_completed_at=now - timedelta(minutes=30),
+        checked_at=now,
+    )
+
+    assert result.status == CheckStatus.COMPLETE
+    assert result.checks[0].changed_after_draft is True
+    assert result.checks[0].evidence_urls == [follow_up.canonical_url]
+
+
 def test_publish_gate_is_machine_checkable_and_fail_closed() -> None:
     root = __import__("pathlib").Path(__file__).parents[1]
     policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
