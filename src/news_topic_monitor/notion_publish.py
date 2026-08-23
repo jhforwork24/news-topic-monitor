@@ -39,6 +39,7 @@ from .chat_bridge import (
 from .classifier import RuleClassifier
 from .editorial import select_chat_editorial_candidates
 from .models import Classification, EditorialCandidate
+from .selection_review import NearMissTopic, ScoredArticle, SelectionReview
 from .sources import SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import KST, normalize_text, short_error, short_text
@@ -361,6 +362,48 @@ class NotionPublisher:
                     _paragraph("GitHub Actions 자동발행 점검 필요"),
                     *children,
                 ],
+            },
+        )
+        return str(page.get("url")) if page.get("url") else None
+
+    def record_selection_report(self, review: SelectionReview) -> str | None:
+        if not self.settings.reports_data_source_id:
+            return None
+        title = f"선별 검토 자료 ({review.report_date})"
+        matches = self._query_exact(self.settings.reports_data_source_id, title, review.report_date)
+        if matches:
+            page_url = matches[0].get("url")
+            return str(page_url) if page_url else None
+        children: list[dict[str, Any]] = [
+            _heading(
+                f"장애 섹션 후보 전체 목록 (선별 이전, disability_rights 점수순 상위 "
+                f"{len(review.candidate_pool)}건)",
+                2,
+            ),
+            *_selection_pool_blocks(review.candidate_pool),
+            _heading("선별 커트라인(relevant) 근접 낙선 기사", 2),
+        ]
+        for topic in review.near_miss:
+            children.append(
+                _heading(
+                    f"{topic.topic_label} · 커트라인 {topic.relevant_threshold:.1f}점",
+                    3,
+                )
+            )
+            children.extend(_near_miss_blocks(topic))
+        page = self._request(
+            "POST",
+            "/pages",
+            json={
+                "parent": {
+                    "type": "data_source_id",
+                    "data_source_id": self.settings.reports_data_source_id,
+                },
+                "properties": {
+                    "이름": {"title": [_rich_text(title)]},
+                    "날짜": {"date": {"start": review.report_date}},
+                },
+                "children": children,
             },
         )
         return str(page.get("url")) if page.get("url") else None
@@ -1072,6 +1115,68 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
             }
         )
     return blocks
+
+
+def _selection_pool_blocks(pool: list[ScoredArticle]) -> list[dict[str, Any]]:
+    if not pool:
+        return [_paragraph("해당 기간 수집된 기사 없음")]
+    rows = [
+        _table_row(
+            [
+                [_rich_text("순위")],
+                [_rich_text("기사")],
+                [_rich_text("점수")],
+                [_rich_text("분류")],
+                [_rich_text("최종 선정")],
+            ]
+        )
+    ]
+    for rank, entry in enumerate(pool, start=1):
+        rows.append(
+            _table_row(
+                [
+                    [_rich_text(str(rank))],
+                    [
+                        _rich_text(article_listing_prefix(entry.article)),
+                        _rich_text(entry.article.title, href=entry.article.canonical_url),
+                    ],
+                    [_rich_text(f"{entry.topic_score:.2f}")],
+                    [_rich_text(entry.classification.value)],
+                    [_rich_text("선정" if entry.selected else "-")],
+                ]
+            )
+        )
+    return [_table(rows, width=5)]
+
+
+def _near_miss_blocks(topic: NearMissTopic) -> list[dict[str, Any]]:
+    if not topic.articles:
+        return [_paragraph("커트라인 근접 낙선 기사 없음")]
+    rows = [
+        _table_row(
+            [
+                [_rich_text("순위")],
+                [_rich_text("기사")],
+                [_rich_text("점수")],
+                [_rich_text("커트라인과의 차이")],
+            ]
+        )
+    ]
+    for rank, entry in enumerate(topic.articles, start=1):
+        rows.append(
+            _table_row(
+                [
+                    [_rich_text(str(rank))],
+                    [
+                        _rich_text(article_listing_prefix(entry.article)),
+                        _rich_text(entry.article.title, href=entry.article.canonical_url),
+                    ],
+                    [_rich_text(f"{entry.topic_score:.2f}")],
+                    [_rich_text(f"-{topic.relevant_threshold - entry.topic_score:.2f}")],
+                ]
+            )
+        )
+    return [_table(rows, width=4)]
 
 
 def _page_properties(title: str, document: BriefingDocument) -> dict[str, Any]:

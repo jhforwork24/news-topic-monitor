@@ -25,6 +25,7 @@ from news_topic_monitor.notion_publish import (
     NotionPublishSettings,
     notion_blocks,
 )
+from news_topic_monitor.selection_review import NearMissTopic, ScoredArticle, SelectionReview
 
 
 def _document() -> BriefingDocument:
@@ -376,3 +377,136 @@ def test_notion_query_retries_retry_after() -> None:
     assert publisher._query_date("ds-1", "2026-08-16") == []
     assert calls == 2
     assert delays == [0.25]
+
+
+def _scored_article(key: str, *, topic_score: float, selected: bool = False) -> ScoredArticle:
+    published = datetime(2026, 8, 15, 1, tzinfo=UTC)
+    article = ArticleRecord(
+        source="hani",
+        article_id=key,
+        canonical_url=f"https://example.com/{key}",
+        title=f"기사 {key}",
+        byline="김기자",
+        section="사회",
+        published_at=published,
+        updated_at=None,
+        first_seen_at=published,
+        last_seen_at=published,
+        summary="합성 시험 요약",
+        monitor_summary="규칙 판정 결과",
+        body_status=BodyStatus.FETCHED,
+        content_hash=key,
+        classification=Classification.REVIEW,
+        topic_score=topic_score,
+        matched_terms=[],
+        excluded_terms=[],
+        classification_reason="합성 시험 판정",
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        collection_error=None,
+    )
+    return ScoredArticle(
+        article=article,
+        topic_score=topic_score,
+        classification=Classification.REVIEW,
+        selected=selected,
+    )
+
+
+def _selection_review() -> SelectionReview:
+    return SelectionReview(
+        report_date="2026-08-15",
+        candidate_pool=[
+            _scored_article("first", topic_score=7.5, selected=True),
+            _scored_article("second", topic_score=6.0),
+        ],
+        near_miss=[
+            NearMissTopic(
+                topic_label="I절 장애정책·장애인운동",
+                relevant_threshold=8.0,
+                articles=[_scored_article("near", topic_score=7.9)],
+            ),
+            NearMissTopic(
+                topic_label="II절 노동·돌봄·빈곤",
+                relevant_threshold=9.0,
+                articles=[],
+            ),
+        ],
+    )
+
+
+def test_record_selection_report_without_reports_data_source_returns_none() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:  # pragma: no cover - must not be called
+        raise AssertionError(f"unexpected request: {request.method} {request.url}")
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="ds-1"), client=client
+    )
+    assert publisher.record_selection_report(_selection_review()) is None
+
+
+def test_record_selection_report_creates_page_with_pool_and_near_miss_tables() -> None:
+    requests: list[tuple[str, str, dict]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content) if request.content else {}
+        requests.append((request.method, request.url.path, body))
+        if request.url.path.endswith("/query"):
+            return httpx.Response(200, json={"results": [], "has_more": False})
+        if request.url.path == "/v1/pages":
+            return httpx.Response(200, json={"id": "review-1", "url": "https://notion.so/review-1"})
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(
+            token="test", data_source_id="ds-1", reports_data_source_id="reports-ds"
+        ),
+        client=client,
+    )
+    result = publisher.record_selection_report(_selection_review())
+
+    assert result == "https://notion.so/review-1"
+    create = next(
+        body for method, path, body in requests if method == "POST" and path == "/v1/pages"
+    )
+    assert create["parent"]["data_source_id"] == "reports-ds"
+    title = create["properties"]["이름"]["title"][0]["text"]["content"]
+    assert title == "선별 검토 자료 (2026-08-15)"
+    assert create["properties"]["날짜"]["date"]["start"] == "2026-08-15"
+    rendered = json.dumps(create["children"], ensure_ascii=False)
+    assert "기사 first" in rendered
+    assert "기사 second" in rendered
+    assert "기사 near" in rendered
+    assert "I절 장애정책·장애인운동" in rendered
+    assert "II절 노동·돌봄·빈곤" in rendered
+    assert "커트라인 근접 낙선 기사 없음" in rendered
+
+
+def test_record_selection_report_is_idempotent() -> None:
+    requests: list[tuple[str, str, dict]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content) if request.content else {}
+        requests.append((request.method, request.url.path, body))
+        if request.url.path.endswith("/query"):
+            return httpx.Response(
+                200,
+                json={
+                    "results": [{"id": "existing", "url": "https://notion.so/existing"}],
+                    "has_more": False,
+                },
+            )
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(
+            token="test", data_source_id="ds-1", reports_data_source_id="reports-ds"
+        ),
+        client=client,
+    )
+    result = publisher.record_selection_report(_selection_review())
+
+    assert result == "https://notion.so/existing"
+    assert not any(method == "POST" and path == "/v1/pages" for method, path, _ in requests)
