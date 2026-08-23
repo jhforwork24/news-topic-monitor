@@ -11,7 +11,6 @@ from .briefing import (
 from .models import ArticleRecord, Classification
 from .utils import stable_article_key
 
-SECTION_II_ALLOWED_REFERENCE_CATEGORIES = frozenset({"현행 제도", "관련 연구 및 문서"})
 FORBIDDEN_SUMMARY_MARKERS = ('"', "'", "“", "”", "\u2018", "\u2019", "...", "…")
 
 
@@ -51,19 +50,10 @@ def validate_briefing(document: BriefingDocument) -> None:
                 if invalid:
                     errors.append(f"{section.title} / {issue.title}: 자동확정되지 않은 기사 포함")
 
-            if section.title.startswith("II."):
-                disallowed = {
-                    reference.category
-                    for reference in issue.references
-                    if reference.category not in SECTION_II_ALLOWED_REFERENCE_CATEGORIES
-                }
-                if disallowed:
-                    errors.append(
-                        f"{section.title} / {issue.title}: 허용되지 않은 참고 범주 "
-                        + ", ".join(sorted(disallowed))
-                    )
-                if any(labor_editorial_exclusion(article) for article in issue.articles):
-                    errors.append(f"{section.title} / {issue.title}: 사진·연예·스포츠 보도 포함")
+            if section.title.startswith("II.") and any(
+                labor_editorial_exclusion(article) for article in issue.articles
+            ):
+                errors.append(f"{section.title} / {issue.title}: 사진·연예·스포츠 보도 포함")
 
             if section.title.startswith("III.") and any(
                 not editorial_opinion_allowed(article) for article in issue.articles
@@ -81,7 +71,7 @@ def validate_briefing(document: BriefingDocument) -> None:
         "| 언론사 | 기사 | 발행 |": "주요 언론 보도가 표로 출력됨",
         "### 기사 요약": "기사 요약이 별도 항목으로 출력됨",
         "### 보도 논조": "보도 논조가 별도 항목으로 출력됨",
-        "### 이전 보도 참고": "이전 보도가 토글 밖에 출력됨",
+        "### 동일 주제 이전 보도": "이전 보도가 토글 밖에 출력됨",
     }
     for marker, message in forbidden_output.items():
         if marker in rendered:

@@ -8,7 +8,6 @@ from news_topic_monitor.briefing import (
     BriefingSection,
     analyze_tone,
     build_briefing,
-    crpd_articles,
     is_opinion,
     previous_coverage_for,
     render_briefing_markdown,
@@ -94,9 +93,6 @@ def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> Non
     assert document.sections[2].issues
     text = render_briefing_markdown(document, crpd_url="https://notion.example/crpd")
     assert text.index("I. 장애정책") < text.index("II. 노동") < text.index("III. 주요 칼럼")
-    assert "<details>" in text
-    assert "추가 자료 · 더 알아보기" in text
-    assert "| 범주 | 자료 | 확인 쟁점 |" in text
     assert "### 이슈 요약·보도 논조" in text
     assert "### 기사 요약" not in text
     assert "### 보도 논조" not in text
@@ -145,11 +141,31 @@ def test_previous_coverage_requires_a_specific_shared_concept() -> None:
     assert any(item.url == earlier_access.canonical_url for item in access_previous)
 
 
-def test_crpd_mapping_avoids_incidental_school_and_tour_bus_words() -> None:
-    mapped = crpd_articles("인화학교 사건 이후 정신의료기관 입원자를 관광버스로 집단 전원했다.")
-    assert not any(item.startswith("제24조") for item in mapped)
-    assert not any(item.startswith("제30조") for item in mapped)
-    assert any(item.startswith("제14조") for item in mapped)
+def test_previous_coverage_prefers_more_detailed_report_at_equal_relevance() -> None:
+    current = _article(
+        "hani",
+        "권리중심공공일자리 예산 국회 심의",
+        section="탈시설·자립생활",
+        article_id="budget-current",
+    )
+    thin_report = _article(
+        "donga",
+        "권리중심공공일자리 관련 단신",
+        article_id="thin",
+    )
+    thin_report.verification_status = VerificationStatus.METADATA_ONLY
+    thin_report.summary = "짧은 단신."
+    detailed_report = _article(
+        "hani",
+        "권리중심공공일자리 예산 편성 경과 보도",
+        article_id="detailed",
+    )
+    detailed_report.verification_status = VerificationStatus.BODY_VERIFIED
+    detailed_report.summary = "예산 편성 경과와 정부·지자체 입장을 상세히 다룬 보도." * 3
+
+    previous = previous_coverage_for([current], [thin_report, detailed_report])
+    assert previous
+    assert previous[0].url == detailed_report.canonical_url
 
 
 def test_korean_particles_for_single_and_multi_article_tone() -> None:
@@ -195,7 +211,9 @@ def test_markdown_article_link_escapes_brackets(tmp_path, topics_path) -> None:
     assert r"[\[현장\] 장애인 이동권 \| 보도](https://example.com/hani/1)" in text
 
 
-def test_editorial_exclusions_section_assignment_and_crpd_order(tmp_path, topics_path) -> None:
+def test_editorial_exclusions_section_assignment_and_previous_coverage(
+    tmp_path, topics_path
+) -> None:
     storage = JsonlStorage(tmp_path)
     rows = [
         _article(
@@ -283,40 +301,8 @@ def test_editorial_exclusions_section_assignment_and_crpd_order(tmp_path, topics
     assert not any("귀성길" in title for title in disability_titles)
     assert not any("선정 접수" in title for title in disability_titles)
     assert "CRPD 채택 20주년" in disability_titles[-1]
-    care_issue = next(
-        issue
-        for issue in document.sections[0].issues
-        if "최중증 발달장애인 통합돌봄" in issue.title
-    )
-    care_labels = {reference.label for reference in care_issue.references}
-    assert "발달장애인 권리보장 및 지원에 관한 법률" in care_labels
-    assert "근로기준법" not in care_labels
-    assert not any("아이돌봄" in label for label in care_labels)
     ordinance = next(issue for issue in document.sections[0].issues if "서울시의회" in issue.title)
     assert any("30268" in (item.url or "") for item in ordinance.previous_coverage)
-    color_issue = next(issue for issue in document.sections[0].issues if "색동원" in issue.title)
-    international_norms = [
-        reference for reference in color_issue.references if reference.category == "국제 규범"
-    ]
-    assert any("thekdf.org" in (reference.url or "") for reference in international_norms)
-    assert any(
-        "uhr.humanrights.go.kr/pub/uhrstd/373" in (reference.url or "")
-        for reference in international_norms
-        if "일반논평" in reference.label
-    )
-    assert all(
-        reference.category != "관련 연구 및 문서"
-        for reference in color_issue.references
-        if "일반논평" in reference.label
-    )
-    categories = list(dict.fromkeys(reference.category for reference in color_issue.references))
-    requested_order = [
-        "관련 단체 입장",
-        "관련 연구 및 문서",
-        "현행 제도",
-        "국제 규범",
-    ]
-    assert categories == [category for category in requested_order if category in categories]
 
 
 def test_column_scope_and_mandatory_authors(tmp_path, topics_path) -> None:
@@ -476,8 +462,9 @@ def test_previous_coverage_is_only_inside_toggle_and_limited_to_three(
     issue = document.sections[0].issues[0]
     assert 0 <= len(issue.previous_coverage) <= 3
     text = render_briefing_markdown(document, crpd_url=None)
-    assert "### 이전 보도 참고" not in text
-    assert text.index("<summary>추가 자료 · 더 알아보기</summary>") < text.index("| 이전 보도 |")
+    assert "### 동일 주제 이전 보도" not in text
+    summary_index = text.index("<summary>동일 주제 이전 보도</summary>")
+    assert summary_index < text.index("|", summary_index)
     assert "홍길동 기자" in text
     assert "| 언론사 | 기사 | 발행 |" not in text
 
@@ -489,7 +476,6 @@ def test_markdown_omits_reference_toggle_when_nothing_to_show() -> None:
         summary="장애인단체는 이동권 보장을 요구했다.",
         tone_analysis="한겨레는 당사자 요구를 중심으로 보도했다.",
         previous_coverage=[],
-        references=[],
     )
     document = BriefingDocument(
         report_date="2026-08-16",
@@ -502,5 +488,5 @@ def test_markdown_omits_reference_toggle_when_nothing_to_show() -> None:
     )
     text = render_briefing_markdown(document, crpd_url=None)
     assert "<details>" not in text
-    assert "추가 자료 · 더 알아보기" not in text
+    assert "동일 주제 이전 보도" not in text
     assert "확인된 추가 자료 없음" not in text

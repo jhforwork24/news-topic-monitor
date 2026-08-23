@@ -25,6 +25,7 @@ from .models import (
     EditorialVerdict,
     VerificationStatus,
 )
+from .sources import SOURCE_CAMP
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
 
@@ -516,6 +517,7 @@ def _candidate_payload(candidate: EditorialCandidate, evidence_chars: int) -> di
     return {
         "candidate_id": candidate.candidate_id,
         "source": candidate.source,
+        "camp": SOURCE_CAMP.get(candidate.source),
         "title": candidate.title,
         "byline": candidate.byline,
         "source_section": candidate.section,
@@ -735,7 +737,17 @@ def _planning_prompt() -> str:
 summary는 기사가 아니라 해당 이슈를 요약한 중립적인 완성형 문장으로 쓴다.
 직접 인용, 인용부호, 말줄임표를 사용하지 않는다. 당사자를 시혜나 비극의 대상으로 묘사하지 않고
 권리, 정책 변화, 공적 책임, 노동관계를 사실에 근거해 정리한다.
-tone_analysis는 단일 보도면 0~1문장, 복수 보도면 1~4문장으로 작성한다.
+
+tone_analysis는 단일 보도면 0~1문장, 복수 보도면 1~4문장으로 작성한다. 서로 다른 매체가 2개
+이상 포함된 이슈는 evidence_text(본문이 확보된 후보는 요약이 아니라 실제 본문)를 읽고, 다음
+가운데 최소 2가지를 실제 텍스트에서 관찰한 근거로 비교한다: 제목·리드에서 강조한 지점, 취재원
+구성과 인용 순서, 책임을 귀속시킨 대상, 강조한 사실과 다루지 않은 쟁점. "중심으로 구성했다",
+"강조했다", "다루지 않았다"처럼 관찰한 사실만 서술하고 "의도했다"처럼 매체의 의도를 추정하지
+않는다. camp(보수/진보/전문지)는 실제 텍스트를 읽고 확인한 차이를 묶어 설명하는 용도로만 쓰고,
+본문을 읽지 않은 채 매체 성향만으로 내용을 추정하는 근거로 쓰지 않는다. 직접 인용은 매체당 1회,
+15단어 이내로 제한한다. evidence_text가 요약 수준이라 본문을 확보하지 못한 후보가 섞인 경우
+그 사실을 tone_analysis에 명시하고 확인한 범위를 넘어선 비교를 하지 않는다.
+
 title도 선정 기사들의 공통 이슈를 나타내며 선정 기사 제목을 기계적으로 이어 붙이지 않는다.
 exclusions에는 중요도가 높았지만 최종 제외한 후보만 최대 20개까지 기록한다.
 """.strip()
@@ -750,8 +762,10 @@ draft_plan의 각 핵심 문장을 evidence와 처음부터 대조한다. 기사
 fatal은 다음 경우에만 사용한다. 근거에 없는 사실·수치·행위자·현재상태, 조사기간 밖 기사를 당일
 주요 보도로 오인, 원문 미확인 기사에 근거한 확정적 논조 분석, 서로 다른 사건의 잘못된 통합,
 섹션 오분류, 최근 상태와 충돌하는 서술, evidence에 없거나 원자료 확인 상태가 없는 법률·통계
-주장을 초안이 새로 덧붙인 경우다. 기사에 보도된 주장과 독립적으로 확인된 사실을 구분한다.
-표현 개선은 warning으로 기록한다.
+주장을 초안이 새로 덧붙인 경우다. 서로 다른 매체가 2개 이상인 이슈의 tone_analysis가
+evidence_text 문장으로 확인되지 않는 취재원·인용 순서·강조점을 단정하거나, 실제 텍스트 근거
+없이 매체 성향(보수·진보·전문지)만으로 논조를 추정한 경우도 fatal이다. 기사에 보도된 주장과
+독립적으로 확인된 사실을 구분한다. 표현 개선은 warning으로 기록한다.
 농성·파업·교섭·지하철 행동·집회·시위·단식·점거·요구·투쟁처럼 발행 직전 상태가 달라질 수 있는
 이슈의 제목은 progressive_issue_titles에 정확히 기록한다. findings가 없으면 빈 배열을 반환한다.
 """.strip()

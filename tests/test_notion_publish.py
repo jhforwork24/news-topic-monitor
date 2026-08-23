@@ -9,7 +9,6 @@ import pytest
 from news_topic_monitor.briefing import (
     BriefingDocument,
     BriefingIssue,
-    BriefingReference,
     BriefingSection,
     PreviousCoverage,
 )
@@ -83,7 +82,7 @@ def test_notion_blocks_keep_technical_notes_out_of_briefing() -> None:
     assert "점검" not in rendered
 
 
-def test_notion_issue_uses_article_bullets_and_one_reference_toggle() -> None:
+def test_notion_issue_uses_article_bullets_and_previous_coverage_toggle() -> None:
     now = datetime(2026, 8, 15, 1, tzinfo=UTC)
     article = ArticleRecord(
         source="hani",
@@ -115,14 +114,6 @@ def test_notion_issue_uses_article_bullets_and_one_reference_toggle() -> None:
                 "정책 변화 여부를 대조한다.",
             )
         ],
-        references=[
-            BriefingReference(
-                "현행 제도",
-                "교통약자의 이동편의 증진법",
-                "https://example.com/law",
-                "법적 의무를 확인한다.",
-            )
-        ],
     )
     document = _document()
     document.sections = [BriefingSection("I. 장애정책·장애인운동", [issue])]
@@ -137,8 +128,8 @@ def test_notion_issue_uses_article_bullets_and_one_reference_toggle() -> None:
     assert "KST" not in rendered
     toggle = next(block for block in blocks if block["type"] == "toggle")
     toggle_text = json.dumps(toggle, ensure_ascii=False)
-    assert "이전 보도" in toggle_text
-    assert "현행 제도" in toggle_text
+    assert "동일 주제 이전 보도" in toggle_text
+    assert "이전 이동권 보도" in toggle_text
 
 
 def test_notion_issue_omits_reference_toggle_when_nothing_to_show() -> None:
@@ -166,7 +157,6 @@ def test_notion_issue_omits_reference_toggle_when_nothing_to_show() -> None:
         summary="장애인단체는 이동권 보장을 요구했다.",
         tone_analysis="한겨레는 당사자 요구를 중심으로 보도했다.",
         previous_coverage=[],
-        references=[],
     )
     document = _document()
     document.sections = [BriefingSection("I. 장애정책·장애인운동", [issue])]
@@ -174,7 +164,7 @@ def test_notion_issue_omits_reference_toggle_when_nothing_to_show() -> None:
     assert not any(block["type"] == "toggle" for block in blocks)
     rendered = json.dumps(blocks, ensure_ascii=False)
     assert "확인된 추가 자료 없음" not in rendered
-    assert "추가 자료 · 더 알아보기" not in rendered
+    assert "동일 주제 이전 보도" not in rendered
 
 
 def test_notion_publish_creates_page_and_children() -> None:

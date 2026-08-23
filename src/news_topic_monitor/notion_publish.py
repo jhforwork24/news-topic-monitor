@@ -1080,27 +1080,14 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
             _paragraph(issue_analysis_text(issue)),
         ]
     )
-    if issue.previous_coverage or issue.references:
-        reference_rows = [
-            _table_row([[_rich_text("범주")], [_rich_text("자료")], [_rich_text("확인 쟁점")]])
-        ]
+    if issue.previous_coverage:
+        coverage_rows = [_table_row([[_rich_text("자료")], [_rich_text("확인 쟁점")]])]
         for item in issue.previous_coverage[:3]:
-            reference_rows.append(
+            coverage_rows.append(
                 _table_row(
                     [
-                        [_rich_text("이전 보도")],
                         [_rich_text(item.label, href=item.url)],
                         [_rich_text(f"{item.published} · {item.comparison}")],
-                    ]
-                )
-            )
-        for reference in issue.references:
-            reference_rows.append(
-                _table_row(
-                    [
-                        [_rich_text(reference.category)],
-                        [_rich_text(reference.label, href=reference.url)],
-                        [_rich_text(reference.note)],
                     ]
                 )
             )
@@ -1109,8 +1096,8 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 "object": "block",
                 "type": "toggle",
                 "toggle": {
-                    "rich_text": [_rich_text("추가 자료 · 더 알아보기")],
-                    "children": [_table(reference_rows, width=3)],
+                    "rich_text": [_rich_text("동일 주제 이전 보도")],
+                    "children": [_table(coverage_rows, width=2)],
                 },
             }
         )
