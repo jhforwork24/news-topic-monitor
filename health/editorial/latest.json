@@ -1,15 +1,21 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-23",
-  "status": "failed",
+  "status": "blocked_by_publish_gate",
+  "model": "connected_chatgpt_editor",
+  "auditor_model": "connected_chatgpt_independent_auditor",
+  "candidate_count": 140,
+  "included_after_first_pass": 0,
+  "published_issue_count": 6,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.643,
-    "assurance": 0.001,
-    "bridge_import_validation": 8.834,
-    "final_state_recrawl": 50.642,
-    "gap_reverse_search": 45.611,
-    "total": 114.298
+    "api_preflight": 1.779,
+    "assurance": 0.003,
+    "bridge_import_validation": 8.406,
+    "final_state_recrawl": 62.622,
+    "gap_reverse_search": 47.11,
+    "total": 121.282
   },
-  "error": "브리핑 발행 검증 실패: II. 노동·돌봄·빈곤 / 게임업계 노동자성 인정과 노조 결성을 둘러싼 국제 비교: 요약에 인용·말줄임 표지가 있음",
-  "completed_at": "2026-08-23T04:20:35.238689Z"
+  "error": "publish gate blocked publication: 초안 작성 뒤 최종상태 변경이 발견되어 재편집이 필요함",
+  "completed_at": "2026-08-23T04:52:44.024776Z"
 }

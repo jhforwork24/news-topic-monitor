@@ -44,19 +44,19 @@
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-08-23T04:19:19.801835Z",
+      "last_run_at": "2026-08-23T04:51:26.542338Z",
       "success": true,
-      "discovered": 105,
+      "discovered": 106,
       "errors": [],
-      "last_success_at": "2026-08-23T04:19:19.801835Z",
+      "last_success_at": "2026-08-23T04:51:26.542338Z",
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-08-23T04:19:42.074991Z",
+      "last_run_at": "2026-08-23T04:51:54.800381Z",
       "success": true,
       "discovered": 25,
       "errors": [],
-      "last_success_at": "2026-08-23T04:19:42.074991Z",
+      "last_success_at": "2026-08-23T04:51:54.800381Z",
       "discovery_status": "complete"
     },
     "newscham": {

@@ -1,11 +1,38 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-23",
-  "checked_at": "2026-08-23T04:20:28.485956Z",
-  "allowed": true,
-  "fatal_errors": [],
+  "checked_at": "2026-08-23T04:52:42.573754Z",
+  "allowed": false,
+  "fatal_errors": [
+    "초안 작성 뒤 최종상태 변경이 발견되어 재편집이 필요함"
+  ],
   "degraded_warnings": [],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
-  "reporting_items": []
+  "reporting_items": [
+    {
+      "cause": "HL만도 평택공장 비정규직 노동자 끼임 사망, 유가족 원청 책임 촉구: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
+      "result": "changed_after_draft",
+      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
+    },
+    {
+      "cause": "전북 무주 필리핀 계절근로자 임금체불, 지자체·정부 관리 책임 방치 논란: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
+      "result": "changed_after_draft",
+      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
+    },
+    {
+      "cause": "태움으로 숨진 간호사들 추모, 병원의 구조적 책임 촉구: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
+      "result": "changed_after_draft",
+      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
+    },
+    {
+      "cause": "전교조 해직교사 국가폭력 사과 속 미흡한 명예회복 문제 제기: 초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+      "fallback": "새 후속보도 URL을 evidence에 남기고 기존 초안 발행을 중단",
+      "result": "changed_after_draft",
+      "next_action": "후속보도를 초안에 반영하고 편집·감사·gate를 처음부터 재실행"
+    }
+  ]
 }

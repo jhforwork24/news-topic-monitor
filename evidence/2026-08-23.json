@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-23",
-  "generated_at": "2026-08-23T04:20:29.200318Z",
+  "generated_at": "2026-08-23T04:52:43.221800Z",
   "articles": [
     {
       "candidate_id": "bb6061122581a65fb2ec636cc0d4442a5bb700c60634674a45327e167fe682b7",
@@ -27432,7 +27432,7 @@
       "published_at": "2026-08-23T00:38:17Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.069484Z",
-      "last_checked_at": "2026-08-23T04:19:40.079414Z",
+      "last_checked_at": "2026-08-23T04:51:52.791334Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -27605,7 +27605,7 @@
       "published_at": "2026-08-23T00:47:38Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.069320Z",
-      "last_checked_at": "2026-08-23T04:19:38.059862Z",
+      "last_checked_at": "2026-08-23T04:51:50.805501Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -27836,7 +27836,7 @@
       "published_at": "2026-08-23T00:56:08Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.069147Z",
-      "last_checked_at": "2026-08-23T04:19:36.149088Z",
+      "last_checked_at": "2026-08-23T04:51:48.796522Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -27855,7 +27855,7 @@
       "published_at": "2026-08-23T00:57:41Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.068971Z",
-      "last_checked_at": "2026-08-23T04:19:34.062662Z",
+      "last_checked_at": "2026-08-23T04:51:46.800875Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -28046,7 +28046,7 @@
       "published_at": "2026-08-23T01:08:13Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.068786Z",
-      "last_checked_at": "2026-08-23T04:19:32.061983Z",
+      "last_checked_at": "2026-08-23T04:51:44.799445Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -28255,7 +28255,7 @@
       "published_at": "2026-08-23T01:21:12Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.068575Z",
-      "last_checked_at": "2026-08-23T04:19:30.059834Z",
+      "last_checked_at": "2026-08-23T04:51:42.789796Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -28293,7 +28293,7 @@
       "published_at": "2026-08-23T01:27:57Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:07.068355Z",
-      "last_checked_at": "2026-08-23T04:19:28.065289Z",
+      "last_checked_at": "2026-08-23T04:51:40.797647Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -28715,7 +28715,7 @@
       "published_at": "2026-08-23T01:48:00Z",
       "modified_at": "2026-08-23T01:48:00Z",
       "discovered_at": "2026-08-23T03:19:02.763300Z",
-      "last_checked_at": "2026-08-23T04:19:17.855202Z",
+      "last_checked_at": "2026-08-23T04:51:24.594248Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -28867,7 +28867,7 @@
       "published_at": "2026-08-23T01:56:00Z",
       "modified_at": "2026-08-23T01:56:00Z",
       "discovered_at": "2026-08-23T04:19:13.851637Z",
-      "last_checked_at": "2026-08-23T04:19:13.851637Z",
+      "last_checked_at": "2026-08-23T04:51:20.571222Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -28944,7 +28944,7 @@
       "published_at": "2026-08-23T01:57:00Z",
       "modified_at": "2026-08-23T01:57:00Z",
       "discovered_at": "2026-08-23T04:19:05.848922Z",
-      "last_checked_at": "2026-08-23T04:19:05.848922Z",
+      "last_checked_at": "2026-08-23T04:51:12.627724Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -28963,7 +28963,7 @@
       "published_at": "2026-08-23T01:57:00Z",
       "modified_at": "2026-08-23T01:57:00Z",
       "discovered_at": "2026-08-23T03:19:02.762873Z",
-      "last_checked_at": "2026-08-23T04:19:09.880601Z",
+      "last_checked_at": "2026-08-23T04:51:16.513831Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -28982,7 +28982,7 @@
       "published_at": "2026-08-23T01:57:00Z",
       "modified_at": "2026-08-23T01:57:00Z",
       "discovered_at": "2026-08-23T03:19:02.763017Z",
-      "last_checked_at": "2026-08-23T04:19:11.842563Z",
+      "last_checked_at": "2026-08-23T04:51:18.560745Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -29040,7 +29040,7 @@
       "published_at": "2026-08-23T01:58:00Z",
       "modified_at": "2026-08-23T01:58:00Z",
       "discovered_at": "2026-08-23T03:19:02.762511Z",
-      "last_checked_at": "2026-08-23T04:19:03.867375Z",
+      "last_checked_at": "2026-08-23T04:51:10.551929Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -29176,7 +29176,7 @@
       "published_at": "2026-08-23T02:01:06Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:04.994156Z",
-      "last_checked_at": "2026-08-23T04:19:26.062854Z",
+      "last_checked_at": "2026-08-23T04:51:38.794483Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -29683,7 +29683,7 @@
       "published_at": "2026-08-23T02:19:00Z",
       "modified_at": "2026-08-23T02:19:00Z",
       "discovered_at": "2026-08-23T03:19:02.762338Z",
-      "last_checked_at": "2026-08-23T04:19:01.835735Z",
+      "last_checked_at": "2026-08-23T04:51:08.561272Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -30400,7 +30400,7 @@
       "published_at": "2026-08-23T02:41:57Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:04.993962Z",
-      "last_checked_at": "2026-08-23T04:19:24.065480Z",
+      "last_checked_at": "2026-08-23T04:51:36.801394Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -31010,7 +31010,7 @@
       "published_at": "2026-08-23T02:57:00Z",
       "modified_at": "2026-08-23T02:57:00Z",
       "discovered_at": "2026-08-23T03:19:02.762022Z",
-      "last_checked_at": "2026-08-23T04:18:59.986985Z",
+      "last_checked_at": "2026-08-23T04:51:06.594866Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -31400,7 +31400,7 @@
       "published_at": "2026-08-23T03:06:19Z",
       "modified_at": null,
       "discovered_at": "2026-08-23T03:19:04.993587Z",
-      "last_checked_at": "2026-08-23T04:19:21.994412Z",
+      "last_checked_at": "2026-08-23T04:51:34.789590Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -31828,7 +31828,7 @@
       "published_at": "2026-08-23T03:36:00Z",
       "modified_at": "2026-08-23T03:36:00Z",
       "discovered_at": "2026-08-23T04:18:57.971476Z",
-      "last_checked_at": "2026-08-23T04:18:57.971476Z",
+      "last_checked_at": "2026-08-23T04:51:04.551547Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -31847,7 +31847,7 @@
       "published_at": "2026-08-23T04:04:00Z",
       "modified_at": "2026-08-23T04:04:00Z",
       "discovered_at": "2026-08-23T04:18:57.157789Z",
-      "last_checked_at": "2026-08-23T04:18:57.157789Z",
+      "last_checked_at": "2026-08-23T04:51:02.570937Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -31864,14 +31864,109 @@
       "outlet": "ohmynews",
       "reporter": "이정환",
       "published_at": "2026-08-23T04:10:00Z",
-      "modified_at": "2026-08-23T04:10:00Z",
+      "modified_at": "2026-08-23T04:25:00Z",
       "discovered_at": "2026-08-23T04:18:53.967833Z",
-      "last_checked_at": "2026-08-23T04:18:53.967833Z",
+      "last_checked_at": "2026-08-23T04:51:00.672793Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
       "full_body_status": "fetched",
-      "body_hash": "29ac29b5bc8cef9076c8fdf12250b5fd2b53c087fd5245cf0816ce8a5b9bbfa2",
+      "body_hash": "cb43e09e8944e220ca350291f0dbf15438b920bb53b46df6b531103f34e34967",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "a6e67bf109103503493c21b2359449105017bf3c22fa953cea0e460af5e962e8",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026082310024139057",
+      "title": "화엄사, 인문 프로그램 '화야몽' 진행…구례 출신 정지아 작가와 만남",
+      "outlet": "pressian",
+      "reporter": "지정운 기자(=구례)",
+      "published_at": "2026-08-23T04:20:03Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-23T04:51:32.871635Z",
+      "last_checked_at": "2026-08-23T04:51:32.871635Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "8f82d098db7c1e805e5e216a4b611be4f3cb0159a62de865b099150446a2eaae",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "68053f70a41430502e66e06b07529708dc30153711a1b73d095ac12f7e560df1",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/Series/series_premium_pg.aspx?CNTN_CD=A0003261164",
+      "title": "중국, 국토 전체를 하나의 슈퍼 컴퓨팅 노드로",
+      "outlet": "ohmynews",
+      "reporter": "임선영",
+      "published_at": "2026-08-23T04:25:00Z",
+      "modified_at": "2026-08-23T04:25:00Z",
+      "discovered_at": "2026-08-23T04:50:57.589630Z",
+      "last_checked_at": "2026-08-23T04:50:57.589630Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "9d55639b11f0c0349f8e9ba5f85635245619c7175aeb2585b101b3b024193580",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "76bd753c17e32951132032e45c0ef115cda5304974a8833d996826f81a14aebc",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026082313261257768",
+      "title": "민주당 '김민석 체제' 첫 고위당정청…金 \"비거주 1주택 사유 폭넓게 인정해야\"",
+      "outlet": "pressian",
+      "reporter": "곽재훈 기자",
+      "published_at": "2026-08-23T04:26:21Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-23T04:51:30.949632Z",
+      "last_checked_at": "2026-08-23T04:51:30.949632Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "d123d9f2ab599ca09c57fa8b01ae3ab1c9e83f64d52461a9096eebaf90fddb98",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "852f4a1d3db6a1f0584fec9d6ac09763c58777007f17a0a841dfeebf06ec9464",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026082311154794829",
+      "title": "[새만금에 1000조(兆) 담기] ⑧ '7공구의 기적'…\"현대차의 '본진'에 협력사 클러스터 유치\"",
+      "outlet": "pressian",
+      "reporter": "박기홍 기자(=전북)",
+      "published_at": "2026-08-23T04:44:20Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-23T04:51:28.747434Z",
+      "last_checked_at": "2026-08-23T04:51:28.747434Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "4c078bcac1ec4ce96020a684a80856811dfe2de0f0c4352f951948de50977e68",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "a5ede028f7ee6244962425f28796bf0017f6549988d09570e2dd021faa0110ef",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003261166",
+      "title": "민주당 \"조희대, 사퇴만이 속죄의 길\"… 탄핵 주장엔 신중론",
+      "outlet": "ohmynews",
+      "reporter": "연합뉴스",
+      "published_at": "2026-08-23T04:45:00Z",
+      "modified_at": "2026-08-23T04:45:00Z",
+      "discovered_at": "2026-08-23T04:50:54.582281Z",
+      "last_checked_at": "2026-08-23T04:50:54.582281Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "d68eb618a3d9112ac6a48592b9c18d05e12c6f340272348d49947bcbb0a4b98e",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -32541,7 +32636,7 @@
   },
   "final_state": {
     "status": "complete",
-    "checked_at": "2026-08-23T04:19:42.075686Z",
+    "checked_at": "2026-08-23T04:51:54.800903Z",
     "checks": [
       {
         "issue_title": "청각장애를 결핍이 아닌 문화로 재정의하는 농인 작가 김 크리스틴 선 개인전",
@@ -32555,25 +32650,34 @@
         "issue_title": "HL만도 평택공장 비정규직 노동자 끼임 사망, 유가족 원청 책임 촉구",
         "status": "complete",
         "progressive": true,
-        "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
-        "evidence_urls": []
+        "changed_after_draft": true,
+        "reason": "초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+        "evidence_urls": [
+          "https://www.pressian.com/pages/articles/2026082311154794829",
+          "https://www.ohmynews.com/NWS_Web/Series/series_premium_pg.aspx?CNTN_CD=A0003261164"
+        ]
       },
       {
         "issue_title": "전북 무주 필리핀 계절근로자 임금체불, 지자체·정부 관리 책임 방치 논란",
         "status": "complete",
         "progressive": true,
-        "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
-        "evidence_urls": []
+        "changed_after_draft": true,
+        "reason": "초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+        "evidence_urls": [
+          "https://www.pressian.com/pages/articles/2026082311154794829",
+          "https://www.pressian.com/pages/articles/2026082313261257768",
+          "https://www.ohmynews.com/NWS_Web/Series/series_premium_pg.aspx?CNTN_CD=A0003261164"
+        ]
       },
       {
         "issue_title": "태움으로 숨진 간호사들 추모, 병원의 구조적 책임 촉구",
         "status": "complete",
         "progressive": true,
-        "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
-        "evidence_urls": []
+        "changed_after_draft": true,
+        "reason": "초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+        "evidence_urls": [
+          "https://www.pressian.com/pages/articles/2026082313261257768"
+        ]
       },
       {
         "issue_title": "게임업계 노동자성 인정과 노조 결성을 둘러싼 국제 비교",
@@ -32587,9 +32691,13 @@
         "issue_title": "전교조 해직교사 국가폭력 사과 속 미흡한 명예회복 문제 제기",
         "status": "complete",
         "progressive": true,
-        "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
-        "evidence_urls": []
+        "changed_after_draft": true,
+        "reason": "초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
+        "evidence_urls": [
+          "https://www.pressian.com/pages/articles/2026082311154794829",
+          "https://www.pressian.com/pages/articles/2026082313261257768",
+          "https://www.ohmynews.com/NWS_Web/Series/series_premium_pg.aspx?CNTN_CD=A0003261164"
+        ]
       }
     ]
   }
