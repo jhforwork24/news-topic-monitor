@@ -1037,49 +1037,40 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
             _paragraph(issue_analysis_text(issue)),
         ]
     )
-    reference_rows = [
-        _table_row([[_rich_text("범주")], [_rich_text("자료")], [_rich_text("확인 쟁점")]])
-    ]
-    for item in issue.previous_coverage[:3]:
-        reference_rows.append(
-            _table_row(
-                [
-                    [_rich_text("이전 보도")],
-                    [_rich_text(item.label, href=item.url)],
-                    [_rich_text(f"{item.published} · {item.comparison}")],
-                ]
+    if issue.previous_coverage or issue.references:
+        reference_rows = [
+            _table_row([[_rich_text("범주")], [_rich_text("자료")], [_rich_text("확인 쟁점")]])
+        ]
+        for item in issue.previous_coverage[:3]:
+            reference_rows.append(
+                _table_row(
+                    [
+                        [_rich_text("이전 보도")],
+                        [_rich_text(item.label, href=item.url)],
+                        [_rich_text(f"{item.published} · {item.comparison}")],
+                    ]
+                )
             )
-        )
-    for reference in issue.references:
-        reference_rows.append(
-            _table_row(
-                [
-                    [_rich_text(reference.category)],
-                    [_rich_text(reference.label, href=reference.url)],
-                    [_rich_text(reference.note)],
-                ]
+        for reference in issue.references:
+            reference_rows.append(
+                _table_row(
+                    [
+                        [_rich_text(reference.category)],
+                        [_rich_text(reference.label, href=reference.url)],
+                        [_rich_text(reference.note)],
+                    ]
+                )
             )
+        blocks.append(
+            {
+                "object": "block",
+                "type": "toggle",
+                "toggle": {
+                    "rich_text": [_rich_text("추가 자료 · 더 알아보기")],
+                    "children": [_table(reference_rows, width=3)],
+                },
+            }
         )
-    if not issue.previous_coverage and not issue.references:
-        reference_rows.append(
-            _table_row(
-                [
-                    [_rich_text("참고 자료")],
-                    [_rich_text("확인된 추가 자료 없음")],
-                    [_rich_text("후속 조사 필요")],
-                ]
-            )
-        )
-    blocks.append(
-        {
-            "object": "block",
-            "type": "toggle",
-            "toggle": {
-                "rich_text": [_rich_text("추가 자료 · 더 알아보기")],
-                "children": [_table(reference_rows, width=3)],
-            },
-        }
-    )
     return blocks
 
 
