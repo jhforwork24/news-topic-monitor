@@ -2,9 +2,10 @@ name: Daily backfill
 
 on:
   schedule:
-    # 07:20 Asia/Seoul = 22:20 UTC on the previous date. This leaves a bounded
-    # recovery window before the last incremental collection and final pipeline.
-    - cron: "20 22 * * *"
+    # 05:20 Asia/Seoul = 20:20 UTC on the previous date. This leaves a bounded
+    # recovery window before the last incremental collection (06:17 KST) and
+    # the 07:00 KST report window close.
+    - cron: "20 20 * * *"
   workflow_dispatch:
     inputs:
       hours:

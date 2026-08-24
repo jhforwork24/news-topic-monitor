@@ -1328,7 +1328,7 @@ def _add_report_window_arguments(parser: argparse.ArgumentParser) -> None:
 def _report_window(args: argparse.Namespace):
     now_kst = datetime.now(KST)
     date_value = datetime.strptime(args.date, "%Y-%m-%d").date() if args.date else now_kst.date()
-    default_end = datetime.combine(date_value, time(hour=9), tzinfo=KST).astimezone(UTC)
+    default_end = datetime.combine(date_value, time(hour=7), tzinfo=KST).astimezone(UTC)
     end = parse_datetime(args.end) if args.end else default_end
     start = parse_datetime(args.start) if args.start else end - timedelta(days=1)
     assert start is not None and end is not None
