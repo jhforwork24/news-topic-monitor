@@ -2,9 +2,9 @@ name: Collect news metadata
 
 on:
   schedule:
-    # Three-hour overlap shifted so the last pre-briefing run starts at 08:17 KST
-    # and does not queue behind the 09:00 report/final publication path.
-    - cron: "17 2-23/3 * * *"
+    # Three-hour overlap shifted so the last pre-briefing run starts at 06:17 KST
+    # and does not queue behind the 07:00 report/final publication path.
+    - cron: "17 21,0,3,6,9,12,15,18 * * *"
   workflow_dispatch:
     inputs:
       since_hours:

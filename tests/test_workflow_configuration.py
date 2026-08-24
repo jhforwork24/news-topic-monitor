@@ -18,12 +18,12 @@ def test_connected_claude_bridge_has_one_scheduled_final_writer() -> None:
     finalize = _workflow("editorial-finalize.yml")
     fallback = _workflow("publish-notion.yml")
 
-    assert collect["on"]["schedule"] == [{"cron": "17 2-23/3 * * *"}]
-    assert backfill["on"]["schedule"] == [{"cron": "20 22 * * *"}]
+    assert collect["on"]["schedule"] == [{"cron": "17 21,0,3,6,9,12,15,18 * * *"}]
+    assert backfill["on"]["schedule"] == [{"cron": "20 20 * * *"}]
     assert report["on"]["schedule"] == [{"cron": "2 0 * * *"}]
     assert "schedule" not in editorial["on"]
-    assert queue["on"]["schedule"] == [{"cron": "5 0 * * *"}]
-    assert finalize["on"]["schedule"] == [{"cron": "48 0 * * *"}]
+    assert queue["on"]["schedule"] == [{"cron": "5 22 * * *"}]
+    assert finalize["on"]["schedule"] == [{"cron": "0 3 * * *"}]
     assert "schedule" not in fallback["on"]
     assert "PUBLICATION_OWNER" in finalize["jobs"]["editorial-finalize"]["if"]
     assert "CHAT_EDITORIAL_BRIDGE_ENABLED" in queue["jobs"]["editorial-queue"]["if"]

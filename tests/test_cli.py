@@ -1,10 +1,21 @@
 from __future__ import annotations
 
+import argparse
 from datetime import UTC, datetime
 
-from news_topic_monitor.cli import _known_relevant_seed_discoveries
+from news_topic_monitor.cli import _known_relevant_seed_discoveries, _report_window
 from news_topic_monitor.models import ArticleRecord, BodyStatus, Classification, VerificationStatus
 from news_topic_monitor.storage import JsonlStorage
+
+
+def test_report_window_defaults_to_the_0700_kst_boundary() -> None:
+    args = argparse.Namespace(date="2026-08-25", start=None, end=None)
+
+    date_value, start, end = _report_window(args)
+
+    assert date_value.isoformat() == "2026-08-25"
+    assert end == datetime(2026, 8, 24, 22, tzinfo=UTC)  # 2026-08-25 07:00 KST
+    assert start == datetime(2026, 8, 23, 22, tzinfo=UTC)  # 2026-08-24 07:00 KST
 
 
 def _article(
