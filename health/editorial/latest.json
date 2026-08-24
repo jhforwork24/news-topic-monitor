@@ -1,22 +1,15 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-08-24",
-  "status": "completed",
-  "model": "connected_claude_editor",
-  "auditor_model": "connected_claude_independent_auditor",
-  "candidate_count": 159,
-  "included_after_first_pass": 0,
-  "published_issue_count": 17,
-  "validator_fatal_errors": 0,
+  "report_date": "2026-08-25",
+  "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.648,
-    "assurance": 0.007,
-    "bridge_import_validation": 7.387,
-    "final_state_recrawl": 403.747,
-    "gap_reverse_search": 116.513,
-    "render_briefing": 15.558,
-    "total": 546.555
+    "api_preflight": 2.005,
+    "assurance": 0.002,
+    "bridge_import_validation": 7.729,
+    "final_state_recrawl": 101.465,
+    "gap_reverse_search": 125.056,
+    "total": 255.881
   },
-  "error": null,
-  "completed_at": "2026-08-24T05:48:00.636286Z"
+  "error": "브리핑 발행 검증 실패: I. 장애정책·장애인운동 / 전장연, 73차만에 출근길 지하철 탑니다 전면 중단… 서울시의회 민주당과 이동권·노동권 조례 대타협: 복수 보도 논조가 1~4문장이 아님; I. 장애정책·장애인운동 / 기획예산처, 전장연 요구에 이동권·노동권 예산 검토 밝혔으나 확답은 유보: 단일 보도 논조가 한 문장이 아님; I. 장애정책·장애인운동 / 특별교통수단, 차량 확보율은 법정기준 넘겼지만 승하차 위치 품질은 관리 사각: 단일 보도 논조가 한 문장이 아님; I. 장애정책·장애인운동 / 박위 KTX 휠체어 낙상 CCTV 공개 논란, 책임 공방 넘어 승하차 안전설비 점검 필요성: 단일 보도 논조가 한 문장이 아님; I. 장애정책·장애인운동 / 장애인주간이용시설 법제화 방안 정책토론회, 자립지원법 시행 앞두고 종사자 처우 개선 요구: 단일 보도 논조가 한 문장이 아님; I. 장애정책·장애인운동 / 국회, 행안부의 장애인 고용부담금 예산 전용 관행 질타… 의무고용 미이행 반복",
+  "completed_at": "2026-08-24T23:55:43.620973Z"
 }
