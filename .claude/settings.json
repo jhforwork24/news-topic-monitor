@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-create-*",
+      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-update-*",
+      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-duplicate-page",
+      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-move-pages",
+      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-convert-page-to-skill",
+      "mcp__Notion__notion-create-*",
+      "mcp__Notion__notion-update-*",
+      "mcp__Notion__notion-duplicate-page",
+      "mcp__Notion__notion-move-pages",
+      "mcp__Notion__notion-convert-page-to-skill"
+    ]
+  }
+}
