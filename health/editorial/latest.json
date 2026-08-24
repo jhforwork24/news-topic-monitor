@@ -1,11 +1,22 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-24",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 159,
+  "included_after_first_pass": 0,
+  "published_issue_count": 17,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.399,
-    "total": 2.027
+    "api_preflight": 1.648,
+    "assurance": 0.007,
+    "bridge_import_validation": 7.387,
+    "final_state_recrawl": 403.747,
+    "gap_reverse_search": 116.513,
+    "render_briefing": 15.558,
+    "total": 546.555
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 초안 · 2026-08-24 (found=0)",
-  "completed_at": "2026-08-24T02:13:21.569877Z"
+  "error": null,
+  "completed_at": "2026-08-24T05:48:00.636286Z"
 }
