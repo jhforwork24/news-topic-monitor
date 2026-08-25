@@ -1,22 +1,11 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-25",
-  "status": "completed",
-  "model": "connected_claude_editor",
-  "auditor_model": "connected_claude_independent_auditor",
-  "candidate_count": 180,
-  "included_after_first_pass": 0,
-  "published_issue_count": 17,
-  "validator_fatal_errors": 0,
+  "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 2.314,
-    "assurance": 0.001,
-    "bridge_import_validation": 8.944,
-    "final_state_recrawl": 115.186,
-    "gap_reverse_search": 125.172,
-    "render_briefing": 13.501,
-    "total": 266.754
+    "api_preflight": 2.016,
+    "total": 3.593
   },
-  "error": null,
-  "completed_at": "2026-08-25T00:05:12.920078Z"
+  "error": "Claude 편집 브리지 JSON이 고정 스키마를 충족하지 않음",
+  "completed_at": "2026-08-25T03:41:58.874437Z"
 }
