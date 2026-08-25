@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-25",
-  "generated_at": "2026-08-24T23:55:25.963210Z",
+  "generated_at": "2026-08-25T00:04:59.343339Z",
   "articles": [
     {
       "candidate_id": "03322c8b11d5b2c1ff6df63ea55843ceef069a33aae3e5dbf3767780a383b066",
@@ -50610,7 +50610,7 @@
       "published_at": "2026-08-24T22:04:00Z",
       "modified_at": "2026-08-24T22:09:23Z",
       "discovered_at": "2026-08-24T23:52:06.306302Z",
-      "last_checked_at": "2026-08-24T23:52:06.306302Z",
+      "last_checked_at": "2026-08-25T00:01:30.319919Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50630,7 +50630,7 @@
       "published_at": "2026-08-24T22:20:00Z",
       "modified_at": "2026-08-24T22:20:00Z",
       "discovered_at": "2026-08-24T23:52:04.300321Z",
-      "last_checked_at": "2026-08-24T23:52:04.300321Z",
+      "last_checked_at": "2026-08-25T00:01:28.220999Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50650,7 +50650,7 @@
       "published_at": "2026-08-24T22:20:17Z",
       "modified_at": "2026-08-24T22:20:17Z",
       "discovered_at": "2026-08-24T23:52:02.429235Z",
-      "last_checked_at": "2026-08-24T23:52:02.429235Z",
+      "last_checked_at": "2026-08-25T00:01:26.204264Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50670,7 +50670,7 @@
       "published_at": "2026-08-24T22:20:56Z",
       "modified_at": "2026-08-24T22:20:56Z",
       "discovered_at": "2026-08-24T23:52:00.294900Z",
-      "last_checked_at": "2026-08-24T23:52:00.294900Z",
+      "last_checked_at": "2026-08-25T00:01:24.201258Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50690,7 +50690,7 @@
       "published_at": "2026-08-24T22:25:33Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:53:00.003436Z",
-      "last_checked_at": "2026-08-24T23:53:00.003436Z",
+      "last_checked_at": "2026-08-25T00:02:33.695580Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -50709,7 +50709,7 @@
       "published_at": "2026-08-24T22:30:48Z",
       "modified_at": "2026-08-24T22:30:48Z",
       "discovered_at": "2026-08-24T23:51:58.297101Z",
-      "last_checked_at": "2026-08-24T23:51:58.297101Z",
+      "last_checked_at": "2026-08-25T00:01:22.323069Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50729,7 +50729,7 @@
       "published_at": "2026-08-24T22:32:00Z",
       "modified_at": "2026-08-24T22:32:00Z",
       "discovered_at": "2026-08-24T23:52:33.601508Z",
-      "last_checked_at": "2026-08-24T23:52:33.601508Z",
+      "last_checked_at": "2026-08-25T00:02:05.329690Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50748,7 +50748,7 @@
       "published_at": "2026-08-24T22:35:00Z",
       "modified_at": "2026-08-24T22:35:00Z",
       "discovered_at": "2026-08-24T23:52:31.581264Z",
-      "last_checked_at": "2026-08-24T23:52:31.581264Z",
+      "last_checked_at": "2026-08-25T00:02:03.480577Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50767,7 +50767,7 @@
       "published_at": "2026-08-24T22:35:00Z",
       "modified_at": "2026-08-24T22:47:00Z",
       "discovered_at": "2026-08-24T23:52:29.541462Z",
-      "last_checked_at": "2026-08-24T23:52:29.541462Z",
+      "last_checked_at": "2026-08-25T00:02:01.414923Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50786,7 +50786,7 @@
       "published_at": "2026-08-24T22:36:26Z",
       "modified_at": "2026-08-24T22:36:26Z",
       "discovered_at": "2026-08-24T23:51:56.373534Z",
-      "last_checked_at": "2026-08-24T23:51:56.373534Z",
+      "last_checked_at": "2026-08-25T00:01:20.221026Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50806,7 +50806,7 @@
       "published_at": "2026-08-24T22:43:14Z",
       "modified_at": "2026-08-24T22:43:14Z",
       "discovered_at": "2026-08-24T23:51:54.415395Z",
-      "last_checked_at": "2026-08-24T23:51:54.415395Z",
+      "last_checked_at": "2026-08-25T00:01:18.215059Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50826,7 +50826,7 @@
       "published_at": "2026-08-24T22:47:02Z",
       "modified_at": "2026-08-24T22:47:02Z",
       "discovered_at": "2026-08-24T23:51:52.339483Z",
-      "last_checked_at": "2026-08-24T23:52:08.302907Z",
+      "last_checked_at": "2026-08-25T00:01:32.377257Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50846,7 +50846,7 @@
       "published_at": "2026-08-24T22:52:00Z",
       "modified_at": "2026-08-24T23:10:36Z",
       "discovered_at": "2026-08-24T23:51:50.300135Z",
-      "last_checked_at": "2026-08-24T23:51:50.300135Z",
+      "last_checked_at": "2026-08-25T00:01:14.313312Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50866,7 +50866,7 @@
       "published_at": "2026-08-24T22:53:00Z",
       "modified_at": "2026-08-24T23:30:00Z",
       "discovered_at": "2026-08-24T23:52:27.708756Z",
-      "last_checked_at": "2026-08-24T23:52:27.708756Z",
+      "last_checked_at": "2026-08-25T00:01:59.349153Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50885,7 +50885,7 @@
       "published_at": "2026-08-24T22:53:08Z",
       "modified_at": "2026-08-24T22:53:08Z",
       "discovered_at": "2026-08-24T23:51:48.401447Z",
-      "last_checked_at": "2026-08-24T23:51:48.401447Z",
+      "last_checked_at": "2026-08-25T00:01:12.207476Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50905,7 +50905,7 @@
       "published_at": "2026-08-24T22:54:00Z",
       "modified_at": "2026-08-24T23:05:49Z",
       "discovered_at": "2026-08-24T23:51:46.301403Z",
-      "last_checked_at": "2026-08-24T23:51:46.301403Z",
+      "last_checked_at": "2026-08-25T00:01:10.205475Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50925,7 +50925,7 @@
       "published_at": "2026-08-24T22:54:00Z",
       "modified_at": "2026-08-24T22:54:00Z",
       "discovered_at": "2026-08-24T23:52:25.607876Z",
-      "last_checked_at": "2026-08-24T23:52:25.607876Z",
+      "last_checked_at": "2026-08-25T00:01:57.358145Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50944,7 +50944,7 @@
       "published_at": "2026-08-24T22:57:04Z",
       "modified_at": "2026-08-24T22:57:04Z",
       "discovered_at": "2026-08-24T23:51:45.592173Z",
-      "last_checked_at": "2026-08-24T23:51:45.592173Z",
+      "last_checked_at": "2026-08-25T00:01:08.322438Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50964,7 +50964,7 @@
       "published_at": "2026-08-24T22:59:06Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:58.002475Z",
-      "last_checked_at": "2026-08-24T23:52:58.002475Z",
+      "last_checked_at": "2026-08-25T00:02:31.683428Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -50983,7 +50983,7 @@
       "published_at": "2026-08-24T22:59:37Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:56.002270Z",
-      "last_checked_at": "2026-08-24T23:52:56.002270Z",
+      "last_checked_at": "2026-08-25T00:02:29.676916Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51002,7 +51002,7 @@
       "published_at": "2026-08-24T23:05:00Z",
       "modified_at": "2026-08-24T23:05:00Z",
       "discovered_at": "2026-08-24T23:52:23.596462Z",
-      "last_checked_at": "2026-08-24T23:52:23.596462Z",
+      "last_checked_at": "2026-08-25T00:01:55.480650Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51021,7 +51021,7 @@
       "published_at": "2026-08-24T23:09:00Z",
       "modified_at": "2026-08-24T23:09:00Z",
       "discovered_at": "2026-08-24T23:52:21.755693Z",
-      "last_checked_at": "2026-08-24T23:52:21.755693Z",
+      "last_checked_at": "2026-08-25T00:01:53.365638Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51040,7 +51040,7 @@
       "published_at": "2026-08-24T23:11:00Z",
       "modified_at": "2026-08-24T23:32:51Z",
       "discovered_at": "2026-08-24T23:51:42.230470Z",
-      "last_checked_at": "2026-08-24T23:51:42.230470Z",
+      "last_checked_at": "2026-08-25T00:01:06.208527Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -51059,7 +51059,7 @@
       "published_at": "2026-08-24T23:15:04Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:54.007071Z",
-      "last_checked_at": "2026-08-24T23:52:54.007071Z",
+      "last_checked_at": "2026-08-25T00:02:27.674815Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51078,7 +51078,7 @@
       "published_at": "2026-08-24T23:15:06Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:52.002461Z",
-      "last_checked_at": "2026-08-24T23:52:52.002461Z",
+      "last_checked_at": "2026-08-25T00:02:25.683678Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51097,7 +51097,7 @@
       "published_at": "2026-08-24T23:15:08Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:49.998719Z",
-      "last_checked_at": "2026-08-24T23:52:49.998719Z",
+      "last_checked_at": "2026-08-25T00:02:23.682578Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51116,7 +51116,7 @@
       "published_at": "2026-08-24T23:15:09Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:48.003502Z",
-      "last_checked_at": "2026-08-24T23:52:48.003502Z",
+      "last_checked_at": "2026-08-25T00:02:21.951309Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51135,7 +51135,7 @@
       "published_at": "2026-08-24T23:21:24Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:45.999217Z",
-      "last_checked_at": "2026-08-24T23:52:45.999217Z",
+      "last_checked_at": "2026-08-25T00:02:19.933572Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51154,7 +51154,7 @@
       "published_at": "2026-08-24T23:30:00Z",
       "modified_at": "2026-08-24T23:37:00Z",
       "discovered_at": "2026-08-24T23:52:19.693682Z",
-      "last_checked_at": "2026-08-24T23:52:19.693682Z",
+      "last_checked_at": "2026-08-25T00:01:51.350147Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51173,7 +51173,7 @@
       "published_at": "2026-08-24T23:31:00Z",
       "modified_at": "2026-08-24T23:31:00Z",
       "discovered_at": "2026-08-24T23:52:17.593395Z",
-      "last_checked_at": "2026-08-24T23:52:17.593395Z",
+      "last_checked_at": "2026-08-25T00:01:49.390939Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51192,7 +51192,7 @@
       "published_at": "2026-08-24T23:35:00Z",
       "modified_at": "2026-08-24T23:35:00Z",
       "discovered_at": "2026-08-24T23:52:15.550910Z",
-      "last_checked_at": "2026-08-24T23:52:15.550910Z",
+      "last_checked_at": "2026-08-25T00:01:47.607749Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51211,7 +51211,7 @@
       "published_at": "2026-08-24T23:39:59Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:53:12.209124Z",
-      "last_checked_at": "2026-08-24T23:53:12.209124Z",
+      "last_checked_at": "2026-08-25T00:02:45.864057Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -51230,7 +51230,7 @@
       "published_at": "2026-08-24T23:40:03Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:53:10.332241Z",
-      "last_checked_at": "2026-08-24T23:53:10.332241Z",
+      "last_checked_at": "2026-08-25T00:02:43.922383Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -51249,7 +51249,7 @@
       "published_at": "2026-08-24T23:40:06Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:53:07.746697Z",
-      "last_checked_at": "2026-08-24T23:53:07.746697Z",
+      "last_checked_at": "2026-08-25T00:02:41.461472Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -51268,7 +51268,7 @@
       "published_at": "2026-08-24T23:40:49Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:44.010642Z",
-      "last_checked_at": "2026-08-24T23:52:44.010642Z",
+      "last_checked_at": "2026-08-25T00:02:17.783518Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51287,7 +51287,7 @@
       "published_at": "2026-08-24T23:45:00Z",
       "modified_at": "2026-08-24T23:49:00Z",
       "discovered_at": "2026-08-24T23:52:13.235136Z",
-      "last_checked_at": "2026-08-24T23:52:13.235136Z",
+      "last_checked_at": "2026-08-25T00:01:45.414284Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51306,7 +51306,7 @@
       "published_at": "2026-08-24T23:45:52Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:42.007259Z",
-      "last_checked_at": "2026-08-24T23:52:42.007259Z",
+      "last_checked_at": "2026-08-25T00:02:16.271084Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -51325,12 +51325,31 @@
       "published_at": "2026-08-24T23:47:50Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:40.006777Z",
-      "last_checked_at": "2026-08-24T23:52:40.006777Z",
+      "last_checked_at": "2026-08-25T00:02:13.676372Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
       "full_body_status": "fetched",
       "body_hash": "8d510010276164eee1907d9151d01750971a49661ec95a5961875de276c6d0b9",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "4c3a892784918bfe4d6cc25e294723bdf3818ba09006c237de7ec8556eb0966b",
+      "canonical_url": "https://www.khan.co.kr/article/202608250849001",
+      "title": "‘엘니뇨 정점’ 오기도 전에···해수면 온도 사상 최고치 경신",
+      "outlet": "khan",
+      "reporter": "최민지",
+      "published_at": "2026-08-24T23:49:00Z",
+      "modified_at": "2026-08-24T23:49:00Z",
+      "discovered_at": "2026-08-25T00:01:43.431545Z",
+      "last_checked_at": "2026-08-25T00:01:43.431545Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a893943e80a7c7aa2baaf635a4a2ec5474a638993528ba7153cac7aed19c313c",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
@@ -51344,12 +51363,126 @@
       "published_at": "2026-08-24T23:49:45Z",
       "modified_at": null,
       "discovered_at": "2026-08-24T23:52:37.941428Z",
-      "last_checked_at": "2026-08-24T23:52:37.941428Z",
+      "last_checked_at": "2026-08-25T00:02:11.683257Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
       "full_body_status": "fetched",
       "body_hash": "d4d54760596f48fd5eae1d54d38dd6175e1ccea61ce42bc6c29db1b911ddfa8e",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "2628e0ae0d0b74d6eea4dc05706b82a01ca1cb88c771ac4b455f7b23f26439d3",
+      "canonical_url": "https://www.khan.co.kr/article/202608250853001",
+      "title": "HD현중 노조, 파업 찬반투표 개시…27일까지 진행",
+      "outlet": "khan",
+      "reporter": "이정호",
+      "published_at": "2026-08-24T23:53:00Z",
+      "modified_at": "2026-08-24T23:53:00Z",
+      "discovered_at": "2026-08-25T00:01:41.391199Z",
+      "last_checked_at": "2026-08-25T00:01:41.391199Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a83654838ef622152c39300c222fd6ff86f39fb8a2fc9b657236acc17db02470",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "bc550e557501f989be97311c146c62725f8da56139cd58bb82b2f2b838483939",
+      "canonical_url": "https://www.donga.com/news/Sports/article/all/20260825/134537025/1",
+      "title": "바둑 김은지, 여자기사 최초 10대 500승…신진서보다도 빨랐다",
+      "outlet": "donga",
+      "reporter": null,
+      "published_at": "2026-08-24T23:54:21Z",
+      "modified_at": "2026-08-24T23:54:21Z",
+      "discovered_at": "2026-08-25T00:01:05.215288Z",
+      "last_checked_at": "2026-08-25T00:01:05.215288Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "53c89aacfe86a254135537006ad2685b67e7b2526132b65f565f04a4a4306fb9",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "83f3f073223a1b887512cad391d9ecb88fcc643ca0ca62a3cea2d800b2f56dbb",
+      "canonical_url": "https://www.khan.co.kr/article/202608250856001",
+      "title": "안산 의약품 제조공장서 50대 노동자 추락해 숨져",
+      "outlet": "khan",
+      "reporter": "김태희",
+      "published_at": "2026-08-24T23:56:00Z",
+      "modified_at": "2026-08-24T23:56:00Z",
+      "discovered_at": "2026-08-25T00:01:39.483507Z",
+      "last_checked_at": "2026-08-25T00:01:39.483507Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "733d90cb53a6998443203b94d85ecd9b09faec69809183a12933068ef72b526f",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "71768c806008e92c4dcce99a6990d2338f556e4039c16390f3af27cc57cdcfc6",
+      "canonical_url": "https://www.donga.com/news/Society/article/all/20260825/134536987/1",
+      "title": "이번엔 ‘망사스타킹’ 나체男…‘복면 알몸남’ 이어 경찰 수사",
+      "outlet": "donga",
+      "reporter": "박성진",
+      "published_at": "2026-08-24T23:56:51Z",
+      "modified_at": "2026-08-24T23:56:51Z",
+      "discovered_at": "2026-08-25T00:01:02.132936Z",
+      "last_checked_at": "2026-08-25T00:01:02.132936Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "300f1e4a9b35b3b29af824961c0460cbe5a10e399c20bc10940d82b19c672410",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "d3591309f2cd0c1e260673716ffbbf3f55148e18f6b24cac6e4636968ae9dc52",
+      "canonical_url": "https://www.khan.co.kr/article/202608250900001",
+      "title": "‘대기·해양 오염 감시’ 천리안위성 6호 내년 개발 착수…2033년 발사",
+      "outlet": "khan",
+      "reporter": "이정호",
+      "published_at": "2026-08-25T00:00:00Z",
+      "modified_at": "2026-08-25T00:00:01Z",
+      "discovered_at": "2026-08-25T00:01:37.044813Z",
+      "last_checked_at": "2026-08-25T00:01:37.044813Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "311035fca2610d124677c7688c742823aa7cace02a4cdf39caca2615e8c7e1d4",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "9ff605a9c8c3ec3315e024e7035563222bda24f04495e12dd4d14030b466f727",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026082509012788118",
+      "title": "경기도, 외국인 근로자 맞춤형 스마트 교육 ‘팜데믹Ⅱ’ 보급",
+      "outlet": "pressian",
+      "reporter": "김명승 기자",
+      "published_at": "2026-08-25T00:01:44Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-25T00:02:09.622448Z",
+      "last_checked_at": "2026-08-25T00:02:09.622448Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "add57a12005545ab9763d640d2f9ed29429c39058ca549f7bd12bdf3c040612b",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -51432,16 +51565,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "보건의료 덮어버린 경제 논리...\"전면 약 배송은 제2의 실손보험 사태\"",
-        "original_url": "https://www.pharmnews.com/news/articleView.html?idxno=305802",
-        "naver_url": "https://www.pharmnews.com/news/articleView.html?idxno=305802",
-        "published_at": "2026-08-24T21:00:00Z",
-        "description": "같은 날 보건복지부 약무 정책 과는 '비대면진료의 성공적 안착과 국민 의약품 접근성 확대 본격 추진'을... 장기요양수급자, 장애인 , 감염병환자 등에게만 제한적으로 의약품 재택 수령을 허용하기로 합의하고 12월 법...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "스타트레인, '2026 이노베이션 & 소비자가 선호하는 혁신기업·브랜드 대...",
         "original_url": "https://www.abcn.kr/news/articleView.html?idxno=90848",
         "naver_url": "https://www.abcn.kr/news/articleView.html?idxno=90848",
@@ -51457,6 +51580,16 @@
         "naver_url": "https://n.news.naver.com/mnews/article/003/0014145327?sid=102",
         "published_at": "2026-08-24T21:00:00Z",
         "description": "부동산 정책 정상화 촉구 집회 ▲오후 2시 전장연, 태평로1가 서울시의회 앞, 장애인 권리예산 촉구 집회 ▲오후 2시 마포농수산물시장상인회, 성산동 마포구청 앞, 임대료 감면 촉구 집회 ▲오후 4시 民SK쉴더스노조...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "보건의료 덮어버린 경제 논리...\"전면 약 배송은 제2의 실손보험 사태\"",
+        "original_url": "https://www.pharmnews.com/news/articleView.html?idxno=305802",
+        "naver_url": "https://www.pharmnews.com/news/articleView.html?idxno=305802",
+        "published_at": "2026-08-24T21:00:00Z",
+        "description": "같은 날 보건복지부 약무 정책 과는 '비대면진료의 성공적 안착과 국민 의약품 접근성 확대 본격 추진'을... 장기요양수급자, 장애인 , 감염병환자 등에게만 제한적으로 의약품 재택 수령을 허용하기로 합의하고 12월 법...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -51551,22 +51684,22 @@
         "in_deterministic_collection": null
       },
       {
-        "query": "장애인 정책",
-        "title": "[사설] 멈추는 지하철 시위... 장애인 이동권·노동권은 당연한 권리",
-        "original_url": "https://www.hankookilbo.com/news/article/A2026082416100002719?did=NA",
-        "naver_url": "https://n.news.naver.com/mnews/article/469/0000949827?sid=110",
-        "published_at": "2026-08-24T15:10:00Z",
-        "description": "장애인 을 복지 수혜자가 아닌 권리의 주체로 규정한 장애인 권리보장법안이 4월 국회를 통과하고, 박홍근 기획예산처 장관이 내년도 예산 편성에서 장애인 예산· 정책 을 책임 있게 검토하겠다고 한 것이 실질적 진전으로...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
         "query": "장애인 노동권 권리중심공공일자리",
         "title": "전장연, 4년9개월 만에 출근길 지하철 시위 중단…서울시의회 민주당과...",
         "original_url": "https://www.fntoday.co.kr/news/articleView.html?idxno=391216",
         "naver_url": "https://www.fntoday.co.kr/news/articleView.html?idxno=391216",
         "published_at": "2026-08-24T15:10:00Z",
         "description": "노동권 뿐 아니라 탈시설 정책을 둘러싼 서울시와 시의회의 논의도 이어질 것으로 예상된다. 이번 결정으로 장기간 이어져 온 출근길 지하철 탑승 시위는 일단 중단됐지만, 장애인 이동권 보장과 권리중심 공공일자리 의...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[사설] 멈추는 지하철 시위... 장애인 이동권·노동권은 당연한 권리",
+        "original_url": "https://www.hankookilbo.com/news/article/A2026082416100002719?did=NA",
+        "naver_url": "https://n.news.naver.com/mnews/article/469/0000949827?sid=110",
+        "published_at": "2026-08-24T15:10:00Z",
+        "description": "장애인 을 복지 수혜자가 아닌 권리의 주체로 규정한 장애인 권리보장법안이 4월 국회를 통과하고, 박홍근 기획예산처 장관이 내년도 예산 편성에서 장애인 예산· 정책 을 책임 있게 검토하겠다고 한 것이 실질적 진전으로...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -51862,16 +51995,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "전장연, 5년만에 시위 중단…박홍근 \" 장애인 권리 더 두텁게\"",
-        "original_url": "http://mbn.mk.co.kr/pages/news/newsView.php?category=mbn00009&news_seq_no=5214486",
-        "naver_url": "https://n.news.naver.com/mnews/article/057/0001965278?sid=102",
-        "published_at": "2026-08-24T10:01:00Z",
-        "description": "박 장관은 이날 오후 전장연 대표단이 기획처를 방문해 시위 중단에 관한 입장과 장애인 정책 ·예산 요구사항을 전달했다고 소개했습니다. 그러면서 \"정부는 전달받은 현장의 목소리를 경청하되 개별 정책과 예산은...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "충주시, 발달 장애인 배상책임보험 지원사업 본격 추진",
         "original_url": "https://www.dynews.co.kr/news/articleView.html?idxno=862766",
         "naver_url": "https://www.dynews.co.kr/news/articleView.html?idxno=862766",
@@ -51887,6 +52010,16 @@
         "naver_url": "https://n.news.naver.com/mnews/article/056/0012243302?sid=101",
         "published_at": "2026-08-24T10:01:00Z",
         "description": "그늘막과 쿨링포그 등 폭염저감시설 설치에 23억 원, 도로 살수차 운영 등에 19억 원이 반영됐는데 장애인 ... 보다 과학적이고 통계 데이터에 기반한 ( 정책 을 수립해야 합니다.)\"] 극한 폭염이 일상이 된 시대, 대구 경북...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "전장연, 5년만에 시위 중단…박홍근 \" 장애인 권리 더 두텁게\"",
+        "original_url": "http://mbn.mk.co.kr/pages/news/newsView.php?category=mbn00009&news_seq_no=5214486",
+        "naver_url": "https://n.news.naver.com/mnews/article/057/0001965278?sid=102",
+        "published_at": "2026-08-24T10:01:00Z",
+        "description": "박 장관은 이날 오후 전장연 대표단이 기획처를 방문해 시위 중단에 관한 입장과 장애인 정책 ·예산 요구사항을 전달했다고 소개했습니다. 그러면서 \"정부는 전달받은 현장의 목소리를 경청하되 개별 정책과 예산은...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -51992,21 +52125,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "남해군가족센터, 장애인 가족 지원 강화 위한 업무협약",
-        "original_url": "http://www.gndomin.com/news/articleView.html?idxno=486571",
-        "naver_url": "http://www.gndomin.com/news/articleView.html?idxno=486571",
-        "published_at": "2026-08-24T09:02:00Z",
-        "description": "김경주 남해군가족센터장(남해군청 주민행복과장)은 \"이번 협약은 장애인 가족을 남해군 가족 정책 의 중요한 대상군으로 명확히 파악하고, 민·관이 함께 돌보는 기반을 마련했다는 점에서 큰 의미를 둔다\"며 \"앞으로도...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[경북 브리핑 모음(8월 24일)] 예천군, 호명읍 내신리서 올해 첫 벼 베기...",
         "original_url": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608240826345770990",
         "naver_url": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608240826345770990",
         "published_at": "2026-08-24T09:02:00Z",
         "description": "도민 행복 분야에서는 아이 키우기 좋은 환경을 조성하기 위한 돌봄체계 강화와 청년 정착 지원, 어르신 건강밥상 등 세대별 맞춤형 정책 을 제시했다. 보호가족 지원과 장애인 이동권·주거·자립생활 지원 등 생활밀착형...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "남해군가족센터, 장애인 가족 지원 강화 위한 업무협약",
+        "original_url": "http://www.gndomin.com/news/articleView.html?idxno=486571",
+        "naver_url": "http://www.gndomin.com/news/articleView.html?idxno=486571",
+        "published_at": "2026-08-24T09:02:00Z",
+        "description": "김경주 남해군가족센터장(남해군청 주민행복과장)은 \"이번 협약은 장애인 가족을 남해군 가족 정책 의 중요한 대상군으로 명확히 파악하고, 민·관이 함께 돌보는 기반을 마련했다는 점에서 큰 의미를 둔다\"며 \"앞으로도...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52019,16 +52152,6 @@
         "description": "박 장관은 이날 오후 전장연 대표단이 기획처를 방문해 시위 중단에 관한 입장과 장애인 정책 ·예산 요구사항을 전달했다고 소개했다. 그러면서 \"정부는 전달받은 현장의 목소리를 경청하되 개별 정책과 예산은 필요성과...",
         "matched_source": null,
         "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "이철우 지사, “말한 건 지킨다” 매니페스토 약속대상 수상",
-        "original_url": "https://www.pressian.com/pages/articles/2026082417181469740",
-        "naver_url": "https://n.news.naver.com/mnews/article/002/0002453307?sid=102",
-        "published_at": "2026-08-24T08:52:00Z",
-        "description": "도민의 삶과 밀접한 행복 분야에서는 돌봄체계 강화와 청년 정착 지원, 어르신 건강밥상 등 세대별 맞춤형 정책 을 제시했다. 보호가족 지원과 장애인 의 이동권·주거·자립생활 지원 등 복지 분야 공약도 폭넓게 담았다....",
-        "matched_source": "pressian",
-        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -52049,6 +52172,16 @@
         "description": "공공기관 우선구매제도는 사회적경제기업이나 중증 장애인 생산품 생산시설 등 정책 적 지원이 필요한 기업의 제품을 공공기관이 적극적으로 구매하도록 유도하는 제도다. 공공기관의 구매력을 활용해 안정적인 판로를...",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "이철우 지사, “말한 건 지킨다” 매니페스토 약속대상 수상",
+        "original_url": "https://www.pressian.com/pages/articles/2026082417181469740",
+        "naver_url": "https://n.news.naver.com/mnews/article/002/0002453307?sid=102",
+        "published_at": "2026-08-24T08:52:00Z",
+        "description": "도민의 삶과 밀접한 행복 분야에서는 돌봄체계 강화와 청년 정착 지원, 어르신 건강밥상 등 세대별 맞춤형 정책 을 제시했다. 보호가족 지원과 장애인 의 이동권·주거·자립생활 지원 등 복지 분야 공약도 폭넓게 담았다....",
+        "matched_source": "pressian",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 노동권 권리중심공공일자리",
@@ -52072,21 +52205,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "박위, 토크콘서트도 취소…아내 송지은 SNS에도 댓글 테러",
-        "original_url": "https://www.hankyung.com/article/202608249416H",
-        "naver_url": "https://n.news.naver.com/mnews/article/015/0005324091?sid=103",
-        "published_at": "2026-08-24T08:42:00Z",
-        "description": "또 27일 서울시청에서 개최 예정이던 '2026 서울청년 정책 네트워크 인사이트 특강'도 취소됐다. 앞서 박위는... 당시 박위는 장애인 이동권 안전 문제를 공론화하고 유사 사고 재발을 방지하려는 의도라고 설명했다. 장애...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "부산시, '전국 지자체 일자리대상' 4년 연속 수상",
         "original_url": "https://www.iusm.co.kr/news/articleView.html?idxno=1066956",
         "naver_url": "https://www.iusm.co.kr/news/articleView.html?idxno=1066956",
         "published_at": "2026-08-24T08:42:00Z",
         "description": "'전국 지방자치단체 일자리대상'은 고용노동부가 전국 지방자치단체의 일자리 정책 과 성과를 종합적으로... 특히 대상별 맞춤형 일자리 지원을 통해 청년·여성·장노년· 장애인 ·외국인 등 취약계층을 대상으로 총...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "박위, 토크콘서트도 취소…아내 송지은 SNS에도 댓글 테러",
+        "original_url": "https://www.hankyung.com/article/202608249416H",
+        "naver_url": "https://n.news.naver.com/mnews/article/015/0005324091?sid=103",
+        "published_at": "2026-08-24T08:42:00Z",
+        "description": "또 27일 서울시청에서 개최 예정이던 '2026 서울청년 정책 네트워크 인사이트 특강'도 취소됐다. 앞서 박위는... 당시 박위는 장애인 이동권 안전 문제를 공론화하고 유사 사고 재발을 방지하려는 의도라고 설명했다. 장애...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52142,21 +52275,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "울산교육청, 학생맞춤통합지원 열린 박람회 개최",
-        "original_url": "https://www.jeonmae.co.kr/news/articleView.html?idxno=1286347",
-        "naver_url": "https://www.jeonmae.co.kr/news/articleView.html?idxno=1286347",
-        "published_at": "2026-08-24T08:18:00Z",
-        "description": "박람회 정책 연수에서 참석자들에게 인사말을 하고있다. 이번 박람회에는 지방자치단체를 비롯해 위기 학생 긴급·피해 보호, 지역 아동·돌봄, 청소년 활동·진로, 시민단체·복지·후원, 정신건강·청소년 상담, 장애인 ...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "이상일 용인특례시장 “용인반도체국가산단 논란 정리…부지 조성공사...",
         "original_url": "https://www.siminilbo.co.kr/news/newsview.php?ncode=1160293070823430",
         "naver_url": "https://www.siminilbo.co.kr/news/newsview.php?ncode=1160293070823430",
         "published_at": "2026-08-24T08:18:00Z",
         "description": "그는 다낭에서 스마트 횡단보도와 노인 돌봄용 AI 로봇, 맞춤형 학교 제설지도 등 용인시의 정책 을 영문 자료로 발표했다고 설명했다. 공공수영장에 장애인 가족샤워실·탈의실·화장실을 설치한 사례도 시민 불편을...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "울산교육청, 학생맞춤통합지원 열린 박람회 개최",
+        "original_url": "https://www.jeonmae.co.kr/news/articleView.html?idxno=1286347",
+        "naver_url": "https://www.jeonmae.co.kr/news/articleView.html?idxno=1286347",
+        "published_at": "2026-08-24T08:18:00Z",
+        "description": "박람회 정책 연수에서 참석자들에게 인사말을 하고있다. 이번 박람회에는 지방자치단체를 비롯해 위기 학생 긴급·피해 보호, 지역 아동·돌봄, 청소년 활동·진로, 시민단체·복지·후원, 정신건강·청소년 상담, 장애인 ...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52201,6 +52334,16 @@
         "in_deterministic_collection": null
       },
       {
+        "query": "장애인 정책",
+        "title": "서울 용산구, 을지연습 기간 민생현장 24곳 찾아",
+        "original_url": "https://weekly.hankooki.com/news/articleView.html?idxno=7180357",
+        "naver_url": "https://weekly.hankooki.com/news/articleView.html?idxno=7180357",
+        "published_at": "2026-08-24T08:12:00Z",
+        "description": "또 발달 장애인 평생교육센터, 온마음숲센터(구민 심리상담), 정신건강복지센터, 시니어클럽... 구는 현장에서 나온 의견을 관련 부서와 공유하고, 검토가 필요한 사항은 향후 시설 운영과 정책 추진 과정에 반영할...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
         "query": "장애인 노동권 권리중심공공일자리",
         "title": "박홍근 기획예산처 장관, \" 장애인 이동권, 노동권 예산 검토하겠다\"",
         "original_url": "https://www.beminor.com/news/articleView.html?idxno=30327",
@@ -52212,11 +52355,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "서울 용산구, 을지연습 기간 민생현장 24곳 찾아",
-        "original_url": "https://weekly.hankooki.com/news/articleView.html?idxno=7180357",
-        "naver_url": "https://weekly.hankooki.com/news/articleView.html?idxno=7180357",
-        "published_at": "2026-08-24T08:12:00Z",
-        "description": "또 발달 장애인 평생교육센터, 온마음숲센터(구민 심리상담), 정신건강복지센터, 시니어클럽... 구는 현장에서 나온 의견을 관련 부서와 공유하고, 검토가 필요한 사항은 향후 시설 운영과 정책 추진 과정에 반영할...",
+        "title": "[인터뷰] 정운찬 \"동반성장, 선언 아닌 실행\"…공공조달 상생방안 대통...",
+        "original_url": "https://www.pointdaily.co.kr/news/articleView.html?idxno=316476",
+        "naver_url": "https://www.pointdaily.co.kr/news/articleView.html?idxno=316476",
+        "published_at": "2026-08-24T08:04:00Z",
+        "description": "일반형 청구서는 중소기업 간 경쟁으로 배분하고, 맞춤형 청구서는 장애인 기업 등 사회적 약자기업이... 정 이사장은 특히 정부의 시장 개방 정책 이 발표에 그쳐서는 안 된다고 강조했다. 실제 입찰과 계약, 물량 배분까지...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52232,31 +52375,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[인터뷰] 정운찬 \"동반성장, 선언 아닌 실행\"…공공조달 상생방안 대통...",
-        "original_url": "https://www.pointdaily.co.kr/news/articleView.html?idxno=316476",
-        "naver_url": "https://www.pointdaily.co.kr/news/articleView.html?idxno=316476",
-        "published_at": "2026-08-24T08:04:00Z",
-        "description": "일반형 청구서는 중소기업 간 경쟁으로 배분하고, 맞춤형 청구서는 장애인 기업 등 사회적 약자기업이... 정 이사장은 특히 정부의 시장 개방 정책 이 발표에 그쳐서는 안 된다고 강조했다. 실제 입찰과 계약, 물량 배분까지...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "횡성군, 아동부터 고위험군까지…촘촘한 복지망 강화",
         "original_url": "https://www.newsis.com/view/NISX20260824_0003759656",
         "naver_url": "https://n.news.naver.com/mnews/article/003/0014144984?sid=102",
         "published_at": "2026-08-24T08:00:00Z",
         "description": "지난해 4월 사회서비스원 서로돌봄센터 횡성분원을 설치한 뒤 노인·치매 환자·정신 장애인 등 고위험군과 가족에게 맞춤형 돌봄을 제공해 왔다. 아동과 고위험군을 대상으로 한 정책 은 다르지만 지역에서 필요한 지원을...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "영광군, 2027~2030년 지역사회보장계획 수립 논의 본격화",
-        "original_url": "http://www.newsmaker.or.kr/news/articleView.html?idxno=181161",
-        "naver_url": "http://www.newsmaker.or.kr/news/articleView.html?idxno=181161",
-        "published_at": "2026-08-24T07:58:00Z",
-        "description": "영광군이 2027~2030년 4년간의 복지 정책 방향을 담는 '제6기 영광군 지역사회보장계획' 수립을 위해 실무... 이번 회의는 앞서 8월 7일 실시한 노인· 장애인 ·청년·중장년·아동청소년 등 5개 생애주기 분과 대상 FGI...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52622,16 +52745,6 @@
       },
       {
         "query": "장애인 노동권 권리중심공공일자리",
-        "title": "전장연, '지하철 시위' 전면 중단‥서울시의회 민주당과 타협",
-        "original_url": "https://imnews.imbc.com/news/2026/society/article/6846853_36918.html",
-        "naver_url": "https://n.news.naver.com/mnews/article/214/0001519661?sid=102",
-        "published_at": "2026-08-24T04:48:00Z",
-        "description": "이동권과 노동권 등 장애인 권리 보장을 요구하며 출근길 시위를 벌여온 장애인 단체가 지하철 탑승 시위를... 장애인 이동권 보장이 편의가 아니라 보장할 책무가 있는 권리 문제라는 내용과, 권리중심 공공일자리 의...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 노동권 권리중심공공일자리",
         "title": "‘ 장애인 권리 조례’ 통과 약속에…전장연 “지하철 탑승 시위 멈춥니...",
         "original_url": "https://www.hani.co.kr/arti/society/society_general/1274302.html",
         "naver_url": "https://n.news.naver.com/mnews/article/028/0002819843?sid=102",
@@ -52639,6 +52752,16 @@
         "description": "서울시의회 더불어민주당은 이날 “ 장애인 의 이동권과 노동권 보장을 위해 당론 제1·2호 조례안을 다가오는... 하고 권리중심 중증 장애인 맞춤형 공공 일자리 의 정의를 명확히 하는 조례를 통과시킬 것”이라고 했다....",
         "matched_source": "hani",
         "in_deterministic_collection": true
+      },
+      {
+        "query": "장애인 노동권 권리중심공공일자리",
+        "title": "전장연, '지하철 시위' 전면 중단‥서울시의회 민주당과 타협",
+        "original_url": "https://imnews.imbc.com/news/2026/society/article/6846853_36918.html",
+        "naver_url": "https://n.news.naver.com/mnews/article/214/0001519661?sid=102",
+        "published_at": "2026-08-24T04:48:00Z",
+        "description": "이동권과 노동권 등 장애인 권리 보장을 요구하며 출근길 시위를 벌여온 장애인 단체가 지하철 탑승 시위를... 장애인 이동권 보장이 편의가 아니라 보장할 책무가 있는 권리 문제라는 내용과, 권리중심 공공일자리 의...",
+        "matched_source": null,
+        "in_deterministic_collection": null
       },
       {
         "query": "장애인 노동권 권리중심공공일자리",
@@ -53833,7 +53956,7 @@
   },
   "final_state": {
     "status": "complete",
-    "checked_at": "2026-08-24T23:53:18.946968Z",
+    "checked_at": "2026-08-25T00:02:52.506518Z",
     "checks": [
       {
         "issue_title": "전장연, 73차만에 출근길 지하철 탑니다 전면 중단… 서울시의회 민주당과 이동권·노동권 조례 대타협",
