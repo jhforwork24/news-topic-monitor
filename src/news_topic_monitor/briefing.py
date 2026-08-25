@@ -183,6 +183,7 @@ class BriefingIssue:
     summary: str
     tone_analysis: str
     previous_coverage: list[PreviousCoverage] = field(default_factory=list)
+    keyword: str = ""
 
 
 @dataclass
@@ -365,6 +366,7 @@ def build_editorial_briefing(
                 summary=decision.summary,
                 tone_analysis=decision.tone_analysis,
                 previous_coverage=previous_coverage_for(articles, history),
+                keyword=decision.keyword,
             )
         )
 
@@ -659,20 +661,20 @@ def build_overview(start: datetime, end: datetime, sections: list[BriefingSectio
     if disability and disability.issues:
         sentences.append(
             "장애정책·장애인운동에서는 "
-            + _issue_titles(disability.issues, 4)
+            + _issue_keywords(disability.issues, 4)
             + " 등을 중심으로 지역사회에서 살아갈 권리와 공적 책임의 이행 여부를 살폈다."
         )
     labor = by_title.get("II. 노동·돌봄·빈곤")
     if labor and labor.issues:
         sentences.append(
             "노동·돌봄·빈곤 부문에서는 "
-            + _issue_titles(labor.issues, 4)
+            + _issue_keywords(labor.issues, 4)
             + " 등을 통해 원청·사용자와 국가의 책임을 점검하였다."
         )
     columns = by_title.get("III. 주요 칼럼")
     if columns and columns.issues:
         sentences.append(
-            "주요 칼럼으로는 " + _issue_titles(columns.issues, 3) + "을 함께 소개한다."
+            "주요 칼럼으로는 " + _issue_keywords(columns.issues, 3) + "을 함께 소개한다."
         )
     sentences.extend(
         [
@@ -694,12 +696,12 @@ def build_telegram_summary(sections: list[BriefingSection]) -> str:
     if disability and disability.issues:
         sentences.append(
             "장애 의제에서는 "
-            + _issue_titles(disability.issues, 4)
+            + _issue_keywords(disability.issues, 4)
             + "을 주요 후속 감시 대상으로 정리하였다."
         )
     labor = by_title.get("II. 노동·돌봄·빈곤")
     if labor and labor.issues:
-        labor_titles = _issue_titles(labor.issues, 3)
+        labor_titles = _issue_keywords(labor.issues, 3)
         sentences.append(
             "노동·돌봄·빈곤 의제에서는 "
             + labor_titles
@@ -953,11 +955,14 @@ def _can_cluster(article: ArticleRecord, cluster: list[ArticleRecord]) -> bool:
     return True
 
 
-def _issue_titles(issues: list[BriefingIssue], limit: int) -> str:
+def _issue_keywords(issues: list[BriefingIssue], limit: int) -> str:
     labels = []
     for issue in issues[:limit]:
-        title = re.sub(r"\s*\(\d{4}\.\d{2}\.\d{2}/[^)]*\)$", "", issue.title)
-        labels.append(short_text(title, 65) or title)
+        label = issue.keyword.strip() if issue.keyword else ""
+        if not label:
+            title = re.sub(r"\s*\(\d{4}\.\d{2}\.\d{2}/[^)]*\)$", "", issue.title)
+            label = short_text(title, 65) or title
+        labels.append(label)
     return "·".join(labels)
 
 

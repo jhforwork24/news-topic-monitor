@@ -7,7 +7,7 @@ import httpx
 import pytest
 
 from news_topic_monitor.briefing import build_editorial_briefing, render_briefing_markdown
-from news_topic_monitor.briefing_validation import validate_briefing
+from news_topic_monitor.briefing_validation import BriefingValidationError, validate_briefing
 from news_topic_monitor.editorial import (
     EditorialApiError,
     EditorialValidationError,
@@ -196,6 +196,7 @@ def test_editor_and_independent_auditor_use_strict_non_stored_responses() -> Non
                         {
                             "section": "disability",
                             "title": "활동지원 제도 개편 요구",
+                            "keyword": "활동지원 제도 개편",
                             "candidate_ids": [candidate.candidate_id],
                             "summary": (
                                 "장애인단체가 지역사회 생활을 보장하기 위한 활동지원 예산과 "
@@ -257,6 +258,7 @@ def test_editor_rejects_unrecognized_candidate_id() -> None:
                     {
                         "section": "disability",
                         "title": "확인되지 않은 기사",
+                        "keyword": "확인되지 않은 기사",
                         "candidate_ids": ["invented-id"],
                         "summary": "확인되지 않은 기사에 관한 내용을 정리했다.",
                         "tone_analysis": "",
@@ -285,6 +287,7 @@ def test_editorial_briefing_accepts_verified_gpt_selection_and_preserves_format(
             EditorialIssueDecision(
                 section=EditorialSection.DISABILITY,
                 title="활동지원 제도 개편 요구",
+                keyword="활동지원 제도 개편",
                 candidate_ids=[candidate_id],
                 summary=(
                     "장애인단체가 지역사회 생활을 보장하기 위한 활동지원 제도의 개편을 요구했다."
@@ -308,3 +311,69 @@ def test_editorial_briefing_accepts_verified_gpt_selection_and_preserves_format(
     assert "| 언론사 | 기사 | 발행 |" not in rendered
     assert "### 이슈 요약·보도 논조" in rendered
     assert "KST" not in rendered
+    assert "활동지원 제도 개편" in document.overview
+    assert "활동지원 제도 개편 요구" not in document.overview
+    assert "활동지원 제도 개편" in document.telegram_summary
+    assert "활동지원 제도 개편 요구" not in document.telegram_summary
+
+
+def test_editorial_briefing_rejects_tone_analysis_with_leaning_labels(tmp_path) -> None:
+    article = _article(classification=Classification.IRRELEVANT)
+    storage = JsonlStorage(tmp_path)
+    storage.upsert(article)
+    candidate_id = article_candidate_id(article)
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 제도 개편 요구",
+                keyword="활동지원 제도 개편",
+                candidate_ids=[candidate_id],
+                summary=(
+                    "장애인단체가 지역사회 생활을 보장하기 위한 활동지원 제도의 개편을 요구했다."
+                ),
+                tone_analysis="한겨레(진보)는 당사자의 권리 요구를 강조했다.",
+            )
+        ],
+        exclusions=[],
+    )
+    document = build_editorial_briefing(
+        storage,
+        plan=plan,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    with pytest.raises(BriefingValidationError, match="진영 라벨"):
+        validate_briefing(document)
+
+
+def test_editorial_briefing_rejects_keyword_that_copies_the_title(tmp_path) -> None:
+    article = _article(classification=Classification.IRRELEVANT)
+    storage = JsonlStorage(tmp_path)
+    storage.upsert(article)
+    candidate_id = article_candidate_id(article)
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 제도 개편 요구",
+                keyword="활동지원 제도 개편 요구",
+                candidate_ids=[candidate_id],
+                summary=(
+                    "장애인단체가 지역사회 생활을 보장하기 위한 활동지원 제도의 개편을 요구했다."
+                ),
+                tone_analysis="당사자의 권리 요구와 정부의 책임을 중심으로 전했다.",
+            )
+        ],
+        exclusions=[],
+    )
+    document = build_editorial_briefing(
+        storage,
+        plan=plan,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    with pytest.raises(BriefingValidationError, match="키워드 요약이 제목을 그대로 인용함"):
+        validate_briefing(document)

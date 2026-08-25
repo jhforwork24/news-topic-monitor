@@ -67,6 +67,7 @@ def _bundle() -> ChatEditorialBridgeBundle:
             EditorialIssueDecision(
                 section=EditorialSection.DISABILITY,
                 title="권리중심공공일자리 고용승계 요구",
+                keyword="권리중심공공일자리 고용승계",
                 candidate_ids=[candidate.candidate_id],
                 summary="장애인 노동자들이 지방정부에 고용승계를 요구했다.",
                 tone_analysis="노동권 요구와 지방정부의 책임을 함께 다뤘다.",

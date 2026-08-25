@@ -86,6 +86,7 @@ def _plan(candidate_id: str) -> EditorialPlan:
             EditorialIssueDecision(
                 section=EditorialSection.DISABILITY,
                 title="권리중심공공일자리 농성",
+                keyword="권리중심공공일자리 농성",
                 candidate_ids=[candidate_id],
                 summary="장애인 노동권 보장을 요구하는 농성이 이어졌다.",
                 tone_analysis="권리 요구와 지방정부의 책임을 함께 다뤘다.",
@@ -257,6 +258,7 @@ def test_final_state_ignores_unrelated_article_with_only_incidental_body_overlap
             EditorialIssueDecision(
                 section=EditorialSection.LABOR,
                 title="HL만도 평택공장 비정규직 노동자 끼임 사망, 유가족 원청 책임 촉구",
+                keyword="HL만도 하청노동자 끼임 사망",
                 candidate_ids=[original.candidate_id],
                 summary="유가족과 노동단체는 책임 규명과 관리 강화를 요구했다.",
                 tone_analysis="원청의 안전관리 부실 책임을 강조하는 논조를 보인다.",
@@ -308,6 +310,7 @@ def test_final_state_still_detects_follow_up_that_names_the_same_subject() -> No
             EditorialIssueDecision(
                 section=EditorialSection.LABOR,
                 title="HL만도 평택공장 비정규직 노동자 끼임 사망, 유가족 원청 책임 촉구",
+                keyword="HL만도 하청노동자 끼임 사망",
                 candidate_ids=[original.candidate_id],
                 summary="유가족과 노동단체는 책임 규명과 관리 강화를 요구했다.",
                 tone_analysis="원청의 안전관리 부실 책임을 강조하는 논조를 보인다.",

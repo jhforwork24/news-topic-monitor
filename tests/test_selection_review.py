@@ -117,6 +117,7 @@ def test_candidate_pool_flags_the_article_the_editor_actually_selected(topics_pa
             EditorialIssueDecision(
                 section=EditorialSection.DISABILITY,
                 title="이슈 제목",
+                keyword="이슈 키워드",
                 candidate_ids=[candidate.candidate_id],
                 summary="합성 시험 요약",
                 tone_analysis="합성 시험 논조",
