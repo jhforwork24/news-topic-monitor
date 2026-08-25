@@ -12,6 +12,7 @@ from .models import ArticleRecord, Classification
 from .utils import stable_article_key
 
 FORBIDDEN_SUMMARY_MARKERS = ('"', "'", "“", "”", "\u2018", "\u2019", "...", "…")
+FORBIDDEN_TONE_LABELS = ("(진보)", "(보수)", "(전문지)")
 
 
 class BriefingValidationError(ValueError):
@@ -39,6 +40,15 @@ def validate_briefing(document: BriefingDocument) -> None:
                 errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
             if len(issue.articles) > 1 and not 1 <= tone_sentences <= 4:
                 errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
+            if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
+                errors.append(f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨")
+
+            if document.editorially_selected_ids:
+                keyword = issue.keyword.strip()
+                if not keyword:
+                    errors.append(f"{section.title} / {issue.title}: 키워드 요약이 비어 있음")
+                elif keyword == issue.title.strip():
+                    errors.append(f"{section.title} / {issue.title}: 키워드 요약이 제목을 그대로 인용함")
 
             if section.title.startswith("I."):
                 invalid = [

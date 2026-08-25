@@ -89,6 +89,7 @@ def test_reverse_search_records_explicit_degraded_9_of_9_without_credentials() -
             EditorialIssueDecision(
                 section=EditorialSection.DISABILITY,
                 title="장애인 이동권 예산",
+                keyword="장애인 이동권 예산",
                 candidate_ids=["candidate"],
                 summary="장애인 이동권 예산의 국가 책임을 다룬다.",
                 tone_analysis="",

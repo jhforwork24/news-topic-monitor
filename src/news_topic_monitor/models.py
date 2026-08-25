@@ -280,6 +280,7 @@ class EditorialIssueDecision(BaseModel):
 
     section: EditorialSection
     title: str
+    keyword: str
     candidate_ids: list[str]
     summary: str
     tone_analysis: str
