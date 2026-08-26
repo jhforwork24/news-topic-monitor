@@ -169,6 +169,14 @@ def build_parser() -> argparse.ArgumentParser:
     finalize.add_argument(
         "--dry-run", action="store_true", help="run final validation without calling Notion"
     )
+    finalize.add_argument(
+        "--allow-stale-revalidation",
+        action="store_true",
+        help=(
+            "manual exception: bypass the 6-hour report-boundary revalidation "
+            "deadline instead of failing closed"
+        ),
+    )
     return parser
 
 
@@ -844,9 +852,18 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             raise EditorialValidationError("최종상태 공식 재수집에 사용할 선정 기사 출처가 없음")
 
         revalidation_requested_at = datetime.now(UTC)
+        stale_revalidation_override = False
         if revalidation_requested_at > end + timedelta(hours=6):
-            raise EditorialValidationError(
-                "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음"
+            if not args.allow_stale_revalidation:
+                raise EditorialValidationError(
+                    "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음"
+                )
+            stale_revalidation_override = True
+            LOGGER.warning(
+                "editorial finalize: 보고 경계 6시간 초과 후 수동 예외(--allow-stale-revalidation)로 "
+                "재검증 진행 (report_date=%s, revalidation_requested_at=%s)",
+                report_date,
+                revalidation_requested_at.isoformat(),
             )
         revalidation_start = (
             end
@@ -1013,6 +1030,15 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             )
             for item in gate.reporting_items
         )
+        if stale_revalidation_override:
+            document.source_failures.append(
+                "원인=발행 직전 최종상태 재검증이 보고 경계로부터 6시간을 초과해 시작됨 · "
+                "대체경로=세션 승인에 따른 수동 예외(--allow-stale-revalidation)로 재검증을 "
+                "계속 진행 · "
+                f"결과=재검증 완료 후 발행 진행(재검증 요청 시각 "
+                f"{revalidation_requested_at.isoformat()}) · "
+                "다음조치=착수 지연이 반복되지 않도록 원인 점검 필요"
+            )
         validate_briefing(document)
         path = write_briefing(
             document,
