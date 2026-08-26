@@ -1,12 +1,22 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-26",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 180,
+  "included_after_first_pass": 0,
+  "published_issue_count": 21,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.547,
-    "bridge_import_validation": 10.303,
-    "total": 11.861
+    "api_preflight": 1.291,
+    "assurance": 0.006,
+    "bridge_import_validation": 9.176,
+    "final_state_recrawl": 144.796,
+    "gap_reverse_search": 148.011,
+    "render_briefing": 23.369,
+    "total": 328.791
   },
-  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
-  "completed_at": "2026-08-26T04:41:29.858867Z"
+  "error": null,
+  "completed_at": "2026-08-26T05:06:15.300226Z"
 }
