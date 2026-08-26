@@ -3,13 +3,10 @@
   "report_date": "2026-08-26",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.322,
-    "assurance": 0.002,
-    "bridge_import_validation": 6.878,
-    "final_state_recrawl": 144.776,
-    "gap_reverse_search": 143.864,
-    "total": 321.406
+    "api_preflight": 1.547,
+    "bridge_import_validation": 10.303,
+    "total": 11.861
   },
-  "error": "브리핑 발행 검증 실패: I. 장애정책·장애인운동 / 탈시설 1호 김선심 씨 20주년 기념행사 '스물, 꽃님' 열려: 요약에 인용·말줄임 표지가 있음",
-  "completed_at": "2026-08-26T03:53:00.914200Z"
+  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
+  "completed_at": "2026-08-26T04:41:29.858867Z"
 }
