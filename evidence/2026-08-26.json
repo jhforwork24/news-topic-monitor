@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-26",
-  "generated_at": "2026-08-26T03:46:07.705539Z",
+  "generated_at": "2026-08-26T03:52:38.282381Z",
   "articles": [
     {
       "candidate_id": "3a96d988c22e852ced47c41ee2f562deb61cddff0d34dc7e72eec143345be0c0",
@@ -47350,7 +47350,7 @@
       "published_at": "2026-08-25T22:10:00Z",
       "modified_at": "2026-08-26T02:28:00Z",
       "discovered_at": "2026-08-26T02:00:08.146117Z",
-      "last_checked_at": "2026-08-26T03:43:12.806205Z",
+      "last_checked_at": "2026-08-26T03:49:40.721210Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -47371,7 +47371,7 @@
       "published_at": "2026-08-25T22:18:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643844Z",
-      "last_checked_at": "2026-08-26T03:42:12.438971Z",
+      "last_checked_at": "2026-08-26T03:48:40.468684Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -47409,7 +47409,7 @@
       "published_at": "2026-08-25T22:25:18Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643795Z",
-      "last_checked_at": "2026-08-26T03:42:12.437625Z",
+      "last_checked_at": "2026-08-26T03:48:40.467776Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -47428,7 +47428,7 @@
       "published_at": "2026-08-25T22:27:00Z",
       "modified_at": "2026-08-25T22:28:00Z",
       "discovered_at": "2026-08-26T02:00:08.146005Z",
-      "last_checked_at": "2026-08-26T03:43:12.804059Z",
+      "last_checked_at": "2026-08-26T03:49:40.719914Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -47506,7 +47506,7 @@
       "published_at": "2026-08-25T22:30:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643745Z",
-      "last_checked_at": "2026-08-26T03:42:12.435764Z",
+      "last_checked_at": "2026-08-26T03:48:40.466513Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -47545,7 +47545,7 @@
       "published_at": "2026-08-25T22:39:00Z",
       "modified_at": "2026-08-25T22:44:00Z",
       "discovered_at": "2026-08-26T02:00:08.145904Z",
-      "last_checked_at": "2026-08-26T03:43:12.802515Z",
+      "last_checked_at": "2026-08-26T03:49:40.719061Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -47566,7 +47566,7 @@
       "published_at": "2026-08-25T22:41:58Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643693Z",
-      "last_checked_at": "2026-08-26T03:42:12.434471Z",
+      "last_checked_at": "2026-08-26T03:48:40.465609Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -47604,7 +47604,7 @@
       "published_at": "2026-08-25T22:46:58Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T02:00:23.259778Z",
-      "last_checked_at": "2026-08-26T03:43:23.905415Z",
+      "last_checked_at": "2026-08-26T03:49:51.686703Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -47643,7 +47643,7 @@
       "published_at": "2026-08-25T22:53:00Z",
       "modified_at": "2026-08-25T23:01:00Z",
       "discovered_at": "2026-08-26T02:00:08.145805Z",
-      "last_checked_at": "2026-08-26T03:43:12.800657Z",
+      "last_checked_at": "2026-08-26T03:49:40.717868Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -47664,7 +47664,7 @@
       "published_at": "2026-08-25T22:54:40Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643644Z",
-      "last_checked_at": "2026-08-26T03:42:12.433237Z",
+      "last_checked_at": "2026-08-26T03:48:40.464697Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -47721,7 +47721,7 @@
       "published_at": "2026-08-25T23:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643518Z",
-      "last_checked_at": "2026-08-26T03:42:12.431677Z",
+      "last_checked_at": "2026-08-26T03:48:40.463565Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -47798,7 +47798,7 @@
       "published_at": "2026-08-25T23:17:00Z",
       "modified_at": "2026-08-26T01:20:00Z",
       "discovered_at": "2026-08-26T02:00:08.145704Z",
-      "last_checked_at": "2026-08-26T03:43:12.799265Z",
+      "last_checked_at": "2026-08-26T03:49:40.716855Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -47819,7 +47819,7 @@
       "published_at": "2026-08-25T23:17:49Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643389Z",
-      "last_checked_at": "2026-08-26T03:42:12.430355Z",
+      "last_checked_at": "2026-08-26T03:48:40.462693Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -47839,7 +47839,7 @@
       "published_at": "2026-08-25T23:19:12Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643262Z",
-      "last_checked_at": "2026-08-26T03:42:12.429166Z",
+      "last_checked_at": "2026-08-26T03:48:40.461809Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -47859,7 +47859,7 @@
       "published_at": "2026-08-25T23:20:19Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643139Z",
-      "last_checked_at": "2026-08-26T03:42:12.427539Z",
+      "last_checked_at": "2026-08-26T03:48:40.460562Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -47898,7 +47898,7 @@
       "published_at": "2026-08-25T23:26:00Z",
       "modified_at": "2026-08-26T02:53:00Z",
       "discovered_at": "2026-08-26T02:00:08.145604Z",
-      "last_checked_at": "2026-08-26T03:43:12.797454Z",
+      "last_checked_at": "2026-08-26T03:49:40.715579Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -47938,7 +47938,7 @@
       "published_at": "2026-08-25T23:30:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.643002Z",
-      "last_checked_at": "2026-08-26T03:42:12.426224Z",
+      "last_checked_at": "2026-08-26T03:48:40.459593Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -47958,7 +47958,7 @@
       "published_at": "2026-08-25T23:30:00Z",
       "modified_at": "2026-08-26T00:54:00Z",
       "discovered_at": "2026-08-26T02:00:08.145502Z",
-      "last_checked_at": "2026-08-26T03:43:12.796060Z",
+      "last_checked_at": "2026-08-26T03:49:40.714610Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48018,7 +48018,7 @@
       "published_at": "2026-08-25T23:39:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642868Z",
-      "last_checked_at": "2026-08-26T03:42:12.424950Z",
+      "last_checked_at": "2026-08-26T03:48:40.458659Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48058,7 +48058,7 @@
       "published_at": "2026-08-25T23:46:00Z",
       "modified_at": "2026-08-26T03:14:00Z",
       "discovered_at": "2026-08-26T02:00:08.145401Z",
-      "last_checked_at": "2026-08-26T03:43:12.794224Z",
+      "last_checked_at": "2026-08-26T03:49:40.713271Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48099,7 +48099,7 @@
       "published_at": "2026-08-25T23:49:00Z",
       "modified_at": "2026-08-25T23:56:00Z",
       "discovered_at": "2026-08-26T02:00:08.145301Z",
-      "last_checked_at": "2026-08-26T03:43:12.792656Z",
+      "last_checked_at": "2026-08-26T03:49:40.712236Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48120,7 +48120,7 @@
       "published_at": "2026-08-25T23:50:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T02:00:28.014643Z",
-      "last_checked_at": "2026-08-26T03:43:30.873316Z",
+      "last_checked_at": "2026-08-26T03:49:58.655680Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -48139,7 +48139,7 @@
       "published_at": "2026-08-25T23:54:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642766Z",
-      "last_checked_at": "2026-08-26T03:42:12.423248Z",
+      "last_checked_at": "2026-08-26T03:48:40.457509Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48159,7 +48159,7 @@
       "published_at": "2026-08-25T23:54:38Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642642Z",
-      "last_checked_at": "2026-08-26T03:42:12.422017Z",
+      "last_checked_at": "2026-08-26T03:48:40.456599Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48179,7 +48179,7 @@
       "published_at": "2026-08-25T23:57:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642526Z",
-      "last_checked_at": "2026-08-26T03:42:12.420807Z",
+      "last_checked_at": "2026-08-26T03:48:40.455693Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48199,7 +48199,7 @@
       "published_at": "2026-08-26T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642401Z",
-      "last_checked_at": "2026-08-26T03:42:12.418999Z",
+      "last_checked_at": "2026-08-26T03:48:40.453717Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48219,7 +48219,7 @@
       "published_at": "2026-08-26T00:00:00Z",
       "modified_at": "2026-08-26T00:05:00Z",
       "discovered_at": "2026-08-26T02:00:08.145203Z",
-      "last_checked_at": "2026-08-26T03:43:12.790805Z",
+      "last_checked_at": "2026-08-26T03:49:40.711003Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48240,7 +48240,7 @@
       "published_at": "2026-08-26T00:01:00Z",
       "modified_at": "2026-08-26T00:06:00Z",
       "discovered_at": "2026-08-26T02:00:08.145104Z",
-      "last_checked_at": "2026-08-26T03:43:12.789389Z",
+      "last_checked_at": "2026-08-26T03:49:40.710087Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48359,7 +48359,7 @@
       "published_at": "2026-08-26T00:06:00Z",
       "modified_at": "2026-08-26T00:10:00Z",
       "discovered_at": "2026-08-26T02:00:08.144995Z",
-      "last_checked_at": "2026-08-26T03:43:12.787512Z",
+      "last_checked_at": "2026-08-26T03:49:40.708793Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48380,7 +48380,7 @@
       "published_at": "2026-08-26T00:07:00Z",
       "modified_at": "2026-08-26T01:39:00Z",
       "discovered_at": "2026-08-26T02:00:08.144893Z",
-      "last_checked_at": "2026-08-26T03:43:12.786022Z",
+      "last_checked_at": "2026-08-26T03:49:40.707771Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48401,7 +48401,7 @@
       "published_at": "2026-08-26T00:09:33Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642270Z",
-      "last_checked_at": "2026-08-26T03:42:12.417692Z",
+      "last_checked_at": "2026-08-26T03:48:40.452386Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48479,7 +48479,7 @@
       "published_at": "2026-08-26T00:15:00Z",
       "modified_at": "2026-08-26T00:17:00Z",
       "discovered_at": "2026-08-26T02:00:08.144794Z",
-      "last_checked_at": "2026-08-26T03:43:12.784136Z",
+      "last_checked_at": "2026-08-26T03:49:40.706538Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2",
@@ -48519,7 +48519,7 @@
       "published_at": "2026-08-26T00:20:00Z",
       "modified_at": "2026-08-26T02:04:00Z",
       "discovered_at": "2026-08-26T02:00:08.144691Z",
-      "last_checked_at": "2026-08-26T03:43:12.782443Z",
+      "last_checked_at": "2026-08-26T03:49:40.705561Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48540,10 +48540,11 @@
       "published_at": "2026-08-26T00:21:03Z",
       "modified_at": "2026-08-26T01:24:14Z",
       "discovered_at": "2026-08-26T02:00:34.616192Z",
-      "last_checked_at": "2026-08-26T03:43:39.705229Z",
+      "last_checked_at": "2026-08-26T03:50:10.679485Z",
       "discovery_route": [
         "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T19%3A59%3A41Z&before=2026-08-26T01%3A59%3A41Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A41%3A19Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A41%3A19Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A47%3A47Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "80204b62bc73d4f8e10d020ca0fcaa3ddde28e011753df7a8d403885de35db18",
@@ -48560,7 +48561,7 @@
       "published_at": "2026-08-26T00:22:43Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642144Z",
-      "last_checked_at": "2026-08-26T03:42:12.416535Z",
+      "last_checked_at": "2026-08-26T03:48:40.451391Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48618,7 +48619,7 @@
       "published_at": "2026-08-26T00:25:29Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T02:00:23.259559Z",
-      "last_checked_at": "2026-08-26T03:43:21.910798Z",
+      "last_checked_at": "2026-08-26T03:49:49.695056Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -48637,7 +48638,7 @@
       "published_at": "2026-08-26T00:27:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.642007Z",
-      "last_checked_at": "2026-08-26T03:42:12.414760Z",
+      "last_checked_at": "2026-08-26T03:48:40.450007Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48657,7 +48658,7 @@
       "published_at": "2026-08-26T00:28:00Z",
       "modified_at": "2026-08-26T00:48:00Z",
       "discovered_at": "2026-08-26T02:00:08.144590Z",
-      "last_checked_at": "2026-08-26T03:43:12.780705Z",
+      "last_checked_at": "2026-08-26T03:49:40.704314Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48697,7 +48698,7 @@
       "published_at": "2026-08-26T00:30:00Z",
       "modified_at": "2026-08-26T00:56:00Z",
       "discovered_at": "2026-08-26T02:00:08.144387Z",
-      "last_checked_at": "2026-08-26T03:43:12.777372Z",
+      "last_checked_at": "2026-08-26T03:49:40.702016Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48718,7 +48719,7 @@
       "published_at": "2026-08-26T00:30:00Z",
       "modified_at": "2026-08-26T00:36:00Z",
       "discovered_at": "2026-08-26T02:00:08.144490Z",
-      "last_checked_at": "2026-08-26T03:43:12.779268Z",
+      "last_checked_at": "2026-08-26T03:49:40.703266Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48759,7 +48760,7 @@
       "published_at": "2026-08-26T00:34:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641873Z",
-      "last_checked_at": "2026-08-26T03:42:12.413382Z",
+      "last_checked_at": "2026-08-26T03:48:40.448972Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48798,7 +48799,7 @@
       "published_at": "2026-08-26T00:35:00Z",
       "modified_at": "2026-08-26T03:14:00Z",
       "discovered_at": "2026-08-26T02:00:08.144283Z",
-      "last_checked_at": "2026-08-26T03:43:12.775804Z",
+      "last_checked_at": "2026-08-26T03:49:40.701013Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48937,7 +48938,7 @@
       "published_at": "2026-08-26T00:42:47Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641738Z",
-      "last_checked_at": "2026-08-26T03:42:12.412014Z",
+      "last_checked_at": "2026-08-26T03:48:40.447878Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -48996,7 +48997,7 @@
       "published_at": "2026-08-26T00:46:41Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641605Z",
-      "last_checked_at": "2026-08-26T03:42:12.410204Z",
+      "last_checked_at": "2026-08-26T03:48:40.446631Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49073,7 +49074,7 @@
       "published_at": "2026-08-26T00:49:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641476Z",
-      "last_checked_at": "2026-08-26T03:42:12.408804Z",
+      "last_checked_at": "2026-08-26T03:48:40.445686Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49265,7 +49266,7 @@
       "published_at": "2026-08-26T00:57:55Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641345Z",
-      "last_checked_at": "2026-08-26T03:42:12.407381Z",
+      "last_checked_at": "2026-08-26T03:48:40.444794Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49285,7 +49286,7 @@
       "published_at": "2026-08-26T00:59:44Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641219Z",
-      "last_checked_at": "2026-08-26T03:42:12.405555Z",
+      "last_checked_at": "2026-08-26T03:48:40.443482Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49305,7 +49306,7 @@
       "published_at": "2026-08-26T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640686Z",
-      "last_checked_at": "2026-08-26T03:42:12.398375Z",
+      "last_checked_at": "2026-08-26T03:48:40.439581Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49325,7 +49326,7 @@
       "published_at": "2026-08-26T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.641086Z",
-      "last_checked_at": "2026-08-26T03:42:12.403686Z",
+      "last_checked_at": "2026-08-26T03:48:40.442585Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49345,7 +49346,7 @@
       "published_at": "2026-08-26T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640944Z",
-      "last_checked_at": "2026-08-26T03:42:12.401883Z",
+      "last_checked_at": "2026-08-26T03:48:40.441621Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49365,7 +49366,7 @@
       "published_at": "2026-08-26T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.400026Z",
-      "last_checked_at": "2026-08-26T03:42:12.400026Z",
+      "last_checked_at": "2026-08-26T03:48:40.440406Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -49403,7 +49404,7 @@
       "published_at": "2026-08-26T01:00:00Z",
       "modified_at": "2026-08-26T01:11:00Z",
       "discovered_at": "2026-08-26T02:00:08.144181Z",
-      "last_checked_at": "2026-08-26T03:43:12.773749Z",
+      "last_checked_at": "2026-08-26T03:49:40.699621Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -49444,7 +49445,7 @@
       "published_at": "2026-08-26T01:01:36Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640554Z",
-      "last_checked_at": "2026-08-26T03:42:12.397099Z",
+      "last_checked_at": "2026-08-26T03:48:40.438633Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49464,7 +49465,7 @@
       "published_at": "2026-08-26T01:02:50Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640431Z",
-      "last_checked_at": "2026-08-26T03:42:12.395407Z",
+      "last_checked_at": "2026-08-26T03:48:40.437233Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49562,7 +49563,7 @@
       "published_at": "2026-08-26T01:09:00Z",
       "modified_at": "2026-08-26T03:14:00Z",
       "discovered_at": "2026-08-26T02:00:08.144066Z",
-      "last_checked_at": "2026-08-26T03:43:12.771570Z",
+      "last_checked_at": "2026-08-26T03:49:40.697881Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -49775,7 +49776,7 @@
       "published_at": "2026-08-26T01:12:22Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.393901Z",
-      "last_checked_at": "2026-08-26T03:42:12.393901Z",
+      "last_checked_at": "2026-08-26T03:48:40.436351Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -49794,7 +49795,7 @@
       "published_at": "2026-08-26T01:12:22Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640298Z",
-      "last_checked_at": "2026-08-26T03:42:08.436794Z",
+      "last_checked_at": "2026-08-26T03:48:36.460604Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -49813,7 +49814,7 @@
       "published_at": "2026-08-26T01:12:27Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640170Z",
-      "last_checked_at": "2026-08-26T03:42:08.434776Z",
+      "last_checked_at": "2026-08-26T03:48:36.459288Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49852,7 +49853,7 @@
       "published_at": "2026-08-26T01:12:55Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.392597Z",
-      "last_checked_at": "2026-08-26T03:42:12.392597Z",
+      "last_checked_at": "2026-08-26T03:48:40.435519Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -49871,7 +49872,7 @@
       "published_at": "2026-08-26T01:12:55Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.640033Z",
-      "last_checked_at": "2026-08-26T03:42:08.432796Z",
+      "last_checked_at": "2026-08-26T03:48:36.457986Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -49890,7 +49891,7 @@
       "published_at": "2026-08-26T01:13:00Z",
       "modified_at": "2026-08-26T01:22:00Z",
       "discovered_at": "2026-08-26T02:00:08.143962Z",
-      "last_checked_at": "2026-08-26T03:43:12.769571Z",
+      "last_checked_at": "2026-08-26T03:49:40.696291Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50025,7 +50026,7 @@
       "published_at": "2026-08-26T01:15:27Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639896Z",
-      "last_checked_at": "2026-08-26T03:42:08.430563Z",
+      "last_checked_at": "2026-08-26T03:48:36.456618Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50064,7 +50065,7 @@
       "published_at": "2026-08-26T01:16:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639781Z",
-      "last_checked_at": "2026-08-26T03:42:08.428666Z",
+      "last_checked_at": "2026-08-26T03:48:36.455247Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50084,7 +50085,7 @@
       "published_at": "2026-08-26T01:16:00Z",
       "modified_at": "2026-08-26T03:13:00Z",
       "discovered_at": "2026-08-26T02:00:08.143860Z",
-      "last_checked_at": "2026-08-26T03:43:12.768125Z",
+      "last_checked_at": "2026-08-26T03:49:40.695053Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50163,7 +50164,7 @@
       "published_at": "2026-08-26T01:18:00Z",
       "modified_at": "2026-08-26T03:14:00Z",
       "discovered_at": "2026-08-26T02:00:08.143756Z",
-      "last_checked_at": "2026-08-26T03:43:12.765955Z",
+      "last_checked_at": "2026-08-26T03:49:40.693138Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50413,7 +50414,7 @@
       "published_at": "2026-08-26T01:21:19Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.390760Z",
-      "last_checked_at": "2026-08-26T03:42:12.390760Z",
+      "last_checked_at": "2026-08-26T03:48:40.434356Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -50432,7 +50433,7 @@
       "published_at": "2026-08-26T01:21:19Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639658Z",
-      "last_checked_at": "2026-08-26T03:42:08.426627Z",
+      "last_checked_at": "2026-08-26T03:48:36.453948Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -50680,7 +50681,7 @@
       "published_at": "2026-08-26T01:26:00Z",
       "modified_at": "2026-08-26T01:30:00Z",
       "discovered_at": "2026-08-26T02:00:08.143651Z",
-      "last_checked_at": "2026-08-26T03:43:10.782511Z",
+      "last_checked_at": "2026-08-26T03:49:38.696957Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50720,7 +50721,7 @@
       "published_at": "2026-08-26T01:27:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639583Z",
-      "last_checked_at": "2026-08-26T03:42:08.424855Z",
+      "last_checked_at": "2026-08-26T03:48:36.452710Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50759,7 +50760,7 @@
       "published_at": "2026-08-26T01:27:14Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639453Z",
-      "last_checked_at": "2026-08-26T03:42:08.422810Z",
+      "last_checked_at": "2026-08-26T03:48:36.451190Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -50855,7 +50856,7 @@
       "published_at": "2026-08-26T01:29:00Z",
       "modified_at": "2026-08-26T03:13:00Z",
       "discovered_at": "2026-08-26T02:00:08.143541Z",
-      "last_checked_at": "2026-08-26T03:43:08.730047Z",
+      "last_checked_at": "2026-08-26T03:49:36.672821Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50952,7 +50953,7 @@
       "published_at": "2026-08-26T01:30:17Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639349Z",
-      "last_checked_at": "2026-08-26T03:42:08.421170Z",
+      "last_checked_at": "2026-08-26T03:48:36.449914Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -51010,7 +51011,7 @@
       "published_at": "2026-08-26T01:30:52Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.389413Z",
-      "last_checked_at": "2026-08-26T03:42:12.389413Z",
+      "last_checked_at": "2026-08-26T03:48:40.433292Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -51029,7 +51030,7 @@
       "published_at": "2026-08-26T01:30:52Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639222Z",
-      "last_checked_at": "2026-08-26T03:42:08.419148Z",
+      "last_checked_at": "2026-08-26T03:48:36.448630Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -51361,7 +51362,7 @@
       "published_at": "2026-08-26T01:34:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.639100Z",
-      "last_checked_at": "2026-08-26T03:42:08.417238Z",
+      "last_checked_at": "2026-08-26T03:48:36.447318Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -52315,7 +52316,7 @@
       "published_at": "2026-08-26T01:40:00Z",
       "modified_at": "2026-08-26T02:14:00Z",
       "discovered_at": "2026-08-26T02:00:08.143422Z",
-      "last_checked_at": "2026-08-26T03:43:06.714489Z",
+      "last_checked_at": "2026-08-26T03:49:34.713987Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -52413,7 +52414,7 @@
       "published_at": "2026-08-26T01:40:55Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638967Z",
-      "last_checked_at": "2026-08-26T03:42:08.415417Z",
+      "last_checked_at": "2026-08-26T03:48:36.446019Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -52608,7 +52609,7 @@
       "published_at": "2026-08-26T01:43:09Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638843Z",
-      "last_checked_at": "2026-08-26T03:42:08.413492Z",
+      "last_checked_at": "2026-08-26T03:48:36.444734Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -52627,7 +52628,7 @@
       "published_at": "2026-08-26T01:43:09Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.388032Z",
-      "last_checked_at": "2026-08-26T03:42:12.388032Z",
+      "last_checked_at": "2026-08-26T03:48:40.432404Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -52685,7 +52686,7 @@
       "published_at": "2026-08-26T01:43:41Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638714Z",
-      "last_checked_at": "2026-08-26T03:42:08.411624Z",
+      "last_checked_at": "2026-08-26T03:48:36.443416Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -52859,7 +52860,7 @@
       "published_at": "2026-08-26T01:45:00Z",
       "modified_at": "2026-08-26T01:49:00Z",
       "discovered_at": "2026-08-26T02:00:08.143292Z",
-      "last_checked_at": "2026-08-26T03:43:04.702542Z",
+      "last_checked_at": "2026-08-26T03:49:32.665607Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -53151,7 +53152,7 @@
       "published_at": "2026-08-26T01:47:46Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638582Z",
-      "last_checked_at": "2026-08-26T03:42:08.409720Z",
+      "last_checked_at": "2026-08-26T03:48:36.441983Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53210,7 +53211,7 @@
       "published_at": "2026-08-26T01:48:59Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638444Z",
-      "last_checked_at": "2026-08-26T03:42:08.407819Z",
+      "last_checked_at": "2026-08-26T03:48:36.440583Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53230,7 +53231,7 @@
       "published_at": "2026-08-26T01:49:00Z",
       "modified_at": "2026-08-26T01:56:00Z",
       "discovered_at": "2026-08-26T02:00:08.143025Z",
-      "last_checked_at": "2026-08-26T03:43:02.772769Z",
+      "last_checked_at": "2026-08-26T03:49:30.530162Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -53270,7 +53271,7 @@
       "published_at": "2026-08-26T01:50:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638306Z",
-      "last_checked_at": "2026-08-26T03:42:08.406019Z",
+      "last_checked_at": "2026-08-26T03:48:36.439293Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53368,7 +53369,7 @@
       "published_at": "2026-08-26T01:51:05Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638177Z",
-      "last_checked_at": "2026-08-26T03:42:08.404107Z",
+      "last_checked_at": "2026-08-26T03:48:36.438045Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53388,7 +53389,7 @@
       "published_at": "2026-08-26T01:51:10Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.638028Z",
-      "last_checked_at": "2026-08-26T03:42:08.402033Z",
+      "last_checked_at": "2026-08-26T03:48:36.436724Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53544,7 +53545,7 @@
       "published_at": "2026-08-26T01:53:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.637893Z",
-      "last_checked_at": "2026-08-26T03:42:08.400128Z",
+      "last_checked_at": "2026-08-26T03:48:36.435169Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53642,7 +53643,7 @@
       "published_at": "2026-08-26T01:54:25Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.637751Z",
-      "last_checked_at": "2026-08-26T03:42:08.398102Z",
+      "last_checked_at": "2026-08-26T03:48:36.433897Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53760,7 +53761,7 @@
       "published_at": "2026-08-26T01:55:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.637615Z",
-      "last_checked_at": "2026-08-26T03:42:08.396188Z",
+      "last_checked_at": "2026-08-26T03:48:36.432623Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53800,7 +53801,7 @@
       "published_at": "2026-08-26T01:56:24Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.637475Z",
-      "last_checked_at": "2026-08-26T03:42:08.394159Z",
+      "last_checked_at": "2026-08-26T03:48:36.431256Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53839,7 +53840,7 @@
       "published_at": "2026-08-26T01:57:34Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.637315Z",
-      "last_checked_at": "2026-08-26T03:42:08.392195Z",
+      "last_checked_at": "2026-08-26T03:48:36.429709Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53879,7 +53880,7 @@
       "published_at": "2026-08-26T01:58:20Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:12.386031Z",
-      "last_checked_at": "2026-08-26T03:42:12.386031Z",
+      "last_checked_at": "2026-08-26T03:48:40.431098Z",
       "discovery_route": [
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
@@ -53898,7 +53899,7 @@
       "published_at": "2026-08-26T01:58:20Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T01:59:57.637043Z",
-      "last_checked_at": "2026-08-26T03:42:08.390073Z",
+      "last_checked_at": "2026-08-26T03:48:36.428204Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -53936,7 +53937,7 @@
       "published_at": "2026-08-26T02:00:00Z",
       "modified_at": "2026-08-26T02:08:00Z",
       "discovered_at": "2026-08-26T03:43:00.705289Z",
-      "last_checked_at": "2026-08-26T03:43:00.705289Z",
+      "last_checked_at": "2026-08-26T03:49:28.698270Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -53956,7 +53957,7 @@
       "published_at": "2026-08-26T02:00:00Z",
       "modified_at": "2026-08-26T02:11:00Z",
       "discovered_at": "2026-08-26T03:42:58.702578Z",
-      "last_checked_at": "2026-08-26T03:42:58.702578Z",
+      "last_checked_at": "2026-08-26T03:49:26.667500Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -53976,7 +53977,7 @@
       "published_at": "2026-08-26T02:00:25Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:08.388003Z",
-      "last_checked_at": "2026-08-26T03:42:08.388003Z",
+      "last_checked_at": "2026-08-26T03:48:36.426772Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -53996,7 +53997,7 @@
       "published_at": "2026-08-26T02:03:00Z",
       "modified_at": "2026-08-26T02:23:00Z",
       "discovered_at": "2026-08-26T03:42:56.726895Z",
-      "last_checked_at": "2026-08-26T03:42:56.726895Z",
+      "last_checked_at": "2026-08-26T03:49:24.695980Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -54016,7 +54017,7 @@
       "published_at": "2026-08-26T02:04:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:08.385933Z",
-      "last_checked_at": "2026-08-26T03:42:08.385933Z",
+      "last_checked_at": "2026-08-26T03:48:36.425344Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54036,7 +54037,7 @@
       "published_at": "2026-08-26T02:07:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:42:08.383626Z",
-      "last_checked_at": "2026-08-26T03:42:08.383626Z",
+      "last_checked_at": "2026-08-26T03:48:36.423800Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54056,7 +54057,7 @@
       "published_at": "2026-08-26T02:18:00Z",
       "modified_at": "2026-08-26T02:18:00Z",
       "discovered_at": "2026-08-26T03:42:06.412598Z",
-      "last_checked_at": "2026-08-26T03:42:06.412598Z",
+      "last_checked_at": "2026-08-26T03:48:34.438419Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54076,7 +54077,7 @@
       "published_at": "2026-08-26T02:20:00Z",
       "modified_at": "2026-08-26T03:37:35Z",
       "discovered_at": "2026-08-26T03:42:04.397743Z",
-      "last_checked_at": "2026-08-26T03:42:04.397743Z",
+      "last_checked_at": "2026-08-26T03:48:32.432655Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54096,7 +54097,7 @@
       "published_at": "2026-08-26T02:23:52Z",
       "modified_at": "2026-08-26T02:23:52Z",
       "discovered_at": "2026-08-26T03:42:02.541489Z",
-      "last_checked_at": "2026-08-26T03:42:02.541489Z",
+      "last_checked_at": "2026-08-26T03:48:30.544959Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54116,7 +54117,7 @@
       "published_at": "2026-08-26T02:24:00Z",
       "modified_at": "2026-08-26T02:29:15Z",
       "discovered_at": "2026-08-26T03:42:00.381083Z",
-      "last_checked_at": "2026-08-26T03:42:00.381083Z",
+      "last_checked_at": "2026-08-26T03:48:28.428677Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54136,7 +54137,7 @@
       "published_at": "2026-08-26T02:24:02Z",
       "modified_at": "2026-08-26T02:24:02Z",
       "discovered_at": "2026-08-26T03:41:58.405082Z",
-      "last_checked_at": "2026-08-26T03:42:10.519587Z",
+      "last_checked_at": "2026-08-26T03:48:38.538441Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54156,7 +54157,7 @@
       "published_at": "2026-08-26T02:24:41Z",
       "modified_at": "2026-08-26T02:24:41Z",
       "discovered_at": "2026-08-26T03:41:56.495347Z",
-      "last_checked_at": "2026-08-26T03:41:56.495347Z",
+      "last_checked_at": "2026-08-26T03:48:24.524905Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54176,7 +54177,7 @@
       "published_at": "2026-08-26T02:28:28Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:43:20.099724Z",
-      "last_checked_at": "2026-08-26T03:43:20.099724Z",
+      "last_checked_at": "2026-08-26T03:49:47.883195Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -54195,7 +54196,7 @@
       "published_at": "2026-08-26T02:29:00Z",
       "modified_at": "2026-08-26T02:52:58Z",
       "discovered_at": "2026-08-26T03:41:54.406444Z",
-      "last_checked_at": "2026-08-26T03:41:54.406444Z",
+      "last_checked_at": "2026-08-26T03:48:22.436266Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54215,7 +54216,7 @@
       "published_at": "2026-08-26T02:30:00Z",
       "modified_at": "2026-08-26T02:56:01Z",
       "discovered_at": "2026-08-26T03:41:52.384561Z",
-      "last_checked_at": "2026-08-26T03:41:52.384561Z",
+      "last_checked_at": "2026-08-26T03:48:20.435566Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54235,7 +54236,7 @@
       "published_at": "2026-08-26T02:31:00Z",
       "modified_at": "2026-08-26T02:51:00Z",
       "discovered_at": "2026-08-26T03:42:54.722231Z",
-      "last_checked_at": "2026-08-26T03:42:54.722231Z",
+      "last_checked_at": "2026-08-26T03:49:22.526640Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -54255,7 +54256,7 @@
       "published_at": "2026-08-26T02:33:00Z",
       "modified_at": "2026-08-26T03:32:39Z",
       "discovered_at": "2026-08-26T03:41:50.386794Z",
-      "last_checked_at": "2026-08-26T03:41:50.386794Z",
+      "last_checked_at": "2026-08-26T03:48:18.439439Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54275,7 +54276,7 @@
       "published_at": "2026-08-26T02:35:00Z",
       "modified_at": "2026-08-26T02:40:00Z",
       "discovered_at": "2026-08-26T03:42:52.825619Z",
-      "last_checked_at": "2026-08-26T03:42:52.825619Z",
+      "last_checked_at": "2026-08-26T03:49:20.768688Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54295,7 +54296,7 @@
       "published_at": "2026-08-26T02:36:00Z",
       "modified_at": "2026-08-26T03:05:20Z",
       "discovered_at": "2026-08-26T03:41:48.500139Z",
-      "last_checked_at": "2026-08-26T03:41:48.500139Z",
+      "last_checked_at": "2026-08-26T03:48:16.532079Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54315,7 +54316,7 @@
       "published_at": "2026-08-26T02:36:00Z",
       "modified_at": "2026-08-26T02:38:38Z",
       "discovered_at": "2026-08-26T03:41:46.634193Z",
-      "last_checked_at": "2026-08-26T03:41:46.634193Z",
+      "last_checked_at": "2026-08-26T03:48:14.434788Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54335,7 +54336,7 @@
       "published_at": "2026-08-26T02:37:00Z",
       "modified_at": "2026-08-26T02:49:00Z",
       "discovered_at": "2026-08-26T03:42:50.825465Z",
-      "last_checked_at": "2026-08-26T03:42:50.825465Z",
+      "last_checked_at": "2026-08-26T03:49:18.701042Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54355,7 +54356,7 @@
       "published_at": "2026-08-26T02:38:00Z",
       "modified_at": "2026-08-26T03:13:00Z",
       "discovered_at": "2026-08-26T03:42:46.746206Z",
-      "last_checked_at": "2026-08-26T03:42:46.746206Z",
+      "last_checked_at": "2026-08-26T03:49:14.664165Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54375,7 +54376,7 @@
       "published_at": "2026-08-26T02:38:00Z",
       "modified_at": "2026-08-26T02:43:00Z",
       "discovered_at": "2026-08-26T03:42:48.720992Z",
-      "last_checked_at": "2026-08-26T03:42:48.720992Z",
+      "last_checked_at": "2026-08-26T03:49:16.792962Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54395,7 +54396,7 @@
       "published_at": "2026-08-26T02:39:42Z",
       "modified_at": "2026-08-26T02:39:42Z",
       "discovered_at": "2026-08-26T03:41:44.500593Z",
-      "last_checked_at": "2026-08-26T03:41:44.500593Z",
+      "last_checked_at": "2026-08-26T03:48:12.446774Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54415,7 +54416,7 @@
       "published_at": "2026-08-26T02:40:00Z",
       "modified_at": "2026-08-26T02:40:00Z",
       "discovered_at": "2026-08-26T03:41:42.492177Z",
-      "last_checked_at": "2026-08-26T03:41:42.492177Z",
+      "last_checked_at": "2026-08-26T03:48:10.543498Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54435,7 +54436,7 @@
       "published_at": "2026-08-26T02:41:00Z",
       "modified_at": "2026-08-26T02:45:00Z",
       "discovered_at": "2026-08-26T03:42:44.528115Z",
-      "last_checked_at": "2026-08-26T03:42:44.528115Z",
+      "last_checked_at": "2026-08-26T03:49:13.020073Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54455,9 +54456,10 @@
       "published_at": "2026-08-26T02:41:49Z",
       "modified_at": "2026-08-26T02:41:50Z",
       "discovered_at": "2026-08-26T03:43:37.851970Z",
-      "last_checked_at": "2026-08-26T03:43:37.851970Z",
+      "last_checked_at": "2026-08-26T03:50:09.312789Z",
       "discovery_route": [
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A41%3A19Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A41%3A19Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A47%3A47Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "94f0a3fb53c2ade7dac580a9bdeb20694c4b70ebc7bc368cf6a4c852fee9a480",
@@ -54474,7 +54476,7 @@
       "published_at": "2026-08-26T02:44:00Z",
       "modified_at": "2026-08-26T02:55:00Z",
       "discovered_at": "2026-08-26T03:42:42.698784Z",
-      "last_checked_at": "2026-08-26T03:42:42.698784Z",
+      "last_checked_at": "2026-08-26T03:49:10.527093Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54494,7 +54496,7 @@
       "published_at": "2026-08-26T02:46:00Z",
       "modified_at": "2026-08-26T02:50:00Z",
       "discovered_at": "2026-08-26T03:42:40.528405Z",
-      "last_checked_at": "2026-08-26T03:42:40.528405Z",
+      "last_checked_at": "2026-08-26T03:49:08.528311Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54514,7 +54516,7 @@
       "published_at": "2026-08-26T02:47:00Z",
       "modified_at": "2026-08-26T02:50:05Z",
       "discovered_at": "2026-08-26T03:41:40.395426Z",
-      "last_checked_at": "2026-08-26T03:42:08.438609Z",
+      "last_checked_at": "2026-08-26T03:48:36.462004Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54534,7 +54536,7 @@
       "published_at": "2026-08-26T02:47:08Z",
       "modified_at": "2026-08-26T02:47:08Z",
       "discovered_at": "2026-08-26T03:41:38.395261Z",
-      "last_checked_at": "2026-08-26T03:41:38.395261Z",
+      "last_checked_at": "2026-08-26T03:48:06.430295Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54554,7 +54556,7 @@
       "published_at": "2026-08-26T02:47:42Z",
       "modified_at": "2026-08-26T02:47:42Z",
       "discovered_at": "2026-08-26T03:41:36.399194Z",
-      "last_checked_at": "2026-08-26T03:41:36.399194Z",
+      "last_checked_at": "2026-08-26T03:48:04.429448Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54574,7 +54576,7 @@
       "published_at": "2026-08-26T02:53:00Z",
       "modified_at": "2026-08-26T02:59:04Z",
       "discovered_at": "2026-08-26T03:41:34.507787Z",
-      "last_checked_at": "2026-08-26T03:41:34.507787Z",
+      "last_checked_at": "2026-08-26T03:48:02.561351Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54594,7 +54596,7 @@
       "published_at": "2026-08-26T02:53:17Z",
       "modified_at": "2026-08-26T02:53:17Z",
       "discovered_at": "2026-08-26T03:41:32.399936Z",
-      "last_checked_at": "2026-08-26T03:41:32.399936Z",
+      "last_checked_at": "2026-08-26T03:48:00.435599Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54614,7 +54616,7 @@
       "published_at": "2026-08-26T02:54:00Z",
       "modified_at": "2026-08-26T03:05:00Z",
       "discovered_at": "2026-08-26T03:42:38.530785Z",
-      "last_checked_at": "2026-08-26T03:42:38.530785Z",
+      "last_checked_at": "2026-08-26T03:49:06.529595Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54634,7 +54636,7 @@
       "published_at": "2026-08-26T02:55:00Z",
       "modified_at": "2026-08-26T03:11:00Z",
       "discovered_at": "2026-08-26T03:42:36.701714Z",
-      "last_checked_at": "2026-08-26T03:42:36.701714Z",
+      "last_checked_at": "2026-08-26T03:49:04.526482Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54654,7 +54656,7 @@
       "published_at": "2026-08-26T02:57:00Z",
       "modified_at": "2026-08-26T03:29:20Z",
       "discovered_at": "2026-08-26T03:41:30.409058Z",
-      "last_checked_at": "2026-08-26T03:41:30.409058Z",
+      "last_checked_at": "2026-08-26T03:47:58.431603Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -54674,7 +54676,7 @@
       "published_at": "2026-08-26T03:00:00Z",
       "modified_at": "2026-08-26T03:12:57Z",
       "discovered_at": "2026-08-26T03:41:28.485329Z",
-      "last_checked_at": "2026-08-26T03:41:28.485329Z",
+      "last_checked_at": "2026-08-26T03:47:56.524973Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -54693,7 +54695,7 @@
       "published_at": "2026-08-26T03:00:00Z",
       "modified_at": "2026-08-26T03:22:00Z",
       "discovered_at": "2026-08-26T03:42:32.706940Z",
-      "last_checked_at": "2026-08-26T03:42:32.706940Z",
+      "last_checked_at": "2026-08-26T03:49:00.527051Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54713,7 +54715,7 @@
       "published_at": "2026-08-26T03:00:00Z",
       "modified_at": "2026-08-26T03:15:00Z",
       "discovered_at": "2026-08-26T03:42:34.701000Z",
-      "last_checked_at": "2026-08-26T03:42:34.701000Z",
+      "last_checked_at": "2026-08-26T03:49:02.530287Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54733,7 +54735,7 @@
       "published_at": "2026-08-26T03:00:00Z",
       "modified_at": "2026-08-26T03:03:00Z",
       "discovered_at": "2026-08-26T03:42:28.768063Z",
-      "last_checked_at": "2026-08-26T03:42:28.768063Z",
+      "last_checked_at": "2026-08-26T03:48:56.678611Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54753,7 +54755,7 @@
       "published_at": "2026-08-26T03:00:00Z",
       "modified_at": "2026-08-26T03:27:00Z",
       "discovered_at": "2026-08-26T03:42:30.777569Z",
-      "last_checked_at": "2026-08-26T03:42:30.777569Z",
+      "last_checked_at": "2026-08-26T03:48:58.523629Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54773,7 +54775,7 @@
       "published_at": "2026-08-26T03:02:00Z",
       "modified_at": "2026-08-26T03:07:00Z",
       "discovered_at": "2026-08-26T03:42:26.527309Z",
-      "last_checked_at": "2026-08-26T03:42:26.527309Z",
+      "last_checked_at": "2026-08-26T03:48:54.664579Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54793,7 +54795,7 @@
       "published_at": "2026-08-26T03:09:00Z",
       "modified_at": "2026-08-26T03:36:00Z",
       "discovered_at": "2026-08-26T03:42:24.715809Z",
-      "last_checked_at": "2026-08-26T03:42:24.715809Z",
+      "last_checked_at": "2026-08-26T03:48:52.717257Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54811,14 +54813,14 @@
       "outlet": "donga",
       "reporter": "권구용",
       "published_at": "2026-08-26T03:15:00Z",
-      "modified_at": "2026-08-26T03:36:14Z",
+      "modified_at": "2026-08-26T03:42:05Z",
       "discovered_at": "2026-08-26T03:41:27.662089Z",
-      "last_checked_at": "2026-08-26T03:41:27.662089Z",
+      "last_checked_at": "2026-08-26T03:47:55.736226Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "cf18c64d27d2522f22a6b980340b22578d21b9b336bbd9de3348c39320a243a4",
+      "body_hash": "a386cb83bdc558b7b36d627888b7e0db58c688ad866a01a741357003a6cb0da2",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -54832,9 +54834,10 @@
       "published_at": "2026-08-26T03:16:36Z",
       "modified_at": "2026-08-26T03:16:36Z",
       "discovered_at": "2026-08-26T03:43:35.408883Z",
-      "last_checked_at": "2026-08-26T03:43:35.408883Z",
+      "last_checked_at": "2026-08-26T03:50:07.634509Z",
       "discovery_route": [
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A41%3A19Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A41%3A19Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-25T22%3A00%3A00Z&before=2026-08-26T03%3A47%3A47Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "39dd99fee5ebab7e0dd470a65011663714e020b1780b73700f9f8d5670b40d9d",
@@ -54851,7 +54854,7 @@
       "published_at": "2026-08-26T03:16:43Z",
       "modified_at": null,
       "discovered_at": "2026-08-26T03:43:17.851418Z",
-      "last_checked_at": "2026-08-26T03:43:17.851418Z",
+      "last_checked_at": "2026-08-26T03:49:45.622207Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -54870,7 +54873,7 @@
       "published_at": "2026-08-26T03:21:00Z",
       "modified_at": "2026-08-26T03:38:44Z",
       "discovered_at": "2026-08-26T03:41:24.364908Z",
-      "last_checked_at": "2026-08-26T03:41:24.364908Z",
+      "last_checked_at": "2026-08-26T03:47:52.346411Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -55263,16 +55266,6 @@
         "naver_url": "http://www.chungnamilbo.co.kr/news/articleView.html?idxno=905779",
         "published_at": "2026-08-25T09:22:00Z",
         "description": "여성, 장애인 과 각계 직능단체가 '충남의 발전'이라는 하나의 대의 아래 뭉치는 '원팀 충남도당'을 만들겠다고 약속했다. 세 번째로는 도민의 삶을 실질적으로 변화시키는 유능한 민생 정책 정당으로 거듭나겠다는 구상을...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "\"일자리 현장서 답 찾는다\"…부산시, 노인·신중년 일자리 확대 모색",
-        "original_url": "https://www.gukjenews.com/news/articleView.html?idxno=3674179",
-        "naver_url": "https://www.gukjenews.com/news/articleView.html?idxno=3674179",
-        "published_at": "2026-08-25T09:20:00Z",
-        "description": "중심 정책 마련에 나섰다. 부산시는 25일 오후, 우리동네 사회가치경영(ESG) 센터 부산진구점에서 일자리... 지역아동센터와 장애인 주간보호센터, 프로그램실 등을 차례로 방문했다. 25일 오후, 우리동네 사회가치경영(ESG)...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -56780,7 +56773,7 @@
   },
   "final_state": {
     "status": "complete",
-    "checked_at": "2026-08-26T03:43:41.661174Z",
+    "checked_at": "2026-08-26T03:50:12.476088Z",
     "checks": [
       {
         "issue_title": "서울시의회 장애인 이동권·노동권 조례 대타협, 전장연 73차 만에 지하철 시위 중단",
