@@ -25,6 +25,13 @@ on:
         required: false
         type: boolean
         default: true
+      allow_stale_revalidation:
+        description: >-
+          Manual exception: bypass the 6-hour report-boundary revalidation deadline.
+          Only for a session-approved one-off catch-up publish; never enable by default.
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: news-topic-monitor-data
@@ -69,12 +76,14 @@ jobs:
           INPUT_START: ${{ inputs.start }}
           INPUT_END: ${{ inputs.end }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_ALLOW_STALE_REVALIDATION: ${{ inputs.allow_stale_revalidation }}
         run: |
           args=(editorial-finalize)
           if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
           if test -n "$INPUT_START"; then args+=(--start "$INPUT_START"); fi
           if test -n "$INPUT_END"; then args+=(--end "$INPUT_END"); fi
           if test "$INPUT_DRY_RUN" = "true"; then args+=(--dry-run); fi
+          if test "$INPUT_ALLOW_STALE_REVALIDATION" = "true"; then args+=(--allow-stale-revalidation); fi
           news-topic-monitor "${args[@]}"
       - name: Commit metadata, briefing, and health outputs
         if: ${{ always() }}
