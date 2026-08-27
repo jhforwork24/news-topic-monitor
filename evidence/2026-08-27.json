@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-27",
-  "generated_at": "2026-08-27T01:59:07.984368Z",
+  "generated_at": "2026-08-27T02:08:51.409975Z",
   "articles": [
     {
       "candidate_id": "3cbfa550e5653bae763e01e2dc1da025546f2ec3d717ac645ef94d7e5bb55be3",
@@ -46908,7 +46908,7 @@
       "published_at": "2026-08-26T22:00:00Z",
       "modified_at": "2026-08-26T22:00:01Z",
       "discovered_at": "2026-08-26T23:47:03.218176Z",
-      "last_checked_at": "2026-08-27T01:55:53.489557Z",
+      "last_checked_at": "2026-08-27T02:05:26.159535Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -46947,7 +46947,7 @@
       "published_at": "2026-08-26T22:07:18Z",
       "modified_at": "2026-08-26T22:07:55Z",
       "discovered_at": "2026-08-26T23:47:06.052511Z",
-      "last_checked_at": "2026-08-27T01:56:45.827149Z",
+      "last_checked_at": "2026-08-27T02:06:16.511452Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -46985,11 +46985,12 @@
       "published_at": "2026-08-26T22:17:00Z",
       "modified_at": "2026-08-27T01:37:00Z",
       "discovered_at": "2026-08-26T23:46:52.344825Z",
-      "last_checked_at": "2026-08-27T01:55:02.574837Z",
+      "last_checked_at": "2026-08-27T02:04:35.208081Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
-        "official:https://www.hani.co.kr/arti?page=2"
+        "official:https://www.hani.co.kr/arti?page=2",
+        "official:https://www.hani.co.kr/arti?page=3"
       ],
       "full_body_status": "skipped_irrelevant",
       "body_hash": null,
@@ -47044,7 +47045,7 @@
       "published_at": "2026-08-26T22:23:00Z",
       "modified_at": "2026-08-26T22:23:00Z",
       "discovered_at": "2026-08-26T23:47:03.218102Z",
-      "last_checked_at": "2026-08-27T01:55:53.488578Z",
+      "last_checked_at": "2026-08-27T02:05:26.158167Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47101,7 +47102,7 @@
       "published_at": "2026-08-26T22:26:00Z",
       "modified_at": "2026-08-26T22:26:00Z",
       "discovered_at": "2026-08-26T23:47:03.218029Z",
-      "last_checked_at": "2026-08-27T01:55:53.487312Z",
+      "last_checked_at": "2026-08-27T02:05:26.157196Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47120,7 +47121,7 @@
       "published_at": "2026-08-26T22:26:01Z",
       "modified_at": "2026-08-27T00:53:20Z",
       "discovered_at": "2026-08-26T23:47:06.052398Z",
-      "last_checked_at": "2026-08-27T01:56:45.826211Z",
+      "last_checked_at": "2026-08-27T02:06:16.510203Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47139,7 +47140,7 @@
       "published_at": "2026-08-26T22:27:21Z",
       "modified_at": "2026-08-26T22:27:21Z",
       "discovered_at": "2026-08-26T23:47:06.052285Z",
-      "last_checked_at": "2026-08-27T01:56:45.825215Z",
+      "last_checked_at": "2026-08-27T02:06:16.508529Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47158,7 +47159,7 @@
       "published_at": "2026-08-26T22:28:28Z",
       "modified_at": "2026-08-27T01:49:06Z",
       "discovered_at": "2026-08-26T23:47:06.052159Z",
-      "last_checked_at": "2026-08-27T01:56:45.823974Z",
+      "last_checked_at": "2026-08-27T02:06:16.507324Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47293,7 +47294,7 @@
       "published_at": "2026-08-26T22:33:41Z",
       "modified_at": "2026-08-26T22:33:41Z",
       "discovered_at": "2026-08-26T23:47:06.052050Z",
-      "last_checked_at": "2026-08-27T01:56:45.822963Z",
+      "last_checked_at": "2026-08-27T02:06:16.506300Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47306,13 +47307,13 @@
     {
       "candidate_id": "925fc07f8985c47f7fb158db91190ef78208f73c0a3fdce8a248a59fc9522c18",
       "canonical_url": "https://www.khan.co.kr/article/202608270734001",
-      "title": "“올해 2분기 글로벌 신에너지차 판매량 10.4% 상승…중국 업체, 해외로 눈길 돌려”",
+      "title": "세계로 돌진하는 중국 신에너지차…글로벌 판매량 1년새 10.4% 상승",
       "outlet": "khan",
       "reporter": null,
       "published_at": "2026-08-26T22:34:00Z",
-      "modified_at": "2026-08-26T22:34:00Z",
+      "modified_at": "2026-08-27T01:50:28Z",
       "discovered_at": "2026-08-26T23:47:03.217952Z",
-      "last_checked_at": "2026-08-27T01:55:53.486039Z",
+      "last_checked_at": "2026-08-27T02:05:26.155500Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47369,7 +47370,7 @@
       "published_at": "2026-08-26T22:35:00Z",
       "modified_at": "2026-08-26T22:48:00Z",
       "discovered_at": "2026-08-26T23:46:52.344661Z",
-      "last_checked_at": "2026-08-27T01:55:02.572040Z",
+      "last_checked_at": "2026-08-27T02:04:35.206923Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -47409,7 +47410,7 @@
       "published_at": "2026-08-26T22:37:00Z",
       "modified_at": "2026-08-26T22:37:00Z",
       "discovered_at": "2026-08-26T23:47:03.217875Z",
-      "last_checked_at": "2026-08-27T01:55:53.485065Z",
+      "last_checked_at": "2026-08-27T02:05:26.154202Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47868,7 +47869,7 @@
       "published_at": "2026-08-26T22:51:00Z",
       "modified_at": "2026-08-26T23:04:00Z",
       "discovered_at": "2026-08-26T23:46:52.344498Z",
-      "last_checked_at": "2026-08-27T01:55:02.570861Z",
+      "last_checked_at": "2026-08-27T02:04:35.205330Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -47927,7 +47928,7 @@
       "published_at": "2026-08-26T22:53:00Z",
       "modified_at": "2026-08-26T22:53:00Z",
       "discovered_at": "2026-08-26T23:47:03.217797Z",
-      "last_checked_at": "2026-08-27T01:55:53.483763Z",
+      "last_checked_at": "2026-08-27T02:05:26.152946Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48139,7 +48140,7 @@
       "published_at": "2026-08-26T22:57:00Z",
       "modified_at": "2026-08-26T22:57:00Z",
       "discovered_at": "2026-08-26T23:47:03.217716Z",
-      "last_checked_at": "2026-08-27T01:55:53.482777Z",
+      "last_checked_at": "2026-08-27T02:05:26.151417Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48257,7 +48258,7 @@
       "published_at": "2026-08-26T22:58:59Z",
       "modified_at": "2026-08-26T23:05:04Z",
       "discovered_at": "2026-08-26T23:47:06.051936Z",
-      "last_checked_at": "2026-08-27T01:56:45.821985Z",
+      "last_checked_at": "2026-08-27T02:06:16.504905Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -48276,7 +48277,7 @@
       "published_at": "2026-08-26T22:59:00Z",
       "modified_at": "2026-08-26T23:18:19Z",
       "discovered_at": "2026-08-26T23:47:03.217636Z",
-      "last_checked_at": "2026-08-27T01:55:53.481823Z",
+      "last_checked_at": "2026-08-27T02:05:26.150200Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48349,42 +48350,42 @@
       "canonical_url": "https://www.hani.co.kr/arti/specialsection/esc_section/1274852.html",
       "title": "말 안 통해도 요리로 통하는 고수들의 협업 만찬",
       "outlet": "hani",
-      "reporter": "박미향",
+      "reporter": null,
       "published_at": "2026-08-26T23:00:00Z",
       "modified_at": "2026-08-26T23:19:00Z",
       "discovered_at": "2026-08-26T23:46:52.344331Z",
-      "last_checked_at": "2026-08-27T01:55:00.453758Z",
+      "last_checked_at": "2026-08-27T02:04:35.204042Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "0327c7eae3a638c9930c398a00bf7f51f3b2a412b4b6c3d62676bcae63356375",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "0e5afd07c79a72e6cee098636fd90dfb348464867c8a0fcfd5fb055ec73d0449",
       "canonical_url": "https://www.hani.co.kr/arti/specialsection/esc_section/1274853.html",
       "title": "베트남인 영혼까지 우려낸 육수…여기가 호찌민 ‘쌀국수 찐맛집’",
       "outlet": "hani",
-      "reporter": "박미향",
+      "reporter": null,
       "published_at": "2026-08-26T23:00:00Z",
       "modified_at": "2026-08-26T23:35:00Z",
       "discovered_at": "2026-08-26T23:46:52.344136Z",
-      "last_checked_at": "2026-08-27T01:54:58.544110Z",
+      "last_checked_at": "2026-08-27T02:04:35.202531Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "7937a618f09bae8a141c0810cdcc04e2fb09aef4c87556411fd32951ca82d922",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "8f84a4a780030b69466f71341c215fb8147d5b7f5e4dcddc7afb286e863cefaa",
@@ -48415,12 +48416,13 @@
       "published_at": "2026-08-26T23:00:00Z",
       "modified_at": "2026-08-26T23:13:44Z",
       "discovered_at": "2026-08-26T23:49:09.028377Z",
-      "last_checked_at": "2026-08-27T01:57:14.132717Z",
+      "last_checked_at": "2026-08-27T02:06:56.992745Z",
       "discovery_route": [
         "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-24T23%3A45%3A25Z&before=2026-08-26T23%3A45%3A25Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
         "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T18%3A48%3A40Z&before=2026-08-27T00%3A48%3A40Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
         "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T01%3A44%3A09Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T01%3A54%3A06Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T01%3A54%3A06Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T02%3A03%3A36Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "801ff56e130f52c735cb1858a7a2ab147c15411504fc477bd0adbc5dd3a82a57",
@@ -48614,7 +48616,7 @@
       "published_at": "2026-08-26T23:05:00Z",
       "modified_at": "2026-08-27T01:13:42Z",
       "discovered_at": "2026-08-26T23:47:03.217552Z",
-      "last_checked_at": "2026-08-27T01:55:53.480218Z",
+      "last_checked_at": "2026-08-27T02:05:26.149101Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48629,17 +48631,17 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270805011",
       "title": "중국인 유학생 살해 피의자 일부 자백···“20일 새벽 살해” 진술",
       "outlet": "khan",
-      "reporter": "김현수",
-      "published_at": "2026-08-26T23:05:00Z",
-      "modified_at": "2026-08-26T23:13:00Z",
+      "reporter": null,
+      "published_at": "2026-08-26T23:05:01Z",
+      "modified_at": "2026-08-26T23:13:55Z",
       "discovered_at": "2026-08-26T23:47:03.217463Z",
-      "last_checked_at": "2026-08-27T01:55:51.466802Z",
+      "last_checked_at": "2026-08-27T02:05:26.147435Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "0278e9631d729acd0a0215780ae45f7e824dc08eb106358452ee998288855539",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -48975,17 +48977,17 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270813001",
       "title": "서초구, 내달 반포교 재개교 앞두고 ‘통학로 안전 점검’ 실시",
       "outlet": "khan",
-      "reporter": "하주언",
+      "reporter": null,
       "published_at": "2026-08-26T23:13:00Z",
       "modified_at": "2026-08-26T23:13:00Z",
       "discovered_at": "2026-08-26T23:47:03.217362Z",
-      "last_checked_at": "2026-08-27T01:55:49.481780Z",
+      "last_checked_at": "2026-08-27T02:05:26.146485Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "03a29c1e173835486db1fba03c795da5a6113904837501f78a5935eb2d7a278e",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -49462,7 +49464,7 @@
       "published_at": "2026-08-26T23:27:46Z",
       "modified_at": "2026-08-26T23:27:46Z",
       "discovered_at": "2026-08-26T23:47:06.051818Z",
-      "last_checked_at": "2026-08-27T01:56:45.820641Z",
+      "last_checked_at": "2026-08-27T02:06:16.503793Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -49477,40 +49479,40 @@
       "canonical_url": "https://www.hani.co.kr/arti/international/international_general/1274854.html",
       "title": "인스타 청소년 계정 ‘성형 필터’ 막힌다…메타, ‘SNS 중독’ 23조 지급 합의",
       "outlet": "hani",
-      "reporter": "곽진산",
+      "reporter": null,
       "published_at": "2026-08-26T23:28:00Z",
       "modified_at": "2026-08-27T01:17:00Z",
       "discovered_at": "2026-08-26T23:46:52.343846Z",
-      "last_checked_at": "2026-08-27T01:54:56.528918Z",
+      "last_checked_at": "2026-08-27T02:04:35.201366Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "48b6dd94beac694a9a14eeef095f1c2940155b1fe961300ade30bf66f2905f18",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "991ec2bef6f1a09a78dd55184bc652a32f9cc159bd02df34bf9715f50883d08d",
       "canonical_url": "https://www.khan.co.kr/article/202608270829001",
       "title": "엘니뇨 가뭄에 말라가는 중남미…파나마 “국가 비상사태”",
       "outlet": "khan",
-      "reporter": "배시은",
+      "reporter": null,
       "published_at": "2026-08-26T23:29:00Z",
-      "modified_at": "2026-08-27T01:41:00Z",
+      "modified_at": "2026-08-27T01:41:48Z",
       "discovered_at": "2026-08-26T23:47:03.217124Z",
-      "last_checked_at": "2026-08-27T01:55:47.614717Z",
+      "last_checked_at": "2026-08-27T02:05:26.145271Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "5320d39c81f063e4ef354d5d0351a8a624552fa2a1ff8eaf43e4229580fb8b5d",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "f7a353bca85af2ff7fa17872f8de7feee702ca3784870d97da4140b3ed3a578d",
@@ -49892,7 +49894,7 @@
       "published_at": "2026-08-26T23:37:49Z",
       "modified_at": "2026-08-26T23:37:49Z",
       "discovered_at": "2026-08-26T23:47:06.051690Z",
-      "last_checked_at": "2026-08-27T01:56:45.819518Z",
+      "last_checked_at": "2026-08-27T02:06:16.502693Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -49981,25 +49983,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "c73dcb46233525090a229c0db0586fd17993f8c0c99a12204b1385a9ba277657",
-      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262220",
-      "title": "고양이가 내 우울을 알아본 걸까?",
-      "outlet": "ohmynews",
-      "reporter": "유현주",
-      "published_at": "2026-08-26T23:40:00Z",
-      "modified_at": "2026-08-26T23:40:00Z",
-      "discovered_at": "2026-08-26T23:47:06.051438Z",
-      "last_checked_at": "2026-08-27T01:56:43.871061Z",
-      "discovery_route": [
-        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "32216a4c43b87e5e8c19c24f5900ef8fba33469210dec5d3976a44b255fbda26",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
       "candidate_id": "fcb202d7aa98a73b3f3f1de10d300b0ea905e388ceea49123f9f41179da855a5",
       "canonical_url": "https://www.joongang.co.kr/article/25456629",
       "title": "[속보] ‘독파모 탈락’ 모티프, 재심의·평가점수 상세 공개 요청",
@@ -50012,6 +49995,25 @@
       "discovery_route": [
         "official:https://www.joongang.co.kr/sitemap/latest-articles",
         "official:https://www.joongang.co.kr/sitemap/articles/2026/20260827"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "c73dcb46233525090a229c0db0586fd17993f8c0c99a12204b1385a9ba277657",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262220",
+      "title": "고양이가 내 우울을 알아본 걸까?",
+      "outlet": "ohmynews",
+      "reporter": null,
+      "published_at": "2026-08-26T23:40:44Z",
+      "modified_at": "2026-08-26T23:40:44Z",
+      "discovered_at": "2026-08-26T23:47:06.051438Z",
+      "last_checked_at": "2026-08-27T02:06:16.501194Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
       "full_body_status": "skipped_irrelevant",
       "body_hash": null,
@@ -50044,17 +50046,17 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270841001",
       "title": "김영진, 레버리지 ETF 추진 인사에 “그냥 넘어가는 거 적절치 않아, 일정 부분 책임 필요”",
       "outlet": "khan",
-      "reporter": "김원진",
+      "reporter": null,
       "published_at": "2026-08-26T23:41:00Z",
       "modified_at": "2026-08-26T23:41:00Z",
       "discovered_at": "2026-08-27T00:49:12.765852Z",
-      "last_checked_at": "2026-08-27T01:55:45.462999Z",
+      "last_checked_at": "2026-08-27T02:05:26.143546Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "bb9689077cec9d1c14f091b56d621de552c43409ac41854c5e61a6ad886e9635",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50448,19 +50450,19 @@
       "canonical_url": "https://www.hani.co.kr/arti/sports/soccer/1274855.html",
       "title": "‘김상식 매직’ 베트남 축구대표팀, 무패 행진으로 아세안 현대컵 2연패",
       "outlet": "hani",
-      "reporter": "김창금",
+      "reporter": null,
       "published_at": "2026-08-26T23:53:00Z",
       "modified_at": "2026-08-26T23:59:00Z",
       "discovered_at": "2026-08-27T00:49:10.127002Z",
-      "last_checked_at": "2026-08-27T01:54:54.522347Z",
+      "last_checked_at": "2026-08-27T02:04:35.199820Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "672ca66810734ee81d67afc9533339a8c4aebb5df276c9ffd81d2efc4b989b00",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50603,19 +50605,19 @@
       "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262044",
       "title": "알츠하이머 악순환 끊을 '핵심 스위치' 찾았다",
       "outlet": "ohmynews",
-      "reporter": "유창재",
-      "published_at": "2026-08-26T23:57:00Z",
-      "modified_at": "2026-08-26T23:57:00Z",
+      "reporter": null,
+      "published_at": "2026-08-26T23:57:32Z",
+      "modified_at": "2026-08-26T23:57:32Z",
       "discovered_at": "2026-08-27T00:49:15.447835Z",
-      "last_checked_at": "2026-08-27T01:56:41.951882Z",
+      "last_checked_at": "2026-08-27T02:06:16.499952Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "a4f669ba250d5904bfc7cbbff7fe18843b8094386f996a467e86dd088e7d5872",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "4c38ddbf780cf5bfd8961e5f2e3b4519f345a9552a5055cb35396f70372188c0",
@@ -50626,7 +50628,7 @@
       "published_at": "2026-08-26T23:58:00Z",
       "modified_at": "2026-08-27T00:05:00Z",
       "discovered_at": "2026-08-27T00:49:10.126764Z",
-      "last_checked_at": "2026-08-27T01:54:52.308264Z",
+      "last_checked_at": "2026-08-27T02:04:33.131145Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50647,7 +50649,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:43.353812Z",
-      "last_checked_at": "2026-08-27T01:57:09.726375Z",
+      "last_checked_at": "2026-08-27T02:06:52.614849Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50666,7 +50668,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:41.412823Z",
-      "last_checked_at": "2026-08-27T01:57:07.726244Z",
+      "last_checked_at": "2026-08-27T02:06:50.506850Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50685,7 +50687,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:39.391950Z",
-      "last_checked_at": "2026-08-27T01:57:05.725815Z",
+      "last_checked_at": "2026-08-27T02:06:48.505060Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50704,7 +50706,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:37.369203Z",
-      "last_checked_at": "2026-08-27T01:57:03.858687Z",
+      "last_checked_at": "2026-08-27T02:06:46.507684Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50886,25 +50888,6 @@
       "primary_source_validation": "pending"
     },
     {
-      "candidate_id": "b08ded69ebefeaed2eb122d8f3397361be9623e113210266271724b400b47a77",
-      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003260075",
-      "title": "'ㆇ, ㆉ, ㆋ, ㆊ, ㆈ' 잊혀진 언어들같이",
-      "outlet": "ohmynews",
-      "reporter": "신준영",
-      "published_at": "2026-08-27T00:00:00Z",
-      "modified_at": "2026-08-27T00:00:00Z",
-      "discovered_at": "2026-08-27T00:49:15.447665Z",
-      "last_checked_at": "2026-08-27T01:56:39.743191Z",
-      "discovery_route": [
-        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "906942f40cbbf2d7c02768135fae9f9ebe04398fa81679f73c9097a5c537c116",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
       "candidate_id": "cbe03d0920614baf23d29fb8ae74e92eb744de21b89b69ee32ad370b03b40b26",
       "canonical_url": "https://www.chosun.com/economy/money/2026/08/27/NHSCCK3EP5GXXORDE2JMD3PQKA",
       "title": "건설株, 미국·이란 휴전 가능성에 급등...호남 반도체 단지 등 국내 대형 사업도 속도",
@@ -50916,6 +50899,25 @@
       "last_checked_at": "2026-08-27T00:48:46.783796Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "b08ded69ebefeaed2eb122d8f3397361be9623e113210266271724b400b47a77",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003260075",
+      "title": "'ㆇ, ㆉ, ㆋ, ㆊ, ㆈ' 잊혀진 언어들같이",
+      "outlet": "ohmynews",
+      "reporter": null,
+      "published_at": "2026-08-27T00:00:45Z",
+      "modified_at": "2026-08-27T00:00:45Z",
+      "discovered_at": "2026-08-27T00:49:15.447665Z",
+      "last_checked_at": "2026-08-27T02:06:16.498717Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
       "full_body_status": "skipped_irrelevant",
       "body_hash": null,
@@ -50951,7 +50953,7 @@
       "published_at": "2026-08-27T00:01:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:35.470427Z",
-      "last_checked_at": "2026-08-27T01:57:01.724961Z",
+      "last_checked_at": "2026-08-27T02:06:44.504765Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50970,7 +50972,7 @@
       "published_at": "2026-08-27T00:01:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:33.570044Z",
-      "last_checked_at": "2026-08-27T01:56:59.858883Z",
+      "last_checked_at": "2026-08-27T02:06:42.507524Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -51008,7 +51010,7 @@
       "published_at": "2026-08-27T00:01:00Z",
       "modified_at": "2026-08-27T00:27:00Z",
       "discovered_at": "2026-08-27T00:49:10.126549Z",
-      "last_checked_at": "2026-08-27T01:54:50.595855Z",
+      "last_checked_at": "2026-08-27T02:04:31.132247Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -51125,7 +51127,7 @@
       "published_at": "2026-08-27T00:02:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:31.253993Z",
-      "last_checked_at": "2026-08-27T01:56:57.684528Z",
+      "last_checked_at": "2026-08-27T02:06:40.632439Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -51316,7 +51318,7 @@
       "published_at": "2026-08-27T00:08:35Z",
       "modified_at": "2026-08-27T00:08:35Z",
       "discovered_at": "2026-08-27T00:49:15.447492Z",
-      "last_checked_at": "2026-08-27T00:49:15.447492Z",
+      "last_checked_at": "2026-08-27T02:06:16.496923Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -51484,19 +51486,19 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270912001",
       "title": "미 국회의사당 인근에서 ‘단두대’ 발견···“용의자, 평소 정치에 불만”",
       "outlet": "khan",
-      "reporter": "배시은",
+      "reporter": null,
       "published_at": "2026-08-27T00:12:00Z",
-      "modified_at": "2026-08-27T00:26:00Z",
+      "modified_at": "2026-08-27T00:26:36Z",
       "discovered_at": "2026-08-27T00:49:12.765600Z",
-      "last_checked_at": "2026-08-27T01:55:43.495676Z",
+      "last_checked_at": "2026-08-27T02:05:26.142025Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "7f3678b60341e3b8090dabca9ff1a58bb2441239db75bb78dbdb1ba17f06e3fb",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "b5f719c831ba5fc5e4f01a13149af994c1bf21a22cc87a7f00b2393a23d67868",
@@ -51640,7 +51642,7 @@
       "published_at": "2026-08-27T00:15:00Z",
       "modified_at": "2026-08-27T00:17:00Z",
       "discovered_at": "2026-08-27T00:49:10.126343Z",
-      "last_checked_at": "2026-08-27T01:54:48.446552Z",
+      "last_checked_at": "2026-08-27T02:04:29.130233Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -51951,7 +51953,7 @@
       "published_at": "2026-08-27T00:23:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T00:49:10.126129Z",
-      "last_checked_at": "2026-08-27T01:54:46.413040Z",
+      "last_checked_at": "2026-08-27T02:04:27.217075Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -51972,7 +51974,7 @@
       "published_at": "2026-08-27T00:23:00Z",
       "modified_at": "2026-08-27T00:29:00Z",
       "discovered_at": "2026-08-27T00:49:10.125910Z",
-      "last_checked_at": "2026-08-27T01:54:44.485105Z",
+      "last_checked_at": "2026-08-27T02:04:25.257916Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -52383,7 +52385,7 @@
       "published_at": "2026-08-27T00:29:00Z",
       "modified_at": "2026-08-27T00:29:00Z",
       "discovered_at": "2026-08-27T00:49:15.447316Z",
-      "last_checked_at": "2026-08-27T01:56:33.780225Z",
+      "last_checked_at": "2026-08-27T02:06:14.472223Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -52542,10 +52544,11 @@
       "published_at": "2026-08-27T00:30:00Z",
       "modified_at": "2026-08-27T00:30:00Z",
       "discovered_at": "2026-08-27T00:49:10.125437Z",
-      "last_checked_at": "2026-08-27T01:54:40.654848Z",
+      "last_checked_at": "2026-08-27T02:04:21.144649Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "0e2e7a66ce6b64a43eefaad097e81bab56e29a482f78c6f4eefb587d37b3e20c",
@@ -52562,10 +52565,11 @@
       "published_at": "2026-08-27T00:30:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T00:49:10.125657Z",
-      "last_checked_at": "2026-08-27T01:54:42.518872Z",
+      "last_checked_at": "2026-08-27T02:04:23.129834Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "78cbb3d23f50faec1fdf623f406138a6e3e0c155c3f7d04fcd3c54c404c5d86b",
@@ -52582,7 +52586,7 @@
       "published_at": "2026-08-27T00:30:00Z",
       "modified_at": "2026-08-27T00:30:00Z",
       "discovered_at": "2026-08-27T00:49:15.447138Z",
-      "last_checked_at": "2026-08-27T01:56:31.851552Z",
+      "last_checked_at": "2026-08-27T02:06:12.667848Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -52777,10 +52781,11 @@
       "published_at": "2026-08-27T00:31:00Z",
       "modified_at": "2026-08-27T00:31:00Z",
       "discovered_at": "2026-08-27T00:49:10.125213Z",
-      "last_checked_at": "2026-08-27T01:54:38.590799Z",
+      "last_checked_at": "2026-08-27T02:04:19.131406Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "bf8b2882f6576d26676b88325b5bbc007bba2633800b76c45270c86a34759e2b",
@@ -52915,7 +52920,7 @@
       "published_at": "2026-08-27T00:32:00Z",
       "modified_at": "2026-08-27T00:32:00Z",
       "discovered_at": "2026-08-27T00:49:15.446959Z",
-      "last_checked_at": "2026-08-27T01:56:29.782639Z",
+      "last_checked_at": "2026-08-27T02:06:10.485009Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -53108,7 +53113,7 @@
       "published_at": "2026-08-27T00:34:00Z",
       "modified_at": "2026-08-27T00:34:00Z",
       "discovered_at": "2026-08-27T00:49:15.446749Z",
-      "last_checked_at": "2026-08-27T01:56:27.798250Z",
+      "last_checked_at": "2026-08-27T02:06:08.505884Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -53341,10 +53346,11 @@
       "published_at": "2026-08-27T00:38:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T00:49:10.124984Z",
-      "last_checked_at": "2026-08-27T01:54:37.011479Z",
+      "last_checked_at": "2026-08-27T02:04:17.129075Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "bc25e1b20e41f7427db17ae3ff7b487d1541f0cba714d6d77726ebc58827367b",
@@ -53478,7 +53484,7 @@
       "published_at": "2026-08-27T00:40:00Z",
       "modified_at": "2026-08-27T01:10:00Z",
       "discovered_at": "2026-08-27T00:49:10.124633Z",
-      "last_checked_at": "2026-08-27T01:54:34.306743Z",
+      "last_checked_at": "2026-08-27T02:04:14.991383Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -53518,7 +53524,7 @@
       "published_at": "2026-08-27T00:40:00Z",
       "modified_at": "2026-08-27T00:40:00Z",
       "discovered_at": "2026-08-27T00:49:15.446560Z",
-      "last_checked_at": "2026-08-27T01:56:25.822288Z",
+      "last_checked_at": "2026-08-27T02:06:06.529022Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -53596,7 +53602,7 @@
       "published_at": "2026-08-27T00:41:00Z",
       "modified_at": "2026-08-27T01:21:00Z",
       "discovered_at": "2026-08-27T01:45:36.705390Z",
-      "last_checked_at": "2026-08-27T01:55:41.499767Z",
+      "last_checked_at": "2026-08-27T02:05:24.147158Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54132,7 +54138,7 @@
       "published_at": "2026-08-27T00:46:00Z",
       "modified_at": "2026-08-27T00:46:00Z",
       "discovered_at": "2026-08-27T01:45:34.658639Z",
-      "last_checked_at": "2026-08-27T01:55:39.621543Z",
+      "last_checked_at": "2026-08-27T02:05:22.200252Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54246,7 +54252,7 @@
       "published_at": "2026-08-27T00:47:00Z",
       "modified_at": "2026-08-27T00:47:00Z",
       "discovered_at": "2026-08-27T00:49:15.446263Z",
-      "last_checked_at": "2026-08-27T01:56:23.799921Z",
+      "last_checked_at": "2026-08-27T02:06:04.486104Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54320,14 +54326,14 @@
       "outlet": "khan",
       "reporter": "조미덥",
       "published_at": "2026-08-27T00:50:00Z",
-      "modified_at": "2026-08-27T01:08:00Z",
+      "modified_at": "2026-08-27T02:03:00Z",
       "discovered_at": "2026-08-27T01:45:32.801856Z",
-      "last_checked_at": "2026-08-27T01:55:37.477303Z",
+      "last_checked_at": "2026-08-27T02:05:20.288678Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "7bb8e3d19deaff86d992b3fd184a7dd619ba192bf2c4a6d694cd6ac7ddb92d2c",
+      "body_hash": "35850b977e1dca452bb1037eb104c717cb7a36b0fac25129bf8983b7007da4aa",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -54341,7 +54347,7 @@
       "published_at": "2026-08-27T00:51:00Z",
       "modified_at": "2026-08-27T01:47:00Z",
       "discovered_at": "2026-08-27T01:44:27.552834Z",
-      "last_checked_at": "2026-08-27T01:54:32.548734Z",
+      "last_checked_at": "2026-08-27T02:04:13.247622Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54361,7 +54367,7 @@
       "published_at": "2026-08-27T00:52:00Z",
       "modified_at": "2026-08-27T01:47:00Z",
       "discovered_at": "2026-08-27T01:44:25.548465Z",
-      "last_checked_at": "2026-08-27T01:54:30.446840Z",
+      "last_checked_at": "2026-08-27T02:04:11.274141Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54381,7 +54387,7 @@
       "published_at": "2026-08-27T00:52:00Z",
       "modified_at": "2026-08-27T00:58:00Z",
       "discovered_at": "2026-08-27T01:46:23.113207Z",
-      "last_checked_at": "2026-08-27T01:56:22.293199Z",
+      "last_checked_at": "2026-08-27T02:06:02.502479Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54400,7 +54406,7 @@
       "published_at": "2026-08-27T00:55:00Z",
       "modified_at": "2026-08-27T00:55:00Z",
       "discovered_at": "2026-08-27T01:46:21.191646Z",
-      "last_checked_at": "2026-08-27T01:56:19.787243Z",
+      "last_checked_at": "2026-08-27T02:06:00.493252Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54419,7 +54425,7 @@
       "published_at": "2026-08-27T00:55:50Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T01:46:55.044702Z",
-      "last_checked_at": "2026-08-27T01:56:53.459550Z",
+      "last_checked_at": "2026-08-27T02:06:24.201539Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -54438,7 +54444,7 @@
       "published_at": "2026-08-27T00:55:50Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T01:46:52.674548Z",
-      "last_checked_at": "2026-08-27T01:56:51.371087Z",
+      "last_checked_at": "2026-08-27T02:06:21.799384Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -54457,7 +54463,7 @@
       "published_at": "2026-08-27T00:56:00Z",
       "modified_at": "2026-08-27T00:56:00Z",
       "discovered_at": "2026-08-27T01:46:19.053125Z",
-      "last_checked_at": "2026-08-27T01:56:17.795782Z",
+      "last_checked_at": "2026-08-27T02:05:58.503352Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54476,7 +54482,7 @@
       "published_at": "2026-08-27T01:02:00Z",
       "modified_at": "2026-08-27T01:02:00Z",
       "discovered_at": "2026-08-27T01:46:17.042339Z",
-      "last_checked_at": "2026-08-27T01:56:15.802646Z",
+      "last_checked_at": "2026-08-27T02:05:56.472010Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54495,7 +54501,7 @@
       "published_at": "2026-08-27T01:03:00Z",
       "modified_at": "2026-08-27T01:43:00Z",
       "discovered_at": "2026-08-27T01:44:23.629538Z",
-      "last_checked_at": "2026-08-27T01:54:28.550712Z",
+      "last_checked_at": "2026-08-27T02:04:09.269258Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54515,7 +54521,7 @@
       "published_at": "2026-08-27T01:07:00Z",
       "modified_at": "2026-08-27T01:07:00Z",
       "discovered_at": "2026-08-27T01:45:30.678838Z",
-      "last_checked_at": "2026-08-27T01:55:35.460916Z",
+      "last_checked_at": "2026-08-27T02:05:18.153202Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54534,7 +54540,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:24:00Z",
       "discovered_at": "2026-08-27T01:45:28.679845Z",
-      "last_checked_at": "2026-08-27T01:55:33.462185Z",
+      "last_checked_at": "2026-08-27T02:05:16.174769Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54553,7 +54559,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:39:00Z",
       "discovered_at": "2026-08-27T01:45:26.640387Z",
-      "last_checked_at": "2026-08-27T01:55:31.641846Z",
+      "last_checked_at": "2026-08-27T02:05:14.240024Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54572,7 +54578,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:13:00Z",
       "discovered_at": "2026-08-27T01:46:15.052321Z",
-      "last_checked_at": "2026-08-27T01:56:13.775441Z",
+      "last_checked_at": "2026-08-27T02:05:54.579408Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54591,7 +54597,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:13:00Z",
       "discovered_at": "2026-08-27T01:46:13.034137Z",
-      "last_checked_at": "2026-08-27T01:56:11.767604Z",
+      "last_checked_at": "2026-08-27T02:05:52.472888Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54610,7 +54616,7 @@
       "published_at": "2026-08-27T01:14:00Z",
       "modified_at": "2026-08-27T01:14:00Z",
       "discovered_at": "2026-08-27T01:45:24.802912Z",
-      "last_checked_at": "2026-08-27T01:55:29.480977Z",
+      "last_checked_at": "2026-08-27T02:05:12.175075Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54629,7 +54635,7 @@
       "published_at": "2026-08-27T01:14:00Z",
       "modified_at": "2026-08-27T01:14:00Z",
       "discovered_at": "2026-08-27T01:46:11.038390Z",
-      "last_checked_at": "2026-08-27T01:56:09.762789Z",
+      "last_checked_at": "2026-08-27T02:05:50.472719Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54648,7 +54654,7 @@
       "published_at": "2026-08-27T01:17:00Z",
       "modified_at": "2026-08-27T01:17:00Z",
       "discovered_at": "2026-08-27T01:45:22.639769Z",
-      "last_checked_at": "2026-08-27T01:55:27.569119Z",
+      "last_checked_at": "2026-08-27T02:05:10.188292Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54667,7 +54673,7 @@
       "published_at": "2026-08-27T01:18:00Z",
       "modified_at": "2026-08-27T01:43:00Z",
       "discovered_at": "2026-08-27T01:45:20.716188Z",
-      "last_checked_at": "2026-08-27T01:55:25.499009Z",
+      "last_checked_at": "2026-08-27T02:05:08.155631Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54686,7 +54692,7 @@
       "published_at": "2026-08-27T01:21:00Z",
       "modified_at": "2026-08-27T01:21:00Z",
       "discovered_at": "2026-08-27T01:46:09.048947Z",
-      "last_checked_at": "2026-08-27T01:56:07.820559Z",
+      "last_checked_at": "2026-08-27T02:05:48.475673Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54705,7 +54711,7 @@
       "published_at": "2026-08-27T01:23:00Z",
       "modified_at": "2026-08-27T01:30:00Z",
       "discovered_at": "2026-08-27T01:44:21.290400Z",
-      "last_checked_at": "2026-08-27T01:54:26.481713Z",
+      "last_checked_at": "2026-08-27T02:04:07.089763Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54725,7 +54731,7 @@
       "published_at": "2026-08-27T01:26:00Z",
       "modified_at": "2026-08-27T01:26:00Z",
       "discovered_at": "2026-08-27T01:45:18.649759Z",
-      "last_checked_at": "2026-08-27T01:55:23.656897Z",
+      "last_checked_at": "2026-08-27T02:05:06.264308Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54744,7 +54750,7 @@
       "published_at": "2026-08-27T01:26:00Z",
       "modified_at": "2026-08-27T01:26:01Z",
       "discovered_at": "2026-08-27T01:45:16.787401Z",
-      "last_checked_at": "2026-08-27T01:55:21.463656Z",
+      "last_checked_at": "2026-08-27T02:05:04.183994Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54763,7 +54769,7 @@
       "published_at": "2026-08-27T01:27:00Z",
       "modified_at": "2026-08-27T01:27:00Z",
       "discovered_at": "2026-08-27T01:45:14.655965Z",
-      "last_checked_at": "2026-08-27T01:55:19.460694Z",
+      "last_checked_at": "2026-08-27T02:05:02.166716Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54782,7 +54788,7 @@
       "published_at": "2026-08-27T01:27:00Z",
       "modified_at": "2026-08-27T01:27:00Z",
       "discovered_at": "2026-08-27T01:46:07.069795Z",
-      "last_checked_at": "2026-08-27T01:56:05.791997Z",
+      "last_checked_at": "2026-08-27T02:05:46.495195Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54801,7 +54807,7 @@
       "published_at": "2026-08-27T01:29:00Z",
       "modified_at": "2026-08-27T01:33:00Z",
       "discovered_at": "2026-08-27T01:45:12.686432Z",
-      "last_checked_at": "2026-08-27T01:55:17.450048Z",
+      "last_checked_at": "2026-08-27T02:05:00.171833Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54820,7 +54826,7 @@
       "published_at": "2026-08-27T01:30:00Z",
       "modified_at": "2026-08-27T01:30:00Z",
       "discovered_at": "2026-08-27T01:46:05.047769Z",
-      "last_checked_at": "2026-08-27T01:56:03.828654Z",
+      "last_checked_at": "2026-08-27T02:05:44.468677Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54839,7 +54845,7 @@
       "published_at": "2026-08-27T01:32:00Z",
       "modified_at": "2026-08-27T01:32:00Z",
       "discovered_at": "2026-08-27T01:46:03.218881Z",
-      "last_checked_at": "2026-08-27T01:56:01.787496Z",
+      "last_checked_at": "2026-08-27T02:05:42.491321Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54858,7 +54864,7 @@
       "published_at": "2026-08-27T01:33:00Z",
       "modified_at": "2026-08-27T01:33:00Z",
       "discovered_at": "2026-08-27T01:46:01.170836Z",
-      "last_checked_at": "2026-08-27T01:55:59.758684Z",
+      "last_checked_at": "2026-08-27T02:05:40.477373Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54877,7 +54883,7 @@
       "published_at": "2026-08-27T01:35:00Z",
       "modified_at": "2026-08-27T01:35:00Z",
       "discovered_at": "2026-08-27T01:45:59.229330Z",
-      "last_checked_at": "2026-08-27T01:55:58.072654Z",
+      "last_checked_at": "2026-08-27T02:05:38.471825Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54896,7 +54902,7 @@
       "published_at": "2026-08-27T01:36:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T01:45:10.928492Z",
-      "last_checked_at": "2026-08-27T01:55:15.667278Z",
+      "last_checked_at": "2026-08-27T02:04:58.248992Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54911,18 +54917,18 @@
       "canonical_url": "https://www.hani.co.kr/arti/international/china/1274870.html",
       "title": "네팔 홍수, 중국 국경 덮쳐 265명 실종…시진핑 “2차 재해 막아야”",
       "outlet": "hani",
-      "reporter": "이정연",
+      "reporter": null,
       "published_at": "2026-08-27T01:37:00Z",
       "modified_at": "2026-08-27T01:54:00Z",
       "discovered_at": "2026-08-27T01:44:21.117156Z",
-      "last_checked_at": "2026-08-27T01:54:24.685064Z",
+      "last_checked_at": "2026-08-27T02:04:05.128873Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "f98aaac106436008b71fefd9f55884c54c2896349d0f3b1817856ddbae699545",
-      "verification_grade": "A",
+      "full_body_status": "http_error",
+      "body_hash": null,
+      "verification_grade": "D",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -54935,7 +54941,7 @@
       "published_at": "2026-08-27T01:38:00Z",
       "modified_at": "2026-08-27T01:44:00Z",
       "discovered_at": "2026-08-27T01:44:17.485664Z",
-      "last_checked_at": "2026-08-27T01:54:22.476645Z",
+      "last_checked_at": "2026-08-27T02:04:03.130015Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54955,7 +54961,7 @@
       "published_at": "2026-08-27T01:38:00Z",
       "modified_at": "2026-08-27T01:51:00Z",
       "discovered_at": "2026-08-27T01:45:08.684886Z",
-      "last_checked_at": "2026-08-27T01:55:13.511893Z",
+      "last_checked_at": "2026-08-27T02:04:56.176021Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54968,13 +54974,13 @@
     {
       "candidate_id": "47b632f332581086315d37d42b0da713e7e079294cb784f0a890ad2968495a53",
       "canonical_url": "https://www.khan.co.kr/article/202608271039001",
-      "title": "“머리 숙여 사과···제주 모든 실종사건 전면 재조사 실시”",
+      "title": "제주경찰청장 “머리 숙여 사과···모든 실종사건 전면 재조사 실시”",
       "outlet": "khan",
       "reporter": "박미라",
       "published_at": "2026-08-27T01:39:00Z",
-      "modified_at": "2026-08-27T01:49:00Z",
+      "modified_at": "2026-08-27T01:56:00Z",
       "discovered_at": "2026-08-27T01:45:06.361604Z",
-      "last_checked_at": "2026-08-27T01:55:11.513536Z",
+      "last_checked_at": "2026-08-27T02:04:54.205517Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54993,7 +54999,7 @@
       "published_at": "2026-08-27T01:39:00Z",
       "modified_at": "2026-08-27T01:39:00Z",
       "discovered_at": "2026-08-27T01:45:57.443870Z",
-      "last_checked_at": "2026-08-27T01:55:56.099647Z",
+      "last_checked_at": "2026-08-27T02:05:36.608770Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -55012,7 +55018,7 @@
       "published_at": "2026-08-27T01:42:00Z",
       "modified_at": "2026-08-27T01:42:00Z",
       "discovered_at": "2026-08-27T01:55:09.484565Z",
-      "last_checked_at": "2026-08-27T01:55:09.484565Z",
+      "last_checked_at": "2026-08-27T02:04:52.149484Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -55025,13 +55031,13 @@
     {
       "candidate_id": "b6690e5dff2e420946c3b18cabc2d61e967ebede862a5d19a65e62fb25678298",
       "canonical_url": "https://www.khan.co.kr/article/202608271046001",
-      "title": "대변 채취하고 장 비우는 불편 대신··· 대장암 ‘혈액검사’ 정확도 높아",
+      "title": "‘대장암 진단’ 피만 뽑아도 정확도 높아···내시경·대변 채취 불편 덜겠네",
       "outlet": "khan",
       "reporter": "김태훈",
       "published_at": "2026-08-27T01:46:00Z",
-      "modified_at": "2026-08-27T01:46:00Z",
+      "modified_at": "2026-08-27T01:58:00Z",
       "discovered_at": "2026-08-27T01:55:07.604440Z",
-      "last_checked_at": "2026-08-27T01:55:07.604440Z",
+      "last_checked_at": "2026-08-27T02:04:50.279546Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -55044,19 +55050,19 @@
     {
       "candidate_id": "bfe7a1a0186248be6c505f9b47a4f148cb3a78756fe29ad13b7cef8559235d35",
       "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1274872.html",
-      "title": "“민혁당? 다 사형당할 듯ㅋㅋ” 평론가에 조국 “도 한참 넘어”",
+      "title": "“민혁당? 다 사형당할 듯ㅋㅋ” 평론가에…조국 “도 한참 넘어”",
       "outlet": "hani",
       "reporter": "전광준",
       "published_at": "2026-08-27T01:47:00Z",
-      "modified_at": "2026-08-27T01:47:00Z",
+      "modified_at": "2026-08-27T01:54:00Z",
       "discovered_at": "2026-08-27T01:54:20.570235Z",
-      "last_checked_at": "2026-08-27T01:54:20.570235Z",
+      "last_checked_at": "2026-08-27T02:04:01.712975Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "0b7af80e205f2fabb942e4b67b3dbaec004ce5237e1e315fecc2f641c6b91a50",
+      "body_hash": "f297fd94342f95d0edfb9c482efac9a8d1b5e5cb43203fcd16b6fe1d4ca03340",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -55070,7 +55076,7 @@
       "published_at": "2026-08-27T01:48:00Z",
       "modified_at": "2026-08-27T01:48:00Z",
       "discovered_at": "2026-08-27T01:55:05.330962Z",
-      "last_checked_at": "2026-08-27T01:55:05.330962Z",
+      "last_checked_at": "2026-08-27T02:04:48.138009Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -55089,7 +55095,7 @@
       "published_at": "2026-08-27T01:50:00Z",
       "modified_at": "2026-08-27T01:52:00Z",
       "discovered_at": "2026-08-27T01:54:18.636787Z",
-      "last_checked_at": "2026-08-27T01:54:18.636787Z",
+      "last_checked_at": "2026-08-27T02:03:59.132823Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -55101,21 +55107,116 @@
       "primary_source_validation": "pending"
     },
     {
+      "candidate_id": "77456a7f5827257e5dfdba567b7cb2c4def3a9194fc38c8ccf10d27e43d6055c",
+      "canonical_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232911",
+      "title": "발달장애인 특화사업장 충남 가치만드소, 사과즙·딸기잼 밀착형 창업교육 성료",
+      "outlet": "ablenews",
+      "reporter": null,
+      "published_at": "2026-08-27T01:51:02Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-27T02:06:38.504391Z",
+      "last_checked_at": "2026-08-27T02:06:38.504391Z",
+      "discovery_route": [
+        "official:https://www.ablenews.co.kr/sitemap.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "f4855027dc74c648be8114518a862387c978d45af640696039d3fac225e502a5",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "e8cfb9d3b4cdf6a37dfa14b11197995ffd1d8fce74f443a3be62cd0a09579773",
+      "canonical_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232909",
+      "title": "중앙장애인권익옹호기관, 한국생명존중희망재단과 업무협약 체결",
+      "outlet": "ablenews",
+      "reporter": null,
+      "published_at": "2026-08-27T01:51:08Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-27T02:06:36.506107Z",
+      "last_checked_at": "2026-08-27T02:06:36.506107Z",
+      "discovery_route": [
+        "official:https://www.ablenews.co.kr/sitemap.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "21a700a473c6c24fa4168beb2505e6eec81a9229b21486d29577af90a508fb06",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "ae938faa283f1f45db92a172fb768d317dff6ca1bd50d52f89d9944d408e0a92",
+      "canonical_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232912",
+      "title": "경기도시각장복·배화여자대학교, 시각장애인 자서전 제작 맞손",
+      "outlet": "ablenews",
+      "reporter": null,
+      "published_at": "2026-08-27T01:51:12Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-27T02:06:34.504163Z",
+      "last_checked_at": "2026-08-27T02:06:34.504163Z",
+      "discovery_route": [
+        "official:https://www.ablenews.co.kr/sitemap.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "6da7fa15375db8a851ff4b734180fd1a04290bc1e35535de79bb2a13f86b1270",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "9830266254133c2aac78a394f0864fce3966660e1e07c8cef9886b4e4b20dffc",
+      "canonical_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232913",
+      "title": "경기도, 발달장애·경계선지능 청소년 ‘씨앗에서 나눔까지’ 성장프로젝트 운영",
+      "outlet": "ablenews",
+      "reporter": null,
+      "published_at": "2026-08-27T01:51:16Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-27T02:06:32.717043Z",
+      "last_checked_at": "2026-08-27T02:06:32.717043Z",
+      "discovery_route": [
+        "official:https://www.ablenews.co.kr/sitemap.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "58c688bfa84bfe2cdaddbd763b989598aecdc5480f4284757d66c52c3cb556cc",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "8076533a7f5e51a6003785bb8339fc97cdae24d372a0cb81523f69d363cd4caf",
       "canonical_url": "https://www.hani.co.kr/arti/economy/finance/1274874.html",
-      "title": "한은, 금리 ‘깜짝 인상’…채권전문가들 시장 전망 빗나갔다",
+      "title": "시장선 ‘동결’ 예상했는데…한은, 기준금리 ‘깜짝 인상’",
       "outlet": "hani",
       "reporter": "조계완",
       "published_at": "2026-08-27T01:52:00Z",
-      "modified_at": "2026-08-27T01:52:00Z",
+      "modified_at": "2026-08-27T01:59:00Z",
       "discovered_at": "2026-08-27T01:54:17.523095Z",
-      "last_checked_at": "2026-08-27T01:54:17.523095Z",
+      "last_checked_at": "2026-08-27T02:03:57.128917Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "ea1563c1c05b2f5a7c041f7491cf68fa2be7eab6a41bfada5f439490e612d55c",
+      "body_hash": "5116afee68694fdeceee405cbc540a108c739a4114d140a8338487aa3e15c075",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "b3ddc67cd39f7bbb9eb96cd6b7526e937eee6b28d51654b804dc908ccfca50b1",
+      "canonical_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232910",
+      "title": "휠체어가 넘어진 것이 아니라 철도 안전체계가 넘어졌다",
+      "outlet": "ablenews",
+      "reporter": null,
+      "published_at": "2026-08-27T01:53:37Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-27T02:06:30.730512Z",
+      "last_checked_at": "2026-08-27T02:06:30.730512Z",
+      "discovery_route": [
+        "official:https://www.ablenews.co.kr/sitemap.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "cd59044186a8cc8a29e2e9489d292fd8e3cd69aa84f87d53e120cb6c74f16dad",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -55129,13 +55230,283 @@
       "published_at": "2026-08-27T01:54:00Z",
       "modified_at": "2026-08-27T01:54:00Z",
       "discovered_at": "2026-08-27T01:54:14.505959Z",
-      "last_checked_at": "2026-08-27T01:54:14.505959Z",
+      "last_checked_at": "2026-08-27T02:03:55.407237Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
       "body_hash": "a8979d779e38efe21f3d4d9a59368b4800028ac60d3dfc8401e3c2b50443ca00",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "93935aa06acdb712e42509daf35a295ad5c42ef8ec6c0d923098e6f6b019006b",
+      "canonical_url": "https://www.khan.co.kr/article/202608271054001",
+      "title": "유학생 살해 피의자 “훼손 시신 경산·경기 등에 유기”···경찰 수색 확대",
+      "outlet": "khan",
+      "reporter": "김현수",
+      "published_at": "2026-08-27T01:54:00Z",
+      "modified_at": "2026-08-27T02:00:00Z",
+      "discovered_at": "2026-08-27T02:04:46.149686Z",
+      "last_checked_at": "2026-08-27T02:04:46.149686Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "824ade37e4f9b8d474fad866a09bb7efec30f552f910e4b40f4ee48aa289e157",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "d0a7c8c4ae61859b31dc5ffad7d66e89f7e68efcfde43b8d0e768c27bdb998dd",
+      "canonical_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=232873",
+      "title": "하석미와 떠나는 무장애 여행지, '붉은빛과 푸른 바다, 칭다오를 네 바퀴로 건너다'-①",
+      "outlet": "ablenews",
+      "reporter": null,
+      "published_at": "2026-08-27T01:55:00Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-27T02:06:28.427297Z",
+      "last_checked_at": "2026-08-27T02:06:28.427297Z",
+      "discovery_route": [
+        "official:https://www.ablenews.co.kr/sitemap.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "f18033ed50a9ac94571813f8af1b880e5e1864841335d431dd118d4e9e46f0b7",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "acd6583659b903b0e5983caa463dfbb0bc7dbb8efa6f7c73f421d77a853def06",
+      "canonical_url": "https://www.hani.co.kr/arti/economy/finance/1274876.html",
+      "title": "보험사 상반기에 9조 순이익…생보사, 본업보다 투자로 더 벌어",
+      "outlet": "hani",
+      "reporter": "안태호",
+      "published_at": "2026-08-27T01:55:00Z",
+      "modified_at": "2026-08-27T02:00:00Z",
+      "discovered_at": "2026-08-27T02:03:53.208995Z",
+      "last_checked_at": "2026-08-27T02:03:53.208995Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "0e436ffee85698667267032801aa848152cb5339df8ed7e42703586637b6c702",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "8fbbacfe6a82ee6d7033270d3247e1c563505f2af160095465343cd14469f9a6",
+      "canonical_url": "https://www.khan.co.kr/article/202608271056001",
+      "title": "마포구, 치매 어르신 기억 담은 그림책 전시 ‘기억열람실’ 운영[서울25]",
+      "outlet": "khan",
+      "reporter": "임주영",
+      "published_at": "2026-08-27T01:56:00Z",
+      "modified_at": "2026-08-27T01:56:00Z",
+      "discovered_at": "2026-08-27T02:04:44.183734Z",
+      "last_checked_at": "2026-08-27T02:04:44.183734Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c4d53ac28dd77705c5fc039cc43125a2932dd5db98cb59ec52acbac9f788be49",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "37b2e9f332f43a5033ca34fd04f00ea64f855b21c0a205f8ef1af5b76737286f",
+      "canonical_url": "https://www.khan.co.kr/article/202608271056011",
+      "title": "경기연구원 “도민 95%, ‘AI 기본사회’ 개념 몰라···통합 브랜드·로드맵 제시 주문",
+      "outlet": "khan",
+      "reporter": "안광호",
+      "published_at": "2026-08-27T01:56:00Z",
+      "modified_at": "2026-08-27T01:56:01Z",
+      "discovered_at": "2026-08-27T02:04:42.236255Z",
+      "last_checked_at": "2026-08-27T02:04:42.236255Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "cb1422328b9c826963e7a498b21b280fa28de2efe2d60fafe90964593fc7f1ca",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "1671ad43265eac662c880a9938af6b7ce8da33ec21a0ba6fc85e685d5c289ff0",
+      "canonical_url": "https://www.hani.co.kr/arti/area/honam/1274878.html",
+      "title": "경찰, 캄보디아 콜센터 차려 3400억대 도박사이트 운영한 18명 검거",
+      "outlet": "hani",
+      "reporter": "천경석",
+      "published_at": "2026-08-27T01:59:00Z",
+      "modified_at": "2026-08-27T01:59:00Z",
+      "discovered_at": "2026-08-27T02:03:50.441079Z",
+      "last_checked_at": "2026-08-27T02:03:50.441079Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "046b8b80ca352a17b2e642af0b35f429c742ad39902c2b3928f1dc9417c87e55",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "54f79df28f19181b1ce453db7483aa26567e24ba40005a9d9501c8be03a2af1c",
+      "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1274877.html",
+      "title": "이재오 “장동혁, ‘사퇴하겠습니다’ 한마디면 만사해결”",
+      "outlet": "hani",
+      "reporter": "전광준",
+      "published_at": "2026-08-27T01:59:00Z",
+      "modified_at": "2026-08-27T01:59:00Z",
+      "discovered_at": "2026-08-27T02:03:50.993003Z",
+      "last_checked_at": "2026-08-27T02:03:50.993003Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "043661439e6ae102d7f587f6175f3f16a021a19963c3065e026444da931e0f51",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "ee8e007bdec46cd4c644a95cfee0ff42c218dce569dc54edcd57c60acdc81cc6",
+      "canonical_url": "https://www.khan.co.kr/article/202608271059001",
+      "title": "구윤철 “CPTPP 가입 논의 착수…농어업계 우려 살필 것”",
+      "outlet": "khan",
+      "reporter": "김경민",
+      "published_at": "2026-08-27T01:59:00Z",
+      "modified_at": "2026-08-27T01:59:00Z",
+      "discovered_at": "2026-08-27T02:04:40.188985Z",
+      "last_checked_at": "2026-08-27T02:04:40.188985Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "e6ab2329f96f6e371cfe8f3f77a1d9f33c86efe68fe16d154d264fb17b66b6ea",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "5d1bab7a9ac98bcbe80fa5f2b6c42ae7cc40a88afc7faaf38e2b16e2276849d1",
+      "canonical_url": "https://www.hani.co.kr/arti/science/science_general/1274879.html",
+      "title": "해남 지역 작은 지진들 “정점 찍고 앞으로 잦아들 듯”",
+      "outlet": "hani",
+      "reporter": "최원형",
+      "published_at": "2026-08-27T02:00:00Z",
+      "modified_at": "2026-08-27T02:00:00Z",
+      "discovered_at": "2026-08-27T02:03:47.171886Z",
+      "last_checked_at": "2026-08-27T02:03:47.171886Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a7b77b500fff739f00b62829b6396e8d2d88768857d7325cad52c428cea76fb4",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "6fe702b1f2d0fbd9debebbae83b7cd2735be325ac5d0d3c6d357638cffc14345",
+      "canonical_url": "https://www.khan.co.kr/article/202608271100001",
+      "title": "31조 중소기업 지원사업 대수술해 4조 절감···고성과·신성장 분야에 집중투자",
+      "outlet": "khan",
+      "reporter": "정대연",
+      "published_at": "2026-08-27T02:00:00Z",
+      "modified_at": "2026-08-27T02:00:01Z",
+      "discovered_at": "2026-08-27T02:04:37.847256Z",
+      "last_checked_at": "2026-08-27T02:04:37.847256Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "1d46e9de291cd7a80e0f034a8bd91a03fbf9dde7ac6ae73f5062d0728cf424ee",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "cff44d4c5eca235b6ed60339d1d6613e651b1e0a90dae01f0a86bcb3fd8dc901",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262259",
+      "title": "서부발전, 발전공기업 최초 중앙아시아 재생에너지 시장 진출",
+      "outlet": "ohmynews",
+      "reporter": "신문웅",
+      "published_at": "2026-08-27T02:01:00Z",
+      "modified_at": "2026-08-27T02:01:00Z",
+      "discovered_at": "2026-08-27T02:05:32.651963Z",
+      "last_checked_at": "2026-08-27T02:05:32.651963Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c03447bcce26598492c9dca2c1089476766134baf226a0af70fe3e049430e3c1",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "99e3832919d4bbfac519449dd75f48d1720309a24954f0299613fd9dd59eecf9",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262298",
+      "title": "5·18단체 \"국회, 책임지고 이진숙 제명해야\"",
+      "outlet": "ohmynews",
+      "reporter": "배동민",
+      "published_at": "2026-08-27T02:01:00Z",
+      "modified_at": "2026-08-27T02:01:00Z",
+      "discovered_at": "2026-08-27T02:05:34.739765Z",
+      "last_checked_at": "2026-08-27T02:05:34.739765Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "82ac8e3179af9c1a5e5465c68cf060d6130411a59681a19d148747192cfe715e",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "1cebdb9e6b2ff3a7d244d15ff6a920fc8c2411dc2b1e84ebc9353c5f09ed0403",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262253",
+      "title": "용산 기념관 두 곳을 걸으며 던진 불편한 질문들",
+      "outlet": "ohmynews",
+      "reporter": "이소연",
+      "published_at": "2026-08-27T02:03:00Z",
+      "modified_at": "2026-08-27T02:03:00Z",
+      "discovered_at": "2026-08-27T02:05:30.658569Z",
+      "last_checked_at": "2026-08-27T02:05:30.658569Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "22114ef3ec061851fa75c2eb90650ae319ca16cbbc48e3941d8739346a59b100",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "8b5126670717573286d5c982fb91ca7e30577420476c3eb1979ff8ccb8dc16f7",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003262290",
+      "title": "울산 트램 교통혼잡 해소할 '문수로 우회도로' 예타 대상 선정",
+      "outlet": "ohmynews",
+      "reporter": "박석철",
+      "published_at": "2026-08-27T02:05:00Z",
+      "modified_at": "2026-08-27T02:05:00Z",
+      "discovered_at": "2026-08-27T02:05:28.829442Z",
+      "last_checked_at": "2026-08-27T02:05:28.829442Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "5f75b5291800de4ad59b179a8ef77579c873ae0ed48fee7399f18d22b0d20c13",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -55238,21 +55609,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[오늘의 주요일정]경기남부(8월27일 목요일)",
-        "original_url": "https://www.newsis.com/view/NISX20260826_0003763889",
-        "naver_url": "https://n.news.naver.com/mnews/article/003/0014150868?sid=102",
-        "published_at": "2026-08-26T20:00:00Z",
-        "description": "◇경기도 ▲오전 9시, 글로벌반도체기업재생에너지 정책 간담회, 판교 ▲오전 9시30분, 도정현안회의... 발달 장애인 활동서비스 제공기관 지정 심의, 소회의실 ◇여주시 ▲오전 9시30분, 전국 시·군·구청장...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[오늘의 주요일정]전북(8월27일 목요일)",
         "original_url": "https://www.newsis.com/view/NISX20260826_0003764163",
         "naver_url": "https://n.news.naver.com/mnews/article/003/0014150860?sid=102",
         "published_at": "2026-08-26T20:00:00Z",
         "description": "◇전북특별자치도 ▲오전 8시, 전북국회의원-전북특별자치도 정책 간담회, 국회 의원회관 ▲오후 3시, 희망... 기념행사, 장애인 평생교육센터 ▲오후 3시, 맛보자고 푸트 컴페티션 평가위원회, 신활력관 ◇완주군...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[오늘의 주요일정]경기남부(8월27일 목요일)",
+        "original_url": "https://www.newsis.com/view/NISX20260826_0003763889",
+        "naver_url": "https://n.news.naver.com/mnews/article/003/0014150868?sid=102",
+        "published_at": "2026-08-26T20:00:00Z",
+        "description": "◇경기도 ▲오전 9시, 글로벌반도체기업재생에너지 정책 간담회, 판교 ▲오전 9시30분, 도정현안회의... 발달 장애인 활동서비스 제공기관 지정 심의, 소회의실 ◇여주시 ▲오전 9시30분, 전국 시·군·구청장...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -55448,16 +55819,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[기고]국민을 향한 기술, AI 민주정부",
-        "original_url": "https://www.khan.co.kr/article/202608262036005",
-        "naver_url": "https://n.news.naver.com/mnews/article/032/0003466656?sid=110",
-        "published_at": "2026-08-26T11:36:00Z",
-        "description": "국민의 목소리를 이해하고, 그 뜻을 정책 에 반영하며, 필요한 서비스를 먼저 찾아 제공하는 정부. 행정의... 디지털 기기가 낯선 어르신이나 장애인 도 말 한마디로 필요한 서비스를 이용할 수 있도록 행정안전부가 AI 음성...",
-        "matched_source": "khan",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "\"지역의 약한 곳 비추는 언론...당사자들의 목소리 더 많이 담았으면\"",
         "original_url": "https://www.pn.or.kr/news/articleView.html?idxno=34035",
         "naver_url": "https://www.pn.or.kr/news/articleView.html?idxno=34035",
@@ -55465,6 +55826,16 @@
         "description": "\"청년 유출 막으려면, 노동 정책 세워야\"(8.6) 40도 콘크리트 열기, 푹 젖은 작업복...건설노동자들 '폭염' 속 노동(7.13) 대구 지자체 위원회 179곳 '남초'...여전한 성비 불균형, '법정 기준'에도 미달(8.10) 지자체마저 ' 장애인 ...",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[기고]국민을 향한 기술, AI 민주정부",
+        "original_url": "https://www.khan.co.kr/article/202608262036005",
+        "naver_url": "https://n.news.naver.com/mnews/article/032/0003466656?sid=110",
+        "published_at": "2026-08-26T11:36:00Z",
+        "description": "국민의 목소리를 이해하고, 그 뜻을 정책 에 반영하며, 필요한 서비스를 먼저 찾아 제공하는 정부. 행정의... 디지털 기기가 낯선 어르신이나 장애인 도 말 한마디로 필요한 서비스를 이용할 수 있도록 행정안전부가 AI 음성...",
+        "matched_source": "khan",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -55728,21 +56099,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[복지뉴스] 한국사회복지협의회, '혁신기업 브랜드 대상' 공공기관 부문...",
-        "original_url": "https://www.ibabynews.com/news/articleView.html?idxno=153995",
-        "naver_url": "https://www.ibabynews.com/news/articleView.html?idxno=153995",
-        "published_at": "2026-08-26T08:06:00Z",
-        "description": "'복지뉴스'는 아이를 키우는 가정에 도움이 되는 복지 정책 과 제도 관련 주요 소식을 전하기 위해 기획된... 사회복지 분야에는 부모급여 32억 원, 생계급여 28억 원, 주거급여 21억 원, 장애인 활동지원 21억 원 등을 편성해...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "차유미 경기도의원, 안산 장애인 직업재활시설 ‘큰숲빵집’ 현장방문",
         "original_url": "https://www.seoul.co.kr/news/publicnews/local_govern/kyungki_do/2026/08/26/20260826500255?wlog_tag3=naver",
         "naver_url": "https://n.news.naver.com/mnews/article/081/0003673826?sid=102",
         "published_at": "2026-08-26T08:06:00Z",
         "description": "아울러 현실 물가를 반영하지 못해 장기간 동결 수준에 머물러 있는 장애인 근로자 주·부식비 지원 단가의 현실화 필요성이 제기됐다. 이와 함께 경기도의 ‘AI 휴머노믹스’ 정책 기조와 연계해 장애 유형과 특성을...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[복지뉴스] 한국사회복지협의회, '혁신기업 브랜드 대상' 공공기관 부문...",
+        "original_url": "https://www.ibabynews.com/news/articleView.html?idxno=153995",
+        "naver_url": "https://www.ibabynews.com/news/articleView.html?idxno=153995",
+        "published_at": "2026-08-26T08:06:00Z",
+        "description": "'복지뉴스'는 아이를 키우는 가정에 도움이 되는 복지 정책 과 제도 관련 주요 소식을 전하기 위해 기획된... 사회복지 분야에는 부모급여 32억 원, 생계급여 28억 원, 주거급여 21억 원, 장애인 활동지원 21억 원 등을 편성해...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -55758,21 +56129,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "‘통합돌봄’ 전국 확대되는데…인천시, 전담 인력 부족",
-        "original_url": "https://www.kgnews.co.kr/news/article.html?no=909091",
-        "naver_url": "https://www.kgnews.co.kr/news/article.html?no=909091",
-        "published_at": "2026-08-26T08:00:00Z",
-        "description": "통합돌봄은 노인과 장애인 등이 살던 곳에서 계속 생활할 수 있도록 의료·요양·돌봄·주거·복지 서비스를... 익명을 요구한 복지사는 “통합돌봄은 어느 한 부서나 기관의 힘만으로 완성될 수 있는 정책 이 아니다....",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[인사] 대구 달성군",
         "original_url": "https://www.kbsm.net/news/view.php?idx=531771",
         "naver_url": "https://www.kbsm.net/news/view.php?idx=531771",
         "published_at": "2026-08-26T08:00:00Z",
         "description": "최미현 ▲ 장애인 복지과 이순재 ▲ 도시 정책 과 김가람 ▲ 체육진흥과 문준우 ▲ 관광과 박지웅 ▲ 조경사업과 방기선 ▲ 조경관리과 정현우 ▲ 조경관리과 장태영 ▲ 조경관리과 박민아 ▲ 농업 정책 과 박선영(朴宣暎)...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "‘통합돌봄’ 전국 확대되는데…인천시, 전담 인력 부족",
+        "original_url": "https://www.kgnews.co.kr/news/article.html?no=909091",
+        "naver_url": "https://www.kgnews.co.kr/news/article.html?no=909091",
+        "published_at": "2026-08-26T08:00:00Z",
+        "description": "통합돌봄은 노인과 장애인 등이 살던 곳에서 계속 생활할 수 있도록 의료·요양·돌봄·주거·복지 서비스를... 익명을 요구한 복지사는 “통합돌봄은 어느 한 부서나 기관의 힘만으로 완성될 수 있는 정책 이 아니다....",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -55913,16 +56284,6 @@
         "naver_url": "https://n.news.naver.com/mnews/article/654/0000197127?sid=100",
         "published_at": "2026-08-26T06:58:00Z",
         "description": "최재우 국민건강보험공단 통합돌봄 정책 개발센터 부연구위원은 26일 보건복지부가 서울 종로구... 고령 장애인 등이다. 최 부연구위원이 지난해 말 기준 국민건강보험과 노인장기요양보험 등의 자료를 활용해 분석한...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[인사]대구 달성군",
-        "original_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=557676",
-        "naver_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=557676",
-        "published_at": "2026-08-26T06:54:00Z",
-        "description": "최미현 △ 장애인 복지과 이순재 △도시 정책 과 김가람 △체육진흥과 문준우 △관광과 박지웅 △조경사업과 방기선 △조경관리과 정현우 △조경관리과 장태영 △조경관리과 박민아 △농업 정책 과 박선영(朴宣暎) △화원읍...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -57005,15 +57366,15 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-08-27T01:57:16.670751Z",
+    "status": "complete",
+    "checked_at": "2026-08-27T02:06:59.348785Z",
     "checks": [
       {
         "issue_title": "전장연 지하철 시위 중단 둘러싼 예산 왜곡 정보 확산",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -57058,18 +57419,18 @@
       },
       {
         "issue_title": "한화오션 하청노동자, 폭염 속 작업 후 쓰러져 사망",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "삼성전자 반도체 하청노동자 혈액암으로 사망",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -57090,18 +57451,18 @@
       },
       {
         "issue_title": "금속노조 전국 2차 파업, 원청 사용자 책임 요구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "CJ대한통운, 택배노조 원청교섭 요구 5개월째 미이행",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -57130,10 +57491,10 @@
       },
       {
         "issue_title": "카카오, 회사 인적분할 추진에 노조 저지 나서",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       }
     ]
