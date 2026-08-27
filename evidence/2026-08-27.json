@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-27",
-  "generated_at": "2026-08-27T01:49:14.363246Z",
+  "generated_at": "2026-08-27T01:59:07.984368Z",
   "articles": [
     {
       "candidate_id": "3cbfa550e5653bae763e01e2dc1da025546f2ec3d717ac645ef94d7e5bb55be3",
@@ -46908,7 +46908,7 @@
       "published_at": "2026-08-26T22:00:00Z",
       "modified_at": "2026-08-26T22:00:01Z",
       "discovered_at": "2026-08-26T23:47:03.218176Z",
-      "last_checked_at": "2026-08-27T01:45:54.699659Z",
+      "last_checked_at": "2026-08-27T01:55:53.489557Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -46947,7 +46947,7 @@
       "published_at": "2026-08-26T22:07:18Z",
       "modified_at": "2026-08-26T22:07:55Z",
       "discovered_at": "2026-08-26T23:47:06.052511Z",
-      "last_checked_at": "2026-08-27T01:46:47.058475Z",
+      "last_checked_at": "2026-08-27T01:56:45.827149Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -46981,19 +46981,19 @@
       "canonical_url": "https://www.hani.co.kr/arti/international/international_general/1274849.html",
       "title": "[영상] 네팔 대홍수 “지진 아닌 빙하붕괴 사태”…최소 160명 사망",
       "outlet": "hani",
-      "reporter": "곽진산",
+      "reporter": null,
       "published_at": "2026-08-26T22:17:00Z",
       "modified_at": "2026-08-27T01:37:00Z",
       "discovered_at": "2026-08-26T23:46:52.344825Z",
-      "last_checked_at": "2026-08-27T01:45:01.453067Z",
+      "last_checked_at": "2026-08-27T01:55:02.574837Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "e8a452a58a1e13031d4df554d7385aed4df105b5e9cd6e57b47a28916ce70031",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -47044,7 +47044,7 @@
       "published_at": "2026-08-26T22:23:00Z",
       "modified_at": "2026-08-26T22:23:00Z",
       "discovered_at": "2026-08-26T23:47:03.218102Z",
-      "last_checked_at": "2026-08-27T01:45:54.698489Z",
+      "last_checked_at": "2026-08-27T01:55:53.488578Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47101,7 +47101,7 @@
       "published_at": "2026-08-26T22:26:00Z",
       "modified_at": "2026-08-26T22:26:00Z",
       "discovered_at": "2026-08-26T23:47:03.218029Z",
-      "last_checked_at": "2026-08-27T01:45:54.697403Z",
+      "last_checked_at": "2026-08-27T01:55:53.487312Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47120,7 +47120,7 @@
       "published_at": "2026-08-26T22:26:01Z",
       "modified_at": "2026-08-27T00:53:20Z",
       "discovered_at": "2026-08-26T23:47:06.052398Z",
-      "last_checked_at": "2026-08-27T01:46:47.057121Z",
+      "last_checked_at": "2026-08-27T01:56:45.826211Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47139,7 +47139,7 @@
       "published_at": "2026-08-26T22:27:21Z",
       "modified_at": "2026-08-26T22:27:21Z",
       "discovered_at": "2026-08-26T23:47:06.052285Z",
-      "last_checked_at": "2026-08-27T01:46:47.055825Z",
+      "last_checked_at": "2026-08-27T01:56:45.825215Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47156,9 +47156,9 @@
       "outlet": "ohmynews",
       "reporter": null,
       "published_at": "2026-08-26T22:28:28Z",
-      "modified_at": "2026-08-27T00:18:23Z",
+      "modified_at": "2026-08-27T01:49:06Z",
       "discovered_at": "2026-08-26T23:47:06.052159Z",
-      "last_checked_at": "2026-08-27T01:46:47.053756Z",
+      "last_checked_at": "2026-08-27T01:56:45.823974Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47293,7 +47293,7 @@
       "published_at": "2026-08-26T22:33:41Z",
       "modified_at": "2026-08-26T22:33:41Z",
       "discovered_at": "2026-08-26T23:47:06.052050Z",
-      "last_checked_at": "2026-08-27T01:46:47.052044Z",
+      "last_checked_at": "2026-08-27T01:56:45.822963Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -47312,7 +47312,7 @@
       "published_at": "2026-08-26T22:34:00Z",
       "modified_at": "2026-08-26T22:34:00Z",
       "discovered_at": "2026-08-26T23:47:03.217952Z",
-      "last_checked_at": "2026-08-27T01:45:54.695475Z",
+      "last_checked_at": "2026-08-27T01:55:53.486039Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47365,19 +47365,19 @@
       "canonical_url": "https://www.hani.co.kr/arti/economy/economy_general/1274850.html",
       "title": "마흔살 이상 일자리, 여기 있을까…2026 중장년 채용박람회",
       "outlet": "hani",
-      "reporter": "최현수",
+      "reporter": null,
       "published_at": "2026-08-26T22:35:00Z",
       "modified_at": "2026-08-26T22:48:00Z",
       "discovered_at": "2026-08-26T23:46:52.344661Z",
-      "last_checked_at": "2026-08-27T01:44:59.572642Z",
+      "last_checked_at": "2026-08-27T01:55:02.572040Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "503661eb2de35c737792488d2c19ad14670cf5d660270254996f228631c986db",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -47409,7 +47409,7 @@
       "published_at": "2026-08-26T22:37:00Z",
       "modified_at": "2026-08-26T22:37:00Z",
       "discovered_at": "2026-08-26T23:47:03.217875Z",
-      "last_checked_at": "2026-08-27T01:45:54.694283Z",
+      "last_checked_at": "2026-08-27T01:55:53.485065Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47864,19 +47864,19 @@
       "canonical_url": "https://www.hani.co.kr/arti/society/environment/1274851.html",
       "title": "전국 곳곳 비, 경남·전남 최대 60㎜…그래도 34도 ‘덥다’",
       "outlet": "hani",
-      "reporter": "김지숙",
+      "reporter": null,
       "published_at": "2026-08-26T22:51:00Z",
       "modified_at": "2026-08-26T23:04:00Z",
       "discovered_at": "2026-08-26T23:46:52.344498Z",
-      "last_checked_at": "2026-08-27T01:44:57.635131Z",
+      "last_checked_at": "2026-08-27T01:55:02.570861Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "4e0a48240ba7630bdc2e9bbe879387cdffd8f93cfcc057a9f80f27ebc5a0ed83",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -47927,7 +47927,7 @@
       "published_at": "2026-08-26T22:53:00Z",
       "modified_at": "2026-08-26T22:53:00Z",
       "discovered_at": "2026-08-26T23:47:03.217797Z",
-      "last_checked_at": "2026-08-27T01:45:54.692936Z",
+      "last_checked_at": "2026-08-27T01:55:53.483763Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48135,19 +48135,19 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270757001",
       "title": "메타 ‘청소년 SNS 중독 조장’ 소송 25조 합의···셧다운제, 나이 확인 기술 등 도입",
       "outlet": "khan",
-      "reporter": "배시은",
+      "reporter": null,
       "published_at": "2026-08-26T22:57:00Z",
       "modified_at": "2026-08-26T22:57:00Z",
       "discovered_at": "2026-08-26T23:47:03.217716Z",
-      "last_checked_at": "2026-08-27T01:45:52.720481Z",
+      "last_checked_at": "2026-08-27T01:55:53.482777Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "c6c91b9234ce35f18189a820ad4ac18ce521965626fec8b5d6c0efe2077753e5",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "509b6be07b6d5f94a2fb321c682566ae2c5704794fa5dd7c59d23ef5b01bfa5e",
@@ -48257,7 +48257,7 @@
       "published_at": "2026-08-26T22:58:59Z",
       "modified_at": "2026-08-26T23:05:04Z",
       "discovered_at": "2026-08-26T23:47:06.051936Z",
-      "last_checked_at": "2026-08-27T01:46:47.050788Z",
+      "last_checked_at": "2026-08-27T01:56:45.821985Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -48272,17 +48272,17 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270759001",
       "title": "전국 곳곳 비 소식…낮 최고 34도 ‘무더위’ 계속",
       "outlet": "khan",
-      "reporter": "하주언",
+      "reporter": null,
       "published_at": "2026-08-26T22:59:00Z",
-      "modified_at": "2026-08-26T23:18:00Z",
+      "modified_at": "2026-08-26T23:18:19Z",
       "discovered_at": "2026-08-26T23:47:03.217636Z",
-      "last_checked_at": "2026-08-27T01:45:50.654096Z",
+      "last_checked_at": "2026-08-27T01:55:53.481823Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "bcc8545fbce269ebaafac7e1474d108d07a004afc342f9ac0f104a96f9e37de6",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -48353,7 +48353,7 @@
       "published_at": "2026-08-26T23:00:00Z",
       "modified_at": "2026-08-26T23:19:00Z",
       "discovered_at": "2026-08-26T23:46:52.344331Z",
-      "last_checked_at": "2026-08-27T01:44:55.471699Z",
+      "last_checked_at": "2026-08-27T01:55:00.453758Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48374,7 +48374,7 @@
       "published_at": "2026-08-26T23:00:00Z",
       "modified_at": "2026-08-26T23:35:00Z",
       "discovered_at": "2026-08-26T23:46:52.344136Z",
-      "last_checked_at": "2026-08-27T01:44:53.584540Z",
+      "last_checked_at": "2026-08-27T01:54:58.544110Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -48415,11 +48415,12 @@
       "published_at": "2026-08-26T23:00:00Z",
       "modified_at": "2026-08-26T23:13:44Z",
       "discovered_at": "2026-08-26T23:49:09.028377Z",
-      "last_checked_at": "2026-08-27T01:47:15.578794Z",
+      "last_checked_at": "2026-08-27T01:57:14.132717Z",
       "discovery_route": [
         "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-24T23%3A45%3A25Z&before=2026-08-26T23%3A45%3A25Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
         "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T18%3A48%3A40Z&before=2026-08-27T00%3A48%3A40Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T01%3A44%3A09Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T01%3A44%3A09Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-26T22%3A00%3A00Z&before=2026-08-27T01%3A54%3A06Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "801ff56e130f52c735cb1858a7a2ab147c15411504fc477bd0adbc5dd3a82a57",
@@ -48609,19 +48610,19 @@
       "canonical_url": "https://www.khan.co.kr/article/202608270805001",
       "title": "‘금란’ 가격 내려갈까···한 판에 7천원대 계란, 생산량·수입 늘려 가격 안정화 나선다",
       "outlet": "khan",
-      "reporter": "오동욱",
+      "reporter": null,
       "published_at": "2026-08-26T23:05:00Z",
-      "modified_at": "2026-08-27T01:13:00Z",
+      "modified_at": "2026-08-27T01:13:42Z",
       "discovered_at": "2026-08-26T23:47:03.217552Z",
-      "last_checked_at": "2026-08-27T01:45:48.802325Z",
+      "last_checked_at": "2026-08-27T01:55:53.480218Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "90c15fe148d686757eeca4f1e800d48f983850d6e8ec504770cf0b3b94e288c6",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "d9ffbd3231bdc2a1c301606f1afb324d09ea27bc59b9b1f8288a3fc39b195ee7",
@@ -48632,7 +48633,7 @@
       "published_at": "2026-08-26T23:05:00Z",
       "modified_at": "2026-08-26T23:13:00Z",
       "discovered_at": "2026-08-26T23:47:03.217463Z",
-      "last_checked_at": "2026-08-27T01:45:46.652479Z",
+      "last_checked_at": "2026-08-27T01:55:51.466802Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48978,7 +48979,7 @@
       "published_at": "2026-08-26T23:13:00Z",
       "modified_at": "2026-08-26T23:13:00Z",
       "discovered_at": "2026-08-26T23:47:03.217362Z",
-      "last_checked_at": "2026-08-27T01:45:44.713252Z",
+      "last_checked_at": "2026-08-27T01:55:49.481780Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -49461,7 +49462,7 @@
       "published_at": "2026-08-26T23:27:46Z",
       "modified_at": "2026-08-26T23:27:46Z",
       "discovered_at": "2026-08-26T23:47:06.051818Z",
-      "last_checked_at": "2026-08-27T01:46:47.049219Z",
+      "last_checked_at": "2026-08-27T01:56:45.820641Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -49480,7 +49481,7 @@
       "published_at": "2026-08-26T23:28:00Z",
       "modified_at": "2026-08-27T01:17:00Z",
       "discovered_at": "2026-08-26T23:46:52.343846Z",
-      "last_checked_at": "2026-08-27T01:44:51.462226Z",
+      "last_checked_at": "2026-08-27T01:54:56.528918Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -49501,7 +49502,7 @@
       "published_at": "2026-08-26T23:29:00Z",
       "modified_at": "2026-08-27T01:41:00Z",
       "discovered_at": "2026-08-26T23:47:03.217124Z",
-      "last_checked_at": "2026-08-27T01:45:42.674551Z",
+      "last_checked_at": "2026-08-27T01:55:47.614717Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -49891,7 +49892,7 @@
       "published_at": "2026-08-26T23:37:49Z",
       "modified_at": "2026-08-26T23:37:49Z",
       "discovered_at": "2026-08-26T23:47:06.051690Z",
-      "last_checked_at": "2026-08-27T01:46:47.048048Z",
+      "last_checked_at": "2026-08-27T01:56:45.819518Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -49988,7 +49989,7 @@
       "published_at": "2026-08-26T23:40:00Z",
       "modified_at": "2026-08-26T23:40:00Z",
       "discovered_at": "2026-08-26T23:47:06.051438Z",
-      "last_checked_at": "2026-08-27T01:46:45.083141Z",
+      "last_checked_at": "2026-08-27T01:56:43.871061Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -50047,7 +50048,7 @@
       "published_at": "2026-08-26T23:41:00Z",
       "modified_at": "2026-08-26T23:41:00Z",
       "discovered_at": "2026-08-27T00:49:12.765852Z",
-      "last_checked_at": "2026-08-27T01:45:40.772596Z",
+      "last_checked_at": "2026-08-27T01:55:45.462999Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50451,7 +50452,7 @@
       "published_at": "2026-08-26T23:53:00Z",
       "modified_at": "2026-08-26T23:59:00Z",
       "discovered_at": "2026-08-27T00:49:10.127002Z",
-      "last_checked_at": "2026-08-27T01:44:49.463752Z",
+      "last_checked_at": "2026-08-27T01:54:54.522347Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50606,7 +50607,7 @@
       "published_at": "2026-08-26T23:57:00Z",
       "modified_at": "2026-08-26T23:57:00Z",
       "discovered_at": "2026-08-27T00:49:15.447835Z",
-      "last_checked_at": "2026-08-27T01:46:43.073344Z",
+      "last_checked_at": "2026-08-27T01:56:41.951882Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -50625,7 +50626,7 @@
       "published_at": "2026-08-26T23:58:00Z",
       "modified_at": "2026-08-27T00:05:00Z",
       "discovered_at": "2026-08-27T00:49:10.126764Z",
-      "last_checked_at": "2026-08-27T01:44:47.460931Z",
+      "last_checked_at": "2026-08-27T01:54:52.308264Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -50646,7 +50647,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:43.353812Z",
-      "last_checked_at": "2026-08-27T01:47:11.168341Z",
+      "last_checked_at": "2026-08-27T01:57:09.726375Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50665,7 +50666,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:41.412823Z",
-      "last_checked_at": "2026-08-27T01:47:09.192758Z",
+      "last_checked_at": "2026-08-27T01:57:07.726244Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50684,7 +50685,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:39.391950Z",
-      "last_checked_at": "2026-08-27T01:47:07.177146Z",
+      "last_checked_at": "2026-08-27T01:57:05.725815Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50703,7 +50704,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:37.369203Z",
-      "last_checked_at": "2026-08-27T01:47:05.312857Z",
+      "last_checked_at": "2026-08-27T01:57:03.858687Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50893,7 +50894,7 @@
       "published_at": "2026-08-27T00:00:00Z",
       "modified_at": "2026-08-27T00:00:00Z",
       "discovered_at": "2026-08-27T00:49:15.447665Z",
-      "last_checked_at": "2026-08-27T01:46:41.147639Z",
+      "last_checked_at": "2026-08-27T01:56:39.743191Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -50950,7 +50951,7 @@
       "published_at": "2026-08-27T00:01:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:35.470427Z",
-      "last_checked_at": "2026-08-27T01:47:03.154789Z",
+      "last_checked_at": "2026-08-27T01:57:01.724961Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -50969,7 +50970,7 @@
       "published_at": "2026-08-27T00:01:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:33.570044Z",
-      "last_checked_at": "2026-08-27T01:47:01.293996Z",
+      "last_checked_at": "2026-08-27T01:56:59.858883Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -51007,10 +51008,11 @@
       "published_at": "2026-08-27T00:01:00Z",
       "modified_at": "2026-08-27T00:27:00Z",
       "discovered_at": "2026-08-27T00:49:10.126549Z",
-      "last_checked_at": "2026-08-27T01:44:45.451150Z",
+      "last_checked_at": "2026-08-27T01:54:50.595855Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "9a3edf3ac733dde56b7e93044a22ad37c479a5bf2d5604c22c9a63efcedc2357",
@@ -51123,7 +51125,7 @@
       "published_at": "2026-08-27T00:02:00Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T00:49:31.253993Z",
-      "last_checked_at": "2026-08-27T01:46:59.036188Z",
+      "last_checked_at": "2026-08-27T01:56:57.684528Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -51295,7 +51297,7 @@
       "published_at": "2026-08-27T00:08:00Z",
       "modified_at": "2026-08-27T00:08:00Z",
       "discovered_at": "2026-08-27T01:46:37.083105Z",
-      "last_checked_at": "2026-08-27T01:46:37.083105Z",
+      "last_checked_at": "2026-08-27T01:56:35.785882Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -51486,7 +51488,7 @@
       "published_at": "2026-08-27T00:12:00Z",
       "modified_at": "2026-08-27T00:26:00Z",
       "discovered_at": "2026-08-27T00:49:12.765600Z",
-      "last_checked_at": "2026-08-27T01:45:38.688653Z",
+      "last_checked_at": "2026-08-27T01:55:43.495676Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -51638,10 +51640,11 @@
       "published_at": "2026-08-27T00:15:00Z",
       "modified_at": "2026-08-27T00:17:00Z",
       "discovered_at": "2026-08-27T00:49:10.126343Z",
-      "last_checked_at": "2026-08-27T01:44:43.456921Z",
+      "last_checked_at": "2026-08-27T01:54:48.446552Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "889156f1983a41e15d5c2c75a20174d3481d2c8aad6e53b77735aafd2a22a308",
@@ -51948,10 +51951,11 @@
       "published_at": "2026-08-27T00:23:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T00:49:10.126129Z",
-      "last_checked_at": "2026-08-27T01:44:41.696660Z",
+      "last_checked_at": "2026-08-27T01:54:46.413040Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "2598f9ed8e6bdf81563d05657e2da41295cc6284a27b0c33087a0aa75a3ee611",
@@ -51968,10 +51972,11 @@
       "published_at": "2026-08-27T00:23:00Z",
       "modified_at": "2026-08-27T00:29:00Z",
       "discovered_at": "2026-08-27T00:49:10.125910Z",
-      "last_checked_at": "2026-08-27T01:44:39.544555Z",
+      "last_checked_at": "2026-08-27T01:54:44.485105Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "693c1ef6348ee2df446f3d520b56b44d34a14cba2abd5b09620932375b8bcde4",
@@ -52378,7 +52383,7 @@
       "published_at": "2026-08-27T00:29:00Z",
       "modified_at": "2026-08-27T00:29:00Z",
       "discovered_at": "2026-08-27T00:49:15.447316Z",
-      "last_checked_at": "2026-08-27T01:46:35.051419Z",
+      "last_checked_at": "2026-08-27T01:56:33.780225Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -52537,7 +52542,7 @@
       "published_at": "2026-08-27T00:30:00Z",
       "modified_at": "2026-08-27T00:30:00Z",
       "discovered_at": "2026-08-27T00:49:10.125437Z",
-      "last_checked_at": "2026-08-27T01:44:35.451657Z",
+      "last_checked_at": "2026-08-27T01:54:40.654848Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -52557,7 +52562,7 @@
       "published_at": "2026-08-27T00:30:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T00:49:10.125657Z",
-      "last_checked_at": "2026-08-27T01:44:37.564632Z",
+      "last_checked_at": "2026-08-27T01:54:42.518872Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -52577,7 +52582,7 @@
       "published_at": "2026-08-27T00:30:00Z",
       "modified_at": "2026-08-27T00:30:00Z",
       "discovered_at": "2026-08-27T00:49:15.447138Z",
-      "last_checked_at": "2026-08-27T01:46:33.127416Z",
+      "last_checked_at": "2026-08-27T01:56:31.851552Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -52772,7 +52777,7 @@
       "published_at": "2026-08-27T00:31:00Z",
       "modified_at": "2026-08-27T00:31:00Z",
       "discovered_at": "2026-08-27T00:49:10.125213Z",
-      "last_checked_at": "2026-08-27T01:44:33.460637Z",
+      "last_checked_at": "2026-08-27T01:54:38.590799Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -52910,7 +52915,7 @@
       "published_at": "2026-08-27T00:32:00Z",
       "modified_at": "2026-08-27T00:32:00Z",
       "discovered_at": "2026-08-27T00:49:15.446959Z",
-      "last_checked_at": "2026-08-27T01:46:31.083939Z",
+      "last_checked_at": "2026-08-27T01:56:29.782639Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -53103,7 +53108,7 @@
       "published_at": "2026-08-27T00:34:00Z",
       "modified_at": "2026-08-27T00:34:00Z",
       "discovered_at": "2026-08-27T00:49:15.446749Z",
-      "last_checked_at": "2026-08-27T01:46:29.074376Z",
+      "last_checked_at": "2026-08-27T01:56:27.798250Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -53336,7 +53341,7 @@
       "published_at": "2026-08-27T00:38:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T00:49:10.124984Z",
-      "last_checked_at": "2026-08-27T01:44:31.595171Z",
+      "last_checked_at": "2026-08-27T01:54:37.011479Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -53473,7 +53478,7 @@
       "published_at": "2026-08-27T00:40:00Z",
       "modified_at": "2026-08-27T01:10:00Z",
       "discovered_at": "2026-08-27T00:49:10.124633Z",
-      "last_checked_at": "2026-08-27T01:44:29.457251Z",
+      "last_checked_at": "2026-08-27T01:54:34.306743Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -53513,7 +53518,7 @@
       "published_at": "2026-08-27T00:40:00Z",
       "modified_at": "2026-08-27T00:40:00Z",
       "discovered_at": "2026-08-27T00:49:15.446560Z",
-      "last_checked_at": "2026-08-27T01:46:27.088364Z",
+      "last_checked_at": "2026-08-27T01:56:25.822288Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -53591,7 +53596,7 @@
       "published_at": "2026-08-27T00:41:00Z",
       "modified_at": "2026-08-27T01:21:00Z",
       "discovered_at": "2026-08-27T01:45:36.705390Z",
-      "last_checked_at": "2026-08-27T01:45:36.705390Z",
+      "last_checked_at": "2026-08-27T01:55:41.499767Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54127,7 +54132,7 @@
       "published_at": "2026-08-27T00:46:00Z",
       "modified_at": "2026-08-27T00:46:00Z",
       "discovered_at": "2026-08-27T01:45:34.658639Z",
-      "last_checked_at": "2026-08-27T01:45:34.658639Z",
+      "last_checked_at": "2026-08-27T01:55:39.621543Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54241,7 +54246,7 @@
       "published_at": "2026-08-27T00:47:00Z",
       "modified_at": "2026-08-27T00:47:00Z",
       "discovered_at": "2026-08-27T00:49:15.446263Z",
-      "last_checked_at": "2026-08-27T01:46:25.054283Z",
+      "last_checked_at": "2026-08-27T01:56:23.799921Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54317,7 +54322,7 @@
       "published_at": "2026-08-27T00:50:00Z",
       "modified_at": "2026-08-27T01:08:00Z",
       "discovered_at": "2026-08-27T01:45:32.801856Z",
-      "last_checked_at": "2026-08-27T01:45:32.801856Z",
+      "last_checked_at": "2026-08-27T01:55:37.477303Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54330,19 +54335,19 @@
     {
       "candidate_id": "562709edb13b0e8007d0efdddfc4e6a6de892983e1197a3cecc5a4b97b7a2501",
       "canonical_url": "https://www.hani.co.kr/arti/economy/economy_general/1274866.html",
-      "title": "[속보] 한은, 기준금리 3%로 올려…물가 압박에 이례적 ‘두달 연속 인상’",
+      "title": "한은, 기준금리 3%로 올려…물가 압박에 이례적 ‘두달 연속 인상’",
       "outlet": "hani",
       "reporter": "김영배",
       "published_at": "2026-08-27T00:51:00Z",
-      "modified_at": "2026-08-27T01:36:00Z",
+      "modified_at": "2026-08-27T01:47:00Z",
       "discovered_at": "2026-08-27T01:44:27.552834Z",
-      "last_checked_at": "2026-08-27T01:44:27.552834Z",
+      "last_checked_at": "2026-08-27T01:54:32.548734Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "53027eb85787f36391664f233b3b5628c2d72128173c031e9bfaa860f6c048be",
+      "body_hash": "c92af1ab92c32a7b4ab96ba48e2388b87e62733e10ff55cc289a9b63044229ad",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -54350,19 +54355,19 @@
     {
       "candidate_id": "08ede939368b08d6944f801e59c318c409fb5e1d969db1404fd0e3a4f93a6171",
       "canonical_url": "https://www.hani.co.kr/arti/economy/economy_general/1274867.html",
-      "title": "[속보] 한은, 올해 성장률 전망 2.6%→3.3% 상향",
+      "title": "한은, 올해 성장률 전망 2.6%→3.3% 상향",
       "outlet": "hani",
       "reporter": "김영배",
       "published_at": "2026-08-27T00:52:00Z",
-      "modified_at": "2026-08-27T00:54:00Z",
+      "modified_at": "2026-08-27T01:47:00Z",
       "discovered_at": "2026-08-27T01:44:25.548465Z",
-      "last_checked_at": "2026-08-27T01:44:25.548465Z",
+      "last_checked_at": "2026-08-27T01:54:30.446840Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "7718255ac1db1e075d90deea9aaebe9f980d842592742b52da0789c5dd45c412",
+      "body_hash": "e004dea66d9ecae99fd28599a5442b14298193c7e60dc2e17da2e47e83e2a63f",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -54376,7 +54381,7 @@
       "published_at": "2026-08-27T00:52:00Z",
       "modified_at": "2026-08-27T00:58:00Z",
       "discovered_at": "2026-08-27T01:46:23.113207Z",
-      "last_checked_at": "2026-08-27T01:46:23.113207Z",
+      "last_checked_at": "2026-08-27T01:56:22.293199Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54395,7 +54400,7 @@
       "published_at": "2026-08-27T00:55:00Z",
       "modified_at": "2026-08-27T00:55:00Z",
       "discovered_at": "2026-08-27T01:46:21.191646Z",
-      "last_checked_at": "2026-08-27T01:46:21.191646Z",
+      "last_checked_at": "2026-08-27T01:56:19.787243Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54414,7 +54419,7 @@
       "published_at": "2026-08-27T00:55:50Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T01:46:55.044702Z",
-      "last_checked_at": "2026-08-27T01:46:55.044702Z",
+      "last_checked_at": "2026-08-27T01:56:53.459550Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -54433,7 +54438,7 @@
       "published_at": "2026-08-27T00:55:50Z",
       "modified_at": null,
       "discovered_at": "2026-08-27T01:46:52.674548Z",
-      "last_checked_at": "2026-08-27T01:46:52.674548Z",
+      "last_checked_at": "2026-08-27T01:56:51.371087Z",
       "discovery_route": [
         "official:https://www.beminor.com/sitemap.xml"
       ],
@@ -54452,7 +54457,7 @@
       "published_at": "2026-08-27T00:56:00Z",
       "modified_at": "2026-08-27T00:56:00Z",
       "discovered_at": "2026-08-27T01:46:19.053125Z",
-      "last_checked_at": "2026-08-27T01:46:19.053125Z",
+      "last_checked_at": "2026-08-27T01:56:17.795782Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54471,7 +54476,7 @@
       "published_at": "2026-08-27T01:02:00Z",
       "modified_at": "2026-08-27T01:02:00Z",
       "discovered_at": "2026-08-27T01:46:17.042339Z",
-      "last_checked_at": "2026-08-27T01:46:17.042339Z",
+      "last_checked_at": "2026-08-27T01:56:15.802646Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54490,7 +54495,7 @@
       "published_at": "2026-08-27T01:03:00Z",
       "modified_at": "2026-08-27T01:43:00Z",
       "discovered_at": "2026-08-27T01:44:23.629538Z",
-      "last_checked_at": "2026-08-27T01:44:23.629538Z",
+      "last_checked_at": "2026-08-27T01:54:28.550712Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54510,7 +54515,7 @@
       "published_at": "2026-08-27T01:07:00Z",
       "modified_at": "2026-08-27T01:07:00Z",
       "discovered_at": "2026-08-27T01:45:30.678838Z",
-      "last_checked_at": "2026-08-27T01:45:30.678838Z",
+      "last_checked_at": "2026-08-27T01:55:35.460916Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54529,7 +54534,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:24:00Z",
       "discovered_at": "2026-08-27T01:45:28.679845Z",
-      "last_checked_at": "2026-08-27T01:45:28.679845Z",
+      "last_checked_at": "2026-08-27T01:55:33.462185Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54548,7 +54553,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:39:00Z",
       "discovered_at": "2026-08-27T01:45:26.640387Z",
-      "last_checked_at": "2026-08-27T01:45:26.640387Z",
+      "last_checked_at": "2026-08-27T01:55:31.641846Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54567,7 +54572,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:13:00Z",
       "discovered_at": "2026-08-27T01:46:15.052321Z",
-      "last_checked_at": "2026-08-27T01:46:15.052321Z",
+      "last_checked_at": "2026-08-27T01:56:13.775441Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54586,7 +54591,7 @@
       "published_at": "2026-08-27T01:13:00Z",
       "modified_at": "2026-08-27T01:13:00Z",
       "discovered_at": "2026-08-27T01:46:13.034137Z",
-      "last_checked_at": "2026-08-27T01:46:13.034137Z",
+      "last_checked_at": "2026-08-27T01:56:11.767604Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54605,7 +54610,7 @@
       "published_at": "2026-08-27T01:14:00Z",
       "modified_at": "2026-08-27T01:14:00Z",
       "discovered_at": "2026-08-27T01:45:24.802912Z",
-      "last_checked_at": "2026-08-27T01:45:24.802912Z",
+      "last_checked_at": "2026-08-27T01:55:29.480977Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54624,7 +54629,7 @@
       "published_at": "2026-08-27T01:14:00Z",
       "modified_at": "2026-08-27T01:14:00Z",
       "discovered_at": "2026-08-27T01:46:11.038390Z",
-      "last_checked_at": "2026-08-27T01:46:11.038390Z",
+      "last_checked_at": "2026-08-27T01:56:09.762789Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54643,7 +54648,7 @@
       "published_at": "2026-08-27T01:17:00Z",
       "modified_at": "2026-08-27T01:17:00Z",
       "discovered_at": "2026-08-27T01:45:22.639769Z",
-      "last_checked_at": "2026-08-27T01:45:22.639769Z",
+      "last_checked_at": "2026-08-27T01:55:27.569119Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54662,7 +54667,7 @@
       "published_at": "2026-08-27T01:18:00Z",
       "modified_at": "2026-08-27T01:43:00Z",
       "discovered_at": "2026-08-27T01:45:20.716188Z",
-      "last_checked_at": "2026-08-27T01:45:20.716188Z",
+      "last_checked_at": "2026-08-27T01:55:25.499009Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54681,7 +54686,7 @@
       "published_at": "2026-08-27T01:21:00Z",
       "modified_at": "2026-08-27T01:21:00Z",
       "discovered_at": "2026-08-27T01:46:09.048947Z",
-      "last_checked_at": "2026-08-27T01:46:09.048947Z",
+      "last_checked_at": "2026-08-27T01:56:07.820559Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54700,7 +54705,7 @@
       "published_at": "2026-08-27T01:23:00Z",
       "modified_at": "2026-08-27T01:30:00Z",
       "discovered_at": "2026-08-27T01:44:21.290400Z",
-      "last_checked_at": "2026-08-27T01:44:21.290400Z",
+      "last_checked_at": "2026-08-27T01:54:26.481713Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -54720,7 +54725,7 @@
       "published_at": "2026-08-27T01:26:00Z",
       "modified_at": "2026-08-27T01:26:00Z",
       "discovered_at": "2026-08-27T01:45:18.649759Z",
-      "last_checked_at": "2026-08-27T01:45:18.649759Z",
+      "last_checked_at": "2026-08-27T01:55:23.656897Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54739,7 +54744,7 @@
       "published_at": "2026-08-27T01:26:00Z",
       "modified_at": "2026-08-27T01:26:01Z",
       "discovered_at": "2026-08-27T01:45:16.787401Z",
-      "last_checked_at": "2026-08-27T01:45:16.787401Z",
+      "last_checked_at": "2026-08-27T01:55:21.463656Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54758,7 +54763,7 @@
       "published_at": "2026-08-27T01:27:00Z",
       "modified_at": "2026-08-27T01:27:00Z",
       "discovered_at": "2026-08-27T01:45:14.655965Z",
-      "last_checked_at": "2026-08-27T01:45:14.655965Z",
+      "last_checked_at": "2026-08-27T01:55:19.460694Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54777,7 +54782,7 @@
       "published_at": "2026-08-27T01:27:00Z",
       "modified_at": "2026-08-27T01:27:00Z",
       "discovered_at": "2026-08-27T01:46:07.069795Z",
-      "last_checked_at": "2026-08-27T01:46:07.069795Z",
+      "last_checked_at": "2026-08-27T01:56:05.791997Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54796,7 +54801,7 @@
       "published_at": "2026-08-27T01:29:00Z",
       "modified_at": "2026-08-27T01:33:00Z",
       "discovered_at": "2026-08-27T01:45:12.686432Z",
-      "last_checked_at": "2026-08-27T01:45:12.686432Z",
+      "last_checked_at": "2026-08-27T01:55:17.450048Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54815,7 +54820,7 @@
       "published_at": "2026-08-27T01:30:00Z",
       "modified_at": "2026-08-27T01:30:00Z",
       "discovered_at": "2026-08-27T01:46:05.047769Z",
-      "last_checked_at": "2026-08-27T01:46:05.047769Z",
+      "last_checked_at": "2026-08-27T01:56:03.828654Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54834,7 +54839,7 @@
       "published_at": "2026-08-27T01:32:00Z",
       "modified_at": "2026-08-27T01:32:00Z",
       "discovered_at": "2026-08-27T01:46:03.218881Z",
-      "last_checked_at": "2026-08-27T01:46:03.218881Z",
+      "last_checked_at": "2026-08-27T01:56:01.787496Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54853,7 +54858,7 @@
       "published_at": "2026-08-27T01:33:00Z",
       "modified_at": "2026-08-27T01:33:00Z",
       "discovered_at": "2026-08-27T01:46:01.170836Z",
-      "last_checked_at": "2026-08-27T01:46:01.170836Z",
+      "last_checked_at": "2026-08-27T01:55:59.758684Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54872,7 +54877,7 @@
       "published_at": "2026-08-27T01:35:00Z",
       "modified_at": "2026-08-27T01:35:00Z",
       "discovered_at": "2026-08-27T01:45:59.229330Z",
-      "last_checked_at": "2026-08-27T01:45:59.229330Z",
+      "last_checked_at": "2026-08-27T01:55:58.072654Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -54891,7 +54896,7 @@
       "published_at": "2026-08-27T01:36:00Z",
       "modified_at": "2026-08-27T01:36:00Z",
       "discovered_at": "2026-08-27T01:45:10.928492Z",
-      "last_checked_at": "2026-08-27T01:45:10.928492Z",
+      "last_checked_at": "2026-08-27T01:55:15.667278Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54904,19 +54909,19 @@
     {
       "candidate_id": "87889fe51b7151630bd358e7937cd771d72708d2d59d80423ae5b7a877cef16e",
       "canonical_url": "https://www.hani.co.kr/arti/international/china/1274870.html",
-      "title": "중국, 네팔 접경지역 산사태·급류에 265명 실종…시진핑 “2차재해 막아야”",
+      "title": "네팔 홍수, 중국 국경 덮쳐 265명 실종…시진핑 “2차 재해 막아야”",
       "outlet": "hani",
       "reporter": "이정연",
       "published_at": "2026-08-27T01:37:00Z",
-      "modified_at": "2026-08-27T01:37:00Z",
+      "modified_at": "2026-08-27T01:54:00Z",
       "discovered_at": "2026-08-27T01:44:21.117156Z",
-      "last_checked_at": "2026-08-27T01:44:21.117156Z",
+      "last_checked_at": "2026-08-27T01:54:24.685064Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "ce8ccb0a2506a521377b4677b96d1087baa243ae07ae3abed965f03c6a4f6f62",
+      "body_hash": "f98aaac106436008b71fefd9f55884c54c2896349d0f3b1817856ddbae699545",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -54924,19 +54929,19 @@
     {
       "candidate_id": "8733910d9f381da3208614de730f9776668be33cecf65b5da90e971b3b8cfe17",
       "canonical_url": "https://www.hani.co.kr/arti/area/jeju/1274871.html",
-      "title": "‘실종 허위종결’ 사건에 제주경찰청장 “머리 숙여 사과”",
+      "title": "‘실종 허위종결’ 사건에 제주경찰청장 “있어선 안 될 일…머리 숙여 사과”",
       "outlet": "hani",
       "reporter": "서보미",
       "published_at": "2026-08-27T01:38:00Z",
-      "modified_at": "2026-08-27T01:38:00Z",
+      "modified_at": "2026-08-27T01:44:00Z",
       "discovered_at": "2026-08-27T01:44:17.485664Z",
-      "last_checked_at": "2026-08-27T01:44:17.485664Z",
+      "last_checked_at": "2026-08-27T01:54:22.476645Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "c5e304fc2687b3ddf31e5d7050bd7fb08e656e41456e947e104627f69b70269b",
+      "body_hash": "2892917708d663c521beb9620d37050c1d2e239f3ee29de0a996110ec681bfc6",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
@@ -54944,13 +54949,13 @@
     {
       "candidate_id": "fa8a2976f486980d1b4f145ce84189eaf0f3f40ab2b375f02a209fe8a6fd0970",
       "canonical_url": "https://www.khan.co.kr/article/202608271038001",
-      "title": "엔비디아발 훈풍에 오른 코스피…금리인상에 상승폭 1%대로 축소",
+      "title": "엔비디아발 훈풍에 웃는 코스피…금리인상에 상승폭 1%로 축소",
       "outlet": "khan",
       "reporter": "이보라",
       "published_at": "2026-08-27T01:38:00Z",
-      "modified_at": "2026-08-27T01:41:00Z",
+      "modified_at": "2026-08-27T01:51:00Z",
       "discovered_at": "2026-08-27T01:45:08.684886Z",
-      "last_checked_at": "2026-08-27T01:45:08.684886Z",
+      "last_checked_at": "2026-08-27T01:55:13.511893Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -54967,14 +54972,14 @@
       "outlet": "khan",
       "reporter": "박미라",
       "published_at": "2026-08-27T01:39:00Z",
-      "modified_at": "2026-08-27T01:39:48Z",
+      "modified_at": "2026-08-27T01:49:00Z",
       "discovered_at": "2026-08-27T01:45:06.361604Z",
-      "last_checked_at": "2026-08-27T01:45:06.361604Z",
+      "last_checked_at": "2026-08-27T01:55:11.513536Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "2d4101d64a50615ebc4f8b2baae491d9ba576280dc14f121e8e4d55a191398f8",
+      "body_hash": "2a4173e4e83a0e200a2bdaf740ac7fa02d1a238267f857246e4536eea6095fda",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -54988,12 +54993,149 @@
       "published_at": "2026-08-27T01:39:00Z",
       "modified_at": "2026-08-27T01:39:00Z",
       "discovered_at": "2026-08-27T01:45:57.443870Z",
-      "last_checked_at": "2026-08-27T01:45:57.443870Z",
+      "last_checked_at": "2026-08-27T01:55:56.099647Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
       "full_body_status": "fetched",
       "body_hash": "55a13a2e5bc880a68e6d1fd06f7a3e16b615aa442cfaa5b4e4680ebc96c5de58",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "da660bb642024df38ac2dc2852c80334a8dd0826aac6c34c7cd3bdbad4c8d7c1",
+      "canonical_url": "https://www.khan.co.kr/article/202608271042001",
+      "title": "캄보디아 거점 3400억대 도박사이트 일당 적발",
+      "outlet": "khan",
+      "reporter": "김창효",
+      "published_at": "2026-08-27T01:42:00Z",
+      "modified_at": "2026-08-27T01:42:00Z",
+      "discovered_at": "2026-08-27T01:55:09.484565Z",
+      "last_checked_at": "2026-08-27T01:55:09.484565Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "116b99da9196a66006666fc1e91bc2c592d6e666e513a2754e83817667cc84c8",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "b6690e5dff2e420946c3b18cabc2d61e967ebede862a5d19a65e62fb25678298",
+      "canonical_url": "https://www.khan.co.kr/article/202608271046001",
+      "title": "대변 채취하고 장 비우는 불편 대신··· 대장암 ‘혈액검사’ 정확도 높아",
+      "outlet": "khan",
+      "reporter": "김태훈",
+      "published_at": "2026-08-27T01:46:00Z",
+      "modified_at": "2026-08-27T01:46:00Z",
+      "discovered_at": "2026-08-27T01:55:07.604440Z",
+      "last_checked_at": "2026-08-27T01:55:07.604440Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "51d9dd728ed315d54c690c9bead358ad90af9b6b57768b3477b163bd2bffa31d",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "bfe7a1a0186248be6c505f9b47a4f148cb3a78756fe29ad13b7cef8559235d35",
+      "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1274872.html",
+      "title": "“민혁당? 다 사형당할 듯ㅋㅋ” 평론가에 조국 “도 한참 넘어”",
+      "outlet": "hani",
+      "reporter": "전광준",
+      "published_at": "2026-08-27T01:47:00Z",
+      "modified_at": "2026-08-27T01:47:00Z",
+      "discovered_at": "2026-08-27T01:54:20.570235Z",
+      "last_checked_at": "2026-08-27T01:54:20.570235Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "0b7af80e205f2fabb942e4b67b3dbaec004ce5237e1e315fecc2f641c6b91a50",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "90b2d6cac9b17ad6f1b496e6a84143c0de1cc7d90b92f32c77c8c1318a354d21",
+      "canonical_url": "https://www.khan.co.kr/article/202608271048001",
+      "title": "3년간 1억 원 파격 지원··· 부산 월드클래스에 이동윤·노현지 ·허석민",
+      "outlet": "khan",
+      "reporter": "김준용",
+      "published_at": "2026-08-27T01:48:00Z",
+      "modified_at": "2026-08-27T01:48:00Z",
+      "discovered_at": "2026-08-27T01:55:05.330962Z",
+      "last_checked_at": "2026-08-27T01:55:05.330962Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "74b4c6f4bb21ddc519cf90ddfcfabb9aa962fed00c4fda0927d75c1680a0c252",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "8f6d3e766e663d6eef9bd65db5df6fb7079bc5a9031e716f2d9c5333b9861f45",
+      "canonical_url": "https://www.hani.co.kr/arti/economy/economy_general/1274873.html",
+      "title": "[속보] 한은 기준금리, 추가 상승 예고…‘점도표’ 분포 대거 상향",
+      "outlet": "hani",
+      "reporter": "김영배",
+      "published_at": "2026-08-27T01:50:00Z",
+      "modified_at": "2026-08-27T01:52:00Z",
+      "discovered_at": "2026-08-27T01:54:18.636787Z",
+      "last_checked_at": "2026-08-27T01:54:18.636787Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "2d730f6b431fc88ca58257f1601b7501851f1759c9dee61dbfbb67c7f40c7e0d",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "8076533a7f5e51a6003785bb8339fc97cdae24d372a0cb81523f69d363cd4caf",
+      "canonical_url": "https://www.hani.co.kr/arti/economy/finance/1274874.html",
+      "title": "한은, 금리 ‘깜짝 인상’…채권전문가들 시장 전망 빗나갔다",
+      "outlet": "hani",
+      "reporter": "조계완",
+      "published_at": "2026-08-27T01:52:00Z",
+      "modified_at": "2026-08-27T01:52:00Z",
+      "discovered_at": "2026-08-27T01:54:17.523095Z",
+      "last_checked_at": "2026-08-27T01:54:17.523095Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "ea1563c1c05b2f5a7c041f7491cf68fa2be7eab6a41bfada5f439490e612d55c",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "5adb43412046d4341cc8c604a941edff2148294664ae6c898b383ecfd1dc1556",
+      "canonical_url": "https://www.hani.co.kr/arti/society/society_general/1274875.html",
+      "title": "읍면 지역 여성 58% “결혼 의향 없다”…수도권 여성은 42%",
+      "outlet": "hani",
+      "reporter": "신소윤",
+      "published_at": "2026-08-27T01:54:00Z",
+      "modified_at": "2026-08-27T01:54:00Z",
+      "discovered_at": "2026-08-27T01:54:14.505959Z",
+      "last_checked_at": "2026-08-27T01:54:14.505959Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a8979d779e38efe21f3d4d9a59368b4800028ac60d3dfc8401e3c2b50443ca00",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -55116,21 +55258,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[오늘의 주요일정]부산(8월27일 목요일)",
-        "original_url": "https://www.newsis.com/view/NISX20260826_0003763319",
-        "naver_url": "https://n.news.naver.com/mnews/article/003/0014150878?sid=102",
-        "published_at": "2026-08-26T20:00:00Z",
-        "description": "▲오전 9시30분, 부산시장, 금융창업 정책 관 임용장 수여식, 시청 7층 의전실 ▲오전 10시, 부산공공성연대... 전국 장애인 체전 부산선수단 결단식, 시청 1층 대강당 ▲오전 11시, 부산환경운동연합 등, 대저·엄궁대교...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[오늘의 주요일정] 부산·경남(27일, 목)",
         "original_url": "https://www.news1.kr/local/busan-gyeongnam/6270585",
         "naver_url": "https://n.news.naver.com/mnews/article/421/0009134613?sid=102",
         "published_at": "2026-08-26T20:00:00Z",
         "description": "◇부산시 -전재수 시장 09:30 임용장 수여식-금융창업 정책 관(의전실) 11:00 제46회 전국 장애인 체전 부산선수단 결단식(대강당) 14:00 메르세데스-벤츠 사회공헌위원회 「청소년 PLAY&ESG」 조성기금 전달식...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[오늘의 주요일정]부산(8월27일 목요일)",
+        "original_url": "https://www.newsis.com/view/NISX20260826_0003763319",
+        "naver_url": "https://n.news.naver.com/mnews/article/003/0014150878?sid=102",
+        "published_at": "2026-08-26T20:00:00Z",
+        "description": "▲오전 9시30분, 부산시장, 금융창업 정책 관 임용장 수여식, 시청 7층 의전실 ▲오전 10시, 부산공공성연대... 전국 장애인 체전 부산선수단 결단식, 시청 1층 대강당 ▲오전 11시, 부산환경운동연합 등, 대저·엄궁대교...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -55781,46 +55923,6 @@
         "naver_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=557676",
         "published_at": "2026-08-26T06:54:00Z",
         "description": "최미현 △ 장애인 복지과 이순재 △도시 정책 과 김가람 △체육진흥과 문준우 △관광과 박지웅 △조경사업과 방기선 △조경관리과 정현우 △조경관리과 장태영 △조경관리과 박민아 △농업 정책 과 박선영(朴宣暎) △화원읍...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[포토뉴스] 육동한 시장 춘천시사회복지기관장 간담회",
-        "original_url": "https://www.kwnews.co.kr/article/20260826501041",
-        "naver_url": "https://n.news.naver.com/mnews/article/087/0001213711?sid=102",
-        "published_at": "2026-08-26T06:47:00Z",
-        "description": "참석자들은 지난 5월 정책 간담회에서 제안된 사회복지종사자 처우 개선과 노인· 장애인 ·아동복지 정책 에 대한 검토 결과를 공유하고, 지역 복지 발전을 위한 의견을 나눴다.",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[인사] 충남도",
-        "original_url": "https://www.kukinews.com/article/view/kuk202608260154",
-        "naver_url": "https://www.kukinews.com/article/view/kuk202608260154",
-        "published_at": "2026-08-26T06:44:00Z",
-        "description": "박진서 ▲ 장애인정책 과 김희주 ▲충남도서관 유한석 ▲AI정보화담당관실 신형섭 ▲건설본부 정희진 ▲관광진흥과 조영은 ▲인사과 박지윤 ▲자치경찰협력과 배선영 ▲인사과 안진영 ▲인재개발원 이하림...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "손화정 영종구청장, 관내 복지기관 방문",
-        "original_url": "https://www.gukjenews.com/news/articleView.html?idxno=3675490",
-        "naver_url": "https://www.gukjenews.com/news/articleView.html?idxno=3675490",
-        "published_at": "2026-08-26T06:44:00Z",
-        "description": "손화정 영종구청장은 \"복지의 해답은 늘 현장에 있다\"며 \"어르신과 장애인 을 비롯한 모든 구민이 복지 서비스를 이용하는 데 불편함이 없도록 현장 밀착형 복지 정책 을 꾸준히 펼쳐나가겠다\"고 말했다.",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "충남도, 민선 9기 첫 조직개편 후속인사 마무리",
-        "original_url": "https://www.aflnews.co.kr/news/articleView.html?idxno=326944",
-        "naver_url": "https://www.aflnews.co.kr/news/articleView.html?idxno=326944",
-        "published_at": "2026-08-26T06:44:00Z",
-        "description": "박진서 △ 장애인정책 과 김희주 △충남도서관 유한석 △AI정보화담당관실 신형섭 △건설본부 정희진 △관광진흥과 조영은 △인사과 박지윤 △자치경찰협력과 배선영 △인사과 안진영 △인재개발원 이하림...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -56903,15 +57005,15 @@
     ]
   },
   "final_state": {
-    "status": "complete",
-    "checked_at": "2026-08-27T01:47:18.325491Z",
+    "status": "failed",
+    "checked_at": "2026-08-27T01:57:16.670751Z",
     "checks": [
       {
         "issue_title": "전장연 지하철 시위 중단 둘러싼 예산 왜곡 정보 확산",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
@@ -56956,18 +57058,18 @@
       },
       {
         "issue_title": "한화오션 하청노동자, 폭염 속 작업 후 쓰러져 사망",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
         "issue_title": "삼성전자 반도체 하청노동자 혈액암으로 사망",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
@@ -56988,18 +57090,18 @@
       },
       {
         "issue_title": "금속노조 전국 2차 파업, 원청 사용자 책임 요구",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
         "issue_title": "CJ대한통운, 택배노조 원청교섭 요구 5개월째 미이행",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
@@ -57028,10 +57130,10 @@
       },
       {
         "issue_title": "카카오, 회사 인적분할 추진에 노조 저지 나서",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       }
     ]

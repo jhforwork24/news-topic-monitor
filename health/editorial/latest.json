@@ -1,15 +1,21 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-27",
-  "status": "failed",
+  "status": "blocked_by_publish_gate",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 180,
+  "included_after_first_pass": 0,
+  "published_issue_count": 16,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.602,
-    "assurance": 0.003,
-    "bridge_import_validation": 11.772,
-    "final_state_recrawl": 189.17,
-    "gap_reverse_search": 113.882,
-    "total": 338.203
+    "api_preflight": 1.507,
+    "assurance": 0.0,
+    "bridge_import_validation": 8.679,
+    "final_state_recrawl": 190.453,
+    "gap_reverse_search": 109.718,
+    "total": 312.179
   },
-  "error": "브리핑 발행 검증 실패: I. 장애정책·장애인운동 / 전장연 지하철 시위 중단 둘러싼 예산 왜곡 정보 확산: 요약이 중립적 서술체가 아님",
-  "completed_at": "2026-08-27T01:49:33.987294Z"
+  "error": "publish gate blocked publication: final-state revalidation이 COMPLETE가 아님",
+  "completed_at": "2026-08-27T01:59:09.127495Z"
 }
