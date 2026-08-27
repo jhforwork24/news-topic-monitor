@@ -13,6 +13,11 @@ from .utils import stable_article_key
 
 FORBIDDEN_SUMMARY_MARKERS = ('"', "'", "“", "”", "\u2018", "\u2019", "...", "…")
 FORBIDDEN_TONE_LABELS = ("(진보)", "(보수)", "(전문지)")
+# Flags 해요체/합쇼체 sentence endings (e.g. "...입니다.", "...습니다.", "...하죠.").
+# "니다" is excluded when preceded by "아" so the plain-register negative copula
+# "아니다" (e.g. "확정된 금액은 아니다.") isn't mistaken for the "-습니다"/"-입니다"
+# formal ending it happens to share a two-syllable substring with.
+_NON_NEUTRAL_ENDING = re.compile(r"(?:요|죠)\.$|(?<!아)니다\.$")
 
 
 class BriefingValidationError(ValueError):
@@ -32,7 +37,7 @@ def validate_briefing(document: BriefingDocument) -> None:
                 errors.append(f"{section.title} / {issue.title}: 요약에 인용·말줄임 표지가 있음")
             if not issue.summary.endswith("."):
                 errors.append(f"{section.title} / {issue.title}: 요약이 완성형 문장이 아님")
-            if re.search(r"(?:요|죠|니다)\.$", issue.summary):
+            if _NON_NEUTRAL_ENDING.search(issue.summary):
                 errors.append(f"{section.title} / {issue.title}: 요약이 중립적 서술체가 아님")
 
             tone_sentences = _sentence_count(issue.tone_analysis)
