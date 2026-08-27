@@ -3,9 +3,13 @@
   "report_date": "2026-08-27",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.397,
-    "total": 1.977
+    "api_preflight": 1.602,
+    "assurance": 0.003,
+    "bridge_import_validation": 11.772,
+    "final_state_recrawl": 189.17,
+    "gap_reverse_search": 113.882,
+    "total": 338.203
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 초안 · 2026-08-27 (found=0)",
-  "completed_at": "2026-08-27T01:32:33.795179Z"
+  "error": "브리핑 발행 검증 실패: I. 장애정책·장애인운동 / 전장연 지하철 시위 중단 둘러싼 예산 왜곡 정보 확산: 요약이 중립적 서술체가 아님",
+  "completed_at": "2026-08-27T01:49:33.987294Z"
 }
