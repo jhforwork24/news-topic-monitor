@@ -1,22 +1,11 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-27",
-  "status": "completed",
-  "model": "connected_claude_editor",
-  "auditor_model": "connected_claude_independent_auditor",
-  "candidate_count": 180,
-  "included_after_first_pass": 0,
-  "published_issue_count": 16,
-  "validator_fatal_errors": 0,
+  "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.258,
-    "assurance": 0.002,
-    "bridge_import_validation": 9.703,
-    "final_state_recrawl": 202.492,
-    "gap_reverse_search": 109.951,
-    "render_briefing": 18.788,
-    "total": 344.493
+    "api_preflight": 1.398,
+    "total": 11.243
   },
-  "error": null,
-  "completed_at": "2026-08-27T02:09:10.287781Z"
+  "error": "Claude bridge validation failed: queue, draft, and audit queue_id values do not match; draft predates the verified editorial queue",
+  "completed_at": "2026-08-27T13:27:33.391289Z"
 }
