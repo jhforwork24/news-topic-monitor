@@ -1,11 +1,10 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-28",
-  "checked_at": "2026-08-28T00:18:11.151810Z",
+  "checked_at": "2026-08-28T00:32:21.347676Z",
   "allowed": false,
   "fatal_errors": [
-    "장애언론 census COMPLETE 조건을 충족하지 못함",
-    "final-state revalidation이 COMPLETE가 아님"
+    "장애언론 census COMPLETE 조건을 충족하지 못함"
   ],
   "degraded_warnings": [
     "독립 검색에서 결정론적 수집에 없는 잠재 누락 1건"
@@ -18,36 +17,6 @@
       "fallback": "등록된 공식 목록 경로와 Naver gap detector를 분리 실행",
       "result": "failed",
       "next_action": "공식 목록 경계를 재확인하고 COMPLETE 전에는 발행하지 않음"
-    },
-    {
-      "cause": "인천 중증장애인거주시설 색동원 법인, 설립허가 취소 처분에 불복 소송: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
-    },
-    {
-      "cause": "삼성전자·SK하이닉스 반도체 호황 이면, 공급망 협력업체 노동자 장시간 노동: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
-    },
-    {
-      "cause": "쿠팡 택배기사들, 계약에 없는 프레시백 무급노동 거부 캠페인: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
-    },
-    {
-      "cause": "드림파크골프장 하청노동자, 수도권매립지관리공사와 첫 원청교섭: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
-    },
-    {
-      "cause": "SK스토아 매각 재추진에 노동조합 반발: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
     },
     {
       "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 \"갈라치기와 혐오정치 중단하라\" 김재섭 향한 서미화의 일갈",
