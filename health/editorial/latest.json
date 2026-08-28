@@ -1,11 +1,21 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-08-27",
-  "status": "failed",
+  "report_date": "2026-08-28",
+  "status": "blocked_by_publish_gate",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 180,
+  "included_after_first_pass": 0,
+  "published_issue_count": 15,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.398,
-    "total": 11.243
+    "api_preflight": 1.473,
+    "assurance": 0.001,
+    "bridge_import_validation": 6.836,
+    "final_state_recrawl": 43.502,
+    "gap_reverse_search": 100.191,
+    "total": 154.41
   },
-  "error": "Claude bridge validation failed: queue, draft, and audit queue_id values do not match; draft predates the verified editorial queue",
-  "completed_at": "2026-08-27T13:27:33.391289Z"
+  "error": "publish gate blocked publication: 장애언론 census COMPLETE 조건을 충족하지 못함; final-state revalidation이 COMPLETE가 아님",
+  "completed_at": "2026-08-28T00:06:24.271692Z"
 }
