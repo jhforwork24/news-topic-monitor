@@ -156,6 +156,7 @@ KNOWN_PREVIOUS_COVERAGE = (
         "2026-08-12",
         "서울시의회, 오세훈 시장이 후퇴시킨 장애인 권리 되돌리나",
         "https://www.beminor.com/news/articleView.html?idxno=30268",
+        "비마이너",
         "조례 발의의 배경과 임시회 표결 일정을 확인한 비마이너 선행 보도다.",
     ),
     (
@@ -163,6 +164,7 @@ KNOWN_PREVIOUS_COVERAGE = (
         "2026-06-08",
         "색동원 피해자 전원 탈시설 약속 이행 요구 천막농성 돌입",
         "https://www.imedialife.co.kr/news/articleView.html?idxno=66542",
+        "imedialife.co.kr",
         "전원 자립계획·주거·활동지원 요구가 농성 시작 단계에서 제기되었다.",
     ),
 )
@@ -173,6 +175,7 @@ class PreviousCoverage:
     published: str
     label: str
     url: str | None
+    outlet: str
     comparison: str
 
 
@@ -294,7 +297,7 @@ def build_briefing(
             cluster_issues(
                 [item for item, _score in labor],
                 history=history,
-                max_issues=10,
+                max_issues=7,
             ),
         ),
     ]
@@ -599,9 +602,9 @@ def previous_coverage_for(
 
     text = " ".join(_article_text(article) for article in articles)
     result: list[PreviousCoverage] = []
-    for triggers, published, label, url, comparison in KNOWN_PREVIOUS_COVERAGE:
+    for triggers, published, label, url, outlet, comparison in KNOWN_PREVIOUS_COVERAGE:
         if all(trigger in text for trigger in triggers):
-            result.append(PreviousCoverage(published, label, url, comparison))
+            result.append(PreviousCoverage(published, label, url, outlet, comparison))
 
     tokens = set().union(*(issue_tokens(article) for article in articles))
     strong_tokens = {term.lower() for term in STRONG_PREVIOUS_CONCEPTS} & tokens
@@ -631,13 +634,25 @@ def previous_coverage_for(
                 published.astimezone(KST).date().isoformat(),
                 article.title,
                 article.canonical_url,
-                "당일 보도와 대조하여 요구·정책·행정조치가 실제로 달라졌는지 확인한다.",
+                SOURCE_LABELS.get(article.source, article.source),
+                _previous_coverage_summary(article),
             )
         )
         known_urls.add(article.canonical_url)
         if len(result) >= 3:
             break
     return result[:3]
+
+
+def _previous_coverage_summary(article: ArticleRecord) -> str:
+    """One sentence on what the prior article actually covered, not a generic prompt."""
+
+    sentences = _clean_summary_sentences(article.summary)
+    if sentences:
+        return sentences[0]
+    title = _neutral_text(article.title).rstrip(". ")
+    particle = _korean_particle(title, "을", "를")
+    return f"{title}{particle} 보도했다."
 
 
 def _detail_score(article: ArticleRecord) -> float:
@@ -652,41 +667,39 @@ def _detail_score(article: ArticleRecord) -> float:
 
 def build_overview(start: datetime, end: datetime, sections: list[BriefingSection]) -> str:
     by_title = {section.title: section for section in sections}
-    sentences = [
+    section_sentences = [
         f"이번 브리핑은 {kst_display(start)}부터 {kst_display(end)}까지 보도된 사안 가운데 "
         "장애인의 시민권과 노동자·빈곤 당사자의 생명·생존권에 영향을 미치는 내용을 "
         "정리하였다."
     ]
     disability = by_title.get("I. 장애정책·장애인운동")
     if disability and disability.issues:
-        sentences.append(
+        section_sentences.append(
             "장애정책·장애인운동에서는 "
             + _issue_keywords(disability.issues, 4)
             + " 등을 중심으로 지역사회에서 살아갈 권리와 공적 책임의 이행 여부를 살폈다."
         )
     labor = by_title.get("II. 노동·돌봄·빈곤")
     if labor and labor.issues:
-        sentences.append(
+        section_sentences.append(
             "노동·돌봄·빈곤 부문에서는 "
             + _issue_keywords(labor.issues, 4)
             + " 등을 통해 원청·사용자와 국가의 책임을 점검하였다."
         )
     columns = by_title.get("III. 주요 칼럼")
     if columns and columns.issues:
-        sentences.append(
+        section_sentences.append(
             "주요 칼럼으로는 " + _issue_keywords(columns.issues, 3) + "을 함께 소개한다."
         )
-    sentences.extend(
-        [
-            "각 사안은 시혜나 개인의 불운이 아니라 자본과 국가·지방정부가 부담해야 할 "
-            "구조적 책임의 문제로 읽어야 한다.",
-            "오늘 다룬 사안들에서 반복되는 것은 예외적 사고가 아니라 제도가 이행을 "
-            "미루거나 책임을 당사자와 노동자 개인에게 떠넘겨온 구조다.",
-            "보도가 개별 사건으로 다루는 지점일수록 국가와 사용자·원청이 이행하지 "
-            "않은 의무가 무엇인지를 따져 읽을 필요가 있다.",
-        ]
-    )
-    return " ".join(sentences[:12])
+    assessment_sentences = [
+        "각 사안은 시혜나 개인의 불운이 아니라 자본과 국가·지방정부가 부담해야 할 "
+        "구조적 책임의 문제로 읽어야 한다.",
+        "오늘 다룬 사안들에서 반복되는 것은 예외적 사고가 아니라 제도가 이행을 "
+        "미루거나 책임을 당사자와 노동자 개인에게 떠넘겨온 구조다.",
+        "보도가 개별 사건으로 다루는 지점일수록 국가와 사용자·원청이 이행하지 "
+        "않은 의무가 무엇인지를 따져 읽을 필요가 있다.",
+    ]
+    return " ".join(section_sentences) + "\n\n" + " ".join(assessment_sentences)
 
 
 def build_telegram_summary(sections: list[BriefingSection]) -> str:
@@ -751,15 +764,16 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                 lines.extend(["<details>", "<summary>동일 주제 이전 보도</summary>", ""])
                 lines.extend(
                     [
-                        "| 자료 | 확인 쟁점 |",
-                        "|---|---|",
+                        "| 자료 | 날짜·매체 | 이전 보도 요약 |",
+                        "|---|---|---|",
                     ]
                 )
                 for item in issue.previous_coverage[:3]:
                     label = _markdown_table_text(item.label)
                     material = f"[{label}]({item.url})" if item.url else label
-                    note = f"{item.published} · {item.comparison}"
-                    lines.append(f"| {material} | {_markdown_table_text(note)} |")
+                    meta = _markdown_table_text(f"{item.published} · {item.outlet}")
+                    summary = _markdown_table_text(item.comparison)
+                    lines.append(f"| {material} | {meta} | {summary} |")
                 lines.extend(["", "</details>", ""])
     return "\n".join(lines)
 

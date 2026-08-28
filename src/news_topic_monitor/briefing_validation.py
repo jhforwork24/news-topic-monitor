@@ -13,6 +13,9 @@ from .utils import stable_article_key
 
 FORBIDDEN_SUMMARY_MARKERS = ('"', "'", "“", "”", "\u2018", "\u2019", "...", "…")
 FORBIDDEN_TONE_LABELS = ("(진보)", "(보수)", "(전문지)")
+# "필자"는 칼럼·사설(III절)의 서술자를 가리킬 때만 쓴다. I·II절 보도는 취재기사이므로
+# 서술 주체가 기자 개인이 아니라 매체다 — 이름을 밝히지 않는 게 아니라 애초에 틀린 지칭이다.
+FORBIDDEN_AUTHOR_TERM = "필자"
 # Flags 해요체/합쇼체 sentence endings (e.g. "...입니다.", "...습니다.", "...하죠.").
 # "니다" is excluded when preceded by "아" so the plain-register negative copula
 # "아니다" (e.g. "확정된 금액은 아니다.") isn't mistaken for the "-습니다"/"-입니다"
@@ -47,6 +50,10 @@ def validate_briefing(document: BriefingDocument) -> None:
                 errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
             if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
                 errors.append(f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨")
+            if not section.title.startswith("III.") and FORBIDDEN_AUTHOR_TERM in (
+                issue.summary + issue.tone_analysis
+            ):
+                errors.append(f"{section.title} / {issue.title}: 칼럼이 아닌데 '필자'로 지칭함")
 
             if document.editorially_selected_ids:
                 keyword = issue.keyword.strip()
