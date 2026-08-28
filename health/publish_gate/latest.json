@@ -1,23 +1,15 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-28",
-  "checked_at": "2026-08-28T00:32:21.347676Z",
-  "allowed": false,
-  "fatal_errors": [
-    "장애언론 census COMPLETE 조건을 충족하지 못함"
-  ],
+  "checked_at": "2026-08-28T03:54:22.665609Z",
+  "allowed": true,
+  "fatal_errors": [],
   "degraded_warnings": [
     "독립 검색에서 결정론적 수집에 없는 잠재 누락 1건"
   ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
   "reporting_items": [
-    {
-      "cause": "theindigo: 공식 목록 수집 실패: unavailable",
-      "fallback": "등록된 공식 목록 경로와 Naver gap detector를 분리 실행",
-      "result": "failed",
-      "next_action": "공식 목록 경계를 재확인하고 COMPLETE 전에는 발행하지 않음"
-    },
     {
       "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 \"갈라치기와 혐오정치 중단하라\" 김재섭 향한 서미화의 일갈",
       "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",

@@ -34,11 +34,11 @@
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-08-28T01:01:28.483588Z",
+      "last_run_at": "2026-08-28T03:49:41.973983Z",
       "success": true,
-      "discovered": 287,
+      "discovered": 324,
       "errors": [],
-      "last_success_at": "2026-08-28T01:01:28.483588Z",
+      "last_success_at": "2026-08-28T03:49:41.973983Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
@@ -67,36 +67,38 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-08-28T01:03:25.123701Z",
+      "last_run_at": "2026-08-28T03:49:44.681632Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-28T01:03:25.123701Z",
+      "last_success_at": "2026-08-28T03:49:44.681632Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-08-28T01:03:58.349048Z",
+      "last_run_at": "2026-08-28T03:50:06.120200Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-28T01:03:58.349048Z",
+      "last_success_at": "2026-08-28T03:50:06.120200Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-08-28T01:05:36.643383Z",
+      "last_run_at": "2026-08-28T03:50:24.398010Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-28T01:05:36.643383Z",
+      "last_success_at": "2026-08-28T03:50:24.398010Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-08-28T01:05:53.469569Z",
-      "success": true,
-      "discovered": 9,
-      "errors": [],
+      "last_run_at": "2026-08-28T03:50:24.952317Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-08-27T22%3A00%3A00Z&before=2026-08-28T03%3A48%3A50Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories: robots.txt unavailable for theindigo.co.kr: GET failed: https://theindigo.co.kr/robots.txt: HTTP 415"
+      ],
       "last_success_at": "2026-08-28T01:05:53.469569Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "kbs": {
       "last_run_at": "2026-08-22T11:40:50.052534Z",
@@ -131,12 +133,12 @@
       "discovery_status": "complete"
     },
     "mediaus": {
-      "last_run_at": "2026-08-28T01:03:41.400417Z",
+      "last_run_at": "2026-08-28T03:50:01.000899Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-28T01:03:41.400417Z"
+      "last_success_at": "2026-08-28T03:50:01.000899Z"
     }
   }
 }
