@@ -377,3 +377,64 @@ def test_editorial_briefing_rejects_keyword_that_copies_the_title(tmp_path) -> N
     )
     with pytest.raises(BriefingValidationError, match="키워드 요약이 제목을 그대로 인용함"):
         validate_briefing(document)
+
+
+def test_editorial_briefing_accepts_summary_ending_in_plain_negative_copula(tmp_path) -> None:
+    article = _article(classification=Classification.IRRELEVANT)
+    storage = JsonlStorage(tmp_path)
+    storage.upsert(article)
+    candidate_id = article_candidate_id(article)
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 제도 개편 요구",
+                keyword="활동지원 제도 개편",
+                candidate_ids=[candidate_id],
+                summary=(
+                    "장애인단체는 예산 항목의 합산 추정액이 약 2조원일 뿐, 확정되거나 지급이 "
+                    "약속된 금액은 아니다."
+                ),
+                tone_analysis="당사자의 권리 요구와 정부의 책임을 중심으로 전했다.",
+            )
+        ],
+        exclusions=[],
+    )
+    document = build_editorial_briefing(
+        storage,
+        plan=plan,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+
+    validate_briefing(document)
+
+
+def test_editorial_briefing_rejects_summary_in_formal_register(tmp_path) -> None:
+    article = _article(classification=Classification.IRRELEVANT)
+    storage = JsonlStorage(tmp_path)
+    storage.upsert(article)
+    candidate_id = article_candidate_id(article)
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 제도 개편 요구",
+                keyword="활동지원 제도 개편",
+                candidate_ids=[candidate_id],
+                summary="장애인단체가 활동지원 제도의 개편을 요구했습니다.",
+                tone_analysis="당사자의 권리 요구와 정부의 책임을 중심으로 전했다.",
+            )
+        ],
+        exclusions=[],
+    )
+    document = build_editorial_briefing(
+        storage,
+        plan=plan,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    with pytest.raises(BriefingValidationError, match="중립적 서술체가 아님"):
+        validate_briefing(document)

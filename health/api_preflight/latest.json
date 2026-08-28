@@ -1,5 +1,5 @@
 {
-  "report_date": "2026-08-26",
+  "report_date": "2026-08-28",
   "naver_api_hub": {
     "status": "complete",
     "error": null
@@ -9,5 +9,5 @@
     "error": null,
     "route": "connected_claude_automation"
   },
-  "checked_at": "2026-08-26T04:41:19.555627Z"
+  "checked_at": "2026-08-28T03:48:44.049787Z"
 }
