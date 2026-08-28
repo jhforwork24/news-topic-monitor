@@ -9,13 +9,13 @@
   "published_issue_count": 15,
   "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.473,
+    "api_preflight": 1.785,
     "assurance": 0.001,
-    "bridge_import_validation": 6.836,
-    "final_state_recrawl": 43.502,
-    "gap_reverse_search": 100.191,
-    "total": 154.41
+    "bridge_import_validation": 6.48,
+    "final_state_recrawl": 47.186,
+    "gap_reverse_search": 103.787,
+    "total": 161.452
   },
   "error": "publish gate blocked publication: 장애언론 census COMPLETE 조건을 충족하지 못함; final-state revalidation이 COMPLETE가 아님",
-  "completed_at": "2026-08-28T00:06:24.271692Z"
+  "completed_at": "2026-08-28T00:18:13.501400Z"
 }
