@@ -34,11 +34,11 @@
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-08-30T01:12:38.220681Z",
+      "last_run_at": "2026-08-30T01:19:18.069363Z",
       "success": true,
       "discovered": 67,
       "errors": [],
-      "last_success_at": "2026-08-30T01:12:38.220681Z",
+      "last_success_at": "2026-08-30T01:19:18.069363Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
@@ -91,11 +91,11 @@
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-08-30T01:12:40.848060Z",
+      "last_run_at": "2026-08-30T01:19:20.851712Z",
       "success": true,
       "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-08-30T01:12:40.848060Z",
+      "last_success_at": "2026-08-30T01:19:20.851712Z",
       "discovery_status": "complete"
     },
     "kbs": {

@@ -1,15 +1,22 @@
 {
   "prompt_version": 1,
   "report_date": "2026-08-30",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 165,
+  "included_after_first_pass": 0,
+  "published_issue_count": 2,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.904,
+    "api_preflight": 2.839,
     "assurance": 0.0,
-    "bridge_import_validation": 8.315,
-    "final_state_recrawl": 60.375,
-    "gap_reverse_search": 26.51,
-    "total": 105.096
+    "bridge_import_validation": 6.505,
+    "final_state_recrawl": 36.592,
+    "gap_reverse_search": 42.263,
+    "render_briefing": 4.268,
+    "total": 95.034
   },
-  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / “어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”: 허용 범위 밖의 칼럼이 포함됨",
-  "completed_at": "2026-08-30T01:13:15.530771Z"
+  "error": null,
+  "completed_at": "2026-08-30T01:20:09.917999Z"
 }

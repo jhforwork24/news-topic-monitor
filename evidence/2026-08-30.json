@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-30",
-  "generated_at": "2026-08-30T01:13:09.948162Z",
+  "generated_at": "2026-08-30T01:20:05.610713Z",
   "articles": [
     {
       "candidate_id": "cec9488795160e0479e5cc3fe470bf569c7d094297a395f22fbd39c78f017926",
@@ -42,7 +42,7 @@
       "full_body_status": "fetched",
       "body_hash": "5115909a6e57f877d0a9ce19fa419e2d95fe5e30b4ea382bfea9e4a0d7030774",
       "verification_grade": "A",
-      "issue_id": "2026-08-30-issue-03",
+      "issue_id": null,
       "primary_source_validation": "not_required"
     },
     {
@@ -18462,7 +18462,7 @@
       "published_at": "2026-08-29T22:00:00Z",
       "modified_at": "2026-08-29T22:00:01Z",
       "discovered_at": "2026-08-29T22:43:07.940840Z",
-      "last_checked_at": "2026-08-30T01:12:36.253507Z",
+      "last_checked_at": "2026-08-30T01:19:16.083664Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -19850,7 +19850,7 @@
       "published_at": "2026-08-29T23:00:00Z",
       "modified_at": "2026-08-30T00:24:00Z",
       "discovered_at": "2026-08-29T23:22:42.038790Z",
-      "last_checked_at": "2026-08-30T01:12:34.219266Z",
+      "last_checked_at": "2026-08-30T01:19:14.199176Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -19869,7 +19869,7 @@
       "published_at": "2026-08-29T23:00:00Z",
       "modified_at": "2026-08-29T23:01:00Z",
       "discovered_at": "2026-08-29T23:22:42.038673Z",
-      "last_checked_at": "2026-08-30T01:12:32.433760Z",
+      "last_checked_at": "2026-08-30T01:19:12.096222Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -19888,7 +19888,7 @@
       "published_at": "2026-08-29T23:00:00Z",
       "modified_at": "2026-08-29T23:10:00Z",
       "discovered_at": "2026-08-29T23:22:42.038425Z",
-      "last_checked_at": "2026-08-30T01:12:30.257219Z",
+      "last_checked_at": "2026-08-30T01:19:10.149055Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20199,7 +20199,7 @@
       "published_at": "2026-08-29T23:26:00Z",
       "modified_at": "2026-08-29T23:26:00Z",
       "discovered_at": "2026-08-30T01:12:28.244065Z",
-      "last_checked_at": "2026-08-30T01:12:28.244065Z",
+      "last_checked_at": "2026-08-30T01:19:08.061275Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20218,7 +20218,7 @@
       "published_at": "2026-08-29T23:54:00Z",
       "modified_at": "2026-08-29T23:54:00Z",
       "discovered_at": "2026-08-30T01:12:26.233257Z",
-      "last_checked_at": "2026-08-30T01:12:26.233257Z",
+      "last_checked_at": "2026-08-30T01:19:06.178892Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20257,7 +20257,7 @@
       "published_at": "2026-08-30T00:00:00Z",
       "modified_at": "2026-08-30T00:00:04Z",
       "discovered_at": "2026-08-30T01:12:24.205691Z",
-      "last_checked_at": "2026-08-30T01:12:24.205691Z",
+      "last_checked_at": "2026-08-30T01:19:04.103369Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20276,7 +20276,7 @@
       "published_at": "2026-08-30T00:00:00Z",
       "modified_at": "2026-08-30T00:07:00Z",
       "discovered_at": "2026-08-30T01:12:22.402278Z",
-      "last_checked_at": "2026-08-30T01:12:22.402278Z",
+      "last_checked_at": "2026-08-30T01:19:02.064196Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20295,7 +20295,7 @@
       "published_at": "2026-08-30T00:00:00Z",
       "modified_at": "2026-08-30T00:00:01Z",
       "discovered_at": "2026-08-30T01:12:20.213840Z",
-      "last_checked_at": "2026-08-30T01:12:20.213840Z",
+      "last_checked_at": "2026-08-30T01:19:00.081742Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20334,7 +20334,7 @@
       "published_at": "2026-08-30T00:20:00Z",
       "modified_at": "2026-08-30T00:26:00Z",
       "discovered_at": "2026-08-30T01:12:18.216707Z",
-      "last_checked_at": "2026-08-30T01:12:18.216707Z",
+      "last_checked_at": "2026-08-30T01:18:58.092811Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20393,7 +20393,7 @@
       "published_at": "2026-08-30T00:40:00Z",
       "modified_at": "2026-08-30T00:40:01Z",
       "discovered_at": "2026-08-30T01:12:16.227881Z",
-      "last_checked_at": "2026-08-30T01:12:16.227881Z",
+      "last_checked_at": "2026-08-30T01:18:56.200037Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20432,7 +20432,7 @@
       "published_at": "2026-08-30T00:44:00Z",
       "modified_at": "2026-08-30T00:49:00Z",
       "discovered_at": "2026-08-30T01:12:14.580622Z",
-      "last_checked_at": "2026-08-30T01:12:14.580622Z",
+      "last_checked_at": "2026-08-30T01:18:54.064817Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20451,7 +20451,7 @@
       "published_at": "2026-08-30T01:00:00Z",
       "modified_at": "2026-08-30T01:01:00Z",
       "discovered_at": "2026-08-30T01:12:12.271081Z",
-      "last_checked_at": "2026-08-30T01:12:12.271081Z",
+      "last_checked_at": "2026-08-30T01:18:52.105935Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20470,7 +20470,7 @@
       "published_at": "2026-08-30T01:00:00Z",
       "modified_at": "2026-08-30T01:00:04Z",
       "discovered_at": "2026-08-30T01:12:10.259721Z",
-      "last_checked_at": "2026-08-30T01:12:10.259721Z",
+      "last_checked_at": "2026-08-30T01:18:51.176708Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -20489,7 +20489,7 @@
       "published_at": "2026-08-30T01:00:00Z",
       "modified_at": "2026-08-30T01:00:01Z",
       "discovered_at": "2026-08-30T01:12:07.670706Z",
-      "last_checked_at": "2026-08-30T01:12:07.670706Z",
+      "last_checked_at": "2026-08-30T01:18:46.889233Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -21037,75 +21037,12 @@
         "status": "complete",
         "match_count": 0,
         "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "labortoday",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "newscham",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "chosun",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "joongang",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "donga",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "khan",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "hani",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "ohmynews",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
-        "source": "pressian",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
       }
     ]
   },
   "final_state": {
     "status": "complete",
-    "checked_at": "2026-08-30T01:12:40.848883Z",
+    "checked_at": "2026-08-30T01:19:20.852718Z",
     "checks": [
       {
         "issue_title": "해외 제출 장애인증명서 온라인 아포스티유 발급 개시",
@@ -21117,14 +21054,6 @@
       },
       {
         "issue_title": "의왕역 코레일 직원 입환 작업 중 열차 사고 사망",
-        "status": "complete",
-        "progressive": false,
-        "changed_after_draft": false,
-        "reason": "진행형 사건 탐지 조건에 해당하지 않음",
-        "evidence_urls": []
-      },
-      {
-        "issue_title": "“어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”",
         "status": "complete",
         "progressive": false,
         "changed_after_draft": false,
