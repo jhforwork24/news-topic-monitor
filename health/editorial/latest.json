@@ -1,12 +1,15 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-08-29",
+  "report_date": "2026-08-30",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.426,
-    "bridge_import_validation": 8.068,
-    "total": 9.507
+    "api_preflight": 1.904,
+    "assurance": 0.0,
+    "bridge_import_validation": 8.315,
+    "final_state_recrawl": 60.375,
+    "gap_reverse_search": 26.51,
+    "total": 105.096
   },
-  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
-  "completed_at": "2026-08-29T09:39:33.352565Z"
+  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / “어서 나으라”는 시선 넘어…“이 세계에도 기쁨이 있어요”: 허용 범위 밖의 칼럼이 포함됨",
+  "completed_at": "2026-08-30T01:13:15.530771Z"
 }

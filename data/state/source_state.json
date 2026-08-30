@@ -26,19 +26,19 @@
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-08-30T00:01:22.338357Z",
+      "last_run_at": "2026-08-30T01:12:05.060058Z",
       "success": true,
-      "discovered": 194,
+      "discovered": 30,
       "errors": [],
-      "last_success_at": "2026-08-30T00:01:22.338357Z",
+      "last_success_at": "2026-08-30T01:12:05.060058Z",
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-08-30T00:02:13.192661Z",
+      "last_run_at": "2026-08-30T01:12:38.220681Z",
       "success": true,
-      "discovered": 59,
+      "discovered": 67,
       "errors": [],
-      "last_success_at": "2026-08-30T00:02:13.192661Z",
+      "last_success_at": "2026-08-30T01:12:38.220681Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
@@ -91,11 +91,11 @@
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-08-30T00:05:15.587374Z",
+      "last_run_at": "2026-08-30T01:12:40.848060Z",
       "success": true,
-      "discovered": 6,
+      "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-08-30T00:05:15.587374Z",
+      "last_success_at": "2026-08-30T01:12:40.848060Z",
       "discovery_status": "complete"
     },
     "kbs": {
