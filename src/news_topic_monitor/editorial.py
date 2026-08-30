@@ -25,11 +25,17 @@ from .models import (
     EditorialVerdict,
     VerificationStatus,
 )
-from .sources import SOURCE_CAMP
+from .sources import LABOR_SECTION_ALLOWED_SOURCES, SOURCE_CAMP
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
 
 EDITORIAL_PROMPT_VERSION = 1
+
+SECTION_MAX_ISSUES = {
+    EditorialSection.DISABILITY: 10,
+    EditorialSection.LABOR: 7,
+    EditorialSection.OPINION: 10,
+}
 
 
 class EditorialConfigurationError(ValueError):
@@ -627,11 +633,20 @@ def _validate_plan(
                 errors.append(f"{issue.title}: 1차 포함 판정을 받지 않은 기사임")
             if assessment.section != issue.section:
                 errors.append(f"{issue.title}: 1차·2차 섹션 판정이 다름")
+            if (
+                issue.section == EditorialSection.LABOR
+                and candidate.source not in LABOR_SECTION_ALLOWED_SOURCES
+            ):
+                errors.append(
+                    f"{issue.title}: 노동·돌봄·빈곤 섹션 신규 선정에 비지정 매체"
+                    f"({candidate.source}) 기사 포함"
+                )
     issue_titles = [issue.title for issue in plan.issues]
     if len(issue_titles) != len(set(issue_titles)):
         errors.append("서로 다른 이슈가 같은 제목을 사용함")
-    if any(count > 10 for count in section_counts.values()):
-        errors.append("한 섹션의 이슈가 10개를 초과함")
+    for section, count in section_counts.items():
+        if count > SECTION_MAX_ISSUES[section]:
+            errors.append(f"{section.value} 섹션의 이슈가 {SECTION_MAX_ISSUES[section]}개를 초과함")
     if not plan.issues:
         errors.append("최종 선정 이슈가 없음")
     known = set(candidate_by_id)

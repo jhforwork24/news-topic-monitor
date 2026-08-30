@@ -40,7 +40,7 @@ from .classifier import RuleClassifier
 from .editorial import select_chat_editorial_candidates
 from .models import Classification, EditorialCandidate
 from .selection_review import NearMissTopic, ScoredArticle, SelectionReview
-from .sources import SOURCE_LABELS
+from .sources import LABOR_SECTION_ALLOWED_SOURCES, SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import KST, normalize_text, short_error, short_text
 
@@ -802,7 +802,9 @@ class NotionPublisher:
 
 def notion_blocks(document: BriefingDocument, *, crpd_url: str | None) -> list[dict[str, Any]]:
     del crpd_url
-    blocks: list[dict[str, Any]] = [_paragraph(document.overview)]
+    blocks: list[dict[str, Any]] = [
+        _paragraph(paragraph) for paragraph in document.overview.split("\n\n") if paragraph
+    ]
     for section in document.sections:
         if section.title == "III. 주요 칼럼" and not section.issues:
             continue
@@ -1027,6 +1029,8 @@ def _labor_queue_hint(candidate: EditorialCandidate, labor_classifier: RuleClass
     exclusion = _labor_queue_exclusion(candidate)
     if exclusion:
         return exclusion
+    if candidate.source not in LABOR_SECTION_ALLOWED_SOURCES:
+        return "II절 비지정 매체 — 당일 신규 선정 불가, 동일 주제 이전 보도 참고용만 가능"
     result = labor_classifier.classify(
         title=candidate.title,
         summary=candidate.summary or candidate.evidence_text,
@@ -1081,13 +1085,22 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
         ]
     )
     if issue.previous_coverage:
-        coverage_rows = [_table_row([[_rich_text("자료")], [_rich_text("확인 쟁점")]])]
+        coverage_rows = [
+            _table_row(
+                [
+                    [_rich_text("자료")],
+                    [_rich_text("날짜·매체")],
+                    [_rich_text("이전 보도 요약")],
+                ]
+            )
+        ]
         for item in issue.previous_coverage[:3]:
             coverage_rows.append(
                 _table_row(
                     [
                         [_rich_text(item.label, href=item.url)],
-                        [_rich_text(f"{item.published} · {item.comparison}")],
+                        [_rich_text(f"{item.published} · {item.outlet}")],
+                        [_rich_text(item.comparison)],
                     ]
                 )
             )
@@ -1097,7 +1110,7 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 "type": "toggle",
                 "toggle": {
                     "rich_text": [_rich_text("동일 주제 이전 보도")],
-                    "children": [_table(coverage_rows, width=2)],
+                    "children": [_table(coverage_rows, width=3)],
                 },
             }
         )

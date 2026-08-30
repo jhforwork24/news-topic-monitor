@@ -1,10 +1,24 @@
 from __future__ import annotations
 
 import argparse
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
-from news_topic_monitor.cli import _known_relevant_seed_discoveries, _report_window
-from news_topic_monitor.models import ArticleRecord, BodyStatus, Classification, VerificationStatus
+from news_topic_monitor.cli import (
+    _known_relevant_seed_discoveries,
+    _report_window,
+    _revalidate_failed_census_sources,
+)
+from news_topic_monitor.models import (
+    ArticleRecord,
+    BodyStatus,
+    Classification,
+    DiscoveryStatus,
+    RunHealth,
+    SourceHealth,
+    VerificationStatus,
+)
+from news_topic_monitor.policy import load_briefing_policy
 from news_topic_monitor.storage import JsonlStorage
 
 
@@ -80,6 +94,117 @@ def test_seed_discoveries_exclude_irrelevant_articles(tmp_path) -> None:
     seeds = _known_relevant_seed_discoveries(storage, start=start, end=end)
 
     assert seeds == {}
+
+
+def _census_health(now: datetime, *, theindigo_success: bool) -> RunHealth:
+    def _source(name: str, *, success: bool) -> SourceHealth:
+        return SourceHealth(
+            source=name,
+            success=success,
+            discovery_status=DiscoveryStatus.COMPLETE if success else DiscoveryStatus.UNAVAILABLE,
+            started_at=now,
+            finished_at=now,
+            discovered=100 if success else 0,
+            oldest_discovered_at=(now - timedelta(days=2)) if success else None,
+            discovery_paths_attempted=1,
+            discovery_paths_succeeded=1 if success else 0,
+            errors=[] if success else ["all discovery paths failed: robots.txt unavailable"],
+        )
+
+    return RunHealth(
+        run_started_at=now,
+        run_finished_at=now,
+        window_start=now - timedelta(hours=48),
+        window_end=now,
+        all_sources_failed=False,
+        sources={
+            "beminor": _source("beminor", success=True),
+            "ablenews": _source("ablenews", success=True),
+            "theindigo": _source("theindigo", success=theindigo_success),
+        },
+    )
+
+
+def _briefing_policy():
+    root = Path(__file__).parents[1]
+    return load_briefing_policy(root / "config" / "briefing-policy.yaml")
+
+
+def test_revalidate_failed_census_sources_recovers_via_live_retry() -> None:
+    now = datetime(2026, 8, 28, 1, tzinfo=UTC)
+    health = _census_health(now, theindigo_success=False)
+    policy = _briefing_policy()
+    calls: list[str] = []
+
+    def fake_collect(source: str) -> RunHealth:
+        calls.append(source)
+        return _census_health(now, theindigo_success=True)
+
+    result = _revalidate_failed_census_sources(
+        None,
+        None,
+        None,
+        health,
+        policy=policy,
+        sleeper=lambda seconds: None,
+        collect=fake_collect,
+    )
+
+    assert calls == ["theindigo"]
+    assert result.sources["theindigo"].success is True
+    assert result.sources["theindigo"].discovered == 100
+    # Unaffected sources pass through untouched.
+    assert result.sources["beminor"] is health.sources["beminor"]
+    assert result.sources["ablenews"] is health.sources["ablenews"]
+    # The frozen snapshot object itself is never mutated in place.
+    assert health.sources["theindigo"].success is False
+
+
+def test_revalidate_failed_census_sources_gives_up_after_max_attempts() -> None:
+    now = datetime(2026, 8, 28, 1, tzinfo=UTC)
+    health = _census_health(now, theindigo_success=False)
+    policy = _briefing_policy()
+    calls: list[str] = []
+    delays: list[float] = []
+
+    def fake_collect(source: str) -> RunHealth:
+        calls.append(source)
+        return _census_health(now, theindigo_success=False)
+
+    result = _revalidate_failed_census_sources(
+        None,
+        None,
+        None,
+        health,
+        policy=policy,
+        max_attempts=2,
+        retry_delay_seconds=5.0,
+        sleeper=delays.append,
+        collect=fake_collect,
+    )
+
+    assert calls == ["theindigo", "theindigo"]
+    assert delays == [5.0]  # slept once, between the two attempts, not after the last
+    assert result.sources["theindigo"].success is False
+
+
+def test_revalidate_failed_census_sources_skips_when_nothing_failed() -> None:
+    now = datetime(2026, 8, 28, 1, tzinfo=UTC)
+    health = _census_health(now, theindigo_success=True)
+    policy = _briefing_policy()
+    calls: list[str] = []
+
+    result = _revalidate_failed_census_sources(
+        None,
+        None,
+        None,
+        health,
+        policy=policy,
+        collect=lambda source: calls.append(source) or health,
+    )
+
+    assert calls == []
+    assert result is health
 
 
 def test_seed_discoveries_exclude_articles_outside_the_window(tmp_path) -> None:

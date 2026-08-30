@@ -6,7 +6,10 @@ on:
     # closes at 07:00 KST; this fires 5 minutes after so the bounded 48-hour
     # collection can start immediately, well ahead of the ~10:00-10:30 KST
     # publication target.
-    - cron: "5 22 * * *"
+    # Day-of-week "0-5" (UTC Sun-Fri) skips the UTC Saturday firing, which
+    # would otherwise land at 07:05 KST Sunday — article volume is too low
+    # on Sundays to justify a briefing, so no queue is built for it.
+    - cron: "5 22 * * 0-5"
   workflow_dispatch:
     inputs:
       date:

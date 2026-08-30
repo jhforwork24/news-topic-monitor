@@ -5,10 +5,11 @@ import json
 import logging
 import os
 import sys
+from collections.abc import Callable
 from datetime import UTC, datetime, time, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from time import perf_counter
+from time import perf_counter, sleep
 
 import httpx
 
@@ -69,6 +70,7 @@ from .notion_publish import (
 )
 from .pipeline import Collector
 from .policy import (
+    BriefingPolicy,
     PolicyConfigurationError,
     load_briefing_policy,
     load_source_registry,
@@ -955,8 +957,18 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             phase_durations["gap_reverse_search"] = perf_counter() - phase_started
 
             phase_started = perf_counter()
-            census = evaluate_census(
+            census_health = _revalidate_failed_census_sources(
+                settings,
+                storage,
+                classifier,
                 initial_health,
+                policy=briefing_policy,
+            )
+            phase_durations["census_retry"] = perf_counter() - phase_started
+
+            phase_started = perf_counter()
+            census = evaluate_census(
+                census_health,
                 window_start=start,
                 registry=source_registry,
                 policy=briefing_policy,
@@ -980,7 +992,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                 audit=run.audit,
                 plan=run.plan,
                 candidates=bundle.queue.candidates,
-                health=initial_health,
+                health=census_health,
                 revalidation_health=revalidation_health,
             )
             phase_durations["assurance"] = perf_counter() - phase_started
@@ -1169,6 +1181,96 @@ def _build_adapters(
         else:
             adapters.append(adapter_type())
     return adapters
+
+
+def _collect_single_source(
+    settings: Settings,
+    storage: JsonlStorage,
+    classifier: RuleClassifier,
+    source: str,
+    start: datetime,
+    end: datetime,
+) -> RunHealth:
+    adapters = _build_adapters(settings, storage, {source})
+    with SafeHttpClient(settings) as http:
+        return Collector(
+            http=http,
+            storage=storage,
+            classifier=classifier,
+            adapters=adapters,
+            max_discovery_children=settings.max_discovery_children,
+            write_health=False,
+        ).run(start, end)
+
+
+def _revalidate_failed_census_sources(
+    settings: Settings,
+    storage: JsonlStorage,
+    classifier: RuleClassifier,
+    health: RunHealth,
+    *,
+    policy: BriefingPolicy,
+    max_attempts: int = 2,
+    retry_delay_seconds: float = 5.0,
+    sleeper: Callable[[float], None] = sleep,
+    collect: Callable[[str], RunHealth] | None = None,
+) -> RunHealth:
+    """Bounded live retry for disability-press census sources that failed at
+    queue-creation time.
+
+    ``evaluate_census`` fails closed on the frozen ``initial_health`` snapshot
+    bound to the queue, so a single transient error at queue-build time (a
+    WAF hiccup, a flaky robots.txt fetch) otherwise blocks that day's
+    publication for good -- rebuilding the whole queue is the only recorded
+    recovery path, even when the source is reachable again by the time
+    finalize actually runs. This retries only the census-required sources
+    that failed, live, up to ``max_attempts`` times each, and only ever
+    replaces those sources' entries in the health object used for this run's
+    census/gate evaluation. The frozen snapshot on disk is never modified,
+    and every other source's recorded evidence is passed through unchanged.
+    """
+    failing = [
+        source
+        for source in policy.publish_gate.disability_press_census_required
+        if (detail := health.sources.get(source)) is None or not detail.success
+    ]
+    if not failing:
+        return health
+
+    collect_source = collect or (
+        lambda source: _collect_single_source(
+            settings, storage, classifier, source, health.window_start, health.window_end
+        )
+    )
+    sources = dict(health.sources)
+    for source in failing:
+        for attempt in range(1, max_attempts + 1):
+            LOGGER.info(
+                "editorial finalize: retrying failed census source=%s attempt=%d/%d",
+                source,
+                attempt,
+                max_attempts,
+            )
+            retry_health = collect_source(source)
+            detail = retry_health.sources.get(source)
+            if detail is not None and detail.success:
+                LOGGER.info(
+                    "editorial finalize: census source=%s recovered on retry %d/%d",
+                    source,
+                    attempt,
+                    max_attempts,
+                )
+                sources[source] = detail
+                break
+            if attempt < max_attempts:
+                sleeper(retry_delay_seconds)
+        else:
+            LOGGER.warning(
+                "editorial finalize: census source=%s still failing after %d live retries",
+                source,
+                max_attempts,
+            )
+    return health.model_copy(update={"sources": sources})
 
 
 def _known_relevant_seed_discoveries(

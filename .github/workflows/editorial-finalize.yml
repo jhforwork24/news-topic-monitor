@@ -8,7 +8,10 @@ on:
     # audit, targeting ~10:00-10:30 KST publication. This schedule exists in
     # case that automation never fires; a run here after publication already
     # succeeded is a harmless no-op (publish is idempotent per report date).
-    - cron: "0 3 * * *"
+    # Day-of-week "1-6" (UTC Mon-Sat, same calendar day as KST here) skips
+    # Sunday: no queue is built that day (see editorial-queue.yml), so this
+    # fallback has nothing to finalize anyway.
+    - cron: "0 3 * * 1-6"
   workflow_dispatch:
     inputs:
       date:

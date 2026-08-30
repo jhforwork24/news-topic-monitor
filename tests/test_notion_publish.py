@@ -111,6 +111,7 @@ def test_notion_issue_uses_article_bullets_and_previous_coverage_toggle() -> Non
                 "2026-08-14",
                 "이전 이동권 보도",
                 "https://example.com/previous",
+                "한겨레",
                 "정책 변화 여부를 대조한다.",
             )
         ],

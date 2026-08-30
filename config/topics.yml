@@ -156,6 +156,7 @@ topics:
       - {term: 빈곤, score: 6.0}
       - {term: 산업재해, score: 7.0}
       - {term: 산재, score: 6.0}
+      - {term: 기초연금, score: 7.0}
     supporting_terms:
       - {term: 노조, score: 5.0}
       - {term: 파업, score: 5.0}
@@ -176,6 +177,14 @@ topics:
       - {term: 소득보장, score: 5.0}
       - {term: 기초생활보장, score: 6.0}
       - {term: 노숙, score: 5.0}
+      - {term: 노인장기요양보험, score: 6.0}
+      - {term: 부양의무자, score: 5.0}
+      - {term: 차상위계층, score: 5.0}
+      - {term: 자활사업, score: 4.0}
+      - {term: 자활근로, score: 4.0}
+      - {term: 복지사각지대, score: 5.0}
+      - {term: 위기가구, score: 4.0}
+      - {term: 수급자, score: 3.0, ambiguous: true}
     laws:
       - {term: 노동조합 및 노동관계조정법, score: 8.0}
       - {term: 근로기준법, score: 7.0}
@@ -190,6 +199,8 @@ topics:
       - {term: 주거급여, score: 6.0}
       - {term: 돌봄서비스, score: 5.0}
       - {term: 사회서비스원, score: 6.0}
+      - {term: 긴급복지지원, score: 6.0}
+      - {term: 근로장려금, score: 5.0}
     organizations:
       - {term: 민주노총, score: 7.0}
       - {term: 한국노총, score: 6.0}
@@ -208,3 +219,5 @@ topics:
       - {all: [돌봄, 임금], score: 5.0}
       - {all: [돌봄, 고용], score: 4.0}
       - {all: [빈곤, 주거], score: 4.0}
+      - {all: [기초연금, 개편], score: 5.0}
+      - {all: [기초연금, 인상], score: 4.0}
