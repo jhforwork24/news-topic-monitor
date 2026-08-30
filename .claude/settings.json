@@ -12,6 +12,7 @@
     ]
   },
   "permissions": {
+    "defaultMode": "dontAsk",
     "allow": [
       "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-create-*",
       "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-update-*",
