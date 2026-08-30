@@ -691,15 +691,7 @@ def build_overview(start: datetime, end: datetime, sections: list[BriefingSectio
         section_sentences.append(
             "주요 칼럼으로는 " + _issue_keywords(columns.issues, 3) + "을 함께 소개한다."
         )
-    assessment_sentences = [
-        "각 사안은 시혜나 개인의 불운이 아니라 자본과 국가·지방정부가 부담해야 할 "
-        "구조적 책임의 문제로 읽어야 한다.",
-        "오늘 다룬 사안들에서 반복되는 것은 예외적 사고가 아니라 제도가 이행을 "
-        "미루거나 책임을 당사자와 노동자 개인에게 떠넘겨온 구조다.",
-        "보도가 개별 사건으로 다루는 지점일수록 국가와 사용자·원청이 이행하지 "
-        "않은 의무가 무엇인지를 따져 읽을 필요가 있다.",
-    ]
-    return " ".join(section_sentences) + "\n\n" + " ".join(assessment_sentences)
+    return " ".join(section_sentences)
 
 
 def build_telegram_summary(sections: list[BriefingSection]) -> str:
@@ -725,10 +717,6 @@ def build_telegram_summary(sections: list[BriefingSection]) -> str:
         sentences.append(
             "당일 보도에서 장애인의 시민권과 노동자의 생존권 관련 핵심 의제를 정리하였다."
         )
-    sentences.append(
-        "각 사안은 개인의 불운이 아니라 국가와 사용자·원청이 이행하지 않은 구조적 "
-        "책임의 문제다."
-    )
     return " ".join(sentences[:6])
 
 
