@@ -26,12 +26,14 @@
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-08-31T00:18:51.879591Z",
-      "success": true,
-      "discovered": 210,
-      "errors": [],
+      "last_run_at": "2026-08-31T01:04:30.777141Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.hani.co.kr/rss/: robots.txt unavailable for www.hani.co.kr: GET failed: https://www.hani.co.kr/robots.txt: HTTP 403; https://www.hani.co.kr/arti?page=1: robots.txt unavailable for www.hani.co.kr: GET failed: https://www.hani.co.kr/robots.txt: HTTP 403; https://www.hani.co.kr/arti?page=2: robots.txt unavailable for www.hani.co.kr: GET failed: https://www.hani.co.kr/robots.txt: HTTP 403; https://www.hani.co.kr/arti?page=3: robots.txt unavailable for www.hani"
+      ],
       "last_success_at": "2026-08-31T00:18:51.879591Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "khan": {
       "last_run_at": "2026-08-31T00:19:47.234147Z",
@@ -50,12 +52,14 @@
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-08-31T00:21:22.048678Z",
-      "success": true,
-      "discovered": 25,
-      "errors": [],
+      "last_run_at": "2026-08-31T01:05:04.382584Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.pressian.com/api/v3/site/rss/news: robots.txt unavailable for www.pressian.com: GET failed after retries: https://www.pressian.com/robots.txt: timed out"
+      ],
       "last_success_at": "2026-08-31T00:21:22.048678Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "newscham": {
       "last_run_at": "2026-08-31T00:21:23.162526Z",
@@ -67,11 +71,11 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-08-31T00:22:10.473214Z",
+      "last_run_at": "2026-08-31T01:05:07.039523Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-08-31T00:22:10.473214Z",
+      "last_success_at": "2026-08-31T01:05:07.039523Z",
       "discovery_status": "complete"
     },
     "beminor": {

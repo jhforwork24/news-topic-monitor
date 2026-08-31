@@ -1,11 +1,52 @@
 {
   "schema_version": 1,
-  "report_date": "2026-08-30",
-  "checked_at": "2026-08-30T01:20:04.363770Z",
-  "allowed": true,
-  "fatal_errors": [],
-  "degraded_warnings": [],
+  "report_date": "2026-08-31",
+  "checked_at": "2026-08-31T01:06:50.500812Z",
+  "allowed": false,
+  "fatal_errors": [
+    "final-state revalidation이 COMPLETE가 아님"
+  ],
+  "degraded_warnings": [
+    "독립 검색에서 결정론적 수집에 없는 잠재 누락 1건"
+  ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
-  "reporting_items": []
+  "reporting_items": [
+    {
+      "cause": "이천 이주노동자 크레인 낙하사고 사망과 원청 책임 논란: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "단체교섭 거부 사용자 형사처벌 조항 헌재 합헌 결정: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "현대차 대리점 판매노동자 원청 사용자성 중노위 재심: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "계양전기 노동자 미국 공장 설립 반대 파업: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "건설노동자 건설안전특별법 제정 촉구 국회 농성 예고: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 용혜인 지명에 \"차라리 종북\"… 이준석이 꺼낸 10년 전 캡처",
+      "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
+      "result": "potential_gap",
+      "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
+    }
+  ]
 }

@@ -1,16 +1,13 @@
 {
   "report_date": "2026-08-31",
+  "naver_api_hub": {
+    "status": "complete",
+    "error": null
+  },
   "openai": {
     "status": "not_required",
     "error": null,
     "route": "connected_claude_automation"
   },
-  "naver_api_hub": {
-    "status": "complete",
-    "error": null,
-    "queries_attempted": 5,
-    "queries_completed": 5,
-    "potential_gap_count": 1
-  },
-  "checked_at": "2026-08-31T00:22:40.694619Z"
+  "checked_at": "2026-08-31T01:04:21.719153Z"
 }
