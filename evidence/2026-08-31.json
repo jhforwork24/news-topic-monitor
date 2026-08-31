@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-08-31",
-  "generated_at": "2026-08-31T01:06:51.513668Z",
+  "generated_at": "2026-08-31T01:15:02.864257Z",
   "articles": [
     {
       "candidate_id": "234af8001d126d36d1daf70e5e07d5611f95e17c600af6b4a6943c195fa1beb2",
@@ -32607,60 +32607,62 @@
       "canonical_url": "https://www.hani.co.kr/arti/economy/it/1275400.html",
       "title": "AI에 의식이 있다면…인격과 권리를 인정해야 할까",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "이주현",
       "published_at": "2026-08-30T22:00:00Z",
       "modified_at": "2026-08-30T22:04:00Z",
       "discovered_at": "2026-08-30T22:50:26.728071Z",
-      "last_checked_at": "2026-08-30T23:31:48.725622Z",
+      "last_checked_at": "2026-08-31T01:13:37.021273Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "33d14d0dd64a80311fa7523a8e7d2b22d1ac8a91b7d64b0405d42f25025460e7",
+      "verification_grade": "A",
       "issue_id": null,
-      "primary_source_validation": "not_required"
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "71f1761eef46629f6f8e8fb32fece7a88df4d7dcd63486ec1696ed328ee4762f",
       "canonical_url": "https://www.hani.co.kr/arti/economy/it/1275401.html",
       "title": "AI에 스트레스 주면 일 더 잘할까?",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "한겨레",
       "published_at": "2026-08-30T22:00:00Z",
       "modified_at": "2026-08-30T22:11:00Z",
       "discovered_at": "2026-08-30T22:50:26.727830Z",
-      "last_checked_at": "2026-08-30T23:31:48.725409Z",
+      "last_checked_at": "2026-08-31T01:13:35.056009Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "2ea3473a9f69255a54d0b10c958a6fd74803746ad5b640ac4abbf2d396f4d522",
+      "verification_grade": "A",
       "issue_id": null,
-      "primary_source_validation": "not_required"
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "48771f3064a3021900f79268f49979bf8af862b58e85a4cc2267cc017e8e6b3e",
       "canonical_url": "https://www.hani.co.kr/arti/economy/it/1275402.html",
       "title": "“AI 정체성을 누가 지배하나…‘인공지능 그루밍’ 대비해야”",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "이주현",
       "published_at": "2026-08-30T22:00:00Z",
       "modified_at": "2026-08-30T22:06:00Z",
       "discovered_at": "2026-08-30T22:50:26.727546Z",
-      "last_checked_at": "2026-08-30T23:31:48.725185Z",
+      "last_checked_at": "2026-08-31T01:13:33.207539Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "3df960fcbfdbc00adf5f0c5694af2473baa18db65399c4f3029479e530432207",
+      "verification_grade": "A",
       "issue_id": null,
-      "primary_source_validation": "not_required"
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "a8b5e0505ecc6cc339e9d420769bef303add2c666974fd7bd1c634be9175cc1d",
@@ -32840,20 +32842,20 @@
     {
       "candidate_id": "541e94bc2c554673485489c6e1e911523e850b4ada16c112c678be21cbb73100",
       "canonical_url": "https://www.hani.co.kr/arti/international/arabafrica/1275403.html",
-      "title": "[속보] 미군, 한달여 만에 이란 공습…호르무즈 기뢰 발사대 타격",
+      "title": "미군, 한달여 만에 이란 공습…호르무즈 기뢰 발사대 타격",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "김원철",
       "published_at": "2026-08-30T22:09:00Z",
-      "modified_at": "2026-08-30T22:14:00Z",
+      "modified_at": "2026-08-31T00:04:00Z",
       "discovered_at": "2026-08-30T22:50:26.727211Z",
-      "last_checked_at": "2026-08-30T23:31:48.724915Z",
+      "last_checked_at": "2026-08-31T01:13:31.023125Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "0c018b65b9f4a7164329da3bbc99cf39b0f9c97322522753d08d0a86e0d76bc6",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -33424,19 +33426,19 @@
     {
       "candidate_id": "52997abdbb937a6acc949fa88e4b8e66538ef86d660ad123d06db1935c62e08b",
       "canonical_url": "https://www.pressian.com/pages/articles/2026083106102788543",
-      "title": "한은 quot;반도체 수출 호조, 근원물가 상승 압력 키워hellip;근원물가 최대 0.4%p 높아질 것quot;",
+      "title": "한은 \"반도체 수출 호조, 근원물가 상승 압력 키워…근원물가 최대 0.4%p 높아질 것\"",
       "outlet": "pressian",
-      "reporter": null,
+      "reporter": "이대희 기자",
       "published_at": "2026-08-30T22:25:10Z",
       "modified_at": null,
       "discovered_at": "2026-08-30T22:50:40.278141Z",
-      "last_checked_at": "2026-08-30T23:31:56.212691Z",
+      "last_checked_at": "2026-08-31T01:14:11.361889Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "7033093fc7c5bcb86aef170bc9093c471794d629a758bf2d876b6606adf9c427",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -34684,18 +34686,18 @@
       "canonical_url": "https://www.hani.co.kr/arti/international/america/1275404.html",
       "title": "“트럼프, 김정은 우선 만나고 중간선거 이후 추가 정상회담할 수도”",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "김원철",
       "published_at": "2026-08-30T23:07:00Z",
       "modified_at": "2026-08-30T23:21:00Z",
       "discovered_at": "2026-08-30T23:31:48.724719Z",
-      "last_checked_at": "2026-08-30T23:31:48.724719Z",
+      "last_checked_at": "2026-08-31T01:13:29.055293Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "bd1ec541ea964b7783c23af37d9addf31251546b0bcc0a931e6ac3e2cd6e3970",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -34893,20 +34895,20 @@
     {
       "candidate_id": "6412fe8c47a1644827780a37c21fb15c90a7e0d769886ede780b21b9969489b1",
       "canonical_url": "https://www.hani.co.kr/arti/society/environment/1275405.html",
-      "title": "8월 마지막 날 전국 ‘강한 비’…충청 최대 200㎜·남부 폭염",
+      "title": "8월 마지막 날 전국 ‘강한 비’…충청권 최대 200㎜",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "장수경",
       "published_at": "2026-08-30T23:13:00Z",
-      "modified_at": "2026-08-30T23:13:00Z",
+      "modified_at": "2026-08-30T23:40:00Z",
       "discovered_at": "2026-08-30T23:31:48.724519Z",
-      "last_checked_at": "2026-08-30T23:31:48.724519Z",
+      "last_checked_at": "2026-08-31T01:13:27.047468Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "68bac6214f567d557e63339a26e1bb21687f9b36ffa7f59da39a83cf514e6b63",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -35263,22 +35265,22 @@
     {
       "candidate_id": "9bdea775b0d808014adf53ab7c70a31f456c6e039ebcdcc4391dfaef2a05265d",
       "canonical_url": "https://www.hani.co.kr/arti/international/america/1275406.html",
-      "title": "[속보] 중동 전쟁 한달여 만에 재충돌…이란, 미국 공습에 보복",
+      "title": "중동 전쟁 한달여 만에 재충돌…이란, 미국 공습에 보복",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "김원철",
       "published_at": "2026-08-30T23:18:00Z",
-      "modified_at": "2026-08-30T23:27:00Z",
+      "modified_at": "2026-08-31T00:44:00Z",
       "discovered_at": "2026-08-30T23:31:48.724303Z",
-      "last_checked_at": "2026-08-30T23:31:48.724303Z",
+      "last_checked_at": "2026-08-31T01:13:25.091835Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "6ea2acf86daa3b670a70d075ab6396c82da70e284724965e138593c0a71b7c22",
+      "verification_grade": "A",
       "issue_id": null,
-      "primary_source_validation": "not_required"
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "25e9022e9e5c9e7f6fc095c4adf60b2f50d71385c3ebf995b269a4b59aded9c8",
@@ -35402,20 +35404,20 @@
       "canonical_url": "https://www.hani.co.kr/arti/economy/economy_general/1275407.html",
       "title": "7월 산업생산 보합…소비 줄고, 설비투자 두달 연속 증가",
       "outlet": "hani",
-      "reporter": null,
+      "reporter": "박수지",
       "published_at": "2026-08-30T23:19:00Z",
-      "modified_at": "2026-08-30T23:19:00Z",
+      "modified_at": "2026-08-30T23:54:00Z",
       "discovered_at": "2026-08-30T23:31:48.723947Z",
-      "last_checked_at": "2026-08-30T23:31:48.723947Z",
+      "last_checked_at": "2026-08-31T01:13:22.885229Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "5466b7005ed655697fbbeb889363719f6c0601b11a8508b420009f085e0ab447",
+      "verification_grade": "A",
       "issue_id": null,
-      "primary_source_validation": "not_required"
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "409f2c3220020ad6f39c214ff710e6b08e51c1aa33c3b7391e0ec2b97d0cddda",
@@ -35802,6 +35804,471 @@
       "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "55756b2cea4e336a4e21a5c2951fd6aeaa3480273c1acc4ec4dfba65ee5cd868",
+      "canonical_url": "https://www.hani.co.kr/arti/international/asiapacific/1275408.html",
+      "title": "네팔·중국 대홍수 사망 804명…생존 가능 터널 뚫고 공기 넣었지만",
+      "outlet": "hani",
+      "reporter": "윤연정",
+      "published_at": "2026-08-30T23:32:00Z",
+      "modified_at": "2026-08-31T00:53:00Z",
+      "discovered_at": "2026-08-31T01:13:21.088951Z",
+      "last_checked_at": "2026-08-31T01:13:21.088951Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "16cbb2e2c1b78390d9e4c0b9f1d93a95da96d66f3f1be0aa2b0f12abadef28b3",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "a32e344cb50bbe464b078a58e284ca3878947be0c80865805a171ae340244885",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083108403131117",
+      "title": "[속보] 이란, 美함정·기지 미사일 공격…美 공격에 대한 보복 대응",
+      "outlet": "pressian",
+      "reporter": "박세열 기자",
+      "published_at": "2026-08-30T23:40:31Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:14:09.362674Z",
+      "last_checked_at": "2026-08-31T01:14:09.362674Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "62e30f87fdaa013dbf8a9c1ae5c1ed81f932753849b643e4c9c16b42b502307b",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "39d13da86f00f549d0a2a0d5ea936c22d164571d194ea9349969aef118062dc6",
+      "canonical_url": "https://www.hani.co.kr/arti/society/women/1275409.html",
+      "title": "테토녀·에겐남, 기존 성별 기대 반복?… 청년이 말하는 ‘○○다움’이란",
+      "outlet": "hani",
+      "reporter": "손지민",
+      "published_at": "2026-08-30T23:44:00Z",
+      "modified_at": "2026-08-31T00:01:00Z",
+      "discovered_at": "2026-08-31T01:13:19.020310Z",
+      "last_checked_at": "2026-08-31T01:13:19.020310Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "b303dd33dff8a7fde0b934cea7626c457e2ef8056959acc26d2f153b8b7a5dd0",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "7588163cd2e6579a91d45e51211d09faaa0cec88516e91acf6cd675bbd8f0377",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083108481264130",
+      "title": "[속보] \"트럼프·김정은 어떤식으로든 만나 대화 물꼬 틀 것\"…트럼프1기 前대북 당국자",
+      "outlet": "pressian",
+      "reporter": "박세열 기자",
+      "published_at": "2026-08-30T23:48:12Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:14:07.394162Z",
+      "last_checked_at": "2026-08-31T01:14:07.394162Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "aab6c045189569ff82f297d11e4b9265dc5c2471d58cece7a91eb1beea302f73",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "47c3d5b6b5285f466a7ac76c1de65505b4c452723904ecd2ceac76aff05e8834",
+      "canonical_url": "https://www.hani.co.kr/arti/sports/soccer/1275410.html",
+      "title": "아우크스부르크 설영우, 분데스리가 개막전서 데뷔 첫 도움",
+      "outlet": "hani",
+      "reporter": "김창금",
+      "published_at": "2026-08-30T23:53:00Z",
+      "modified_at": "2026-08-31T00:06:00Z",
+      "discovered_at": "2026-08-31T01:13:17.056895Z",
+      "last_checked_at": "2026-08-31T01:13:17.056895Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "95afc0b12150cf012adc4abdb3ac0c612442e88b25b7e1ddca76308918547326",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "a348960b2d6ea0363bf292369717c53d7ee11b05279f268a644272d0280a6c31",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109113487835",
+      "title": "롯데아울렛 이시아폴리스점, '지역 동반성장 상생 프리마켓' 진행",
+      "outlet": "pressian",
+      "reporter": "김기호 기자(=대구)",
+      "published_at": "2026-08-31T00:11:52Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:14:05.401771Z",
+      "last_checked_at": "2026-08-31T01:14:05.401771Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "28c30bd3c43b38f8f108f392bd25a9281fb122e72888ae868b8dccda4478685b",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "31ef1684b5329b8341136e9845af925ff83b59f36080031120c1033e737b98d8",
+      "canonical_url": "https://www.hani.co.kr/arti/area/honam/1275411.html",
+      "title": "전북 사흘째 호우, 군산 264㎜…시설피해 96건, 인명피해는 없어",
+      "outlet": "hani",
+      "reporter": "천경석",
+      "published_at": "2026-08-31T00:12:00Z",
+      "modified_at": "2026-08-31T00:15:00Z",
+      "discovered_at": "2026-08-31T01:13:15.115560Z",
+      "last_checked_at": "2026-08-31T01:13:15.115560Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c2ac74954efdef3da52ca776d15a1a88d11604ef30837f2d84ffb44f597652e1",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "f4e199282c425aa254e432a1b0aed7109de38cf0af747cc96a684aa648d823e0",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109130747545",
+      "title": "경남 통영·고성 정점식 \"정치경찰 야당탄압...유감\"",
+      "outlet": "pressian",
+      "reporter": "조민규 기자(=경남)",
+      "published_at": "2026-08-31T00:14:30Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:14:03.381315Z",
+      "last_checked_at": "2026-08-31T01:14:03.381315Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "60f451a711a770a7fe49e634beab3b0474ba8f1fd473b8bed6c42fe2ba755a24",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "39ac0302e5d519248188cd996afd81bb79a79678ed96f34133a69c7ff9f9f87a",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109040573316",
+      "title": "진주 남동발전, 네팔 현장에 2차 현지대응반 추가 파견",
+      "outlet": "pressian",
+      "reporter": "김동수 기자(=진주)",
+      "published_at": "2026-08-31T00:20:00Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:14:01.438249Z",
+      "last_checked_at": "2026-08-31T01:14:01.438249Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "cab9131afce1b77a254d584811bb88f2265032eda5119bd46afc34d026a0c364",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "945574b999bc05fabdd07eb33523cd03d474953c1bdc9696f304f4ed8657d1e2",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109192551943",
+      "title": "최대 454㎜ 쏟아진 전남광주 곳곳 호우 피해…순천·화순 13명 대피",
+      "outlet": "pressian",
+      "reporter": "김보현 기자(=전남광주)",
+      "published_at": "2026-08-31T00:22:11Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:59.395116Z",
+      "last_checked_at": "2026-08-31T01:13:59.395116Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "63075c739117e387a21d540d8b6beb80cf6df0e712600a17b2369bb505f2dd2d",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "90be8dc9b397868e7d36aecd40774e44c7faf4e498a8ebdac324916d745a9d2f",
+      "canonical_url": "https://www.hani.co.kr/arti/science/science_general/1275412.html",
+      "title": "[영상] 영화 ‘마션’ 실제 배경…지름이 서울~부산 거리인 화성 충돌구",
+      "outlet": "hani",
+      "reporter": "곽노필",
+      "published_at": "2026-08-31T00:30:00Z",
+      "modified_at": "2026-08-31T01:09:00Z",
+      "discovered_at": "2026-08-31T01:13:13.101357Z",
+      "last_checked_at": "2026-08-31T01:13:13.101357Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a985880f8102584327f9a52855c739b0b1ac82e6772cbce7a508f19824a4d3df",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "6ba2480e9924d0eb162f31c03b9624a267711874886e1343f6e5652e1d5b2ddf",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109380341358",
+      "title": "김제전통시장 아케이드 구간, 9월 1일부터 차량 통행 전면 금지",
+      "outlet": "pressian",
+      "reporter": "유청 기자(=김제)",
+      "published_at": "2026-08-31T00:46:15Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:58.469763Z",
+      "last_checked_at": "2026-08-31T01:13:58.469763Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "ac54d78541bfe0b426a07b62dbd0e935f4b90a2ca1e4ca367df33b86ee12172d",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "12e4772cef0d24f68ab8627bfdb6b4fc07cbae5b85bad7b130f052f5a6edac31",
+      "canonical_url": "https://www.hani.co.kr/arti/culture/music/1275413.html",
+      "title": "엔하이픈, 데뷔 첫 ‘빌보드 200’ 1위…K팝 보이그룹 6번째 정상",
+      "outlet": "hani",
+      "reporter": "이정국",
+      "published_at": "2026-08-31T00:50:00Z",
+      "modified_at": "2026-08-31T00:55:00Z",
+      "discovered_at": "2026-08-31T01:13:11.021841Z",
+      "last_checked_at": "2026-08-31T01:13:11.021841Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "65aa5e0681d9d42605692a8f481b88ec35c925207ea6cc815e5c09d7cb383d57",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "43ba43846bb14b4d60fa4fc5f351ce4bcb1058af7e5811f8b9a6aa9bc2996a09",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109515692314",
+      "title": "[속보] 사흘 연속 비로 전북 126mm 기록…고창·부안 호우경보 발효",
+      "outlet": "pressian",
+      "reporter": "허환주 기자",
+      "published_at": "2026-08-31T00:51:57Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:55.392703Z",
+      "last_checked_at": "2026-08-31T01:13:55.392703Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "bdc6f41c02247591be90a94c1ae82ea02f9ba0e8ba16fb8358e0e24dd34dcf6c",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "d90479849d502fe3ea2471386678a719c7536b86f48ef6709b062ad1298973a7",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109503126468",
+      "title": "\"피지컬AI 세계 1등에 도전하라\"…전북이 천년 만의 기회를 살리는 길 [이춘구 칼럼]",
+      "outlet": "pressian",
+      "reporter": "이춘구 칼럼니스트",
+      "published_at": "2026-08-31T00:52:06Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:53.386082Z",
+      "last_checked_at": "2026-08-31T01:13:53.386082Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "21c2a1c49237b6db48b62e3642ebc39bc6c13d749d8447ec66505f8139c38d8a",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "77e001f43df61833504a03280732b1ba42b2e434eae08e6e77370c021204cb3a",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109572769959",
+      "title": "경기도, 24세 청년 분기별 25만원…청년기본소득 3분기 신청 시작",
+      "outlet": "pressian",
+      "reporter": "전승표 기자",
+      "published_at": "2026-08-31T00:57:38Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:51.381543Z",
+      "last_checked_at": "2026-08-31T01:13:51.381543Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "752170bed97fe07611a35ddade840e49901f85eff742bbd08726c4ce22d67757",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "e5764451bfc4f5a7d2d076dfbd337c70744f0edd210b4262ed604b2498345d16",
+      "canonical_url": "https://www.hani.co.kr/arti/economy/property/1275414.html",
+      "title": "홍지선 국토장관 후보자 “서울시와 충분히 협의해 주택 공급”",
+      "outlet": "hani",
+      "reporter": "최종훈",
+      "published_at": "2026-08-31T01:00:00Z",
+      "modified_at": "2026-08-31T01:06:00Z",
+      "discovered_at": "2026-08-31T01:13:09.020727Z",
+      "last_checked_at": "2026-08-31T01:13:09.020727Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "df2580cd28500bb04c494daadb9c9dc93e03d9f374a597f59e8d26060972327c",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "a558175aae01ee344fcc33b9bd3d40a7f2346691b6d84101eb84d5ebd942c83f",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083109554145112",
+      "title": "윤준병 의원 “고창 신림저수지 주변 개발해 신림면 랜드마크로 만들 것”",
+      "outlet": "pressian",
+      "reporter": "박용관 기자(=고창)",
+      "published_at": "2026-08-31T01:02:47Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:49.480781Z",
+      "last_checked_at": "2026-08-31T01:13:49.480781Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "99994b245136e3d533a4c5fb2a877e3d1cec3668eb6f22fac6623fc214e6e5b7",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "7798a33606cdc1a93609931b19dfee71164fdd042d495600786fbd4fe7dac6e4",
+      "canonical_url": "https://www.hani.co.kr/arti/sports/sports_general/1275415.html",
+      "title": "아시안게임 앞둔 서창완, 근대5종 세계선수권 개인전 동메달",
+      "outlet": "hani",
+      "reporter": "김창금",
+      "published_at": "2026-08-31T01:05:00Z",
+      "modified_at": "2026-08-31T01:08:00Z",
+      "discovered_at": "2026-08-31T01:13:08.406002Z",
+      "last_checked_at": "2026-08-31T01:13:08.406002Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "e22bc061541422efed181f30b1f81fb42b333f02d60fba55315c7cd43f89b0d3",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "ff71fff6773a861f6d0e12d04d3380f699c1349c1d5caf635bbe7e9f3e75b239",
+      "canonical_url": "https://www.hani.co.kr/arti/economy/finance/1275416.html",
+      "title": "고금리에 빚 못 버틴 서민 채무조정, 상반기만 10만명…5조7천억 규모",
+      "outlet": "hani",
+      "reporter": "조계완",
+      "published_at": "2026-08-31T01:06:00Z",
+      "modified_at": "2026-08-31T01:06:00Z",
+      "discovered_at": "2026-08-31T01:13:05.044841Z",
+      "last_checked_at": "2026-08-31T01:13:05.044841Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "fa67338a0137bed4ede6cfc10693e090ff724420e3e775a26525a0e6ff3e46a8",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "7a06b03fec630b516bf13c7c9b67658b6046c7077c83d9cdebadf122bd7379c3",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083108024341154",
+      "title": "슈퍼 예산의 시대, 약자의 삶도 나아질까?",
+      "outlet": "pressian",
+      "reporter": "시민건강연구소",
+      "published_at": "2026-08-31T01:06:29Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:47.408381Z",
+      "last_checked_at": "2026-08-31T01:13:47.408381Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "4fcaaf0c428106b1f0aefb830ec09dc758b104e5aae7e3355301f6cfa726c3d5",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "c65f42a78684bd8cc7a5af97f2761f2f841cf49a264ee308d244a6223702e2ff",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083108171829060",
+      "title": "[리얼미터] 李대통령 국정지지도 38.9%…40%선 붕괴",
+      "outlet": "pressian",
+      "reporter": "곽재훈 기자",
+      "published_at": "2026-08-31T01:06:31Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:45.374646Z",
+      "last_checked_at": "2026-08-31T01:13:45.374646Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "10e6f6236e4b7e54fa073660697c0fa40858edf030b7d27591c9055771dea291",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "29099e3cdae91ccda5f4d9ad424dc5e0b0ab6a3797f587f413d827ad9b75a67f",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083105113910739",
+      "title": "금리 인상에 시중 자금 은행으로 쏠려…5대 은행 예금 사상 첫 1천조 돌파",
+      "outlet": "pressian",
+      "reporter": "이대희 기자",
+      "published_at": "2026-08-31T01:06:42Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:43.492860Z",
+      "last_checked_at": "2026-08-31T01:13:43.492860Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "5bbc7b25e4667c21a66504b27cbd05b25f90fd36fee649da751a3537f253aa8f",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "926aebb232bb458365a23eaca845a683b18a22b7027858bb2151ac5e4cd3aaec",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026083110065633763",
+      "title": "경기일자리재단, '꿈날개 이용자 경험' 숏폼 공모…총상금 200만원",
+      "outlet": "pressian",
+      "reporter": "김재구 기자",
+      "published_at": "2026-08-31T01:07:10Z",
+      "modified_at": null,
+      "discovered_at": "2026-08-31T01:13:41.312739Z",
+      "last_checked_at": "2026-08-31T01:13:41.312739Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "dd4473ed29134a34aa58e48f09f449f0b5f20b30d158350ff7b9692b2f2a73d5",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
     }
   ],
   "census": [
@@ -35871,16 +36338,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "성평등 의제에 소극적인 이재명 정부와 민주당…이탈하는 2030 여성들",
-        "original_url": "https://weekly.khan.co.kr/article/202608310600021",
-        "naver_url": "https://n.news.naver.com/mnews/article/033/0000051934?sid=100",
-        "published_at": "2026-08-30T21:02:00Z",
-        "description": "방지 정책 ’(45.7%)이 꼽혔다. 최근 논란이 된 것은 검찰개혁 세부방안인 보완수사권 폐지다. 여성단체들은 검찰 보완수사권 전면 폐지가 경찰의 수사권 남용과 부실 수사로 이어질 수 있고, 여성·아동· 장애인 등 법률적...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "메트로신문 8월 31일자 한줄뉴스",
         "original_url": "http://www.metroseoul.co.kr/article/20260830500277",
         "naver_url": "http://www.metroseoul.co.kr/article/20260830500277",
@@ -35901,21 +36358,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "대한투석협회가 그리는 새 10년…'실용 학술'에 방점",
-        "original_url": "https://www.medipana.com/news/articleView.html?idxno=416757",
-        "naver_url": "https://www.medipana.com/news/articleView.html?idxno=416757",
-        "published_at": "2026-08-30T21:00:00Z",
-        "description": "진료와 정책 에 반영하는 역할을 강화하겠다는 구상이다. 이는 새로운 학술단체를 만들겠다는 선언과는... 실제 협회는 한국신장 장애인 협회 등 환자단체와 소통하면서 투석환자의 이동 문제에 대한 해결책을 모색하고...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[오늘의 주요일정]사회(8월31일 월요일)",
-        "original_url": "https://www.newsis.com/view/NISX20260830_0003768583",
-        "naver_url": "https://n.news.naver.com/mnews/article/003/0014157386?sid=102",
-        "published_at": "2026-08-30T21:00:00Z",
-        "description": "차로, 장애인 권리예산 증액 촉구 ▲오전 9시 공공운수노조 퀴네앤드나겔지부, 여의도 하나증권 앞, 단협... 민주당 정책 실패 규탄 ▲오전 11시30분 JTBC채권피해자연대, 여의도 금융감독원 앞, JTBC 채권 판매 증권사 감사...",
+        "title": "성평등 의제에 소극적인 이재명 정부와 민주당…이탈하는 2030 여성들",
+        "original_url": "https://weekly.khan.co.kr/article/202608310600021",
+        "naver_url": "https://n.news.naver.com/mnews/article/033/0000051934?sid=100",
+        "published_at": "2026-08-30T21:02:00Z",
+        "description": "방지 정책 ’(45.7%)이 꼽혔다. 최근 논란이 된 것은 검찰개혁 세부방안인 보완수사권 폐지다. 여성단체들은 검찰 보완수사권 전면 폐지가 경찰의 수사권 남용과 부실 수사로 이어질 수 있고, 여성·아동· 장애인 등 법률적...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -35941,21 +36388,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[기자의창] 이소영 중기부 장관 지명, 약사사회가 긴장할 이유",
-        "original_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541949",
-        "naver_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541949",
-        "published_at": "2026-08-30T20:56:00Z",
-        "description": "폭넓은 정책 경험을 쌓아왔다고 밝혔다. 이어 그동안 축적해 온 역량과 남다른 추진력을 바탕으로 국가 창업... 비대면진료 의약품 배송은 올해 12월 24일 의료법 개정안이 시행됨에 따라 섬·벽지, 장기요양수급자, 장애인 ...",
+        "title": "대한투석협회가 그리는 새 10년…'실용 학술'에 방점",
+        "original_url": "https://www.medipana.com/news/articleView.html?idxno=416757",
+        "naver_url": "https://www.medipana.com/news/articleView.html?idxno=416757",
+        "published_at": "2026-08-30T21:00:00Z",
+        "description": "진료와 정책 에 반영하는 역할을 강화하겠다는 구상이다. 이는 새로운 학술단체를 만들겠다는 선언과는... 실제 협회는 한국신장 장애인 협회 등 환자단체와 소통하면서 투석환자의 이동 문제에 대한 해결책을 모색하고...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
-        "title": "오배송·오복용·미회수·도난…해외서 확인된 '약배송' 치명적 위험",
-        "original_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541946",
-        "naver_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541946",
-        "published_at": "2026-08-30T20:56:00Z",
-        "description": "오는 12월 24일 의료법 개정안 시행에 따라 섬·벽지 주민, 장기요양수급자, 장애인 , 감염병환자, 희귀질환자... 약국가에서는 정부의 '가까운 동네약국'이라는 정책 목표와 실제 민간 플랫폼의 약국 노출 알고리즘이 항상...",
+        "title": "[오늘의 주요일정]사회(8월31일 월요일)",
+        "original_url": "https://www.newsis.com/view/NISX20260830_0003768583",
+        "naver_url": "https://n.news.naver.com/mnews/article/003/0014157386?sid=102",
+        "published_at": "2026-08-30T21:00:00Z",
+        "description": "차로, 장애인 권리예산 증액 촉구 ▲오전 9시 공공운수노조 퀴네앤드나겔지부, 여의도 하나증권 앞, 단협... 민주당 정책 실패 규탄 ▲오전 11시30분 JTBC채권피해자연대, 여의도 금융감독원 앞, JTBC 채권 판매 증권사 감사...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -35971,11 +36418,41 @@
       },
       {
         "query": "장애인 정책",
+        "title": "오배송·오복용·미회수·도난…해외서 확인된 '약배송' 치명적 위험",
+        "original_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541946",
+        "naver_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541946",
+        "published_at": "2026-08-30T20:56:00Z",
+        "description": "오는 12월 24일 의료법 개정안 시행에 따라 섬·벽지 주민, 장기요양수급자, 장애인 , 감염병환자, 희귀질환자... 약국가에서는 정부의 '가까운 동네약국'이라는 정책 목표와 실제 민간 플랫폼의 약국 노출 알고리즘이 항상...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[기자의창] 이소영 중기부 장관 지명, 약사사회가 긴장할 이유",
+        "original_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541949",
+        "naver_url": "https://www.kpanews.co.kr/news/articleView.html?idxno=541949",
+        "published_at": "2026-08-30T20:56:00Z",
+        "description": "폭넓은 정책 경험을 쌓아왔다고 밝혔다. 이어 그동안 축적해 온 역량과 남다른 추진력을 바탕으로 국가 창업... 비대면진료 의약품 배송은 올해 12월 24일 의료법 개정안이 시행됨에 따라 섬·벽지, 장기요양수급자, 장애인 ...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
         "title": "\"5시간 진행 투석, 고령 환자 식사·차량 지원 시급\"",
         "original_url": "https://www.dailymedi.com/news/news_view.php?wr_id=939957",
         "naver_url": "https://www.dailymedi.com/news/news_view.php?wr_id=939957",
         "published_at": "2026-08-30T20:50:00Z",
         "description": "\" 김상욱 대한투석협회 이사장은 30일 세종대에서 열린 정책 토론회 및 학술대회 기자회견에서 이 같은... \"신장 장애인 , 치료 편의성 확대 지원…투석 관련 기술변화 검토\" 또한 협회는 한국신장 장애인 협회와 내부 장애(당뇨...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[오늘의 주요일정]전북(8월31일 월요일)",
+        "original_url": "https://www.newsis.com/view/NISX20260830_0003768565",
+        "naver_url": "https://n.news.naver.com/mnews/article/003/0014157357?sid=102",
+        "published_at": "2026-08-30T20:00:00Z",
+        "description": "농어촌위원회 2차회의, 종합상황실 ◇전북특별자치도교육청 ▲오전 9시, 주간 정책 회의, 5층 회의실... 전북도 장애인 생활체육 어울림 한궁대회, 국민체육센터 ▲오후 3시, 무주군 기본소득위원회, 대회의실...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -35991,16 +36468,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[오늘의 주요일정] 충북·세종(31일, 월)",
-        "original_url": "https://www.news1.kr/local/sejong-chungbuk/6273776",
-        "naver_url": "https://n.news.naver.com/mnews/article/421/0009140468?sid=102",
-        "published_at": "2026-08-30T20:00:00Z",
-        "description": "◇충북도 -신용한 충북지사 11:00 행정수도 특별법 결의대회(국회) 14:00 국회의원 초청 예산 정책 간담회... 전국 장애인 체육대회 출정식(소회의실) 11:00 새내기 공직자 소통 간담회(관내식당) 14:00 충주시 민관정...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[오늘의 국회일정] (31일, 월)",
         "original_url": "https://www.news1.kr/politics/assembly/6273990",
         "naver_url": "https://n.news.naver.com/mnews/article/421/0009140477?sid=100",
@@ -36011,11 +36478,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[오늘의 주요일정]전북(8월31일 월요일)",
-        "original_url": "https://www.newsis.com/view/NISX20260830_0003768565",
-        "naver_url": "https://n.news.naver.com/mnews/article/003/0014157357?sid=102",
+        "title": "[오늘의 주요일정] 충북·세종(31일, 월)",
+        "original_url": "https://www.news1.kr/local/sejong-chungbuk/6273776",
+        "naver_url": "https://n.news.naver.com/mnews/article/421/0009140468?sid=102",
         "published_at": "2026-08-30T20:00:00Z",
-        "description": "농어촌위원회 2차회의, 종합상황실 ◇전북특별자치도교육청 ▲오전 9시, 주간 정책 회의, 5층 회의실... 전북도 장애인 생활체육 어울림 한궁대회, 국민체육센터 ▲오후 3시, 무주군 기본소득위원회, 대회의실...",
+        "description": "◇충북도 -신용한 충북지사 11:00 행정수도 특별법 결의대회(국회) 14:00 국회의원 초청 예산 정책 간담회... 전국 장애인 체육대회 출정식(소회의실) 11:00 새내기 공직자 소통 간담회(관내식당) 14:00 충주시 민관정...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -36041,16 +36508,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[프리즘] 이웃이 이웃을 살린다, 힘받는 사회연대경제",
-        "original_url": "https://www.joongang.co.kr/article/25457463",
-        "naver_url": "https://n.news.naver.com/mnews/article/025/0003547797?sid=102",
-        "published_at": "2026-08-30T15:02:00Z",
-        "description": "대구 안심마을에서는 발달 장애인 이 지역 농축산물 직매장 직원으로 일하며 돌봄과 먹거리 문제를 함께 풀었다. 그러나 꽃을 피워내기까지의 여정은 가시밭길에 가까웠다. 부처마다 분산된 예산, 칸막이에 갇힌 정책 ...",
-        "matched_source": "joongang",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "비대면 처방약 배송 확대 추진…시 약사회 '반발'",
         "original_url": "https://www.ksilbo.co.kr/news/articleView.html?idxno=1065797",
         "naver_url": "https://www.ksilbo.co.kr/news/articleView.html?idxno=1065797",
@@ -36058,6 +36515,16 @@
         "description": "오는 12월24일 비대면진료 제도화를 앞두고 현재 섬·벽지 거주자와 장기요양수급자, 장애인 , 감염병... 하지만 울산 약사들은 약 배송 확대가 환자 편의만을 앞세운 정책 으로 이어질 수 있다고 우려하고 있다. 약은 보관...",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[프리즘] 이웃이 이웃을 살린다, 힘받는 사회연대경제",
+        "original_url": "https://www.joongang.co.kr/article/25457463",
+        "naver_url": "https://n.news.naver.com/mnews/article/025/0003547797?sid=102",
+        "published_at": "2026-08-30T15:02:00Z",
+        "description": "대구 안심마을에서는 발달 장애인 이 지역 농축산물 직매장 직원으로 일하며 돌봄과 먹거리 문제를 함께 풀었다. 그러나 꽃을 피워내기까지의 여정은 가시밭길에 가까웠다. 부처마다 분산된 예산, 칸막이에 갇힌 정책 ...",
+        "matched_source": "joongang",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -36131,21 +36598,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "충북도 9월 한달간 2040 자기혈관숫자 알기 캠페인",
-        "original_url": "http://www.cctimes.kr/news/articleView.html?idxno=924350",
-        "naver_url": "http://www.cctimes.kr/news/articleView.html?idxno=924350",
-        "published_at": "2026-08-30T10:18:00Z",
-        "description": "노인대학과 전통시장, 장애인 복지관, 사업장 등을 직접 찾아 건강 상담과 예방 캠페인도 이어간다. 한찬오 도 보건 정책 과장은 \"심뇌혈관질환은 발병하면 사망하거나 중증 후유증을 남길 수 있지만 생활 습관 개선과...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "\"투석실 경험이 근거\"…투석협회, 현장중심 학술로 새 10년 연다",
         "original_url": "http://www.bokuennews.com/news/article.html?no=283310",
         "naver_url": "http://www.bokuennews.com/news/article.html?no=283310",
         "published_at": "2026-08-30T10:18:00Z",
         "description": "대한투석협회 김성남 정책 자문단장, 김화정 부회장, 김상욱 이사장, 탁우택 회장, 부창수 부회장, 이재원... 이에 협회는 한국신장 장애인 협회와의 소통을 통해 주 3회 투석을 받아야 하는 환자들의 이동 문제를 살피고...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "충북도 9월 한달간 2040 자기혈관숫자 알기 캠페인",
+        "original_url": "http://www.cctimes.kr/news/articleView.html?idxno=924350",
+        "naver_url": "http://www.cctimes.kr/news/articleView.html?idxno=924350",
+        "published_at": "2026-08-30T10:18:00Z",
+        "description": "노인대학과 전통시장, 장애인 복지관, 사업장 등을 직접 찾아 건강 상담과 예방 캠페인도 이어간다. 한찬오 도 보건 정책 과장은 \"심뇌혈관질환은 발병하면 사망하거나 중증 후유증을 남길 수 있지만 생활 습관 개선과...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -36341,21 +36808,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "천안시 공무원 '관행 깬 행정' 빛났다…180억 아끼고 전국 최초 압류까...",
-        "original_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1096438",
-        "naver_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1096438",
-        "published_at": "2026-08-30T06:38:00Z",
-        "description": "장려에는 도시재생과 박종석 팀장·홍도균 주무관이 추진한 '포기된 정비구역의 도시재생 인정사업 선정'과 청년 정책 과 강연희 팀장·정연우 주무관의 '청년 일자리 및 정착 지원'이 선정됐다. 장애인 복지과 이명옥...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "인천 제물포구 고령화비율 30.6%… 원도심 지역서 최고",
         "original_url": "https://www.kgnews.co.kr/news/article.html?no=909464",
         "naver_url": "https://www.kgnews.co.kr/news/article.html?no=909464",
         "published_at": "2026-08-30T06:38:00Z",
         "description": "노인복지 정책 을 넘어 돌봄 체계 전반의 구조적 전환이 필요하다고 분석했다. 이에 고령층 비율이 높고... 혼자서 일상생활을 유지하기 어려운 노인과 65세 이상 장애인 (지체·뇌병변)을 대상으로 의료와 복지를 통합...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "천안시 공무원 '관행 깬 행정' 빛났다…180억 아끼고 전국 최초 압류까...",
+        "original_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1096438",
+        "naver_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1096438",
+        "published_at": "2026-08-30T06:38:00Z",
+        "description": "장려에는 도시재생과 박종석 팀장·홍도균 주무관이 추진한 '포기된 정비구역의 도시재생 인정사업 선정'과 청년 정책 과 강연희 팀장·정연우 주무관의 '청년 일자리 및 정착 지원'이 선정됐다. 장애인 복지과 이명옥...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -36491,16 +36958,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "장애인 증명서 국외 제출용 인증서, 31일부터 온라인 발급",
-        "original_url": "https://biz.chosun.com/science-chosun/medicine-health/2026/08/30/2SCR4LNUUFA2ZBCKRGZXVWIZ4I",
-        "naver_url": "https://n.news.naver.com/mnews/article/366/0001189158?sid=105",
-        "published_at": "2026-08-30T03:01:00Z",
-        "description": "박문수 보건복지부 장애인정책 과장은 “외국에서 장애인 혜택을 받고자 하는 장애인들이 편리하게 장애인증명서를 제출할 수 있게 됐다”며 “앞으로도 장애인 편의 증진을 위한 관계부처의 적극적인 협력이 필요하다”...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "장애인 증명서 국외 인증, 31일부터 온라인 즉시 발급",
         "original_url": "https://www.etnews.com/20260830000005",
         "naver_url": "https://n.news.naver.com/mnews/article/030/0003461561?sid=105",
@@ -36511,21 +36968,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "정부는 열고 국회는 닫았다…닥터나우·삼쩜삼, 입법에 발목",
-        "original_url": "https://www.m-i.kr/news/articleView.html?idxno=1407249",
-        "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=1407249",
-        "published_at": "2026-08-30T03:00:00Z",
-        "description": "약사법 개정안은 정부의 정책 방향과도 엇갈린다. 정부는 올해 말 비대면진료 제도화를 앞두고 섬·벽지 주민, 장기요양수급자, 장애인 등 일부 환자에게 약배송을 허용하는 하위법령을 마련하고 있다. 여기서 나아가 모든...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "장애인 증명서 아포스티유 31일부터 온라인 발급…우편 7~10일 불편 해소",
-        "original_url": "https://www.news1.kr/economy/trend/6273591",
-        "naver_url": "https://n.news.naver.com/mnews/article/421/0009139861?sid=101",
-        "published_at": "2026-08-30T03:00:00Z",
-        "description": "박문수 복지부 장애인정책 과장은 \"외국에서 장애인 혜택을 받고자 하는 장애인들이 편리하게 장애인증명서를 제출할 수 있게 됐다\"고 밝혔다. 국승용 재외동포청 정보화 전담팀장은 \"관계기관과 협의를 통해 온라인...",
+        "title": "장애인 증명서 국외 제출용 인증서, 31일부터 온라인 발급",
+        "original_url": "https://biz.chosun.com/science-chosun/medicine-health/2026/08/30/2SCR4LNUUFA2ZBCKRGZXVWIZ4I",
+        "naver_url": "https://n.news.naver.com/mnews/article/366/0001189158?sid=105",
+        "published_at": "2026-08-30T03:01:00Z",
+        "description": "박문수 보건복지부 장애인정책 과장은 “외국에서 장애인 혜택을 받고자 하는 장애인들이 편리하게 장애인증명서를 제출할 수 있게 됐다”며 “앞으로도 장애인 편의 증진을 위한 관계부처의 적극적인 협력이 필요하다”...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -36551,21 +36998,31 @@
       },
       {
         "query": "장애인 정책",
-        "title": "\"쌀·보리 직접 나르던 시절에서 통합돌봄까지\"···전북 사회복지공무...",
-        "original_url": "http://www.jeonmin.co.kr/news/articleView.html?idxno=446025",
-        "naver_url": "http://www.jeonmin.co.kr/news/articleView.html?idxno=446025",
-        "published_at": "2026-08-30T02:58:00Z",
-        "description": "노인과 장애인 가구에는 매달 쌀과 보리를 저울에 달아 직접 전달하기도 했다. 1991년 첫 임용자 가운데 한... 통합돌봄 등 새로운 정책 이 도입되면서 업무 영역은 넓어졌지만, 현장에서는 늘어난 업무량과 악성민원에...",
+        "title": "정부는 열고 국회는 닫았다…닥터나우·삼쩜삼, 입법에 발목",
+        "original_url": "https://www.m-i.kr/news/articleView.html?idxno=1407249",
+        "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=1407249",
+        "published_at": "2026-08-30T03:00:00Z",
+        "description": "약사법 개정안은 정부의 정책 방향과도 엇갈린다. 정부는 올해 말 비대면진료 제도화를 앞두고 섬·벽지 주민, 장기요양수급자, 장애인 등 일부 환자에게 약배송을 허용하는 하위법령을 마련하고 있다. 여기서 나아가 모든...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
-        "title": "도민과 통(通)하는 충남형 적극행정 우수사례 선정",
-        "original_url": "http://www.cctimes.kr/news/articleView.html?idxno=924212",
-        "naver_url": "http://www.cctimes.kr/news/articleView.html?idxno=924212",
-        "published_at": "2026-08-30T02:48:00Z",
-        "description": "우수 사례 5건은 △공주시 경로 장애인 과 △당진시 환경위생과 △道 소방본부 소방행정과 △道 해운항만과 △道 청년 정책 과가 이름을 올렸다. 협업우수 사례로는 △道 관광진흥과 △충남역사문화연구원이 선정되었다....",
+        "title": "장애인 증명서 아포스티유 31일부터 온라인 발급…우편 7~10일 불편 해소",
+        "original_url": "https://www.news1.kr/economy/trend/6273591",
+        "naver_url": "https://n.news.naver.com/mnews/article/421/0009139861?sid=101",
+        "published_at": "2026-08-30T03:00:00Z",
+        "description": "박문수 복지부 장애인정책 과장은 \"외국에서 장애인 혜택을 받고자 하는 장애인들이 편리하게 장애인증명서를 제출할 수 있게 됐다\"고 밝혔다. 국승용 재외동포청 정보화 전담팀장은 \"관계기관과 협의를 통해 온라인...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "\"쌀·보리 직접 나르던 시절에서 통합돌봄까지\"···전북 사회복지공무...",
+        "original_url": "http://www.jeonmin.co.kr/news/articleView.html?idxno=446025",
+        "naver_url": "http://www.jeonmin.co.kr/news/articleView.html?idxno=446025",
+        "published_at": "2026-08-30T02:58:00Z",
+        "description": "노인과 장애인 가구에는 매달 쌀과 보리를 저울에 달아 직접 전달하기도 했다. 1991년 첫 임용자 가운데 한... 통합돌봄 등 새로운 정책 이 도입되면서 업무 영역은 넓어졌지만, 현장에서는 늘어난 업무량과 악성민원에...",
         "matched_source": null,
         "in_deterministic_collection": null
       }
@@ -36968,47 +37425,47 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-08-31T01:05:07.040343Z",
+    "status": "complete",
+    "checked_at": "2026-08-31T01:14:16.070131Z",
     "checks": [
       {
         "issue_title": "이천 이주노동자 크레인 낙하사고 사망과 원청 책임 논란",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "단체교섭 거부 사용자 형사처벌 조항 헌재 합헌 결정",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "현대차 대리점 판매노동자 원청 사용자성 중노위 재심",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "계양전기 노동자 미국 공장 설립 반대 파업",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "건설노동자 건설안전특별법 제정 촉구 국회 농성 예고",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
