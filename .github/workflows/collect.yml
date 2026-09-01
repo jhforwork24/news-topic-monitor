@@ -13,6 +13,11 @@ on:
         default: "6"
 
 concurrency:
+  # Shared with every other workflow that runs a live Collector against the
+  # same data/ JSONL storage (backfill, editorial-queue, editorial-finalize,
+  # editorial-publish) — they must stay serialized to avoid concurrent
+  # writers on the same files. Read-only workflows (report, publish-notion)
+  # use the separate news-topic-monitor-reports group instead.
   group: news-topic-monitor-data
   cancel-in-progress: false
 

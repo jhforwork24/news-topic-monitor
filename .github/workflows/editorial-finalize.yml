@@ -37,6 +37,8 @@ on:
         default: false
 
 concurrency:
+  # See collect.yml: shared with every workflow that writes to data/ via a
+  # live Collector (this workflow's own final-state recrawl included).
   group: news-topic-monitor-data
   cancel-in-progress: false
 

@@ -14,7 +14,11 @@ on:
         required: false
 
 concurrency:
-  group: news-topic-monitor-data
+  # `publish-notion` only reads JsonlStorage (via build_briefing) and writes
+  # to reports/ + Notion — it never runs a live Collector, so it can share
+  # the read-only lane with report.yml instead of queuing behind the
+  # collect/backfill/editorial-* writers that append to data/.
+  group: news-topic-monitor-reports
   cancel-in-progress: false
 
 permissions:
