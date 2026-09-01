@@ -40,7 +40,7 @@ flowchart LR
 - `pipeline.py`: 출처 격리, 시간창 필터, 1·2차 판별, 본문 폐기, health 집계
 - `policy.py`: `source-registry.yaml`과 `briefing-policy.yaml` 스키마 검증
 - `gap_detection.py`: Naver API Hub 원문 URL을 결정론적 수집 URL 집합과 대조한 잠재 누락 탐지,
-  지정 9개 매체 역검색 상태 기록
+  지정 10개 매체 역검색 상태 기록
 - `final_state.py`: 진행형 사건의 발행 직전 공식 출처 재수집 결과 비교
 - `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
 - `chat_bridge.py`: 대기열·초안·감사의 고정 스키마, SHA-256 queue binding, 제출 순서와 후보 ID 검증
@@ -51,7 +51,7 @@ flowchart LR
   동일 주제 이전 보도 선정(연관성·상세성 기준)
 - `notion_publish.py`: private 구조화 대기열 export/import, exact title/date 멱등 최종 발행,
   관리 표식 충돌 방지, 발행 health
-- `sources.py`: 13개 출처명과 종합·노동대안·장애언론 매체군 정의
+- `sources.py`: 14개 출처명과 종합·노동대안·장애언론 매체군, 섹션별 지정매체 집합 정의
 - `cli.py`: collect, backfill, report, briefing, publish-notion 명령
 
 ## robots.txt와 요청 흐름
@@ -112,7 +112,7 @@ YouTube 업로드도 여러 프로그램이 섞여 있어 신뢰할 수 있는 �
 상위 10개 검토군을 먼저 고정하고 단순 홍보·모집·의전성 보도를 제외하며 빈자리를 차순위로
 채우지 않는다. CRPD 20주년 행사는 연간 핵심의제로 보아 예외적으로 최하단에 둔다. II절은 별도
 `labor_care_poverty` 규칙의 `relevant` 기사만 사용하고 사진·화보·연예·스포츠 보도를 제외한다.
-III절은 3개 지정 칼럼과 7개 종합매체의 장애 관련 칼럼만 선정하며, 결과가 없으면 절 자체를
+III절은 3개 지정 칼럼과 8개 종합매체의 장애 관련 칼럼만 선정하며, 결과가 없으면 절 자체를
 생략한다. 생성 문서는 형식·문장·분류 검증을 통과해야만 노션 발행 단계로 진행한다.
 
 각 이슈에는 동일 주제의 이전 보도를 연관성(공유 개념어 중복)과 상세성(본문 검증 여부·지정매체

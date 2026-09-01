@@ -328,7 +328,11 @@ def evaluate_publish_gate(
     }
     actual_reverse = {(check.issue_title, check.source) for check in reverse_search.checks}
     if actual_reverse != expected_reverse:
-        fatal.append("지정매체 reverse-search 상태가 모든 이슈의 9/9를 포함하지 않음")
+        required_count = len(policy.publish_gate.designated_reverse_search_required)
+        fatal.append(
+            f"지정매체 reverse-search 상태가 모든 이슈의 {required_count}/{required_count}를 "
+            "포함하지 않음"
+        )
         reporting.append(
             ReportingItem(
                 cause=(
@@ -337,7 +341,9 @@ def evaluate_publish_gate(
                 ),
                 fallback="수집된 공식 원문은 보존하되 누락된 상태를 COMPLETE로 추정하지 않음",
                 result="failed",
-                next_action="각 이슈별 지정 9개 매체 상태를 다시 생성한 뒤 gate 재실행",
+                next_action=(
+                    f"각 이슈별 지정 {required_count}개 매체 상태를 다시 생성한 뒤 gate 재실행"
+                ),
             )
         )
     for check in reverse_search.checks:

@@ -88,6 +88,12 @@ sources:
     domains: [www.pressian.com, pressian.com]
     discovery_routes: [official_rss_api]
     fallbacks: [naver_gap_detection]
+  sisain:
+    label: 시사인
+    tier: designated_reverse_search
+    domains: [www.sisain.co.kr, sisain.co.kr]
+    discovery_routes: [official_news_sitemap]
+    fallbacks: [naver_gap_detection]
 
   mediaus:
     label: 미디어스

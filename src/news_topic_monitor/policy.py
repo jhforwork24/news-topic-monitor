@@ -22,6 +22,7 @@ REQUIRED_REVERSE_SEARCH = frozenset(
         "hani",
         "ohmynews",
         "pressian",
+        "sisain",
     }
 )
 
@@ -171,7 +172,7 @@ def validate_policy_contract(registry: SourceRegistry, policy: BriefingPolicy) -
     if set(census) != REQUIRED_DISABILITY_CENSUS:
         errors.append("disability census must contain the required exact 3 sources")
     if set(reverse) != REQUIRED_REVERSE_SEARCH:
-        errors.append("reverse search must contain the required exact 9 sources")
+        errors.append("reverse search must contain the required exact 10 sources")
     for source in census:
         source_policy = registry.sources.get(source)
         if source_policy is None:

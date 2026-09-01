@@ -19,7 +19,7 @@ def test_stable_policy_files_define_exact_census_and_reverse_search_sets() -> No
         "ablenews",
         "theindigo",
     ]
-    assert len(policy.publish_gate.designated_reverse_search_required) == 9
+    assert len(policy.publish_gate.designated_reverse_search_required) == 10
     assert all(
         registry.sources[source].tier == "designated_reverse_search"
         for source in policy.publish_gate.designated_reverse_search_required

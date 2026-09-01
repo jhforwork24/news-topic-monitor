@@ -20,7 +20,7 @@
 3. finalizer가 아직 실행 중이면 완료로 추정하거나 다른 writer를 시작하지 않는다. 진행 중임과
    다음 확인 필요만 보고한다.
 4. 오늘 `publish_gate.allowed=true`, Notion 상태가 `created` 또는 `already_published`, 날짜가 모두
-   일치할 때만 성공으로 보고한다. 장애언론 census 3/3, 지정매체 역검색 9/9 또는 명시적 degraded,
+   일치할 때만 성공으로 보고한다. 장애언론 census 3/3, 지정매체 역검색 10/10 또는 명시적 degraded,
    감사 fatal error 0, final-state COMPLETE 여부를 함께 요약한다.
 5. gate가 차단되거나 workflow가 실패하면 최종 브리핑을 대신 만들거나 수동 발행하지 않는다.
    `reporting_items`와 실행 로그에서 원인·대체경로·결과·다음 조치를 보고한다.
