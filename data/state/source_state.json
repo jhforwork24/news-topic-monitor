@@ -18,19 +18,19 @@
       "discovery_status": "complete"
     },
     "donga": {
-      "last_run_at": "2026-09-01T01:04:11.319469Z",
+      "last_run_at": "2026-09-01T02:05:53.147559Z",
       "success": true,
-      "discovered": 597,
+      "discovered": 612,
       "errors": [],
-      "last_success_at": "2026-09-01T01:04:11.319469Z",
+      "last_success_at": "2026-09-01T02:05:53.147559Z",
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-09-01T01:05:57.859662Z",
+      "last_run_at": "2026-09-01T02:06:51.383403Z",
       "success": true,
-      "discovered": 360,
+      "discovered": 45,
       "errors": [],
-      "last_success_at": "2026-09-01T01:05:57.859662Z",
+      "last_success_at": "2026-09-01T02:06:51.383403Z",
       "discovery_status": "complete"
     },
     "khan": {
@@ -67,35 +67,35 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-09-01T01:08:37.365482Z",
+      "last_run_at": "2026-09-01T02:06:53.929227Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-01T01:08:37.365482Z",
+      "last_success_at": "2026-09-01T02:06:53.929227Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-09-01T01:09:12.758799Z",
+      "last_run_at": "2026-09-01T02:06:56.709374Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-01T01:09:12.758799Z",
+      "last_success_at": "2026-09-01T02:06:56.709374Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-09-01T01:10:07.043463Z",
+      "last_run_at": "2026-09-01T02:07:38.994185Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-01T01:10:07.043463Z",
+      "last_success_at": "2026-09-01T02:07:38.994185Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-09-01T01:10:27.782707Z",
+      "last_run_at": "2026-09-01T02:07:41.263007Z",
       "success": true,
-      "discovered": 5,
+      "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-09-01T01:10:27.782707Z",
+      "last_success_at": "2026-09-01T02:07:41.263007Z",
       "discovery_status": "complete"
     },
     "kbs": {
