@@ -49,7 +49,9 @@ def validate_briefing(document: BriefingDocument) -> None:
             if len(issue.articles) > 1 and not 1 <= tone_sentences <= 4:
                 errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
             if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
-                errors.append(f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨")
+                errors.append(
+                    f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨"
+                )
             if not section.title.startswith("III.") and FORBIDDEN_AUTHOR_TERM in (
                 issue.summary + issue.tone_analysis
             ):
@@ -60,7 +62,9 @@ def validate_briefing(document: BriefingDocument) -> None:
                 if not keyword:
                     errors.append(f"{section.title} / {issue.title}: 키워드 요약이 비어 있음")
                 elif keyword == issue.title.strip():
-                    errors.append(f"{section.title} / {issue.title}: 키워드 요약이 제목을 그대로 인용함")
+                    errors.append(
+                        f"{section.title} / {issue.title}: 키워드 요약이 제목을 그대로 인용함"
+                    )
 
             if section.title.startswith("I."):
                 invalid = [
