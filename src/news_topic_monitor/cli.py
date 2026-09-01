@@ -862,8 +862,9 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                 )
             stale_revalidation_override = True
             LOGGER.warning(
-                "editorial finalize: 보고 경계 6시간 초과 후 수동 예외(--allow-stale-revalidation)로 "
-                "재검증 진행 (report_date=%s, revalidation_requested_at=%s)",
+                "editorial finalize: 보고 경계 6시간 초과 후 수동 예외"
+                "(--allow-stale-revalidation)로 재검증 진행 "
+                "(report_date=%s, revalidation_requested_at=%s)",
                 report_date,
                 revalidation_requested_at.isoformat(),
             )

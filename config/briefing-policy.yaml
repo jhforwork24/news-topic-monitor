@@ -57,6 +57,7 @@ publish_gate:
     - hani
     - ohmynews
     - pressian
+    - sisain
   allow_explicit_reverse_search_degraded: true
   require_core_article_body: true
   require_final_state_complete: true

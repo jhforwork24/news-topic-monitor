@@ -80,7 +80,7 @@ def test_naver_api_hub_headers_and_gap_result_are_discovery_only() -> None:
     assert collected.potential_gaps == []
 
 
-def test_reverse_search_records_explicit_degraded_9_of_9_without_credentials() -> None:
+def test_reverse_search_records_explicit_degraded_10_of_10_without_credentials() -> None:
     root = __import__("pathlib").Path(__file__).parents[1]
     policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
     registry = load_source_registry(root / "config" / "source-registry.yaml")
@@ -108,5 +108,5 @@ def test_reverse_search_records_explicit_degraded_9_of_9_without_credentials() -
         end=end,
     )
     assert result.status == CheckStatus.DEGRADED
-    assert len(result.checks) == 9
+    assert len(result.checks) == 10
     assert all(check.status == CheckStatus.DEGRADED for check in result.checks)

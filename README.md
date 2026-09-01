@@ -1,6 +1,6 @@
 # KCIL News Topic Monitor
 
-13개 인쇄·디지털 매체의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록을 주기적으로 확인하고,
+14개 인쇄·디지털 매체의 공식 공개 RSS·뉴스 사이트맵·최신기사 목록을 주기적으로 확인하고,
 발견 기사 메타데이터를 중복 없이 기록한 뒤 장애인권과
 노동·돌봄·빈곤 의제를 규칙 기반으로 판별하는 Python 3.12 프로젝트이다. 개인 PC를 켜 두거나
 화면을 원격 조작하지 않으며, GitHub Actions와 연결형 Claude 예약 작업을 연결해 별도 OpenAI API
@@ -127,7 +127,7 @@ news-topic-monitor report \
   같은 원근거와 초안을 독립 감사함. 두 작업 모두 최종 브리핑을 직접 발행하지 않음
 - `.github/workflows/editorial-finalize.yml`: `48 0 * * *`(UTC), 매일 09:48에 대기열·초안·감사의
   날짜·queue_id·draft_id·후보 ID·스키마·제출순서를 검증하고, 선정 출처 final-state 재수집,
-  Naver gap detection·9개 지정매체 역검색, 장애언론 census, publish gate를 거쳐 유일하게
+  Naver gap detection·10개 지정매체 역검색, 장애언론 census, publish gate를 거쳐 유일하게
   Notion 최종 발행을 수행함
 - `.github/workflows/editorial-publish.yml`: 예약 없음. 사용자가 유료 OpenAI API 복구를
   명시적으로 승인한 경우에만 수동 실행하는 이전 경로
@@ -203,7 +203,7 @@ API preflight 결과는 `health/api_preflight/latest.json`에 `complete/degraded
 기계 오류 코드만 남긴다. 무료 production 경로에서 OpenAI 상태는 `not_required`이며, Naver
 실패는 독립 검색층의 명시적 degraded 상태로 이어진다. 수동 유료 fallback에서만 OpenAI
 preflight 실패가 전체 편집 실행을 중단한다.
-publish gate는 장애언론 census 3/3 COMPLETE, 각 이슈의 지정매체 역검색 9/9 또는 명시적
+publish gate는 장애언론 census 3/3 COMPLETE, 각 이슈의 지정매체 역검색 10/10 또는 명시적
 DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal error 0, 미분류 실패 0을
 검사한다. 하나라도 충족하지 못하면 Notion 최종 브리핑을 만들지 않고 `브리핑 보고사항`에 원인·
 대체경로·결과·다음 조치를 남긴다. Naver 원문 URL은 결정론적 수집 URL 집합과 대조하며, 장애언론
@@ -290,7 +290,7 @@ KDF, 일반논평은
 - 사이트 구조나 robots.txt가 바뀌면 해당 출처는 안전하게 중단되며 파서 갱신 전까지 공백이 생긴다.
 - 본문 접근이 금지되거나 robots.txt 확인에 실패하면 공개 메타데이터만으로 판별한다.
 - 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단한다.
-- 13개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
+- 14개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
 
 이 한계 때문에 **수집 실패를 기사 부재로 해석해서는 안 된다.** 장애인권 의제의 언론 비가시성을
 기술적 0건과 혼동하지 않도록 보고서의 건강상태를 함께 검토해야 한다.

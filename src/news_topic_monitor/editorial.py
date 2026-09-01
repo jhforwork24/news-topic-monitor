@@ -25,7 +25,7 @@ from .models import (
     EditorialVerdict,
     VerificationStatus,
 )
-from .sources import LABOR_SECTION_ALLOWED_SOURCES, SOURCE_CAMP
+from .sources import DISABILITY_SECTION_ALLOWED_SOURCES, LABOR_SECTION_ALLOWED_SOURCES, SOURCE_CAMP
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
 
@@ -639,6 +639,14 @@ def _validate_plan(
             ):
                 errors.append(
                     f"{issue.title}: 노동·돌봄·빈곤 섹션 신규 선정에 비지정 매체"
+                    f"({candidate.source}) 기사 포함"
+                )
+            if (
+                issue.section == EditorialSection.DISABILITY
+                and candidate.source not in DISABILITY_SECTION_ALLOWED_SOURCES
+            ):
+                errors.append(
+                    f"{issue.title}: 장애 섹션 신규 선정에 비지정 매체"
                     f"({candidate.source}) 기사 포함"
                 )
     issue_titles = [issue.title for issue in plan.issues]

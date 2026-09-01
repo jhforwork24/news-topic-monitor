@@ -10,6 +10,7 @@ from .mediaus import MediausAdapter
 from .newscham import NewschamAdapter
 from .ohmynews import OhmynewsAdapter
 from .pressian import PressianAdapter
+from .sisain import SisainAdapter
 from .theindigo import TheindigoAdapter
 
 ALL_ADAPTERS = (
@@ -20,6 +21,7 @@ ALL_ADAPTERS = (
     KhanAdapter,
     OhmynewsAdapter,
     PressianAdapter,
+    SisainAdapter,
     NewschamAdapter,
     LabortodayAdapter,
     MediausAdapter,
@@ -42,5 +44,6 @@ __all__ = [
     "NewschamAdapter",
     "OhmynewsAdapter",
     "PressianAdapter",
+    "SisainAdapter",
     "TheindigoAdapter",
 ]

@@ -19,7 +19,12 @@ on:
         required: false
 
 concurrency:
-  group: news-topic-monitor-data
+  # `report` only reads JsonlStorage (via generate_report) and writes to
+  # reports/ — it never runs a live Collector, so it doesn't need to
+  # serialize behind the collect/backfill/editorial-* writers that append to
+  # the same data/ JSONL files. Sharing that group meant this daily report
+  # could sit queued for hours behind unrelated collection runs.
+  group: news-topic-monitor-reports
   cancel-in-progress: false
 
 permissions:

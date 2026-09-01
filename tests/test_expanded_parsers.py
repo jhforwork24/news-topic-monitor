@@ -13,6 +13,7 @@ from news_topic_monitor.adapters.mediaus import MediausAdapter
 from news_topic_monitor.adapters.newscham import NewschamAdapter
 from news_topic_monitor.adapters.ohmynews import OhmynewsAdapter
 from news_topic_monitor.adapters.pressian import PressianAdapter
+from news_topic_monitor.adapters.sisain import SisainAdapter
 from news_topic_monitor.adapters.theindigo import TheindigoAdapter
 
 
@@ -52,6 +53,11 @@ from news_topic_monitor.adapters.theindigo import TheindigoAdapter
         (
             AblenewsAdapter(),
             "https://www.ablenews.co.kr/news/articleView.html?idxno=232606",
+            "generic_news_sitemap.xml",
+        ),
+        (
+            SisainAdapter(),
+            "https://www.sisain.co.kr/news/articleView.html?idxno=52341",
             "generic_news_sitemap.xml",
         ),
     ],
@@ -119,6 +125,7 @@ def test_theindigo_empty_window_is_successful_empty_discovery() -> None:
         (MediausAdapter(), "article-view-content-div"),
         (BeminorAdapter(), "article-view-content-div"),
         (AblenewsAdapter(), "article-view-content-div"),
+        (SisainAdapter(), "article-view-content-div"),
         (TheindigoAdapter(), "td-post-content"),
     ],
 )
