@@ -23,7 +23,22 @@
       "mcp__Notion__notion-update-*",
       "mcp__Notion__notion-duplicate-page",
       "mcp__Notion__notion-move-pages",
-      "mcp__Notion__notion-convert-page-to-skill"
+      "mcp__Notion__notion-convert-page-to-skill",
+      "mcp__Claude_Code_Remote__send_later",
+      "mcp__Notion__notion-fetch",
+      "mcp__github__actions_list",
+      "mcp__Notion__notion-search",
+      "mcp__github__pull_request_read",
+      "Bash(git fetch*)",
+      "mcp__github__get_job_logs",
+      "mcp__github__get_file_contents",
+      "mcp__github__actions_get",
+      "mcp__Claude_Code_Remote__list_triggers",
+      "Bash(ruff check*)",
+      "Bash(/home/user/news-topic-monitor/.venv/bin/pytest tests/test_assurance.py)",
+      "mcp__github__list_pull_requests",
+      "mcp__Claude_Code_Remote__get_session",
+      "mcp__github__list_commits"
     ]
   }
 }
