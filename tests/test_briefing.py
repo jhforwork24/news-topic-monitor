@@ -141,6 +141,23 @@ def test_previous_coverage_requires_a_specific_shared_concept() -> None:
     assert any(item.url == earlier_access.canonical_url for item in access_previous)
 
 
+def test_previous_coverage_links_differently_worded_reports_via_concept_terms() -> None:
+    current = _article(
+        "ablenews",
+        "특별교통수단은 장애인의 필수적 이동지원, 예산 부족 이동권 축소 안 된다",
+        article_id="current",
+    )
+    current.summary = "경기도 특별교통수단 운영예산이 부족해 장애인콜택시 이용에 차질이 우려된다."
+    earlier = _article(
+        "beminor",
+        "추미애 필수 예산 끝까지 지킨다더니, 장애인콜택시 예산은 삭감",
+        article_id="earlier",
+    )
+    earlier.summary = "경기도가 특별교통수단(장애인콜택시) 예산을 삭감해 장애인 이동권이 후퇴했다."
+    previous = previous_coverage_for([current], [earlier])
+    assert any(item.url == earlier.canonical_url for item in previous)
+
+
 def test_previous_coverage_prefers_more_detailed_report_at_equal_relevance() -> None:
     current = _article(
         "hani",
