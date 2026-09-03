@@ -158,6 +158,66 @@ def test_previous_coverage_links_differently_worded_reports_via_concept_terms() 
     assert any(item.url == earlier.canonical_url for item in previous)
 
 
+def test_previous_coverage_ignores_generic_court_procedure_overlap() -> None:
+    ablenews = _article(
+        "ablenews",
+        "색동원 성폭력 피해 고스란히 인정받지 못했다 항거불능 벽에 막힌 1심",
+        section="인권",
+        article_id="ablenews",
+    )
+    beminor = _article(
+        "beminor",
+        "색동원 시설장 징역 15년 선고했지만 위력 외면한 법원, 강간 혐의 일부 무죄",
+        section="탈시설·자립생활",
+        article_id="beminor",
+    )
+    theindigo = _article(
+        "theindigo",
+        "법원, 색동원 시설장 징역 15년 장애계 강간 혐의 무죄 비판",
+        article_id="theindigo",
+    )
+    unrelated_verdict = _article(
+        "khan",
+        "1타 강사 현우진, 문항 거래 혐의 1심 무죄 법원 주고받은 금품 사적 거래 해당",
+        classification=Classification.IRRELEVANT,
+        article_id="hyunwoojin",
+    )
+    previous = previous_coverage_for([ablenews, beminor, theindigo], [unrelated_verdict])
+    assert not any(item.url == unrelated_verdict.canonical_url for item in previous)
+
+
+def test_build_briefing_excludes_irrelevant_history_from_previous_coverage(
+    tmp_path, topics_path
+) -> None:
+    storage = JsonlStorage(tmp_path)
+    current = _article(
+        "ablenews",
+        "제주 섭지코지 산책로 이동권 개선 인권위 권고 수용",
+        article_id="current",
+    )
+    current.byline = "홍길동 기자"
+    storage.upsert(current)
+    off_topic_history = _article(
+        "donga",
+        "제주 섭지코지 산책로 이동권 개선 관련 후속 대책 발표",
+        classification=Classification.IRRELEVANT,
+        article_id="off-topic-previous",
+    )
+    off_topic_history.published_at = datetime(2026, 8, 14, 0, tzinfo=UTC)
+    off_topic_history.first_seen_at = off_topic_history.published_at
+    off_topic_history.last_seen_at = off_topic_history.published_at
+    storage.upsert(off_topic_history)
+    document = build_briefing(
+        storage,
+        topics_path=topics_path,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    issue = document.sections[0].issues[0]
+    assert not any(item.url == off_topic_history.canonical_url for item in issue.previous_coverage)
+
+
 def test_previous_coverage_prefers_more_detailed_report_at_equal_relevance() -> None:
     current = _article(
         "hani",
