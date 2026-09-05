@@ -3,9 +3,10 @@
   "report_date": "2026-09-05",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.124,
-    "total": 1.758
+    "api_preflight": 1.374,
+    "bridge_import_validation": 8.556,
+    "total": 9.939
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 초안 · 2026-09-05 (found=0)",
-  "completed_at": "2026-09-05T07:32:24.930464Z"
+  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
+  "completed_at": "2026-09-05T11:14:15.353066Z"
 }
