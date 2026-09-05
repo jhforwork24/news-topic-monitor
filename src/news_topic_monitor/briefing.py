@@ -73,6 +73,19 @@ STOPWORDS = {
     "전원",
     "추진",
     "현장",
+    "법원",
+    "혐의",
+    "무죄",
+    "유죄",
+    "징역",
+    "기소",
+    "선고",
+    "1심",
+    "2심",
+    "3심",
+    "판결",
+    "재판부",
+    "검찰",
 }
 CONCEPT_TERMS = (
     "색동원",
@@ -102,6 +115,8 @@ CONCEPT_TERMS = (
     "공공돌봄",
     "홈플러스",
     "현대차",
+    "특별교통수단",
+    "장애인콜택시",
 )
 
 # 편집단계에서 단순 홍보·의전성 보도는 제외한다. 다만 CRPD 채택 20주년처럼
@@ -140,7 +155,6 @@ STRONG_PREVIOUS_CONCEPTS = frozenset(
         "섭지코지",
         "최중증",
         "통합돌봄",
-        "교육권",
         "국제장애인권컨퍼런스",
         "산업재해",
         "중대재해",
@@ -221,7 +235,12 @@ def build_briefing(
         item for item in all_articles if start <= (item.published_at or item.first_seen_at) < end
     ]
     articles.sort(key=lambda item: item.published_at or item.first_seen_at, reverse=True)
-    history = [item for item in all_articles if (item.published_at or item.first_seen_at) < start]
+    history = [
+        item
+        for item in all_articles
+        if (item.published_at or item.first_seen_at) < start
+        and item.classification == Classification.RELEVANT
+    ]
     editorial_notes: list[str] = []
 
     disability_candidates: list[ArticleRecord] = []
@@ -345,6 +364,7 @@ def build_editorial_briefing(
         article
         for article in all_articles
         if (article.published_at or article.first_seen_at) < start
+        and article.classification == Classification.RELEVANT
     ]
     by_id = {_editorial_candidate_id(article): article for article in current}
     issues_by_section: dict[EditorialSection, list[BriefingIssue]] = {

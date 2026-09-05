@@ -141,6 +141,109 @@ def test_previous_coverage_requires_a_specific_shared_concept() -> None:
     assert any(item.url == earlier_access.canonical_url for item in access_previous)
 
 
+def test_previous_coverage_links_differently_worded_reports_via_concept_terms() -> None:
+    current = _article(
+        "ablenews",
+        "특별교통수단은 장애인의 필수적 이동지원, 예산 부족 이동권 축소 안 된다",
+        article_id="current",
+    )
+    current.summary = "경기도 특별교통수단 운영예산이 부족해 장애인콜택시 이용에 차질이 우려된다."
+    earlier = _article(
+        "beminor",
+        "추미애 필수 예산 끝까지 지킨다더니, 장애인콜택시 예산은 삭감",
+        article_id="earlier",
+    )
+    earlier.summary = "경기도가 특별교통수단(장애인콜택시) 예산을 삭감해 장애인 이동권이 후퇴했다."
+    previous = previous_coverage_for([current], [earlier])
+    assert any(item.url == earlier.canonical_url for item in previous)
+
+
+def test_previous_coverage_ignores_generic_court_procedure_overlap() -> None:
+    ablenews = _article(
+        "ablenews",
+        "색동원 성폭력 피해 고스란히 인정받지 못했다 항거불능 벽에 막힌 1심",
+        section="인권",
+        article_id="ablenews",
+    )
+    beminor = _article(
+        "beminor",
+        "색동원 시설장 징역 15년 선고했지만 위력 외면한 법원, 강간 혐의 일부 무죄",
+        section="탈시설·자립생활",
+        article_id="beminor",
+    )
+    theindigo = _article(
+        "theindigo",
+        "법원, 색동원 시설장 징역 15년 장애계 강간 혐의 무죄 비판",
+        article_id="theindigo",
+    )
+    unrelated_verdict = _article(
+        "khan",
+        "1타 강사 현우진, 문항 거래 혐의 1심 무죄 법원 주고받은 금품 사적 거래 해당",
+        classification=Classification.IRRELEVANT,
+        article_id="hyunwoojin",
+    )
+    previous = previous_coverage_for([ablenews, beminor, theindigo], [unrelated_verdict])
+    assert not any(item.url == unrelated_verdict.canonical_url for item in previous)
+
+
+def test_previous_coverage_ignores_incidental_rights_category_overlap() -> None:
+    budget_ablenews = _article(
+        "ablenews",
+        "전장연 요구 내년 장애인권리예산, 이동권 포함됐지만 교육 노동 탈시설 외면",
+        article_id="ablenews-budget",
+    )
+    budget_beminor = _article(
+        "beminor",
+        "전장연, 내년 예산 장애인 권리보장 아닌 차별예산 국회 투쟁 예고",
+        article_id="beminor-budget",
+    )
+    budget_beminor.summary = (
+        "지역사회에서 함께 살기 위한 이동권, 노동권, 교육권, 자립생활, 탈시설 예산을 요구했다."
+    )
+    unrelated_rare_disease = _article(
+        "ohmynews",
+        "서다운 희귀질환 아동 어디서나 동등한 교육 건강권 보장해야",
+        article_id="rare-disease",
+    )
+    unrelated_rare_disease.summary = (
+        "서다운 의원이 희귀질환 아동의 교육권과 건강권 보장 지원체계 마련을 촉구했다."
+    )
+    previous = previous_coverage_for([budget_ablenews, budget_beminor], [unrelated_rare_disease])
+    assert not any(item.url == unrelated_rare_disease.canonical_url for item in previous)
+
+
+def test_build_briefing_excludes_irrelevant_history_from_previous_coverage(
+    tmp_path, topics_path
+) -> None:
+    storage = JsonlStorage(tmp_path)
+    current = _article(
+        "ablenews",
+        "제주 섭지코지 산책로 이동권 개선 인권위 권고 수용",
+        article_id="current",
+    )
+    current.byline = "홍길동 기자"
+    storage.upsert(current)
+    off_topic_history = _article(
+        "donga",
+        "제주 섭지코지 산책로 이동권 개선 관련 후속 대책 발표",
+        classification=Classification.IRRELEVANT,
+        article_id="off-topic-previous",
+    )
+    off_topic_history.published_at = datetime(2026, 8, 14, 0, tzinfo=UTC)
+    off_topic_history.first_seen_at = off_topic_history.published_at
+    off_topic_history.last_seen_at = off_topic_history.published_at
+    storage.upsert(off_topic_history)
+    document = build_briefing(
+        storage,
+        topics_path=topics_path,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    issue = document.sections[0].issues[0]
+    assert not any(item.url == off_topic_history.canonical_url for item in issue.previous_coverage)
+
+
 def test_previous_coverage_prefers_more_detailed_report_at_equal_relevance() -> None:
     current = _article(
         "hani",
