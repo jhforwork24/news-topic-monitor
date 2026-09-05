@@ -186,6 +186,32 @@ def test_previous_coverage_ignores_generic_court_procedure_overlap() -> None:
     assert not any(item.url == unrelated_verdict.canonical_url for item in previous)
 
 
+def test_previous_coverage_ignores_incidental_rights_category_overlap() -> None:
+    budget_ablenews = _article(
+        "ablenews",
+        "전장연 요구 내년 장애인권리예산, 이동권 포함됐지만 교육 노동 탈시설 외면",
+        article_id="ablenews-budget",
+    )
+    budget_beminor = _article(
+        "beminor",
+        "전장연, 내년 예산 장애인 권리보장 아닌 차별예산 국회 투쟁 예고",
+        article_id="beminor-budget",
+    )
+    budget_beminor.summary = (
+        "지역사회에서 함께 살기 위한 이동권, 노동권, 교육권, 자립생활, 탈시설 예산을 요구했다."
+    )
+    unrelated_rare_disease = _article(
+        "ohmynews",
+        "서다운 희귀질환 아동 어디서나 동등한 교육 건강권 보장해야",
+        article_id="rare-disease",
+    )
+    unrelated_rare_disease.summary = (
+        "서다운 의원이 희귀질환 아동의 교육권과 건강권 보장 지원체계 마련을 촉구했다."
+    )
+    previous = previous_coverage_for([budget_ablenews, budget_beminor], [unrelated_rare_disease])
+    assert not any(item.url == unrelated_rare_disease.canonical_url for item in previous)
+
+
 def test_build_briefing_excludes_irrelevant_history_from_previous_coverage(
     tmp_path, topics_path
 ) -> None:
