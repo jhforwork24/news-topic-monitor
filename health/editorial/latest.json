@@ -1,23 +1,22 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-09-05",
-  "status": "completed",
+  "report_date": "2026-09-07",
+  "status": "blocked_by_publish_gate",
   "model": "connected_claude_editor",
   "auditor_model": "connected_claude_independent_auditor",
   "candidate_count": 180,
   "included_after_first_pass": 0,
-  "published_issue_count": 13,
+  "published_issue_count": 7,
   "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.634,
-    "assurance": 0.001,
-    "bridge_import_validation": 9.416,
+    "api_preflight": 1.385,
+    "assurance": 0.0,
+    "bridge_import_validation": 8.829,
     "census_retry": 0.0,
-    "final_state_recrawl": 61.097,
-    "gap_reverse_search": 100.441,
-    "render_briefing": 24.68,
-    "total": 200.399
+    "final_state_recrawl": 203.905,
+    "gap_reverse_search": 57.947,
+    "total": 274.41
   },
-  "error": null,
-  "completed_at": "2026-09-05T11:28:06.614530Z"
+  "error": "publish gate blocked publication: final-state revalidation이 COMPLETE가 아님",
+  "completed_at": "2026-09-07T01:31:22.366973Z"
 }

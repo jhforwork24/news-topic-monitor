@@ -18,11 +18,11 @@
       "discovery_status": "complete"
     },
     "donga": {
-      "last_run_at": "2026-09-06T23:36:02.370795Z",
+      "last_run_at": "2026-09-07T01:27:50.080145Z",
       "success": true,
-      "discovered": 255,
+      "discovered": 290,
       "errors": [],
-      "last_success_at": "2026-09-06T23:36:02.370795Z",
+      "last_success_at": "2026-09-07T01:27:50.080145Z",
       "discovery_status": "complete"
     },
     "hani": {
@@ -34,27 +34,27 @@
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-09-06T23:38:18.141959Z",
+      "last_run_at": "2026-09-07T01:28:35.451666Z",
       "success": true,
-      "discovered": 196,
+      "discovered": 207,
       "errors": [],
-      "last_success_at": "2026-09-06T23:38:18.141959Z",
+      "last_success_at": "2026-09-07T01:28:35.451666Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-09-06T23:39:14.568277Z",
+      "last_run_at": "2026-09-07T01:29:27.937906Z",
       "success": true,
-      "discovered": 76,
+      "discovered": 98,
       "errors": [],
-      "last_success_at": "2026-09-06T23:39:14.568277Z",
+      "last_success_at": "2026-09-07T01:29:27.937906Z",
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-09-06T23:39:54.884373Z",
+      "last_run_at": "2026-09-07T01:30:18.233387Z",
       "success": true,
       "discovered": 25,
       "errors": [],
-      "last_success_at": "2026-09-06T23:39:54.884373Z",
+      "last_success_at": "2026-09-07T01:30:18.233387Z",
       "discovery_status": "complete"
     },
     "newscham": {
@@ -67,11 +67,11 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-09-06T23:41:01.394690Z",
+      "last_run_at": "2026-09-07T01:30:21.042567Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-06T23:41:01.394690Z",
+      "last_success_at": "2026-09-07T01:30:21.042567Z",
       "discovery_status": "complete"
     },
     "beminor": {
