@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-09-07",
-  "generated_at": "2026-09-07T01:31:21.229307Z",
+  "generated_at": "2026-09-07T01:42:34.131530Z",
   "articles": [
     {
       "candidate_id": "70ca6a1ae2478a7af2b57b2716aa0837ccc0d6f7e044e9b56a3fed99e2a4c3c5",
@@ -29829,7 +29829,7 @@
       "published_at": "2026-09-06T22:00:00Z",
       "modified_at": "2026-09-06T22:01:00Z",
       "discovered_at": "2026-09-06T22:11:21.900000Z",
-      "last_checked_at": "2026-09-07T01:28:33.097944Z",
+      "last_checked_at": "2026-09-07T01:39:45.776823Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -30042,7 +30042,7 @@
       "published_at": "2026-09-06T22:07:00Z",
       "modified_at": "2026-09-06T22:07:00Z",
       "discovered_at": "2026-09-06T22:11:21.899778Z",
-      "last_checked_at": "2026-09-07T01:28:31.132880Z",
+      "last_checked_at": "2026-09-07T01:39:43.722170Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -30061,7 +30061,7 @@
       "published_at": "2026-09-06T22:09:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.262708Z",
-      "last_checked_at": "2026-09-07T01:27:50.077034Z",
+      "last_checked_at": "2026-09-07T01:38:56.678140Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -30140,7 +30140,7 @@
       "published_at": "2026-09-06T22:12:00Z",
       "modified_at": "2026-09-06T22:12:00Z",
       "discovered_at": "2026-09-06T22:54:42.930871Z",
-      "last_checked_at": "2026-09-07T01:28:29.302664Z",
+      "last_checked_at": "2026-09-07T01:39:41.962148Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -30256,7 +30256,7 @@
       "published_at": "2026-09-06T22:15:09Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.262437Z",
-      "last_checked_at": "2026-09-07T01:27:50.075378Z",
+      "last_checked_at": "2026-09-07T01:38:56.675735Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -30373,7 +30373,7 @@
       "published_at": "2026-09-06T22:17:00Z",
       "modified_at": "2026-09-06T22:17:00Z",
       "discovered_at": "2026-09-06T22:54:42.930741Z",
-      "last_checked_at": "2026-09-07T01:28:27.133461Z",
+      "last_checked_at": "2026-09-07T01:39:39.729997Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -30470,7 +30470,7 @@
       "published_at": "2026-09-06T22:20:00Z",
       "modified_at": "2026-09-06T22:20:00Z",
       "discovered_at": "2026-09-06T22:54:42.930607Z",
-      "last_checked_at": "2026-09-07T01:28:25.308206Z",
+      "last_checked_at": "2026-09-07T01:39:37.835402Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -30508,7 +30508,7 @@
       "published_at": "2026-09-06T22:20:09Z",
       "modified_at": "2026-09-06T22:20:09Z",
       "discovered_at": "2026-09-06T22:54:45.332904Z",
-      "last_checked_at": "2026-09-07T01:29:27.934674Z",
+      "last_checked_at": "2026-09-07T01:40:40.503847Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -30586,7 +30586,7 @@
       "published_at": "2026-09-06T22:21:14Z",
       "modified_at": "2026-09-06T22:21:14Z",
       "discovered_at": "2026-09-06T22:54:45.332734Z",
-      "last_checked_at": "2026-09-07T01:29:27.930285Z",
+      "last_checked_at": "2026-09-07T01:40:40.501002Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -30682,7 +30682,7 @@
       "published_at": "2026-09-06T22:26:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.262162Z",
-      "last_checked_at": "2026-09-07T01:27:50.073534Z",
+      "last_checked_at": "2026-09-07T01:38:56.672062Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -30895,7 +30895,7 @@
       "published_at": "2026-09-06T22:30:26Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.261864Z",
-      "last_checked_at": "2026-09-07T01:27:50.071182Z",
+      "last_checked_at": "2026-09-07T01:38:56.670127Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -30935,7 +30935,7 @@
       "published_at": "2026-09-06T22:30:54Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.261589Z",
-      "last_checked_at": "2026-09-07T01:27:50.068932Z",
+      "last_checked_at": "2026-09-07T01:38:56.667957Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31071,7 +31071,7 @@
       "published_at": "2026-09-06T22:37:00Z",
       "modified_at": "2026-09-06T22:37:00Z",
       "discovered_at": "2026-09-06T22:54:42.930471Z",
-      "last_checked_at": "2026-09-07T01:28:23.082945Z",
+      "last_checked_at": "2026-09-07T01:39:35.944514Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -31188,7 +31188,7 @@
       "published_at": "2026-09-06T22:41:00Z",
       "modified_at": "2026-09-07T01:11:00Z",
       "discovered_at": "2026-09-06T22:54:42.930328Z",
-      "last_checked_at": "2026-09-07T01:28:21.173670Z",
+      "last_checked_at": "2026-09-07T01:39:34.055421Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -31461,7 +31461,7 @@
       "published_at": "2026-09-06T22:46:00Z",
       "modified_at": "2026-09-06T22:52:00Z",
       "discovered_at": "2026-09-06T22:54:42.930137Z",
-      "last_checked_at": "2026-09-07T01:28:19.125642Z",
+      "last_checked_at": "2026-09-07T01:39:31.938036Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -31558,7 +31558,7 @@
       "published_at": "2026-09-06T22:47:01Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.261307Z",
-      "last_checked_at": "2026-09-07T01:27:50.067194Z",
+      "last_checked_at": "2026-09-07T01:38:56.664115Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31675,7 +31675,7 @@
       "published_at": "2026-09-06T22:48:50Z",
       "modified_at": "2026-09-06T23:06:52Z",
       "discovered_at": "2026-09-06T22:54:45.332520Z",
-      "last_checked_at": "2026-09-07T01:29:27.926880Z",
+      "last_checked_at": "2026-09-07T01:40:40.495297Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -31713,7 +31713,7 @@
       "published_at": "2026-09-06T22:49:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.261040Z",
-      "last_checked_at": "2026-09-07T01:27:50.064830Z",
+      "last_checked_at": "2026-09-07T01:38:56.652310Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31733,7 +31733,7 @@
       "published_at": "2026-09-06T22:49:47Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.260727Z",
-      "last_checked_at": "2026-09-07T01:27:50.062228Z",
+      "last_checked_at": "2026-09-07T01:38:56.650035Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31742,7 +31742,7 @@
       "body_hash": null,
       "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "f74fa3b703e940de64efd4ba8aca6ba1adf0d75dad7f50e9f2d5117eb53a9903",
@@ -31753,7 +31753,7 @@
       "published_at": "2026-09-06T22:50:30Z",
       "modified_at": null,
       "discovered_at": "2026-09-06T22:54:25.260431Z",
-      "last_checked_at": "2026-09-07T01:27:50.059889Z",
+      "last_checked_at": "2026-09-07T01:38:56.647833Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31773,7 +31773,7 @@
       "published_at": "2026-09-06T22:55:33Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.057637Z",
-      "last_checked_at": "2026-09-07T01:27:50.057637Z",
+      "last_checked_at": "2026-09-07T01:38:56.624798Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31793,7 +31793,7 @@
       "published_at": "2026-09-06T22:59:00Z",
       "modified_at": "2026-09-06T22:59:00Z",
       "discovered_at": "2026-09-07T01:28:17.081487Z",
-      "last_checked_at": "2026-09-07T01:28:17.081487Z",
+      "last_checked_at": "2026-09-07T01:39:30.020045Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -31812,7 +31812,7 @@
       "published_at": "2026-09-06T22:59:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.055240Z",
-      "last_checked_at": "2026-09-07T01:27:50.055240Z",
+      "last_checked_at": "2026-09-07T01:38:56.561640Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31832,7 +31832,7 @@
       "published_at": "2026-09-06T23:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.052769Z",
-      "last_checked_at": "2026-09-07T01:27:50.052769Z",
+      "last_checked_at": "2026-09-07T01:38:56.546560Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31852,7 +31852,7 @@
       "published_at": "2026-09-06T23:03:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.050376Z",
-      "last_checked_at": "2026-09-07T01:27:50.050376Z",
+      "last_checked_at": "2026-09-07T01:38:56.509517Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31861,7 +31861,7 @@
       "body_hash": null,
       "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "3d6db1db54c4e4de1bed152cc6872b3bfbbdce400a32100f0696c0e7a7af35e9",
@@ -31872,7 +31872,7 @@
       "published_at": "2026-09-06T23:04:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.047961Z",
-      "last_checked_at": "2026-09-07T01:27:50.047961Z",
+      "last_checked_at": "2026-09-07T01:38:56.507056Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31892,7 +31892,7 @@
       "published_at": "2026-09-06T23:08:00Z",
       "modified_at": "2026-09-06T23:08:00Z",
       "discovered_at": "2026-09-07T01:28:15.357633Z",
-      "last_checked_at": "2026-09-07T01:28:15.357633Z",
+      "last_checked_at": "2026-09-07T01:39:27.722962Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -31911,7 +31911,7 @@
       "published_at": "2026-09-06T23:12:08Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.045621Z",
-      "last_checked_at": "2026-09-07T01:27:50.045621Z",
+      "last_checked_at": "2026-09-07T01:38:56.505508Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31931,7 +31931,7 @@
       "published_at": "2026-09-06T23:12:28Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.043183Z",
-      "last_checked_at": "2026-09-07T01:27:50.043183Z",
+      "last_checked_at": "2026-09-07T01:38:56.478462Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31940,7 +31940,7 @@
       "body_hash": null,
       "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "c7e942bbd5c646bea8b077dc6092c2a997519dd3e072cf467e93ff6840e00e18",
@@ -31951,7 +31951,7 @@
       "published_at": "2026-09-06T23:12:48Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.036772Z",
-      "last_checked_at": "2026-09-07T01:27:50.036772Z",
+      "last_checked_at": "2026-09-07T01:38:56.471597Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31971,7 +31971,7 @@
       "published_at": "2026-09-06T23:13:19Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.034213Z",
-      "last_checked_at": "2026-09-07T01:27:50.034213Z",
+      "last_checked_at": "2026-09-07T01:38:56.468898Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -31991,7 +31991,7 @@
       "published_at": "2026-09-06T23:13:36Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.032133Z",
-      "last_checked_at": "2026-09-07T01:27:50.032133Z",
+      "last_checked_at": "2026-09-07T01:38:56.466171Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32011,7 +32011,7 @@
       "published_at": "2026-09-06T23:23:31Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.029275Z",
-      "last_checked_at": "2026-09-07T01:27:50.029275Z",
+      "last_checked_at": "2026-09-07T01:38:56.463425Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32031,7 +32031,7 @@
       "published_at": "2026-09-06T23:24:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.027200Z",
-      "last_checked_at": "2026-09-07T01:27:50.027200Z",
+      "last_checked_at": "2026-09-07T01:38:56.460517Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32051,7 +32051,7 @@
       "published_at": "2026-09-06T23:39:00Z",
       "modified_at": "2026-09-06T23:39:00Z",
       "discovered_at": "2026-09-07T01:28:13.081385Z",
-      "last_checked_at": "2026-09-07T01:28:13.081385Z",
+      "last_checked_at": "2026-09-07T01:39:25.768479Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32070,7 +32070,7 @@
       "published_at": "2026-09-06T23:45:27Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.025011Z",
-      "last_checked_at": "2026-09-07T01:27:50.025011Z",
+      "last_checked_at": "2026-09-07T01:38:56.457218Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32090,7 +32090,7 @@
       "published_at": "2026-09-06T23:48:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.022531Z",
-      "last_checked_at": "2026-09-07T01:27:50.022531Z",
+      "last_checked_at": "2026-09-07T01:38:56.392559Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32110,7 +32110,7 @@
       "published_at": "2026-09-06T23:51:36Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.020367Z",
-      "last_checked_at": "2026-09-07T01:27:50.020367Z",
+      "last_checked_at": "2026-09-07T01:38:56.387461Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32126,17 +32126,17 @@
       "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003264259",
       "title": "[단독] 광주공항 국제선 연내 취항... 무안공항 활주로 문제 탓",
       "outlet": "ohmynews",
-      "reporter": "배동민",
-      "published_at": "2026-09-06T23:56:00Z",
-      "modified_at": "2026-09-07T00:59:00Z",
+      "reporter": null,
+      "published_at": "2026-09-06T23:56:44Z",
+      "modified_at": "2026-09-07T00:59:09Z",
       "discovered_at": "2026-09-07T01:29:25.813689Z",
-      "last_checked_at": "2026-09-07T01:29:25.813689Z",
+      "last_checked_at": "2026-09-07T01:40:40.302612Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "27ffcdc318d0cd5008e1bec2a6ff89a6bf55c4514f9eaba47437828464a9bd01",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -32149,7 +32149,7 @@
       "published_at": "2026-09-06T23:57:00Z",
       "modified_at": "2026-09-06T23:57:00Z",
       "discovered_at": "2026-09-07T01:28:11.129790Z",
-      "last_checked_at": "2026-09-07T01:28:11.129790Z",
+      "last_checked_at": "2026-09-07T01:39:23.764663Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32168,7 +32168,7 @@
       "published_at": "2026-09-06T23:59:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.017910Z",
-      "last_checked_at": "2026-09-07T01:27:50.017910Z",
+      "last_checked_at": "2026-09-07T01:38:56.334644Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32188,7 +32188,7 @@
       "published_at": "2026-09-06T23:59:45Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.014492Z",
-      "last_checked_at": "2026-09-07T01:27:50.014492Z",
+      "last_checked_at": "2026-09-07T01:38:56.328193Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32208,7 +32208,7 @@
       "published_at": "2026-09-07T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.005971Z",
-      "last_checked_at": "2026-09-07T01:27:50.005971Z",
+      "last_checked_at": "2026-09-07T01:38:56.323942Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32228,7 +32228,7 @@
       "published_at": "2026-09-07T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.010972Z",
-      "last_checked_at": "2026-09-07T01:27:50.010972Z",
+      "last_checked_at": "2026-09-07T01:38:56.326166Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32248,7 +32248,7 @@
       "published_at": "2026-09-07T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:50.002365Z",
-      "last_checked_at": "2026-09-07T01:27:50.002365Z",
+      "last_checked_at": "2026-09-07T01:38:56.321584Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32268,7 +32268,7 @@
       "published_at": "2026-09-07T00:00:24Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:49.998606Z",
-      "last_checked_at": "2026-09-07T01:27:49.998606Z",
+      "last_checked_at": "2026-09-07T01:38:56.302364Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32284,17 +32284,17 @@
       "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003263774",
       "title": "아무 데도 가지 마",
       "outlet": "ohmynews",
-      "reporter": "정미주",
-      "published_at": "2026-09-07T00:02:00Z",
-      "modified_at": "2026-09-07T00:02:00Z",
+      "reporter": null,
+      "published_at": "2026-09-07T00:02:14Z",
+      "modified_at": "2026-09-07T00:02:14Z",
       "discovered_at": "2026-09-07T01:29:23.875936Z",
-      "last_checked_at": "2026-09-07T01:29:23.875936Z",
+      "last_checked_at": "2026-09-07T01:40:40.297830Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "dc370efc6ba8baac579621852ae67735403f99c29f7c44f3474f462b5de1fbb8",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -32307,7 +32307,7 @@
       "published_at": "2026-09-07T00:03:00Z",
       "modified_at": "2026-09-07T00:03:00Z",
       "discovered_at": "2026-09-07T01:28:09.393038Z",
-      "last_checked_at": "2026-09-07T01:28:09.393038Z",
+      "last_checked_at": "2026-09-07T01:39:21.847355Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32326,7 +32326,7 @@
       "published_at": "2026-09-07T00:05:00Z",
       "modified_at": "2026-09-07T00:05:00Z",
       "discovered_at": "2026-09-07T01:29:19.783383Z",
-      "last_checked_at": "2026-09-07T01:29:19.783383Z",
+      "last_checked_at": "2026-09-07T01:40:36.330964Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32364,7 +32364,7 @@
       "published_at": "2026-09-07T00:08:00Z",
       "modified_at": "2026-09-07T00:08:00Z",
       "discovered_at": "2026-09-07T01:29:17.881239Z",
-      "last_checked_at": "2026-09-07T01:29:17.881239Z",
+      "last_checked_at": "2026-09-07T01:40:34.513196Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32379,17 +32379,17 @@
       "canonical_url": "https://www.pressian.com/pages/articles/2026090709110713413",
       "title": "[속보] 코스피, 전장 대피 3.34% 상승한 6910.78로 시작",
       "outlet": "pressian",
-      "reporter": "허환주 기자",
+      "reporter": null,
       "published_at": "2026-09-07T00:11:07Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:16.196977Z",
-      "last_checked_at": "2026-09-07T01:30:16.196977Z",
+      "last_checked_at": "2026-09-07T01:41:30.769753Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "e440059d711b18efa3e7799e926c528622e4c963fa4f2117211690eaad115d95",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -32402,7 +32402,7 @@
       "published_at": "2026-09-07T00:16:09Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:14.191292Z",
-      "last_checked_at": "2026-09-07T01:30:14.191292Z",
+      "last_checked_at": "2026-09-07T01:41:28.768065Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32421,7 +32421,7 @@
       "published_at": "2026-09-07T00:21:10Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:13.414273Z",
-      "last_checked_at": "2026-09-07T01:30:13.414273Z",
+      "last_checked_at": "2026-09-07T01:41:26.757308Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32440,7 +32440,7 @@
       "published_at": "2026-09-07T00:23:00Z",
       "modified_at": "2026-09-07T00:23:00Z",
       "discovered_at": "2026-09-07T01:29:13.911540Z",
-      "last_checked_at": "2026-09-07T01:29:13.911540Z",
+      "last_checked_at": "2026-09-07T01:40:30.285933Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32459,7 +32459,7 @@
       "published_at": "2026-09-07T00:23:00Z",
       "modified_at": "2026-09-07T00:23:00Z",
       "discovered_at": "2026-09-07T01:29:15.909751Z",
-      "last_checked_at": "2026-09-07T01:29:15.909751Z",
+      "last_checked_at": "2026-09-07T01:40:32.374216Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32478,7 +32478,7 @@
       "published_at": "2026-09-07T00:24:00Z",
       "modified_at": "2026-09-07T00:24:00Z",
       "discovered_at": "2026-09-07T01:29:11.843739Z",
-      "last_checked_at": "2026-09-07T01:29:11.843739Z",
+      "last_checked_at": "2026-09-07T01:40:28.299991Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32497,7 +32497,7 @@
       "published_at": "2026-09-07T00:25:59Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:10.352661Z",
-      "last_checked_at": "2026-09-07T01:30:10.352661Z",
+      "last_checked_at": "2026-09-07T01:41:24.797094Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32516,7 +32516,7 @@
       "published_at": "2026-09-07T00:27:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:49.993221Z",
-      "last_checked_at": "2026-09-07T01:27:49.993221Z",
+      "last_checked_at": "2026-09-07T01:38:56.297573Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32536,7 +32536,7 @@
       "published_at": "2026-09-07T00:27:00Z",
       "modified_at": "2026-09-07T00:27:00Z",
       "discovered_at": "2026-09-07T01:29:09.797877Z",
-      "last_checked_at": "2026-09-07T01:29:09.797877Z",
+      "last_checked_at": "2026-09-07T01:40:26.303975Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32555,7 +32555,7 @@
       "published_at": "2026-09-07T00:28:11Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:27:49.989372Z",
-      "last_checked_at": "2026-09-07T01:27:49.989372Z",
+      "last_checked_at": "2026-09-07T01:38:56.295339Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -32575,7 +32575,7 @@
       "published_at": "2026-09-07T00:29:52Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:08.241059Z",
-      "last_checked_at": "2026-09-07T01:30:08.241059Z",
+      "last_checked_at": "2026-09-07T01:41:22.833192Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32594,7 +32594,7 @@
       "published_at": "2026-09-07T00:32:00Z",
       "modified_at": "2026-09-07T00:32:00Z",
       "discovered_at": "2026-09-07T01:28:07.160885Z",
-      "last_checked_at": "2026-09-07T01:28:07.160885Z",
+      "last_checked_at": "2026-09-07T01:39:19.787560Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32613,7 +32613,7 @@
       "published_at": "2026-09-07T00:32:00Z",
       "modified_at": "2026-09-07T00:32:00Z",
       "discovered_at": "2026-09-07T01:29:07.836492Z",
-      "last_checked_at": "2026-09-07T01:29:07.836492Z",
+      "last_checked_at": "2026-09-07T01:40:24.291207Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32632,7 +32632,7 @@
       "published_at": "2026-09-07T00:33:00Z",
       "modified_at": "2026-09-07T00:33:00Z",
       "discovered_at": "2026-09-07T01:29:05.956510Z",
-      "last_checked_at": "2026-09-07T01:29:05.956510Z",
+      "last_checked_at": "2026-09-07T01:40:22.466167Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -32651,7 +32651,7 @@
       "published_at": "2026-09-07T00:33:10Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:06.504976Z",
-      "last_checked_at": "2026-09-07T01:30:06.504976Z",
+      "last_checked_at": "2026-09-07T01:41:20.860121Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32670,7 +32670,7 @@
       "published_at": "2026-09-07T00:34:00Z",
       "modified_at": "2026-09-07T00:34:00Z",
       "discovered_at": "2026-09-07T01:28:05.111743Z",
-      "last_checked_at": "2026-09-07T01:28:05.111743Z",
+      "last_checked_at": "2026-09-07T01:39:17.735270Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32687,16 +32687,16 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:35:30Z",
-      "modified_at": "2026-09-07T00:35:30Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:47.897592Z",
-      "last_checked_at": "2026-09-07T01:27:47.897592Z",
+      "last_checked_at": "2026-09-07T01:38:56.292807Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "078bd2ffdb4336e6effbc989a3338264ec22bc65cd9144c4e598e2f1a1e75f42",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -32709,7 +32709,7 @@
       "published_at": "2026-09-07T00:36:00Z",
       "modified_at": "2026-09-07T00:36:00Z",
       "discovered_at": "2026-09-07T01:28:03.253758Z",
-      "last_checked_at": "2026-09-07T01:28:03.253758Z",
+      "last_checked_at": "2026-09-07T01:39:15.803870Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32726,18 +32726,18 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:37:00Z",
-      "modified_at": "2026-09-07T00:38:51Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:45.828106Z",
-      "last_checked_at": "2026-09-07T01:27:45.828106Z",
+      "last_checked_at": "2026-09-07T01:38:56.286517Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "8037fc8efff3f55a148b9a9edca6f24ec706b9414d5c1a997938f502da8e5f00",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "794bb030331eaa339bfb92c7c080c3ae7c38264d3ce44c59b6a4ca50c641431a",
@@ -32748,7 +32748,7 @@
       "published_at": "2026-09-07T00:39:00Z",
       "modified_at": "2026-09-07T00:39:00Z",
       "discovered_at": "2026-09-07T01:28:01.119714Z",
-      "last_checked_at": "2026-09-07T01:28:01.119714Z",
+      "last_checked_at": "2026-09-07T01:39:13.800818Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32767,7 +32767,7 @@
       "published_at": "2026-09-07T00:40:00Z",
       "modified_at": "2026-09-07T00:40:00Z",
       "discovered_at": "2026-09-07T01:27:59.124583Z",
-      "last_checked_at": "2026-09-07T01:27:59.124583Z",
+      "last_checked_at": "2026-09-07T01:39:11.853481Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -32786,7 +32786,7 @@
       "published_at": "2026-09-07T00:40:26Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:04.414705Z",
-      "last_checked_at": "2026-09-07T01:30:04.414705Z",
+      "last_checked_at": "2026-09-07T01:41:18.765826Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32805,7 +32805,7 @@
       "published_at": "2026-09-07T00:41:49Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:02.281996Z",
-      "last_checked_at": "2026-09-07T01:30:02.281996Z",
+      "last_checked_at": "2026-09-07T01:41:16.819905Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32822,36 +32822,36 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:42:27Z",
-      "modified_at": "2026-09-07T00:42:27Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:43.835387Z",
-      "last_checked_at": "2026-09-07T01:27:43.835387Z",
+      "last_checked_at": "2026-09-07T01:38:56.284264Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "89432f053fa6f84add1d126cffeebdc1f801930981e6b2280adb76cb9ddd6e3c",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "161a926dd19f3716103f05f420a548618d81acaf5617d086d039e1385d4cba2a",
       "canonical_url": "https://www.donga.com/news/Politics/article/all/20260907/134617102/1",
-      "title": "김승원 “민원 전달 신중했어야…양씨는 존중하는 기업인”",
+      "title": "[속보]김승원 “민원 전달 신중했어야…부정청탁 무혐의 나온 일”",
       "outlet": "donga",
-      "reporter": "김형민",
+      "reporter": null,
       "published_at": "2026-09-07T00:44:00Z",
-      "modified_at": "2026-09-07T01:25:04Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:41.837139Z",
-      "last_checked_at": "2026-09-07T01:27:41.837139Z",
+      "last_checked_at": "2026-09-07T01:38:56.281907Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "8eeca20b507973f775a5ebf49237fd7a33df3de5109b90775807d75dd075507c",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -32862,36 +32862,36 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:44:36Z",
-      "modified_at": "2026-09-07T00:44:36Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:39.984877Z",
-      "last_checked_at": "2026-09-07T01:27:39.984877Z",
+      "last_checked_at": "2026-09-07T01:38:56.279824Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "0995bae32ef99041dd90823e7b8f06392bbdf8c5ddfe8554e91d955a9e9cd962",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "43f28a267f6098372eabcdba549bb024ff6421b91cedbcbc08b1283c92545296",
       "canonical_url": "https://www.donga.com/news/Society/article/all/20260907/134617145/1",
-      "title": "라방서 ‘길로틴 초크’ 시연…기절시킨 뒤 방치한 격투기 선수",
+      "title": "유튜브 생방송 중 일반인에 ‘초크’…격투기 선수 수사",
       "outlet": "donga",
-      "reporter": "오승준",
+      "reporter": null,
       "published_at": "2026-09-07T00:46:00Z",
-      "modified_at": "2026-09-07T01:04:55Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:37.920113Z",
-      "last_checked_at": "2026-09-07T01:27:37.920113Z",
+      "last_checked_at": "2026-09-07T01:38:56.277137Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "228f64976723ff32e6330c1c71d170b842c84798e977edb44e9ff85fe18d008c",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -32901,17 +32901,17 @@
       "title": "“아이폰→갤폴드 환승 찐이었네”…폴드8 환승족 전년比 2배↑",
       "outlet": "donga",
       "reporter": null,
-      "published_at": "2026-09-07T00:47:00Z",
-      "modified_at": "2026-09-07T00:59:41Z",
+      "published_at": "2026-09-07T00:47:20Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:35.911289Z",
-      "last_checked_at": "2026-09-07T01:27:35.911289Z",
+      "last_checked_at": "2026-09-07T01:38:56.274914Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "1207bd29e400390941b229d49f7c9e463f3b572b35c0a9ec6ed2b8acd8a7588a",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -32924,7 +32924,7 @@
       "published_at": "2026-09-07T00:47:36Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:30:00.704807Z",
-      "last_checked_at": "2026-09-07T01:30:00.704807Z",
+      "last_checked_at": "2026-09-07T01:41:14.761058Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -32937,20 +32937,20 @@
     {
       "candidate_id": "407c11855f6bc1576e85aa7281c5267f98520d827445c5a39c3e182a95c3a467",
       "canonical_url": "https://www.donga.com/news/Culture/article/all/20260907/134617158/2",
-      "title": "‘하이킥’ 백진희, 캐나다 거주 직장인과 내년 1월 결혼",
+      "title": "백진희, 내년 1월 결혼…예비 신랑은 캐나다 거주 직장인",
       "outlet": "donga",
-      "reporter": "조혜선",
+      "reporter": null,
       "published_at": "2026-09-07T00:48:00Z",
-      "modified_at": "2026-09-07T00:59:48Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:33.947829Z",
-      "last_checked_at": "2026-09-07T01:27:33.947829Z",
+      "last_checked_at": "2026-09-07T01:38:56.265755Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "f243f3a745759c9cf4d5cae72551b45be0ce18f1f5eeb0f7e5aab62a31b77a10",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -32961,18 +32961,18 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:48:30Z",
-      "modified_at": "2026-09-07T00:48:30Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:31.845036Z",
-      "last_checked_at": "2026-09-07T01:27:31.845036Z",
+      "last_checked_at": "2026-09-07T01:38:56.262446Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "43e16f33360f38974dcdda14707c60c47fb094fda22bc16a48dc64b8839320e3",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "d288e0accffe599e9a2173cb439b3012b20957c467ea310bbaf71dadc07ecb53",
@@ -32981,16 +32981,16 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:49:00Z",
-      "modified_at": "2026-09-07T00:49:00Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:29.991200Z",
-      "last_checked_at": "2026-09-07T01:27:29.991200Z",
+      "last_checked_at": "2026-09-07T01:38:56.250559Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "83ee9949557d42479ac3487299851a2871716f641f29b0a99bfb41aca431743e",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -33003,7 +33003,7 @@
       "published_at": "2026-09-07T00:50:27Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:58.275330Z",
-      "last_checked_at": "2026-09-07T01:29:58.275330Z",
+      "last_checked_at": "2026-09-07T01:41:12.813274Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33022,7 +33022,7 @@
       "published_at": "2026-09-07T00:50:56Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:56.214011Z",
-      "last_checked_at": "2026-09-07T01:29:56.214011Z",
+      "last_checked_at": "2026-09-07T01:41:10.752609Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33039,16 +33039,16 @@
       "outlet": "donga",
       "reporter": null,
       "published_at": "2026-09-07T00:51:57Z",
-      "modified_at": "2026-09-07T00:51:57Z",
+      "modified_at": null,
       "discovered_at": "2026-09-07T01:27:27.832164Z",
-      "last_checked_at": "2026-09-07T01:27:27.832164Z",
+      "last_checked_at": "2026-09-07T01:38:56.248313Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "a1962344aae71302ebd6804b7f68998ccf38babfe2295fea6a4c710cf398d03d",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -33061,7 +33061,7 @@
       "published_at": "2026-09-07T00:52:00Z",
       "modified_at": "2026-09-07T00:52:00Z",
       "discovered_at": "2026-09-07T01:29:04.066025Z",
-      "last_checked_at": "2026-09-07T01:29:04.066025Z",
+      "last_checked_at": "2026-09-07T01:40:20.313459Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33080,7 +33080,7 @@
       "published_at": "2026-09-07T00:52:00Z",
       "modified_at": "2026-09-07T00:52:00Z",
       "discovered_at": "2026-09-07T01:29:02.083312Z",
-      "last_checked_at": "2026-09-07T01:29:02.083312Z",
+      "last_checked_at": "2026-09-07T01:40:18.452735Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33099,7 +33099,7 @@
       "published_at": "2026-09-07T00:52:08Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:54.502527Z",
-      "last_checked_at": "2026-09-07T01:29:54.502527Z",
+      "last_checked_at": "2026-09-07T01:41:08.953988Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33118,7 +33118,7 @@
       "published_at": "2026-09-07T00:53:20Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:52.441000Z",
-      "last_checked_at": "2026-09-07T01:29:52.441000Z",
+      "last_checked_at": "2026-09-07T01:41:06.781563Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33137,7 +33137,7 @@
       "published_at": "2026-09-07T00:53:33Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:50.280007Z",
-      "last_checked_at": "2026-09-07T01:29:50.280007Z",
+      "last_checked_at": "2026-09-07T01:41:04.759278Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33156,7 +33156,7 @@
       "published_at": "2026-09-07T00:55:00Z",
       "modified_at": "2026-09-07T01:11:00Z",
       "discovered_at": "2026-09-07T01:27:57.156219Z",
-      "last_checked_at": "2026-09-07T01:27:57.156219Z",
+      "last_checked_at": "2026-09-07T01:39:09.949312Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -33175,7 +33175,7 @@
       "published_at": "2026-09-07T00:55:00Z",
       "modified_at": "2026-09-07T00:55:01Z",
       "discovered_at": "2026-09-07T01:27:55.076649Z",
-      "last_checked_at": "2026-09-07T01:27:55.076649Z",
+      "last_checked_at": "2026-09-07T01:39:07.822469Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -33194,7 +33194,7 @@
       "published_at": "2026-09-07T00:55:02Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:48.231978Z",
-      "last_checked_at": "2026-09-07T01:29:48.231978Z",
+      "last_checked_at": "2026-09-07T01:41:02.926740Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33213,7 +33213,7 @@
       "published_at": "2026-09-07T00:56:00Z",
       "modified_at": "2026-09-07T00:56:00Z",
       "discovered_at": "2026-09-07T01:28:59.773038Z",
-      "last_checked_at": "2026-09-07T01:28:59.773038Z",
+      "last_checked_at": "2026-09-07T01:40:16.343878Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33232,7 +33232,7 @@
       "published_at": "2026-09-07T00:56:29Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:46.256314Z",
-      "last_checked_at": "2026-09-07T01:29:46.256314Z",
+      "last_checked_at": "2026-09-07T01:41:01.056640Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33251,7 +33251,7 @@
       "published_at": "2026-09-07T00:56:35Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:44.223811Z",
-      "last_checked_at": "2026-09-07T01:29:44.223811Z",
+      "last_checked_at": "2026-09-07T01:40:58.767442Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33270,7 +33270,7 @@
       "published_at": "2026-09-07T01:01:00Z",
       "modified_at": "2026-09-07T01:01:00Z",
       "discovered_at": "2026-09-07T01:28:57.775584Z",
-      "last_checked_at": "2026-09-07T01:28:57.775584Z",
+      "last_checked_at": "2026-09-07T01:40:14.296020Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33289,7 +33289,7 @@
       "published_at": "2026-09-07T01:03:12Z",
       "modified_at": "2026-09-07T01:03:12Z",
       "discovered_at": "2026-09-07T01:27:25.854154Z",
-      "last_checked_at": "2026-09-07T01:27:25.854154Z",
+      "last_checked_at": "2026-09-07T01:38:54.184564Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33308,7 +33308,7 @@
       "published_at": "2026-09-07T01:03:39Z",
       "modified_at": "2026-09-07T01:03:39Z",
       "discovered_at": "2026-09-07T01:27:23.936023Z",
-      "last_checked_at": "2026-09-07T01:27:23.936023Z",
+      "last_checked_at": "2026-09-07T01:38:52.389124Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33327,7 +33327,7 @@
       "published_at": "2026-09-07T01:03:51Z",
       "modified_at": "2026-09-07T01:03:51Z",
       "discovered_at": "2026-09-07T01:27:21.820673Z",
-      "last_checked_at": "2026-09-07T01:27:21.820673Z",
+      "last_checked_at": "2026-09-07T01:38:50.136845Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33346,7 +33346,7 @@
       "published_at": "2026-09-07T01:04:15Z",
       "modified_at": "2026-09-07T01:04:15Z",
       "discovered_at": "2026-09-07T01:27:19.987804Z",
-      "last_checked_at": "2026-09-07T01:27:19.987804Z",
+      "last_checked_at": "2026-09-07T01:38:48.102482Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33365,7 +33365,7 @@
       "published_at": "2026-09-07T01:06:10Z",
       "modified_at": "2026-09-07T01:06:10Z",
       "discovered_at": "2026-09-07T01:27:17.822501Z",
-      "last_checked_at": "2026-09-07T01:27:17.822501Z",
+      "last_checked_at": "2026-09-07T01:38:46.570310Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33384,7 +33384,7 @@
       "published_at": "2026-09-07T01:07:00Z",
       "modified_at": "2026-09-07T01:07:00Z",
       "discovered_at": "2026-09-07T01:28:55.998861Z",
-      "last_checked_at": "2026-09-07T01:28:55.998861Z",
+      "last_checked_at": "2026-09-07T01:40:12.305363Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33403,7 +33403,7 @@
       "published_at": "2026-09-07T01:07:45Z",
       "modified_at": "2026-09-07T01:07:45Z",
       "discovered_at": "2026-09-07T01:27:15.953992Z",
-      "last_checked_at": "2026-09-07T01:27:15.953992Z",
+      "last_checked_at": "2026-09-07T01:38:44.132719Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33422,7 +33422,7 @@
       "published_at": "2026-09-07T01:09:11Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:42.452739Z",
-      "last_checked_at": "2026-09-07T01:29:42.452739Z",
+      "last_checked_at": "2026-09-07T01:40:56.848595Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33441,7 +33441,7 @@
       "published_at": "2026-09-07T01:10:00Z",
       "modified_at": "2026-09-07T01:20:47Z",
       "discovered_at": "2026-09-07T01:27:13.917848Z",
-      "last_checked_at": "2026-09-07T01:27:13.917848Z",
+      "last_checked_at": "2026-09-07T01:38:42.319561Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33460,7 +33460,7 @@
       "published_at": "2026-09-07T01:10:00Z",
       "modified_at": "2026-09-07T01:26:00Z",
       "discovered_at": "2026-09-07T01:27:52.922999Z",
-      "last_checked_at": "2026-09-07T01:27:52.922999Z",
+      "last_checked_at": "2026-09-07T01:39:05.866720Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -33479,7 +33479,7 @@
       "published_at": "2026-09-07T01:10:00Z",
       "modified_at": "2026-09-07T01:10:00Z",
       "discovered_at": "2026-09-07T01:28:51.779808Z",
-      "last_checked_at": "2026-09-07T01:28:51.779808Z",
+      "last_checked_at": "2026-09-07T01:40:08.386139Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33496,14 +33496,14 @@
       "outlet": "ohmynews",
       "reporter": "김지현, 복건우, 유성호",
       "published_at": "2026-09-07T01:10:00Z",
-      "modified_at": "2026-09-07T01:27:00Z",
+      "modified_at": "2026-09-07T01:32:00Z",
       "discovered_at": "2026-09-07T01:28:53.851370Z",
-      "last_checked_at": "2026-09-07T01:28:53.851370Z",
+      "last_checked_at": "2026-09-07T01:40:10.329921Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
       "full_body_status": "fetched",
-      "body_hash": "b79145b6e2c793972c56dff5ece09715d98ab74e3137cfe56fc8f94ec528daf9",
+      "body_hash": "fc19055102f52acadb2bb0e16d790d9d000a1e2889406b5ebb29ead9f5257726",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -33517,7 +33517,7 @@
       "published_at": "2026-09-07T01:11:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:40.343191Z",
-      "last_checked_at": "2026-09-07T01:29:40.343191Z",
+      "last_checked_at": "2026-09-07T01:40:54.760711Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33536,7 +33536,7 @@
       "published_at": "2026-09-07T01:14:00Z",
       "modified_at": "2026-09-07T01:14:00Z",
       "discovered_at": "2026-09-07T01:28:49.791151Z",
-      "last_checked_at": "2026-09-07T01:28:49.791151Z",
+      "last_checked_at": "2026-09-07T01:40:06.373355Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33555,7 +33555,7 @@
       "published_at": "2026-09-07T01:15:00Z",
       "modified_at": "2026-09-07T01:15:00Z",
       "discovered_at": "2026-09-07T01:28:45.905528Z",
-      "last_checked_at": "2026-09-07T01:28:45.905528Z",
+      "last_checked_at": "2026-09-07T01:40:02.590523Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33574,7 +33574,7 @@
       "published_at": "2026-09-07T01:15:00Z",
       "modified_at": "2026-09-07T01:15:00Z",
       "discovered_at": "2026-09-07T01:28:47.795281Z",
-      "last_checked_at": "2026-09-07T01:28:47.795281Z",
+      "last_checked_at": "2026-09-07T01:40:04.327997Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33593,7 +33593,7 @@
       "published_at": "2026-09-07T01:16:27Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:38.207211Z",
-      "last_checked_at": "2026-09-07T01:29:38.207211Z",
+      "last_checked_at": "2026-09-07T01:40:52.864575Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33612,7 +33612,7 @@
       "published_at": "2026-09-07T01:16:34Z",
       "modified_at": "2026-09-07T01:16:34Z",
       "discovered_at": "2026-09-07T01:27:11.962422Z",
-      "last_checked_at": "2026-09-07T01:27:11.962422Z",
+      "last_checked_at": "2026-09-07T01:38:40.153057Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33631,7 +33631,7 @@
       "published_at": "2026-09-07T01:17:00Z",
       "modified_at": "2026-09-07T01:17:00Z",
       "discovered_at": "2026-09-07T01:28:43.972578Z",
-      "last_checked_at": "2026-09-07T01:28:43.972578Z",
+      "last_checked_at": "2026-09-07T01:40:00.549875Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33650,7 +33650,7 @@
       "published_at": "2026-09-07T01:17:32Z",
       "modified_at": "2026-09-07T01:17:32Z",
       "discovered_at": "2026-09-07T01:27:10.128818Z",
-      "last_checked_at": "2026-09-07T01:27:10.128818Z",
+      "last_checked_at": "2026-09-07T01:38:38.085715Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33669,7 +33669,7 @@
       "published_at": "2026-09-07T01:17:33Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:36.268206Z",
-      "last_checked_at": "2026-09-07T01:29:36.268206Z",
+      "last_checked_at": "2026-09-07T01:40:51.011155Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33688,7 +33688,7 @@
       "published_at": "2026-09-07T01:18:02Z",
       "modified_at": "2026-09-07T01:18:02Z",
       "discovered_at": "2026-09-07T01:27:07.844608Z",
-      "last_checked_at": "2026-09-07T01:27:07.844608Z",
+      "last_checked_at": "2026-09-07T01:38:36.246513Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33707,12 +33707,69 @@
       "published_at": "2026-09-07T01:21:05Z",
       "modified_at": "2026-09-07T01:21:05Z",
       "discovered_at": "2026-09-07T01:27:05.825891Z",
-      "last_checked_at": "2026-09-07T01:27:05.825891Z",
+      "last_checked_at": "2026-09-07T01:38:34.121474Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "04f03bae4f55b865a15f66affdf196fb3b846b5ac6fcbda4a0ed3c78154d5625",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "639f400d86b1d2385a18e38bfbc9ffb0a885ac39a7c0a5256f97c05c536c6e09",
+      "canonical_url": "https://www.donga.com/news/Economy/article/all/20260907/134617392/2",
+      "title": "‘치맥’이 아니었다…야구장 포장·배달음식 1위는?",
+      "outlet": "donga",
+      "reporter": "이혜원",
+      "published_at": "2026-09-07T01:22:00Z",
+      "modified_at": "2026-09-07T01:27:11Z",
+      "discovered_at": "2026-09-07T01:27:05.476038Z",
+      "last_checked_at": "2026-09-07T01:38:32.275837Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "e2e71afba483a26341618e3ca0c09e8c2b15b62c9e4c129ef72a5a3f83b216da",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "3142605b606308b52ed27b7fd6fc84f5bef90c85b9f809b2234a4a07e0db0ffa",
+      "canonical_url": "https://www.khan.co.kr/article/202609071022001",
+      "title": "강원도, 도지사 직통 ‘상호(相互)소통방’ 운영···정책 제언, 고충·건의 등 직접 전달",
+      "outlet": "khan",
+      "reporter": "최승현",
+      "published_at": "2026-09-07T01:22:00Z",
+      "modified_at": "2026-09-07T01:22:00Z",
+      "discovered_at": "2026-09-07T01:39:03.754601Z",
+      "last_checked_at": "2026-09-07T01:39:03.754601Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "dec1f17f568e86526a346a8af43cd4e9a1a360f9b2b27c1f75bca1d8e547e75c",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "11ce4c720535f73402bcfbe5a1e3ae0750c6e9905aa9db74f29a04bb540345ae",
+      "canonical_url": "https://www.khan.co.kr/article/202609071022011",
+      "title": "자메이카 “영국이 노예제 책임 밝혀야”…찰스 3세에 배상 청원서 전달 예정",
+      "outlet": "khan",
+      "reporter": "조형국",
+      "published_at": "2026-09-07T01:22:00Z",
+      "modified_at": "2026-09-07T01:22:01Z",
+      "discovered_at": "2026-09-07T01:39:01.878369Z",
+      "last_checked_at": "2026-09-07T01:39:01.878369Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "7146331f15d8e7eb667fdbb7526aaad72d1ab5df238c7f41841edbeca3d42645",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -33726,7 +33783,7 @@
       "published_at": "2026-09-07T01:22:00Z",
       "modified_at": "2026-09-07T01:22:00Z",
       "discovered_at": "2026-09-07T01:28:42.040941Z",
-      "last_checked_at": "2026-09-07T01:28:42.040941Z",
+      "last_checked_at": "2026-09-07T01:39:58.284969Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33745,7 +33802,7 @@
       "published_at": "2026-09-07T01:22:06Z",
       "modified_at": "2026-09-07T01:22:06Z",
       "discovered_at": "2026-09-07T01:27:01.739723Z",
-      "last_checked_at": "2026-09-07T01:27:01.739723Z",
+      "last_checked_at": "2026-09-07T01:38:30.218194Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -33756,20 +33813,20 @@
       "primary_source_validation": "pending"
     },
     {
-      "candidate_id": "639f400d86b1d2385a18e38bfbc9ffb0a885ac39a7c0a5256f97c05c536c6e09",
-      "canonical_url": "https://www.donga.com/news/Economy/article/all/20260907/134617392/2",
-      "title": "“응원석으로 직접 배달”…요즘 야구팬 몰린 음식은 ‘이것’",
-      "outlet": "donga",
-      "reporter": "이혜원",
-      "published_at": "2026-09-07T01:22:20Z",
-      "modified_at": "2026-09-07T01:22:20Z",
-      "discovered_at": "2026-09-07T01:27:05.476038Z",
-      "last_checked_at": "2026-09-07T01:27:05.476038Z",
+      "candidate_id": "3e10801353db72ff0a6c057f9d4fb5e62e6fa63b5701834be2007c77669b405c",
+      "canonical_url": "https://www.khan.co.kr/article/202609071023001",
+      "title": "대상, 추석 앞두고 협력사 대금 400억원 조기 지급",
+      "outlet": "khan",
+      "reporter": "정대연",
+      "published_at": "2026-09-07T01:23:00Z",
+      "modified_at": "2026-09-07T01:23:00Z",
+      "discovered_at": "2026-09-07T01:38:59.590776Z",
+      "last_checked_at": "2026-09-07T01:38:59.590776Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "e2e71afba483a26341618e3ca0c09e8c2b15b62c9e4c129ef72a5a3f83b216da",
+      "body_hash": "3a0a52b34d981de9efbc0fd70b734018fa69a4bb17eb836d2b323f94f8bf6efb",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -33783,12 +33840,12 @@
       "published_at": "2026-09-07T01:23:30Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:34.257867Z",
-      "last_checked_at": "2026-09-07T01:29:34.257867Z",
+      "last_checked_at": "2026-09-07T01:40:48.769191Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
       "full_body_status": "fetched",
-      "body_hash": "8f9b443618872575a659df380fec00ec89660280cf4c2bec24fb0304b07c9a14",
+      "body_hash": "e74d842eb1b785d69a2b68537ffef1b751b591c3a139815ec80a1be0234d1658",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -33802,7 +33859,7 @@
       "published_at": "2026-09-07T01:25:00Z",
       "modified_at": "2026-09-07T01:25:00Z",
       "discovered_at": "2026-09-07T01:28:40.092964Z",
-      "last_checked_at": "2026-09-07T01:28:40.092964Z",
+      "last_checked_at": "2026-09-07T01:39:56.513311Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -33821,12 +33878,50 @@
       "published_at": "2026-09-07T01:25:22Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:32.420531Z",
-      "last_checked_at": "2026-09-07T01:29:32.420531Z",
+      "last_checked_at": "2026-09-07T01:40:46.757812Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
       "full_body_status": "fetched",
       "body_hash": "12332977072d785a17faaa8350499a69f71f63f03b73f47cc2ba5b79950beb64",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "b1a6c6d789bbf19c16b22167f0af0370fc818fabb84aa52410099ccd518d498c",
+      "canonical_url": "https://www.donga.com/news/Society/article/all/20260907/134617596/1",
+      "title": "파주 카페 냉동창고서 60대 여성 숨진 채 발견…업주 구속",
+      "outlet": "donga",
+      "reporter": null,
+      "published_at": "2026-09-07T01:26:56Z",
+      "modified_at": "2026-09-07T01:26:56Z",
+      "discovered_at": "2026-09-07T01:38:28.133403Z",
+      "last_checked_at": "2026-09-07T01:38:28.133403Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "4052e51ccac2d8aa4e4a92efe76eaa66310b72c41d876b1d190e6cad136e8afe",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "e102e1ddd575ad8517535c447c9e4fcf2cccd5235ea266212c31ef1262167f48",
+      "canonical_url": "https://www.donga.com/news/Economy/article/all/20260907/134617600/1",
+      "title": "KB금융, 임직원 AI 아이디어 경연…현장 혁신 이끈다",
+      "outlet": "donga",
+      "reporter": "정봉오",
+      "published_at": "2026-09-07T01:27:00Z",
+      "modified_at": "2026-09-07T01:27:30Z",
+      "discovered_at": "2026-09-07T01:38:26.259166Z",
+      "last_checked_at": "2026-09-07T01:38:26.259166Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "59770d0428d31501c6c933e63ca097b308cbdc55516a77e18ebe0256551e86a2",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -33840,7 +33935,7 @@
       "published_at": "2026-09-07T01:27:13Z",
       "modified_at": null,
       "discovered_at": "2026-09-07T01:29:30.146526Z",
-      "last_checked_at": "2026-09-07T01:29:30.146526Z",
+      "last_checked_at": "2026-09-07T01:40:44.924181Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -33859,12 +33954,240 @@
       "published_at": "2026-09-07T01:28:00Z",
       "modified_at": "2026-09-07T01:28:00Z",
       "discovered_at": "2026-09-07T01:28:37.816773Z",
-      "last_checked_at": "2026-09-07T01:28:37.816773Z",
+      "last_checked_at": "2026-09-07T01:39:54.501605Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
       "full_body_status": "fetched",
       "body_hash": "f0f0a30427c74bab2edca2d3b217a4909e9777a2732d5f6d5dfc366983dfd12f",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "b9d323888b45a549a3872b73f111ebb0aa58e491b20a787bb9d2f9797ccf1427",
+      "canonical_url": "https://www.donga.com/news/Economy/article/all/20260907/134617421/1",
+      "title": "실업 청년 2명 중 1명 ‘번아웃’…가장 큰 원인은 ‘진로 불안’",
+      "outlet": "donga",
+      "reporter": "최지원",
+      "published_at": "2026-09-07T01:29:00Z",
+      "modified_at": "2026-09-07T01:30:18Z",
+      "discovered_at": "2026-09-07T01:38:24.542567Z",
+      "last_checked_at": "2026-09-07T01:38:24.542567Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "f8bfa61f4d7d9b9c9590e4441a91a975e1bfa799402add232ab4103681b30e32",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "84226b3f1b9f0c8fe9cc581ecd6877269c0737c9349f8ea30486439ef32ab689",
+      "canonical_url": "https://www.donga.com/news/Economy/article/all/20260907/134617633/1",
+      "title": "케어원, 사회적기업 세하앤과 손잡고 장애인 일자리 창출·ESG 경영 강화",
+      "outlet": "donga",
+      "reporter": "최용석",
+      "published_at": "2026-09-07T01:29:39Z",
+      "modified_at": "2026-09-07T01:29:39Z",
+      "discovered_at": "2026-09-07T01:38:22.088197Z",
+      "last_checked_at": "2026-09-07T01:38:22.088197Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "397eeacdea814b00e03482f954471964617dd2c9dc6593d5f753c1686b9dd727",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "73b97d309d922b6bd39f123f3b87585c2b82f2e7c743ae92269fa3d2567e6b6a",
+      "canonical_url": "https://www.donga.com/news/Economy/article/all/20260907/134617648/1",
+      "title": "“작년 11월 당첨된 로또 20억…50여일 남았습니다, 찾아가세요”",
+      "outlet": "donga",
+      "reporter": null,
+      "published_at": "2026-09-07T01:31:29Z",
+      "modified_at": "2026-09-07T01:31:29Z",
+      "discovered_at": "2026-09-07T01:38:18.100954Z",
+      "last_checked_at": "2026-09-07T01:38:18.100954Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "0e9ae4f7cfceeb347297d23d66e3ad714c0d69d6377f41253e1ef21328f3f7e8",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "22b8f955d998db938e4fdd5d13d5199daa427b72b50faa1b2dc2b199d231553f",
+      "canonical_url": "https://www.donga.com/news/Politics/article/all/20260907/134617655/1",
+      "title": "논란 커지는 용혜인…‘언더조직·의원직 겸직’ 질문에 “청문회서 답변”",
+      "outlet": "donga",
+      "reporter": "오승준",
+      "published_at": "2026-09-07T01:31:55Z",
+      "modified_at": "2026-09-07T01:31:55Z",
+      "discovered_at": "2026-09-07T01:38:20.088893Z",
+      "last_checked_at": "2026-09-07T01:38:20.088893Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "41bd0ddceb342920558f5d3536ee1ddfd94f2ece9c7ae8d2fdf1a57a8b029a2c",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "236c28a3968dae8681f0ed43e0c771d103c3a6348c4b305db83c26464ab99476",
+      "canonical_url": "https://www.donga.com/news/Society/article/all/20260907/134617659/1",
+      "title": "‘장애인 성폭행’ 색동원 시설장, 1심 징역 15년에 항소",
+      "outlet": "donga",
+      "reporter": null,
+      "published_at": "2026-09-07T01:31:56Z",
+      "modified_at": "2026-09-07T01:31:56Z",
+      "discovered_at": "2026-09-07T01:38:16.352035Z",
+      "last_checked_at": "2026-09-07T01:38:16.352035Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "1589e6366e4d1ce16e76cf44677bd072f0c45458f8da7696c01c4a7c29b052b0",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "1d1cd7ebd27b857c1e467647f6eac1109d32530b4fbf035312ccd095fcece149",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003264997",
+      "title": "내비게이션 없이 운전을 합니다, 왜냐하면",
+      "outlet": "ohmynews",
+      "reporter": "서부원",
+      "published_at": "2026-09-07T01:32:00Z",
+      "modified_at": "2026-09-07T01:32:00Z",
+      "discovered_at": "2026-09-07T01:39:52.679826Z",
+      "last_checked_at": "2026-09-07T01:39:52.679826Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "1f9e462561b55395b880ad86e2ccd204a13fc9bb442d0cac43ecd8a3b7a66ec2",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "3c0f0651e040624b4b8b51ad0dd1a21619f8a5fd144320b50e1e4336374033eb",
+      "canonical_url": "https://www.donga.com/news/Inter/article/all/20260907/134617662/1",
+      "title": "“日다카이치, 이달 개각서 고이즈미 방위상·모테기 외무상 유임”",
+      "outlet": "donga",
+      "reporter": null,
+      "published_at": "2026-09-07T01:32:13Z",
+      "modified_at": "2026-09-07T01:32:13Z",
+      "discovered_at": "2026-09-07T01:38:12.140917Z",
+      "last_checked_at": "2026-09-07T01:38:12.140917Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c5e59cb19d29b2de32c14f5c205b84ff1e330e77adb8e7f8bbdce6efcd113fe7",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "4ec33a15d1496e448ec9b9dd3d7f4e2a4a4c183518a5794ddb2af147e7a08b32",
+      "canonical_url": "https://www.donga.com/news/Politics/article/all/20260907/134617672/1",
+      "title": "김민석 첫 교섭단체 대표 연설서 “현실가능한 개헌추진…본회의장, 섞어앉자”",
+      "outlet": "donga",
+      "reporter": "송유근",
+      "published_at": "2026-09-07T01:32:52Z",
+      "modified_at": "2026-09-07T01:32:52Z",
+      "discovered_at": "2026-09-07T01:38:14.135665Z",
+      "last_checked_at": "2026-09-07T01:38:14.135665Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "75ef62d00484f34dd1ed1049b1c841cb6578cc14410cb9096a716bd1fa49318f",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "d4fd8d7fb86efba808c9bfe7171157067df0c324220ea541d0884a971bfba48d",
+      "canonical_url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003265028",
+      "title": "가을하늘 수놓은 상모돌리기, 옛 성곽이 품은 따뜻한 위로",
+      "outlet": "ohmynews",
+      "reporter": "김지영",
+      "published_at": "2026-09-07T01:35:00Z",
+      "modified_at": "2026-09-07T01:35:00Z",
+      "discovered_at": "2026-09-07T01:39:50.480597Z",
+      "last_checked_at": "2026-09-07T01:39:50.480597Z",
+      "discovery_route": [
+        "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "95b3bbe016fc891bdabbfa986bd1123c2b7010664ac3b701bca6ab6c4c9bca60",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "6400b9f74fcd67da66f5a59eade63cb957880b62f88a90172d5bf585bce4846a",
+      "canonical_url": "https://www.donga.com/news/Society/article/all/20260907/134617701/1",
+      "title": "“최고의 타이밍…여의도 불꽃축제, 비행기 창문으로 봤다” SNS 화제",
+      "outlet": "donga",
+      "reporter": null,
+      "published_at": "2026-09-07T01:35:34Z",
+      "modified_at": "2026-09-07T01:35:34Z",
+      "discovered_at": "2026-09-07T01:38:11.691782Z",
+      "last_checked_at": "2026-09-07T01:38:11.691782Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "4005e7030e150b2558af81438a3e43485a21178c033fc17bff0e2035f523358a",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "71e55f2e11a8673cea3b748df04a1a2b8f9da43b3dc55091a459ee5a8e69430c",
+      "canonical_url": "https://www.donga.com/news/Politics/article/all/20260907/134617709/1",
+      "title": "김민석 “北 ‘적대적 2국가론’ 동의 어렵지만 현실 반영…韓 독자안보 역량 강화해야”",
+      "outlet": "donga",
+      "reporter": "송유근",
+      "published_at": "2026-09-07T01:35:59Z",
+      "modified_at": "2026-09-07T01:35:59Z",
+      "discovered_at": "2026-09-07T01:38:08.014777Z",
+      "last_checked_at": "2026-09-07T01:38:08.014777Z",
+      "discovery_route": [
+        "official:https://rss.donga.com/total.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a7ec177e2757fa333472e203f5a6afc435be24cb86d4be146b11746fd8948642",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "5a0cccadb9a98601b7d028340f934585b647bf6f4fb01856a87e8bf45305cf36",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026090710355984426",
+      "title": "포항시의회, 8일부터 제333회 임시회…추경안 등 29건 심사",
+      "outlet": "pressian",
+      "reporter": "오주호 기자(=포항)",
+      "published_at": "2026-09-07T01:36:14Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-07T01:40:42.719185Z",
+      "last_checked_at": "2026-09-07T01:40:42.719185Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "59e682a84489404880b3f1c5f1009cea41561652d9238281d96e8859134d0a8e",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -33977,16 +34300,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "“10년 고립 이렇게 깼죠”…한·일 은둔청년의 특별한 만남",
-        "original_url": "https://www.joongang.co.kr/article/25459554",
-        "naver_url": "https://n.news.naver.com/mnews/article/025/0003549489?sid=102",
-        "published_at": "2026-09-06T20:00:00Z",
-        "description": "고립·은둔과 장애를 바라보는 시선부터 바뀌어야 정책 도 바뀐다는 걸 체감했다”고 강조했다. 이러한 경험이 없는 청년의 마음도 며칠새 달라졌다. 일본 연수에 함께 참여한 비 장애인 최수민(22)씨는 “예전엔 집에...",
-        "matched_source": "joongang",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "[오늘의 주요일정]대전·세종·충남(9월7일 월요일)",
         "original_url": "https://www.newsis.com/view/NISX20260906_0003778260",
         "naver_url": "https://n.news.naver.com/mnews/article/003/0014172559?sid=102",
@@ -33994,6 +34307,16 @@
         "description": "부여군 정책 소통회의, 서동브리핑실 ▲오전 9시, 예산군 주간업무보고, 중회의실 ▲오전 9시, 청양군... 전국 장애인 체육대회 선수단 결단식, 지역 식당 ▲오후 1시, 태안군 생활체육 게이트볼 리그전, 이곡게이트볼장...",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "“10년 고립 이렇게 깼죠”…한·일 은둔청년의 특별한 만남",
+        "original_url": "https://www.joongang.co.kr/article/25459554",
+        "naver_url": "https://n.news.naver.com/mnews/article/025/0003549489?sid=102",
+        "published_at": "2026-09-06T20:00:00Z",
+        "description": "고립·은둔과 장애를 바라보는 시선부터 바뀌어야 정책 도 바뀐다는 걸 체감했다”고 강조했다. 이러한 경험이 없는 청년의 마음도 며칠새 달라졌다. 일본 연수에 함께 참여한 비 장애인 최수민(22)씨는 “예전엔 집에...",
+        "matched_source": "joongang",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -34257,21 +34580,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "천안시, '주거복지 사각지대 없앤다'… 제6기 위원회 출범",
-        "original_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1097899",
-        "naver_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1097899",
-        "published_at": "2026-09-06T08:35:00Z",
-        "description": "주거복지 정책 과 취약계층 지원 대책을 논의했다. 주거복지위원회는 관련 조례에 따라 주거복지 기본... 장애인 과 고령자를 대상으로 한 주택 개조사업도 추진하고 있으며 저장강박 의심 가구 등 개별 상황에 따른 맞춤형...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "장래홍 천안시의원, '전통무예 진흥·지원 조례' 본회의 통과",
         "original_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1097887",
         "naver_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1097887",
         "published_at": "2026-09-06T08:35:00Z",
         "description": "특히 그동안 개별 종목이나 단체 중심으로 이어져 온 전통무예를 지방자치단체 차원의 정책 영역으로... 이어 \"전통무예는 청소년의 예절과 인성교육은 물론 유소년과 노인, 장애인 등 다양한 계층이 참여할 수 있는...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "천안시, '주거복지 사각지대 없앤다'… 제6기 위원회 출범",
+        "original_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1097899",
+        "naver_url": "https://www.ccdn.co.kr/news/articleView.html?idxno=1097899",
+        "published_at": "2026-09-06T08:35:00Z",
+        "description": "주거복지 정책 과 취약계층 지원 대책을 논의했다. 주거복지위원회는 관련 조례에 따라 주거복지 기본... 장애인 과 고령자를 대상으로 한 주택 개조사업도 추진하고 있으며 저장강박 의심 가구 등 개별 상황에 따른 맞춤형...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -34442,26 +34765,6 @@
         "naver_url": "https://n.news.naver.com/mnews/article/081/0003677169?sid=102",
         "published_at": "2026-09-06T05:24:00Z",
         "description": "복지 정책 이다. 생계가 어려운 국민이 거주지 인근 그냥드림 코너를 찾으면 1인당 2만 원 상당의 먹거리와... 복지부는 전국 확대에 맞춰 거동이 불편한 노인과 장애인 , 도서벽지 주민을 위한 ‘찾아가는 그냥드림’도...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "안동시, 민선 9기 핵심사업 실행 본격화…시민 체감 정책 강화",
-        "original_url": "https://www.hidomin.com/news/articleView.html?idxno=719940",
-        "naver_url": "https://www.hidomin.com/news/articleView.html?idxno=719940",
-        "published_at": "2026-09-06T05:08:00Z",
-        "description": "안동시가 민선 9기 핵심사업의 구체적인 실행계획을 마련하고 시민들이 체감할 수 있는 생활밀착형 정책 ... 및 장애인 체육대회 개최 등을 꼽았다. 내년에는 바이오산업과 의료 분야를 중심으로 미래 성장 기반을...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "임병택 시흥시장, 시흥 첫 공공산후조리원 개원...1주 42만원에 산모·신...",
-        "original_url": "https://www.ajunews.com/view/20260906135446009",
-        "naver_url": "https://www.ajunews.com/view/20260906135446009",
-        "published_at": "2026-09-06T05:00:00Z",
-        "description": "12실과 장애인 실 1실 등 총 13실을 비롯해 신생아실, 모유수유실, 프로그램실, 조리실, 카페테리아 등을... 지원 정책 과의 연계도 확대할 계획이다. 시흥시공공산후조리원 개원식 참가자들이 기념촬영을 하고 있다. [사진...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -34975,15 +35278,15 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-09-07T01:30:21.043209Z",
+    "status": "complete",
+    "checked_at": "2026-09-07T01:41:33.484303Z",
     "checks": [
       {
         "issue_title": "개정 노조법 이후 원청 대체근로 공방, 현대글로비스·CJ대한통운 사례로 번져",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -35012,26 +35315,26 @@
       },
       {
         "issue_title": "인천 동네병원 노동자 저임금 실태, 보건의료노조 지역교섭으로 대응",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "금융노조, 주4.5일제·지방이전 반대 총파업…2·3차 예고",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "복지부, 무증빙 먹거리 지원 '그냥드림' 전국 시군구로 확대",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       }
     ]
