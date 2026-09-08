@@ -212,6 +212,33 @@ def test_previous_coverage_ignores_incidental_rights_category_overlap() -> None:
     assert not any(item.url == unrelated_rare_disease.canonical_url for item in previous)
 
 
+def test_previous_coverage_ignores_incidental_program_name_overlap() -> None:
+    budget_indigo = _article(
+        "theindigo",
+        "정부, 2027년 통합돌봄 예산 1558억원 편성, 시민사회 요구 6447억원에 크게 못 미쳐",
+        article_id="indigo-budget",
+    )
+    budget_indigo.summary = (
+        "돌봄재정 확대 공동행동이 2027년도 통합돌봄 예산안 1558억원을 비판하며 증액을 요구했다."
+    )
+    budget_ablenews = _article(
+        "ablenews",
+        "통합돌봄 정부안 1558억원 턱없이 부족",
+        article_id="ablenews-budget",
+    )
+    budget_ablenews.summary = "돌봄취약지역 인프라 예산이 요구액에 크게 못 미친다는 지적이 나왔다."
+    unrelated_service_linkage = _article(
+        "ablenews",
+        "실로암시각장복, 고령 시각장애인 대상 맞춤형 주거의료 돌봄 서비스 연계",
+        article_id="silloam",
+    )
+    unrelated_service_linkage.summary = (
+        "한국형 통합돌봄모형 구축 사업의 일환으로 고령 시각장애인 11명에게 돌봄 서비스를 연계했다."
+    )
+    previous = previous_coverage_for([budget_indigo, budget_ablenews], [unrelated_service_linkage])
+    assert not any(item.url == unrelated_service_linkage.canonical_url for item in previous)
+
+
 def test_build_briefing_excludes_irrelevant_history_from_previous_coverage(
     tmp_path, topics_path
 ) -> None:
