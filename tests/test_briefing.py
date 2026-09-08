@@ -239,6 +239,63 @@ def test_previous_coverage_ignores_incidental_program_name_overlap() -> None:
     assert not any(item.url == unrelated_service_linkage.canonical_url for item in previous)
 
 
+def test_previous_coverage_ignores_incidental_company_name_overlap() -> None:
+    wage_deal = _article(
+        "donga",
+        "현대차 노사, 올해 임협 타결 성과급 400%+1270만원 지급",
+        article_id="hyundai-wage",
+    )
+    wage_deal.summary = "현대차 노사가 10년만의 전면파업 진통 끝에 올해 임금협상을 최종 타결했다."
+    unrelated_oman_mou = _article(
+        "chosun",
+        "현대차그룹, 오만 정부와 친환경 모빌리티 협력 MOU 체결",
+        article_id="hyundai-oman",
+    )
+    unrelated_oman_mou.summary = (
+        "현대차그룹이 오만 정부와 수소전기버스·초고속 전기충전기 투입에 합의했다."
+    )
+    previous = previous_coverage_for([wage_deal], [unrelated_oman_mou])
+    assert not any(item.url == unrelated_oman_mou.canonical_url for item in previous)
+
+
+def test_previous_coverage_ignores_incidental_legal_category_overlap() -> None:
+    hlmando_death = _article(
+        "labortoday",
+        "HL만도 사망사고 유족 노동부에 조사 내용 공개하라",
+        article_id="hlmando-death",
+    )
+    hlmando_death.summary = (
+        "HL만도 평택공장 하청노동자 사망사고 유족이 중대재해 조사 결과 공개를 요구했다."
+    )
+    unrelated_shipyard_death = _article(
+        "hani",
+        "현대중공업 올해만 5명 중대재해 사망 노조 노동장관 면담 요구",
+        article_id="hhi-death",
+    )
+    unrelated_shipyard_death.summary = (
+        "현대중공업에서 올해만 5명이 중대재해로 사망해 노조가 대책을 촉구했다."
+    )
+    previous = previous_coverage_for([hlmando_death], [unrelated_shipyard_death])
+    assert not any(item.url == unrelated_shipyard_death.canonical_url for item in previous)
+
+
+def test_previous_coverage_ignores_incidental_retailer_name_overlap() -> None:
+    rehab_plan = _article(
+        "khan",
+        "법원, 홈플러스 회생계획안 인가",
+        article_id="homeplus-rehab",
+    )
+    rehab_plan.summary = "법원이 홈플러스 회생계획안을 인가해 채권자 75.9%가 찬성했다고 밝혔다."
+    unrelated_award = _article(
+        "labortoday",
+        "홈플러스 1546억 체불 청산 노동부 우수직원 포상",
+        article_id="homeplus-award",
+    )
+    unrelated_award.summary = "노동부가 홈플러스 체불임금 1546억원 청산에 기여한 직원을 포상했다."
+    previous = previous_coverage_for([rehab_plan], [unrelated_award])
+    assert not any(item.url == unrelated_award.canonical_url for item in previous)
+
+
 def test_build_briefing_excludes_irrelevant_history_from_previous_coverage(
     tmp_path, topics_path
 ) -> None:
