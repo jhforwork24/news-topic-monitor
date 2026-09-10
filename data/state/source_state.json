@@ -2,63 +2,65 @@
   "version": 1,
   "sources": {
     "chosun": {
-      "last_run_at": "2026-09-10T11:22:26.495537Z",
+      "last_run_at": "2026-09-10T16:26:22.147892Z",
       "success": true,
-      "discovered": 121,
+      "discovered": 153,
       "errors": [],
-      "last_success_at": "2026-09-10T11:22:26.495537Z",
+      "last_success_at": "2026-09-10T16:26:22.147892Z",
       "discovery_status": "complete"
     },
     "joongang": {
-      "last_run_at": "2026-09-10T11:22:31.139586Z",
-      "success": true,
-      "discovered": 320,
-      "errors": [],
+      "last_run_at": "2026-09-10T16:26:55.485822Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://www.joongang.co.kr/sitemap/latest-articles: robots.txt unavailable for www.joongang.co.kr: GET failed after retries: https://www.joongang.co.kr/robots.txt: timed out; https://www.joongang.co.kr/sitemap/articles/2026/20260910: robots.txt unavailable for www.joongang.co.kr: GET failed after retries: https://www.joongang.co.kr/robots.txt: timed out; https://www.joongang.co.kr/sitemap/articles/2026/20260911: robots.txt unavailable for www.joongang.co.kr: GET faile"
+      ],
       "last_success_at": "2026-09-10T11:22:31.139586Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "donga": {
-      "last_run_at": "2026-09-10T11:22:39.938361Z",
+      "last_run_at": "2026-09-10T16:27:00.025744Z",
       "success": true,
-      "discovered": 860,
+      "discovered": 450,
       "errors": [],
-      "last_success_at": "2026-09-10T11:22:39.938361Z",
+      "last_success_at": "2026-09-10T16:27:00.025744Z",
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-09-10T11:23:04.302605Z",
+      "last_run_at": "2026-09-10T16:27:10.415642Z",
       "success": true,
-      "discovered": 120,
+      "discovered": 30,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:04.302605Z",
+      "last_success_at": "2026-09-10T16:27:10.415642Z",
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-09-10T11:23:09.773740Z",
+      "last_run_at": "2026-09-10T16:27:15.366095Z",
       "success": true,
-      "discovered": 434,
+      "discovered": 237,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:09.773740Z",
+      "last_success_at": "2026-09-10T16:27:15.366095Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-09-10T11:23:16.129361Z",
+      "last_run_at": "2026-09-10T16:27:18.028183Z",
       "success": true,
       "discovered": 256,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:16.129361Z",
+      "last_success_at": "2026-09-10T16:27:18.028183Z",
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-09-10T11:23:18.366270Z",
+      "last_run_at": "2026-09-10T16:27:20.209309Z",
       "success": true,
       "discovered": 25,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:18.366270Z",
+      "last_success_at": "2026-09-10T16:27:20.209309Z",
       "discovery_status": "complete"
     },
     "newscham": {
-      "last_run_at": "2026-09-10T11:23:21.565259Z",
+      "last_run_at": "2026-09-10T16:27:23.721625Z",
       "success": false,
       "discovered": 0,
       "errors": [
@@ -67,36 +69,38 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-09-10T11:23:24.616528Z",
+      "last_run_at": "2026-09-10T16:27:26.534145Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:24.616528Z",
+      "last_success_at": "2026-09-10T16:27:26.534145Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-09-10T11:23:32.150055Z",
+      "last_run_at": "2026-09-10T16:27:31.778396Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:32.150055Z",
+      "last_success_at": "2026-09-10T16:27:31.778396Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-09-10T11:23:46.473055Z",
+      "last_run_at": "2026-09-10T16:27:33.970087Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:46.473055Z",
+      "last_success_at": "2026-09-10T16:27:33.970087Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-09-10T11:23:53.196102Z",
-      "success": true,
-      "discovered": 2,
-      "errors": [],
+      "last_run_at": "2026-09-10T16:27:34.522520Z",
+      "success": false,
+      "discovered": 0,
+      "errors": [
+        "all discovery paths failed: https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-10T10%3A26%3A15Z&before=2026-09-10T16%3A26%3A15Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories: robots.txt unavailable for theindigo.co.kr: GET failed: https://theindigo.co.kr/robots.txt: HTTP 415"
+      ],
       "last_success_at": "2026-09-10T11:23:53.196102Z",
-      "discovery_status": "complete"
+      "discovery_status": "unavailable"
     },
     "kbs": {
       "last_run_at": "2026-08-22T11:40:50.052534Z",
@@ -131,20 +135,20 @@
       "discovery_status": "complete"
     },
     "mediaus": {
-      "last_run_at": "2026-09-10T11:23:26.855655Z",
+      "last_run_at": "2026-09-10T16:27:28.920677Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:26.855655Z"
+      "last_success_at": "2026-09-10T16:27:28.920677Z"
     },
     "sisain": {
-      "last_run_at": "2026-09-10T11:23:20.565497Z",
+      "last_run_at": "2026-09-10T16:27:22.354421Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-10T11:23:20.565497Z"
+      "last_success_at": "2026-09-10T16:27:22.354421Z"
     }
   }
 }
