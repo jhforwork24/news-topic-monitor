@@ -19,6 +19,9 @@ GENERIC_TOKENS = frozenset(
         "요구",
         "대해",
         "위한",
+        "만에",
+        "이후",
+        "이래",
     }
 )
 
@@ -116,6 +119,10 @@ def revalidate_final_state(
         # articles that merely happened to share two ordinary words (over a
         # full article's worth of tokens, coincidental overlap is common) get
         # mistaken for a follow-up on a completely different story.
+        # A single shared title token is not enough on its own: two unrelated
+        # headlines can coincidentally share one common connector word (e.g.
+        # "만에"), so at least two distinct entity-dense tokens must overlap
+        # before a candidate is treated as naming the same subject.
         issue_title_tokens = _tokens(issue.title)
         updates: list[EditorialCandidate] = []
         selected_ids = set(issue.candidate_ids)
@@ -139,7 +146,7 @@ def revalidate_final_state(
                 continue
             if candidate.verification_status != VerificationStatus.BODY_VERIFIED:
                 continue
-            if _overlap(issue_title_tokens, _tokens(candidate.title)) < 1:
+            if _overlap(issue_title_tokens, _tokens(candidate.title)) < 2:
                 continue
             updates.append(candidate)
 
