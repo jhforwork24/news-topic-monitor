@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-09-10",
-  "generated_at": "2026-09-10T01:40:31.755008Z",
+  "generated_at": "2026-09-10T01:54:27.386712Z",
   "articles": [
     {
       "candidate_id": "16e7e28e80e20c87ca0f1b5e206cff6195bd22fcc719ec91cb81a925ccb69827",
@@ -14721,6 +14721,26 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "b8933449120219eaa79074628a367cc053869e96b38ef56df7ed5d818361aefb",
+      "canonical_url": "https://www.chosun.com/opinion/specialist_column/2026/09/09/5BBAQPTI5BG53NQT6Z2IH5VLKY",
+      "title": "[윤희영의 News English] 2030년 한국인 기대수명 세계 1등 되는 이유",
+      "outlet": "chosun",
+      "reporter": "윤희영 기자",
+      "published_at": "2026-09-09T03:50:48.448000Z",
+      "modified_at": "2026-09-10T01:40:40.893000Z",
+      "discovered_at": "2026-09-10T01:48:19.359569Z",
+      "last_checked_at": "2026-09-10T01:48:19.359569Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "91c256ee30c40ae184f2acb4e6c1f33552e1f2384ab6280f708b976464533d2a",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "4c62a2c348c18cb0a6403b9ec33a2e484eedc251809e1fa9b43ad96deaa59d65",
       "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/09/RDPA4JII3JC3RADT3XFAFQ7IIE",
       "title": "Shohei Ohtani Excluded Again Amid Physical Condition Concerns",
@@ -21280,6 +21300,26 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "7b29a584b85efd20823d1adfd6e0f4333f61107b427cb4d56bb05b19aacc6841",
+      "canonical_url": "https://www.chosun.com/opinion/column/2026/09/09/TUSD3YEHC5COZECXNOM6EXJS5U",
+      "title": "[논설실의 뉴스 읽기] 원칙 지킨 일본, 국민연금 56조원 내다팔자 외국인이 87조원 폭풍 매수",
+      "outlet": "chosun",
+      "reporter": "선우정 기자",
+      "published_at": "2026-09-09T06:39:04.098000Z",
+      "modified_at": "2026-09-10T01:40:16.920000Z",
+      "discovered_at": "2026-09-10T01:48:21.488094Z",
+      "last_checked_at": "2026-09-10T01:48:21.488094Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "dde09f267917aa5a5c0a083e1f4f675a1dd85755ed6ee96e2a6c67e5d6272df2",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "f50e0f44f600b2c78bccc385c7d7b289d3e0220662f79182b1e7eb26dae8b13c",
       "canonical_url": "https://www.hani.co.kr/arti/society/society_general/1276989.html",
       "title": "민주화운동기념사업회 새 이사장에 문국주씨",
@@ -25719,26 +25759,6 @@
       ],
       "full_body_status": "fetched",
       "body_hash": "be3a6ee1f923b18b9cb9854e260de8c3b4436a1803014aed7a21fbfbb65c5d1f",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
-      "candidate_id": "818e6e8bea8c4f0abe528e037d180ade4400ea6b246e938da42f75266bc5fb4d",
-      "canonical_url": "https://www.chosun.com/culture-life/relion-academia/2026/09/10/3YD47Q6NPZEFPIVKTLMZEG75GI",
-      "title": "“수상자 5명의 삶… 만해의 가르침이 역사 아니라 현재라는 증거”",
-      "outlet": "chosun",
-      "reporter": "김한수 기자",
-      "published_at": "2026-09-09T08:32:35.319000Z",
-      "modified_at": "2026-09-09T23:07:04.623000Z",
-      "discovered_at": "2026-09-09T16:40:35.763112Z",
-      "last_checked_at": "2026-09-10T00:04:02.020319Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "76e35e217a043fe0a62075c80472f885743215c2d4fb1bb36ea110aa3c93df43",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -34175,6 +34195,63 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "0a22403d5eb3d18863d1b8c8553b936ada585424c0c17fef0cf7a5db23428e07",
+      "canonical_url": "https://www.chosun.com/english/opinion-en/2026/09/09/CJB6M5WOYJARRAOXGZNQHZDCH4",
+      "title": "Truth Advocate in Sheep's Clothing",
+      "outlet": "chosun",
+      "reporter": "Lee Mi-do Writer·Film Translator",
+      "published_at": "2026-09-09T14:40:25.957000Z",
+      "modified_at": "2026-09-10T01:41:40.318000Z",
+      "discovered_at": "2026-09-10T01:36:06.732026Z",
+      "last_checked_at": "2026-09-10T01:49:09.455993Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c88ae7766f5b097cf5fcf18e039204461b01d79287f9df3221480d73a82fde3d",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "4bf56de7d2b76c72fb43771df43a9e4519f3ec6a0766e92d2fe07ebaeeebd949",
+      "canonical_url": "https://www.chosun.com/english/opinion-en/2026/09/09/LGCKBQRQBREA3MJ4LWFIQUYPBU",
+      "title": "South Korea's Life Expectancy to Lead Globally by 2030",
+      "outlet": "chosun",
+      "reporter": "Yoon Hee-young",
+      "published_at": "2026-09-09T14:44:38.239000Z",
+      "modified_at": "2026-09-10T01:41:44.962000Z",
+      "discovered_at": "2026-09-10T01:49:28.953386Z",
+      "last_checked_at": "2026-09-10T01:49:28.953386Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "b182ac28779a63f52bafd9095c8b6aea151334b9a086e14d247c6ba21158c5a8",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "94a88f5a77b5bc45ad9e5942f83fe4bdc08ba4cb6bceb83772475face0df7339",
+      "canonical_url": "https://www.chosun.com/english/opinion-en/2026/09/09/NRNERIFCLZAZHGSO64UIQ62MNQ",
+      "title": "Japan’s Discipline Contrasts with NPS’s Inaction",
+      "outlet": "chosun",
+      "reporter": "Seon Woo-jung",
+      "published_at": "2026-09-09T14:46:41.341000Z",
+      "modified_at": "2026-09-10T01:40:56.493000Z",
+      "discovered_at": "2026-09-10T01:49:32.949124Z",
+      "last_checked_at": "2026-09-10T01:49:32.949124Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "ed67e96ee138fa6767ff4b311223d7f0fb9ec2d5479b1e2d656d68a501eb3ebd",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "6f6dffac15f3a6a1dc4692c50bb3ae79d7b3a0700d9108ecdc459a6577445d7f",
       "canonical_url": "https://www.joongang.co.kr/article/25460518",
       "title": "“아디다스와 관계 끊어라”…광고 논란에 제니까지 불똥, 무슨 일",
@@ -36819,6 +36896,25 @@
       "full_body_status": "skipped_irrelevant",
       "body_hash": null,
       "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "c477bc4279b25b8fd8251cc30e5d19218e805bf732dcac9144463f37b1680124",
+      "canonical_url": "https://www.chosun.com/english/travel-food-en/2026/09/10/SEOZ4G4PJFEQVISXCXTJJVNJHY",
+      "title": "Manhae Grand Prize Honorees Embody Teachings' Living Legacy",
+      "outlet": "chosun",
+      "reporter": "Gim Han-soo",
+      "published_at": "2026-09-09T15:40:43.498000Z",
+      "modified_at": "2026-09-10T01:37:46.241000Z",
+      "discovered_at": "2026-09-09T23:16:56.810189Z",
+      "last_checked_at": "2026-09-10T01:49:52.962567Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "8fc42e66181cdf03435fefb3984ed8dcc0676e7bd41bae56a413b7cef69ecab4",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -45516,6 +45612,26 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "dd1aae0a4c1ba7594ce37a0c7192ec5d8af84d3bf370c0b8e255ca6495192cb9",
+      "canonical_url": "https://www.chosun.com/international/international_general/2026/09/10/SXJLUNJZTRHKNFSSD4WPTKLEBQ",
+      "title": "개막 3시간 지나도 텅텅 빈 객석...예전 같지 않은 ‘트럼프 쇼’ 열기",
+      "outlet": "chosun",
+      "reporter": "댈러스=박국희 특파원",
+      "published_at": "2026-09-09T22:25:22.180000Z",
+      "modified_at": "2026-09-10T01:37:51.642000Z",
+      "discovered_at": "2026-09-09T23:16:53.634376Z",
+      "last_checked_at": "2026-09-10T01:48:37.450714Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c82d3c5de3afe49cf592cad5ece1824610384c45d6de0c36978a3ecf6de7aaec",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "53dc9cb8294d2b2b6af7995d37d1b9582cc894abac93e2f27cf16c8a0a352838",
       "canonical_url": "https://www.chosun.com/english/world-en/2026/09/10/UI5PY3IU6RBRDMYAYLXBTETDTA",
       "title": "Korea Fair Trade Commission Chief Visits U.S. Amid Coupang Dispute",
@@ -45679,11 +45795,12 @@
       "published_at": "2026-09-09T22:28:00Z",
       "modified_at": "2026-09-09T22:38:00Z",
       "discovered_at": "2026-09-09T22:39:12.107920Z",
-      "last_checked_at": "2026-09-10T01:37:03.109979Z",
+      "last_checked_at": "2026-09-10T01:50:56.528101Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
-        "official:https://www.hani.co.kr/arti?page=2"
+        "official:https://www.hani.co.kr/arti?page=2",
+        "official:https://www.hani.co.kr/arti?page=3"
       ],
       "full_body_status": "skipped_irrelevant",
       "body_hash": null,
@@ -46060,6 +46177,25 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "87d9c36502da3d4f8e20e4e4b20aae8f6ebc0b63f094f02871d95b9edae50904",
+      "canonical_url": "https://www.chosun.com/english/world-en/2026/09/10/R4AYCQB5WRFE7OCODGM3HFS7AY",
+      "title": "Trump Rally Draws Sparse Crowd in Dallas",
+      "outlet": "chosun",
+      "reporter": "Park Kook-hee",
+      "published_at": "2026-09-09T22:37:04.874000Z",
+      "modified_at": "2026-09-10T01:38:19.207000Z",
+      "discovered_at": "2026-09-09T23:16:56.809699Z",
+      "last_checked_at": "2026-09-10T01:49:49.376468Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "89a4bb05a37c70c93bd873c05833a52475f65aa75d206f6736c75f47f0db63a7",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "1760ad6145fdcafcbf1042a2542eafbf5d813905e2c8b8169342bf0d6bd403f9",
       "canonical_url": "https://www.chosun.com/entertainments/broadcast/2026/09/10/MQ4WKYTCGU4DKZBRMNRDMYLEGI",
       "title": "‘신혼’ 변요한, ♥티파니 장점에 당황..“너무 많아서 말 못 해” (효연의레벨업)",
@@ -46184,7 +46320,7 @@
       "published_at": "2026-09-09T22:40:00Z",
       "modified_at": "2026-09-09T23:09:00Z",
       "discovered_at": "2026-09-09T23:17:16.063650Z",
-      "last_checked_at": "2026-09-10T01:37:03.108790Z",
+      "last_checked_at": "2026-09-10T01:50:56.526765Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -46361,7 +46497,7 @@
       "published_at": "2026-09-09T22:43:38.880000Z",
       "modified_at": "2026-09-10T01:04:42.267000Z",
       "discovered_at": "2026-09-09T23:16:53.635736Z",
-      "last_checked_at": "2026-09-10T01:35:22.732753Z",
+      "last_checked_at": "2026-09-10T01:48:45.532908Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -46748,7 +46884,7 @@
       "published_at": "2026-09-09T23:00:00Z",
       "modified_at": "2026-09-09T23:14:00Z",
       "discovered_at": "2026-09-09T23:17:16.063431Z",
-      "last_checked_at": "2026-09-10T01:37:03.106947Z",
+      "last_checked_at": "2026-09-10T01:50:56.525182Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -46831,25 +46967,6 @@
       "last_checked_at": "2026-09-09T23:16:53.633597Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "c477bc4279b25b8fd8251cc30e5d19218e805bf732dcac9144463f37b1680124",
-      "canonical_url": "https://www.chosun.com/english/travel-food-en/2026/09/10/SEOZ4G4PJFEQVISXCXTJJVNJHY",
-      "title": "Five Recipients' Lives Show Manhae's Teachings Alive Today",
-      "outlet": "chosun",
-      "reporter": null,
-      "published_at": "2026-09-09T23:07:40.850000Z",
-      "modified_at": "2026-09-09T23:07:40.850000Z",
-      "discovered_at": "2026-09-09T23:16:56.810189Z",
-      "last_checked_at": "2026-09-09T23:16:56.810189Z",
-      "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
       "full_body_status": "skipped_irrelevant",
@@ -47034,26 +47151,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "dd1aae0a4c1ba7594ce37a0c7192ec5d8af84d3bf370c0b8e255ca6495192cb9",
-      "canonical_url": "https://www.chosun.com/international/international_general/2026/09/10/SXJLUNJZTRHKNFSSD4WPTKLEBQ",
-      "title": "개막 3시간 지나도 텅텅 빈 객석...예전 같지 않은 ‘트럼프 쇼’ 열기",
-      "outlet": "chosun",
-      "reporter": "댈러스=박국희 특파원",
-      "published_at": "2026-09-09T23:11:25.565000Z",
-      "modified_at": "2026-09-09T23:11:25.565000Z",
-      "discovered_at": "2026-09-09T23:16:53.634376Z",
-      "last_checked_at": "2026-09-09T23:16:53.634376Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
       "candidate_id": "4811627065fde5731e0a6af9ed0d08ceb3467fd8f9ad3cabb7f2d3c256e1e4b1",
       "canonical_url": "https://www.chosun.com/entertainments/movie/2026/09/10/GFSDGMZSMRTGIZJVMIYDEYRTMQ",
       "title": "[SC인터뷰] \"무대인사요? 머리띠 다 쓸게요!\"…'인턴' 한소희, 첫 추석 극장가 출격(종합)",
@@ -47101,25 +47198,6 @@
       "modified_at": "2026-09-09T23:12:24.483000Z",
       "discovered_at": "2026-09-09T23:16:56.809406Z",
       "last_checked_at": "2026-09-09T23:16:56.809406Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "87d9c36502da3d4f8e20e4e4b20aae8f6ebc0b63f094f02871d95b9edae50904",
-      "canonical_url": "https://www.chosun.com/english/world-en/2026/09/10/R4AYCQB5WRFE7OCODGM3HFS7AY",
-      "title": "Trump's Rally Draws Sparse Crowd at Republican Convention",
-      "outlet": "chosun",
-      "reporter": null,
-      "published_at": "2026-09-09T23:12:28.861000Z",
-      "modified_at": "2026-09-09T23:12:28.861000Z",
-      "discovered_at": "2026-09-09T23:16:56.809699Z",
-      "last_checked_at": "2026-09-09T23:16:56.809699Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -47253,7 +47331,7 @@
       "published_at": "2026-09-09T23:14:00Z",
       "modified_at": "2026-09-09T23:23:00Z",
       "discovered_at": "2026-09-09T23:17:16.063096Z",
-      "last_checked_at": "2026-09-10T01:37:03.105541Z",
+      "last_checked_at": "2026-09-10T01:50:56.523996Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -47428,7 +47506,7 @@
       "published_at": "2026-09-09T23:21:00Z",
       "modified_at": "2026-09-09T23:28:00Z",
       "discovered_at": "2026-09-10T01:37:03.103817Z",
-      "last_checked_at": "2026-09-10T01:37:03.103817Z",
+      "last_checked_at": "2026-09-10T01:50:56.522435Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47444,58 +47522,20 @@
       "canonical_url": "https://www.hani.co.kr/arti/area/yeongnam/1277102.html",
       "title": "‘부산 예인선 전복’ 실종 1명, 포항서 숨진 채 발견…5명 수색 중",
       "outlet": "hani",
-      "reporter": "김영동",
+      "reporter": null,
       "published_at": "2026-09-09T23:26:00Z",
       "modified_at": "2026-09-09T23:31:00Z",
       "discovered_at": "2026-09-10T01:37:01.035168Z",
-      "last_checked_at": "2026-09-10T01:37:01.035168Z",
+      "last_checked_at": "2026-09-10T01:50:56.521130Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "f85a79e3801edf857ba28b3dec7ef4e1927082ac2d2c1a337a975f71aad93041",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
-      "candidate_id": "cf02b4341b2b40422ab2baa6d0ff5d69f822500f710d293680e50b566449a86d",
-      "canonical_url": "https://www.chosun.com/politics/assembly/2026/09/10/3CZG6UBIORBDXIRZIE7EOIHEH4",
-      "title": "김민석 “서울시장 선거 99.9% 있다... 후보에 김현종·김경민도 있어\"",
-      "outlet": "chosun",
-      "reporter": "김경필 기자",
-      "published_at": "2026-09-09T23:29:32Z",
-      "modified_at": null,
-      "discovered_at": "2026-09-10T01:34:34.652450Z",
-      "last_checked_at": "2026-09-10T01:34:34.652450Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
-      ],
       "full_body_status": "skipped_irrelevant",
       "body_hash": null,
       "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
-    },
-    {
-      "candidate_id": "25bc38d0d837b9f06c0a60223472d9fe2edd29e4f803cd097083baf81f017dd9",
-      "canonical_url": "https://www.chosun.com/sports/world-football/2026/09/10/AIWXNATBGFC6ZBSLCX7IRSCCT4",
-      "title": "‘실점 빌미 제공’ 이강인 59분 소화… 팀은 리버풀에 1대2 역전패",
-      "outlet": "chosun",
-      "reporter": "김도균 기자",
-      "published_at": "2026-09-09T23:49:48Z",
-      "modified_at": null,
-      "discovered_at": "2026-09-10T01:34:29.994430Z",
-      "last_checked_at": "2026-09-10T01:34:29.994430Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "9efa8463f05a8351738a187e2096c0363165334d21b230ef4bf296a5346a37f9",
@@ -47506,7 +47546,7 @@
       "published_at": "2026-09-09T23:55:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:17.439461Z",
-      "last_checked_at": "2026-09-10T01:38:17.439461Z",
+      "last_checked_at": "2026-09-10T01:52:10.925029Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47525,7 +47565,7 @@
       "published_at": "2026-09-09T23:57:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:15.389865Z",
-      "last_checked_at": "2026-09-10T01:38:15.389865Z",
+      "last_checked_at": "2026-09-10T01:52:08.905502Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47544,7 +47584,7 @@
       "published_at": "2026-09-10T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:13.410519Z",
-      "last_checked_at": "2026-09-10T01:38:13.410519Z",
+      "last_checked_at": "2026-09-10T01:52:06.956863Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47563,7 +47603,7 @@
       "published_at": "2026-09-10T00:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:11.410319Z",
-      "last_checked_at": "2026-09-10T01:38:11.410319Z",
+      "last_checked_at": "2026-09-10T01:52:04.925852Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47582,7 +47622,7 @@
       "published_at": "2026-09-10T00:01:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:09.401978Z",
-      "last_checked_at": "2026-09-10T01:38:09.401978Z",
+      "last_checked_at": "2026-09-10T01:52:02.917744Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47601,7 +47641,7 @@
       "published_at": "2026-09-10T00:02:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.658290Z",
-      "last_checked_at": "2026-09-10T01:35:27.658290Z",
+      "last_checked_at": "2026-09-10T01:48:49.882313Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -47620,7 +47660,7 @@
       "published_at": "2026-09-10T00:05:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:07.573224Z",
-      "last_checked_at": "2026-09-10T01:38:07.573224Z",
+      "last_checked_at": "2026-09-10T01:52:01.157303Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47639,7 +47679,7 @@
       "published_at": "2026-09-10T00:06:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:05.581054Z",
-      "last_checked_at": "2026-09-10T01:38:05.581054Z",
+      "last_checked_at": "2026-09-10T01:51:59.091069Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47658,7 +47698,7 @@
       "published_at": "2026-09-10T00:09:41Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:22.731579Z",
-      "last_checked_at": "2026-09-10T01:35:22.731579Z",
+      "last_checked_at": "2026-09-10T01:48:45.531828Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -47669,22 +47709,62 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "826515b17e603eb4342968e0e0c0e03c43221e266de1932a0fe1886dc2948b3d",
+      "canonical_url": "https://www.chosun.com/economy/economy_general/2026/09/10/2RV7VLW5OBBPDCBHAQYEOS2XCA",
+      "title": "“사업자대출 받아 부동산 매매”…금융당국, 5년여간 1167건 적발",
+      "outlet": "chosun",
+      "reporter": "유준호 기자",
+      "published_at": "2026-09-10T00:11:14Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.727255Z",
+      "last_checked_at": "2026-09-10T01:48:45.528041Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "e755116a8cae0b8d306150bc718db4a31c6c3c4bbc5fbd689a16367c8f55a4ec",
+      "canonical_url": "https://www.chosun.com/economy/economy_general/2026/09/10/DYLVAI3SQRET7HISLDSI43EXRU",
+      "title": "20·30대 8명 중 1명 “노후준비는 주식·채권으로”",
+      "outlet": "chosun",
+      "reporter": "정석우 기자",
+      "published_at": "2026-09-10T00:12:50Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.724534Z",
+      "last_checked_at": "2026-09-10T01:48:45.525188Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "7e81343a71fc64fedd73ba486ea0b32b9d4409f456ea54bd24539f0718e8006e",
       "canonical_url": "https://www.hani.co.kr/arti/sports/soccer/1277103.html",
       "title": "이강인 AT 마드리드 데뷔골, 라리가 ‘8월의 가장 멋진 골’ 선정",
       "outlet": "hani",
-      "reporter": "남지은",
+      "reporter": null,
       "published_at": "2026-09-10T00:14:00Z",
       "modified_at": "2026-09-10T00:15:00Z",
       "discovered_at": "2026-09-10T01:36:59.033500Z",
-      "last_checked_at": "2026-09-10T01:36:59.033500Z",
+      "last_checked_at": "2026-09-10T01:50:56.519497Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "26cad99bbeb674660d41465e3ca16ec63a0fdf865d3e199137af28624ee03df8",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -47697,7 +47777,7 @@
       "published_at": "2026-09-10T00:15:00Z",
       "modified_at": "2026-09-10T00:18:00Z",
       "discovered_at": "2026-09-10T01:36:57.153242Z",
-      "last_checked_at": "2026-09-10T01:36:57.153242Z",
+      "last_checked_at": "2026-09-10T01:50:54.259681Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47717,32 +47797,13 @@
       "published_at": "2026-09-10T00:17:23Z",
       "modified_at": "2026-09-10T00:17:26Z",
       "discovered_at": "2026-09-10T01:38:24.613334Z",
-      "last_checked_at": "2026-09-10T01:38:24.613334Z",
+      "last_checked_at": "2026-09-10T01:52:18.093021Z",
       "discovery_route": [
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-09T22%3A00%3A00Z&before=2026-09-10T01%3A34%3A25Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-09T22%3A00%3A00Z&before=2026-09-10T01%3A34%3A25Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-09T22%3A00%3A00Z&before=2026-09-10T01%3A48%3A08Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "bf80c28926acc3e054d784307f9c156a2979dd757e4015dc5d81c62a2ae32a21",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
-      "candidate_id": "2b393d05c4afe4aa5b034273b0138f47e5b8b793aef54dff745e2e32549feb08",
-      "canonical_url": "https://www.chosun.com/culture-life/culture_general/2026/09/10/63JMG4MJTJCXVNYYEPW5CIRXGU",
-      "title": "4DX의 힘... 나홍진 ‘호프’ 박스오피스 5위로 껑충",
-      "outlet": "chosun",
-      "reporter": "신정선 기자",
-      "published_at": "2026-09-10T00:19:05.960000Z",
-      "modified_at": "2026-09-10T01:28:03.890000Z",
-      "discovered_at": "2026-09-10T01:34:42.673586Z",
-      "last_checked_at": "2026-09-10T01:34:42.673586Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "4d15e18266d006825e4385ee5a68194891f227fc42447cadcab81c1fcc20d8ab",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -47756,7 +47817,7 @@
       "published_at": "2026-09-10T00:22:00Z",
       "modified_at": "2026-09-10T00:27:00Z",
       "discovered_at": "2026-09-10T01:36:55.231258Z",
-      "last_checked_at": "2026-09-10T01:36:55.231258Z",
+      "last_checked_at": "2026-09-10T01:50:52.231177Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47770,19 +47831,19 @@
     {
       "candidate_id": "086ef1202a342072ef7b1388d202af72557aacc718aac3f5d455c196fed23702",
       "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1277107.html",
-      "title": "김민석 “‘서울시장 후보’ 훈식·원식·청래, 거론되는 분들 적은 것…나도 있어”",
+      "title": "[영상] 김민석 “‘서울시장 후보’ 훈식·원식·청래, 거론되는 분들 적은 것…나도 있어”",
       "outlet": "hani",
       "reporter": "고한솔",
       "published_at": "2026-09-10T00:30:00Z",
-      "modified_at": "2026-09-10T00:46:00Z",
+      "modified_at": "2026-09-10T01:39:00Z",
       "discovered_at": "2026-09-10T01:36:51.130519Z",
-      "last_checked_at": "2026-09-10T01:36:51.130519Z",
+      "last_checked_at": "2026-09-10T01:50:48.265145Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
-      "body_hash": "75040fa6b139131cf3d77acf1142d09eff8030cb3462bf4f7407934eab32db7a",
+      "body_hash": "33982de7339a926505637b04e3a37e3f15584f5adc649f1e059dfe73b7d2eac5",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -47796,7 +47857,7 @@
       "published_at": "2026-09-10T00:30:00Z",
       "modified_at": "2026-09-10T00:56:00Z",
       "discovered_at": "2026-09-10T01:36:53.035143Z",
-      "last_checked_at": "2026-09-10T01:36:53.035143Z",
+      "last_checked_at": "2026-09-10T01:50:50.224502Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47835,7 +47896,7 @@
       "published_at": "2026-09-10T00:31:00Z",
       "modified_at": "2026-09-10T00:33:00Z",
       "discovered_at": "2026-09-10T01:36:49.104955Z",
-      "last_checked_at": "2026-09-10T01:36:49.104955Z",
+      "last_checked_at": "2026-09-10T01:50:46.253690Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47847,6 +47908,26 @@
       "primary_source_validation": "pending"
     },
     {
+      "candidate_id": "af80c11296efc0008c768ea0620f9dda8733f5f0b3b48182e3ac6da53bd5df3e",
+      "canonical_url": "https://www.chosun.com/politics/assembly/2026/09/10/QTEAWNZVLFDWRMW3L6INYZ7KOQ",
+      "title": "與 박성준 “김승원 청문회, 한동훈 증인 채택하는 게 맞다”",
+      "outlet": "chosun",
+      "reporter": "신지인 기자",
+      "published_at": "2026-09-10T00:31:50Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.721717Z",
+      "last_checked_at": "2026-09-10T01:48:45.522456Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
       "candidate_id": "53d96dfd3fcc18326d6ae258a80e24df9c9bf40392354ea2257f8c94ba395b7d",
       "canonical_url": "https://www.hani.co.kr/arti/sports/soccer/1277109.html",
       "title": "이강인 59분 활약 아틀레티코, 챔피언스리그 리버풀에 1-2 역전패",
@@ -47855,7 +47936,7 @@
       "published_at": "2026-09-10T00:33:00Z",
       "modified_at": "2026-09-10T01:15:00Z",
       "discovered_at": "2026-09-10T01:36:47.033389Z",
-      "last_checked_at": "2026-09-10T01:36:47.033389Z",
+      "last_checked_at": "2026-09-10T01:50:44.230312Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47875,7 +47956,7 @@
       "published_at": "2026-09-10T00:34:00Z",
       "modified_at": "2026-09-10T00:38:00Z",
       "discovered_at": "2026-09-10T01:36:45.105340Z",
-      "last_checked_at": "2026-09-10T01:36:45.105340Z",
+      "last_checked_at": "2026-09-10T01:50:42.335505Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -47883,6 +47964,26 @@
       "full_body_status": "fetched",
       "body_hash": "456bcfb91dd1fd42b5e9652251259f85b70a1cfded6772fc48b9575f829ecd46",
       "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "6f690ae1808d74d3caf4cc70505f3a43d1fb3779b95effb6f335819d1756443f",
+      "canonical_url": "https://www.chosun.com/economy/money/2026/09/10/5NCDDZ3EEZH2JES47S4RXW52HY",
+      "title": "이달 2000억원 몰린 美 단기채 ETF…주요국 금리 인상 우려에 서학개미 관심",
+      "outlet": "chosun",
+      "reporter": "유소연 기자",
+      "published_at": "2026-09-10T00:39:01Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.712329Z",
+      "last_checked_at": "2026-09-10T01:48:45.517976Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -47933,7 +48034,7 @@
       "published_at": "2026-09-10T00:44:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:38:03.495836Z",
-      "last_checked_at": "2026-09-10T01:38:03.495836Z",
+      "last_checked_at": "2026-09-10T01:51:56.825132Z",
       "discovery_route": [
         "official:https://www.ablenews.co.kr/sitemap.xml"
       ],
@@ -47952,10 +48053,11 @@
       "published_at": "2026-09-10T00:45:00Z",
       "modified_at": "2026-09-10T01:16:00Z",
       "discovered_at": "2026-09-10T01:36:43.035356Z",
-      "last_checked_at": "2026-09-10T01:36:43.035356Z",
+      "last_checked_at": "2026-09-10T01:50:40.266658Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "adc25781fc53220a2ea4c5d61b35b4ea5845aedb96d1d92281a2653b02d68d0b",
@@ -48010,7 +48112,7 @@
       "published_at": "2026-09-10T00:50:47Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.667828Z",
-      "last_checked_at": "2026-09-10T01:35:27.667828Z",
+      "last_checked_at": "2026-09-10T01:48:49.894017Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48048,7 +48150,7 @@
       "published_at": "2026-09-10T00:51:08Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.666693Z",
-      "last_checked_at": "2026-09-10T01:35:27.666693Z",
+      "last_checked_at": "2026-09-10T01:48:49.892834Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48137,21 +48239,21 @@
     {
       "candidate_id": "b4cfe054cc5fd5a2abb9140ca5a2c43f401ac9c63461277ce05f5c8ef1548fe2",
       "canonical_url": "https://www.pressian.com/pages/articles/2026091000002761305",
-      "title": "전북TP, 특성화고 학생 대상 이차전지 기업탐방·일자리 연계 프로그램 개최",
+      "title": "전북TP, 특성화고 학생 대상 이차전지 기업탐방middot;일자리 연계 프로그램 개최",
       "outlet": "pressian",
-      "reporter": "홍영택 기자(=전주)",
+      "reporter": null,
       "published_at": "2026-09-10T00:54:57Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:39.382746Z",
-      "last_checked_at": "2026-09-10T01:37:39.382746Z",
+      "last_checked_at": "2026-09-10T01:51:46.777995Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "78823e1749a19657e7cbdcf8e66908e74faf9ae118e00d468a27613b527db78d",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "c469f43960757153c714691cc8c27b4efd85b5361e1f7faf7ebd55b574521c2e",
@@ -48162,7 +48264,7 @@
       "published_at": "2026-09-10T00:55:11Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:37.375379Z",
-      "last_checked_at": "2026-09-10T01:37:37.375379Z",
+      "last_checked_at": "2026-09-10T01:51:44.783304Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48181,7 +48283,7 @@
       "published_at": "2026-09-10T00:55:13Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:35.391817Z",
-      "last_checked_at": "2026-09-10T01:37:35.391817Z",
+      "last_checked_at": "2026-09-10T01:51:42.780955Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48200,7 +48302,7 @@
       "published_at": "2026-09-10T00:55:26Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:33.371028Z",
-      "last_checked_at": "2026-09-10T01:37:33.371028Z",
+      "last_checked_at": "2026-09-10T01:51:40.777114Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48238,7 +48340,7 @@
       "published_at": "2026-09-10T00:56:29Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:31.384362Z",
-      "last_checked_at": "2026-09-10T01:37:31.384362Z",
+      "last_checked_at": "2026-09-10T01:51:38.784732Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48257,7 +48359,7 @@
       "published_at": "2026-09-10T00:56:32Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:29.377002Z",
-      "last_checked_at": "2026-09-10T01:37:29.377002Z",
+      "last_checked_at": "2026-09-10T01:51:36.789203Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48276,7 +48378,7 @@
       "published_at": "2026-09-10T00:58:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.669304Z",
-      "last_checked_at": "2026-09-10T01:35:27.669304Z",
+      "last_checked_at": "2026-09-10T01:48:49.895571Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48287,6 +48389,26 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "455f77ecbc9c9c1d1dc18952775a19915d799cab9e93e514f915c42f80c2608c",
+      "canonical_url": "https://www.chosun.com/economy/economy_general/2026/09/10/BJWLOQLBY5BWHLYJ5GKAAL3FII",
+      "title": "공정위, 하도급 대금 늑장 지급한 건설사 등 18개 기업 조사",
+      "outlet": "chosun",
+      "reporter": "김승현 기자",
+      "published_at": "2026-09-10T00:58:14Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.726173Z",
+      "last_checked_at": "2026-09-10T01:48:45.526665Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "25b356b62bb2fe8f9f4642314220c731128e4965362d637d820b44be9c86fa02",
       "canonical_url": "https://www.hani.co.kr/arti/area/honam/1277112.html",
       "title": "신안 자은도 바다서 일하던 50대 어부, 어구에 끼어 숨져",
@@ -48295,10 +48417,11 @@
       "published_at": "2026-09-10T00:59:00Z",
       "modified_at": "2026-09-10T01:03:00Z",
       "discovered_at": "2026-09-10T01:36:41.097234Z",
-      "last_checked_at": "2026-09-10T01:36:41.097234Z",
+      "last_checked_at": "2026-09-10T01:50:38.335380Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "ba28235153fc23b89bc12a7207c493507d6ec570e80096f67f686881e70da37a",
@@ -48315,7 +48438,7 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.663652Z",
-      "last_checked_at": "2026-09-10T01:35:27.663652Z",
+      "last_checked_at": "2026-09-10T01:48:49.887753Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48334,7 +48457,7 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.659357Z",
-      "last_checked_at": "2026-09-10T01:35:27.659357Z",
+      "last_checked_at": "2026-09-10T01:48:49.883512Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48353,7 +48476,7 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.665204Z",
-      "last_checked_at": "2026-09-10T01:35:27.665204Z",
+      "last_checked_at": "2026-09-10T01:48:49.889296Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48372,7 +48495,7 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.662149Z",
-      "last_checked_at": "2026-09-10T01:35:27.662149Z",
+      "last_checked_at": "2026-09-10T01:48:49.885098Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48391,7 +48514,7 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.661072Z",
-      "last_checked_at": "2026-09-10T01:35:27.661072Z",
+      "last_checked_at": "2026-09-10T01:48:49.886625Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48410,7 +48533,7 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": "2026-09-10T01:09:00Z",
       "discovered_at": "2026-09-10T01:36:39.099680Z",
-      "last_checked_at": "2026-09-10T01:36:39.099680Z",
+      "last_checked_at": "2026-09-10T01:50:36.301738Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -48430,13 +48553,33 @@
       "published_at": "2026-09-10T01:00:00Z",
       "modified_at": "2026-09-10T01:06:00Z",
       "discovered_at": "2026-09-10T01:36:37.036421Z",
-      "last_checked_at": "2026-09-10T01:36:37.036421Z",
+      "last_checked_at": "2026-09-10T01:50:34.309665Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
       "body_hash": "79f4c2d6433ca9a564d6c57669c275a2544e60b889a9ff2152834a18be5cc7dc",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "40d360eeee158c87c36b62cb1046f8a46d71315ada528d88b763b6e486b0ec49",
+      "canonical_url": "https://www.chosun.com/politics/politics_general/2026/09/10/DIACTHYGGFE3VMP4JIJISV5UF4",
+      "title": "강신철 일가 4명 철거민 딱지... “엘리트 군인 아닌 엘리트 투기”",
+      "outlet": "chosun",
+      "reporter": "이해인 기자",
+      "published_at": "2026-09-10T01:00:35.593000Z",
+      "modified_at": "2026-09-10T01:41:57.125000Z",
+      "discovered_at": "2026-09-10T01:35:22.681231Z",
+      "last_checked_at": "2026-09-10T01:48:25.969370Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "88d04c79af4c81f965e4b50121538bbd1840b2bd92698248a52184bacf9fece3",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -48450,7 +48593,7 @@
       "published_at": "2026-09-10T01:01:29Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:27.385042Z",
-      "last_checked_at": "2026-09-10T01:37:27.385042Z",
+      "last_checked_at": "2026-09-10T01:51:34.778905Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48469,7 +48612,7 @@
       "published_at": "2026-09-10T01:01:37Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.656736Z",
-      "last_checked_at": "2026-09-10T01:35:27.656736Z",
+      "last_checked_at": "2026-09-10T01:48:49.880796Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48488,7 +48631,7 @@
       "published_at": "2026-09-10T01:01:53Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:25.391259Z",
-      "last_checked_at": "2026-09-10T01:37:25.391259Z",
+      "last_checked_at": "2026-09-10T01:51:32.797442Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -48507,7 +48650,7 @@
       "published_at": "2026-09-10T01:02:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.654994Z",
-      "last_checked_at": "2026-09-10T01:35:27.654994Z",
+      "last_checked_at": "2026-09-10T01:48:49.879146Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48526,7 +48669,7 @@
       "published_at": "2026-09-10T01:03:00Z",
       "modified_at": "2026-09-10T01:17:00Z",
       "discovered_at": "2026-09-10T01:36:35.032458Z",
-      "last_checked_at": "2026-09-10T01:36:35.032458Z",
+      "last_checked_at": "2026-09-10T01:50:32.318980Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -48546,7 +48689,7 @@
       "published_at": "2026-09-10T01:03:16Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:27.653420Z",
-      "last_checked_at": "2026-09-10T01:35:27.653420Z",
+      "last_checked_at": "2026-09-10T01:48:49.877811Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48557,20 +48700,40 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "e2b8c7977923c7f91b2628451821ad2fca8cd0336d68dc88afa048bbd1c249bc",
+      "canonical_url": "https://www.chosun.com/economy/industry-company/2026/09/10/SCT6N2FZNVF3DKG4H5OPJIXVCI",
+      "title": "美 해군 수장, 1년여 만에 한화 필리조선소 또 찾았다... “더 많은 함정 건조”",
+      "outlet": "chosun",
+      "reporter": "한예나 기자",
+      "published_at": "2026-09-10T01:03:56Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.728803Z",
+      "last_checked_at": "2026-09-10T01:48:45.529034Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
       "candidate_id": "c458e8995757a82feb7f10fee57cc7f661d5bbc526b12e2f31805e47f353981f",
       "canonical_url": "https://www.chosun.com/english/national-en/2026/09/10/I5BGHWZPCRBMHG75FD3EGOLBOQ",
-      "title": "Defense Minister Nominee’s Family Accused of Housing Scheme",
+      "title": "Defense Nominee Kang's Family Accused of Fraudulent Housing Scheme",
       "outlet": "chosun",
       "reporter": "Lee Hae-in",
       "published_at": "2026-09-10T01:04:35.531000Z",
-      "modified_at": "2026-09-10T01:25:41.250000Z",
+      "modified_at": "2026-09-10T01:42:30.812000Z",
       "discovered_at": "2026-09-10T01:35:42.671520Z",
-      "last_checked_at": "2026-09-10T01:35:42.671520Z",
+      "last_checked_at": "2026-09-10T01:48:58.317943Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "90095c5f2e6fb526cd64548ba05218517068bb011988203e5ff08a8352d19f38",
+      "body_hash": "3c8d13b35bb928563329cccda6729b8d33c192f59f639ea380b0280ce1f0491c",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
@@ -48584,7 +48747,7 @@
       "published_at": "2026-09-10T01:05:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:35:22.729885Z",
-      "last_checked_at": "2026-09-10T01:35:22.729885Z",
+      "last_checked_at": "2026-09-10T01:48:45.530265Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
       ],
@@ -48603,7 +48766,7 @@
       "published_at": "2026-09-10T01:05:00Z",
       "modified_at": "2026-09-10T01:23:00Z",
       "discovered_at": "2026-09-10T01:36:33.108406Z",
-      "last_checked_at": "2026-09-10T01:36:33.108406Z",
+      "last_checked_at": "2026-09-10T01:50:30.222092Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -48634,46 +48797,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "e2b8c7977923c7f91b2628451821ad2fca8cd0336d68dc88afa048bbd1c249bc",
-      "canonical_url": "https://www.chosun.com/economy/industry-company/2026/09/10/SCT6N2FZNVF3DKG4H5OPJIXVCI",
-      "title": "美 해군 수장, 1년여 만에 한화 필리조선소 또 찾았다... “더 많은 함정 건조”",
-      "outlet": "chosun",
-      "reporter": "한예나 기자",
-      "published_at": "2026-09-10T01:06:05.783000Z",
-      "modified_at": "2026-09-10T01:06:05.783000Z",
-      "discovered_at": "2026-09-10T01:35:22.728803Z",
-      "last_checked_at": "2026-09-10T01:35:22.728803Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "826515b17e603eb4342968e0e0c0e03c43221e266de1932a0fe1886dc2948b3d",
-      "canonical_url": "https://www.chosun.com/economy/economy_general/2026/09/10/2RV7VLW5OBBPDCBHAQYEOS2XCA",
-      "title": "“사업자대출 받아 부동산 매매”…금융당국, 5년여간 1167건 적발",
-      "outlet": "chosun",
-      "reporter": "유준호 기자",
-      "published_at": "2026-09-10T01:06:07.517000Z",
-      "modified_at": "2026-09-10T01:06:07.517000Z",
-      "discovered_at": "2026-09-10T01:35:22.727255Z",
-      "last_checked_at": "2026-09-10T01:35:22.727255Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
       "candidate_id": "463a527207acb765f93d013afeabe0ec00afe9afb8318d3e19e7f2a030f626c1",
       "canonical_url": "https://www.chosun.com/english/market-money-en/2026/09/10/XVBLD3G6X5F7DD6HFV2GXQ5VZQ",
       "title": "Financial Services Commission Chairman Visits Gimpo PF Site, Calls It Success",
@@ -48691,26 +48814,6 @@
       "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "455f77ecbc9c9c1d1dc18952775a19915d799cab9e93e514f915c42f80c2608c",
-      "canonical_url": "https://www.chosun.com/economy/economy_general/2026/09/10/BJWLOQLBY5BWHLYJ5GKAAL3FII",
-      "title": "공정위, 하도급 대금 늑장 지급한 건설사 등 18개 기업 조사",
-      "outlet": "chosun",
-      "reporter": "김승현 기자",
-      "published_at": "2026-09-10T01:06:18.375000Z",
-      "modified_at": "2026-09-10T01:06:18.375000Z",
-      "discovered_at": "2026-09-10T01:35:22.726173Z",
-      "last_checked_at": "2026-09-10T01:35:22.726173Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "acaeab953c56265b84d5d1ea102ca60b6865b48b5c6cd914cfd6cf3694f56a9a",
@@ -48751,26 +48854,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "0fe404cd318e622472695080811dd1e357fcf3480e8ed0459363eb63623c642c",
-      "canonical_url": "https://www.chosun.com/economy/tech_it/2026/09/10/P2BU3ZMBZNAEVO2WB5OF3TMZ2A",
-      "title": "25표 차 부결 뒤 다시 절충... SK하이닉스 노사, 성과급 현금 비율 40%서 50%로 확대",
-      "outlet": "chosun",
-      "reporter": "안별 기자",
-      "published_at": "2026-09-10T01:06:59.922000Z",
-      "modified_at": "2026-09-10T01:28:27.135000Z",
-      "discovered_at": "2026-09-10T01:34:39.134965Z",
-      "last_checked_at": "2026-09-10T01:34:39.134965Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "d58ab530f20ce247af58aae817d10358cdd5b4fa029fdc741be9dda057798c09",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
       "candidate_id": "49660c7ea31c3d1bc776d90cafc354f71eef5ded543195698e045faf3200dac6",
       "canonical_url": "https://www.hani.co.kr/arti/area/honam/1277117.html",
       "title": "‘달려라 책’ 전주독서대전 11일 개막…73개 행사 마련",
@@ -48779,7 +48862,7 @@
       "published_at": "2026-09-10T01:07:00Z",
       "modified_at": "2026-09-10T01:14:00Z",
       "discovered_at": "2026-09-10T01:36:31.034412Z",
-      "last_checked_at": "2026-09-10T01:36:31.034412Z",
+      "last_checked_at": "2026-09-10T01:50:28.218754Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -48829,26 +48912,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "e755116a8cae0b8d306150bc718db4a31c6c3c4bbc5fbd689a16367c8f55a4ec",
-      "canonical_url": "https://www.chosun.com/economy/economy_general/2026/09/10/DYLVAI3SQRET7HISLDSI43EXRU",
-      "title": "20·30대 8명 중 1명 “노후준비는 주식·채권으로”",
-      "outlet": "chosun",
-      "reporter": "정석우 기자",
-      "published_at": "2026-09-10T01:07:09.813000Z",
-      "modified_at": "2026-09-10T01:07:09.813000Z",
-      "discovered_at": "2026-09-10T01:35:22.724534Z",
-      "last_checked_at": "2026-09-10T01:35:22.724534Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
       "candidate_id": "858ba72af253441129f99ee58f852793d8f50311ad783a4f59481c8229dda33b",
       "canonical_url": "https://www.chosun.com/english/market-money-en/2026/09/10/KZSVFNR2PBB2RLMFVILRJPU4HU",
       "title": "20s, 30s Choose Stocks, Bonds for Retirement",
@@ -48868,54 +48931,15 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "207d3d56df5b1e4a50e6ae3604da2264f4569c673383ef7476b73250a6944def",
-      "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1277118.html",
-      "title": "한동훈, ‘서영교 찌릿’ 사진 올리며 “‘계엄’하시게요?” 비아냥",
-      "outlet": "hani",
-      "reporter": "송경화",
-      "published_at": "2026-09-10T01:08:00Z",
-      "modified_at": "2026-09-10T01:32:00Z",
-      "discovered_at": "2026-09-10T01:36:29.033938Z",
-      "last_checked_at": "2026-09-10T01:36:29.033938Z",
-      "discovery_route": [
-        "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "426370b65afa4e937cb7a8f4817c1367992badff9182a0ce6f1b3d63104092f2",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
-      "candidate_id": "0a22403d5eb3d18863d1b8c8553b936ada585424c0c17fef0cf7a5db23428e07",
-      "canonical_url": "https://www.chosun.com/english/opinion-en/2026/09/09/CJB6M5WOYJARRAOXGZNQHZDCH4",
-      "title": "Truth's Wolf in Sheep's Clothing",
-      "outlet": "chosun",
-      "reporter": null,
-      "published_at": "2026-09-10T01:08:32.871000Z",
-      "modified_at": "2026-09-10T01:08:32.871000Z",
-      "discovered_at": "2026-09-10T01:36:06.732026Z",
-      "last_checked_at": "2026-09-10T01:36:06.732026Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
       "candidate_id": "e1225199a7a26d56bfce8ed4bf16166bced725ddc76ed52bb0855c7e372231d9",
       "canonical_url": "https://www.chosun.com/sports/world-football/2026/09/10/GI4TSZBZGQ3DGNJXGJRWEZJSHE",
       "title": "[오피셜]미쳤다! 이강인, 아틀레티코 데뷔전 데뷔골→라리가 8월 '이달의 골' 수상 '쾌거'!...韓선수 최초 영예",
       "outlet": "chosun",
       "reporter": "스포츠조선",
-      "published_at": "2026-09-10T01:08:46.551000Z",
-      "modified_at": "2026-09-10T01:08:46.551000Z",
+      "published_at": "2026-09-10T01:07:50Z",
+      "modified_at": null,
       "discovered_at": "2026-09-10T01:35:22.723118Z",
-      "last_checked_at": "2026-09-10T01:35:22.723118Z",
+      "last_checked_at": "2026-09-10T01:48:45.523585Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -48925,6 +48949,26 @@
       "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "207d3d56df5b1e4a50e6ae3604da2264f4569c673383ef7476b73250a6944def",
+      "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1277118.html",
+      "title": "한동훈, ‘서영교 찌릿’ 사진 올리며 “‘계엄’하시게요?” 비아냥",
+      "outlet": "hani",
+      "reporter": "송경화",
+      "published_at": "2026-09-10T01:08:00Z",
+      "modified_at": "2026-09-10T01:32:00Z",
+      "discovered_at": "2026-09-10T01:36:29.033938Z",
+      "last_checked_at": "2026-09-10T01:50:26.026155Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "426370b65afa4e937cb7a8f4817c1367992badff9182a0ce6f1b3d63104092f2",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "b4915b96a42df27a8d31d7d8a1d8c9b018199b32ea1538482c234d7d57f994ed",
@@ -48937,26 +48981,6 @@
       "discovered_at": "2026-09-10T01:36:06.730430Z",
       "last_checked_at": "2026-09-10T01:36:06.730430Z",
       "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "af80c11296efc0008c768ea0620f9dda8733f5f0b3b48182e3ac6da53bd5df3e",
-      "canonical_url": "https://www.chosun.com/politics/assembly/2026/09/10/QTEAWNZVLFDWRMW3L6INYZ7KOQ",
-      "title": "與 박성준 “김승원 청문회, 한동훈 증인 채택하는 게 맞다”",
-      "outlet": "chosun",
-      "reporter": "신지인 기자",
-      "published_at": "2026-09-10T01:09:17.567000Z",
-      "modified_at": "2026-09-10T01:09:17.567000Z",
-      "discovered_at": "2026-09-10T01:35:22.721717Z",
-      "last_checked_at": "2026-09-10T01:35:22.721717Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
       "full_body_status": "skipped_irrelevant",
@@ -48993,7 +49017,7 @@
       "published_at": "2026-09-10T01:09:29Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:23.380063Z",
-      "last_checked_at": "2026-09-10T01:37:23.380063Z",
+      "last_checked_at": "2026-09-10T01:51:30.769814Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -49012,7 +49036,7 @@
       "published_at": "2026-09-10T01:09:34Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:21.386260Z",
-      "last_checked_at": "2026-09-10T01:37:21.386260Z",
+      "last_checked_at": "2026-09-10T01:51:28.783143Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -49031,7 +49055,7 @@
       "published_at": "2026-09-10T01:09:36Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:19.374829Z",
-      "last_checked_at": "2026-09-10T01:37:19.374829Z",
+      "last_checked_at": "2026-09-10T01:51:26.775177Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -49061,6 +49085,26 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "9509a77b5c904190fce9dc36aa44309bd52c8b0e1f878639e1ed966f115cb9f2",
+      "canonical_url": "https://www.chosun.com/sports/baseball/2026/09/10/HBRTEOJVHE4DKNJYHBSTEYRXGI",
+      "title": "MLB 스카우트 15명 몰려든 '150km 좌완 맞대결'…韓·대만 괴물 유망주 손 맞잡았다 \"WBC에서 다시 만나자\"",
+      "outlet": "chosun",
+      "reporter": "OSEN",
+      "published_at": "2026-09-10T01:10:00Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.720370Z",
+      "last_checked_at": "2026-09-10T01:48:45.520736Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "c356a770471b9676edfe4c93174628561c337a5184bf9e1e19fa7b7cf3183640",
       "canonical_url": "https://theindigo.co.kr/archives/69728",
       "title": "책에서 방향을 찾다… 국립장애인도서관 ‘내책방 북토크쇼’ 개최",
@@ -49069,9 +49113,10 @@
       "published_at": "2026-09-10T01:10:00Z",
       "modified_at": "2026-09-09T12:56:52Z",
       "discovered_at": "2026-09-10T01:38:22.350877Z",
-      "last_checked_at": "2026-09-10T01:38:22.350877Z",
+      "last_checked_at": "2026-09-10T01:52:15.713744Z",
       "discovery_route": [
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-09T22%3A00%3A00Z&before=2026-09-10T01%3A34%3A25Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-09T22%3A00%3A00Z&before=2026-09-10T01%3A34%3A25Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-09T22%3A00%3A00Z&before=2026-09-10T01%3A48%3A08Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "c2198ec7341489ff21aec8ea100bb2f98ce0b860f172c62a497b1eb01e9ccefa",
@@ -49178,6 +49223,26 @@
       "primary_source_validation": "not_required"
     },
     {
+      "candidate_id": "47ce606b1b89e1f60be4c038fe6d962ea98c98132c5070b577f534bff01634fa",
+      "canonical_url": "https://www.chosun.com/entertainments/broadcast/2026/09/10/GFSWMZTCGJSDMNJXMY4GKMJSGQ",
+      "title": "\"아닙니다요\" 김신영, '나혼산' 불참설 일축…시청자 기만 후 뒤숭숭 [Oh!쎈 이슈]",
+      "outlet": "chosun",
+      "reporter": "OSEN",
+      "published_at": "2026-09-10T01:11:00Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.714977Z",
+      "last_checked_at": "2026-09-10T01:48:45.519131Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
       "candidate_id": "835f1c56f612e1b679a1db5b337c0d37531209632ce4952987f4560c3d6989e5",
       "canonical_url": "https://www.chosun.com/economy/stock-finance/2026/09/10/QEBCT3KAPZGH5AA2RXF5V57WRU",
       "title": "[주식 매매 상위 종목 및 환율] 2026년 9월 9일자",
@@ -49198,26 +49263,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "6f690ae1808d74d3caf4cc70505f3a43d1fb3779b95effb6f335819d1756443f",
-      "canonical_url": "https://www.chosun.com/economy/money/2026/09/10/5NCDDZ3EEZH2JES47S4RXW52HY",
-      "title": "이달 2000억원 몰린 美 단기채 ETF…주요국 금리 인상 우려에 서학개미 관심",
-      "outlet": "chosun",
-      "reporter": "유소연 기자",
-      "published_at": "2026-09-10T01:11:09.320000Z",
-      "modified_at": "2026-09-10T01:11:09.320000Z",
-      "discovered_at": "2026-09-10T01:35:22.712329Z",
-      "last_checked_at": "2026-09-10T01:35:22.712329Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
       "candidate_id": "84beb1bf9ae693c40542c807b89ac2ba895019bebe58e325b348c0ab05702c3b",
       "canonical_url": "https://www.pressian.com/pages/articles/2026091010104950933",
       "title": "경기도, 남양주·가평 구운천 정비 완료",
@@ -49226,7 +49271,7 @@
       "published_at": "2026-09-10T01:11:11Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:17.365315Z",
-      "last_checked_at": "2026-09-10T01:37:17.365315Z",
+      "last_checked_at": "2026-09-10T01:51:24.794570Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -49352,15 +49397,15 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "9509a77b5c904190fce9dc36aa44309bd52c8b0e1f878639e1ed966f115cb9f2",
-      "canonical_url": "https://www.chosun.com/sports/baseball/2026/09/10/HBRTEOJVHE4DKNJYHBSTEYRXGI",
-      "title": "MLB 스카우트 15명 몰려든 '150km 좌완 맞대결'…韓·대만 괴물 유망주 손 맞잡았다 \"WBC에서 다시 만나자\"",
+      "candidate_id": "60583fc787b8ca1a5c480ec3783402ffc7dfb2883e49ebaf3ab27dd8f749cbb5",
+      "canonical_url": "https://www.chosun.com/entertainments/broadcast/2026/09/10/HEZWCOJVMY3DAZRZGQZDOOBTHE",
+      "title": "이서진, 하다하다 서인영 ‘속옷 화보’ 수발까지..결국 기싸움 발발 (비서진)",
       "outlet": "chosun",
       "reporter": "OSEN",
-      "published_at": "2026-09-10T01:11:44.864000Z",
-      "modified_at": "2026-09-10T01:11:44.864000Z",
-      "discovered_at": "2026-09-10T01:35:22.720370Z",
-      "last_checked_at": "2026-09-10T01:35:22.720370Z",
+      "published_at": "2026-09-10T01:12:00Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:35:22.707199Z",
+      "last_checked_at": "2026-09-10T01:48:45.516399Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49369,7 +49414,7 @@
       "body_hash": null,
       "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "16cbc2208f2d72479714ee8e1207954f01919c29dc73f5801d6e6c09ca029bb8",
@@ -49430,26 +49475,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "47ce606b1b89e1f60be4c038fe6d962ea98c98132c5070b577f534bff01634fa",
-      "canonical_url": "https://www.chosun.com/entertainments/broadcast/2026/09/10/GFSWMZTCGJSDMNJXMY4GKMJSGQ",
-      "title": "\"아닙니다요\" 김신영, '나혼산' 불참설 일축…시청자 기만 후 뒤숭숭 [Oh!쎈 이슈]",
-      "outlet": "chosun",
-      "reporter": "OSEN",
-      "published_at": "2026-09-10T01:12:22.477000Z",
-      "modified_at": "2026-09-10T01:12:22.477000Z",
-      "discovered_at": "2026-09-10T01:35:22.714977Z",
-      "last_checked_at": "2026-09-10T01:35:22.714977Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
       "candidate_id": "ff800e9158f5dafb1a729b94fe948d22b8a15dca45fbe6095df588431ac7630c",
       "canonical_url": "https://www.pressian.com/pages/articles/2026091010121443708",
       "title": "인천시, 정신질환자 자립준비주택 8호로 확대…15일부터 입주자 모집",
@@ -49458,7 +49483,7 @@
       "published_at": "2026-09-10T01:12:24Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:15.370337Z",
-      "last_checked_at": "2026-09-10T01:37:15.370337Z",
+      "last_checked_at": "2026-09-10T01:51:22.813810Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -49515,7 +49540,7 @@
       "published_at": "2026-09-10T01:12:54.715000Z",
       "modified_at": "2026-09-10T01:12:54.715000Z",
       "discovered_at": "2026-09-10T01:35:22.704552Z",
-      "last_checked_at": "2026-09-10T01:35:22.704552Z",
+      "last_checked_at": "2026-09-10T01:48:45.515405Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49527,25 +49552,6 @@
       "primary_source_validation": "pending"
     },
     {
-      "candidate_id": "58d73c4448cc16a62ba97e31bcfea8f8d3afadd48e9eda94fd79b0ffc2f50205",
-      "canonical_url": "https://www.chosun.com/english/national-en/2026/09/10/Y2RGXTQ2BBGCZAOC4VJZAEGHA4",
-      "title": "Jang Hoon, Japanese Baseball's 3,085-Hit Legend, Dies at 86",
-      "outlet": "chosun",
-      "reporter": "Yang Seung-su",
-      "published_at": "2026-09-10T01:12:58.851000Z",
-      "modified_at": "2026-09-10T01:22:03.386000Z",
-      "discovered_at": "2026-09-10T01:36:02.676129Z",
-      "last_checked_at": "2026-09-10T01:36:02.676129Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "a196d37457124fe6eaa801cf9c2fa4ad49d841f21908a37aabc8d8aecadc00f0",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
       "candidate_id": "865069f8112c7e6d1892c23c2ae51378019a162425618ba7ca7bb31fcb1ad286",
       "canonical_url": "https://www.chosun.com/economy/industry-company/2026/09/10/4UPL62M6N5AI5FIP2HWPM4PFN4",
       "title": "영업익 80% 달라는 노조… 포스코 무파업 전통 깨뜨렸다",
@@ -49554,7 +49560,7 @@
       "published_at": "2026-09-10T01:13:09.338000Z",
       "modified_at": "2026-09-10T01:13:09.338000Z",
       "discovered_at": "2026-09-09T22:37:44.388146Z",
-      "last_checked_at": "2026-09-10T01:35:22.703351Z",
+      "last_checked_at": "2026-09-10T01:48:45.514289Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49574,27 +49580,7 @@
       "published_at": "2026-09-10T01:13:25.289000Z",
       "modified_at": "2026-09-10T01:13:25.289000Z",
       "discovered_at": "2026-09-10T01:35:22.701793Z",
-      "last_checked_at": "2026-09-10T01:35:22.701793Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "60583fc787b8ca1a5c480ec3783402ffc7dfb2883e49ebaf3ab27dd8f749cbb5",
-      "canonical_url": "https://www.chosun.com/entertainments/broadcast/2026/09/10/HEZWCOJVMY3DAZRZGQZDOOBTHE",
-      "title": "이서진, 하다하다 서인영 ‘속옷 화보’ 수발까지..결국 기싸움 발발 (비서진)",
-      "outlet": "chosun",
-      "reporter": "OSEN",
-      "published_at": "2026-09-10T01:13:26.098000Z",
-      "modified_at": "2026-09-10T01:13:26.098000Z",
-      "discovered_at": "2026-09-10T01:35:22.707199Z",
-      "last_checked_at": "2026-09-10T01:35:22.707199Z",
+      "last_checked_at": "2026-09-10T01:48:45.512708Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49614,7 +49600,7 @@
       "published_at": "2026-09-10T01:13:33.279000Z",
       "modified_at": "2026-09-10T01:13:33.279000Z",
       "discovered_at": "2026-09-10T01:36:06.707972Z",
-      "last_checked_at": "2026-09-10T01:36:06.707972Z",
+      "last_checked_at": "2026-09-10T01:49:57.919116Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49633,7 +49619,7 @@
       "published_at": "2026-09-10T01:13:40.682000Z",
       "modified_at": "2026-09-10T01:13:40.682000Z",
       "discovered_at": "2026-09-09T22:37:44.403709Z",
-      "last_checked_at": "2026-09-10T01:36:06.709127Z",
+      "last_checked_at": "2026-09-10T01:49:57.920358Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49652,7 +49638,7 @@
       "published_at": "2026-09-10T01:13:41.977000Z",
       "modified_at": "2026-09-10T01:13:41.977000Z",
       "discovered_at": "2026-09-10T01:35:22.700646Z",
-      "last_checked_at": "2026-09-10T01:35:22.700646Z",
+      "last_checked_at": "2026-09-10T01:48:45.511622Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49691,7 +49677,7 @@
       "published_at": "2026-09-10T01:13:46.617000Z",
       "modified_at": "2026-09-10T01:13:46.617000Z",
       "discovered_at": "2026-09-10T01:36:06.704466Z",
-      "last_checked_at": "2026-09-10T01:36:06.704466Z",
+      "last_checked_at": "2026-09-10T01:49:57.916390Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49710,7 +49696,7 @@
       "published_at": "2026-09-10T01:13:50.746000Z",
       "modified_at": "2026-09-10T01:13:50.746000Z",
       "discovered_at": "2026-09-09T16:40:35.759156Z",
-      "last_checked_at": "2026-09-10T01:35:22.698900Z",
+      "last_checked_at": "2026-09-10T01:48:45.510074Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49730,7 +49716,7 @@
       "published_at": "2026-09-10T01:13:57.987000Z",
       "modified_at": "2026-09-10T01:13:57.987000Z",
       "discovered_at": "2026-09-10T01:35:22.697859Z",
-      "last_checked_at": "2026-09-10T01:35:22.697859Z",
+      "last_checked_at": "2026-09-10T01:48:45.504530Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49750,7 +49736,7 @@
       "published_at": "2026-09-10T01:14:05.767000Z",
       "modified_at": "2026-09-10T01:14:05.767000Z",
       "discovered_at": "2026-09-10T01:36:06.700404Z",
-      "last_checked_at": "2026-09-10T01:36:06.700404Z",
+      "last_checked_at": "2026-09-10T01:49:57.912426Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49769,7 +49755,7 @@
       "published_at": "2026-09-10T01:14:22.248000Z",
       "modified_at": "2026-09-10T01:14:22.248000Z",
       "discovered_at": "2026-09-10T01:35:22.696215Z",
-      "last_checked_at": "2026-09-10T01:35:22.696215Z",
+      "last_checked_at": "2026-09-10T01:48:45.502878Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49787,9 +49773,9 @@
       "outlet": "chosun",
       "reporter": "김형원 기자",
       "published_at": "2026-09-10T01:14:22.959000Z",
-      "modified_at": "2026-09-10T01:32:19.322000Z",
+      "modified_at": "2026-09-10T01:38:58.492000Z",
       "discovered_at": "2026-09-10T01:34:32.600859Z",
-      "last_checked_at": "2026-09-10T01:34:32.600859Z",
+      "last_checked_at": "2026-09-10T01:48:29.667925Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49809,7 +49795,7 @@
       "published_at": "2026-09-10T01:14:32.623000Z",
       "modified_at": "2026-09-10T01:14:32.623000Z",
       "discovered_at": "2026-09-10T01:36:06.701835Z",
-      "last_checked_at": "2026-09-10T01:36:06.701835Z",
+      "last_checked_at": "2026-09-10T01:49:57.913548Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49828,7 +49814,7 @@
       "published_at": "2026-09-10T01:14:33.061000Z",
       "modified_at": "2026-09-10T01:14:33.061000Z",
       "discovered_at": "2026-09-09T16:40:35.765724Z",
-      "last_checked_at": "2026-09-10T01:35:22.694885Z",
+      "last_checked_at": "2026-09-10T01:48:45.501748Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49848,7 +49834,7 @@
       "published_at": "2026-09-10T01:14:36.752000Z",
       "modified_at": "2026-09-10T01:14:36.752000Z",
       "discovered_at": "2026-09-10T01:36:06.706582Z",
-      "last_checked_at": "2026-09-10T01:36:06.706582Z",
+      "last_checked_at": "2026-09-10T01:49:57.917571Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49867,7 +49853,7 @@
       "published_at": "2026-09-10T01:14:40.582000Z",
       "modified_at": "2026-09-10T01:14:40.582000Z",
       "discovered_at": "2026-09-09T16:40:35.762246Z",
-      "last_checked_at": "2026-09-10T01:35:22.693187Z",
+      "last_checked_at": "2026-09-10T01:48:45.500303Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49887,7 +49873,7 @@
       "published_at": "2026-09-10T01:14:40.863000Z",
       "modified_at": "2026-09-10T01:14:40.863000Z",
       "discovered_at": "2026-09-09T16:40:35.766675Z",
-      "last_checked_at": "2026-09-10T01:36:06.703314Z",
+      "last_checked_at": "2026-09-10T01:49:57.915186Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49906,7 +49892,7 @@
       "published_at": "2026-09-10T01:14:42.677000Z",
       "modified_at": "2026-09-10T01:14:42.677000Z",
       "discovered_at": "2026-09-09T16:40:35.765347Z",
-      "last_checked_at": "2026-09-10T01:35:22.691750Z",
+      "last_checked_at": "2026-09-10T01:48:45.499284Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -49926,7 +49912,7 @@
       "published_at": "2026-09-10T01:14:57.839000Z",
       "modified_at": "2026-09-10T01:14:57.839000Z",
       "discovered_at": "2026-09-10T01:36:06.695190Z",
-      "last_checked_at": "2026-09-10T01:36:06.695190Z",
+      "last_checked_at": "2026-09-10T01:49:57.907067Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49945,7 +49931,7 @@
       "published_at": "2026-09-10T01:15:03.448000Z",
       "modified_at": "2026-09-10T01:15:03.448000Z",
       "discovered_at": "2026-09-10T01:36:06.699287Z",
-      "last_checked_at": "2026-09-10T01:36:06.699287Z",
+      "last_checked_at": "2026-09-10T01:49:57.911263Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49964,7 +49950,7 @@
       "published_at": "2026-09-10T01:15:05.495000Z",
       "modified_at": "2026-09-10T01:15:05.495000Z",
       "discovered_at": "2026-09-10T01:36:06.696561Z",
-      "last_checked_at": "2026-09-10T01:36:06.696561Z",
+      "last_checked_at": "2026-09-10T01:49:57.908149Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -49983,7 +49969,7 @@
       "published_at": "2026-09-10T01:15:15.445000Z",
       "modified_at": "2026-09-10T01:15:15.445000Z",
       "discovered_at": "2026-09-10T01:36:06.698240Z",
-      "last_checked_at": "2026-09-10T01:36:06.698240Z",
+      "last_checked_at": "2026-09-10T01:49:57.909378Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50002,7 +49988,7 @@
       "published_at": "2026-09-10T01:15:52.712000Z",
       "modified_at": "2026-09-10T01:15:52.712000Z",
       "discovered_at": "2026-09-10T01:35:22.688426Z",
-      "last_checked_at": "2026-09-10T01:35:22.688426Z",
+      "last_checked_at": "2026-09-10T01:48:45.496288Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50022,7 +50008,7 @@
       "published_at": "2026-09-10T01:16:15.042000Z",
       "modified_at": "2026-09-10T01:16:15.042000Z",
       "discovered_at": "2026-09-10T01:36:06.694106Z",
-      "last_checked_at": "2026-09-10T01:36:06.694106Z",
+      "last_checked_at": "2026-09-10T01:49:57.905424Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50041,32 +50027,12 @@
       "published_at": "2026-09-10T01:16:33Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:13.376430Z",
-      "last_checked_at": "2026-09-10T01:37:13.376430Z",
+      "last_checked_at": "2026-09-10T01:51:20.779645Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
       "full_body_status": "fetched",
       "body_hash": "b893b69a599470af3475b07de79c2e5172ae57c92cf9130d28398cd9a7ccd4a1",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
-      "candidate_id": "cf1ada5b51777a5ab60ad66d0ab5a2cade21e68f8d6496cc7a4702edeb1c69ca",
-      "canonical_url": "https://www.chosun.com/politics/assembly/2026/09/10/4XYIVGIHTBH6RJP4AF5XD2SPBQ",
-      "title": "김민석 “한동훈 자격 정지 추진”… 韓 “김승원 아웃”",
-      "outlet": "chosun",
-      "reporter": "김경필 기자",
-      "published_at": "2026-09-10T01:16:51.484000Z",
-      "modified_at": "2026-09-10T01:33:31.954000Z",
-      "discovered_at": "2026-09-10T01:34:34.653535Z",
-      "last_checked_at": "2026-09-10T01:34:34.653535Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "6937420ae2228aeda3eaf984b491ed76b75f25b1495fbc3d94e3723863aa9c46",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -50080,7 +50046,7 @@
       "published_at": "2026-09-10T01:17:18.508000Z",
       "modified_at": "2026-09-10T01:17:18.508000Z",
       "discovered_at": "2026-09-10T01:35:22.683895Z",
-      "last_checked_at": "2026-09-10T01:35:22.683895Z",
+      "last_checked_at": "2026-09-10T01:48:45.491995Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50100,7 +50066,7 @@
       "published_at": "2026-09-10T01:17:50.032000Z",
       "modified_at": "2026-09-10T01:17:50.032000Z",
       "discovered_at": "2026-09-10T01:35:22.690165Z",
-      "last_checked_at": "2026-09-10T01:35:22.690165Z",
+      "last_checked_at": "2026-09-10T01:48:45.497812Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50120,7 +50086,7 @@
       "published_at": "2026-09-10T01:17:57.134000Z",
       "modified_at": "2026-09-10T01:17:57.134000Z",
       "discovered_at": "2026-09-10T01:36:06.692647Z",
-      "last_checked_at": "2026-09-10T01:36:06.692647Z",
+      "last_checked_at": "2026-09-10T01:49:57.904202Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50139,7 +50105,7 @@
       "published_at": "2026-09-10T01:18:05.807000Z",
       "modified_at": "2026-09-10T01:18:05.807000Z",
       "discovered_at": "2026-09-10T01:36:06.691536Z",
-      "last_checked_at": "2026-09-10T01:36:06.691536Z",
+      "last_checked_at": "2026-09-10T01:49:57.903157Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50158,7 +50124,7 @@
       "published_at": "2026-09-10T01:18:14.226000Z",
       "modified_at": "2026-09-10T01:18:14.226000Z",
       "discovered_at": "2026-09-10T01:35:22.685494Z",
-      "last_checked_at": "2026-09-10T01:35:22.685494Z",
+      "last_checked_at": "2026-09-10T01:48:45.493473Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50178,7 +50144,7 @@
       "published_at": "2026-09-10T01:18:24.093000Z",
       "modified_at": "2026-09-10T01:18:24.093000Z",
       "discovered_at": "2026-09-10T01:36:06.690459Z",
-      "last_checked_at": "2026-09-10T01:36:06.690459Z",
+      "last_checked_at": "2026-09-10T01:49:57.901598Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50197,7 +50163,7 @@
       "published_at": "2026-09-10T01:18:47.155000Z",
       "modified_at": "2026-09-10T01:18:47.155000Z",
       "discovered_at": "2026-09-10T01:36:06.689008Z",
-      "last_checked_at": "2026-09-10T01:36:06.689008Z",
+      "last_checked_at": "2026-09-10T01:49:57.900409Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50208,26 +50174,6 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "40d360eeee158c87c36b62cb1046f8a46d71315ada528d88b763b6e486b0ec49",
-      "canonical_url": "https://www.chosun.com/politics/politics_general/2026/09/10/DIACTHYGGFE3VMP4JIJISV5UF4",
-      "title": "천하람 “‘철거민 딱지 확보 작전?’...강신철 일가 4명이 철거민 딱지 받았다”",
-      "outlet": "chosun",
-      "reporter": "이해인 기자",
-      "published_at": "2026-09-10T01:19:10.200000Z",
-      "modified_at": "2026-09-10T01:19:10.200000Z",
-      "discovered_at": "2026-09-10T01:35:22.681231Z",
-      "last_checked_at": "2026-09-10T01:35:22.681231Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "pending"
-    },
-    {
       "candidate_id": "fa191a77e18f33c0fe05ebea3c9d47f9b906f0186247291e50b034f4fb63fc3b",
       "canonical_url": "https://www.chosun.com/sports/world-football/2026/09/10/GY3GEZRYMZQTEMJWGVTDOZDCHE",
       "title": "호되게 당한 '초보 감독' 야야 투레, 1-6 대패 후 \"PSG 기계 같은 팀...UCL 3연패에 근접\"",
@@ -50236,7 +50182,7 @@
       "published_at": "2026-09-10T01:19:23.754000Z",
       "modified_at": "2026-09-10T01:19:23.754000Z",
       "discovered_at": "2026-09-10T01:35:22.682756Z",
-      "last_checked_at": "2026-09-10T01:35:22.682756Z",
+      "last_checked_at": "2026-09-10T01:48:45.490803Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50256,7 +50202,7 @@
       "published_at": "2026-09-10T01:19:25.226000Z",
       "modified_at": "2026-09-10T01:19:25.226000Z",
       "discovered_at": "2026-09-10T01:35:22.679965Z",
-      "last_checked_at": "2026-09-10T01:35:22.679965Z",
+      "last_checked_at": "2026-09-10T01:48:45.489306Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50276,7 +50222,7 @@
       "published_at": "2026-09-10T01:19:47.721000Z",
       "modified_at": "2026-09-10T01:19:47.721000Z",
       "discovered_at": "2026-09-10T01:35:22.686760Z",
-      "last_checked_at": "2026-09-10T01:35:22.686760Z",
+      "last_checked_at": "2026-09-10T01:48:45.494766Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50296,7 +50242,7 @@
       "published_at": "2026-09-10T01:19:50.668000Z",
       "modified_at": "2026-09-10T01:19:50.668000Z",
       "discovered_at": "2026-09-10T01:36:06.686710Z",
-      "last_checked_at": "2026-09-10T01:36:06.686710Z",
+      "last_checked_at": "2026-09-10T01:49:57.897646Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50315,26 +50261,7 @@
       "published_at": "2026-09-10T01:19:56.261000Z",
       "modified_at": "2026-09-10T01:19:56.261000Z",
       "discovered_at": "2026-09-10T01:36:06.687942Z",
-      "last_checked_at": "2026-09-10T01:36:06.687942Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
-      "issue_id": null,
-      "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "f6477f823e52f0a3f0b36f8279d24aa2c4aeb832a9bfbce309396b4cb44de79e",
-      "canonical_url": "https://www.chosun.com/english/industry-en/2026/09/10/FTLH2YXJSZC33AGPXHODGMWCKA",
-      "title": "Memory Semiconductors Now Half Global Semiconductor Revenue",
-      "outlet": "chosun",
-      "reporter": null,
-      "published_at": "2026-09-10T01:20:16.964000Z",
-      "modified_at": "2026-09-10T01:20:16.964000Z",
-      "discovered_at": "2026-09-10T01:36:06.684561Z",
-      "last_checked_at": "2026-09-10T01:36:06.684561Z",
+      "last_checked_at": "2026-09-10T01:49:57.899094Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
@@ -50347,18 +50274,18 @@
     {
       "candidate_id": "ed6392471eb588f83a2dafefe90b4914c596ed404fbf82351f0f44b2162bc043",
       "canonical_url": "https://www.chosun.com/english/national-en/2026/09/10/JWWJ754NCJDLJKC5H4VAJRMOJM",
-      "title": "Justice Nominee Kim Seung-won Accused of Lobbying During Audit",
+      "title": "Kim Seung-won Faces Solicitation Allegations During Parliamentary Audit",
       "outlet": "chosun",
       "reporter": "Kim Hyeong-won",
       "published_at": "2026-09-10T01:20:31.390000Z",
-      "modified_at": "2026-09-10T01:35:05.890000Z",
+      "modified_at": "2026-09-10T01:39:34.681000Z",
       "discovered_at": "2026-09-10T01:35:55.265006Z",
-      "last_checked_at": "2026-09-10T01:35:55.265006Z",
+      "last_checked_at": "2026-09-10T01:49:37.408300Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "f430bbec86f69baad679bdf8c17238f8a17ccdcf254b4b0076cbdc959898c2d7",
+      "body_hash": "1960475308b0889faece58a17fdd761f877948980fc5639d77420068871b881a",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
@@ -50372,7 +50299,7 @@
       "published_at": "2026-09-10T01:20:33.828000Z",
       "modified_at": "2026-09-10T01:20:33.828000Z",
       "discovered_at": "2026-09-10T01:35:22.676813Z",
-      "last_checked_at": "2026-09-10T01:35:22.676813Z",
+      "last_checked_at": "2026-09-10T01:48:45.486500Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50392,7 +50319,7 @@
       "published_at": "2026-09-10T01:21:21.624000Z",
       "modified_at": "2026-09-10T01:21:21.624000Z",
       "discovered_at": "2026-09-10T01:35:22.674935Z",
-      "last_checked_at": "2026-09-10T01:35:22.674935Z",
+      "last_checked_at": "2026-09-10T01:48:45.485317Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50412,7 +50339,7 @@
       "published_at": "2026-09-10T01:21:33.543000Z",
       "modified_at": "2026-09-10T01:21:33.543000Z",
       "discovered_at": "2026-09-10T01:35:22.678125Z",
-      "last_checked_at": "2026-09-10T01:35:22.678125Z",
+      "last_checked_at": "2026-09-10T01:48:45.487896Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
@@ -50424,40 +50351,40 @@
       "primary_source_validation": "not_required"
     },
     {
-      "candidate_id": "5152f1e9df32c071f6c760ca3c6da730e56d3716f5c0f0c4d1dc9486054063b5",
-      "canonical_url": "https://www.chosun.com/english/travel-food-en/2026/09/10/32CVBY7FTFFWFAZOTYHEKU3JZ4",
-      "title": "Hope Jumps to 5th at Box Office in 4DX Re-release",
+      "candidate_id": "58d73c4448cc16a62ba97e31bcfea8f8d3afadd48e9eda94fd79b0ffc2f50205",
+      "canonical_url": "https://www.chosun.com/english/national-en/2026/09/10/Y2RGXTQ2BBGCZAOC4VJZAEGHA4",
+      "title": "Jang Hoon, Japanese Baseball's 3,085-Hit Legend, Dies at 86",
       "outlet": "chosun",
-      "reporter": "Shin Jeong-sun",
-      "published_at": "2026-09-10T01:22:01.879000Z",
-      "modified_at": "2026-09-10T01:28:45.602000Z",
-      "discovered_at": "2026-09-10T01:35:35.171482Z",
-      "last_checked_at": "2026-09-10T01:35:35.171482Z",
+      "reporter": null,
+      "published_at": "2026-09-10T01:22:03.386000Z",
+      "modified_at": "2026-09-10T01:22:03.386000Z",
+      "discovered_at": "2026-09-10T01:36:02.676129Z",
+      "last_checked_at": "2026-09-10T01:49:57.896556Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "9c8d85b29f560f89ed4efac3ca5626dbea25a69c9b9e877043522c36dec7d577",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "0ebc703ca6f4b7d6dcf068be5ab01fcadee7d6d0469497b13782dfdb27436f9f",
       "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/10/DIPWNNFXAJHT3D554SSFCI3KPU",
       "title": "Paris Bass Returns to Suwon KT, Vows Championship Victory",
       "outlet": "chosun",
-      "reporter": "OSEN",
-      "published_at": "2026-09-10T01:22:03.302000Z",
+      "reporter": null,
+      "published_at": "2026-09-10T01:22:03.520000Z",
       "modified_at": "2026-09-10T01:22:03.520000Z",
       "discovered_at": "2026-09-10T01:35:58.840542Z",
-      "last_checked_at": "2026-09-10T01:35:58.840542Z",
+      "last_checked_at": "2026-09-10T01:49:57.895417Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "dc1ccb4029f3fac179004e49ce7639852a2081b20425105fb6b2d61e4c5e3c5a",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50470,7 +50397,7 @@
       "published_at": "2026-09-10T01:23:00Z",
       "modified_at": "2026-09-10T01:33:00Z",
       "discovered_at": "2026-09-10T01:36:27.031302Z",
-      "last_checked_at": "2026-09-10T01:36:27.031302Z",
+      "last_checked_at": "2026-09-10T01:50:24.256299Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -50487,17 +50414,17 @@
       "title": "유니스, 오늘(10일) '엠카' 출격…'하늘땅 별땅' Y2K 제대로 보여준다",
       "outlet": "chosun",
       "reporter": "OSEN",
-      "published_at": "2026-09-10T01:23:21.970000Z",
+      "published_at": "2026-09-10T01:23:24.566000Z",
       "modified_at": "2026-09-10T01:23:24.566000Z",
       "discovered_at": "2026-09-10T01:35:18.677730Z",
-      "last_checked_at": "2026-09-10T01:35:18.677730Z",
+      "last_checked_at": "2026-09-10T01:48:45.483632Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "a0deaae0cdae0b334053d02de0b5acb7c81cecb73c13021a899e67e7cd3987d9",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50506,17 +50433,17 @@
       "canonical_url": "https://www.chosun.com/english/kpop-culture-en/2026/09/10/K5HVLXQJLNBG5CUQ5VLQXDTWVU",
       "title": "UNIS Performs 'Sky, Land, Star, Land' Remix on 'M Countdown' Debut",
       "outlet": "chosun",
-      "reporter": "OSEN",
-      "published_at": "2026-09-10T01:23:58.757000Z",
+      "reporter": null,
+      "published_at": "2026-09-10T01:23:58.997000Z",
       "modified_at": "2026-09-10T01:23:58.997000Z",
       "discovered_at": "2026-09-10T01:35:51.144789Z",
-      "last_checked_at": "2026-09-10T01:35:51.144789Z",
+      "last_checked_at": "2026-09-10T01:49:57.893593Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "6233cf0585c49ed0746773eab3e5b32b527249adf1379d940a72fcf98cd4fe95",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50529,7 +50456,7 @@
       "published_at": "2026-09-10T01:24:00Z",
       "modified_at": "2026-09-10T01:30:00Z",
       "discovered_at": "2026-09-10T01:36:23.113181Z",
-      "last_checked_at": "2026-09-10T01:36:23.113181Z",
+      "last_checked_at": "2026-09-10T01:50:20.336765Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -50549,7 +50476,7 @@
       "published_at": "2026-09-10T01:24:00Z",
       "modified_at": "2026-09-10T01:29:00Z",
       "discovered_at": "2026-09-10T01:36:25.094928Z",
-      "last_checked_at": "2026-09-10T01:36:25.094928Z",
+      "last_checked_at": "2026-09-10T01:50:22.255428Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -50566,38 +50493,19 @@
       "title": "방탄소년단 'SWIM', 美 빌보드 '글로벌 송 오브 더 서머' 선정",
       "outlet": "chosun",
       "reporter": "OSEN",
-      "published_at": "2026-09-10T01:24:22.189000Z",
+      "published_at": "2026-09-10T01:24:24.938000Z",
       "modified_at": "2026-09-10T01:24:24.938000Z",
       "discovered_at": "2026-09-10T01:35:15.339116Z",
-      "last_checked_at": "2026-09-10T01:35:15.339116Z",
+      "last_checked_at": "2026-09-10T01:48:45.481909Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "9c86a8d0efe9ad5e607e62dd1c326d190aa17c2e81d427bfad9074f7c240f4d2",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
-    },
-    {
-      "candidate_id": "08949bac23a9157483677ade9289bb4d1ec4c4cb7f58b6edf7c091ac2394dab3",
-      "canonical_url": "https://www.chosun.com/english/industry-en/2026/09/10/LTGUWSUBP5FG5JGWL3SA5TZYIM",
-      "title": "SK Hynix Raises Cash Payment Ratio to 50% in Revised Deal",
-      "outlet": "chosun",
-      "reporter": "Ahn Byeol",
-      "published_at": "2026-09-10T01:25:06.136000Z",
-      "modified_at": "2026-09-10T01:28:52.229000Z",
-      "discovered_at": "2026-09-10T01:35:30.834744Z",
-      "last_checked_at": "2026-09-10T01:35:30.834744Z",
-      "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
-      ],
-      "full_body_status": "fetched",
-      "body_hash": "c4f42d46dbd79e9b301ff9d642ebfbde46f7a3b16ededf5bde36f5f29777ff65",
-      "verification_grade": "A",
-      "issue_id": null,
-      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "15e47afb26f6e8c6675fe2b0a4a2d15eeda241bf1312a2ca0cf3b0c7a91aabaa",
@@ -50608,7 +50516,7 @@
       "published_at": "2026-09-10T01:25:07Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:11.377413Z",
-      "last_checked_at": "2026-09-10T01:37:11.377413Z",
+      "last_checked_at": "2026-09-10T01:51:18.775670Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -50619,21 +50527,81 @@
       "primary_source_validation": "pending"
     },
     {
+      "candidate_id": "ee5a27c8cd46ff8dd43ca53bc843d4eec948778ae86ea2b9b6f699229cc55cca",
+      "canonical_url": "https://www.chosun.com/economy/startup_story/2026/07/26/JRLA3GX3FFFCRIDIR566UIZBAM",
+      "title": "생선 중의 생선, 귀한 ‘제주 옥돔’ 대짜 2마리 2만4900원 초특가",
+      "outlet": "chosun",
+      "reporter": "이연주 더비비드 기자, 박유연 기자",
+      "published_at": "2026-09-10T01:25:09.496000Z",
+      "modified_at": "2026-09-10T01:25:09.496000Z",
+      "discovered_at": "2026-08-25T01:53:39.879178Z",
+      "last_checked_at": "2026-09-10T01:48:45.480847Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
       "candidate_id": "e068e979fc0ce9e0c2d207cc7a4d6c345e77ed4ce69ec5ccd8f55d862ebfdba8",
       "canonical_url": "https://www.chosun.com/english/kpop-culture-en/2026/09/10/45ST2NS3TJC3LETJHOG4YITZO4",
       "title": "BTS’s 'SWIM' Named Billboard’s 'Global Song of the Summer' 2026",
       "outlet": "chosun",
-      "reporter": "OSEN",
-      "published_at": "2026-09-10T01:25:11.719000Z",
+      "reporter": null,
+      "published_at": "2026-09-10T01:25:11.913000Z",
       "modified_at": "2026-09-10T01:25:11.913000Z",
       "discovered_at": "2026-09-10T01:35:46.684200Z",
-      "last_checked_at": "2026-09-10T01:35:46.684200Z",
+      "last_checked_at": "2026-09-10T01:49:57.892442Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "64bc658ab099e4adb3688fb4cc1cdf382a58459d0f9f2205b53e57dec126b8d8",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "9bf09012eebee3ca36240fe5bc696d01176301fe77a7676b90abc0caced8523d",
+      "canonical_url": "https://www.chosun.com/economy/startup_story/2026/08/31/BSNR4ZFIWBGVLFX42J4DL7GLT4",
+      "title": "시계 강국의 명맥 잇는 10만원대 한국 시계, 매출의 70%가 美日 등 수출",
+      "outlet": "chosun",
+      "reporter": "이영지 더비비드 기자, 박유연 기자",
+      "published_at": "2026-09-10T01:25:13.854000Z",
+      "modified_at": "2026-09-10T01:25:13.854000Z",
+      "discovered_at": "2026-08-30T21:08:09.373674Z",
+      "last_checked_at": "2026-09-10T01:48:45.479180Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "a8f4c6debeff657b772770149032c40634b4d95cac3c05876bd28cb5b11fd1b2",
+      "canonical_url": "https://www.chosun.com/economy/startup_story/2026/09/04/64XSN2GDQZHKTNVCFL3K7RORFA",
+      "title": "감탄 나오는 당도와 식감, 레인지로 5분 돌려 껍질째 먹는 양구 ‘밤호박’ 秋食",
+      "outlet": "chosun",
+      "reporter": "이연주 더비비드 기자, 박유연 기자",
+      "published_at": "2026-09-10T01:25:18.476000Z",
+      "modified_at": "2026-09-10T01:25:18.476000Z",
+      "discovered_at": "2026-09-03T21:04:23.642180Z",
+      "last_checked_at": "2026-09-10T01:48:45.478042Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50644,14 +50612,14 @@
       "outlet": "chosun",
       "reporter": "Kim Kyeong-pil",
       "published_at": "2026-09-10T01:26:16.453000Z",
-      "modified_at": "2026-09-10T01:34:07.763000Z",
+      "modified_at": "2026-09-10T01:41:24.201000Z",
       "discovered_at": "2026-09-10T01:35:27.679498Z",
-      "last_checked_at": "2026-09-10T01:35:27.679498Z",
+      "last_checked_at": "2026-09-10T01:49:05.457768Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
       "full_body_status": "fetched",
-      "body_hash": "68e4b4a8772525a44f250bb69781d5074cf5e70f339676a02b950adb8aafbf2f",
+      "body_hash": "8587a5445eef6e9ff107f53c75a3b80c50cc413f88d0b273650c4c128e3f55e5",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
@@ -50665,7 +50633,7 @@
       "published_at": "2026-09-10T01:27:00Z",
       "modified_at": "2026-09-10T01:36:00Z",
       "discovered_at": "2026-09-10T01:36:21.030918Z",
-      "last_checked_at": "2026-09-10T01:36:21.030918Z",
+      "last_checked_at": "2026-09-10T01:50:18.255129Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -50682,17 +50650,17 @@
       "title": "[오피셜]갈레고→루빅손→이동경→정승원, 8월 '이달의 선수상' 후보 선정…10일부터 팬투표 시작",
       "outlet": "chosun",
       "reporter": "스포츠조선",
-      "published_at": "2026-09-10T01:27:14.724000Z",
+      "published_at": "2026-09-10T01:27:17.845000Z",
       "modified_at": "2026-09-10T01:27:17.845000Z",
       "discovered_at": "2026-09-10T01:34:55.147450Z",
-      "last_checked_at": "2026-09-10T01:34:55.147450Z",
+      "last_checked_at": "2026-09-10T01:48:45.475009Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "c8345666a59178d45d95864c0a23be447b3369e2d8a3d964554c2e49ee312975",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -50701,19 +50669,39 @@
       "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/10/G33WRHSZYRAJXE7LG3QA4QLNEA",
       "title": "Gallego, Rubikson, Lee, Jeong Nominated for August 'Player of the Month' Award",
       "outlet": "chosun",
-      "reporter": "Sports Chosun",
-      "published_at": "2026-09-10T01:27:44.969000Z",
+      "reporter": null,
+      "published_at": "2026-09-10T01:27:45.206000Z",
       "modified_at": "2026-09-10T01:27:45.206000Z",
       "discovered_at": "2026-09-10T01:35:38.680243Z",
-      "last_checked_at": "2026-09-10T01:35:38.680243Z",
+      "last_checked_at": "2026-09-10T01:49:57.891312Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "407f29922d2fb6fa02004734950baae96cbb60f0b963c0cdac5d4dc796ce9ae1",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "2b393d05c4afe4aa5b034273b0138f47e5b8b793aef54dff745e2e32549feb08",
+      "canonical_url": "https://www.chosun.com/culture-life/culture_general/2026/09/10/63JMG4MJTJCXVNYYEPW5CIRXGU",
+      "title": "4DX의 힘... 나홍진 ‘호프’ 박스오피스 5위로 껑충",
+      "outlet": "chosun",
+      "reporter": "신정선 기자",
+      "published_at": "2026-09-10T01:28:03.890000Z",
+      "modified_at": "2026-09-10T01:28:03.890000Z",
+      "discovered_at": "2026-09-10T01:34:42.673586Z",
+      "last_checked_at": "2026-09-10T01:48:45.470394Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "abff36b1fcc1cf3cd9a8bbdfb7c110b5d861fbb172356d3a73241d55ef774aac",
@@ -50724,7 +50712,7 @@
       "published_at": "2026-09-10T01:28:43Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:09.369769Z",
-      "last_checked_at": "2026-09-10T01:37:09.369769Z",
+      "last_checked_at": "2026-09-10T01:51:16.786730Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -50743,14 +50731,14 @@
       "published_at": "2026-09-10T01:29:23.737000Z",
       "modified_at": "2026-09-10T01:29:23.737000Z",
       "discovered_at": "2026-09-10T01:34:39.133180Z",
-      "last_checked_at": "2026-09-10T01:34:39.133180Z",
+      "last_checked_at": "2026-09-10T01:48:45.468833Z",
       "discovery_route": [
         "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
         "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "blocked_by_robots",
+      "full_body_status": "skipped_irrelevant",
       "body_hash": null,
-      "verification_grade": "D",
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50763,7 +50751,7 @@
       "published_at": "2026-09-10T01:30:29Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:07.669903Z",
-      "last_checked_at": "2026-09-10T01:37:07.669903Z",
+      "last_checked_at": "2026-09-10T01:51:14.769711Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -50779,18 +50767,19 @@
       "title": "'너목보2 중국 수지' 엘수정, 10년 만에 신곡 'NEW ISSUE' 발매…설렘 유발 하우스",
       "outlet": "chosun",
       "reporter": "OSEN",
-      "published_at": "2026-09-10T01:30:45.288000Z",
+      "published_at": "2026-09-10T01:30:48.036000Z",
       "modified_at": "2026-09-10T01:30:48.036000Z",
       "discovered_at": "2026-09-10T01:34:46.638766Z",
-      "last_checked_at": "2026-09-10T01:34:46.638766Z",
+      "last_checked_at": "2026-09-10T01:48:45.471624Z",
       "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "46b106b9934f422b97107eaeaba5721f9059bdf577e9b27c1bf1f497ca1d1326",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
-      "primary_source_validation": "pending"
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "19ab54dcb37960d3e16a0d5dd5878313eb0ad6275ff7f9cb069405d592287c48",
@@ -50798,16 +50787,17 @@
       "title": "메타케어, 두타스테리드 성분 0.2mg 저용량 탈모치료제 출시",
       "outlet": "chosun",
       "reporter": "박지영 기자(조선비즈)",
-      "published_at": "2026-09-10T01:31:01.182000Z",
+      "published_at": "2026-09-10T01:31:03.988000Z",
       "modified_at": "2026-09-10T01:31:03.988000Z",
       "discovered_at": "2026-09-10T01:34:51.265412Z",
-      "last_checked_at": "2026-09-10T01:34:51.265412Z",
+      "last_checked_at": "2026-09-10T01:48:45.473406Z",
       "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "df756c021d110882d99685e14b32fd197730b2aeb0ec7a996d0952f87043fd80",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -50817,18 +50807,76 @@
       "title": "SK하이닉스 노사, 성과급 현금 비중 40→50%로… 수정 잠정합의안 마련",
       "outlet": "chosun",
       "reporter": "정두용 기자(조선비즈)",
-      "published_at": "2026-09-10T01:31:09.214000Z",
+      "published_at": "2026-09-10T01:31:12.304000Z",
       "modified_at": "2026-09-10T01:31:12.304000Z",
       "discovered_at": "2026-09-10T01:34:58.699041Z",
-      "last_checked_at": "2026-09-10T01:34:58.699041Z",
+      "last_checked_at": "2026-09-10T01:48:45.476531Z",
       "discovery_route": [
-        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
       ],
-      "full_body_status": "fetched",
-      "body_hash": "38b8a88a50e3414c5e8be6ccc660cbe8af6c01edfe154de28a95bd02956b10d7",
-      "verification_grade": "A",
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "16ba185722d34ecd11fb387f3b3a55abdc38ed946155febd8d05f0c633818d75",
+      "canonical_url": "https://www.chosun.com/english/kpop-culture-en/2026/09/10/3WZH5JBD7REZFI3DXG54TUHZEM",
+      "title": "Elsujeong's 'NEW ISSUE' Ends Decade-Long Hiatus",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:31:21.700000Z",
+      "modified_at": "2026-09-10T01:31:21.700000Z",
+      "discovered_at": "2026-09-10T01:49:57.889756Z",
+      "last_checked_at": "2026-09-10T01:49:57.889756Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "f7580826e6e1c515bd5e85996c6eac965963bce2ff8c7a935005fe4f4971b295",
+      "canonical_url": "https://www.chosun.com/english/market-money-en/2026/09/10/57YR2SZ6NFC7FKHV4JL2VAF5LI",
+      "title": "Metacare Launches 0.2mg Dutasteride Hair Loss Treatment",
+      "outlet": "chosun",
+      "reporter": "Park Ji-young(ChosunBiz)",
+      "published_at": "2026-09-10T01:31:31.919000Z",
+      "modified_at": "2026-09-10T01:42:37.857000Z",
+      "discovered_at": "2026-09-10T01:48:49.896723Z",
+      "last_checked_at": "2026-09-10T01:48:49.896723Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "56afde42fd2629b75a2912d02ab9e0b31885c6f6b5657ba88f655086d2a91850",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "b5504d236f22b2384bbd007026ebc862898d8a33b9d733673241abdb9d181931",
+      "canonical_url": "https://www.chosun.com/english/industry-en/2026/09/10/CWA7FW5PQZDSTKNZXKHKLNUL5M",
+      "title": "Aptsaurus Secures 500 Million Won via Ministry’s LIPSⅠ Program",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:31:49.861000Z",
+      "modified_at": "2026-09-10T01:31:49.861000Z",
+      "discovered_at": "2026-09-10T01:49:57.888588Z",
+      "last_checked_at": "2026-09-10T01:49:57.888588Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "7ed123270db871976c5388f171ee4d4d04dcb69116c0d2d25731b376814b4f22",
@@ -50837,58 +50885,312 @@
       "outlet": "hani",
       "reporter": "한겨레",
       "published_at": "2026-09-10T01:32:00Z",
-      "modified_at": "2026-09-10T01:32:00Z",
+      "modified_at": "2026-09-10T01:39:00Z",
       "discovered_at": "2026-09-10T01:36:19.029771Z",
-      "last_checked_at": "2026-09-10T01:36:19.029771Z",
+      "last_checked_at": "2026-09-10T01:50:16.415861Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "80f2457c04f1609fb69b2c05ba6cbca7acdd3d03c42d9c79960744f51f4a766c",
+      "body_hash": "4cff238e3a1f8aa8382417de8f6630535ef303cab9060273b3abd1a0a475bb33",
       "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "bc372046ec22d0b6f492e6b70a16a73e720fa7c26f54a98798a2d7857473f692",
+      "canonical_url": "https://www.chosun.com/english/industry-en/2026/09/10/SERYYVYXEBF2XKZIFHUGHNYEOU",
+      "title": "SK Hynix Revises Profit-Sharing Ratio to 50% Cash After Union Rejection",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:32:03.178000Z",
+      "modified_at": "2026-09-10T01:32:03.178000Z",
+      "discovered_at": "2026-09-10T01:49:57.887571Z",
+      "last_checked_at": "2026-09-10T01:49:57.887571Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "ee067c3993120a05526fdf93ff903ab3c2aa94260954ec6fbe957b23b21f047a",
+      "canonical_url": "https://www.chosun.com/sports/baseball/2026/09/10/H5AS3K4K3NCHLDUM7AECUBHC4M",
+      "title": "코뼈 부상 김도영, AG 포기 안 한다",
+      "outlet": "chosun",
+      "reporter": "양승수 기자",
+      "published_at": "2026-09-10T01:32:09.905000Z",
+      "modified_at": "2026-09-10T01:40:52.465000Z",
+      "discovered_at": "2026-09-10T01:48:12.420263Z",
+      "last_checked_at": "2026-09-10T01:48:12.420263Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a54e0ff4aaa4a46841c664a0840194cda6b6cab0799f16359c25752eacd76960",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "cf02b4341b2b40422ab2baa6d0ff5d69f822500f710d293680e50b566449a86d",
+      "canonical_url": "https://www.chosun.com/politics/assembly/2026/09/10/3CZG6UBIORBDXIRZIE7EOIHEH4",
+      "title": "김민석 “서울시장 선거 99.9% 있다... 후보에 김현종·김경민도 있어\"",
+      "outlet": "chosun",
+      "reporter": "김경필 기자",
+      "published_at": "2026-09-10T01:32:14.998000Z",
+      "modified_at": "2026-09-10T01:32:14.998000Z",
+      "discovered_at": "2026-09-10T01:34:34.652450Z",
+      "last_checked_at": "2026-09-10T01:48:45.466269Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "25bc38d0d837b9f06c0a60223472d9fe2edd29e4f803cd097083baf81f017dd9",
+      "canonical_url": "https://www.chosun.com/sports/world-football/2026/09/10/AIWXNATBGFC6ZBSLCX7IRSCCT4",
+      "title": "‘실점 빌미 제공’ 이강인 59분 소화… 팀은 리버풀에 1대2 역전패",
+      "outlet": "chosun",
+      "reporter": "김도균 기자",
+      "published_at": "2026-09-10T01:32:54.197000Z",
+      "modified_at": "2026-09-10T01:32:54.197000Z",
+      "discovered_at": "2026-09-10T01:34:29.994430Z",
+      "last_checked_at": "2026-09-10T01:48:45.465064Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "7134fdb00050b9fa66c098b28858a72639a577e0ed5cc0b66b3ec0879d1b6f85",
       "canonical_url": "https://www.hani.co.kr/arti/economy/marketing/1277124.html",
-      "title": "하이닉스 노사, 성과급 수정안 마련…‘현금 50%·주식 50%’",
+      "title": "하이닉스 노사, 성과급 잠정합의안…현금 50%·자사주 50%",
       "outlet": "hani",
       "reporter": "배지현",
       "published_at": "2026-09-10T01:33:00Z",
-      "modified_at": "2026-09-10T01:33:00Z",
+      "modified_at": "2026-09-10T01:40:00Z",
       "discovered_at": "2026-09-10T01:36:17.030770Z",
-      "last_checked_at": "2026-09-10T01:36:17.030770Z",
+      "last_checked_at": "2026-09-10T01:50:14.259481Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "b01ef459272cb67de9de6a0e2188e72b92855dff338ed15d2892fb030a5482a9",
+      "body_hash": "f04cef57456223f3b46a9d3bc48eabf9577cf805c1dcdf3429d7f613e29ccd94",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
     {
+      "candidate_id": "8733308d3afea6b3736921064ead4748777981f5dba1d7416565711a9d2af679",
+      "canonical_url": "https://www.chosun.com/english/national-en/2026/09/10/FWVJI4NJSZBSPH4GCMIJGVO23M",
+      "title": "Democratic Party Leader Names Seoul Mayor Candidates",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:33:08.255000Z",
+      "modified_at": "2026-09-10T01:33:08.255000Z",
+      "discovered_at": "2026-09-10T01:49:57.886025Z",
+      "last_checked_at": "2026-09-10T01:49:57.886025Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "e3a3e5504b2879ef0fcf62aec7c5ddfcecf9c7fa76a8300c5e9f63f978e36573",
+      "canonical_url": "https://www.chosun.com/entertainments/music/2026/09/10/GI3TQMLBMQ4TGYRTGY2GIMZWGQ",
+      "title": "니쥬, 1년 6개월 만의 韓 컴백..신보 'Sour Grapes' 스케줄러 오픈",
+      "outlet": "chosun",
+      "reporter": "OSEN",
+      "published_at": "2026-09-10T01:33:10.581000Z",
+      "modified_at": "2026-09-10T01:33:10.581000Z",
+      "discovered_at": "2026-09-10T01:48:45.467717Z",
+      "last_checked_at": "2026-09-10T01:48:45.467717Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "dabda80f465491d8f34c57a3d7175dd8061e0bcf17d043c51476f6e6990a430a",
+      "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/10/KF3R7IEZZNCBXDBN42VLDB5XMA",
+      "title": "Lee Kang-in's Costly Mistake Leads to Atlético's 1-2 Loss to Liverpool",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:33:27.233000Z",
+      "modified_at": "2026-09-10T01:33:27.233000Z",
+      "discovered_at": "2026-09-10T01:49:57.884906Z",
+      "last_checked_at": "2026-09-10T01:49:57.884906Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "b95dd8d1d651aa5ff95d615d0300b041ddadb63e41fe8dd079ef9b948ff660a7",
+      "canonical_url": "https://www.chosun.com/national/education/2026/09/07/ELK5O27ZIFF3HN5ASUCWWJTVLQ",
+      "title": "코스 요리 palate cleanser와 dessert의 차이는?",
+      "outlet": "chosun",
+      "reporter": "윤희영 기자",
+      "published_at": "2026-09-10T01:33:28.791000Z",
+      "modified_at": "2026-09-10T01:33:28.791000Z",
+      "discovered_at": "2026-09-06T20:26:05.401297Z",
+      "last_checked_at": "2026-09-10T01:48:45.463607Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "7a0b9fe5cc0cca0a4ca9f88e72925d0c5038d307587ac1b44d16c4942d07c964",
+      "canonical_url": "https://www.chosun.com/english/kpop-culture-en/2026/09/10/WI4IGNP5YREABMFA34ZQZNLNR4",
+      "title": "NiziU Returns with 'Sour Grapes' After 1.5 Years",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:33:30.095000Z",
+      "modified_at": "2026-09-10T01:33:30.095000Z",
+      "discovered_at": "2026-09-10T01:49:57.883836Z",
+      "last_checked_at": "2026-09-10T01:49:57.883836Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "cf1ada5b51777a5ab60ad66d0ab5a2cade21e68f8d6496cc7a4702edeb1c69ca",
+      "canonical_url": "https://www.chosun.com/politics/assembly/2026/09/10/4XYIVGIHTBH6RJP4AF5XD2SPBQ",
+      "title": "김민석 “한동훈 자격 정지 추진”… 韓 “김승원 아웃”",
+      "outlet": "chosun",
+      "reporter": "김경필 기자",
+      "published_at": "2026-09-10T01:33:31.954000Z",
+      "modified_at": "2026-09-10T01:33:31.954000Z",
+      "discovered_at": "2026-09-10T01:34:34.653535Z",
+      "last_checked_at": "2026-09-10T01:48:45.462544Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "f6477f823e52f0a3f0b36f8279d24aa2c4aeb832a9bfbce309396b4cb44de79e",
+      "canonical_url": "https://www.chosun.com/english/industry-en/2026/09/10/FTLH2YXJSZC33AGPXHODGMWCKA",
+      "title": "Memory Semiconductors Now Half Global Semiconductor Revenue",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:34:06.736000Z",
+      "modified_at": "2026-09-10T01:34:06.736000Z",
+      "discovered_at": "2026-09-10T01:36:06.684561Z",
+      "last_checked_at": "2026-09-10T01:49:57.882317Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "4208af6a5e19f6e6e690ee78e8865d2172767ae0e95e37dc8c5f217186fc4e24",
+      "canonical_url": "https://www.chosun.com/sports/football/2026/09/10/GVTDONJTMI4DMN3DMZSGMNJZMU",
+      "title": "\"체육교사 뽑나요?\" 벤투의 일갈...'서류 완벽한 클린스만이 과르디올라에 앞서는 모순' 사상 첫 A대표팀 공채가 남긴 숙제",
+      "outlet": "chosun",
+      "reporter": "스포츠조선",
+      "published_at": "2026-09-10T01:34:42.111000Z",
+      "modified_at": "2026-09-10T01:34:42.111000Z",
+      "discovered_at": "2026-09-10T01:48:45.459273Z",
+      "last_checked_at": "2026-09-10T01:48:45.459273Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
       "candidate_id": "0a325d93f9ee61798fe23264cbdaabfed841684da80c792389724a64b4bc49a8",
       "canonical_url": "https://www.hani.co.kr/arti/politics/politics_general/1277125.html",
-      "title": "“나라 위해 더 내놨다”는 김건희에 민주 “뻔뻔한 발뺌”",
+      "title": "“나라 위해 더 내놨다”는 ‘매관매직’ 김건희에, 민주 “뻔뻔한 발뺌”",
       "outlet": "hani",
       "reporter": "전광준",
       "published_at": "2026-09-10T01:35:00Z",
-      "modified_at": "2026-09-10T01:35:00Z",
+      "modified_at": "2026-09-10T01:42:00Z",
       "discovered_at": "2026-09-10T01:36:15.030511Z",
-      "last_checked_at": "2026-09-10T01:36:15.030511Z",
+      "last_checked_at": "2026-09-10T01:50:12.282166Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
-      "body_hash": "71e652d2001587297becd6899db56ff287dca0684a30aad3b8d5d39f8c3668e1",
+      "body_hash": "da57567243df88ca7ea5b25b6c2825067f2a61fefaf057733271dff3c2a81688",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "17cb3a75cb557d90c6926005eb5f62cb29117c0458c9bc372fa37d429d1ab38a",
+      "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/10/I7C6PPRTM5AZDKZZQCEPDMQJKM",
+      "title": "South Korea's Football Coach Recruitment Favors Paperwork Over Merit",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:35:07.016000Z",
+      "modified_at": "2026-09-10T01:35:07.016000Z",
+      "discovered_at": "2026-09-10T01:49:57.881076Z",
+      "last_checked_at": "2026-09-10T01:49:57.881076Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
     },
     {
       "candidate_id": "2a6405656e3331a9bc46e3d5edf155db34ac481c71d7df97c126613074ab14c8",
@@ -50899,12 +51201,477 @@
       "published_at": "2026-09-10T01:35:56Z",
       "modified_at": null,
       "discovered_at": "2026-09-10T01:37:05.296314Z",
-      "last_checked_at": "2026-09-10T01:37:05.296314Z",
+      "last_checked_at": "2026-09-10T01:51:12.763960Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
       "full_body_status": "fetched",
       "body_hash": "7095816908a804817051de2e8a9cd2797a448c8297c50e12156f8f7f6394c685",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "c4d94bd937982d75f2aa39261f43e6478d20f4bddaf3f1e71ea87b8edeb60300",
+      "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/10/HL4C52EDWZGCPPNHKZJ3KKVLZA",
+      "title": "Kim Do-yeong Vows to Compete in Asian Games Despite Nasal Fracture",
+      "outlet": "chosun",
+      "reporter": "Yang Seung-su",
+      "published_at": "2026-09-10T01:36:45.394000Z",
+      "modified_at": "2026-09-10T01:41:24.700000Z",
+      "discovered_at": "2026-09-10T01:49:22.052610Z",
+      "last_checked_at": "2026-09-10T01:49:22.052610Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "1d2f176802a6388f6bde0990b89e5ce1681cc470bc38f7c34a72bf0410cc699f",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "87ae41b6ed989efb132645ab34d842f1d98d17c969cb61c13d2fbb34144a80f9",
+      "canonical_url": "https://www.chosun.com/economy/stock-finance/2026/09/10/MY2GMNRVMQ2TONRUG5TGIN3BMY",
+      "title": "이형주 FIU 원장, 수협은행장 도전… 금융위 인사 빨라지나",
+      "outlet": "chosun",
+      "reporter": "송기영 기자(조선비즈)",
+      "published_at": "2026-09-10T01:37:02.201000Z",
+      "modified_at": "2026-09-10T01:37:02.201000Z",
+      "discovered_at": "2026-09-10T01:48:45.458114Z",
+      "last_checked_at": "2026-09-10T01:48:45.458114Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "818e6e8bea8c4f0abe528e037d180ade4400ea6b246e938da42f75266bc5fb4d",
+      "canonical_url": "https://www.chosun.com/culture-life/relion-academia/2026/09/10/3YD47Q6NPZEFPIVKTLMZEG75GI",
+      "title": "“수상자 5명의 삶… 만해의 가르침이 역사 아니라 현재라는 증거”",
+      "outlet": "chosun",
+      "reporter": "김한수 기자",
+      "published_at": "2026-09-10T01:37:02.271000Z",
+      "modified_at": "2026-09-10T01:37:02.271000Z",
+      "discovered_at": "2026-09-09T16:40:35.763112Z",
+      "last_checked_at": "2026-09-10T01:48:45.456281Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "a59ca0e6a98f2b69784f3d9e993bafa43c255e2e074857e6205a870f92cf632d",
+      "canonical_url": "https://www.chosun.com/national/education/2026/09/10/ETSPPA3KMVF6XP7OTD6FVNKI5Q",
+      "title": "외국인 유학생 지난해 처음 50만 돌파…4년 새 6배",
+      "outlet": "chosun",
+      "reporter": "장윤 기자",
+      "published_at": "2026-09-10T01:37:03.362000Z",
+      "modified_at": "2026-09-10T01:47:12.228000Z",
+      "discovered_at": "2026-09-10T01:48:41.439881Z",
+      "last_checked_at": "2026-09-10T01:48:41.439881Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "25d1ce87f0d6f5e52d7516ade5160968a3a61cd3106b866a9b8da2b88a5e1a46",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "7fd8bf1f215985c1eb0d1f315ef56e0651a42a3780198cc4a948faf2041cd49f",
+      "canonical_url": "https://www.chosun.com/economy/tech_it/2026/09/10/GA4DONLDMFRWMZBQHBSTSN3EMY",
+      "title": "“갖고 싶지만 너무 비싸”… 외신이 본 1999달러 폴더블 아이폰",
+      "outlet": "chosun",
+      "reporter": "심민관 기자(조선비즈)",
+      "published_at": "2026-09-10T01:37:16.906000Z",
+      "modified_at": "2026-09-10T01:37:16.906000Z",
+      "discovered_at": "2026-09-10T01:48:45.460958Z",
+      "last_checked_at": "2026-09-10T01:48:45.460958Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "0fe404cd318e622472695080811dd1e357fcf3480e8ed0459363eb63623c642c",
+      "canonical_url": "https://www.chosun.com/economy/tech_it/2026/09/10/P2BU3ZMBZNAEVO2WB5OF3TMZ2A",
+      "title": "25표 차 부결 뒤 다시 절충... SK하이닉스 노사, 성과급 현금 비율 40%서 50%로 확대",
+      "outlet": "chosun",
+      "reporter": "안별 기자",
+      "published_at": "2026-09-10T01:37:20.501000Z",
+      "modified_at": "2026-09-10T01:37:20.501000Z",
+      "discovered_at": "2026-09-10T01:34:39.134965Z",
+      "last_checked_at": "2026-09-10T01:48:45.455013Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "1413f6fd5e56a4256ae3292444608b02933a35128527590e60097cc410c2bade",
+      "canonical_url": "https://www.chosun.com/sports/basketball/2026/09/10/MIYGCMZUMQ2DCYZRGJRGMMRTGM",
+      "title": "\"르브론 공백?\" NBA 3차례 우승반지 전 NBA 스타 LA 레이커스 극찬 \"돈치치-리브스-케슬러 빅3. 로스터가 더 두터워졌다\"",
+      "outlet": "chosun",
+      "reporter": "스포츠조선",
+      "published_at": "2026-09-10T01:37:29.932000Z",
+      "modified_at": "2026-09-10T01:37:29.932000Z",
+      "discovered_at": "2026-09-10T01:48:45.453270Z",
+      "last_checked_at": "2026-09-10T01:48:45.453270Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "5152f1e9df32c071f6c760ca3c6da730e56d3716f5c0f0c4d1dc9486054063b5",
+      "canonical_url": "https://www.chosun.com/english/travel-food-en/2026/09/10/32CVBY7FTFFWFAZOTYHEKU3JZ4",
+      "title": "‘Hope’ Jumps to 5th at Box Office in 4DX Re-release",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:37:32.424000Z",
+      "modified_at": "2026-09-10T01:37:32.424000Z",
+      "discovered_at": "2026-09-10T01:35:35.171482Z",
+      "last_checked_at": "2026-09-10T01:49:52.960293Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "f5198f2fea71dada3974446a4c67c55f128c2e140d49ed2af47897674770e4ac",
+      "canonical_url": "https://www.chosun.com/english/market-money-en/2026/09/10/L2Z2VXSKVZGM7JJNCCBH6HVRTE",
+      "title": "Financial Services Commission Grade 1 Shake-Up Looms",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:37:42.558000Z",
+      "modified_at": "2026-09-10T01:37:42.558000Z",
+      "discovered_at": "2026-09-10T01:49:52.958517Z",
+      "last_checked_at": "2026-09-10T01:49:52.958517Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "08949bac23a9157483677ade9289bb4d1ec4c4cb7f58b6edf7c091ac2394dab3",
+      "canonical_url": "https://www.chosun.com/english/industry-en/2026/09/10/LTGUWSUBP5FG5JGWL3SA5TZYIM",
+      "title": "SK Hynix Raises Cash Bonus Ratio to 50% After Narrow Rejection",
+      "outlet": "chosun",
+      "reporter": null,
+      "published_at": "2026-09-10T01:37:43.437000Z",
+      "modified_at": "2026-09-10T01:37:43.437000Z",
+      "discovered_at": "2026-09-10T01:35:30.834744Z",
+      "last_checked_at": "2026-09-10T01:49:52.961475Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "skipped_irrelevant",
+      "body_hash": null,
+      "verification_grade": "B",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "644a4466cbbb32418376bd1c82c1f8ead3fd5c99c766aee009d770d6eb62579f",
+      "canonical_url": "https://www.chosun.com/english/sports-en/2026/09/10/YJHEAQ77W5HFFB4ZL2VBAZ3F4U",
+      "title": "Lakers' Big 3 of Dončić, Reaves, Kessler Praised for Depth",
+      "outlet": "chosun",
+      "reporter": "Sports Chosun",
+      "published_at": "2026-09-10T01:37:53.162000Z",
+      "modified_at": "2026-09-10T01:37:53.438000Z",
+      "discovered_at": "2026-09-10T01:49:45.491373Z",
+      "last_checked_at": "2026-09-10T01:49:45.491373Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "3abebe62bbb9fff1745a6a1fdd15d46f570b4619562495b67b445891496edab4",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "2ba0e8a9e467990e89ba5425277b7d85ba0d74d5c415aba67ca13baee36def79",
+      "canonical_url": "https://www.chosun.com/english/national-en/2026/09/10/Q6WGLKRODJH47GU2EZJNGGMASM",
+      "title": "Foreign Students and Trainees Surpass 500,000 Mark for First Time",
+      "outlet": "chosun",
+      "reporter": "Jang Yoon",
+      "published_at": "2026-09-10T01:38:31.912000Z",
+      "modified_at": "2026-09-10T01:47:32.947000Z",
+      "discovered_at": "2026-09-10T01:49:42.181360Z",
+      "last_checked_at": "2026-09-10T01:49:42.181360Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "e0294fb3cdd1a9f8b97244894743cd4cee47fca6cae5d3b56411102a6306f331",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "89893ece483b37895d9fd66142a1d70fd10165bd01e9f9892e9c44aeaa56ae8b",
+      "canonical_url": "https://www.chosun.com/entertainments/broadcast/2026/09/10/MI3WIYRSG42TOM3FMY3GCODEHA",
+      "title": "'들쥐' 이상운, 도박중독자 완벽 빙의..몰입감 더한 절박함",
+      "outlet": "chosun",
+      "reporter": "OSEN",
+      "published_at": "2026-09-10T01:40:27.601000Z",
+      "modified_at": "2026-09-10T01:40:30.705000Z",
+      "discovered_at": "2026-09-10T01:48:33.455200Z",
+      "last_checked_at": "2026-09-10T01:48:33.455200Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml",
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c98ad87aefed2a752b1b0358d6b02c3714e3c4270b700ef8a71678ffd749ad92",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "174abed6aab01ac50276712eb94184fd13a6058d656abc62fb6956f04e13c79a",
+      "canonical_url": "https://www.chosun.com/english/kpop-culture-en/2026/09/10/ZHZIGIDG3ZERHKMTMF5AZRNJFY",
+      "title": "Lee Sang-woon Shines as Gambling Addict in 'The Rat'",
+      "outlet": "chosun",
+      "reporter": "OSEN",
+      "published_at": "2026-09-10T01:41:03.116000Z",
+      "modified_at": "2026-09-10T01:41:03.351000Z",
+      "discovered_at": "2026-09-10T01:49:17.930621Z",
+      "last_checked_at": "2026-09-10T01:49:17.930621Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "dca7dc70092a7cfa002454ca75d6e1434d8b8719d1ae9351048bfd9c823f48d4",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "b3d5ff557d80b28a3ac70c81f128f8c701f5ba2b52e42d36713bcca1f6936788",
+      "canonical_url": "https://www.chosun.com/sports/world-baseball/2026/09/10/ME3WGNDDGEZWCZDDGRRWGNLBGE",
+      "title": "누가 봐도 이상했던 감독의 마운드 방문…뷸러는 소리쳤는데, 결과는 '대성공'",
+      "outlet": "chosun",
+      "reporter": "스포츠조선",
+      "published_at": "2026-09-10T01:42:27.867000Z",
+      "modified_at": "2026-09-10T01:42:30.488000Z",
+      "discovered_at": "2026-09-10T01:49:01.947418Z",
+      "last_checked_at": "2026-09-10T01:49:01.947418Z",
+      "discovery_route": [
+        "official:https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "2123cf3dc8426789ac99e56a95b35b9b899bb34313188dc2fb51294ea5e70806",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "b4d4923aac7d9d35ac343911ee3808df8e709518e39945edee428f9f0f9326e6",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091010415881469",
+      "title": "[속보] 역대 최대 텔레그램 성착취 조직 '자경단' 총책 김녹완 무기징역 확정",
+      "outlet": "pressian",
+      "reporter": "박상혁 기자",
+      "published_at": "2026-09-10T01:43:27Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:51:11.754327Z",
+      "last_checked_at": "2026-09-10T01:51:11.754327Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "8a28cedc48765d234d96c7444b04812a93180342e8db5b32f8ff06c93eaaa548",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "6a0787069c4fca477ca4bd523b76010ed8881625af01010aab2cadce4f4014a4",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091010435616245",
+      "title": "과천시, '자원봉사 이음축제' 12일 에어드리공원서 개최",
+      "outlet": "pressian",
+      "reporter": "김원태 기자",
+      "published_at": "2026-09-10T01:44:08Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:51:08.779095Z",
+      "last_checked_at": "2026-09-10T01:51:08.779095Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "cc64f922911dd0be2bc26a7c47b02703179d9efec3dad4d6e64a1470ba3caf03",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "22bb7860dd8d9882f9bcb1924fbd45c245414070756a50e6e7b57b45b0b40e2b",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091010393210984",
+      "title": "양부남 의원 \"재정 불균형 해소 위해 광주 자치구의 시 전환 공론화 필요\"",
+      "outlet": "pressian",
+      "reporter": "김보현 기자(=전남광주)",
+      "published_at": "2026-09-10T01:44:12Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:51:06.777361Z",
+      "last_checked_at": "2026-09-10T01:51:06.777361Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "94e6d0ae262b55992fef519ea570cfa8d2f85e4d1038e71169b6a0fc51c2775b",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "48be0d51824ccd4a2b1c3d83a5f5d1324a94643983e8664c4685215585da4ba8",
+      "canonical_url": "https://www.hani.co.kr/arti/area/jeju/1277126.html",
+      "title": "가을엔 제주에서 ‘송당 ᄆᆞ실길’ 걸으세요",
+      "outlet": "hani",
+      "reporter": "서보미",
+      "published_at": "2026-09-10T01:47:00Z",
+      "modified_at": "2026-09-10T01:47:00Z",
+      "discovered_at": "2026-09-10T01:50:10.482287Z",
+      "last_checked_at": "2026-09-10T01:50:10.482287Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "c2af1867e43c69f460e0438f99a06da7e9bf44deaca4025bf6e27759b3cc0a81",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "157846329106762128627f14ec2670f3dc56562d4653f572974dc1b306475b7a",
+      "canonical_url": "https://www.hani.co.kr/arti/international/international_general/1277127.html",
+      "title": "공화당 전당대회 연설자들 죄다 트럼프 칭찬...“트럼프 선거 유세장 같아”",
+      "outlet": "hani",
+      "reporter": "김미향",
+      "published_at": "2026-09-10T01:49:00Z",
+      "modified_at": "2026-09-10T01:49:00Z",
+      "discovered_at": "2026-09-10T01:50:08.231045Z",
+      "last_checked_at": "2026-09-10T01:50:08.231045Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "ad0274b282c9d1aa0a5aa9fea667d8ebaed6d5c7358dc728b1beeb540ae8eed3",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "e4f0eba6324968268e8abfdff14667547255c3d4da253926928200d1bcbe7d2f",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091009591619548",
+      "title": "영진전문대, 세계적 건축·상업공간 현장 탐방",
+      "outlet": "pressian",
+      "reporter": "박용 기자(=대구)",
+      "published_at": "2026-09-10T01:49:15Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:51:04.791780Z",
+      "last_checked_at": "2026-09-10T01:51:04.791780Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "6a1f237b1ce7a6741fe1e1eaa4446f71e99aec897e7bf7be5c21e71fcdceb2cb",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "e0d8475ee748ee68f483a2c7f85441d42940a438dfc8de0d3b79017a2c1a63a9",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091009235578122",
+      "title": "대구수성대, ‘평생직업교육 지·산·학 거버넌스 구축’ 협약",
+      "outlet": "pressian",
+      "reporter": "박용 기자(=대구)",
+      "published_at": "2026-09-10T01:49:59Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:51:02.814512Z",
+      "last_checked_at": "2026-09-10T01:51:02.814512Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "cd2da0531453646f9611c143b41875193d060de1aba8ed38df603db76188a99d",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "f9940cfd52ba9b23b5593c4bb7957c4edbc5b4694c3dade77d49972909c926b1",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091009401601617",
+      "title": "계명대, 국내 최적 ‘시네마 캠퍼스’ 자리매김",
+      "outlet": "pressian",
+      "reporter": "박용 기자(=대구)",
+      "published_at": "2026-09-10T01:50:38Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:51:00.911481Z",
+      "last_checked_at": "2026-09-10T01:51:00.911481Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "cafbc7677150433b4212134335b1c3a2c75cc35cce6ca2b549707ebd96b783ec",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "17e8fa5aa2cfeac5ac07c8f0058b2ba2f26fa957c1b91e5bfefe8a56e14f0147",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091010145414909",
+      "title": "문경시 9월 12~13일 '전국탁구대회'와 '풋볼페스타' 개최",
+      "outlet": "pressian",
+      "reporter": "김기호 기자(=문경)",
+      "published_at": "2026-09-10T01:50:53Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-10T01:50:58.694023Z",
+      "last_checked_at": "2026-09-10T01:50:58.694023Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "b735dbaacc73f54090d68ae73db3e9227403da01297b5d7712a4db45da31ac3c",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -50967,21 +51734,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "전국 광역단체장 9월 10일 일정",
-        "original_url": "https://www.newspim.com/news/view/20260909001324",
-        "naver_url": "https://www.newspim.com/news/view/20260909001324",
+        "title": "[기자의 눈] '닥터나우 방지법' 시행도 전인데…사회적 합의 팽개친 정...",
+        "original_url": "https://www.news1.kr/bio/general/6285074",
+        "naver_url": "https://n.news.naver.com/mnews/article/421/0009161658?sid=110",
         "published_at": "2026-09-09T21:30:00Z",
-        "description": "호텔ICC) -시 정책 자문단 위촉식(9:00 대회의실) -「제1회 찾아가는 열린 시장실」(10:00 충무타올)... 서울지방고용노동청) - 장애인 인권보호를 위한 유관기관 간담회(14:30 집현실) -사회복지의 날 기념행사(16:00...",
+        "description": "24 의료법 개정안 시행)에 따라 일부 대상자(섬·벽지, 장기 요양수급자, 장애인 , 감염병 환자, 희귀질환자)에... 한다면 정책 의 신뢰는 흔들릴 수밖에 없다. 정부가 지금 할 일은 미완의 하위법령 뒤에서 조급하게 확대...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
-        "title": "[기자의 눈] '닥터나우 방지법' 시행도 전인데…사회적 합의 팽개친 정...",
-        "original_url": "https://www.news1.kr/bio/general/6285074",
-        "naver_url": "https://n.news.naver.com/mnews/article/421/0009161658?sid=105",
+        "title": "전국 광역단체장 9월 10일 일정",
+        "original_url": "https://www.newspim.com/news/view/20260909001324",
+        "naver_url": "https://www.newspim.com/news/view/20260909001324",
         "published_at": "2026-09-09T21:30:00Z",
-        "description": "24 의료법 개정안 시행)에 따라 일부 대상자(섬·벽지, 장기 요양수급자, 장애인 , 감염병 환자, 희귀질환자)에... 한다면 정책 의 신뢰는 흔들릴 수밖에 없다. 정부가 지금 할 일은 미완의 하위법령 뒤에서 조급하게 확대...",
+        "description": "호텔ICC) -시 정책 자문단 위촉식(9:00 대회의실) -「제1회 찾아가는 열린 시장실」(10:00 충무타올)... 서울지방고용노동청) - 장애인 인권보호를 위한 유관기관 간담회(14:30 집현실) -사회복지의 날 기념행사(16:00...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -51037,16 +51804,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[오늘의 주요일정]대전·세종·충남(9월10일 목요일)",
-        "original_url": "https://www.newsis.com/view/NISX20260907_0003779836",
-        "naver_url": "https://n.news.naver.com/mnews/article/003/0014180884?sid=102",
-        "published_at": "2026-09-09T20:00:00Z",
-        "description": "대전시 정책 자문단 위촉식, 대회의실 ▲오전 9시, 천안시 제11회 조례규칙심의회, 중회의실 ▲오전 9시... 사회적 장애인 식개선교육 대면교육, 대회의실 ▲오전 10시, 청양군 고추·구기자축제장 사전점검...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[단독] 5개월간 600번 병원쇼핑…‘과잉 진료환자’ 올해만 2600명",
         "original_url": "https://www.joongang.co.kr/article/25460610",
         "naver_url": "https://n.news.naver.com/mnews/article/025/0003550362?sid=102",
@@ -51054,6 +51811,16 @@
         "description": "다만 중증 장애인 ·아동·임산부 등은 대상에서 제외된다. 의사 등으로 구성된... 신현웅 보사연 보건의료 정책 연구실장은 “건보는 2024년부터 연 365회 초과 외래 시 본인 부담을 대폭 높여 과잉 이용이 줄어드는...",
         "matched_source": "joongang",
         "in_deterministic_collection": true
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[오늘의 주요일정]대전·세종·충남(9월10일 목요일)",
+        "original_url": "https://www.newsis.com/view/NISX20260907_0003779836",
+        "naver_url": "https://n.news.naver.com/mnews/article/003/0014180884?sid=102",
+        "published_at": "2026-09-09T20:00:00Z",
+        "description": "대전시 정책 자문단 위촉식, 대회의실 ▲오전 9시, 천안시 제11회 조례규칙심의회, 중회의실 ▲오전 9시... 사회적 장애인 식개선교육 대면교육, 대회의실 ▲오전 10시, 청양군 고추·구기자축제장 사전점검...",
+        "matched_source": null,
+        "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
@@ -51204,140 +51971,9 @@
         "description": "대응 정책 의 우선순위 사업으로 추진해야 한다고 강조했다. 경남도는 난임시술 수요 증가에 따라 올해... 이어서 공 의원은 생계급여 85억 원, 의료급여 208억 원, 기초연금 78억 원을 비롯해 장애인 활동지원과...",
         "matched_source": null,
         "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "진주시, 국토부 '도시대상' 7년 연속 수상",
-        "original_url": "http://www.gnmaeil.com/news/articleView.html?idxno=594471",
-        "naver_url": "http://www.gnmaeil.com/news/articleView.html?idxno=594471",
-        "published_at": "2026-09-09T12:36:00Z",
-        "description": "이 같은 성과는 민선 7·8기에서 민선 9기로 이어지는 도시 발전의 연속성과 정책 성과를 지속적으로... 또한 어르신과 장애인 의 생활 편의와 일자리 지원, 시민들이 즐길 수 있는 남강유등축제와 각종 체육대회 등을...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "\"더워도 이불 못 내리고\"…죽음 떠올린 '고독사 위험군'",
-        "original_url": "https://news.sbs.co.kr/news/endPage.do?cooper=NAVER&news_id=N1008745699&plink=ORI",
-        "naver_url": "https://n.news.naver.com/mnews/article/055/0001387113?sid=102",
-        "published_at": "2026-09-09T12:30:00Z",
-        "description": "것인지 정책 적 문제도 고민이 돼야 해요. 특히 지체장애 어르신들에 대한 맞춤형 서비스를 제공할 것인가….] 보건복지부는 장애인 처럼 기존 사회복지망 안에 들어와 있는 사람들에 대해서도 사회적 고립을 막을 수 있는...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "대구소방 '119안심콜' 가입 집중 홍보",
-        "original_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=559195",
-        "naver_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=559195",
-        "published_at": "2026-09-09T12:24:00Z",
-        "description": "대구소방안전본부는 어린이와 고령자, 장애인 등 일반시민, 화재피난약자와 응급상황 취약계층의 안전망을... 9일 대구소방본부에 따르면 이번 홍보는 개학 시기에 맞춰 추진하는 소방청·교육부 협업 정책 이다. 돌봄이...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "금천구의회 고영찬 의원, '금천형 어르신 외식데이' 등 어르신의 식사권...",
-        "original_url": "https://www.cnbizm.com/news/articleView.html?idxno=314575",
-        "naver_url": "https://www.cnbizm.com/news/articleView.html?idxno=314575",
-        "published_at": "2026-09-09T11:54:00Z",
-        "description": "방향으로 정책 을 전환해야 한다고 촉구했다. 9일 고 의원이 금천구 어르신 장애인 과로부터 제출받은 '경로당 운영지원(중식 등) 현황'을 분석한 결과, 관내 76개 경로당 가운데 69개소(1,770명)만 주5일 중식을 운영하고 있는...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "지역정원제·재택병원…日 의료 정책 서 대구 지역의료 해법 모색",
-        "original_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=559140",
-        "naver_url": "https://www.idaegu.co.kr/news/articleView.html?idxno=559140",
-        "published_at": "2026-09-09T11:54:00Z",
-        "description": "이번 학술대회에는 일본 효고현보험의협회 의료진도 참여해 일본의 의료 정책 과 지역의료 현장 경험을... 정신 장애인 보건복지수첩은 장애 정도에 따라 1~3급으로 구분되며 세제 혜택과 교통·공공시설 할인, 복지...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "'국가유공자 무임승차' 37억 손실...서울교통공사, 국가 손배소 패소",
-        "original_url": "https://www.ajunews.com/view/20260909203551628",
-        "naver_url": "https://www.ajunews.com/view/20260909203551628",
-        "published_at": "2026-09-09T11:40:00Z",
-        "description": "국가유공자법은 1984년부터 42년째 노인· 장애인 ·국가유공자 등에게 교통복지의 일환으로 지하철... 공사 측은 정부가 국가유공자를 예우하기 위한 정책 의 일환으로 무임승차를 제공해 손실이 발생한 만큼, 국가가 이를...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "김보라 안성시장, 33년 전 ‘간호가방’이 정책 으로…“이제 우리가 시...",
-        "original_url": "http://www.beyondpost.co.kr/view.php?ud=2026090919460891804c878f8fa1_30",
-        "naver_url": "http://www.beyondpost.co.kr/view.php?ud=2026090919460891804c878f8fa1_30",
-        "published_at": "2026-09-09T11:10:00Z",
-        "description": "통합돌봄 정책 으로 이어졌다는 점에서다. 김 시장은 이날 자신의 SNS와 블로그를 통해 재택간호센터 개소... 간호사 5명이 병원을 방문하기 어려운 어르신과 장애인 의 집을 직접 찾아 건강 상태를 확인하고 필요한 간호를...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "공립 초등교사 선발 축소 `반발'",
-        "original_url": "http://www.cctimes.kr/news/articleView.html?idxno=926524",
-        "naver_url": "http://www.cctimes.kr/news/articleView.html?idxno=926524",
-        "published_at": "2026-09-09T11:02:00Z",
-        "description": "장애인 구분모집을 포함한 분야별 선발 인원은 △유치원 36명 △초등 75명 △유치원 특수 3명 △초등 특수... 앞서 한국교원단체총연합회는 입장문을 내 \"교육 정책 의 성패는 결국 충분한 교원 확보에 달려 있다\"며...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[지방의회 리더에게 듣는다] 이채명 \"안정적 교육 재정…디지털 포용 모...",
-        "original_url": "https://www.obsnews.co.kr/news/articleView.html?idxno=1536951",
-        "naver_url": "https://www.obsnews.co.kr/news/articleView.html?idxno=1536951",
-        "published_at": "2026-09-09T10:56:00Z",
-        "description": "그 경험을 살려서 교육 현장에 꼭 필요한 정책 이 예산에 제대로 담겨지고 그리고 편성된 예산이 목적에 맞게... 안양의 장애인 복지관과 노인복지관 그리고 도서관 등을 연계해서 찾아가는 디지털 AI 교육을 운영을 하고요....",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[단독] 언더조직, 이번엔 ' 장애인 ·청소년' 배제 의혹…\"눈에 띈다\", \"비...",
-        "original_url": "https://www.pressian.com/pages/articles/2026090915575258977",
-        "naver_url": "https://n.news.naver.com/mnews/article/002/0002455848?sid=102",
-        "published_at": "2026-09-09T10:32:00Z",
-        "description": "\"언더조직, 명문대·비 장애인 ·남성 중시…용혜인, 소수자 배제 조직 활동 반성해야\" 용 후보자가 여성, 청소년 등 소수자 정책 을 이끄는 성평등가족부의 장관 후보자가 된 만큼, 소수자를 배제하는 문화가 있었던 조직에서...",
-        "matched_source": "pressian",
-        "in_deterministic_collection": false
-      },
-      {
-        "query": "장애인 정책",
-        "title": "대통령상 두 번 받은 진주시, 도시대상 7년 연속 수상",
-        "original_url": "https://view.asiae.co.kr/article/2026090919311560674",
-        "naver_url": "https://n.news.naver.com/mnews/article/277/0005814203?sid=102",
-        "published_at": "2026-09-09T10:31:00Z",
-        "description": "온 정책 과 사업 실적을 평가받았다. 도시사회 분야에서는 생활안전을 위한 CCTV 확충과 건강검진·질병 예방 사업, 노인· 장애인 생활편의 및 일자리 지원 등이 평가 대상에 포함됐다. 도시경제 분야에서는 청년과...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "이홍기 거창군수 현장 소통 행보 '호응'",
-        "original_url": "https://www.gnnews.co.kr/news/articleView.html?idxno=645123",
-        "naver_url": "https://www.gnnews.co.kr/news/articleView.html?idxno=645123",
-        "published_at": "2026-09-09T10:22:00Z",
-        "description": "맞춤형 정책 추진을 약속했다. 또한 1일에는 거창스포츠파크 내 회의실에서 체육 분야 관계자들과 간담회를 가졌다. 전문체육과 생활체육, 장애인 체육, 체육시설 이용 및 관리, 체육행사 운영 등 분야 전반을 다룬 이...",
-        "matched_source": null,
-        "in_deterministic_collection": null
       }
     ],
-    "potential_gaps": [
-      {
-        "query": "장애인 정책",
-        "title": "[단독] 언더조직, 이번엔 ' 장애인 ·청소년' 배제 의혹…\"눈에 띈다\", \"비...",
-        "original_url": "https://www.pressian.com/pages/articles/2026090915575258977",
-        "naver_url": "https://n.news.naver.com/mnews/article/002/0002455848?sid=102",
-        "published_at": "2026-09-09T10:32:00Z",
-        "description": "\"언더조직, 명문대·비 장애인 ·남성 중시…용혜인, 소수자 배제 조직 활동 반성해야\" 용 후보자가 여성, 청소년 등 소수자 정책 을 이끄는 성평등가족부의 장관 후보자가 된 만큼, 소수자를 배제하는 문화가 있었던 조직에서...",
-        "matched_source": "pressian",
-        "in_deterministic_collection": false
-      }
-    ],
+    "potential_gaps": [],
     "errors": []
   },
   "reverse_search": {
@@ -52467,7 +53103,7 @@
   },
   "final_state": {
     "status": "complete",
-    "checked_at": "2026-09-10T01:38:26.479199Z",
+    "checked_at": "2026-09-10T01:52:19.964762Z",
     "checks": [
       {
         "issue_title": "전국 장애인들, 거주시설 인권참사 공동대응과 국가책임 촉구",
@@ -52529,11 +53165,9 @@
         "issue_title": "건보 고객센터 노동자, 6년 만에 정규직 전환 합의",
         "status": "complete",
         "progressive": true,
-        "changed_after_draft": true,
-        "reason": "초안·감사 뒤 공식 재수집에서 최종상태 후속보도가 발견됨",
-        "evidence_urls": [
-          "https://www.chosun.com/entertainments/music/2026/09/10/GU4TAODBHBTDMNBWMYYDQY3DGA"
-        ]
+        "changed_after_draft": false,
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "evidence_urls": []
       },
       {
         "issue_title": "포스코노조, 1968년 창사 이래 첫 파업",
