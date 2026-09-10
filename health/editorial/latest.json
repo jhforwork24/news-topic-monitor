@@ -1,16 +1,23 @@
 {
   "prompt_version": 1,
   "report_date": "2026-09-10",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 180,
+  "included_after_first_pass": 0,
+  "published_issue_count": 16,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.868,
+    "api_preflight": 1.815,
     "assurance": 0.005,
-    "bridge_import_validation": 7.567,
+    "bridge_import_validation": 7.637,
     "census_retry": 0.0,
-    "final_state_recrawl": 252.614,
-    "gap_reverse_search": 122.778,
-    "total": 391.78
+    "final_state_recrawl": 248.118,
+    "gap_reverse_search": 126.226,
+    "render_briefing": 1.961,
+    "total": 388.297
   },
-  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / 장애인 시설의 이름에 새겨진 우생학의 역사: 허용 범위 밖의 칼럼이 포함됨",
-  "completed_at": "2026-09-10T01:54:30.610326Z"
+  "error": null,
+  "completed_at": "2026-09-10T02:10:11.651442Z"
 }
