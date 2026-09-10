@@ -31,6 +31,14 @@ OPINION_TERMS = (
     "오피니언",
 )
 OPINION_PATHS = ("/opinion", "/column", "/editorial", "/contribution")
+# Korean bylined columns are conventionally titled with a trailing bracket
+# naming the author and the column series, e.g. "...[김승섭의 공부]" or
+# "...[고병권의 묵묵]". OPINION_TERMS only catches column names Claude has
+# already seen once (like "묵묵"), so a new columnist's series with no
+# other opinion marker in the title was mistaken for a straight news
+# article. This pattern recognizes the "[누군가의 시리즈명]" convention
+# generally instead of requiring each column name to be hardcoded.
+NAMED_COLUMN_TITLE_PATTERN = re.compile(r"\[[^\[\]]{2,20}의\s*[^\[\]]{1,20}\]")
 PHOTO_NEWS_TERMS = ("[포토뉴스]", "[사진]", "포토뉴스", "화보")
 ENTERTAINMENT_SECTION_TERMS = (
     "연예",
@@ -522,8 +530,10 @@ def is_opinion(article: ArticleRecord) -> bool:
     # 않도록 편집 유형을 드러내는 제목·섹션·URL만 판정한다.
     haystack = " ".join(value for value in (article.title, article.section) if value).lower()
     path = urlsplit(article.canonical_url).path.lower()
-    return any(term.lower() in haystack for term in OPINION_TERMS) or any(
-        marker in path for marker in OPINION_PATHS
+    return (
+        any(term.lower() in haystack for term in OPINION_TERMS)
+        or any(marker in path for marker in OPINION_PATHS)
+        or bool(article.title and NAMED_COLUMN_TITLE_PATTERN.search(article.title))
     )
 
 

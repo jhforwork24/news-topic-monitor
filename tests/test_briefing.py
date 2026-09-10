@@ -111,6 +111,24 @@ def test_opinion_detection() -> None:
     assert not is_opinion(article)
 
 
+def test_opinion_detection_recognizes_named_column_bracket() -> None:
+    # Regression test: a real editorial-finalize run rejected the Sisain
+    # column "장애인 시설 이름에 '식민지'가 붙은 이유 [김승섭의 공부]" because
+    # none of OPINION_TERMS appeared in its title — "공부" was not a
+    # recognized marker, unlike the "묵묵"/"세계의 창" columns Claude had
+    # already seen once. The trailing "[필자명의 시리즈명]" bracket is the
+    # actual convention Korean outlets use for a named personal column.
+    assert is_opinion(
+        _article(
+            "sisain",
+            "장애인 시설 이름에 '식민지'가 붙은 이유 [김승섭의 공부]",
+        )
+    )
+    # A plain reported-news bracket like "[단독]" must not be mistaken for a
+    # named column just because it contains brackets.
+    assert not is_opinion(_article("sisain", "[단독] 장애인 시설 인권침해 실태조사"))
+
+
 def test_previous_coverage_requires_a_specific_shared_concept() -> None:
     color = _article(
         "beminor",
