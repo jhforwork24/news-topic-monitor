@@ -38,7 +38,25 @@
       "Bash(/home/user/news-topic-monitor/.venv/bin/pytest tests/test_assurance.py)",
       "mcp__github__list_pull_requests",
       "mcp__Claude_Code_Remote__get_session",
-      "mcp__github__list_commits"
+      "mcp__github__list_commits",
+      "mcp__Claude_Code_Remote__subscribe_pr_activity",
+      "mcp__Claude_Code_Remote__unsubscribe_pr_activity",
+      "mcp__github__create_pull_request",
+      "mcp__github__merge_pull_request",
+      "mcp__github__actions_run_trigger",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git stash*)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git checkout*)",
+      "Bash(git show*)",
+      "Bash(.venv/bin/pytest*)",
+      "Bash(.venv/bin/ruff*)",
+      "Bash(python3*)",
+      "Bash(TZ=Asia/Seoul date*)"
     ]
   }
 }
