@@ -149,6 +149,20 @@ MAJOR_EVENT_TERMS = (
     "인권침해",
 )
 
+# 한국장애인개발원 등 지역센터·제공기관 단위의 정기 종사자 교육·역량강화·사례자문회의는
+# 개발원의 전국 단위 정책·제도 활동과 달리 특정 정책 이슈의 정책적 후속으로 보기 어렵다.
+# "동일 주제 이전 보도"는 STRONG_PREVIOUS_CONCEPTS(예: "최중증")를 공유하면 제목 어휘가
+# 달라도 매칭되므로, 이런 지역 행사·교육 안내가 이슈와 무관하게 딸려 들어올 수 있다.
+ROUTINE_SERVICE_TRAINING_TERMS = (
+    "역량 강화",
+    "사례자문회의",
+    "도전행동 대응 교육",
+    "종사자 교육",
+    "교육 실시",
+    "교류 프로그램",
+    "네트워크 활동",
+)
+
 # 일간 브리핑의 상위 검토군을 먼저 고정한 뒤 홍보·의전성 보도를
 # 제외한다. 제외된 자리를 차순위 홍보 보도로 다시 채우지 않는다.
 DISABILITY_REVIEW_POOL_SIZE = 10
@@ -455,6 +469,16 @@ def disability_editorial_exclusion(article: ArticleRecord) -> str | None:
     return None
 
 
+def is_routine_local_training_notice(article: ArticleRecord) -> bool:
+    """지역센터·제공기관의 정기 종사자 교육·역량강화·사례자문회의 안내인지 판별한다.
+
+    이런 보도는 개발원 등 기관의 활동이라도 특정 정책 이슈의 정책적 후속으로 보기
+    어려워 "동일 주제 이전 보도"에서 제외한다. 기관의 전국 단위 정책·제도 활동
+    보도는 이 판별에 걸리지 않는다.
+    """
+    return any(term in article.title for term in ROUTINE_SERVICE_TRAINING_TERMS)
+
+
 def labor_editorial_exclusion(article: ArticleRecord) -> str | None:
     title = article.title
     section = (article.section or "").lower()
@@ -638,6 +662,8 @@ def previous_coverage_for(
     candidates: list[tuple[int, float, datetime, ArticleRecord]] = []
     for article in history:
         if article.canonical_url in current_urls or is_opinion(article):
+            continue
+        if is_routine_local_training_notice(article):
             continue
         overlap = tokens & issue_tokens(article)
         if not overlap & strong_tokens and len(overlap) < 4:
