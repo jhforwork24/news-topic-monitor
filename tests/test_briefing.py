@@ -373,6 +373,39 @@ def test_previous_coverage_prefers_more_detailed_report_at_equal_relevance() -> 
     assert previous[0].url == detailed_report.canonical_url
 
 
+def test_previous_coverage_excludes_routine_local_center_training_notices() -> None:
+    current = _article(
+        "donga",
+        "'피터팬 아빠' 발달장애인 지원 호소 통했다… 최중증 24시간 일대일 돌봄 주말까지 확대",
+        article_id="care-plan-current",
+    )
+    seoul_center = _article(
+        "ablenews",
+        "개발원 서울센터, 최중증 발달장애인 통합돌봄 종사자 역량 강화·교류 프로그램 운영",
+        article_id="seoul-center",
+    )
+    daejeon_center = _article(
+        "ablenews",
+        "개발원 대전센터, '최중증 발달장애인 통합돌봄서비스 사례자문회의' 성료",
+        article_id="daejeon-center",
+    )
+    jeonbuk_center = _article(
+        "ablenews",
+        "전북 최중증 발달장애인 통합돌봄 종사자 대상 도전행동 대응 교육 실시",
+        article_id="jeonbuk-center",
+    )
+    previous = previous_coverage_for([current], [seoul_center, daejeon_center, jeonbuk_center])
+    assert previous == []
+
+    national_policy = _article(
+        "ablenews",
+        "한국장애인개발원, 최중증 발달장애인 통합돌봄 실태조사 결과 발표",
+        article_id="national-policy",
+    )
+    previous_with_policy = previous_coverage_for([current], [national_policy])
+    assert any(item.url == national_policy.canonical_url for item in previous_with_policy)
+
+
 def test_korean_particles_for_single_and_multi_article_tone() -> None:
     column = _article("khan", "장애인 이동권 보도")
     assert analyze_tone([column]) == ""
