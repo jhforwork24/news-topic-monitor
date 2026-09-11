@@ -1,11 +1,11 @@
 {
-  "report_date": "2026-09-10",
-  "checked_at": "2026-09-10T00:16:08.245475Z",
+  "report_date": "2026-09-11",
+  "checked_at": "2026-09-11T00:11:48.559236Z",
   "status": "ready",
   "candidate_count": 180,
   "part_count": 9,
-  "queue_id": "15a8f36b5303ae2840dde8908524379010077569b2922d70f5a2edc7216c6d46",
+  "queue_id": "48a83c68a1e5031101e8986fbf541f0637a2109030cbbdb09a764060311cb2b9",
   "gap_detection_status": "complete",
-  "gap_potential_count": 3,
+  "gap_potential_count": 1,
   "error": null
 }
