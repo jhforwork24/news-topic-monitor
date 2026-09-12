@@ -819,7 +819,7 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
 
 
 def issue_analysis_text(issue: BriefingIssue) -> str:
-    return " ".join(part for part in (issue.summary, issue.tone_analysis) if part)
+    return "\n\n".join(part for part in (issue.summary, issue.tone_analysis) if part)
 
 
 def article_listing_prefix(article: ArticleRecord) -> str:
