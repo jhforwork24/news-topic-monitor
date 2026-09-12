@@ -3,9 +3,10 @@
   "report_date": "2026-09-12",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.697,
-    "total": 8.506
+    "api_preflight": 2.324,
+    "bridge_import_validation": 6.767,
+    "total": 9.104
   },
-  "error": "GPT 편집 결과 검증 실패: 제외 기록이 20개를 초과함",
-  "completed_at": "2026-09-12T06:25:43.793742Z"
+  "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
+  "completed_at": "2026-09-12T06:33:31.435018Z"
 }
