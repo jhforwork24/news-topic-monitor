@@ -9,6 +9,7 @@ from news_topic_monitor.briefing import (
     analyze_tone,
     build_briefing,
     is_opinion,
+    issue_analysis_text,
     previous_coverage_for,
     render_briefing_markdown,
     summarize_issue,
@@ -101,6 +102,19 @@ def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> Non
     assert "오늘의 변화" not in text
     assert "# 점검" not in text
     validate_briefing(document)
+
+
+def test_issue_analysis_text_separates_summary_and_tone_with_blank_line() -> None:
+    issue = BriefingIssue(
+        title="장애인 이동권 보장 촉구",
+        articles=[_article("hani", "장애인 이동권 보장 촉구")],
+        summary="전장연이 이동권 보장을 촉구하는 기자회견을 열었다.",
+        tone_analysis="한겨레는 요구사항을 중심으로 전했다.",
+    )
+    text = issue_analysis_text(issue)
+    assert text == (
+        "전장연이 이동권 보장을 촉구하는 기자회견을 열었다.\n\n한겨레는 요구사항을 중심으로 전했다."
+    )
 
 
 def test_opinion_detection() -> None:
