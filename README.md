@@ -33,6 +33,7 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 경향신문 | 최신기사 news sitemap | `#articleBody` |
 | 오마이뉴스 | 공식 최신기사 news sitemap | `[itemprop='articleBody']` |
 | 프레시안 | 공식 최신뉴스 RSS API | `.article_body` |
+| 시사인 | 공식 sitemap | `#article-view-content-div` |
 | 참세상 | robots.txt 확인 실패로 안전 중단 | 요청하지 않음 |
 | 매일노동뉴스 | news sitemap | `#article-view-content-div` |
 | 미디어스 | 공식 sitemap | `#article-view-content-div` |
