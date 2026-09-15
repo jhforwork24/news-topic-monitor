@@ -46,7 +46,7 @@ flowchart LR
 - `chat_bridge.py`: 대기열·초안·감사의 고정 스키마, SHA-256 queue binding, 제출 순서와 후보 ID 검증
 - `storage.py`: 멱등 JSONL upsert, 수집 실행 단위 배치 flush, review 동기화,
   state·health 원자적 쓰기
-- `reporting.py`: 09:00 KST 반개방 구간 보고서와 출처 장애 표시
+- `reporting.py`: 05:00 KST 반개방 구간 보고서와 출처 장애 표시
 - `briefing.py`: I~II 절 선정, 결과가 있을 때만 III절 칼럼 선정, 이슈 연결 칼럼 역검색,
   동일 주제 이전 보도 선정(연관성·상세성 기준)
 - `notion_publish.py`: private 구조화 대기열 export/import, exact title/date 멱등 최종 발행,
@@ -107,7 +107,8 @@ YouTube 업로드도 여러 프로그램이 섞여 있어 신뢰할 수 있는 �
 
 ## 브리핑과 노션 발행
 
-브리핑은 저장 메타데이터의 실제 발행시각으로 09:00 KST 반개방 구간을 다시 계산한다. I절은
+브리핑은 저장 메타데이터의 실제 발행시각으로 05:00 KST 반개방 구간을 다시 계산한다(2026-09-16자
+발행만 전날 07:00 KST부터 당일 05:00 KST까지의 전환 구간을 쓴다). I절은
 `relevant` 자동확정 기사만 발행하고 `review` 기사는 사람 검토 목록에만 남긴다. I절은
 상위 10개 검토군을 먼저 고정하고 단순 홍보·모집·의전성 보도를 제외하며 빈자리를 차순위로
 채우지 않는다. CRPD 20주년 행사는 연간 핵심의제로 보아 예외적으로 최하단에 둔다. II절은 별도

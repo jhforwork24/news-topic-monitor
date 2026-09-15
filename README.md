@@ -33,6 +33,7 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 경향신문 | 최신기사 news sitemap | `#articleBody` |
 | 오마이뉴스 | 공식 최신기사 news sitemap | `[itemprop='articleBody']` |
 | 프레시안 | 공식 최신뉴스 RSS API | `.article_body` |
+| 시사인 | 공식 sitemap | `#article-view-content-div` |
 | 참세상 | robots.txt 확인 실패로 안전 중단 | 요청하지 않음 |
 | 매일노동뉴스 | news sitemap | `#article-view-content-div` |
 | 미디어스 | 공식 sitemap | `#article-view-content-div` |
@@ -115,8 +116,8 @@ news-topic-monitor report \
 - `.github/workflows/collect.yml`: `17 2-23/3 * * *`(UTC), 3시간 간격으로 최근 6시간을
   재확인하며 최종 사전 실행은 08:17 KST에 시작
 - `.github/workflows/backfill.yml`: `20 22 * * *`(UTC), 매일 07:20 KST에 최근 48시간 재확인
-- `.github/workflows/report.yml`: `2 0 * * *`(UTC), 매일 09:02 KST에 전날 09:00부터
-  당일 09:00 KST까지 보고
+- `.github/workflows/report.yml`: `2 0 * * *`(UTC), 매일 09:02 KST에 전날 05:00부터
+  당일 05:00 KST까지 보고
 - `.github/workflows/editorial-queue.yml`: `5 0 * * *`(UTC), 매일 09:05에 48시간 공식 목록과
   본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
   기사는 모두, 그 밖의 일반 기사는 매체별 최신 24건까지 본문을 확인함. 수집 단계의 자동 판별은
@@ -134,6 +135,13 @@ news-topic-monitor report \
 - `.github/workflows/publish-notion.yml`: 예약 없음. `PUBLICATION_OWNER=deterministic_fallback`인
   수동 복구 실행에서만 사용함
 - `.github/workflows/ci.yml`: push·PR에서 오프라인 pytest와 ruff 실행
+
+조사 범위 경계는 2026-09-15자 발행까지 07:00 KST였다가 05:00 KST로 2시간 당겨졌다. 2026-09-15
+07:00 KST에 이미 마감된 조사 범위와의 공백을 없애기 위해 2026-09-16자 발행 하루만 전날 07:00
+KST부터 당일 05:00 KST까지(22시간) 조사하고, 그 다음 날짜부터 평소대로 전날 05:00 KST부터
+당일 05:00 KST까지(24시간) 조사한다. 이 1회성 전환은
+`src/news_topic_monitor/cli.py`의 `REPORT_WINDOW_TRANSITION_DATE`로 구현되어 있으며 2026-09-16이
+지나면 코드에서 지워도 된다.
 
 데이터 작성 워크플로는 동일한 `concurrency` 그룹을 사용해 동시 커밋을 막고,
 `contents: write`만 부여한다. 변경이 있을 때만 커밋하며 push 실패 시 최신 브랜치를 rebase한
@@ -233,7 +241,7 @@ GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하
 - `data/articles/YYYY-MM-DD.jsonl`: 기사 본문 없는 메타데이터와 판별 결과
 - `data/review/YYYY-MM-DD.jsonl`: `review` 기사만 모은 사람 검토 목록
 - `data/state/source_state.json`: 출처별 마지막 실행 상태
-- `reports/YYYY-MM-DD.md`: 09:00 KST 경계 일일보고
+- `reports/YYYY-MM-DD.md`: 05:00 KST 경계 일일보고
 - `reports/briefings/YYYY-MM-DD.md`: 총평과 I~II 절, 선정 칼럼이 있을 때만 III절을 덧붙인 노션 발행 원본
 - `health/latest.json`: 최근 실행의 출처별 발견·신규·중복·본문 확인·API 갱신·제거·오류 집계
 - `health/notion/latest.json`: 최근 노션 발행 상태(개인 페이지 URL·토큰은 기록하지 않음)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -167,20 +167,47 @@ ROUTINE_SERVICE_TRAINING_TERMS = (
 # 제외한다. 제외된 자리를 차순위 홍보 보도로 다시 채우지 않는다.
 DISABILITY_REVIEW_POOL_SIZE = 10
 
-STRONG_PREVIOUS_CONCEPTS = frozenset(
+# 하나의 사건·제도를 지목하는 고유명이다. 이 말이 겹치면 사실상 같은 사안을
+# 가리키므로 토큰 하나만으로도 "동일 주제 이전 보도"로 인정한다.
+PROPER_NOUN_PREVIOUS_CONCEPTS = frozenset(
     {
         "색동원",
-        "전원 자립",
+        "섭지코지",
         "권리중심공공일자리",
+        "국제장애인권컨퍼런스",
+    }
+)
+
+# 아래는 사안이 아니라 범주를 가리키는 말이다. 희소하다는 점에서는 고유명과
+# 구별되지 않지만("최중증" 17건, "hl만도" 22건) 서로 무관한 사건에 두루 붙는다.
+# 실제로 "최중증" 하나가 겹친다는 이유로 탈시설 당사자의 지방선거 출마 보도에
+# 무관한 기사가 이전 보도로 딸려 들어간 사례가 있어, 겹치는 토큰을 하나 더
+# 요구한다. 문서빈도만으로는 두 부류를 가를 수 없어 목록으로 구분한다.
+CATEGORY_PREVIOUS_CONCEPTS = frozenset(
+    {
+        "전원 자립",
         "정신의료기관",
         "집단 전원",
-        "섭지코지",
         "최중증",
-        "국제장애인권컨퍼런스",
         "산업재해",
         "공공돌봄",
     }
 )
+
+STRONG_PREVIOUS_CONCEPTS = PROPER_NOUN_PREVIOUS_CONCEPTS | CATEGORY_PREVIOUS_CONCEPTS
+
+# 범주어만 겹쳤을 때 추가로 요구하는 최소 공유 토큰 수(범주어 자신을 포함).
+CATEGORY_CONCEPT_MIN_OVERLAP = 2
+
+# 개념어가 전혀 겹치지 않을 때 요구하는 최소 공유 토큰 수.
+GENERIC_OVERLAP_MIN = 4
+
+# 이전 보도 후보로 삼을 최대 경과일. 오래된 기사는 사안이 이미 종결됐거나
+# 어휘만 닮은 다른 사건일 가능성이 높다.
+PREVIOUS_COVERAGE_MAX_AGE_DAYS = 180
+
+# 이전 보도 요약으로 인정할 최소 길이. 이보다 짧으면 앞 문장의 꼬리 조각이다.
+MINIMUM_PREVIOUS_SUMMARY_CHARS = 8
 
 KNOWN_PREVIOUS_COVERAGE = (
     (
@@ -202,6 +229,19 @@ KNOWN_PREVIOUS_COVERAGE = (
 )
 
 
+# 이전 보도가 어느 규칙으로 걸렸는지 남기는 기계 판독용 표식. 브리핑 본문에는
+# 출력하지 않고 `브리핑 보고사항`에만 기록한다. 오탐이 발생했을 때 어떤 경로가
+# 발화했는지 사후에 특정할 수 있어야 규칙을 근거 위에서 조정할 수 있다.
+PREVIOUS_MATCH_FIXED_LIST = "고정목록"
+PREVIOUS_MATCH_PROPER_NOUN = "고유명"
+PREVIOUS_MATCH_CATEGORY_CONCEPT = "범주어+토큰"
+PREVIOUS_MATCH_TOKEN_OVERLAP = "토큰4개이상"
+
+# `record_report`가 children을 한 번에 POST하므로 Notion의 블록 상한을 넘기지
+# 않도록 이전 보도 기록을 제한한다.
+PREVIOUS_COVERAGE_NOTE_LIMIT = 60
+
+
 @dataclass(frozen=True)
 class PreviousCoverage:
     published: str
@@ -209,6 +249,8 @@ class PreviousCoverage:
     url: str | None
     outlet: str
     comparison: str
+    match_rule: str = ""
+    matched_tokens: tuple[str, ...] = ()
 
 
 @dataclass
@@ -352,6 +394,7 @@ def build_briefing(
     overview = build_overview(start, end, sections)
     telegram_summary = build_telegram_summary(sections)
     failures = _source_failures(storage)
+    editorial_notes.extend(previous_coverage_notes(sections))
     return BriefingDocument(
         report_date=report_date,
         start=start,
@@ -426,6 +469,7 @@ def build_editorial_briefing(
             editorial_notes.append(f"GPT 편집 제외 — {article.title}: {exclusion.reason}")
     if not opinion_issues:
         editorial_notes.append("III절 생략 — GPT 편집에서 최종 선정된 칼럼 없음")
+    editorial_notes.extend(previous_coverage_notes(sections))
 
     return BriefingDocument(
         report_date=report_date,
@@ -654,19 +698,40 @@ def previous_coverage_for(
     result: list[PreviousCoverage] = []
     for triggers, published, label, url, outlet, comparison in KNOWN_PREVIOUS_COVERAGE:
         if all(trigger in text for trigger in triggers):
-            result.append(PreviousCoverage(published, label, url, outlet, comparison))
+            result.append(
+                PreviousCoverage(
+                    published,
+                    label,
+                    url,
+                    outlet,
+                    comparison,
+                    match_rule=PREVIOUS_MATCH_FIXED_LIST,
+                    matched_tokens=tuple(triggers),
+                )
+            )
 
     tokens = set().union(*(issue_tokens(article) for article in articles))
-    strong_tokens = {term.lower() for term in STRONG_PREVIOUS_CONCEPTS} & tokens
+    proper_tokens = {term.lower() for term in PROPER_NOUN_PREVIOUS_CONCEPTS} & tokens
+    category_tokens = {term.lower() for term in CATEGORY_PREVIOUS_CONCEPTS} & tokens
+    strong_tokens = proper_tokens | category_tokens
     current_urls = {article.canonical_url for article in articles}
-    candidates: list[tuple[int, float, datetime, ArticleRecord]] = []
+    earliest = min(
+        (article.published_at or article.first_seen_at for article in articles),
+        default=None,
+    )
+    candidates: list[tuple[int, float, datetime, ArticleRecord, frozenset[str]]] = []
     for article in history:
         if article.canonical_url in current_urls or is_opinion(article):
             continue
         if is_routine_local_training_notice(article):
             continue
+        published_at = article.published_at or article.first_seen_at
+        if earliest is not None and published_at < earliest - timedelta(
+            days=PREVIOUS_COVERAGE_MAX_AGE_DAYS
+        ):
+            continue
         overlap = tokens & issue_tokens(article)
-        if not overlap & strong_tokens and len(overlap) < 4:
+        if not _previous_coverage_overlap_qualifies(overlap, proper_tokens, category_tokens):
             continue
         candidates.append(
             (
@@ -674,13 +739,21 @@ def previous_coverage_for(
                 _detail_score(article),
                 article.published_at or article.first_seen_at,
                 article,
+                frozenset(overlap),
             )
         )
     candidates.sort(key=lambda item: (item[0], item[1], item[2]), reverse=True)
     known_urls = {item.url for item in result}
-    for _relevance, _detail, published, article in candidates:
+    for _relevance, _detail, published, article, overlap in candidates:
         if article.canonical_url in known_urls:
             continue
+        shared_strong = overlap & strong_tokens
+        if overlap & proper_tokens:
+            rule = PREVIOUS_MATCH_PROPER_NOUN
+        elif overlap & category_tokens:
+            rule = PREVIOUS_MATCH_CATEGORY_CONCEPT
+        else:
+            rule = PREVIOUS_MATCH_TOKEN_OVERLAP
         result.append(
             PreviousCoverage(
                 published.astimezone(KST).date().isoformat(),
@@ -688,6 +761,8 @@ def previous_coverage_for(
                 article.canonical_url,
                 SOURCE_LABELS.get(article.source, article.source),
                 _previous_coverage_summary(article),
+                match_rule=rule,
+                matched_tokens=tuple(sorted(shared_strong) + sorted(overlap - shared_strong)),
             )
         )
         known_urls.add(article.canonical_url)
@@ -696,15 +771,62 @@ def previous_coverage_for(
     return result[:3]
 
 
+def _previous_coverage_overlap_qualifies(
+    overlap: set[str], proper_tokens: set[str], category_tokens: set[str]
+) -> bool:
+    """A shared proper noun names one event; a shared category term does not."""
+
+    if overlap & proper_tokens:
+        return True
+    if overlap & category_tokens and len(overlap) >= CATEGORY_CONCEPT_MIN_OVERLAP:
+        return True
+    return len(overlap) >= GENERIC_OVERLAP_MIN
+
+
+def previous_coverage_notes(sections: list[BriefingSection]) -> list[str]:
+    """Record which rule attached each prior report, for `브리핑 보고사항` only.
+
+    The briefing itself never shows this: README keeps technical reasoning out of
+    the published document. Without it there is no way to tell afterwards which
+    matching path produced a false positive, so the rules cannot be adjusted on
+    evidence.
+    """
+
+    notes: list[str] = []
+    for section in sections:
+        for issue in section.issues:
+            for item in issue.previous_coverage:
+                tokens = "·".join(item.matched_tokens[:6]) or "표식 없음"
+                notes.append(
+                    f"이전 보도 매칭 — {section.title} / {issue.title}: {item.label} "
+                    f"(규칙={item.match_rule or '미기록'}, 일치={tokens})"
+                )
+    if len(notes) > PREVIOUS_COVERAGE_NOTE_LIMIT:
+        omitted = len(notes) - PREVIOUS_COVERAGE_NOTE_LIMIT
+        notes = notes[:PREVIOUS_COVERAGE_NOTE_LIMIT]
+        notes.append(f"이전 보도 매칭 — 기록 상한 초과로 {omitted}건을 생략함")
+    return notes
+
+
 def _previous_coverage_summary(article: ArticleRecord) -> str:
     """One sentence on what the prior article actually covered, not a generic prompt."""
 
     sentences = _clean_summary_sentences(article.summary)
-    if sentences:
+    # 요약 첫 문장이 앞 문장의 꼬리였던 경우 "이어." 같은 조각만 남는다. 실제로
+    # 그런 조각이 발행된 전례가 있어, 내용이 없는 조각은 제목 기반 문장으로
+    # 대체한다.
+    if sentences and _is_substantive_summary(sentences[0]):
         return sentences[0]
     title = _neutral_text(article.title).rstrip(". ")
     particle = _korean_particle(title, "을", "를")
     return f"{title}{particle} 보도했다."
+
+
+def _is_substantive_summary(sentence: str) -> bool:
+    stripped = sentence.rstrip(". ").strip()
+    if len(stripped) < MINIMUM_PREVIOUS_SUMMARY_CHARS:
+        return False
+    return len(re.findall(r"[가-힣A-Za-z0-9]{2,}", stripped)) >= 2
 
 
 def _detail_score(article: ArticleRecord) -> float:

@@ -53,6 +53,8 @@ EDITORIAL_AUDIT_TITLE_FRAGMENT = "Claude 독립 감사"
 NOTION_RICH_TEXT_CHUNK_SIZE = 1900
 NOTION_MAX_RICH_TEXT_ITEMS = 100
 NOTION_MACHINE_CODE_MAX_CHARS = NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
+# 한 번의 페이지 생성·children PATCH 요청이 담을 수 있는 블록 수 상한.
+NOTION_MAX_CHILDREN_PER_REQUEST = 100
 
 
 class NotionConfigurationError(ValueError):
@@ -296,6 +298,8 @@ class NotionPublisher:
         if matches:
             page_url = matches[0].get("url")
             return str(page_url) if page_url else None
+        notes = list(document.editorial_notes or ["별도 제외·이동 기록 없음"])
+        failures = list(document.source_failures or ["최근 수집 health에 실패 출처 없음"])
         children = [
             _paragraph(
                 f"자동 발행 브리핑 v{result.version}",
@@ -303,14 +307,13 @@ class NotionPublisher:
             ),
             _heading("편집·분류 기록", 2),
         ]
-        children.extend(
-            _bullet(note) for note in (document.editorial_notes or ["별도 제외·이동 기록 없음"])
-        )
+        children.extend(_bullet(note) for note in notes)
         children.append(_heading("출처 점검", 2))
-        children.extend(
-            _bullet(failure)
-            for failure in (document.source_failures or ["최근 수집 health에 실패 출처 없음"])
-        )
+        children.extend(_bullet(failure) for failure in failures)
+        # 페이지 생성 요청 자체는 최대 100블록까지만 받는다. 정보를 잘라내는 대신
+        # publish_briefing과 같은 방식으로 빈 페이지를 먼저 만들고 나머지를
+        # PATCH로 이어붙인다 — 편집·분류 기록은 오탐 원인 추적용이라 잘리면
+        # 안 된다.
         page = self._request(
             "POST",
             "/pages",
@@ -323,9 +326,16 @@ class NotionPublisher:
                     "이름": {"title": [_rich_text(title)]},
                     "날짜": {"date": {"start": document.report_date}},
                 },
-                "children": children,
+                "children": children[:NOTION_MAX_CHILDREN_PER_REQUEST],
             },
         )
+        page_id = str(page["id"])
+        for start in range(NOTION_MAX_CHILDREN_PER_REQUEST, len(children), 100):
+            self._request(
+                "PATCH",
+                f"/blocks/{page_id}/children",
+                json={"children": children[start : start + 100]},
+            )
         return str(page.get("url")) if page.get("url") else None
 
     def record_failure(self, report_date: str, message: str) -> str | None:
