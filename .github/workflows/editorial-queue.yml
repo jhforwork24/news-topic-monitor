@@ -2,10 +2,11 @@ name: Prepare connected Claude editorial queue
 
 on:
   schedule:
-    # 07:05 Asia/Seoul = 22:05 UTC (previous date). The report window now
-    # closes at 07:00 KST; this fires 5 minutes after so the bounded 48-hour
-    # collection can start immediately, well ahead of the ~10:00-10:30 KST
-    # publication target.
+    # 07:05 Asia/Seoul = 22:05 UTC (previous date). The report window closes
+    # at 05:00 KST; this fires roughly two hours after close, well clear of
+    # the last incremental collection (06:17 KST), so the bounded 48-hour
+    # collection can start with the window's articles already discovered,
+    # well ahead of the ~10:00-10:30 KST publication target.
     # Day-of-week "1-5" (UTC Mon-Fri) skips both the UTC Saturday firing
     # (would land at 07:05 KST Sunday) and the UTC Sunday firing (would land
     # at 07:05 KST Monday) — no briefing is published on Sunday or Monday,

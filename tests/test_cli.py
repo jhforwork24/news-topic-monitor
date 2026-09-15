@@ -22,14 +22,42 @@ from news_topic_monitor.policy import load_briefing_policy
 from news_topic_monitor.storage import JsonlStorage
 
 
-def test_report_window_defaults_to_the_0700_kst_boundary() -> None:
+def test_report_window_defaults_to_the_0500_kst_boundary() -> None:
     args = argparse.Namespace(date="2026-08-25", start=None, end=None)
 
     date_value, start, end = _report_window(args)
 
     assert date_value.isoformat() == "2026-08-25"
-    assert end == datetime(2026, 8, 24, 22, tzinfo=UTC)  # 2026-08-25 07:00 KST
-    assert start == datetime(2026, 8, 23, 22, tzinfo=UTC)  # 2026-08-24 07:00 KST
+    assert end == datetime(2026, 8, 24, 20, tzinfo=UTC)  # 2026-08-25 05:00 KST
+    assert start == datetime(2026, 8, 23, 20, tzinfo=UTC)  # 2026-08-24 05:00 KST
+
+
+def test_report_window_bridges_the_0700_to_0500_transition_on_2026_09_16() -> None:
+    args = argparse.Namespace(date="2026-09-16", start=None, end=None)
+
+    date_value, start, end = _report_window(args)
+
+    assert date_value.isoformat() == "2026-09-16"
+    assert end == datetime(2026, 9, 15, 20, tzinfo=UTC)  # 2026-09-16 05:00 KST
+    assert start == datetime(2026, 9, 14, 22, tzinfo=UTC)  # 2026-09-15 07:00 KST
+
+
+def test_report_window_returns_to_the_normal_24h_window_after_the_transition() -> None:
+    args = argparse.Namespace(date="2026-09-17", start=None, end=None)
+
+    date_value, start, end = _report_window(args)
+
+    assert date_value.isoformat() == "2026-09-17"
+    assert end == datetime(2026, 9, 16, 20, tzinfo=UTC)  # 2026-09-17 05:00 KST
+    assert start == datetime(2026, 9, 15, 20, tzinfo=UTC)  # 2026-09-16 05:00 KST
+
+
+def test_report_window_explicit_start_overrides_the_transition() -> None:
+    args = argparse.Namespace(date="2026-09-16", start="2026-09-15T12:00:00+09:00", end=None)
+
+    _date_value, start, _end = _report_window(args)
+
+    assert start == datetime(2026, 9, 15, 3, tzinfo=UTC)  # 2026-09-15 12:00 KST
 
 
 def _article(
