@@ -1,16 +1,21 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from news_topic_monitor.briefing import (
+    PREVIOUS_COVERAGE_MAX_AGE_DAYS,
+    PREVIOUS_COVERAGE_NOTE_LIMIT,
+    PREVIOUS_MATCH_PROPER_NOUN,
     BriefingDocument,
     BriefingIssue,
     BriefingSection,
+    PreviousCoverage,
     analyze_tone,
     build_briefing,
     is_opinion,
     issue_analysis_text,
     previous_coverage_for,
+    previous_coverage_notes,
     render_briefing_markdown,
     summarize_issue,
 )
@@ -742,3 +747,96 @@ def test_markdown_omits_reference_toggle_when_nothing_to_show() -> None:
     assert "<details>" not in text
     assert "동일 주제 이전 보도" not in text
     assert "확인된 추가 자료 없음" not in text
+
+
+def test_previous_coverage_proper_noun_matches_alone_but_category_term_does_not() -> None:
+    """A shared proper noun names one event; a shared category term does not.
+
+    "최중증" is as rare in the corpus as a proper noun like "hl만도", so document
+    frequency cannot separate them. It still attaches unrelated reports to each
+    other, which is why a category term now needs a second shared token.
+    """
+
+    election = _article(
+        "beminor",
+        "탈시설 당사자 조상지 씨, 지방선거 출마 경험을 말하다",
+        article_id="election",
+    )
+    election.summary = "최중증 장애인 당사자의 정치 참여 경험을 다뤘다."
+    unrelated = _article(
+        "ablenews",
+        "전신마비 김혁건, 박위 논란에 한 말",
+        article_id="unrelated",
+    )
+    unrelated.summary = "최중증 장애인 인식을 둘러싼 방송 발언이 논란이 됐다."
+    assert previous_coverage_for([election], [unrelated]) == []
+
+    care_home = _article("beminor", "색동원 성폭력 사건 대책위, 인천시 면담 요구", article_id="cur")
+    earlier = _article("ablenews", "인천시, 색동원 법인 설립허가 취소 처분", article_id="prev")
+    earlier.summary = "인천시가 해당 법인의 설립허가를 취소했다고 밝혔다."
+    matched = previous_coverage_for([care_home], [earlier])
+    assert [item.url for item in matched] == [earlier.canonical_url]
+    assert matched[0].match_rule == PREVIOUS_MATCH_PROPER_NOUN
+    assert "색동원" in matched[0].matched_tokens
+
+
+def test_previous_coverage_drops_reports_older_than_the_lookback_window() -> None:
+    current = _article("beminor", "색동원 성폭력 사건 대책위, 인천시 면담 요구", article_id="cur")
+    stale = _article("ablenews", "색동원 시설 운영 실태 점검", article_id="stale")
+    stale.summary = "인천시가 해당 시설의 운영 실태를 점검했다고 밝혔다."
+    old = current.published_at - timedelta(days=PREVIOUS_COVERAGE_MAX_AGE_DAYS + 1)
+    stale.published_at = old
+    stale.first_seen_at = old
+    stale.last_seen_at = old
+    assert previous_coverage_for([current], [stale]) == []
+
+
+def test_previous_coverage_replaces_a_summary_fragment_with_a_title_sentence() -> None:
+    current = _article("beminor", "색동원 성폭력 사건 대책위, 인천시 면담 요구", article_id="cur")
+    fragment = _article("joongang", "색동원 피해자 지원 대책 발표", article_id="fragment")
+    fragment.summary = "이어."
+    matched = previous_coverage_for([current], [fragment])
+    assert matched
+    assert matched[0].comparison == "색동원 피해자 지원 대책 발표를 보도했다."
+
+
+def test_previous_coverage_notes_stay_out_of_the_published_briefing(tmp_path, topics_path) -> None:
+    storage = JsonlStorage(tmp_path)
+    current = _article("beminor", "색동원 성폭력 사건 대책위, 인천시 면담 요구", article_id="cur")
+    storage.upsert(current)
+    earlier = _article("ablenews", "인천시, 색동원 법인 설립허가 취소 처분", article_id="prev")
+    earlier.summary = "인천시가 해당 법인의 설립허가를 취소했다고 밝혔다."
+    earlier.published_at = datetime(2026, 8, 14, tzinfo=UTC)
+    earlier.first_seen_at = earlier.published_at
+    earlier.last_seen_at = earlier.published_at
+    storage.upsert(earlier)
+    document = build_briefing(
+        storage,
+        topics_path=topics_path,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+    notes = [note for note in document.editorial_notes if note.startswith("이전 보도 매칭")]
+    assert any(PREVIOUS_MATCH_PROPER_NOUN in note for note in notes)
+    rendered = render_briefing_markdown(document, crpd_url=None)
+    assert "이전 보도 매칭" not in rendered
+    assert "규칙=" not in rendered
+
+
+def test_previous_coverage_notes_are_capped() -> None:
+    issues = [
+        BriefingIssue(
+            title=f"이슈 {index}",
+            articles=[],
+            summary="요약.",
+            tone_analysis="",
+            previous_coverage=[
+                PreviousCoverage("2026-08-01", f"이전 {index}", None, "비마이너", "요약.")
+            ],
+        )
+        for index in range(PREVIOUS_COVERAGE_NOTE_LIMIT + 5)
+    ]
+    notes = previous_coverage_notes([BriefingSection("I. 장애정책·장애인운동", issues)])
+    assert len(notes) == PREVIOUS_COVERAGE_NOTE_LIMIT + 1
+    assert notes[-1].endswith("5건을 생략함")

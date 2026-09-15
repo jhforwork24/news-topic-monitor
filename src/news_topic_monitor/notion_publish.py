@@ -53,6 +53,12 @@ EDITORIAL_AUDIT_TITLE_FRAGMENT = "Claude 독립 감사"
 NOTION_RICH_TEXT_CHUNK_SIZE = 1900
 NOTION_MAX_RICH_TEXT_ITEMS = 100
 NOTION_MACHINE_CODE_MAX_CHARS = NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
+# 한 번의 페이지 생성 요청이 담을 수 있는 블록 수 상한.
+NOTION_MAX_CHILDREN_PER_REQUEST = 100
+# 보고사항 페이지는 고정 블록 2개(문단 1·소제목 2)를 먼저 쓰고, 생략 안내 블록이
+# 각 목록마다 최대 1개씩 더 붙을 수 있다. 상한을 넘기면 보고사항 기록 전체가 실패한다.
+REPORT_FAILURE_LIMIT = 15
+REPORT_NOTE_LIMIT = NOTION_MAX_CHILDREN_PER_REQUEST - REPORT_FAILURE_LIMIT - 5
 
 
 class NotionConfigurationError(ValueError):
@@ -296,6 +302,19 @@ class NotionPublisher:
         if matches:
             page_url = matches[0].get("url")
             return str(page_url) if page_url else None
+        # 이 요청은 children을 한 번에 보내므로 Notion의 블록 상한을 넘기면 보고사항
+        # 전체가 실패한다. 발행 자체는 이미 끝난 뒤이므로 기록을 잃지 않도록 호출자와
+        # 무관하게 여기에서 잘라 낸다.
+        notes = list(document.editorial_notes or ["별도 제외·이동 기록 없음"])
+        failures = list(document.source_failures or ["최근 수집 health에 실패 출처 없음"])
+        omitted_notes = max(len(notes) - REPORT_NOTE_LIMIT, 0)
+        omitted_failures = max(len(failures) - REPORT_FAILURE_LIMIT, 0)
+        notes = notes[:REPORT_NOTE_LIMIT]
+        failures = failures[:REPORT_FAILURE_LIMIT]
+        if omitted_notes:
+            notes.append(f"블록 상한으로 편집·분류 기록 {omitted_notes}건을 생략함")
+        if omitted_failures:
+            failures.append(f"블록 상한으로 출처 점검 {omitted_failures}건을 생략함")
         children = [
             _paragraph(
                 f"자동 발행 브리핑 v{result.version}",
@@ -303,14 +322,9 @@ class NotionPublisher:
             ),
             _heading("편집·분류 기록", 2),
         ]
-        children.extend(
-            _bullet(note) for note in (document.editorial_notes or ["별도 제외·이동 기록 없음"])
-        )
+        children.extend(_bullet(note) for note in notes)
         children.append(_heading("출처 점검", 2))
-        children.extend(
-            _bullet(failure)
-            for failure in (document.source_failures or ["최근 수집 health에 실패 출처 없음"])
-        )
+        children.extend(_bullet(failure) for failure in failures)
         page = self._request(
             "POST",
             "/pages",
