@@ -1,26 +1,11 @@
 {
   "schema_version": 1,
   "report_date": "2026-09-16",
-  "checked_at": "2026-09-16T02:09:21.272024Z",
-  "allowed": false,
-  "fatal_errors": [
-    "final-state revalidation이 COMPLETE가 아님"
-  ],
+  "checked_at": "2026-09-16T02:18:54.549217Z",
+  "allowed": true,
+  "fatal_errors": [],
   "degraded_warnings": [],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
-  "reporting_items": [
-    {
-      "cause": "정부, 메가특구 노동특례 놓고 사회적 대화 제안, 각료 후보자도 노동시간 유연화 발언: 선정 기사 출처의 발행 직전 공식 재수집 실패: pressian",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
-    },
-    {
-      "cause": "서울 시내버스 노사, 파업 예고 끝에 임금 3.2% 인상 타결: 선정 기사 출처의 발행 직전 공식 재수집 실패: pressian",
-      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
-      "result": "failed",
-      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
-    }
-  ]
+  "reporting_items": []
 }
