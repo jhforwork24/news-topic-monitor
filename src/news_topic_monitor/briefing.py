@@ -897,7 +897,7 @@ def build_telegram_summary(sections: list[BriefingSection]) -> str:
 def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None) -> str:
     del crpd_url
     lines = [
-        f"# 일간 장애정책·노동 뉴스 브리핑 ({document.report_date})",
+        f"# 일간 장애·노동 뉴스 브리핑 ({document.report_date})",
         "",
         document.overview,
         "",
