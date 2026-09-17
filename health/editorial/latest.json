@@ -1,12 +1,12 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-09-16",
+  "report_date": "2026-09-17",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.075,
-    "bridge_import_validation": 6.482,
-    "total": 7.569
+    "api_preflight": 1.656,
+    "bridge_import_validation": 5.887,
+    "total": 7.553
   },
   "error": "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
-  "completed_at": "2026-09-16T08:21:59.429426Z"
+  "completed_at": "2026-09-17T04:07:21.890734Z"
 }
