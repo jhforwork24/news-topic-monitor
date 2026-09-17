@@ -2,16 +2,20 @@ name: Finalize connected Claude briefing
 
 on:
   schedule:
-    # 12:00 Asia/Seoul = 03:00 UTC. Late safety-net fallback only: the daily
+    # 12:34 Asia/Seoul = 03:34 UTC. Late safety-net fallback only: the daily
     # editor+auditor automation normally dispatches this workflow itself
     # (workflow_dispatch) immediately after writing the draft and independent
     # audit, targeting ~10:00-10:30 KST publication. This schedule exists in
     # case that automation never fires; a run here after publication already
     # succeeded is a harmless no-op (publish is idempotent per report date).
+    # Minute 34 is deliberately off the top of the hour, for the same reason
+    # as editorial-queue.yml's cron: GitHub can delay scheduled triggers near
+    # the start of each hour, and this fallback gains nothing from sitting in
+    # that window.
     # Day-of-week "2-6" (UTC Tue-Sat, same calendar day as KST here) skips
     # Sunday and Monday: no queue is built on either day (see
     # editorial-queue.yml), so this fallback has nothing to finalize anyway.
-    - cron: "0 3 * * 2-6"
+    - cron: "34 3 * * 2-6"
   workflow_dispatch:
     inputs:
       date:

@@ -1,6 +1,6 @@
 # 10:00 Claude 감독 작업
 
-이 작업은 「일간 장애정책·노동 브리핑」 무료 production 경로의 운영 감독자다. 수집·편집·감사·
+이 작업은 「일간 장애·노동 뉴스 브리핑」 무료 production 경로의 운영 감독자다. 수집·편집·감사·
 최종 브리핑 작성·Notion 발행을 반복하지 않는다. 단일 최종 writer는 GitHub Actions의
 `Finalize connected Claude briefing`이며, 감독자는 그 결과만 확인하고 보고한다.
 

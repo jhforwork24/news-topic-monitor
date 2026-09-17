@@ -2,15 +2,25 @@ name: Prepare connected Claude editorial queue
 
 on:
   schedule:
-    # 07:05 Asia/Seoul = 22:05 UTC (previous date). The report window now
-    # closes at 07:00 KST; this fires 5 minutes after so the bounded 48-hour
-    # collection can start immediately, well ahead of the ~10:00-10:30 KST
-    # publication target.
+    # 07:34 Asia/Seoul = 22:34 UTC (previous date). The report window closes
+    # at 05:00 KST; this fires well clear of the last incremental collection
+    # (06:17 KST), so the bounded 48-hour collection can start with the
+    # window's articles already discovered, well ahead of the ~10:00-10:30
+    # KST publication target.
+    # Minute 34 is deliberately off the top of the hour. GitHub documents
+    # that scheduled (cron) triggers can be delayed during high-load windows,
+    # which cluster near each hour's start; runs observed at minute 5 showed
+    # the *scheduled event itself* firing anywhere from ~25 minutes to ~8
+    # hours late (compare workflow run created_at against the nominal cron
+    # time), which cascaded into late editorial-queue completion and pushed
+    # the 09:25 KST editor session's start — and everything after it — later
+    # in turn. This does not guarantee on-time firing, only reduces exposure
+    # to that specific congestion pattern.
     # Day-of-week "1-5" (UTC Mon-Fri) skips both the UTC Saturday firing
-    # (would land at 07:05 KST Sunday) and the UTC Sunday firing (would land
-    # at 07:05 KST Monday) — no briefing is published on Sunday or Monday,
+    # (would land at 07:34 KST Sunday) and the UTC Sunday firing (would land
+    # at 07:34 KST Monday) — no briefing is published on Sunday or Monday,
     # so no queue is built for either.
-    - cron: "5 22 * * 1-5"
+    - cron: "34 22 * * 1-5"
   workflow_dispatch:
     inputs:
       date:

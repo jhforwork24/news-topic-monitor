@@ -6,7 +6,7 @@ import logging
 import os
 import sys
 from collections.abc import Callable
-from datetime import UTC, datetime, time, timedelta
+from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from time import perf_counter, sleep
@@ -1454,12 +1454,34 @@ def _add_report_window_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--end", help="exclusive ISO-8601 override")
 
 
+REPORT_WINDOW_END_HOUR = 5
+
+# 조사 범위 경계를 07:00에서 05:00 KST로 2시간 당기면서 생기는 1회성 전환일이다.
+# 2026-09-15자 발행은 이미 종전 경계(당일 07:00 KST)로 마감됐으므로, 2026-09-16자
+# 발행만 2026-09-15 07:00 KST ~ 2026-09-16 05:00 KST(22시간)로 그 공백을 잇는다.
+# 그 다음 날짜부터는 평소대로 24시간 창(전날 05:00 ~ 당일 05:00 KST)을 쓴다.
+# 이 전환일이 지나면 REPORT_WINDOW_TRANSITION_START도 함께 지워도 된다.
+REPORT_WINDOW_TRANSITION_DATE = date(2026, 9, 16)
+REPORT_WINDOW_TRANSITION_START_HOUR = 7
+
+
 def _report_window(args: argparse.Namespace):
     now_kst = datetime.now(KST)
     date_value = datetime.strptime(args.date, "%Y-%m-%d").date() if args.date else now_kst.date()
-    default_end = datetime.combine(date_value, time(hour=7), tzinfo=KST).astimezone(UTC)
+    default_end = datetime.combine(
+        date_value, time(hour=REPORT_WINDOW_END_HOUR), tzinfo=KST
+    ).astimezone(UTC)
     end = parse_datetime(args.end) if args.end else default_end
-    start = parse_datetime(args.start) if args.start else end - timedelta(days=1)
+    if args.start:
+        start = parse_datetime(args.start)
+    elif date_value == REPORT_WINDOW_TRANSITION_DATE:
+        start = datetime.combine(
+            date_value - timedelta(days=1),
+            time(hour=REPORT_WINDOW_TRANSITION_START_HOUR),
+            tzinfo=KST,
+        ).astimezone(UTC)
+    else:
+        start = end - timedelta(days=1)
     assert start is not None and end is not None
     if start >= end:
         raise SystemExit("start must be earlier than end")
