@@ -26,27 +26,27 @@
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-09-18T00:49:27.705303Z",
+      "last_run_at": "2026-09-18T02:31:30.644280Z",
       "success": true,
-      "discovered": 450,
+      "discovered": 75,
       "errors": [],
-      "last_success_at": "2026-09-18T00:49:27.705303Z",
+      "last_success_at": "2026-09-18T02:31:30.644280Z",
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-09-18T00:50:22.929468Z",
+      "last_run_at": "2026-09-18T02:32:21.576238Z",
       "success": true,
-      "discovered": 295,
+      "discovered": 318,
       "errors": [],
-      "last_success_at": "2026-09-18T00:50:22.929468Z",
+      "last_success_at": "2026-09-18T02:32:21.576238Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-09-18T00:51:17.343972Z",
+      "last_run_at": "2026-09-18T02:33:13.907554Z",
       "success": true,
-      "discovered": 290,
+      "discovered": 297,
       "errors": [],
-      "last_success_at": "2026-09-18T00:51:17.343972Z",
+      "last_success_at": "2026-09-18T02:33:13.907554Z",
       "discovery_status": "complete"
     },
     "pressian": {
@@ -69,27 +69,27 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-09-18T00:53:16.568655Z",
+      "last_run_at": "2026-09-18T02:34:02.694309Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-18T00:53:16.568655Z",
+      "last_success_at": "2026-09-18T02:34:02.694309Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-09-18T00:53:44.236964Z",
+      "last_run_at": "2026-09-18T02:34:05.522192Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-18T00:53:44.236964Z",
+      "last_success_at": "2026-09-18T02:34:05.522192Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-09-18T00:55:16.495065Z",
+      "last_run_at": "2026-09-18T02:34:27.889547Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-18T00:55:16.495065Z",
+      "last_success_at": "2026-09-18T02:34:27.889547Z",
       "discovery_status": "complete"
     },
     "theindigo": {
