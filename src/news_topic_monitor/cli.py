@@ -175,8 +175,8 @@ def build_parser() -> argparse.ArgumentParser:
         "--allow-stale-revalidation",
         action="store_true",
         help=(
-            "manual exception: bypass the 6-hour report-boundary revalidation "
-            "deadline instead of failing closed"
+            f"manual exception: bypass the {FINAL_STATE_STALE_REVALIDATION_HOURS}-hour "
+            "report-boundary revalidation deadline instead of failing closed"
         ),
     )
     return parser
@@ -395,9 +395,12 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         "최종상태 공식 재수집에 사용할 선정 기사 출처가 없음"
                     )
                 revalidation_requested_at = datetime.now(UTC)
-                if revalidation_requested_at > end + timedelta(hours=6):
+                if revalidation_requested_at > end + timedelta(
+                    hours=FINAL_STATE_STALE_REVALIDATION_HOURS
+                ):
                     raise EditorialValidationError(
-                        "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음"
+                        f"보고 경계가 {FINAL_STATE_STALE_REVALIDATION_HOURS}시간 이상 지나 "
+                        "발행 직전 최종상태를 완전하게 재검증할 수 없음"
                     )
                 revalidation_start = (
                     end
@@ -855,16 +858,18 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
 
         revalidation_requested_at = datetime.now(UTC)
         stale_revalidation_override = False
-        if revalidation_requested_at > end + timedelta(hours=6):
+        if revalidation_requested_at > end + timedelta(hours=FINAL_STATE_STALE_REVALIDATION_HOURS):
             if not args.allow_stale_revalidation:
                 raise EditorialValidationError(
-                    "보고 경계가 6시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음"
+                    f"보고 경계가 {FINAL_STATE_STALE_REVALIDATION_HOURS}시간 이상 지나 "
+                    "발행 직전 최종상태를 완전하게 재검증할 수 없음"
                 )
             stale_revalidation_override = True
             LOGGER.warning(
-                "editorial finalize: 보고 경계 6시간 초과 후 수동 예외"
+                "editorial finalize: 보고 경계 %s시간 초과 후 수동 예외"
                 "(--allow-stale-revalidation)로 재검증 진행 "
                 "(report_date=%s, revalidation_requested_at=%s)",
+                FINAL_STATE_STALE_REVALIDATION_HOURS,
                 report_date,
                 revalidation_requested_at.isoformat(),
             )
@@ -1045,7 +1050,8 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
         )
         if stale_revalidation_override:
             document.source_failures.append(
-                "원인=발행 직전 최종상태 재검증이 보고 경계로부터 6시간을 초과해 시작됨 · "
+                "원인=발행 직전 최종상태 재검증이 보고 경계로부터 "
+                f"{FINAL_STATE_STALE_REVALIDATION_HOURS}시간을 초과해 시작됨 · "
                 "대체경로=세션 승인에 따른 수동 예외(--allow-stale-revalidation)로 재검증을 "
                 "계속 진행 · "
                 f"결과=재검증 완료 후 발행 진행(재검증 요청 시각 "
@@ -1455,6 +1461,13 @@ def _add_report_window_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 REPORT_WINDOW_END_HOUR = 5
+
+# 편집 대기열 생성(editorial-queue.yml)의 예약 실행 자체가 GitHub Actions 스케줄 지연으로
+# report_end 기준 2시간 이상 늦게 시작하는 사례가 반복 관측됐고, 그 뒤 이어지는 초안·독립 감사
+# 사이클도 짧으면 20분, 길면 2시간 이상 걸린다. report_end를 07:00에서 05:00 KST로 2시간
+# 당긴 뒤에는 이 지연들의 합이 옛 6시간 상한을 정기적으로 넘겨 발행이 막혔다(2026-09-17·09-18
+# 연속 발생). 상한을 8시간으로 늘려 그 여유를 되돌린다.
+FINAL_STATE_STALE_REVALIDATION_HOURS = 8
 
 # 조사 범위 경계를 07:00에서 05:00 KST로 2시간 당기면서 생기는 1회성 전환일이다.
 # 2026-09-15자 발행은 이미 종전 경계(당일 07:00 KST)로 마감됐으므로, 2026-09-16자
