@@ -858,9 +858,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
 
         revalidation_requested_at = datetime.now(UTC)
         stale_revalidation_override = False
-        if revalidation_requested_at > end + timedelta(
-            hours=FINAL_STATE_STALE_REVALIDATION_HOURS
-        ):
+        if revalidation_requested_at > end + timedelta(hours=FINAL_STATE_STALE_REVALIDATION_HOURS):
             if not args.allow_stale_revalidation:
                 raise EditorialValidationError(
                     f"보고 경계가 {FINAL_STATE_STALE_REVALIDATION_HOURS}시간 이상 지나 "
