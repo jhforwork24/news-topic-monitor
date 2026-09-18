@@ -34,7 +34,7 @@ on:
         default: true
       allow_stale_revalidation:
         description: >-
-          Manual exception: bypass the 6-hour report-boundary revalidation deadline.
+          Manual exception: bypass the 8-hour report-boundary revalidation deadline.
           Only for a session-approved one-off catch-up publish; never enable by default.
         required: false
         type: boolean
