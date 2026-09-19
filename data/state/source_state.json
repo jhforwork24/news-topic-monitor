@@ -34,19 +34,19 @@
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-09-19T03:00:35.708030Z",
+      "last_run_at": "2026-09-19T03:13:07.861624Z",
       "success": true,
-      "discovered": 182,
+      "discovered": 183,
       "errors": [],
-      "last_success_at": "2026-09-19T03:00:35.708030Z",
+      "last_success_at": "2026-09-19T03:13:07.861624Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-09-19T03:01:08.085098Z",
+      "last_run_at": "2026-09-19T03:13:40.237854Z",
       "success": true,
-      "discovered": 270,
+      "discovered": 266,
       "errors": [],
-      "last_success_at": "2026-09-19T03:01:08.085098Z",
+      "last_success_at": "2026-09-19T03:13:40.237854Z",
       "discovery_status": "complete"
     },
     "pressian": {
@@ -67,35 +67,35 @@
       "discovery_status": "unavailable"
     },
     "labortoday": {
-      "last_run_at": "2026-09-19T03:01:45.481616Z",
+      "last_run_at": "2026-09-19T03:13:43.314824Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-19T03:01:45.481616Z",
+      "last_success_at": "2026-09-19T03:13:43.314824Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-09-19T03:01:48.337737Z",
+      "last_run_at": "2026-09-19T03:13:46.486770Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-19T03:01:48.337737Z",
+      "last_success_at": "2026-09-19T03:13:46.486770Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-09-19T03:01:50.579482Z",
+      "last_run_at": "2026-09-19T03:13:48.688840Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-19T03:01:50.579482Z",
+      "last_success_at": "2026-09-19T03:13:48.688840Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-09-19T03:01:53.150903Z",
+      "last_run_at": "2026-09-19T03:13:51.245583Z",
       "success": true,
       "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-09-19T03:01:53.150903Z",
+      "last_success_at": "2026-09-19T03:13:51.245583Z",
       "discovery_status": "complete"
     },
     "kbs": {

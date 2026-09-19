@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-09-19",
-  "generated_at": "2026-09-19T03:04:23.348472Z",
+  "generated_at": "2026-09-19T03:16:13.390966Z",
   "articles": [
     {
       "candidate_id": "6c7cbcf3ef09c0e1c3f85f63c43f7092832e507143d178cc9637950401442a37",
@@ -34661,7 +34661,7 @@
       "full_body_status": "fetched",
       "body_hash": "6ceb3865478edf2370244867a56842731be6eee63304d018d335794cca27c250",
       "verification_grade": "A",
-      "issue_id": "2026-09-19-issue-18",
+      "issue_id": null,
       "primary_source_validation": "pending"
     },
     {
@@ -39294,7 +39294,7 @@
       "published_at": "2026-09-18T21:00:00Z",
       "modified_at": "2026-09-18T21:02:00Z",
       "discovered_at": "2026-09-18T22:41:49.556360Z",
-      "last_checked_at": "2026-09-19T03:00:33.496497Z",
+      "last_checked_at": "2026-09-19T03:13:05.575560Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39313,7 +39313,7 @@
       "published_at": "2026-09-18T21:00:00Z",
       "modified_at": "2026-09-19T00:27:00Z",
       "discovered_at": "2026-09-18T22:41:49.556231Z",
-      "last_checked_at": "2026-09-19T03:00:31.785561Z",
+      "last_checked_at": "2026-09-19T03:13:03.662128Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39332,7 +39332,7 @@
       "published_at": "2026-09-18T21:00:00Z",
       "modified_at": "2026-09-18T21:00:01Z",
       "discovered_at": "2026-09-18T22:41:49.556099Z",
-      "last_checked_at": "2026-09-19T03:00:29.522734Z",
+      "last_checked_at": "2026-09-19T03:13:01.613343Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39882,7 +39882,7 @@
       "published_at": "2026-09-18T21:41:00Z",
       "modified_at": "2026-09-18T21:44:00Z",
       "discovered_at": "2026-09-18T22:41:49.555965Z",
-      "last_checked_at": "2026-09-19T03:00:27.944623Z",
+      "last_checked_at": "2026-09-19T03:12:59.834738Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39960,7 +39960,7 @@
       "published_at": "2026-09-18T21:55:00Z",
       "modified_at": "2026-09-18T22:06:00Z",
       "discovered_at": "2026-09-18T22:41:49.555824Z",
-      "last_checked_at": "2026-09-19T03:00:25.482835Z",
+      "last_checked_at": "2026-09-19T03:12:57.837317Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -40217,7 +40217,7 @@
       "published_at": "2026-09-18T22:00:00Z",
       "modified_at": "2026-09-19T02:02:00Z",
       "discovered_at": "2026-09-18T22:41:49.555669Z",
-      "last_checked_at": "2026-09-19T03:00:23.455424Z",
+      "last_checked_at": "2026-09-19T03:12:55.627698Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -40236,7 +40236,7 @@
       "published_at": "2026-09-18T22:00:00Z",
       "modified_at": "2026-09-18T22:00:04Z",
       "discovered_at": "2026-09-18T22:41:49.555488Z",
-      "last_checked_at": "2026-09-19T03:00:21.538253Z",
+      "last_checked_at": "2026-09-19T03:12:53.624105Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -41078,7 +41078,7 @@
       "published_at": "2026-09-18T22:30:00Z",
       "modified_at": "2026-09-18T22:30:02Z",
       "discovered_at": "2026-09-18T22:41:49.555228Z",
-      "last_checked_at": "2026-09-19T03:00:19.518651Z",
+      "last_checked_at": "2026-09-19T03:12:51.660336Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -41976,7 +41976,7 @@
       "published_at": "2026-09-18T23:00:00Z",
       "modified_at": "2026-09-19T01:34:00Z",
       "discovered_at": "2026-09-18T23:19:49.556267Z",
-      "last_checked_at": "2026-09-19T03:00:17.516645Z",
+      "last_checked_at": "2026-09-19T03:12:49.624921Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -41995,7 +41995,7 @@
       "published_at": "2026-09-18T23:00:00Z",
       "modified_at": "2026-09-18T23:01:00Z",
       "discovered_at": "2026-09-18T23:19:49.556011Z",
-      "last_checked_at": "2026-09-19T03:00:15.501675Z",
+      "last_checked_at": "2026-09-19T03:12:47.591196Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42594,7 +42594,7 @@
       "published_at": "2026-09-18T23:30:00Z",
       "modified_at": "2026-09-19T01:37:00Z",
       "discovered_at": "2026-09-19T02:50:13.130697Z",
-      "last_checked_at": "2026-09-19T03:00:13.718845Z",
+      "last_checked_at": "2026-09-19T03:12:45.617299Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42651,7 +42651,7 @@
       "published_at": "2026-09-18T23:47:00Z",
       "modified_at": "2026-09-18T23:47:00Z",
       "discovered_at": "2026-09-19T02:50:10.889538Z",
-      "last_checked_at": "2026-09-19T03:00:11.460053Z",
+      "last_checked_at": "2026-09-19T03:12:43.836589Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42670,7 +42670,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:46:00Z",
       "discovered_at": "2026-09-19T02:50:08.928519Z",
-      "last_checked_at": "2026-09-19T03:00:09.477578Z",
+      "last_checked_at": "2026-09-19T03:12:41.623648Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42689,7 +42689,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:00:04Z",
       "discovered_at": "2026-09-19T02:50:06.910228Z",
-      "last_checked_at": "2026-09-19T03:00:07.494459Z",
+      "last_checked_at": "2026-09-19T03:12:39.641162Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42708,7 +42708,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:01:00Z",
       "discovered_at": "2026-09-19T02:50:05.004099Z",
-      "last_checked_at": "2026-09-19T03:00:05.484319Z",
+      "last_checked_at": "2026-09-19T03:12:37.605013Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42727,7 +42727,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:01:00Z",
       "discovered_at": "2026-09-19T02:50:03.048703Z",
-      "last_checked_at": "2026-09-19T03:00:03.750219Z",
+      "last_checked_at": "2026-09-19T03:12:35.841346Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42765,7 +42765,7 @@
       "published_at": "2026-09-19T00:40:00Z",
       "modified_at": "2026-09-19T00:40:00Z",
       "discovered_at": "2026-09-19T02:51:05.492785Z",
-      "last_checked_at": "2026-09-19T03:01:06.077043Z",
+      "last_checked_at": "2026-09-19T03:13:38.230586Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42784,7 +42784,7 @@
       "published_at": "2026-09-19T00:45:00Z",
       "modified_at": "2026-09-19T00:45:00Z",
       "discovered_at": "2026-09-19T02:51:03.430013Z",
-      "last_checked_at": "2026-09-19T03:01:04.082255Z",
+      "last_checked_at": "2026-09-19T03:13:36.230957Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42803,7 +42803,7 @@
       "published_at": "2026-09-19T00:47:00Z",
       "modified_at": "2026-09-19T00:47:01Z",
       "discovered_at": "2026-09-19T02:50:00.946052Z",
-      "last_checked_at": "2026-09-19T03:00:01.527417Z",
+      "last_checked_at": "2026-09-19T03:12:33.649086Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42822,7 +42822,7 @@
       "published_at": "2026-09-19T00:53:00Z",
       "modified_at": "2026-09-19T00:54:00Z",
       "discovered_at": "2026-09-19T02:51:01.348093Z",
-      "last_checked_at": "2026-09-19T03:01:02.085708Z",
+      "last_checked_at": "2026-09-19T03:13:34.238345Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42917,7 +42917,7 @@
       "published_at": "2026-09-19T01:00:00Z",
       "modified_at": "2026-09-19T01:00:01Z",
       "discovered_at": "2026-09-19T02:49:58.933701Z",
-      "last_checked_at": "2026-09-19T02:59:59.494863Z",
+      "last_checked_at": "2026-09-19T03:12:31.647339Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42974,7 +42974,7 @@
       "published_at": "2026-09-19T01:47:00Z",
       "modified_at": "2026-09-19T01:47:00Z",
       "discovered_at": "2026-09-19T02:50:59.336669Z",
-      "last_checked_at": "2026-09-19T03:01:00.107444Z",
+      "last_checked_at": "2026-09-19T03:13:32.239862Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42993,7 +42993,7 @@
       "published_at": "2026-09-19T01:48:00Z",
       "modified_at": "2026-09-19T01:49:00Z",
       "discovered_at": "2026-09-19T02:50:55.327960Z",
-      "last_checked_at": "2026-09-19T03:00:56.326878Z",
+      "last_checked_at": "2026-09-19T03:13:28.259402Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43012,7 +43012,7 @@
       "published_at": "2026-09-19T01:48:00Z",
       "modified_at": "2026-09-19T01:48:00Z",
       "discovered_at": "2026-09-19T02:50:53.543102Z",
-      "last_checked_at": "2026-09-19T03:00:54.040219Z",
+      "last_checked_at": "2026-09-19T03:13:26.198003Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43031,7 +43031,7 @@
       "published_at": "2026-09-19T01:49:00Z",
       "modified_at": "2026-09-19T01:49:00Z",
       "discovered_at": "2026-09-19T02:50:49.344372Z",
-      "last_checked_at": "2026-09-19T03:00:50.139589Z",
+      "last_checked_at": "2026-09-19T03:13:22.259102Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43050,7 +43050,7 @@
       "published_at": "2026-09-19T01:55:00Z",
       "modified_at": "2026-09-19T01:55:00Z",
       "discovered_at": "2026-09-19T02:49:57.281885Z",
-      "last_checked_at": "2026-09-19T02:59:57.703007Z",
+      "last_checked_at": "2026-09-19T03:12:29.829920Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43069,7 +43069,7 @@
       "published_at": "2026-09-19T02:00:00Z",
       "modified_at": "2026-09-19T02:00:01Z",
       "discovered_at": "2026-09-19T02:49:54.905476Z",
-      "last_checked_at": "2026-09-19T02:59:55.526878Z",
+      "last_checked_at": "2026-09-19T03:12:27.634858Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43088,7 +43088,7 @@
       "published_at": "2026-09-19T02:00:00Z",
       "modified_at": "2026-09-19T02:00:04Z",
       "discovered_at": "2026-09-19T02:49:53.998339Z",
-      "last_checked_at": "2026-09-19T02:59:54.297026Z",
+      "last_checked_at": "2026-09-19T03:12:25.620721Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43126,7 +43126,7 @@
       "published_at": "2026-09-19T02:04:00Z",
       "modified_at": "2026-09-19T02:04:00Z",
       "discovered_at": "2026-09-19T02:50:47.325016Z",
-      "last_checked_at": "2026-09-19T03:00:48.085381Z",
+      "last_checked_at": "2026-09-19T03:13:20.232336Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43164,7 +43164,7 @@
       "published_at": "2026-09-19T02:13:00Z",
       "modified_at": "2026-09-19T02:13:00Z",
       "discovered_at": "2026-09-19T02:50:45.332211Z",
-      "last_checked_at": "2026-09-19T03:00:46.100158Z",
+      "last_checked_at": "2026-09-19T03:13:18.228540Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43183,7 +43183,7 @@
       "published_at": "2026-09-19T02:14:00Z",
       "modified_at": "2026-09-19T02:14:00Z",
       "discovered_at": "2026-09-19T02:50:43.394910Z",
-      "last_checked_at": "2026-09-19T03:00:44.310288Z",
+      "last_checked_at": "2026-09-19T03:13:16.486482Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43221,7 +43221,7 @@
       "published_at": "2026-09-19T02:18:00Z",
       "modified_at": "2026-09-19T02:18:00Z",
       "discovered_at": "2026-09-19T02:50:41.368665Z",
-      "last_checked_at": "2026-09-19T03:00:42.257527Z",
+      "last_checked_at": "2026-09-19T03:13:14.227539Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43240,7 +43240,7 @@
       "published_at": "2026-09-19T02:21:00Z",
       "modified_at": "2026-09-19T02:21:00Z",
       "discovered_at": "2026-09-19T02:50:39.475169Z",
-      "last_checked_at": "2026-09-19T03:00:40.254397Z",
+      "last_checked_at": "2026-09-19T03:13:12.419140Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43259,7 +43259,7 @@
       "published_at": "2026-09-19T02:25:00Z",
       "modified_at": "2026-09-19T02:31:00Z",
       "discovered_at": "2026-09-19T02:49:49.457817Z",
-      "last_checked_at": "2026-09-19T02:59:48.493584Z",
+      "last_checked_at": "2026-09-19T03:12:24.430132Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43297,7 +43297,7 @@
       "published_at": "2026-09-19T02:49:00Z",
       "modified_at": "2026-09-19T02:50:00Z",
       "discovered_at": "2026-09-19T02:50:37.673859Z",
-      "last_checked_at": "2026-09-19T03:00:38.555711Z",
+      "last_checked_at": "2026-09-19T03:13:10.524975Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43325,6 +43325,25 @@
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "213befcecac30560ba025790e76dff02d0aac552d2d8f20f252946027aa3df1d",
+      "canonical_url": "https://www.khan.co.kr/article/202609191200001",
+      "title": "누렇게 변한 흰 수건 부활시키려면?…일단 ‘불려라’",
+      "outlet": "khan",
+      "reporter": "장회정",
+      "published_at": "2026-09-19T03:00:00Z",
+      "modified_at": "2026-09-19T03:00:01Z",
+      "discovered_at": "2026-09-19T03:12:18.585839Z",
+      "last_checked_at": "2026-09-19T03:12:18.585839Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "1dbbbcac42475907c8d92a200163f510b1f035b49217c85fbe72a5bd7f7db75a",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
     }
   ],
   "census": [
@@ -43514,21 +43533,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[ 장애인 표준사업장, 필요한가②]\" 장애인 1명 고용하려 수천만원\"…표준...",
-        "original_url": "https://www.getnews.co.kr/news/articleView.html?idxno=880900",
-        "naver_url": "https://www.getnews.co.kr/news/articleView.html?idxno=880900",
-        "published_at": "2026-09-18T09:30:00Z",
-        "description": "장애인 고용 정책 이 신규 고용 숫자뿐 아니라 고용유지 기간과 직무의 안정성까지 함께 살펴봐야 한다는 지적이 나오는 이유다. 결국 장애인 표준사업장의 지속가능성을 확보하기 위해서는 '얼마를 지원했는가'뿐 아니라...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "민주당 강원특별자치도당 운영위 열고…주요 당직인사 의결",
         "original_url": "https://www.kwnews.co.kr/article/20260918500452",
         "naver_url": "https://n.news.naver.com/mnews/article/087/0001219115?sid=100",
         "published_at": "2026-09-18T09:30:00Z",
         "description": "부학생회장) △ 장애인 위원장 박영림(강원도의원·비례) △노동위원장 유한용(현 한국전력 강원본부... 강원민주연구소장에는 최선강(전 강원대학교 산학협력 부단장), 부소장 이동춘(전 강원도 중국본부장), 정책 실장에는...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[ 장애인 표준사업장, 필요한가②]\" 장애인 1명 고용하려 수천만원\"…표준...",
+        "original_url": "https://www.getnews.co.kr/news/articleView.html?idxno=880900",
+        "naver_url": "https://www.getnews.co.kr/news/articleView.html?idxno=880900",
+        "published_at": "2026-09-18T09:30:00Z",
+        "description": "장애인 고용 정책 이 신규 고용 숫자뿐 아니라 고용유지 기간과 직무의 안정성까지 함께 살펴봐야 한다는 지적이 나오는 이유다. 결국 장애인 표준사업장의 지속가능성을 확보하기 위해서는 '얼마를 지원했는가'뿐 아니라...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43594,21 +43613,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[인사] 부산시",
-        "original_url": "https://www.cnbnews.com/news/articleView.html?idxno=1016572",
-        "naver_url": "https://www.cnbnews.com/news/articleView.html?idxno=1016572",
-        "published_at": "2026-09-18T09:00:00Z",
-        "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희 ▲생활권공간계획과(생활공간혁신) 허점숙...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "구리시의회, 사회복지시설 찾아 한가위 온정 나눠",
         "original_url": "https://www.job-post.co.kr/news/articleView.html?idxno=228298",
         "naver_url": "https://www.job-post.co.kr/news/articleView.html?idxno=228298",
         "published_at": "2026-09-18T09:00:00Z",
         "description": "특히 현장에서 체감하는 복지 수요와 지원이 필요한 사항을 직접 확인하며 지역 복지 정책 에 반영할 수 있는 방안을 살폈다. 양경애 의장은 \"사회복지시설에서 생활하시는 어르신과 장애인 분들이 보다 안정적인 환경에서...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[인사] 부산시",
+        "original_url": "https://www.cnbnews.com/news/articleView.html?idxno=1016572",
+        "naver_url": "https://www.cnbnews.com/news/articleView.html?idxno=1016572",
+        "published_at": "2026-09-18T09:00:00Z",
+        "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희 ▲생활권공간계획과(생활공간혁신) 허점숙...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43634,21 +43653,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "추미애 지사, 도정 현안 해결·국비 확보 행보…21일 민주당과 예산 정책 ...",
-        "original_url": "http://www.consumernews.co.kr/news/articleView.html?idxno=764288",
-        "naver_url": "http://www.consumernews.co.kr/news/articleView.html?idxno=764288",
-        "published_at": "2026-09-18T08:56:00Z",
-        "description": "예산 정책 협의회를 열고 재정·산업·교통 현안을 논의한다. 추 지사는 지난 17일 이천 경기도자미술관에서... 이밖에 노동감독관 인건비와 경기북부 광역철도, 전국체전·전국 장애인 체전, 누리과정 차액 보육료 등 10개...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[인사] 부산시",
         "original_url": "https://www.news1.kr/local/busan-gyeongnam/6295781",
         "naver_url": "https://n.news.naver.com/mnews/article/421/0009179657?sid=102",
         "published_at": "2026-09-18T08:56:00Z",
         "description": "(출산 정책 ) 강주희 △영상콘텐츠산업과(대중문화) 강연수 △생활체육과( 장애인 체육) 오진아 △시민주권협치과(협치지원) 조미경 △시민주권협치과(시민협력) 김영희 △생활권공간계획과(생활공간혁신) 허점숙...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "추미애 지사, 도정 현안 해결·국비 확보 행보…21일 민주당과 예산 정책 ...",
+        "original_url": "http://www.consumernews.co.kr/news/articleView.html?idxno=764288",
+        "naver_url": "http://www.consumernews.co.kr/news/articleView.html?idxno=764288",
+        "published_at": "2026-09-18T08:56:00Z",
+        "description": "예산 정책 협의회를 열고 재정·산업·교통 현안을 논의한다. 추 지사는 지난 17일 이천 경기도자미술관에서... 이밖에 노동감독관 인건비와 경기북부 광역철도, 전국체전·전국 장애인 체전, 누리과정 차액 보육료 등 10개...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43674,6 +43693,16 @@
       },
       {
         "query": "장애인 정책",
+        "title": "추미애, 김민석과 21일 대면…민주당과 예산 정책 협의회서 현안 논의",
+        "original_url": "https://www.kyeonggi.com/article/20260918580335",
+        "naver_url": "https://n.news.naver.com/mnews/article/666/0000124073?sid=102",
+        "published_at": "2026-09-18T08:52:00Z",
+        "description": "예산 정책 협의회를 열고 경기도 주요 현안과 국비 사업을 논의한다. 예산 정책 협의회에는 김민석 당대표와... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청한다는...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
         "title": "[인사] 부산시",
         "original_url": "https://www.newspim.com/news/view/20260918001087",
         "naver_url": "https://www.newspim.com/news/view/20260918001087",
@@ -43694,31 +43723,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "추미애, 김민석과 21일 대면…민주당과 예산 정책 협의회서 현안 논의",
-        "original_url": "https://www.kyeonggi.com/article/20260918580335",
-        "naver_url": "https://n.news.naver.com/mnews/article/666/0000124073?sid=102",
-        "published_at": "2026-09-18T08:52:00Z",
-        "description": "예산 정책 협의회를 열고 경기도 주요 현안과 국비 사업을 논의한다. 예산 정책 협의회에는 김민석 당대표와... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청한다는...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "추미애 지사, 민주당 지도부와 첫 예산협의...철도·반도체 국비 건의",
         "original_url": "https://www.ajunews.com/view/20260918173530309",
         "naver_url": "https://www.ajunews.com/view/20260918173530309",
         "published_at": "2026-09-18T08:42:00Z",
         "description": "이번 예산 정책 협의회에서 노동감독관 인건비 지원과 경기북부 광역철도 건설, 전국체전· 장애인 체전 지원, 누리과정 차액 보육료 지원 등 10개 사업을 중심으로 국회 예산 심의 과정에서 필요한 재원 확보를 요청할...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[인사] 부산시",
-        "original_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
-        "naver_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
-        "published_at": "2026-09-18T08:40:00Z",
-        "description": "(출산 정책 ) 강주희 ▲ 영상콘텐츠산업과(대중문화) 강연수 ▲ 생활체육과( 장애인 체육) 오진아 ▲ 시민주권협치과(협치지원) 조미경 ▲ 시민주권협치과(시민협력) 김영희 ▲ 생활권공간계획과(생활공간혁신) 허점숙...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43739,6 +43748,16 @@
         "naver_url": "http://www.lawissue.co.kr/view.php?ud=2026091817361756749a8c8bf58f_12",
         "published_at": "2026-09-18T08:40:00Z",
         "description": "법무부(장관 직무대행 차관 이진수) 범죄예방 정책 국 광주보호관찰소는 9월 18일 엄정하고 투명한 사회봉사... 전남 장애인 복지관, 광주 인애W사랑의집, 영광종합복지관이 우수 협력기관 표창을 수상했다. 이정민...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[인사] 부산시",
+        "original_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
+        "naver_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
+        "published_at": "2026-09-18T08:40:00Z",
+        "description": "(출산 정책 ) 강주희 ▲ 영상콘텐츠산업과(대중문화) 강연수 ▲ 생활체육과( 장애인 체육) 오진아 ▲ 시민주권협치과(협치지원) 조미경 ▲ 시민주권협치과(시민협력) 김영희 ▲ 생활권공간계획과(생활공간혁신) 허점숙...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43814,21 +43833,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[지역을 살리는 힘⑨] 주민자치 역량 키우는 '도서관 공론장'",
-        "original_url": "https://www.sisaweek.com/news/articleView.html?idxno=237970",
-        "naver_url": "https://www.sisaweek.com/news/articleView.html?idxno=237970",
-        "published_at": "2026-09-18T08:14:00Z",
-        "description": "이러한 정책 기조 아래, 도서관 공론장 프로그램도 시작된 것으로 알려진다. 성북구립도서관은 10년간 관별로... 해당 모임의 회의를 통해 △청년, 쉬었음 △돌봄의 공백 △ 장애인 과의 공존 △나이듦과 일 △인구감소와...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "석유관리원, 어촌마을 환경정화·에너지 나눔",
         "original_url": "http://www.ikld.kr/news/articleView.html?idxno=340998",
         "naver_url": "http://www.ikld.kr/news/articleView.html?idxno=340998",
         "published_at": "2026-09-18T08:14:00Z",
         "description": "지역경제 활성화를 위한 'Local Bridge(지역 경제 활성화 및 나눔)' 활동으로는 142만원 상당의 어촌마을 수산특산품을 구매해 사단법인 사회복지 정책 연구원을 통해 발달 장애인 등 취약계층에 전달했다. 최춘식...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[지역을 살리는 힘⑨] 주민자치 역량 키우는 '도서관 공론장'",
+        "original_url": "https://www.sisaweek.com/news/articleView.html?idxno=237970",
+        "naver_url": "https://www.sisaweek.com/news/articleView.html?idxno=237970",
+        "published_at": "2026-09-18T08:14:00Z",
+        "description": "이러한 정책 기조 아래, 도서관 공론장 프로그램도 시작된 것으로 알려진다. 성북구립도서관은 10년간 관별로... 해당 모임의 회의를 통해 △청년, 쉬었음 △돌봄의 공백 △ 장애인 과의 공존 △나이듦과 일 △인구감소와...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44023,14 +44042,14 @@
         "in_deterministic_collection": null
       },
       {
-        "query": "장애인 노동권 권리중심공공일자리",
-        "title": "청년 예산으로 장애인 일자리 ?… 청년들 직접 나서 \"오세훈, 갈라치기 ...",
-        "original_url": "https://www.beminor.com/news/articleView.html?idxno=30439",
-        "naver_url": "https://www.beminor.com/news/articleView.html?idxno=30439",
+        "query": "장애인 정책",
+        "title": "강기윤 창원시장 \"추석 연휴 통합 안전망 구축\" 당부",
+        "original_url": "http://www.breaknews.com/1237871",
+        "naver_url": "http://www.breaknews.com/1237871",
         "published_at": "2026-09-18T07:30:00Z",
-        "description": "삭감과 권리중심 중증 장애인 맞춤형 공공일자리 (아래 권리중심공공일자리 ) 사업을 결부하며, 마치 청년... 삭감되고 장애인 노동권 보장을 위한 조례가 통과되자 청년을 끌어들여 근거 없는 선동과 갈라치기를 시도하고...",
-        "matched_source": "beminor",
-        "in_deterministic_collection": true
+        "description": "소규모 장애인 일자리를 장애 유형과 역량에 맞춘 특화 일자리로 확대하라\"고 주문했다. 도시 정책 국에는 재건축·재개발 원스톱 지원 체계와 관련해 \"요건 충족 시...",
+        "matched_source": null,
+        "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
@@ -44043,14 +44062,14 @@
         "in_deterministic_collection": null
       },
       {
-        "query": "장애인 정책",
-        "title": "강기윤 창원시장 \"추석 연휴 통합 안전망 구축\" 당부",
-        "original_url": "http://www.breaknews.com/1237871",
-        "naver_url": "http://www.breaknews.com/1237871",
+        "query": "장애인 노동권 권리중심공공일자리",
+        "title": "청년 예산으로 장애인 일자리 ?… 청년들 직접 나서 \"오세훈, 갈라치기 ...",
+        "original_url": "https://www.beminor.com/news/articleView.html?idxno=30439",
+        "naver_url": "https://www.beminor.com/news/articleView.html?idxno=30439",
         "published_at": "2026-09-18T07:30:00Z",
-        "description": "소규모 장애인 일자리를 장애 유형과 역량에 맞춘 특화 일자리로 확대하라\"고 주문했다. 도시 정책 국에는 재건축·재개발 원스톱 지원 체계와 관련해 \"요건 충족 시...",
-        "matched_source": null,
-        "in_deterministic_collection": null
+        "description": "삭감과 권리중심 중증 장애인 맞춤형 공공일자리 (아래 권리중심공공일자리 ) 사업을 결부하며, 마치 청년... 삭감되고 장애인 노동권 보장을 위한 조례가 통과되자 청년을 끌어들여 근거 없는 선동과 갈라치기를 시도하고...",
+        "matched_source": "beminor",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -44059,16 +44078,6 @@
         "naver_url": "https://www.dailycar.co.kr/content/news.html?autoId=62606&type=view",
         "published_at": "2026-09-18T07:22:00Z",
         "description": "서울시립 북서울미술관에서 진행 중인 〈나란히 보는 미술관〉은 장애인 과 비 장애인 이 함께 전시를... 함께 10년 이상 이어온 장애 어린이·청소년 이동권 보장 사업 및 문화예술 향유권 지원 정책 이 결실을 본 사례다.",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "\"예산부터 따고 보자\"…당진시 대형사업 이월 되풀이",
-        "original_url": "http://www.djtimes.co.kr/news/articleView.html?idxno=113484",
-        "naver_url": "http://www.djtimes.co.kr/news/articleView.html?idxno=113484",
-        "published_at": "2026-09-18T07:20:00Z",
-        "description": "장애인 형 국민체육센터(이월액 110억1200만 원)와 종합체육관(이월액 122억4900만 원)은 도시계획 변경... 농업 정책 과는 해나루신활력센터, 농촌협약, 거산지구 농촌공간정비 등 8건 196억9500만 원이다. 치매전담...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44084,11 +44093,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "화성특례시의회, 제254회 제1차 정례회 제3차 본회의 개의",
-        "original_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
-        "naver_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
-        "published_at": "2026-09-18T07:16:00Z",
-        "description": "의회운영위원회에서는 시민의 창의적인 정책 아이디어를 발굴해 의정활동에 반영하고 시민 참여를... 보건복지위원회에서는 장애인 편의시설 사후점검 대상 확대, 지역사회보장계획 수립, 성희롱·성폭력...",
+        "title": "\"예산부터 따고 보자\"…당진시 대형사업 이월 되풀이",
+        "original_url": "http://www.djtimes.co.kr/news/articleView.html?idxno=113484",
+        "naver_url": "http://www.djtimes.co.kr/news/articleView.html?idxno=113484",
+        "published_at": "2026-09-18T07:20:00Z",
+        "description": "장애인 형 국민체육센터(이월액 110억1200만 원)와 종합체육관(이월액 122억4900만 원)은 도시계획 변경... 농업 정책 과는 해나루신활력센터, 농촌협약, 거산지구 농촌공간정비 등 8건 196억9500만 원이다. 치매전담...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44104,21 +44113,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[위클리오늘] 부산 주요 일정 9월 18일 (금요일)",
-        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
-        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
-        "published_at": "2026-09-18T07:14:00Z",
-        "description": "전국 장애인 기능경기대회 폐막식, 벡스코 ▲오전 11시, 에코델타시티발전연합회, 생곡마을폐기물처리시설... 전문가 정책 토론회, 상공회의소 상의홀 ▲오후 4시, 부산시장, 제33회 부산복지의 달 기념식, 시청 1층...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "추미애 경기지사, 21일 민주당과 예산 정책 협의회… 국비·철도 현안 건의",
-        "original_url": "https://www.safetynews.co.kr/news/articleView.html?idxno=250649",
-        "naver_url": "https://www.safetynews.co.kr/news/articleView.html?idxno=250649",
-        "published_at": "2026-09-18T07:14:00Z",
-        "description": "추미애 경기지사가 오는 21일 더불어민주당 지도부와 민선 9기 첫 예산 정책 협의회를 열고 지방재정 제도... 이와 함께 노동감독관 인건비와 경기북부 광역철도 건설, 전국체전·전국 장애인 체전 지원, 누리과정 차액보육료...",
+        "title": "화성특례시의회, 제254회 제1차 정례회 제3차 본회의 개의",
+        "original_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
+        "naver_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
+        "published_at": "2026-09-18T07:16:00Z",
+        "description": "의회운영위원회에서는 시민의 창의적인 정책 아이디어를 발굴해 의정활동에 반영하고 시민 참여를... 보건복지위원회에서는 장애인 편의시설 사후점검 대상 확대, 지역사회보장계획 수립, 성희롱·성폭력...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44134,11 +44133,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "유로화 도입 24년만 도안 전면 교체…시민 대상 디자인 설문조사",
-        "original_url": "https://www.asiatoday.co.kr/kn/view.php?key=20260918010007123",
-        "naver_url": "https://www.asiatoday.co.kr/kn/view.php?key=20260918010007123",
-        "published_at": "2026-09-18T07:12:00Z",
-        "description": "ECB 정책 이사회가 디자인 공모 심사 위원단의 의견, 기술적 평가, 시민 설문조사 결과 등을 종합해 연말까지 결정한다. 새로운 도안이 적용된 유로화는 강화된 위조 방지 기술, 친환경 소재, 시각 장애인 을 위한 포용적...",
+        "title": "추미애 경기지사, 21일 민주당과 예산 정책 협의회… 국비·철도 현안 건의",
+        "original_url": "https://www.safetynews.co.kr/news/articleView.html?idxno=250649",
+        "naver_url": "https://www.safetynews.co.kr/news/articleView.html?idxno=250649",
+        "published_at": "2026-09-18T07:14:00Z",
+        "description": "추미애 경기지사가 오는 21일 더불어민주당 지도부와 민선 9기 첫 예산 정책 협의회를 열고 지방재정 제도... 이와 함께 노동감독관 인건비와 경기북부 광역철도 건설, 전국체전·전국 장애인 체전 지원, 누리과정 차액보육료...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[위클리오늘] 부산 주요 일정 9월 18일 (금요일)",
+        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
+        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
+        "published_at": "2026-09-18T07:14:00Z",
+        "description": "전국 장애인 기능경기대회 폐막식, 벡스코 ▲오전 11시, 에코델타시티발전연합회, 생곡마을폐기물처리시설... 전문가 정책 토론회, 상공회의소 상의홀 ▲오후 4시, 부산시장, 제33회 부산복지의 달 기념식, 시청 1층...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44154,11 +44163,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "오는 21일 경기도-더불어민주당 예산 정책 협의회 개최...추미애 지사, 재...",
-        "original_url": "https://www.getnews.co.kr/news/articleView.html?idxno=881249",
-        "naver_url": "https://www.getnews.co.kr/news/articleView.html?idxno=881249",
-        "published_at": "2026-09-18T07:10:00Z",
-        "description": "추미애 경기도지사가 오는 21일 북부청사에서 민선 9기 첫 경기도-더불어민주당 예산 정책 협의회를 열고 주요... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청할...",
+        "title": "유로화 도입 24년만 도안 전면 교체…시민 대상 디자인 설문조사",
+        "original_url": "https://www.asiatoday.co.kr/kn/view.php?key=20260918010007123",
+        "naver_url": "https://www.asiatoday.co.kr/kn/view.php?key=20260918010007123",
+        "published_at": "2026-09-18T07:12:00Z",
+        "description": "ECB 정책 이사회가 디자인 공모 심사 위원단의 의견, 기술적 평가, 시민 설문조사 결과 등을 종합해 연말까지 결정한다. 새로운 도안이 적용된 유로화는 강화된 위조 방지 기술, 친환경 소재, 시각 장애인 을 위한 포용적...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44169,16 +44178,6 @@
         "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795208",
         "published_at": "2026-09-18T07:10:00Z",
         "description": "도는 시민의 일상과 맞닿은 다양한 정책 과 사업을 추진하고 있다. 오늘 발표된 주요 소식을 한데 모았다.... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청할...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[게시판] 복지부, 이대목동병원서 장애 친화 의료 환경 점검",
-        "original_url": "https://www.yna.co.kr/view/AKR20260918143100530?input=1195m",
-        "naver_url": "https://n.news.naver.com/mnews/article/001/0016321242?sid=102",
-        "published_at": "2026-09-18T07:08:00Z",
-        "description": "▲ 보건복지부는 18일 차전경 장애인정책 국장이 이대목동병원을 방문해 '장애인 의료기관 이용편의 지원사업'과 '장애친화 산부인과 운영 지원사업' 현황을 점검했다고 밝혔다. 현장 간담회에서 참석자들은...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -45419,82 +45418,12 @@
         "status": "complete",
         "match_count": 0,
         "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "labortoday",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "newscham",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "chosun",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "joongang",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "donga",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "khan",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "hani",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "ohmynews",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "pressian",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "source": "sisain",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
       }
     ]
   },
   "final_state": {
     "status": "complete",
-    "checked_at": "2026-09-19T03:01:53.151665Z",
+    "checked_at": "2026-09-19T03:13:51.246548Z",
     "checks": [
       {
         "issue_title": "발달장애인법·장애인복지법 개정안 국회 통과…긴급돌봄 법제화, 학대사건 수사체계 정비",
@@ -45630,14 +45559,6 @@
         "progressive": true,
         "changed_after_draft": false,
         "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
-        "evidence_urls": []
-      },
-      {
-        "issue_title": "'공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여",
-        "status": "complete",
-        "progressive": false,
-        "changed_after_draft": false,
-        "reason": "진행형 사건 탐지 조건에 해당하지 않음",
         "evidence_urls": []
       }
     ]
