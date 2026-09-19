@@ -23,6 +23,7 @@ from news_topic_monitor.models import (
 )
 from news_topic_monitor.notion_publish import (
     EditorialQueueSettings,
+    EditorialQueueValidationError,
     NotionApiError,
     NotionPublisher,
     NotionPublishSettings,
@@ -496,3 +497,53 @@ def test_mandatory_column_match_does_not_fire_on_a_namesake() -> None:
 
     assert mandatory_opinion_candidate(column) is True
     assert mandatory_opinion_candidate(namesake) is False
+
+
+def test_queue_refuses_to_rebuild_once_a_draft_is_bound_to_it(topics_path: Path) -> None:
+    # The connected Claude routine builds the queue on time and a delayed GitHub
+    # schedule can fire hours later. A rebuild mints a new queue_id and trashes the
+    # old manifest, so a late second build would strand a draft already bound to the
+    # first queue_id. Refuse instead of destroying work in flight.
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/query"):
+            return httpx.Response(
+                200,
+                json={
+                    "results": [
+                        {
+                            "id": "draft-page",
+                            "properties": {
+                                "이름": {
+                                    "type": "title",
+                                    "title": [{"plain_text": "Claude 편집 초안 · 2026-08-17"}],
+                                },
+                                "날짜": {"type": "date", "date": {"start": "2026-08-17"}},
+                            },
+                        }
+                    ],
+                    "has_more": False,
+                },
+            )
+        raise AssertionError(f"queue must not be rebuilt: {request.method} {request.url.path}")
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="reports-ds"), client=client
+    )
+
+    with pytest.raises(EditorialQueueValidationError, match="편집 초안이 이미 있어"):
+        publisher.publish_editorial_queue(
+            [_candidate("normal")],
+            report_date="2026-08-17",
+            start=datetime(2026, 8, 16, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 17, 0, tzinfo=UTC),
+            initial_health_finished_at=datetime(2026, 8, 17, 0, tzinfo=UTC),
+            gap_detection=GapDetectionResult(
+                status=CheckStatus.COMPLETE,
+                route="naver_api_hub",
+                queries_attempted=5,
+                queries_completed=5,
+            ),
+            queue_settings=EditorialQueueSettings(max_candidates=20, chunk_size=2),
+            labor_classifier=_labor_classifier(topics_path),
+        )

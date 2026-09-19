@@ -431,6 +431,26 @@ class NotionPublisher:
         labor_classifier: RuleClassifier,
         source_failures: list[str] | None = None,
     ) -> EditorialQueueResult:
+        # Rebuilding mints a new queue_id and trashes the old manifest. That is
+        # harmless before anyone has edited, but once a draft exists it is bound to
+        # the old queue_id and the finalizer would reject the mismatch. Two triggers
+        # now race to build this queue — the connected Claude routine builds it on
+        # time, and the GitHub schedule can fire hours late — so refuse the late
+        # rebuild instead of destroying work already in flight.
+        # The title is re-checked here rather than trusted from the query filter:
+        # this guard stops the day's queue from being built at all, so a loosely
+        # matched page must never be enough to halt it.
+        draft_title = f"{EDITORIAL_DRAFT_TITLE_FRAGMENT} · {report_date}"
+        existing_drafts = [
+            page
+            for page in self._query_exact(self.settings.data_source_id, draft_title, report_date)
+            if _page_title(page) == draft_title
+        ]
+        if existing_drafts:
+            raise EditorialQueueValidationError(
+                f"오늘 편집 초안이 이미 있어 대기열을 다시 만들지 않음: {draft_title}"
+            )
+
         selected = select_chat_editorial_candidates(candidates, queue_settings.max_candidates)
         if not selected:
             raise EditorialQueueValidationError(
