@@ -23,6 +23,7 @@ from news_topic_monitor.models import (
     EditorialAudit,
     EditorialAuditFinding,
     EditorialCandidate,
+    EditorialExclusion,
     EditorialIssueDecision,
     EditorialPlan,
     EditorialSection,
@@ -519,3 +520,169 @@ def test_publish_gate_is_machine_checkable_and_fail_closed() -> None:
     )
     assert blocked_by_census_gap.allowed is False
     assert any("census와 모순" in error for error in blocked_by_census_gap.fatal_errors)
+
+
+def _gate_inputs(policy, now, plan):
+    census = [
+        CensusCheck(
+            source=source,
+            status=CheckStatus.COMPLETE,
+            reason="complete",
+            discovered=1,
+            oldest_discovered_at=now - timedelta(days=1),
+            discovery_paths_attempted=1,
+            discovery_paths_succeeded=1,
+        )
+        for source in policy.publish_gate.disability_press_census_required
+    ]
+    reverse = ReverseSearchResult(
+        status=CheckStatus.COMPLETE,
+        checks=[
+            ReverseSourceCheck(
+                issue_title=issue.title,
+                source=source,
+                status=CheckStatus.COMPLETE,
+                reason="searched",
+            )
+            for issue in plan.issues
+            for source in policy.publish_gate.designated_reverse_search_required
+        ],
+    )
+    final_state = FinalStateResult(
+        status=CheckStatus.COMPLETE,
+        checked_at=now,
+        checks=[
+            FinalStateIssueCheck(
+                issue_title=issue.title,
+                status=CheckStatus.COMPLETE,
+                progressive=False,
+                reason="not progressive",
+            )
+            for issue in plan.issues
+        ],
+    )
+    return census, reverse, final_state
+
+
+def _mandatory_column_candidate(now: datetime) -> EditorialCandidate:
+    return EditorialCandidate(
+        candidate_id="khan-column",
+        source="khan",
+        canonical_url="https://www.khan.co.kr/article/202609172007005",
+        title="[고병권의 묵묵]피해자가 될 수 없는 사람들",
+        byline=None,
+        section="opinion",
+        published_at=now - timedelta(hours=9),
+        summary="차별과 피해자성을 다룬 합성 검증용 요약문입니다. " * 3,
+        evidence_text="차별과 피해자성을 다룬 합성 검증용 본문입니다. " * 5,
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.IRRELEVANT,
+        rule_score=0.0,
+    )
+
+
+def test_publish_gate_blocks_a_fixed_column_left_unhandled() -> None:
+    # 2026-09-18 published with no III절 at all while the 미디어스 김민하 칼럼 was
+    # sitting body-verified in that day's queue. Nothing downstream noticed, because
+    # the "always include these columns" rule lived only in prose the editor reads.
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    column = _mandatory_column_candidate(now)
+    plan = _plan(selected.candidate_id)
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+    audit = EditorialAudit(findings=[], progressive_issue_titles=[])
+
+    blocked = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=audit,
+        plan=plan,
+        candidates=[selected, column],
+        health=_health(now),
+    )
+
+    assert blocked.allowed is False
+    assert any("고정 칼럼" in error for error in blocked.fatal_errors)
+    assert any(column.candidate_id in item.cause for item in blocked.reporting_items)
+
+
+def test_publish_gate_accepts_a_fixed_column_excluded_with_a_reason() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    column = _mandatory_column_candidate(now)
+    plan = _plan(selected.candidate_id)
+    plan = EditorialPlan(
+        issues=plan.issues,
+        exclusions=[
+            EditorialExclusion(
+                candidate_id=column.candidate_id,
+                reason="본문이 브리핑 주제와 무관한 회고성 에세이여서 제외함",
+            )
+        ],
+    )
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+
+    allowed = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=[selected, column],
+        health=_health(now),
+    )
+
+    assert allowed.allowed is True
+    assert not any("고정 칼럼" in error for error in allowed.fatal_errors)
+
+
+def test_publish_gate_is_silent_when_no_fixed_column_ran_that_day() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    plan = _plan(selected.candidate_id)
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+
+    allowed = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=[selected],
+        health=_health(now),
+    )
+
+    assert allowed.allowed is True
+    assert not any("고정 칼럼" in error for error in allowed.fatal_errors)

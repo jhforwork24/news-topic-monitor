@@ -6,7 +6,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .editorial import article_candidate_id
+from .editorial import article_candidate_id, mandatory_opinion_candidate
 from .models import (
     ArticleRecord,
     AuditSeverity,
@@ -303,6 +303,43 @@ def evaluate_publish_gate(
                     next_action="공식 목록 경계를 재확인하고 COMPLETE 전에는 발행하지 않음",
                 )
             )
+
+    # A designated column that ran today must be either selected or consciously
+    # excluded with a reason — never silently dropped. Absence of the column that
+    # day needs no handling: it simply produces no candidate, so this never fires.
+    # 2026-09-18 published with no III절 at all while the 미디어스 김민하 칼럼 sat
+    # unselected in the queue, and nothing in the pipeline noticed.
+    mandatory_columns = [
+        candidate for candidate in candidates if mandatory_opinion_candidate(candidate)
+    ]
+    if mandatory_columns:
+        planned_ids = {
+            candidate_id for issue in plan.issues for candidate_id in issue.candidate_ids
+        }
+        excused_ids = {exclusion.candidate_id for exclusion in plan.exclusions}
+        unhandled = [
+            candidate
+            for candidate in mandatory_columns
+            if candidate.candidate_id not in planned_ids
+            and candidate.candidate_id not in excused_ids
+        ]
+        if unhandled:
+            fatal.append("대기열에 있는 고정 칼럼이 초안에 선정도 제외도 되지 않음")
+            for candidate in unhandled:
+                reporting.append(
+                    ReportingItem(
+                        cause=(
+                            f"{candidate.source} 고정 칼럼 미처리: {candidate.title} "
+                            f"({candidate.candidate_id})"
+                        ),
+                        fallback="발행을 막고 초안을 다시 편집",
+                        result="fatal",
+                        next_action=(
+                            "해당 candidate_id를 opinion 이슈에 넣거나, 싣지 않는 이유를 "
+                            "plan.exclusions에 남긴 뒤 다시 발행"
+                        ),
+                    )
+                )
 
     census_gap_hits = [
         hit

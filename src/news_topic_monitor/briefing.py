@@ -606,20 +606,20 @@ def is_opinion(article: ArticleRecord) -> bool:
 
 
 def editorial_opinion_allowed(article: ArticleRecord) -> bool:
-    text = " ".join(
-        value
-        for value in (article.title, article.byline, article.section, article.summary)
-        if value
-    )
-    mandatory = is_mandatory_opinion_column(article.source, text)
+    mandatory = _mandatory_opinion_column(article)
     return mandatory or (article.source in PRIMARY_COMPARISON_SOURCES and is_opinion(article))
+
+
+def _mandatory_opinion_column(article: ArticleRecord) -> bool:
+    return is_mandatory_opinion_column(
+        article.source, article.title, article.byline, article.section, article.summary
+    )
 
 
 def select_opinions(articles: list[ArticleRecord]) -> list[ArticleRecord]:
     selected: list[ArticleRecord] = []
     for article in articles:
-        text = _article_text(article)
-        mandatory = is_mandatory_opinion_column(article.source, text)
+        mandatory = _mandatory_opinion_column(article)
         if not mandatory and not is_opinion(article):
             continue
         disability_column = (

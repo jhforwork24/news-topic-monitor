@@ -5,9 +5,12 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from news_topic_monitor.cli import (
+    REVALIDATION_BODY_LIMIT_BASE,
+    REVALIDATION_BODY_LIMIT_MAX,
     _known_relevant_seed_discoveries,
     _report_window,
     _revalidate_failed_census_sources,
+    _revalidation_body_limit,
 )
 from news_topic_monitor.models import (
     ArticleRecord,
@@ -257,3 +260,34 @@ def test_seed_discoveries_exclude_articles_outside_the_window(tmp_path) -> None:
     seeds = _known_relevant_seed_discoveries(storage, start=start, end=end)
 
     assert seeds == {}
+
+
+def test_revalidation_body_limit_grows_with_the_delay_since_the_window_closed() -> None:
+    # A fixed per-source body cap means a late revalidation looks at the same small
+    # slice of a source's newest articles, so the follow-up it is meant to find gets
+    # pushed out of range — and the result is still reported as "no follow-up found".
+    window_end = datetime(2026, 9, 18, 20, tzinfo=UTC)
+
+    at_boundary = _revalidation_body_limit(window_end=window_end, requested_at=window_end)
+    prompt = _revalidation_body_limit(
+        window_end=window_end, requested_at=window_end + timedelta(minutes=30)
+    )
+    late = _revalidation_body_limit(
+        window_end=window_end, requested_at=window_end + timedelta(hours=6)
+    )
+    extreme = _revalidation_body_limit(
+        window_end=window_end, requested_at=window_end + timedelta(hours=48)
+    )
+
+    assert at_boundary == REVALIDATION_BODY_LIMIT_BASE
+    # The recrawl window is exactly this gap, so coverage has to grow with it.
+    assert prompt > at_boundary
+    assert late > prompt
+    assert extreme == REVALIDATION_BODY_LIMIT_MAX
+    # A revalidation that somehow starts before the boundary never shrinks the cap.
+    assert (
+        _revalidation_body_limit(
+            window_end=window_end, requested_at=window_end - timedelta(hours=1)
+        )
+        == REVALIDATION_BODY_LIMIT_BASE
+    )

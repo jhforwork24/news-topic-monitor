@@ -1063,12 +1063,13 @@ def _opinion_queue_hint(candidate: EditorialCandidate) -> str | None:
     to miss among ~180 candidates. This mirrors _labor_queue_hint's role for II절.
     """
 
-    text = " ".join(
-        value
-        for value in (candidate.title, candidate.byline, candidate.section, candidate.summary)
-        if value
-    )
-    if is_mandatory_opinion_column(candidate.source, text):
+    if is_mandatory_opinion_column(
+        candidate.source,
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    ):
         return "III절 고정 칼럼 — 장애 주제 분류와 무관하게 opinion 후보로 반드시 검토"
     return None
 

@@ -323,16 +323,10 @@ class Collector:
         # 확인을 강제한다.
         mandatory_column = is_mandatory_opinion_column(
             discovery.source,
-            " ".join(
-                value
-                for value in (
-                    discovery.title,
-                    discovery.byline,
-                    discovery.section,
-                    discovery.summary,
-                )
-                if value
-            ),
+            discovery.title,
+            discovery.byline,
+            discovery.section,
+            discovery.summary,
         )
         if (first.candidate or capture_body or mandatory_column) and adapter.fetch_candidate_bodies:
             try:
