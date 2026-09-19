@@ -134,6 +134,27 @@ class MetadataOnlyAdapter(GoodAdapter):
         )
 
 
+class KhanMandatoryColumnAdapter(GoodAdapter):
+    source = "khan"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url="https://good.test/article/khan-column",
+                    title="[고병권의 묵묵]피해자가 될 수 없는 사람들",
+                    published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 칼럼 본문으로 고정 필자 칼럼이 제목만으로 걸러지지 않는지 확인한다."
+
+
 class UnconfiguredAdapter(GoodAdapter):
     source = "unconfigured"
 
@@ -197,6 +218,29 @@ def test_metadata_only_source_never_requests_article_body(tmp_path, topics_path)
     assert http.requested == [("https://good.test/feed", "discovery")]
     record = next(storage.iter_articles())
     assert record.body_status == BodyStatus.NOT_REQUESTED
+
+
+def test_mandatory_opinion_column_body_is_fetched_despite_title_only_classification(
+    tmp_path, topics_path
+) -> None:
+    # "[고병권의 묵묵]피해자가 될 수 없는 사람들" has no disability keyword in its title, so
+    # title-only classification alone would mark it irrelevant and skip the body fetch
+    # entirely (as happened for the 2026-09-18 briefing). Designated fixed-author columns
+    # must always get a body fetch regardless of that first-pass judgment.
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=http,
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[KhanMandatoryColumnAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert record.body_status == BodyStatus.FETCHED
+    assert record.verification_status == VerificationStatus.BODY_VERIFIED
 
 
 def test_missing_source_configuration_has_distinct_health_status(tmp_path, topics_path) -> None:

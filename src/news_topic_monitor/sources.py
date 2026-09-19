@@ -45,6 +45,21 @@ LABOR_SECTION_ALLOWED_SOURCES = (
     PRIMARY_COMPARISON_SOURCES | LABOR_ALTERNATIVE_SOURCES | frozenset({"beminor"})
 )
 
+# III절(칼럼)에 반드시 포함하는 고정 필자 칼럼. 장애 관련 토픽 분류와 무관하게 매번 확인
+# 대상이므로, 수집 단계(pipeline.py)에서 제목만으로 irrelevant 판정돼 본문 확인 자체가
+# 건너뛰지 않도록 별도로 식별한다.
+MANDATORY_OPINION_COLUMNS: dict[str, tuple[str, ...]] = {
+    "hani": ("세계의 창", "지제크"),
+    "mediaus": ("김민하",),
+    "khan": ("고병권", "묵묵"),
+}
+
+
+def is_mandatory_opinion_column(source: str, text: str) -> bool:
+    terms = MANDATORY_OPINION_COLUMNS.get(source)
+    return bool(terms) and all(term in text for term in terms)
+
+
 # 논조 비교에서 실제 기사 텍스트를 읽은 뒤 결과를 묶어 설명하는 용도로만 쓴다.
 # 매체 내용을 읽지 않고 이 라벨만으로 논조를 추정하는 데 쓰지 않는다.
 SOURCE_CAMP = {
