@@ -16,12 +16,15 @@ from news_topic_monitor.models import (
     ArticleRecord,
     BodyStatus,
     Classification,
+    EditorialCandidate,
+    PrimarySourceValidation,
     VerificationStatus,
 )
 from news_topic_monitor.notion_publish import (
     NotionConfigurationError,
     NotionPublisher,
     NotionPublishSettings,
+    _opinion_queue_hint,
     notion_blocks,
 )
 from news_topic_monitor.selection_review import NearMissTopic, ScoredArticle, SelectionReview
@@ -368,6 +371,52 @@ def test_notion_query_retries_retry_after() -> None:
     assert publisher._query_date("ds-1", "2026-08-16") == []
     assert calls == 2
     assert delays == [0.25]
+
+
+def test_opinion_queue_hint_flags_mandatory_column_even_when_byline_is_only_in_summary() -> None:
+    # Real 2026-09-18 case (idxno=318193): title has no columnist name at all; "김민하"
+    # only appears in the summary's byline blurb ("[미디어스=김민하 칼럼] ..."). The
+    # candidate was body-verified and in the queue that day, but the editor produced no
+    # III절 at all — there was no per-candidate signal to catch it among ~180 candidates.
+    candidate = EditorialCandidate(
+        candidate_id="mediaus-318193",
+        source="mediaus",
+        canonical_url="https://www.mediaus.co.kr/news/articleView.html?idxno=318193",
+        title="대통령을 향한 위기의 본질과 기자회견 효과",
+        byline=None,
+        section="오피니언",
+        published_at=datetime(2026, 9, 18, 0, 1, 55, tzinfo=UTC),
+        summary="[미디어스=김민하 칼럼] 이재명 대통령의 기자회견에 대한 많은 이야기들이 있지만",
+        evidence_text="합성 시험 본문",
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.IRRELEVANT,
+        rule_score=0.0,
+        primary_source_validation=PrimarySourceValidation.NOT_REQUIRED,
+    )
+    assert _opinion_queue_hint(candidate) == (
+        "III절 고정 칼럼 — 장애 주제 분류와 무관하게 opinion 후보로 반드시 검토"
+    )
+
+
+def test_opinion_queue_hint_is_none_for_an_ordinary_candidate() -> None:
+    candidate = EditorialCandidate(
+        candidate_id="hani-1",
+        source="hani",
+        canonical_url="https://example.com/1",
+        title="일반 사회 기사",
+        byline="김기자",
+        section="사회",
+        published_at=datetime(2026, 9, 18, 0, tzinfo=UTC),
+        summary="합성 시험 요약",
+        evidence_text="합성 시험 본문",
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.IRRELEVANT,
+        rule_score=0.0,
+        primary_source_validation=PrimarySourceValidation.NOT_REQUIRED,
+    )
+    assert _opinion_queue_hint(candidate) is None
 
 
 def _scored_article(key: str, *, topic_score: float, selected: bool = False) -> ScoredArticle:

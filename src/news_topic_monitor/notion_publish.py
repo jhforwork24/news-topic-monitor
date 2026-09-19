@@ -40,7 +40,7 @@ from .classifier import RuleClassifier
 from .editorial import select_chat_editorial_candidates
 from .models import Classification, EditorialCandidate
 from .selection_review import NearMissTopic, ScoredArticle, SelectionReview
-from .sources import LABOR_SECTION_ALLOWED_SOURCES, SOURCE_LABELS
+from .sources import LABOR_SECTION_ALLOWED_SOURCES, SOURCE_LABELS, is_mandatory_opinion_column
 from .storage import JsonlStorage
 from .utils import KST, normalize_text, short_error, short_text
 
@@ -953,12 +953,14 @@ def _queue_part_blocks(
         source = SOURCE_LABELS.get(candidate.source, candidate.source)
         byline = candidate.byline or "기자명 확인 안 됨"
         labor_guard = _labor_queue_hint(candidate, labor_classifier)
+        opinion_hint = _opinion_queue_hint(candidate)
+        guards = " · ".join(part for part in (labor_guard, opinion_hint) if part)
         blocks.extend(
             [
                 _heading(candidate.title, 3),
                 _bullet(
                     f"candidate_id={candidate.candidate_id} · 언론사={source} · "
-                    f"기자={byline} · 발행={published} · {labor_guard}"
+                    f"기자={byline} · 발행={published} · {guards}"
                 ),
                 _bullet("원문 링크", href=candidate.canonical_url),
                 _paragraph(
@@ -1049,6 +1051,26 @@ def _labor_queue_hint(candidate: EditorialCandidate, labor_classifier: RuleClass
     if result.classification in (Classification.RELEVANT, Classification.REVIEW):
         return f"II절 노동·돌봄·빈곤 관련 가능성(점수 {result.topic_score:.1f})"
     return "II절 검토 가능"
+
+
+def _opinion_queue_hint(candidate: EditorialCandidate) -> str | None:
+    """Flag designated fixed-author columns (지제크·김민하·고병권) inline in the queue.
+
+    2026-09-18's briefing had no III절 at all even though the 미디어스 김민하 칼럼
+    candidate that day was body-verified and present in the queue: the editor never
+    had a per-candidate signal that this one is a mandatory opinion pick regardless
+    of its disability-topic classification, only a separate prose instruction easy
+    to miss among ~180 candidates. This mirrors _labor_queue_hint's role for II절.
+    """
+
+    text = " ".join(
+        value
+        for value in (candidate.title, candidate.byline, candidate.section, candidate.summary)
+        if value
+    )
+    if is_mandatory_opinion_column(candidate.source, text):
+        return "III절 고정 칼럼 — 장애 주제 분류와 무관하게 opinion 후보로 반드시 검토"
+    return None
 
 
 def _labor_queue_exclusion(candidate: EditorialCandidate) -> str | None:
