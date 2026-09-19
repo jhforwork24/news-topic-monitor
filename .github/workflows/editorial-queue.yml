@@ -40,6 +40,14 @@ on:
         required: false
         type: boolean
         default: false
+      force:
+        description: >-
+          Rebuild today's queue even if one already exists. This mints a new
+          queue_id, so any draft already written against the current queue
+          stops validating — only use it when discarding that draft is intended.
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   # See collect.yml: shared with every workflow that writes to data/ via a
@@ -88,12 +96,14 @@ jobs:
           INPUT_END: ${{ inputs.end }}
           INPUT_COLLECT_HOURS: ${{ inputs.collect_hours || '48' }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_FORCE: ${{ inputs.force }}
         run: |
           args=(editorial-queue --collect-hours "$INPUT_COLLECT_HOURS")
           if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
           if test -n "$INPUT_START"; then args+=(--start "$INPUT_START"); fi
           if test -n "$INPUT_END"; then args+=(--end "$INPUT_END"); fi
           if test "$INPUT_DRY_RUN" = "true"; then args+=(--dry-run); fi
+          if test "$INPUT_FORCE" = "true"; then args+=(--force); fi
           news-topic-monitor "${args[@]}"
       - name: Commit metadata and queue health
         if: ${{ always() }}

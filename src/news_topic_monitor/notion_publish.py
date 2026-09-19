@@ -69,6 +69,17 @@ class EditorialQueueValidationError(ValueError):
     pass
 
 
+class EditorialQueueAlreadyBuiltError(RuntimeError):
+    """Today's queue exists, so this run must not rebuild it.
+
+    Two triggers now build the queue: the connected Claude routine dispatches it
+    on time, and the GitHub schedule fires as a fallback that can arrive hours
+    late. A rebuild mints a new queue_id and trashes the old manifest, which
+    strands any draft the editor is writing against the old one. This is a
+    no-op signal rather than a failure — the late fallback did nothing wrong.
+    """
+
+
 @dataclass(frozen=True)
 class NotionPublishSettings:
     token: str
@@ -430,26 +441,22 @@ class NotionPublisher:
         queue_settings: EditorialQueueSettings,
         labor_classifier: RuleClassifier,
         source_failures: list[str] | None = None,
+        force: bool = False,
     ) -> EditorialQueueResult:
-        # Rebuilding mints a new queue_id and trashes the old manifest. That is
-        # harmless before anyone has edited, but once a draft exists it is bound to
-        # the old queue_id and the finalizer would reject the mismatch. Two triggers
-        # now race to build this queue — the connected Claude routine builds it on
-        # time, and the GitHub schedule can fire hours late — so refuse the late
-        # rebuild instead of destroying work already in flight.
-        # The title is re-checked here rather than trusted from the query filter:
-        # this guard stops the day's queue from being built at all, so a loosely
-        # matched page must never be enough to halt it.
-        draft_title = f"{EDITORIAL_DRAFT_TITLE_FRAGMENT} · {report_date}"
-        existing_drafts = [
-            page
-            for page in self._query_exact(self.settings.data_source_id, draft_title, report_date)
-            if _page_title(page) == draft_title
-        ]
-        if existing_drafts:
-            raise EditorialQueueValidationError(
-                f"오늘 편집 초안이 이미 있어 대기열을 다시 만들지 않음: {draft_title}"
-            )
+        # The title is re-checked against the returned pages rather than trusted
+        # from the query filter alone: this guard can stop the day's queue from
+        # being built, so a loosely matched page must never be enough to halt it.
+        manifest_title = f"{EDITORIAL_QUEUE_TITLE_FRAGMENT} · {report_date} · 매니페스트"
+        if not force:
+            existing = [
+                page
+                for page in self._query_exact(
+                    self.settings.data_source_id, manifest_title, report_date
+                )
+                if _page_title(page) == manifest_title
+            ]
+            if existing:
+                raise EditorialQueueAlreadyBuiltError(manifest_title)
 
         selected = select_chat_editorial_candidates(candidates, queue_settings.max_candidates)
         if not selected:

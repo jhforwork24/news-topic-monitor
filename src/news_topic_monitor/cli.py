@@ -59,6 +59,7 @@ from .models import (
     RunHealth,
 )
 from .notion_publish import (
+    EditorialQueueAlreadyBuiltError,
     EditorialQueueSettings,
     EditorialQueueValidationError,
     NotionApiError,
@@ -161,6 +162,11 @@ def build_parser() -> argparse.ArgumentParser:
     queue.add_argument("--sources", nargs="*", choices=[adapter.source for adapter in ALL_ADAPTERS])
     queue.add_argument(
         "--dry-run", action="store_true", help="validate the queue without calling Notion"
+    )
+    queue.add_argument(
+        "--force",
+        action="store_true",
+        help="rebuild today's queue even if one exists (mints a new queue_id)",
     )
 
     finalize = subparsers.add_parser(
@@ -743,6 +749,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         queue_settings=queue_settings,
                         labor_classifier=labor_classifier,
                         source_failures=_run_source_failures(health),
+                        force=bool(getattr(args, "force", False)),
                     )
                 _write_initial_health_snapshot(
                     settings.root,
@@ -763,6 +770,17 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
         )
         # The manifest URL is intentionally printed only to the private Actions log.
         print(json.dumps(result.log_payload(), ensure_ascii=False, indent=2))
+        return 0
+    except EditorialQueueAlreadyBuiltError as exc:
+        # The connected Claude routine already built today's queue. A later
+        # fallback run arriving on top of it has nothing to do and must not be
+        # reported as a failure.
+        LOGGER.info("editorial queue already built for %s: %s", report_date, exc)
+        write_editorial_queue_health(
+            settings.root,
+            report_date=report_date,
+            status="already_built",
+        )
         return 0
     except (NotionConfigurationError, PolicyConfigurationError) as exc:
         LOGGER.error("%s", exc)
