@@ -59,6 +59,7 @@ from .models import (
     RunHealth,
 )
 from .notion_publish import (
+    EditorialQueueAlreadyBuiltError,
     EditorialQueueSettings,
     EditorialQueueValidationError,
     NotionApiError,
@@ -161,6 +162,11 @@ def build_parser() -> argparse.ArgumentParser:
     queue.add_argument("--sources", nargs="*", choices=[adapter.source for adapter in ALL_ADAPTERS])
     queue.add_argument(
         "--dry-run", action="store_true", help="validate the queue without calling Notion"
+    )
+    queue.add_argument(
+        "--force",
+        action="store_true",
+        help="rebuild today's queue even if one exists (mints a new queue_id)",
     )
 
     finalize = subparsers.add_parser(
@@ -423,8 +429,11 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
                         capture_body_start=revalidation_start,
-                        capture_body_limit_per_source=(
-                            editorial_settings.body_fetch_limit_per_source
+                        capture_body_limit_per_source=max(
+                            editorial_settings.body_fetch_limit_per_source,
+                            _revalidation_body_limit(
+                                window_end=end, requested_at=revalidation_requested_at
+                            ),
                         ),
                         write_health=False,
                         rolling_window_end=True,
@@ -740,6 +749,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         queue_settings=queue_settings,
                         labor_classifier=labor_classifier,
                         source_failures=_run_source_failures(health),
+                        force=bool(getattr(args, "force", False)),
                     )
                 _write_initial_health_snapshot(
                     settings.root,
@@ -760,6 +770,17 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
         )
         # The manifest URL is intentionally printed only to the private Actions log.
         print(json.dumps(result.log_payload(), ensure_ascii=False, indent=2))
+        return 0
+    except EditorialQueueAlreadyBuiltError as exc:
+        # The connected Claude routine already built today's queue. A later
+        # fallback run arriving on top of it has nothing to do and must not be
+        # reported as a failure.
+        LOGGER.info("editorial queue already built for %s: %s", report_date, exc)
+        write_editorial_queue_health(
+            settings.root,
+            report_date=report_date,
+            status="already_built",
+        )
         return 0
     except (NotionConfigurationError, PolicyConfigurationError) as exc:
         LOGGER.error("%s", exc)
@@ -901,7 +922,9 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
                         capture_body_start=revalidation_start,
-                        capture_body_limit_per_source=24,
+                        capture_body_limit_per_source=_revalidation_body_limit(
+                            window_end=end, requested_at=revalidation_requested_at
+                        ),
                         write_health=False,
                         rolling_window_end=True,
                     ).run(revalidation_start, revalidation_requested_at)
@@ -1468,6 +1491,22 @@ REPORT_WINDOW_END_HOUR = 5
 # 당긴 뒤에는 이 지연들의 합이 옛 6시간 상한을 정기적으로 넘겨 발행이 막혔다(2026-09-17·09-18
 # 연속 발생). 상한을 8시간으로 늘려 그 여유를 되돌린다.
 FINAL_STATE_STALE_REVALIDATION_HOURS = 8
+
+# 발행 직전 최종상태 재검증은 선정 기사 출처를 다시 훑어 진행형 이슈(농성·파업 등)의
+# 종료·타결 후속보도를 찾는다. 이때 매체별 본문 확인 건수가 고정값이면, 발행이 늦어질수록
+# 그 사이 쌓인 기사에 밀려 정작 필요한 후속보도가 확인 범위 밖으로 나간다. 그런데 결과는
+# "후속보도를 찾지 못함(COMPLETE)"으로 기록되므로, "없다"와 "못 봤다"가 구분되지 않는다.
+# 경과 시간에 비례해 확인 건수를 늘려 지연과 무관하게 재검증 커버리지를 유지한다.
+REVALIDATION_BODY_LIMIT_BASE = 24
+REVALIDATION_BODY_LIMIT_PER_HOUR = 12
+REVALIDATION_BODY_LIMIT_MAX = 200
+
+
+def _revalidation_body_limit(*, window_end: datetime, requested_at: datetime) -> int:
+    elapsed_hours = max(0.0, (requested_at - window_end).total_seconds() / 3600)
+    scaled = REVALIDATION_BODY_LIMIT_BASE + int(elapsed_hours * REVALIDATION_BODY_LIMIT_PER_HOUR)
+    return min(scaled, REVALIDATION_BODY_LIMIT_MAX)
+
 
 # 조사 범위 경계를 07:00에서 05:00 KST로 2시간 당기면서 생기는 1회성 전환일이다.
 # 2026-09-15자 발행은 이미 종전 경계(당일 07:00 KST)로 마감됐으므로, 2026-09-16자

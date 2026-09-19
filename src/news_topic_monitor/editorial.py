@@ -25,7 +25,12 @@ from .models import (
     EditorialVerdict,
     VerificationStatus,
 )
-from .sources import DISABILITY_SECTION_ALLOWED_SOURCES, LABOR_SECTION_ALLOWED_SOURCES, SOURCE_CAMP
+from .sources import (
+    DISABILITY_SECTION_ALLOWED_SOURCES,
+    LABOR_SECTION_ALLOWED_SOURCES,
+    SOURCE_CAMP,
+    is_mandatory_opinion_column,
+)
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
 
@@ -113,6 +118,14 @@ def select_chat_editorial_candidates(
     """Return date-verified candidates suitable for a connected Claude task.
 
     Print and digital articles must have a successfully extracted body.
+
+    Designated fixed-author columns are seated before the per-source balance so
+    the cap can never drop them. `_balanced_candidates` hands each source its
+    slots newest-first, and these columns usually publish well before the window
+    closes: 경향 "고병권의 묵묵" ran 9 hours before the 2026-09-18 boundary, which
+    put it behind that day's 24 most recent 경향 candidates and outside 경향's
+    ~13 balanced slots. There are at most three such columns a day, so seating
+    them costs the rest of the queue almost nothing.
     """
 
     eligible: list[EditorialCandidate] = []
@@ -121,7 +134,20 @@ def select_chat_editorial_candidates(
             continue
         if candidate.verification_status == VerificationStatus.BODY_VERIFIED:
             eligible.append(candidate)
-    return _balanced_candidates(eligible, limit)
+    pinned = [candidate for candidate in eligible if mandatory_opinion_candidate(candidate)]
+    pinned_ids = {candidate.candidate_id for candidate in pinned}
+    rest = [candidate for candidate in eligible if candidate.candidate_id not in pinned_ids]
+    return pinned[:limit] + _balanced_candidates(rest, max(0, limit - len(pinned)))
+
+
+def mandatory_opinion_candidate(candidate: EditorialCandidate) -> bool:
+    return is_mandatory_opinion_column(
+        candidate.source,
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    )
 
 
 def article_candidate_id(article: ArticleRecord) -> str:

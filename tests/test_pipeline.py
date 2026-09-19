@@ -134,6 +134,53 @@ class MetadataOnlyAdapter(GoodAdapter):
         )
 
 
+class KhanMandatoryColumnAdapter(GoodAdapter):
+    source = "khan"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url="https://good.test/article/khan-column",
+                    title="[고병권의 묵묵]피해자가 될 수 없는 사람들",
+                    published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 칼럼 본문으로 고정 필자 칼럼이 제목만으로 걸러지지 않는지 확인한다."
+
+
+class HaniMandatoryColumnAdapter(GoodAdapter):
+    source = "hani"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    # 실제 2026-09-13자 기사: 제목에는 "[세계의 창]"만 있고 필자명
+                    # "지제크"는 RSS 요약(summary)의 필자 소개 줄에만 있었다. title만
+                    # 검사하면 이 칼럼도 khan의 묵묵과 같은 이유로 누락된다.
+                    canonical_url="https://good.test/article/hani-column",
+                    title="AI 기술 도약과 새로운 야만 [세계의 창]",
+                    summary="슬라보이 지제크 | 슬로베니아 류블랴나대·경희대 ES 교수",
+                    section="opinion",
+                    published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 칼럼 본문으로 필자명이 summary에만 있어도 걸러지지 않는지 확인한다."
+
+
 class UnconfiguredAdapter(GoodAdapter):
     source = "unconfigured"
 
@@ -197,6 +244,51 @@ def test_metadata_only_source_never_requests_article_body(tmp_path, topics_path)
     assert http.requested == [("https://good.test/feed", "discovery")]
     record = next(storage.iter_articles())
     assert record.body_status == BodyStatus.NOT_REQUESTED
+
+
+def test_mandatory_opinion_column_body_is_fetched_despite_title_only_classification(
+    tmp_path, topics_path
+) -> None:
+    # "[고병권의 묵묵]피해자가 될 수 없는 사람들" has no disability keyword in its title, so
+    # title-only classification alone would mark it irrelevant and skip the body fetch
+    # entirely (as happened for the 2026-09-18 briefing). Designated fixed-author columns
+    # must always get a body fetch regardless of that first-pass judgment.
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=http,
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[KhanMandatoryColumnAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert record.body_status == BodyStatus.FETCHED
+    assert record.verification_status == VerificationStatus.BODY_VERIFIED
+
+
+def test_mandatory_opinion_column_matches_a_byline_that_is_only_in_the_summary(
+    tmp_path, topics_path
+) -> None:
+    # Real 2026-09-13 case: the title only carries "[세계의 창]"; the columnist's name
+    # "지제크" appears solely in the RSS summary's byline blurb. A title-only (plus
+    # byline/section) match misses this, so summary must be part of the check too.
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=http,
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[HaniMandatoryColumnAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert record.body_status == BodyStatus.FETCHED
+    assert record.verification_status == VerificationStatus.BODY_VERIFIED
 
 
 def test_missing_source_configuration_has_distinct_health_status(tmp_path, topics_path) -> None:

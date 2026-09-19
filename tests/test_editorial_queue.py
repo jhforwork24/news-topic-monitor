@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import unicodedata
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import httpx
@@ -11,7 +11,10 @@ import pytest
 from news_topic_monitor.assurance import CheckStatus, GapDetectionResult
 from news_topic_monitor.chat_bridge import editorial_queue_payload_id
 from news_topic_monitor.classifier import RuleClassifier
-from news_topic_monitor.editorial import select_chat_editorial_candidates
+from news_topic_monitor.editorial import (
+    mandatory_opinion_candidate,
+    select_chat_editorial_candidates,
+)
 from news_topic_monitor.models import (
     BodyStatus,
     Classification,
@@ -19,6 +22,7 @@ from news_topic_monitor.models import (
     VerificationStatus,
 )
 from news_topic_monitor.notion_publish import (
+    EditorialQueueAlreadyBuiltError,
     EditorialQueueSettings,
     NotionApiError,
     NotionPublisher,
@@ -37,6 +41,7 @@ def _candidate(
     source: str = "hani",
     title: str = "장애인 이동권 보장을 요구한 기자회견",
     section: str = "사회",
+    summary: str | None = None,
     published_at: datetime | None = datetime(2026, 8, 17, 0, tzinfo=UTC),
     verification_status: VerificationStatus = VerificationStatus.BODY_VERIFIED,
 ) -> EditorialCandidate:
@@ -53,7 +58,7 @@ def _candidate(
         byline="김기자",
         section=section,
         published_at=published_at,
-        summary=evidence,
+        summary=summary if summary is not None else evidence,
         evidence_text=evidence,
         body_status=(
             BodyStatus.FETCHED
@@ -432,3 +437,119 @@ def test_queue_health_never_records_private_page_url(tmp_path) -> None:
     assert payload["gap_detection_status"] == "complete"
     assert "page_url" not in payload
     assert "notion" not in json.dumps(payload).lower()
+
+
+def test_mandatory_column_is_seated_before_the_per_source_balance_cap() -> None:
+    # 경향 "고병권의 묵묵" ran 9 hours before the 2026-09-18 window closed, so the
+    # per-source balance — which hands each source its slots newest-first — dropped it
+    # even after the collector was fixed to fetch its body. Fixed columns must be
+    # seated ahead of that cap.
+    window_end = datetime(2026, 9, 17, 20, tzinfo=UTC)
+    pool = [
+        _candidate(
+            f"khan-{index}",
+            source="khan",
+            published_at=window_end - timedelta(minutes=10 * (index + 1)),
+        )
+        for index in range(24)
+    ]
+    column = _candidate(
+        "khan-column",
+        source="khan",
+        title="[고병권의 묵묵]피해자가 될 수 없는 사람들",
+        published_at=datetime(2026, 9, 17, 11, 7, tzinfo=UTC),
+    )
+    pool.append(column)
+    for source in ("joongang", "donga", "hani", "ohmynews", "pressian", "sisain"):
+        pool.extend(
+            _candidate(
+                f"{source}-{index}",
+                source=source,
+                published_at=window_end - timedelta(minutes=10 * (index + 1)),
+            )
+            for index in range(24)
+        )
+
+    selected = select_chat_editorial_candidates(pool, 60)
+
+    assert selected[0].candidate_id == "khan-column"
+    assert len(selected) == 60
+
+
+def test_mandatory_column_match_does_not_fire_on_a_namesake() -> None:
+    # 미디어스 김민하 is a columnist, but an actress of the same name appears in
+    # collected entertainment coverage. Requiring "칼럼" keeps the namesake out —
+    # important because the publish gate blocks on an unhandled fixed column.
+    column = _candidate(
+        "mediaus-column",
+        source="mediaus",
+        title="대통령을 향한 위기의 본질과 기자회견 효과",
+        section="오피니언",
+        summary="[미디어스=김민하 칼럼] 이재명 대통령의 기자회견에 대한 많은 이야기들이 있지만",
+    )
+    namesake = _candidate(
+        "mediaus-namesake",
+        source="mediaus",
+        title="이도현X김민하의 생존 로맨스 '우리 태양을 흔들자' 크랭크인",
+        section="뉴스",
+        summary="배우 이도현, 김민하가 로맨스 영화로 호흡을 맞춘다.",
+    )
+
+    assert mandatory_opinion_candidate(column) is True
+    assert mandatory_opinion_candidate(namesake) is False
+
+
+def test_queue_refuses_to_rebuild_over_an_existing_manifest(topics_path: Path) -> None:
+    # Two triggers build this queue: the connected Claude routine dispatches it on
+    # time, and the GitHub schedule can arrive hours later. A rebuild mints a new
+    # queue_id and trashes the old manifest, stranding any draft written against it,
+    # so the late arrival must be a clean no-op rather than a clobber.
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/query"):
+            return httpx.Response(
+                200,
+                json={
+                    "results": [
+                        {
+                            "id": "manifest-page",
+                            "properties": {
+                                "이름": {
+                                    "type": "title",
+                                    "title": [
+                                        {
+                                            "plain_text": (
+                                                "Claude 편집 대기열 · 2026-08-17 · 매니페스트"
+                                            )
+                                        }
+                                    ],
+                                },
+                                "날짜": {"type": "date", "date": {"start": "2026-08-17"}},
+                            },
+                        }
+                    ],
+                    "has_more": False,
+                },
+            )
+        raise AssertionError(f"queue must not be rebuilt: {request.method} {request.url.path}")
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="reports-ds"), client=client
+    )
+
+    with pytest.raises(EditorialQueueAlreadyBuiltError):
+        publisher.publish_editorial_queue(
+            [_candidate("normal")],
+            report_date="2026-08-17",
+            start=datetime(2026, 8, 16, 0, tzinfo=UTC),
+            end=datetime(2026, 8, 17, 0, tzinfo=UTC),
+            initial_health_finished_at=datetime(2026, 8, 17, 0, tzinfo=UTC),
+            gap_detection=GapDetectionResult(
+                status=CheckStatus.COMPLETE,
+                route="naver_api_hub",
+                queries_attempted=5,
+                queries_completed=5,
+            ),
+            queue_settings=EditorialQueueSettings(max_candidates=20, chunk_size=2),
+            labor_classifier=_labor_classifier(topics_path),
+        )

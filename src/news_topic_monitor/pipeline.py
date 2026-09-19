@@ -29,6 +29,7 @@ from .models import (
     StoreResult,
     VerificationStatus,
 )
+from .sources import is_mandatory_opinion_column
 from .storage import JsonlStorage
 from .utils import (
     content_hash,
@@ -312,7 +313,22 @@ class Collector:
         body_text: str | None = None
         error: str | None = None
 
-        if (first.candidate or capture_body) and adapter.fetch_candidate_bodies:
+        # 고정 필자 칼럼(세계의 창 지제크, 미디어스 김민하, 경향 고병권의 묵묵)은 제목만으로는
+        # 장애 관련 용어가 드러나지 않아 first.candidate가 False로 나오는 경우가 흔하다(예:
+        # "[고병권의 묵묵]피해자가 될 수 없는 사람들"). 필자명이 제목이 아니라 summary(예:
+        # 한겨레 "세계의 창"은 제목엔 "[세계의 창]"만 있고 "지제크"는 RSS 요약의 필자 소개
+        # 줄에만 있음)에만 있는 경우도 있어 summary까지 함께 봐야 한다. 이 칼럼들은
+        # briefing.py의 선정 단계에서 토픽 분류와 무관하게 항상 III절 후보로 취급되므로, 그
+        # 시점에 실제로 본문을 읽은 기록이 남아 있도록 여기서 title-only 판정과 무관하게 본문
+        # 확인을 강제한다.
+        mandatory_column = is_mandatory_opinion_column(
+            discovery.source,
+            discovery.title,
+            discovery.byline,
+            discovery.section,
+            discovery.summary,
+        )
+        if (first.candidate or capture_body or mandatory_column) and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")
                 html_text = response.text

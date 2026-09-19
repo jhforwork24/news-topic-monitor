@@ -2,25 +2,24 @@ name: Prepare connected Claude editorial queue
 
 on:
   schedule:
-    # 07:34 Asia/Seoul = 22:34 UTC (previous date). The report window closes
-    # at 05:00 KST; this fires well clear of the last incremental collection
-    # (06:17 KST), so the bounded 48-hour collection can start with the
-    # window's articles already discovered, well ahead of the ~10:00-10:30
-    # KST publication target.
-    # Minute 34 is deliberately off the top of the hour. GitHub documents
-    # that scheduled (cron) triggers can be delayed during high-load windows,
-    # which cluster near each hour's start; runs observed at minute 5 showed
-    # the *scheduled event itself* firing anywhere from ~25 minutes to ~8
-    # hours late (compare workflow run created_at against the nominal cron
-    # time), which cascaded into late editorial-queue completion and pushed
-    # the 09:25 KST editor session's start — and everything after it — later
-    # in turn. This does not guarantee on-time firing, only reduces exposure
-    # to that specific congestion pattern.
+    # 05:10 Asia/Seoul = 20:10 UTC (previous date), ten minutes after the
+    # 05:00 KST report window closes — the earliest point at which the whole
+    # window is available to collect.
+    # This is deliberately far earlier than the ~07:30 KST the pipeline
+    # actually needs, because GitHub's scheduled trigger is what fires late,
+    # not the job: comparing each run's created_at against its nominal cron
+    # time shows 1.5-2.5 hours of delay on most days and up to ~8 hours at
+    # worst, and moving the minute off the top of the hour (07:05 -> 07:34)
+    # changed nothing. The nominal time is the only part we control, so it
+    # absorbs a typical delay instead of arguing with it: a 2-hour slip still
+    # lands near 07:10 KST, before the connected Claude routine needs the
+    # queue. The routine also dispatches this workflow itself when the queue
+    # is missing, so a badly delayed schedule no longer stalls the day.
     # Day-of-week "1-5" (UTC Mon-Fri) skips both the UTC Saturday firing
-    # (would land at 07:34 KST Sunday) and the UTC Sunday firing (would land
-    # at 07:34 KST Monday) — no briefing is published on Sunday or Monday,
+    # (would land at 05:10 KST Sunday) and the UTC Sunday firing (would land
+    # at 05:10 KST Monday) — no briefing is published on Sunday or Monday,
     # so no queue is built for either.
-    - cron: "34 22 * * 1-5"
+    - cron: "10 20 * * 1-5"
   workflow_dispatch:
     inputs:
       date:
@@ -38,6 +37,14 @@ on:
         default: "48"
       dry_run:
         description: "Validate candidates without writing the Notion queue"
+        required: false
+        type: boolean
+        default: false
+      force:
+        description: >-
+          Rebuild today's queue even if one already exists. This mints a new
+          queue_id, so any draft already written against the current queue
+          stops validating — only use it when discarding that draft is intended.
         required: false
         type: boolean
         default: false
@@ -89,12 +96,14 @@ jobs:
           INPUT_END: ${{ inputs.end }}
           INPUT_COLLECT_HOURS: ${{ inputs.collect_hours || '48' }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_FORCE: ${{ inputs.force }}
         run: |
           args=(editorial-queue --collect-hours "$INPUT_COLLECT_HOURS")
           if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
           if test -n "$INPUT_START"; then args+=(--start "$INPUT_START"); fi
           if test -n "$INPUT_END"; then args+=(--end "$INPUT_END"); fi
           if test "$INPUT_DRY_RUN" = "true"; then args+=(--dry-run); fi
+          if test "$INPUT_FORCE" = "true"; then args+=(--force); fi
           news-topic-monitor "${args[@]}"
       - name: Commit metadata and queue health
         if: ${{ always() }}

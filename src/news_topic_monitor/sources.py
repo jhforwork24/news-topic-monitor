@@ -45,6 +45,37 @@ LABOR_SECTION_ALLOWED_SOURCES = (
     PRIMARY_COMPARISON_SOURCES | LABOR_ALTERNATIVE_SOURCES | frozenset({"beminor"})
 )
 
+# III절(칼럼)에 반드시 포함하는 고정 필자 칼럼. 장애 관련 토픽 분류와 무관하게 매번 확인
+# 대상이므로 수집(pipeline)·대기열 선정(editorial)·발행 게이트(assurance) 각 단계에서
+# 일반 후보와 다르게 취급한다.
+#
+# 각 항목은 "모두 일치해야 하는 표지"다. 필자명 하나만으로는 동명이인에 오탐이 난다 —
+# 미디어스 김민하(칼럼니스트)는 동명의 배우와 이름이 같아 연예 기사가 실제로 수집되고
+# 있으므로, 칼럼 바이라인 형식("[미디어스=김민하 칼럼]")에 항상 있는 "칼럼"을 함께 요구한다.
+MANDATORY_OPINION_COLUMNS: dict[str, tuple[str, ...]] = {
+    "hani": ("세계의 창", "지제크"),
+    "mediaus": ("김민하", "칼럼"),
+    "khan": ("고병권", "묵묵"),
+}
+
+
+def is_mandatory_opinion_column(source: str, *texts: str | None) -> bool:
+    """Match a designated column across whatever metadata fields the caller has.
+
+    Callers pass the fields themselves rather than a pre-joined string: the
+    columnist's name lives in a different field per outlet (경향은 제목,
+    한겨레·미디어스는 summary의 바이라인 줄), and an earlier fix silently missed
+    한겨레 지제크 precisely because one call site joined title/byline/section but
+    left summary out.
+    """
+
+    terms = MANDATORY_OPINION_COLUMNS.get(source)
+    if not terms:
+        return False
+    haystack = " ".join(value for value in texts if value)
+    return all(term in haystack for term in terms)
+
+
 # 논조 비교에서 실제 기사 텍스트를 읽은 뒤 결과를 묶어 설명하는 용도로만 쓴다.
 # 매체 내용을 읽지 않고 이 라벨만으로 논조를 추정하는 데 쓰지 않는다.
 SOURCE_CAMP = {

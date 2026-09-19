@@ -14,7 +14,7 @@ from .models import (
     EditorialSection,
     VerificationStatus,
 )
-from .sources import PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS
+from .sources import PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS, is_mandatory_opinion_column
 from .storage import JsonlStorage
 from .utils import KST, kst_display, short_text, stable_article_key
 
@@ -606,28 +606,20 @@ def is_opinion(article: ArticleRecord) -> bool:
 
 
 def editorial_opinion_allowed(article: ArticleRecord) -> bool:
-    text = " ".join(
-        value
-        for value in (article.title, article.byline, article.section, article.summary)
-        if value
-    )
-    mandatory = (
-        (article.source == "hani" and "세계의 창" in text and "지제크" in text)
-        or (article.source == "mediaus" and "김민하" in text)
-        or (article.source == "khan" and "고병권" in text and "묵묵" in text)
-    )
+    mandatory = _mandatory_opinion_column(article)
     return mandatory or (article.source in PRIMARY_COMPARISON_SOURCES and is_opinion(article))
+
+
+def _mandatory_opinion_column(article: ArticleRecord) -> bool:
+    return is_mandatory_opinion_column(
+        article.source, article.title, article.byline, article.section, article.summary
+    )
 
 
 def select_opinions(articles: list[ArticleRecord]) -> list[ArticleRecord]:
     selected: list[ArticleRecord] = []
     for article in articles:
-        text = _article_text(article)
-        mandatory = (
-            (article.source == "hani" and "세계의 창" in text and "지제크" in text)
-            or (article.source == "mediaus" and "김민하" in text)
-            or (article.source == "khan" and "고병권" in text and "묵묵" in text)
-        )
+        mandatory = _mandatory_opinion_column(article)
         if not mandatory and not is_opinion(article):
             continue
         disability_column = (
