@@ -1,17 +1,55 @@
 {
   "schema_version": 1,
-  "report_date": "2026-09-18",
-  "checked_at": "2026-09-18T02:36:18.863386Z",
-  "allowed": true,
-  "fatal_errors": [],
+  "report_date": "2026-09-19",
+  "checked_at": "2026-09-19T02:54:09.025521Z",
+  "allowed": false,
+  "fatal_errors": [
+    "final-state revalidation이 COMPLETE가 아님"
+  ],
   "degraded_warnings": [
-    "독립 검색에서 결정론적 수집에 없는 잠재 누락 1건"
+    "독립 검색에서 결정론적 수집에 없는 잠재 누락 2건"
   ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
   "reporting_items": [
     {
-      "cause": "newscham: 결정론적 수집에 없는 검색 후보 여당의 반대와 미뤄진 회의, 대통령은 기자회견을 연다",
+      "cause": "오세훈 '청년예산 갈라치기' SNS 논란에 전장연·청년들 \"왜곡 중단하라\": GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "'출근길 지하철 탑니다' 항소심도 기각…전장연 대법원 상고 방침: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "4년째 못 받은 임금 2천억원…노동계·여야 의원 \"박영우 엄벌하라\": GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "창사 58년 만의 첫 파업인데…포스코 노조위원장, 경영진과 골프 회동 논란: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "20대 방사선사 숨진 동군산병원, 고용노동부 특별근로감독 착수: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 추미애, 민주당과 첫 예산 정책 협의회…\"경기도 현안 국비 확보 총력\"",
+      "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
+      "result": "potential_gap",
+      "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
+    },
+    {
+      "cause": "newscham: 결정론적 수집에 없는 검색 후보 파병은 없다는 대통령, 청해부대 강화는 고심 중이다",
       "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
       "result": "potential_gap",
       "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
