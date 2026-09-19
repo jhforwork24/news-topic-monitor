@@ -1,22 +1,16 @@
 {
   "prompt_version": 1,
   "report_date": "2026-09-19",
-  "status": "blocked_by_publish_gate",
-  "model": "connected_claude_editor",
-  "auditor_model": "connected_claude_independent_auditor",
-  "candidate_count": 180,
-  "included_after_first_pass": 0,
-  "published_issue_count": 18,
-  "validator_fatal_errors": 0,
+  "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 2.006,
-    "assurance": 0.0,
-    "bridge_import_validation": 5.555,
+    "api_preflight": 2.429,
+    "assurance": 0.001,
+    "bridge_import_validation": 6.874,
     "census_retry": 0.0,
-    "final_state_recrawl": 123.217,
-    "gap_reverse_search": 137.338,
-    "total": 271.634
+    "final_state_recrawl": 127.497,
+    "gap_reverse_search": 145.749,
+    "total": 291.081
   },
-  "error": "publish gate blocked publication: final-state revalidation이 COMPLETE가 아님",
-  "completed_at": "2026-09-19T02:54:11.669132Z"
+  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / '공정'이라는 '가불기', 그 폭력적인 '위선'에 관하여: 허용 범위 밖의 칼럼이 포함됨",
+  "completed_at": "2026-09-19T03:04:27.411598Z"
 }

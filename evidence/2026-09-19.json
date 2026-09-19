@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-09-19",
-  "generated_at": "2026-09-19T02:54:10.850885Z",
+  "generated_at": "2026-09-19T03:04:23.348472Z",
   "articles": [
     {
       "candidate_id": "6c7cbcf3ef09c0e1c3f85f63c43f7092832e507143d178cc9637950401442a37",
@@ -39294,7 +39294,7 @@
       "published_at": "2026-09-18T21:00:00Z",
       "modified_at": "2026-09-18T21:02:00Z",
       "discovered_at": "2026-09-18T22:41:49.556360Z",
-      "last_checked_at": "2026-09-19T02:50:32.870701Z",
+      "last_checked_at": "2026-09-19T03:00:33.496497Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39313,7 +39313,7 @@
       "published_at": "2026-09-18T21:00:00Z",
       "modified_at": "2026-09-19T00:27:00Z",
       "discovered_at": "2026-09-18T22:41:49.556231Z",
-      "last_checked_at": "2026-09-19T02:50:30.921147Z",
+      "last_checked_at": "2026-09-19T03:00:31.785561Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39332,7 +39332,7 @@
       "published_at": "2026-09-18T21:00:00Z",
       "modified_at": "2026-09-18T21:00:01Z",
       "discovered_at": "2026-09-18T22:41:49.556099Z",
-      "last_checked_at": "2026-09-19T02:50:28.911541Z",
+      "last_checked_at": "2026-09-19T03:00:29.522734Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39882,7 +39882,7 @@
       "published_at": "2026-09-18T21:41:00Z",
       "modified_at": "2026-09-18T21:44:00Z",
       "discovered_at": "2026-09-18T22:41:49.555965Z",
-      "last_checked_at": "2026-09-19T02:50:27.296486Z",
+      "last_checked_at": "2026-09-19T03:00:27.944623Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -39960,7 +39960,7 @@
       "published_at": "2026-09-18T21:55:00Z",
       "modified_at": "2026-09-18T22:06:00Z",
       "discovered_at": "2026-09-18T22:41:49.555824Z",
-      "last_checked_at": "2026-09-19T02:50:24.993333Z",
+      "last_checked_at": "2026-09-19T03:00:25.482835Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -40217,7 +40217,7 @@
       "published_at": "2026-09-18T22:00:00Z",
       "modified_at": "2026-09-19T02:02:00Z",
       "discovered_at": "2026-09-18T22:41:49.555669Z",
-      "last_checked_at": "2026-09-19T02:50:22.910800Z",
+      "last_checked_at": "2026-09-19T03:00:23.455424Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -40236,7 +40236,7 @@
       "published_at": "2026-09-18T22:00:00Z",
       "modified_at": "2026-09-18T22:00:04Z",
       "discovered_at": "2026-09-18T22:41:49.555488Z",
-      "last_checked_at": "2026-09-19T02:50:20.889347Z",
+      "last_checked_at": "2026-09-19T03:00:21.538253Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -41078,7 +41078,7 @@
       "published_at": "2026-09-18T22:30:00Z",
       "modified_at": "2026-09-18T22:30:02Z",
       "discovered_at": "2026-09-18T22:41:49.555228Z",
-      "last_checked_at": "2026-09-19T02:50:18.932757Z",
+      "last_checked_at": "2026-09-19T03:00:19.518651Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -41351,7 +41351,7 @@
       "published_at": "2026-09-18T22:42:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-18T23:19:56.415012Z",
-      "last_checked_at": "2026-09-19T02:51:37.592054Z",
+      "last_checked_at": "2026-09-19T03:01:40.415388Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -41976,7 +41976,7 @@
       "published_at": "2026-09-18T23:00:00Z",
       "modified_at": "2026-09-19T01:34:00Z",
       "discovered_at": "2026-09-18T23:19:49.556267Z",
-      "last_checked_at": "2026-09-19T02:50:16.922823Z",
+      "last_checked_at": "2026-09-19T03:00:17.516645Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -41995,7 +41995,7 @@
       "published_at": "2026-09-18T23:00:00Z",
       "modified_at": "2026-09-18T23:01:00Z",
       "discovered_at": "2026-09-18T23:19:49.556011Z",
-      "last_checked_at": "2026-09-19T02:50:14.891154Z",
+      "last_checked_at": "2026-09-19T03:00:15.501675Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42014,7 +42014,7 @@
       "published_at": "2026-09-18T23:01:46Z",
       "modified_at": null,
       "discovered_at": "2026-09-18T23:19:56.414704Z",
-      "last_checked_at": "2026-09-19T02:51:35.578329Z",
+      "last_checked_at": "2026-09-19T03:01:38.405564Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42594,7 +42594,7 @@
       "published_at": "2026-09-18T23:30:00Z",
       "modified_at": "2026-09-19T01:37:00Z",
       "discovered_at": "2026-09-19T02:50:13.130697Z",
-      "last_checked_at": "2026-09-19T02:50:13.130697Z",
+      "last_checked_at": "2026-09-19T03:00:13.718845Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42613,7 +42613,7 @@
       "published_at": "2026-09-18T23:34:57Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:33.594238Z",
-      "last_checked_at": "2026-09-19T02:51:33.594238Z",
+      "last_checked_at": "2026-09-19T03:01:36.397459Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42632,7 +42632,7 @@
       "published_at": "2026-09-18T23:40:42Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:31.574120Z",
-      "last_checked_at": "2026-09-19T02:51:31.574120Z",
+      "last_checked_at": "2026-09-19T03:01:34.397714Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42651,7 +42651,7 @@
       "published_at": "2026-09-18T23:47:00Z",
       "modified_at": "2026-09-18T23:47:00Z",
       "discovered_at": "2026-09-19T02:50:10.889538Z",
-      "last_checked_at": "2026-09-19T02:50:10.889538Z",
+      "last_checked_at": "2026-09-19T03:00:11.460053Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42670,7 +42670,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:46:00Z",
       "discovered_at": "2026-09-19T02:50:08.928519Z",
-      "last_checked_at": "2026-09-19T02:50:08.928519Z",
+      "last_checked_at": "2026-09-19T03:00:09.477578Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42689,7 +42689,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:00:04Z",
       "discovered_at": "2026-09-19T02:50:06.910228Z",
-      "last_checked_at": "2026-09-19T02:50:06.910228Z",
+      "last_checked_at": "2026-09-19T03:00:07.494459Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42708,7 +42708,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:01:00Z",
       "discovered_at": "2026-09-19T02:50:05.004099Z",
-      "last_checked_at": "2026-09-19T02:50:05.004099Z",
+      "last_checked_at": "2026-09-19T03:00:05.484319Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42727,7 +42727,7 @@
       "published_at": "2026-09-19T00:00:00Z",
       "modified_at": "2026-09-19T00:01:00Z",
       "discovered_at": "2026-09-19T02:50:03.048703Z",
-      "last_checked_at": "2026-09-19T02:50:03.048703Z",
+      "last_checked_at": "2026-09-19T03:00:03.750219Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42746,7 +42746,7 @@
       "published_at": "2026-09-19T00:07:00Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:29.580879Z",
-      "last_checked_at": "2026-09-19T02:51:29.580879Z",
+      "last_checked_at": "2026-09-19T03:01:32.392928Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42765,7 +42765,7 @@
       "published_at": "2026-09-19T00:40:00Z",
       "modified_at": "2026-09-19T00:40:00Z",
       "discovered_at": "2026-09-19T02:51:05.492785Z",
-      "last_checked_at": "2026-09-19T02:51:05.492785Z",
+      "last_checked_at": "2026-09-19T03:01:06.077043Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42784,7 +42784,7 @@
       "published_at": "2026-09-19T00:45:00Z",
       "modified_at": "2026-09-19T00:45:00Z",
       "discovered_at": "2026-09-19T02:51:03.430013Z",
-      "last_checked_at": "2026-09-19T02:51:03.430013Z",
+      "last_checked_at": "2026-09-19T03:01:04.082255Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42803,7 +42803,7 @@
       "published_at": "2026-09-19T00:47:00Z",
       "modified_at": "2026-09-19T00:47:01Z",
       "discovered_at": "2026-09-19T02:50:00.946052Z",
-      "last_checked_at": "2026-09-19T02:50:00.946052Z",
+      "last_checked_at": "2026-09-19T03:00:01.527417Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42822,7 +42822,7 @@
       "published_at": "2026-09-19T00:53:00Z",
       "modified_at": "2026-09-19T00:54:00Z",
       "discovered_at": "2026-09-19T02:51:01.348093Z",
-      "last_checked_at": "2026-09-19T02:51:01.348093Z",
+      "last_checked_at": "2026-09-19T03:01:02.085708Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42841,7 +42841,7 @@
       "published_at": "2026-09-19T00:53:19Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:27.580989Z",
-      "last_checked_at": "2026-09-19T02:51:27.580989Z",
+      "last_checked_at": "2026-09-19T03:01:30.391899Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42860,7 +42860,7 @@
       "published_at": "2026-09-19T00:53:35Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:25.567924Z",
-      "last_checked_at": "2026-09-19T02:51:25.567924Z",
+      "last_checked_at": "2026-09-19T03:01:28.385382Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42879,7 +42879,7 @@
       "published_at": "2026-09-19T00:53:50Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:23.588180Z",
-      "last_checked_at": "2026-09-19T02:51:23.588180Z",
+      "last_checked_at": "2026-09-19T03:01:26.436202Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42898,7 +42898,7 @@
       "published_at": "2026-09-19T00:54:06Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:21.603049Z",
-      "last_checked_at": "2026-09-19T02:51:21.603049Z",
+      "last_checked_at": "2026-09-19T03:01:24.387576Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42917,7 +42917,7 @@
       "published_at": "2026-09-19T01:00:00Z",
       "modified_at": "2026-09-19T01:00:01Z",
       "discovered_at": "2026-09-19T02:49:58.933701Z",
-      "last_checked_at": "2026-09-19T02:49:58.933701Z",
+      "last_checked_at": "2026-09-19T02:59:59.494863Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -42936,7 +42936,7 @@
       "published_at": "2026-09-19T01:01:16Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:19.597516Z",
-      "last_checked_at": "2026-09-19T02:51:19.597516Z",
+      "last_checked_at": "2026-09-19T03:01:22.416059Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42955,7 +42955,7 @@
       "published_at": "2026-09-19T01:13:47Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:17.598120Z",
-      "last_checked_at": "2026-09-19T02:51:17.598120Z",
+      "last_checked_at": "2026-09-19T03:01:20.402157Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -42974,7 +42974,7 @@
       "published_at": "2026-09-19T01:47:00Z",
       "modified_at": "2026-09-19T01:47:00Z",
       "discovered_at": "2026-09-19T02:50:59.336669Z",
-      "last_checked_at": "2026-09-19T02:50:59.336669Z",
+      "last_checked_at": "2026-09-19T03:01:00.107444Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -42993,7 +42993,7 @@
       "published_at": "2026-09-19T01:48:00Z",
       "modified_at": "2026-09-19T01:49:00Z",
       "discovered_at": "2026-09-19T02:50:55.327960Z",
-      "last_checked_at": "2026-09-19T02:50:55.327960Z",
+      "last_checked_at": "2026-09-19T03:00:56.326878Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43012,7 +43012,7 @@
       "published_at": "2026-09-19T01:48:00Z",
       "modified_at": "2026-09-19T01:48:00Z",
       "discovered_at": "2026-09-19T02:50:53.543102Z",
-      "last_checked_at": "2026-09-19T02:50:53.543102Z",
+      "last_checked_at": "2026-09-19T03:00:54.040219Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43031,7 +43031,7 @@
       "published_at": "2026-09-19T01:49:00Z",
       "modified_at": "2026-09-19T01:49:00Z",
       "discovered_at": "2026-09-19T02:50:49.344372Z",
-      "last_checked_at": "2026-09-19T02:50:49.344372Z",
+      "last_checked_at": "2026-09-19T03:00:50.139589Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43050,7 +43050,7 @@
       "published_at": "2026-09-19T01:55:00Z",
       "modified_at": "2026-09-19T01:55:00Z",
       "discovered_at": "2026-09-19T02:49:57.281885Z",
-      "last_checked_at": "2026-09-19T02:49:57.281885Z",
+      "last_checked_at": "2026-09-19T02:59:57.703007Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43069,7 +43069,7 @@
       "published_at": "2026-09-19T02:00:00Z",
       "modified_at": "2026-09-19T02:00:01Z",
       "discovered_at": "2026-09-19T02:49:54.905476Z",
-      "last_checked_at": "2026-09-19T02:49:54.905476Z",
+      "last_checked_at": "2026-09-19T02:59:55.526878Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43088,7 +43088,7 @@
       "published_at": "2026-09-19T02:00:00Z",
       "modified_at": "2026-09-19T02:00:04Z",
       "discovered_at": "2026-09-19T02:49:53.998339Z",
-      "last_checked_at": "2026-09-19T02:49:53.998339Z",
+      "last_checked_at": "2026-09-19T02:59:54.297026Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43107,7 +43107,7 @@
       "published_at": "2026-09-19T02:00:09Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:15.625993Z",
-      "last_checked_at": "2026-09-19T02:51:15.625993Z",
+      "last_checked_at": "2026-09-19T03:01:18.392754Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -43126,7 +43126,7 @@
       "published_at": "2026-09-19T02:04:00Z",
       "modified_at": "2026-09-19T02:04:00Z",
       "discovered_at": "2026-09-19T02:50:47.325016Z",
-      "last_checked_at": "2026-09-19T02:50:47.325016Z",
+      "last_checked_at": "2026-09-19T03:00:48.085381Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43145,7 +43145,7 @@
       "published_at": "2026-09-19T02:08:41Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:13.621553Z",
-      "last_checked_at": "2026-09-19T02:51:13.621553Z",
+      "last_checked_at": "2026-09-19T03:01:16.387173Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -43164,7 +43164,7 @@
       "published_at": "2026-09-19T02:13:00Z",
       "modified_at": "2026-09-19T02:13:00Z",
       "discovered_at": "2026-09-19T02:50:45.332211Z",
-      "last_checked_at": "2026-09-19T02:50:45.332211Z",
+      "last_checked_at": "2026-09-19T03:00:46.100158Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43183,7 +43183,7 @@
       "published_at": "2026-09-19T02:14:00Z",
       "modified_at": "2026-09-19T02:14:00Z",
       "discovered_at": "2026-09-19T02:50:43.394910Z",
-      "last_checked_at": "2026-09-19T02:50:43.394910Z",
+      "last_checked_at": "2026-09-19T03:00:44.310288Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43202,7 +43202,7 @@
       "published_at": "2026-09-19T02:15:09Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:11.674185Z",
-      "last_checked_at": "2026-09-19T02:51:11.674185Z",
+      "last_checked_at": "2026-09-19T03:01:14.413364Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -43221,7 +43221,7 @@
       "published_at": "2026-09-19T02:18:00Z",
       "modified_at": "2026-09-19T02:18:00Z",
       "discovered_at": "2026-09-19T02:50:41.368665Z",
-      "last_checked_at": "2026-09-19T02:50:41.368665Z",
+      "last_checked_at": "2026-09-19T03:00:42.257527Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43240,7 +43240,7 @@
       "published_at": "2026-09-19T02:21:00Z",
       "modified_at": "2026-09-19T02:21:00Z",
       "discovered_at": "2026-09-19T02:50:39.475169Z",
-      "last_checked_at": "2026-09-19T02:50:39.475169Z",
+      "last_checked_at": "2026-09-19T03:00:40.254397Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43259,7 +43259,7 @@
       "published_at": "2026-09-19T02:25:00Z",
       "modified_at": "2026-09-19T02:31:00Z",
       "discovered_at": "2026-09-19T02:49:49.457817Z",
-      "last_checked_at": "2026-09-19T02:49:49.457817Z",
+      "last_checked_at": "2026-09-19T02:59:48.493584Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -43278,7 +43278,7 @@
       "published_at": "2026-09-19T02:29:24Z",
       "modified_at": null,
       "discovered_at": "2026-09-19T02:51:09.531108Z",
-      "last_checked_at": "2026-09-19T02:51:09.531108Z",
+      "last_checked_at": "2026-09-19T03:01:12.404675Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news"
       ],
@@ -43297,7 +43297,7 @@
       "published_at": "2026-09-19T02:49:00Z",
       "modified_at": "2026-09-19T02:50:00Z",
       "discovered_at": "2026-09-19T02:50:37.673859Z",
-      "last_checked_at": "2026-09-19T02:50:37.673859Z",
+      "last_checked_at": "2026-09-19T03:00:38.555711Z",
       "discovery_route": [
         "official:https://www.ohmynews.com/NWS_Web/View/latestnews.aspx"
       ],
@@ -43306,6 +43306,25 @@
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "d4b1775f63e527b7088985917951258b486ff4ba6efa583516716316c4be7c95",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026091910084296848",
+      "title": "골프 치고 예술 즐긴다…김길수 영월군수 “유휴 공간 주민에 환원”",
+      "outlet": "pressian",
+      "reporter": "배연호 기자(=영월)",
+      "published_at": "2026-09-19T02:58:37Z",
+      "modified_at": null,
+      "discovered_at": "2026-09-19T03:01:10.328371Z",
+      "last_checked_at": "2026-09-19T03:01:10.328371Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "ef5332842083d00f2453bc51fc8af4b45987b7a50c81ab403305c0844dd2bceb",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
     }
   ],
   "census": [
@@ -43495,21 +43514,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "민주당 강원특별자치도당 운영위 열고…주요 당직인사 의결",
-        "original_url": "https://www.kwnews.co.kr/article/20260918500452",
-        "naver_url": "https://n.news.naver.com/mnews/article/087/0001219115?sid=100",
-        "published_at": "2026-09-18T09:30:00Z",
-        "description": "부학생회장) △ 장애인 위원장 박영림(강원도의원·비례) △노동위원장 유한용(현 한국전력 강원본부... 강원민주연구소장에는 최선강(전 강원대학교 산학협력 부단장), 부소장 이동춘(전 강원도 중국본부장), 정책 실장에는...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[ 장애인 표준사업장, 필요한가②]\" 장애인 1명 고용하려 수천만원\"…표준...",
         "original_url": "https://www.getnews.co.kr/news/articleView.html?idxno=880900",
         "naver_url": "https://www.getnews.co.kr/news/articleView.html?idxno=880900",
         "published_at": "2026-09-18T09:30:00Z",
         "description": "장애인 고용 정책 이 신규 고용 숫자뿐 아니라 고용유지 기간과 직무의 안정성까지 함께 살펴봐야 한다는 지적이 나오는 이유다. 결국 장애인 표준사업장의 지속가능성을 확보하기 위해서는 '얼마를 지원했는가'뿐 아니라...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "민주당 강원특별자치도당 운영위 열고…주요 당직인사 의결",
+        "original_url": "https://www.kwnews.co.kr/article/20260918500452",
+        "naver_url": "https://n.news.naver.com/mnews/article/087/0001219115?sid=100",
+        "published_at": "2026-09-18T09:30:00Z",
+        "description": "부학생회장) △ 장애인 위원장 박영림(강원도의원·비례) △노동위원장 유한용(현 한국전력 강원본부... 강원민주연구소장에는 최선강(전 강원대학교 산학협력 부단장), 부소장 이동춘(전 강원도 중국본부장), 정책 실장에는...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43575,21 +43594,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "구리시의회, 사회복지시설 찾아 한가위 온정 나눠",
-        "original_url": "https://www.job-post.co.kr/news/articleView.html?idxno=228298",
-        "naver_url": "https://www.job-post.co.kr/news/articleView.html?idxno=228298",
-        "published_at": "2026-09-18T09:00:00Z",
-        "description": "특히 현장에서 체감하는 복지 수요와 지원이 필요한 사항을 직접 확인하며 지역 복지 정책 에 반영할 수 있는 방안을 살폈다. 양경애 의장은 \"사회복지시설에서 생활하시는 어르신과 장애인 분들이 보다 안정적인 환경에서...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "[인사] 부산시",
         "original_url": "https://www.cnbnews.com/news/articleView.html?idxno=1016572",
         "naver_url": "https://www.cnbnews.com/news/articleView.html?idxno=1016572",
         "published_at": "2026-09-18T09:00:00Z",
         "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희 ▲생활권공간계획과(생활공간혁신) 허점숙...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "구리시의회, 사회복지시설 찾아 한가위 온정 나눠",
+        "original_url": "https://www.job-post.co.kr/news/articleView.html?idxno=228298",
+        "naver_url": "https://www.job-post.co.kr/news/articleView.html?idxno=228298",
+        "published_at": "2026-09-18T09:00:00Z",
+        "description": "특히 현장에서 체감하는 복지 수요와 지원이 필요한 사항을 직접 확인하며 지역 복지 정책 에 반영할 수 있는 방안을 살폈다. 양경애 의장은 \"사회복지시설에서 생활하시는 어르신과 장애인 분들이 보다 안정적인 환경에서...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43655,6 +43674,16 @@
       },
       {
         "query": "장애인 정책",
+        "title": "[인사] 부산시",
+        "original_url": "https://www.newspim.com/news/view/20260918001087",
+        "naver_url": "https://www.newspim.com/news/view/20260918001087",
+        "published_at": "2026-09-18T08:52:00Z",
+        "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희▲생활권공간계획과(생활공간혁신) 허점숙...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
         "title": "\"추동 숲정원에 8.8km 산책길\" 의정부시, '무장애행복길' 전 구간 개통",
         "original_url": "https://www.wikitree.co.kr/articles/1160569",
         "naver_url": "https://www.wikitree.co.kr/articles/1160569",
@@ -43675,16 +43704,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[인사] 부산시",
-        "original_url": "https://www.newspim.com/news/view/20260918001087",
-        "naver_url": "https://www.newspim.com/news/view/20260918001087",
-        "published_at": "2026-09-18T08:52:00Z",
-        "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희▲생활권공간계획과(생활공간혁신) 허점숙...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "추미애 지사, 민주당 지도부와 첫 예산협의...철도·반도체 국비 건의",
         "original_url": "https://www.ajunews.com/view/20260918173530309",
         "naver_url": "https://www.ajunews.com/view/20260918173530309",
@@ -43695,11 +43714,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "광주보호관찰소, ‘2026년 사회봉사 집행협력기관 간담회’",
-        "original_url": "http://www.lawissue.co.kr/view.php?ud=2026091817361756749a8c8bf58f_12",
-        "naver_url": "http://www.lawissue.co.kr/view.php?ud=2026091817361756749a8c8bf58f_12",
+        "title": "[인사] 부산시",
+        "original_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
+        "naver_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
         "published_at": "2026-09-18T08:40:00Z",
-        "description": "법무부(장관 직무대행 차관 이진수) 범죄예방 정책 국 광주보호관찰소는 9월 18일 엄정하고 투명한 사회봉사... 전남 장애인 복지관, 광주 인애W사랑의집, 영광종합복지관이 우수 협력기관 표창을 수상했다. 이정민...",
+        "description": "(출산 정책 ) 강주희 ▲ 영상콘텐츠산업과(대중문화) 강연수 ▲ 생활체육과( 장애인 체육) 오진아 ▲ 시민주권협치과(협치지원) 조미경 ▲ 시민주권협치과(시민협력) 김영희 ▲ 생활권공간계획과(생활공간혁신) 허점숙...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43715,11 +43734,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[인사] 부산시",
-        "original_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
-        "naver_url": "https://www.thepublic.kr/news/articleView.html?idxno=319359",
+        "title": "광주보호관찰소, ‘2026년 사회봉사 집행협력기관 간담회’",
+        "original_url": "http://www.lawissue.co.kr/view.php?ud=2026091817361756749a8c8bf58f_12",
+        "naver_url": "http://www.lawissue.co.kr/view.php?ud=2026091817361756749a8c8bf58f_12",
         "published_at": "2026-09-18T08:40:00Z",
-        "description": "(출산 정책 ) 강주희 ▲ 영상콘텐츠산업과(대중문화) 강연수 ▲ 생활체육과( 장애인 체육) 오진아 ▲ 시민주권협치과(협치지원) 조미경 ▲ 시민주권협치과(시민협력) 김영희 ▲ 생활권공간계획과(생활공간혁신) 허점숙...",
+        "description": "법무부(장관 직무대행 차관 이진수) 범죄예방 정책 국 광주보호관찰소는 9월 18일 엄정하고 투명한 사회봉사... 전남 장애인 복지관, 광주 인애W사랑의집, 영광종합복지관이 우수 협력기관 표창을 수상했다. 이정민...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -43935,21 +43954,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "3.8%도 못 채운 대구 공공기관… 장애인 채용은 ‘단기’ 쏠림",
-        "original_url": "https://www.yeongnam.com/web/view.php?key=20260918022439338",
-        "naver_url": "https://www.yeongnam.com/web/view.php?key=20260918022439338",
-        "published_at": "2026-09-18T07:40:00Z",
-        "description": "99%, 대구 정책 연구원 3.03%였다. 대구시 산하 공사/공단 장애인 고용률. 대구시 제공 최근 수년간 고용률이 계속 낮아지는 기관도 있었다. 대구의료원은 2021년 2.68%에서 2022년 2.21%, 2023년 2.16%, 2024년 1.54%로 떨어진 뒤...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "천안시, ' 장애인 식개선 문화예술공연' 개최",
         "original_url": "https://www.m-i.kr/news/articleView.html?idxno=1416158",
         "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=1416158",
         "published_at": "2026-09-18T07:40:00Z",
         "description": "게시하고 공직자 장애인 식개선 교육자료로 활용할 계획이다. 윤은미 천안시 복지 정책 국장은 \"문화예술을 활용한 장애인 식개선 교육을 통해 장애에 대한 이해를 높일 수 있도록 관련 사업을 지속 추진하겠다\"고 말했다.",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "3.8%도 못 채운 대구 공공기관… 장애인 채용은 ‘단기’ 쏠림",
+        "original_url": "https://www.yeongnam.com/web/view.php?key=20260918022439338",
+        "naver_url": "https://www.yeongnam.com/web/view.php?key=20260918022439338",
+        "published_at": "2026-09-18T07:40:00Z",
+        "description": "99%, 대구 정책 연구원 3.03%였다. 대구시 산하 공사/공단 장애인 고용률. 대구시 제공 최근 수년간 고용률이 계속 낮아지는 기관도 있었다. 대구의료원은 2021년 2.68%에서 2022년 2.21%, 2023년 2.16%, 2024년 1.54%로 떨어진 뒤...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44004,16 +44023,6 @@
         "in_deterministic_collection": null
       },
       {
-        "query": "장애인 정책",
-        "title": "[인사] 부산시",
-        "original_url": "https://view.asiae.co.kr/article/2026091816305316370",
-        "naver_url": "https://n.news.naver.com/mnews/article/277/0005818590?sid=102",
-        "published_at": "2026-09-18T07:30:00Z",
-        "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희▲생활권공간계획과(생활공간혁신) 허점숙...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
         "query": "장애인 노동권 권리중심공공일자리",
         "title": "청년 예산으로 장애인 일자리 ?… 청년들 직접 나서 \"오세훈, 갈라치기 ...",
         "original_url": "https://www.beminor.com/news/articleView.html?idxno=30439",
@@ -44022,6 +44031,16 @@
         "description": "삭감과 권리중심 중증 장애인 맞춤형 공공일자리 (아래 권리중심공공일자리 ) 사업을 결부하며, 마치 청년... 삭감되고 장애인 노동권 보장을 위한 조례가 통과되자 청년을 끌어들여 근거 없는 선동과 갈라치기를 시도하고...",
         "matched_source": "beminor",
         "in_deterministic_collection": true
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[인사] 부산시",
+        "original_url": "https://view.asiae.co.kr/article/2026091816305316370",
+        "naver_url": "https://n.news.naver.com/mnews/article/277/0005818590?sid=102",
+        "published_at": "2026-09-18T07:30:00Z",
+        "description": "(출산 정책 ) 강주희 ▲영상콘텐츠산업과(대중문화) 강연수 ▲생활체육과( 장애인 체육) 오진아 ▲시민주권협치과(협치지원) 조미경 ▲시민주권협치과(시민협력) 김영희▲생활권공간계획과(생활공간혁신) 허점숙...",
+        "matched_source": null,
+        "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
@@ -44065,6 +44084,16 @@
       },
       {
         "query": "장애인 정책",
+        "title": "화성특례시의회, 제254회 제1차 정례회 제3차 본회의 개의",
+        "original_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
+        "naver_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
+        "published_at": "2026-09-18T07:16:00Z",
+        "description": "의회운영위원회에서는 시민의 창의적인 정책 아이디어를 발굴해 의정활동에 반영하고 시민 참여를... 보건복지위원회에서는 장애인 편의시설 사후점검 대상 확대, 지역사회보장계획 수립, 성희롱·성폭력...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
         "title": "[내겐 너무 '특별한' 결혼식⑭] 조한진 장애학과 교수 \"제도· 정책 제대...",
         "original_url": "https://www.sisaweek.com/news/articleView.html?idxno=237971",
         "naver_url": "https://www.sisaweek.com/news/articleView.html?idxno=237971",
@@ -44075,11 +44104,11 @@
       },
       {
         "query": "장애인 정책",
-        "title": "화성특례시의회, 제254회 제1차 정례회 제3차 본회의 개의",
-        "original_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
-        "naver_url": "http://www.newsroad.co.kr/news/articleView.html?idxno=64540",
-        "published_at": "2026-09-18T07:16:00Z",
-        "description": "의회운영위원회에서는 시민의 창의적인 정책 아이디어를 발굴해 의정활동에 반영하고 시민 참여를... 보건복지위원회에서는 장애인 편의시설 사후점검 대상 확대, 지역사회보장계획 수립, 성희롱·성폭력...",
+        "title": "[위클리오늘] 부산 주요 일정 9월 18일 (금요일)",
+        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
+        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
+        "published_at": "2026-09-18T07:14:00Z",
+        "description": "전국 장애인 기능경기대회 폐막식, 벡스코 ▲오전 11시, 에코델타시티발전연합회, 생곡마을폐기물처리시설... 전문가 정책 토론회, 상공회의소 상의홀 ▲오후 4시, 부산시장, 제33회 부산복지의 달 기념식, 시청 1층...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -44105,16 +44134,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[위클리오늘] 부산 주요 일정 9월 18일 (금요일)",
-        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
-        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795181",
-        "published_at": "2026-09-18T07:14:00Z",
-        "description": "전국 장애인 기능경기대회 폐막식, 벡스코 ▲오전 11시, 에코델타시티발전연합회, 생곡마을폐기물처리시설... 전문가 정책 토론회, 상공회의소 상의홀 ▲오후 4시, 부산시장, 제33회 부산복지의 달 기념식, 시청 1층...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "유로화 도입 24년만 도안 전면 교체…시민 대상 디자인 설문조사",
         "original_url": "https://www.asiatoday.co.kr/kn/view.php?key=20260918010007123",
         "naver_url": "https://www.asiatoday.co.kr/kn/view.php?key=20260918010007123",
@@ -44135,21 +44154,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[위클리오늘] 추미애 경기지사, 21일 민주당과 예산 정책 협의회…국비 확...",
-        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795208",
-        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795208",
-        "published_at": "2026-09-18T07:10:00Z",
-        "description": "도는 시민의 일상과 맞닿은 다양한 정책 과 사업을 추진하고 있다. 오늘 발표된 주요 소식을 한데 모았다.... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청할...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "오는 21일 경기도-더불어민주당 예산 정책 협의회 개최...추미애 지사, 재...",
         "original_url": "https://www.getnews.co.kr/news/articleView.html?idxno=881249",
         "naver_url": "https://www.getnews.co.kr/news/articleView.html?idxno=881249",
         "published_at": "2026-09-18T07:10:00Z",
         "description": "추미애 경기도지사가 오는 21일 북부청사에서 민선 9기 첫 경기도-더불어민주당 예산 정책 협의회를 열고 주요... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청할...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[위클리오늘] 추미애 경기지사, 21일 민주당과 예산 정책 협의회…국비 확...",
+        "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795208",
+        "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795208",
+        "published_at": "2026-09-18T07:10:00Z",
+        "description": "도는 시민의 일상과 맞닿은 다양한 정책 과 사업을 추진하고 있다. 오늘 발표된 주요 소식을 한데 모았다.... 전국( 장애인 )체전 지원, 누리과정 차액 보육료 지원 등 10개 사업에 대해 국비를 확보할 수 있도록 요청할...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -45474,8 +45493,8 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-09-19T02:51:50.054804Z",
+    "status": "complete",
+    "checked_at": "2026-09-19T03:01:53.151665Z",
     "checks": [
       {
         "issue_title": "발달장애인법·장애인복지법 개정안 국회 통과…긴급돌봄 법제화, 학대사건 수사체계 정비",
@@ -45487,10 +45506,10 @@
       },
       {
         "issue_title": "오세훈 '청년예산 갈라치기' SNS 논란에 전장연·청년들 \"왜곡 중단하라\"",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -45511,10 +45530,10 @@
       },
       {
         "issue_title": "'출근길 지하철 탑니다' 항소심도 기각…전장연 대법원 상고 방침",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -45567,18 +45586,18 @@
       },
       {
         "issue_title": "4년째 못 받은 임금 2천억원…노동계·여야 의원 \"박영우 엄벌하라\"",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "창사 58년 만의 첫 파업인데…포스코 노조위원장, 경영진과 골프 회동 논란",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -45607,10 +45626,10 @@
       },
       {
         "issue_title": "20대 방사선사 숨진 동군산병원, 고용노동부 특별근로감독 착수",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
