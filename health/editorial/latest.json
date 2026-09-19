@@ -9,15 +9,15 @@
   "published_issue_count": 17,
   "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.812,
+    "api_preflight": 1.262,
     "assurance": 0.001,
-    "bridge_import_validation": 5.991,
+    "bridge_import_validation": 8.006,
     "census_retry": 0.0,
-    "final_state_recrawl": 95.578,
-    "gap_reverse_search": 137.986,
-    "render_briefing": 3.853,
-    "total": 249.477
+    "final_state_recrawl": 94.816,
+    "gap_reverse_search": 136.029,
+    "render_briefing": 4.082,
+    "total": 248.768
   },
   "error": null,
-  "completed_at": "2026-09-19T03:16:17.322775Z"
+  "completed_at": "2026-09-19T03:34:00.542754Z"
 }
