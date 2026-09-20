@@ -134,6 +134,27 @@ class MetadataOnlyAdapter(GoodAdapter):
         )
 
 
+class MonitoredPersonnelAdapter(GoodAdapter):
+    source = "good"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url="https://good.test/article/personnel",
+                    title="보건복지부, 신임 장애인정책국장에 OOO 내정",
+                    published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 인사 소식 본문으로 disability_rights 토픽 용어를 쓰지 않는다."
+
+
 class KhanMandatoryColumnAdapter(GoodAdapter):
     source = "khan"
 
@@ -282,6 +303,28 @@ def test_mandatory_opinion_column_matches_a_byline_that_is_only_in_the_summary(
         storage=storage,
         classifier=RuleClassifier(topics_path),
         adapters=[HaniMandatoryColumnAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert record.body_status == BodyStatus.FETCHED
+    assert record.verification_status == VerificationStatus.BODY_VERIFIED
+
+
+def test_monitored_personnel_news_body_is_fetched_despite_title_only_classification(
+    tmp_path, topics_path
+) -> None:
+    # "보건복지부, 신임 장애인정책국장에 OOO 내정" has no disability_rights keyword, so
+    # title-only classification alone would skip the body fetch. Monitored-institution
+    # personnel news must always get a body fetch regardless of that first-pass judgment.
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=http,
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[MonitoredPersonnelAdapter()],
     ).run(
         datetime(2026, 8, 15, 0, tzinfo=UTC),
         datetime(2026, 8, 15, 2, tzinfo=UTC),

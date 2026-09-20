@@ -38,9 +38,14 @@ from .chat_bridge import (
 )
 from .classifier import RuleClassifier
 from .editorial import select_chat_editorial_candidates
-from .models import Classification, EditorialCandidate
+from .models import AuditSeverity, Classification, EditorialCandidate
 from .selection_review import NearMissTopic, ScoredArticle, SelectionReview
-from .sources import LABOR_SECTION_ALLOWED_SOURCES, SOURCE_LABELS, is_mandatory_opinion_column
+from .sources import (
+    LABOR_SECTION_ALLOWED_SOURCES,
+    SOURCE_LABELS,
+    is_mandatory_opinion_column,
+    monitored_personnel_match,
+)
 from .storage import JsonlStorage
 from .utils import KST, normalize_text, short_error, short_text
 
@@ -992,7 +997,8 @@ def _queue_part_blocks(
         byline = candidate.byline or "기자명 확인 안 됨"
         labor_guard = _labor_queue_hint(candidate, labor_classifier)
         opinion_hint = _opinion_queue_hint(candidate)
-        guards = " · ".join(part for part in (labor_guard, opinion_hint) if part)
+        personnel_hint = _personnel_queue_hint(candidate)
+        guards = " · ".join(part for part in (labor_guard, opinion_hint, personnel_hint) if part)
         blocks.extend(
             [
                 _heading(candidate.title, 3),
@@ -1110,6 +1116,32 @@ def _opinion_queue_hint(candidate: EditorialCandidate) -> str | None:
     ):
         return "III절 고정 칼럼 — 장애 주제 분류와 무관하게 opinion 후보로 반드시 검토"
     return None
+
+
+def _personnel_queue_hint(candidate: EditorialCandidate) -> str | None:
+    """Flag monitored-institution personnel news inline in the queue.
+
+    Institution/position words alone match almost every routine article about
+    that institution, so `monitored_personnel_match` only fires alongside an
+    explicit personnel-event term (임명·내정·취임 등). Mirrors
+    `_opinion_queue_hint`'s role for III절 fixed columns — a per-candidate
+    signal so the editor doesn't have to spot an appointment story by title
+    alone among a large queue.
+    """
+
+    target = monitored_personnel_match(
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    )
+    if target is None:
+        return None
+    severity_label = "발행 차단" if target.severity == AuditSeverity.FATAL else "감사 보고만"
+    return (
+        f"인사 소식 감시 대상({target.label}, 미처리 시 {severity_label}) — "
+        "선정 또는 제외 사유 필수"
+    )
 
 
 def _labor_queue_exclusion(candidate: EditorialCandidate) -> str | None:

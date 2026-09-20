@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+
+from .models import AuditSeverity
+
 SOURCE_LABELS = {
     "chosun": "조선일보",
     "joongang": "중앙일보",
@@ -74,6 +78,96 @@ def is_mandatory_opinion_column(source: str, *texts: str | None) -> bool:
         return False
     haystack = " ".join(value for value in texts if value)
     return all(term in haystack for term in terms)
+
+
+# 장애정책 핵심 기관·부처의 인사 소식을 토픽 분류와 무관하게 후보로 강제 편입하기 위한
+# 감시 대상. 기관·직위명만으로는 그 기관을 다루는 거의 모든 정책 기사에 걸린다(예:
+# "보건복지부 장관은 오늘 ~라고 밝혔다"는 매일 나오는 문장이지 인사 소식이 아니다). 실제
+# 인사 이동을 가리키는 이벤트 용어가 함께 나올 때만 매칭해 오탐을 줄인다.
+PERSONNEL_EVENT_TERMS: tuple[str, ...] = (
+    "임명",
+    "내정",
+    "취임",
+    "선임",
+    "지명",
+    "신임",
+    "발탁",
+    "이임",
+    "퇴임",
+    "사임",
+    "사퇴",
+    "물러나",
+    "후보자",
+    "교체",
+)
+
+
+@dataclass(frozen=True)
+class PersonnelTarget:
+    label: str
+    anchor: str
+    positions: tuple[str, ...]
+    severity: AuditSeverity
+
+
+# anchor는 다른 기관과 겹치지 않는 고유 표현을 쓴다("장애인정책국"은 보건복지부에만,
+# "통합고용정책국"은 고용노동부에만 있으므로 상위 부처명 없이도 특정된다). "장관"·"차관"처럼
+# 정부부처라면 어디에나 있는 직위는 부처명 자체를 anchor로 삼는다.
+#
+# severity는 이 기관장급(원장·이사장·장관·차관·국장급)이 대기열에 있는데 초안의 선정에도
+# 제외에도 없으면 발행을 막는 fatal, 하위 조직장·과장급은 감사 보고에만 남기는 warning으로
+# 나눈다. 과장급 전보 같은 빈번한 인사로 발행 전체가 막히는 것을 피하기 위함이다.
+MONITORED_PERSONNEL_TARGETS: tuple[PersonnelTarget, ...] = (
+    PersonnelTarget("한국장애인개발원 원장", "한국장애인개발원", ("원장",), AuditSeverity.FATAL),
+    PersonnelTarget(
+        "한국장애인개발원 본부장", "한국장애인개발원", ("본부장",), AuditSeverity.WARNING
+    ),
+    PersonnelTarget(
+        "중앙장애인지역사회통합지원센터 센터장",
+        "중앙장애인지역사회통합지원센터",
+        ("센터장",),
+        AuditSeverity.WARNING,
+    ),
+    PersonnelTarget(
+        "한국장애인고용공단 이사장", "한국장애인고용공단", ("이사장",), AuditSeverity.FATAL
+    ),
+    PersonnelTarget(
+        "한국장애인고용공단 실국장", "한국장애인고용공단", ("실국장",), AuditSeverity.WARNING
+    ),
+    PersonnelTarget("국민연금공단 이사장", "국민연금공단", ("이사장",), AuditSeverity.FATAL),
+    PersonnelTarget("보건복지부 장관", "보건복지부", ("장관",), AuditSeverity.FATAL),
+    PersonnelTarget("보건복지부 차관", "보건복지부", ("차관",), AuditSeverity.FATAL),
+    PersonnelTarget("보건복지부 장애인정책국 국장", "장애인정책국", ("국장",), AuditSeverity.FATAL),
+    PersonnelTarget(
+        "보건복지부 장애인정책과 과장", "장애인정책과", ("과장",), AuditSeverity.WARNING
+    ),
+    PersonnelTarget("고용노동부 장관", "고용노동부", ("장관",), AuditSeverity.FATAL),
+    PersonnelTarget("고용노동부 차관", "고용노동부", ("차관",), AuditSeverity.FATAL),
+    PersonnelTarget(
+        "고용노동부 통합고용정책국 국장", "통합고용정책국", ("국장",), AuditSeverity.FATAL
+    ),
+    PersonnelTarget(
+        "고용노동부 장애인고용과 과장", "장애인고용과", ("과장",), AuditSeverity.WARNING
+    ),
+)
+
+
+def monitored_personnel_match(*texts: str | None) -> PersonnelTarget | None:
+    """Return the first monitored-institution personnel target this text matches.
+
+    Callers pass the fields themselves (title/byline/section/summary), mirroring
+    is_mandatory_opinion_column. Requires an explicit personnel-event term in
+    addition to anchor+position so routine policy coverage of these institutions
+    doesn't match.
+    """
+
+    haystack = " ".join(value for value in texts if value)
+    if not haystack or not any(term in haystack for term in PERSONNEL_EVENT_TERMS):
+        return None
+    for target in MONITORED_PERSONNEL_TARGETS:
+        if target.anchor in haystack and any(position in haystack for position in target.positions):
+            return target
+    return None
 
 
 # 논조 비교에서 실제 기사 텍스트를 읽은 뒤 결과를 묶어 설명하는 용도로만 쓴다.

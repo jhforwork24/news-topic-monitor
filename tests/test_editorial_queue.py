@@ -499,6 +499,42 @@ def test_mandatory_column_match_does_not_fire_on_a_namesake() -> None:
     assert mandatory_opinion_candidate(namesake) is False
 
 
+def test_monitored_personnel_candidate_is_seated_before_the_per_source_balance_cap() -> None:
+    # Mirrors test_mandatory_column_is_seated_before_the_per_source_balance_cap: an
+    # appointment story can run at any time in the window and must not be dropped by
+    # the per-source balance cap.
+    window_end = datetime(2026, 9, 17, 20, tzinfo=UTC)
+    pool = [
+        _candidate(
+            f"hani-{index}",
+            source="hani",
+            published_at=window_end - timedelta(minutes=10 * (index + 1)),
+        )
+        for index in range(24)
+    ]
+    personnel = _candidate(
+        "hani-personnel",
+        source="hani",
+        title="보건복지부, 신임 장관 후보자에 OOO 지명",
+        published_at=datetime(2026, 9, 17, 11, 7, tzinfo=UTC),
+    )
+    pool.append(personnel)
+    for source in ("joongang", "donga", "khan", "ohmynews", "pressian", "sisain"):
+        pool.extend(
+            _candidate(
+                f"{source}-{index}",
+                source=source,
+                published_at=window_end - timedelta(minutes=10 * (index + 1)),
+            )
+            for index in range(24)
+        )
+
+    selected = select_chat_editorial_candidates(pool, 60)
+
+    assert selected[0].candidate_id == "hani-personnel"
+    assert len(selected) == 60
+
+
 def test_queue_refuses_to_rebuild_over_an_existing_manifest(topics_path: Path) -> None:
     # Two triggers build this queue: the connected Claude routine dispatches it on
     # time, and the GitHub schedule can arrive hours later. A rebuild mints a new

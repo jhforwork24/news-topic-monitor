@@ -658,6 +658,141 @@ def test_publish_gate_accepts_a_fixed_column_excluded_with_a_reason() -> None:
     assert not any("고정 칼럼" in error for error in allowed.fatal_errors)
 
 
+def _personnel_candidate(
+    candidate_id: str, title: str, now: datetime, *, source: str = "hani"
+) -> EditorialCandidate:
+    return EditorialCandidate(
+        candidate_id=candidate_id,
+        source=source,
+        canonical_url=f"https://example.com/{candidate_id}",
+        title=title,
+        byline="기자",
+        section="사회",
+        published_at=now - timedelta(hours=1),
+        summary="합성 검증용 요약문입니다. " * 3,
+        evidence_text="합성 검증용 본문입니다. " * 5,
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.IRRELEVANT,
+        rule_score=0.0,
+    )
+
+
+def test_publish_gate_blocks_a_fatal_tier_personnel_match_left_unhandled() -> None:
+    # 원장·이사장·장관·차관·국장급 인사는 고정 칼럼과 동일하게 발행을 막는다.
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    personnel = _personnel_candidate(
+        "personnel-fatal", "보건복지부, 신임 장관 후보자에 OOO 지명", now
+    )
+    plan = _plan(selected.candidate_id)
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+
+    blocked = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=[selected, personnel],
+        health=_health(now),
+    )
+
+    assert blocked.allowed is False
+    assert any("인사 소식 감시 대상(기관장급)" in error for error in blocked.fatal_errors)
+    assert any(personnel.candidate_id in item.cause for item in blocked.reporting_items)
+
+
+def test_publish_gate_only_warns_on_a_warning_tier_personnel_match_left_unhandled() -> None:
+    # 실국장·과장급처럼 빈번한 인사는 발행을 막지 않고 감사 보고에만 남긴다.
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    personnel = _personnel_candidate(
+        "personnel-warning", "한국장애인개발원 본부장 인사 발령, OOO 선임", now
+    )
+    plan = _plan(selected.candidate_id)
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+
+    result = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=[selected, personnel],
+        health=_health(now),
+    )
+
+    assert result.allowed is True
+    assert not any("인사 소식 감시 대상" in error for error in result.fatal_errors)
+    assert any(
+        "인사 소식 감시 대상(하위 조직장·과장급)" in warning for warning in result.degraded_warnings
+    )
+    assert any(personnel.candidate_id in item.cause for item in result.reporting_items)
+
+
+def test_publish_gate_accepts_a_personnel_match_excluded_with_a_reason() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    personnel = _personnel_candidate(
+        "personnel-fatal", "보건복지부, 신임 장관 후보자에 OOO 지명", now
+    )
+    plan = _plan(selected.candidate_id)
+    plan = EditorialPlan(
+        issues=plan.issues,
+        exclusions=[
+            EditorialExclusion(
+                candidate_id=personnel.candidate_id,
+                reason="후보자 지명 단계로 아직 공식 인사가 아니어서 제외함",
+            )
+        ],
+    )
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+
+    allowed = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=[selected, personnel],
+        health=_health(now),
+    )
+
+    assert allowed.allowed is True
+    assert not any("인사 소식 감시 대상" in error for error in allowed.fatal_errors)
+
+
 def test_publish_gate_is_silent_when_no_fixed_column_ran_that_day() -> None:
     root = __import__("pathlib").Path(__file__).parents[1]
     policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
