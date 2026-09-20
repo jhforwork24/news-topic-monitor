@@ -14,13 +14,10 @@
   "permissions": {
     "defaultMode": "dontAsk",
     "allow": [
-      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-create-*",
-      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-update-*",
-      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-duplicate-page",
-      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-move-pages",
-      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__notion-convert-page-to-skill",
       "mcp__Notion__*",
+      "mcp__ca02acf0-799a-4a44-b98b-a159d565f64f__*",
       "mcp__Claude_Code_Remote__*",
+      "mcp__bf7c680d-5fdc-5ef4-b4a0-abadb619bf0a__*",
       "mcp__github__actions_list",
       "mcp__github__pull_request_read",
       "Bash(git fetch*)",
