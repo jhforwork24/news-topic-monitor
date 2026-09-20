@@ -11,6 +11,7 @@ from news_topic_monitor.cli import (
     _report_window,
     _revalidate_failed_census_sources,
     _revalidation_body_limit,
+    _scale_queue_settings,
 )
 from news_topic_monitor.models import (
     ArticleRecord,
@@ -21,18 +22,43 @@ from news_topic_monitor.models import (
     SourceHealth,
     VerificationStatus,
 )
+from news_topic_monitor.notion_publish import (
+    QUEUE_MAX_CANDIDATES_CEILING,
+    EditorialQueueSettings,
+)
 from news_topic_monitor.policy import load_briefing_policy
 from news_topic_monitor.storage import JsonlStorage
 
 
 def test_report_window_defaults_to_the_0500_kst_boundary() -> None:
-    args = argparse.Namespace(date="2026-08-25", start=None, end=None)
+    args = argparse.Namespace(date="2026-08-26", start=None, end=None)  # 수요일
 
     date_value, start, end = _report_window(args)
 
-    assert date_value.isoformat() == "2026-08-25"
-    assert end == datetime(2026, 8, 24, 20, tzinfo=UTC)  # 2026-08-25 05:00 KST
-    assert start == datetime(2026, 8, 23, 20, tzinfo=UTC)  # 2026-08-24 05:00 KST
+    assert date_value.isoformat() == "2026-08-26"
+    assert end == datetime(2026, 8, 25, 20, tzinfo=UTC)  # 2026-08-26 05:00 KST
+    assert start == datetime(2026, 8, 24, 20, tzinfo=UTC)  # 2026-08-25 05:00 KST
+
+
+def test_report_window_on_tuesday_reaches_back_to_the_saturday_boundary() -> None:
+    # 발행은 KST 화~토라 월요일 아침 발행이 없다. 화요일 창이 토요일 경계까지 내려가
+    # 토·일 보도가 어느 창에도 빠지지 않게 한다.
+    args = argparse.Namespace(date="2026-09-22", start=None, end=None)  # 화요일
+
+    _date_value, start, end = _report_window(args)
+
+    assert end == datetime(2026, 9, 21, 20, tzinfo=UTC)  # 2026-09-22 05:00 KST
+    assert start == datetime(2026, 9, 18, 20, tzinfo=UTC)  # 2026-09-19 05:00 KST (토)
+    assert end - start == timedelta(days=3)
+
+
+def test_report_window_on_saturday_stays_a_24h_window() -> None:
+    args = argparse.Namespace(date="2026-09-19", start=None, end=None)  # 토요일
+
+    _date_value, start, end = _report_window(args)
+
+    assert start == datetime(2026, 9, 17, 20, tzinfo=UTC)  # 2026-09-18 05:00 KST (금)
+    assert end - start == timedelta(days=1)
 
 
 def test_report_window_bridges_the_0700_to_0500_transition_on_2026_09_16() -> None:
@@ -53,6 +79,29 @@ def test_report_window_returns_to_the_normal_24h_window_after_the_transition() -
     assert date_value.isoformat() == "2026-09-17"
     assert end == datetime(2026, 9, 16, 20, tzinfo=UTC)  # 2026-09-17 05:00 KST
     assert start == datetime(2026, 9, 15, 20, tzinfo=UTC)  # 2026-09-16 05:00 KST
+
+
+def test_scale_queue_settings_leaves_a_24h_window_untouched() -> None:
+    settings = EditorialQueueSettings()
+    end = datetime(2026, 9, 21, 20, tzinfo=UTC)
+
+    scaled = _scale_queue_settings(settings, start=end - timedelta(days=1), end=end)
+
+    assert scaled == settings
+
+
+def test_scale_queue_settings_raises_candidate_caps_on_a_widened_window() -> None:
+    settings = EditorialQueueSettings()
+    end = datetime(2026, 9, 21, 20, tzinfo=UTC)
+
+    scaled = _scale_queue_settings(settings, start=end - timedelta(days=3), end=end)
+
+    # 180의 3배는 상한 360에서 멈추고, 본문 확인은 24의 3배인 72로 상한(200) 아래에 머문다.
+    assert scaled.max_candidates == QUEUE_MAX_CANDIDATES_CEILING
+    assert scaled.body_fetch_limit_per_source == 72
+    # 섹션별 이슈 상한은 이 경로가 건드리지 않는다.
+    assert scaled.chunk_size == settings.chunk_size
+    assert scaled.evidence_chars == settings.evidence_chars
 
 
 def test_report_window_explicit_start_overrides_the_transition() -> None:

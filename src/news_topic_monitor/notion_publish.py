@@ -167,6 +167,10 @@ class NotionPublishResult:
     fingerprint: str
 
 
+QUEUE_MAX_CANDIDATES_CEILING = 360
+QUEUE_BODY_LIMIT_PER_SOURCE_CEILING = 200
+
+
 @dataclass(frozen=True)
 class EditorialQueueSettings:
     max_candidates: int = 180
@@ -178,7 +182,11 @@ class EditorialQueueSettings:
     def from_env(cls) -> EditorialQueueSettings:
         return cls(
             max_candidates=max(
-                20, min(_environment_integer("CHAT_EDITORIAL_MAX_CANDIDATES", 180), 360)
+                20,
+                min(
+                    _environment_integer("CHAT_EDITORIAL_MAX_CANDIDATES", 180),
+                    QUEUE_MAX_CANDIDATES_CEILING,
+                ),
             ),
             chunk_size=max(5, min(_environment_integer("CHAT_EDITORIAL_CHUNK_SIZE", 24), 24)),
             evidence_chars=max(
@@ -186,7 +194,10 @@ class EditorialQueueSettings:
             ),
             body_fetch_limit_per_source=max(
                 1,
-                min(_environment_integer("CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE", 24), 200),
+                min(
+                    _environment_integer("CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE", 24),
+                    QUEUE_BODY_LIMIT_PER_SOURCE_CEILING,
+                ),
             ),
         )
 

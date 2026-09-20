@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 from collections.abc import Callable
+from dataclasses import replace
 from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -59,6 +60,8 @@ from .models import (
     RunHealth,
 )
 from .notion_publish import (
+    QUEUE_BODY_LIMIT_PER_SOURCE_CEILING,
+    QUEUE_MAX_CANDIDATES_CEILING,
     EditorialQueueAlreadyBuiltError,
     EditorialQueueSettings,
     EditorialQueueValidationError,
@@ -286,7 +289,7 @@ def _briefing(args: argparse.Namespace, root: Path) -> int:
 def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
     date_value, start, end = _report_window(args)
     report_date = date_value.isoformat()
-    collection_start = end - timedelta(hours=args.collect_hours)
+    collection_start = min(end - timedelta(hours=args.collect_hours), start)
     if collection_start >= end:
         raise SystemExit("collect-hours must be greater than zero")
 
@@ -615,10 +618,36 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
         return 3
 
 
+# 후보·본문 확인 상한은 24시간 창을 기준으로 잡혀 있다. 창이 길어진 날(화요일 72시간)에
+# 이 상한을 그대로 두면 월요일 보도가 앞선 토·일 보도에 밀려 후보 단계에서 잘려나간다.
+# 창 길이에 비례해 상한만 올린다. 섹션별 이슈 상한(SECTION_MAX_ISSUES)은 건드리지 않으므로
+# 브리핑 분량은 그대로이고, 늘어난 후보 중 무엇을 싣느냐만 편집·감사 단계가 판단한다.
+def _scale_queue_settings(
+    queue_settings: EditorialQueueSettings, *, start: datetime, end: datetime
+) -> EditorialQueueSettings:
+    window_days = (end - start) / timedelta(days=1)
+    if window_days <= 1:
+        return queue_settings
+    return replace(
+        queue_settings,
+        max_candidates=min(
+            round(queue_settings.max_candidates * window_days),
+            QUEUE_MAX_CANDIDATES_CEILING,
+        ),
+        body_fetch_limit_per_source=min(
+            round(queue_settings.body_fetch_limit_per_source * window_days),
+            QUEUE_BODY_LIMIT_PER_SOURCE_CEILING,
+        ),
+    )
+
+
 def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
     date_value, start, end = _report_window(args)
     report_date = date_value.isoformat()
-    collection_start = end - timedelta(hours=args.collect_hours)
+    # --collect-hours는 보고 경계 앞쪽으로 겹쳐 수집해 늦게 발견된 기사를 잡는 장치다.
+    # 창이 그 값보다 길어진 날에는 창의 시작까지 내려가야 한다. 그러지 않으면 창 안의
+    # 앞부분(화요일이면 토요일 보도)을 아예 수집하지 않고도 "기사 없음"으로 보이게 된다.
+    collection_start = min(end - timedelta(hours=args.collect_hours), start)
     if collection_start >= end:
         raise SystemExit("collect-hours must be greater than zero")
 
@@ -628,7 +657,9 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
         source_registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
         briefing_policy = load_briefing_policy(settings.root / "config" / "briefing-policy.yaml")
         validate_policy_contract(source_registry, briefing_policy)
-        queue_settings = EditorialQueueSettings.from_env()
+        queue_settings = _scale_queue_settings(
+            EditorialQueueSettings.from_env(), start=start, end=end
+        )
         runner_temp = os.getenv("RUNNER_TEMP", "").strip() or None
         with TemporaryDirectory(
             prefix="news-topic-chat-editorial-", dir=runner_temp
@@ -1516,6 +1547,22 @@ def _revalidation_body_limit(*, window_end: datetime, requested_at: datetime) ->
 REPORT_WINDOW_TRANSITION_DATE = date(2026, 9, 16)
 REPORT_WINDOW_TRANSITION_START_HOUR = 7
 
+# 예약 발행은 KST 화~토 아침에 돈다(예약이 UTC 월~금이라 +9시간이면 화~토가 된다).
+# 토요일 발행이 금요일 보도를, 화요일 발행이 월요일 보도를 다루므로 토 05:00 ~ 월 05:00
+# KST(토·일 보도)이 어느 창에도 들어가지 않는 48시간 공백이 있었다. 창의 시작을 직전
+# 발행일의 경계로 잡아 이 공백을 없앤다. 화요일만 72시간이 되고 나머지 요일은 24시간
+# 그대로다. 발행 요일이 바뀌거나 하루를 건너뛰어도 같은 규칙으로 공백이 메워진다.
+PUBLICATION_WEEKDAYS = frozenset({1, 2, 3, 4, 5})  # 화~토 (월=0)
+PUBLICATION_LOOKBACK_LIMIT_DAYS = 7
+
+
+def _previous_publication_date(date_value: date) -> date:
+    for offset in range(1, PUBLICATION_LOOKBACK_LIMIT_DAYS + 1):
+        candidate = date_value - timedelta(days=offset)
+        if candidate.weekday() in PUBLICATION_WEEKDAYS:
+            return candidate
+    return date_value - timedelta(days=1)
+
 
 def _report_window(args: argparse.Namespace):
     now_kst = datetime.now(KST)
@@ -1533,7 +1580,11 @@ def _report_window(args: argparse.Namespace):
             tzinfo=KST,
         ).astimezone(UTC)
     else:
-        start = end - timedelta(days=1)
+        start = datetime.combine(
+            _previous_publication_date(date_value),
+            time(hour=REPORT_WINDOW_END_HOUR),
+            tzinfo=KST,
+        ).astimezone(UTC)
     assert start is not None and end is not None
     if start >= end:
         raise SystemExit("start must be earlier than end")
