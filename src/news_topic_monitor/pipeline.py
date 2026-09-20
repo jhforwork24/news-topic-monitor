@@ -29,7 +29,7 @@ from .models import (
     StoreResult,
     VerificationStatus,
 )
-from .sources import is_mandatory_opinion_column
+from .sources import is_mandatory_opinion_column, monitored_personnel_match
 from .storage import JsonlStorage
 from .utils import (
     content_hash,
@@ -328,7 +328,19 @@ class Collector:
             discovery.section,
             discovery.summary,
         )
-        if (first.candidate or capture_body or mandatory_column) and adapter.fetch_candidate_bodies:
+        # 인사 소식 감시 대상(기관+직위+인사 이벤트 용어)도 같은 이유로 title-only 판정과
+        # 무관하게 본문 확인을 강제한다 — 장애정책 핵심 기관의 인사는 disability_rights
+        # 토픽 용어를 전혀 쓰지 않는 경우가 흔하다(예: "보건복지부, 장애인정책국장에 OOO
+        # 내정").
+        monitored_personnel = monitored_personnel_match(
+            discovery.title,
+            discovery.byline,
+            discovery.section,
+            discovery.summary,
+        )
+        if (
+            first.candidate or capture_body or mandatory_column or monitored_personnel is not None
+        ) and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")
                 html_text = response.text

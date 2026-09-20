@@ -25,6 +25,7 @@ from news_topic_monitor.notion_publish import (
     NotionPublisher,
     NotionPublishSettings,
     _opinion_queue_hint,
+    _personnel_queue_hint,
     notion_blocks,
 )
 from news_topic_monitor.selection_review import NearMissTopic, ScoredArticle, SelectionReview
@@ -417,6 +418,46 @@ def test_opinion_queue_hint_is_none_for_an_ordinary_candidate() -> None:
         primary_source_validation=PrimarySourceValidation.NOT_REQUIRED,
     )
     assert _opinion_queue_hint(candidate) is None
+
+
+def _personnel_candidate(title: str, *, source: str = "hani") -> EditorialCandidate:
+    return EditorialCandidate(
+        candidate_id="candidate-1",
+        source=source,
+        canonical_url="https://example.com/1",
+        title=title,
+        byline="김기자",
+        section="사회",
+        published_at=datetime(2026, 9, 18, 0, tzinfo=UTC),
+        summary="합성 시험 요약",
+        evidence_text="합성 시험 본문",
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.IRRELEVANT,
+        rule_score=0.0,
+        primary_source_validation=PrimarySourceValidation.NOT_REQUIRED,
+    )
+
+
+def test_personnel_queue_hint_flags_a_fatal_tier_match() -> None:
+    candidate = _personnel_candidate("보건복지부, 신임 장관 후보자에 OOO 지명")
+    assert _personnel_queue_hint(candidate) == (
+        "인사 소식 감시 대상(보건복지부 장관, 미처리 시 발행 차단) — 선정 또는 제외 사유 필수"
+    )
+
+
+def test_personnel_queue_hint_flags_a_warning_tier_match() -> None:
+    candidate = _personnel_candidate("한국장애인개발원 본부장 인사 발령, OOO 선임")
+    assert _personnel_queue_hint(candidate) == (
+        "인사 소식 감시 대상(한국장애인개발원 본부장, 미처리 시 감사 보고만) — "
+        "선정 또는 제외 사유 필수"
+    )
+
+
+def test_personnel_queue_hint_is_none_without_an_event_term() -> None:
+    # 기관+직위만으로는 오탐이 나므로 이벤트 용어 없이는 힌트가 붙지 않는다.
+    candidate = _personnel_candidate("한국장애인고용공단 이사장이 국정감사에 출석했다")
+    assert _personnel_queue_hint(candidate) is None
 
 
 def _scored_article(key: str, *, topic_score: float, selected: bool = False) -> ScoredArticle:

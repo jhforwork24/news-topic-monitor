@@ -6,7 +6,11 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .editorial import article_candidate_id, mandatory_opinion_candidate
+from .editorial import (
+    article_candidate_id,
+    mandatory_opinion_candidate,
+    monitored_personnel_candidate,
+)
 from .models import (
     ArticleRecord,
     AuditSeverity,
@@ -309,14 +313,13 @@ def evaluate_publish_gate(
     # day needs no handling: it simply produces no candidate, so this never fires.
     # 2026-09-18 published with no III절 at all while the 미디어스 김민하 칼럼 sat
     # unselected in the queue, and nothing in the pipeline noticed.
+    planned_ids = {candidate_id for issue in plan.issues for candidate_id in issue.candidate_ids}
+    excused_ids = {exclusion.candidate_id for exclusion in plan.exclusions}
+
     mandatory_columns = [
         candidate for candidate in candidates if mandatory_opinion_candidate(candidate)
     ]
     if mandatory_columns:
-        planned_ids = {
-            candidate_id for issue in plan.issues for candidate_id in issue.candidate_ids
-        }
-        excused_ids = {exclusion.candidate_id for exclusion in plan.exclusions}
         unhandled = [
             candidate
             for candidate in mandatory_columns
@@ -340,6 +343,59 @@ def evaluate_publish_gate(
                         ),
                     )
                 )
+
+    # 인사 소식 감시 대상(기관+직위+인사 이벤트 용어)도 고정 칼럼과 같은 원리로 강제한다.
+    # 등급(원장·이사장·장관·차관·국장급=fatal, 하위 조직장·과장급=warning)에 따라 발행을
+    # 막거나 감사 보고에만 남긴다 — 과장급 전보 같은 빈번한 인사로 발행 전체가 막히는 것을
+    # 피하기 위함이다.
+    personnel_matches = [
+        (candidate, monitored_personnel_candidate(candidate)) for candidate in candidates
+    ]
+    unhandled_personnel = [
+        (candidate, target)
+        for candidate, target in personnel_matches
+        if target is not None
+        and candidate.candidate_id not in planned_ids
+        and candidate.candidate_id not in excused_ids
+    ]
+    fatal_personnel = [
+        item for item in unhandled_personnel if item[1].severity == AuditSeverity.FATAL
+    ]
+    warning_personnel = [
+        item for item in unhandled_personnel if item[1].severity == AuditSeverity.WARNING
+    ]
+    if fatal_personnel:
+        fatal.append("대기열에 있는 인사 소식 감시 대상(기관장급)이 초안에 선정도 제외도 되지 않음")
+        for candidate, target in fatal_personnel:
+            reporting.append(
+                ReportingItem(
+                    cause=(
+                        f"{target.label} 인사 미처리: {candidate.title} ({candidate.candidate_id})"
+                    ),
+                    fallback="발행을 막고 초안을 다시 편집",
+                    result="fatal",
+                    next_action=(
+                        "해당 candidate_id를 관련 섹션 이슈에 넣거나, 싣지 않는 이유를 "
+                        "plan.exclusions에 남긴 뒤 다시 발행"
+                    ),
+                )
+            )
+    if warning_personnel:
+        warnings.append(
+            "대기열에 있는 인사 소식 감시 대상(하위 조직장·과장급) "
+            f"{len(warning_personnel)}건이 초안에 선정도 제외도 되지 않음"
+        )
+        for candidate, target in warning_personnel:
+            reporting.append(
+                ReportingItem(
+                    cause=(
+                        f"{target.label} 인사 미처리: {candidate.title} ({candidate.candidate_id})"
+                    ),
+                    fallback="발행은 진행하되 감사 보고에 남김",
+                    result="warning",
+                    next_action="다음 편집에서 선정 또는 제외 사유를 남길지 검토",
+                )
+            )
 
     census_gap_hits = [
         hit

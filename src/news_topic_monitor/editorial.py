@@ -29,7 +29,9 @@ from .sources import (
     DISABILITY_SECTION_ALLOWED_SOURCES,
     LABOR_SECTION_ALLOWED_SOURCES,
     SOURCE_CAMP,
+    PersonnelTarget,
     is_mandatory_opinion_column,
+    monitored_personnel_match,
 )
 from .storage import JsonlStorage
 from .utils import normalize_text, stable_article_key
@@ -126,6 +128,9 @@ def select_chat_editorial_candidates(
     put it behind that day's 24 most recent 경향 candidates and outside 경향's
     ~13 balanced slots. There are at most three such columns a day, so seating
     them costs the rest of the queue almost nothing.
+
+    Monitored-institution personnel news is seated the same way and for the same
+    reason: an appointment story can run on any source, at any time in the window.
     """
 
     eligible: list[EditorialCandidate] = []
@@ -134,7 +139,11 @@ def select_chat_editorial_candidates(
             continue
         if candidate.verification_status == VerificationStatus.BODY_VERIFIED:
             eligible.append(candidate)
-    pinned = [candidate for candidate in eligible if mandatory_opinion_candidate(candidate)]
+    pinned = [
+        candidate
+        for candidate in eligible
+        if mandatory_opinion_candidate(candidate) or monitored_personnel_candidate(candidate)
+    ]
     pinned_ids = {candidate.candidate_id for candidate in pinned}
     rest = [candidate for candidate in eligible if candidate.candidate_id not in pinned_ids]
     return pinned[:limit] + _balanced_candidates(rest, max(0, limit - len(pinned)))
@@ -143,6 +152,15 @@ def select_chat_editorial_candidates(
 def mandatory_opinion_candidate(candidate: EditorialCandidate) -> bool:
     return is_mandatory_opinion_column(
         candidate.source,
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    )
+
+
+def monitored_personnel_candidate(candidate: EditorialCandidate) -> PersonnelTarget | None:
+    return monitored_personnel_match(
         candidate.title,
         candidate.byline,
         candidate.section,
