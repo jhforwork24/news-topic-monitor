@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-09-23",
-  "generated_at": "2026-09-22T23:24:51.574678Z",
+  "generated_at": "2026-09-22T23:35:04.667361Z",
   "articles": [
     {
       "candidate_id": "667da96ba8d7147a0233dd8bafa5b574a24b39aec7ef158a05352ae565368c17",
@@ -47519,7 +47519,7 @@
       "published_at": "2026-09-22T21:16:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T21:22:25.475104Z",
-      "last_checked_at": "2026-09-22T23:22:31.881493Z",
+      "last_checked_at": "2026-09-22T23:32:41.228708Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -47674,7 +47674,7 @@
       "published_at": "2026-09-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.310317Z",
-      "last_checked_at": "2026-09-22T23:22:27.562975Z",
+      "last_checked_at": "2026-09-22T23:32:36.766718Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47693,7 +47693,7 @@
       "published_at": "2026-09-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.310184Z",
-      "last_checked_at": "2026-09-22T23:22:25.830624Z",
+      "last_checked_at": "2026-09-22T23:32:34.756474Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47712,7 +47712,7 @@
       "published_at": "2026-09-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.310049Z",
-      "last_checked_at": "2026-09-22T23:22:23.669713Z",
+      "last_checked_at": "2026-09-22T23:32:32.964152Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47731,7 +47731,7 @@
       "published_at": "2026-09-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309917Z",
-      "last_checked_at": "2026-09-22T23:22:21.719180Z",
+      "last_checked_at": "2026-09-22T23:32:31.018579Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47750,7 +47750,7 @@
       "published_at": "2026-09-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309785Z",
-      "last_checked_at": "2026-09-22T23:22:19.720213Z",
+      "last_checked_at": "2026-09-22T23:32:28.548386Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47769,7 +47769,7 @@
       "published_at": "2026-09-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309635Z",
-      "last_checked_at": "2026-09-22T23:22:17.645530Z",
+      "last_checked_at": "2026-09-22T23:32:26.848310Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47788,7 +47788,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309498Z",
-      "last_checked_at": "2026-09-22T23:22:15.399639Z",
+      "last_checked_at": "2026-09-22T23:32:24.896027Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47807,7 +47807,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309362Z",
-      "last_checked_at": "2026-09-22T23:22:13.660911Z",
+      "last_checked_at": "2026-09-22T23:32:22.722204Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47826,7 +47826,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309230Z",
-      "last_checked_at": "2026-09-22T23:22:11.759827Z",
+      "last_checked_at": "2026-09-22T23:32:21.039681Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47845,7 +47845,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.309093Z",
-      "last_checked_at": "2026-09-22T23:22:09.552211Z",
+      "last_checked_at": "2026-09-22T23:32:19.052548Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47864,7 +47864,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308947Z",
-      "last_checked_at": "2026-09-22T23:22:07.406592Z",
+      "last_checked_at": "2026-09-22T23:32:17.081653Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47883,7 +47883,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308813Z",
-      "last_checked_at": "2026-09-22T23:22:05.405292Z",
+      "last_checked_at": "2026-09-22T23:32:14.801157Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47902,7 +47902,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308659Z",
-      "last_checked_at": "2026-09-22T23:22:04.476220Z",
+      "last_checked_at": "2026-09-22T23:32:12.913389Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47921,7 +47921,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308527Z",
-      "last_checked_at": "2026-09-22T23:22:01.407544Z",
+      "last_checked_at": "2026-09-22T23:32:10.898793Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47940,7 +47940,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308395Z",
-      "last_checked_at": "2026-09-22T23:21:59.767640Z",
+      "last_checked_at": "2026-09-22T23:32:08.946608Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47959,7 +47959,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308259Z",
-      "last_checked_at": "2026-09-22T23:21:57.459295Z",
+      "last_checked_at": "2026-09-22T23:32:06.543055Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47978,7 +47978,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.308128Z",
-      "last_checked_at": "2026-09-22T23:21:55.659134Z",
+      "last_checked_at": "2026-09-22T23:32:05.490084Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -47997,7 +47997,7 @@
       "published_at": "2026-09-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307999Z",
-      "last_checked_at": "2026-09-22T23:21:53.453870Z",
+      "last_checked_at": "2026-09-22T23:32:02.037706Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48016,7 +48016,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307865Z",
-      "last_checked_at": "2026-09-22T23:21:51.773870Z",
+      "last_checked_at": "2026-09-22T23:32:00.031632Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48035,7 +48035,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307727Z",
-      "last_checked_at": "2026-09-22T23:21:49.674413Z",
+      "last_checked_at": "2026-09-22T23:31:58.077358Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48054,7 +48054,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307557Z",
-      "last_checked_at": "2026-09-22T23:21:47.327967Z",
+      "last_checked_at": "2026-09-22T23:31:55.907029Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48073,7 +48073,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307417Z",
-      "last_checked_at": "2026-09-22T23:21:45.419861Z",
+      "last_checked_at": "2026-09-22T23:31:53.871937Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48092,7 +48092,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307283Z",
-      "last_checked_at": "2026-09-22T23:21:43.664349Z",
+      "last_checked_at": "2026-09-22T23:31:51.848631Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48111,7 +48111,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.307126Z",
-      "last_checked_at": "2026-09-22T23:21:42.489444Z",
+      "last_checked_at": "2026-09-22T23:31:50.772275Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -48130,7 +48130,7 @@
       "published_at": "2026-09-22T21:30:05Z",
       "modified_at": null,
       "discovered_at": "2026-09-22T23:10:17.306866Z",
-      "last_checked_at": "2026-09-22T23:21:37.043453Z",
+      "last_checked_at": "2026-09-22T23:31:44.939049Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -51300,6 +51300,25 @@
       "verification_grade": "B",
       "issue_id": null,
       "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "02da48f0ef0e981a2f8a1f82bf28eb7e59ea0dedf92ff0c64a17fbb39357c9de",
+      "canonical_url": "https://theindigo.co.kr/archives/69884",
+      "title": "[전윤선의 무장애 여행] 모두에게 열린 숲, 서울국제정원박람회",
+      "outlet": "theindigo",
+      "reporter": "전윤선",
+      "published_at": "2026-09-22T23:23:16Z",
+      "modified_at": "2026-09-22T23:23:18Z",
+      "discovered_at": "2026-09-22T23:32:51.004303Z",
+      "last_checked_at": "2026-09-22T23:32:51.004303Z",
+      "discovery_route": [
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-22T20%3A00%3A00Z&before=2026-09-22T23%3A31%3A41Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "06fda10a8d772319550ead75ca4f37aec9247e0f7e14ea8cbcebba8671de336c",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
     }
   ],
   "census": [
@@ -51579,16 +51598,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "[추석] 전북체육회장 3파전 가능성 속 검증 문턱 높아졌다…전북체육 새...",
-        "original_url": "http://www.domin.co.kr/news/articleView.html?idxno=1569793",
-        "naver_url": "http://www.domin.co.kr/news/articleView.html?idxno=1569793",
-        "published_at": "2026-09-22T09:54:00Z",
-        "description": "전문체육 경쟁력 강화와 생활체육 확대, 도농 간 시설 격차 해소, 장애인 체육 접근성, 학교체육과 지역 체육의 연계 등 지역별·계층별 격차를 줄일 정책 도 요구된다. 4년 전보다 강화된 선거제도와 후보 검증 절차가...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "“한동훈 YS급으로 키운건 민주당…복당 흐름으로 간다”[황형준의 법정...",
         "original_url": "https://www.donga.com/news/Politics/article/all/20260922/134720902/1",
         "naver_url": "https://n.news.naver.com/mnews/article/020/0003750138?sid=100",
@@ -51596,6 +51605,16 @@
         "description": "▶ 김근식: 장애인 증 받아 일단. ▷ 황형준: 장애인 증 6급이 있다니까요. ▶ 김근식: 이제 그걸 올려가지고... 이 라인까지를 다 포함해서 대대적인 더군다나 거기다가 정책 실장도 비어 있잖아요. 그다음에 안보실장은 어떻게...",
         "matched_source": "donga",
         "in_deterministic_collection": true
+      },
+      {
+        "query": "장애인 정책",
+        "title": "[추석] 전북체육회장 3파전 가능성 속 검증 문턱 높아졌다…전북체육 새...",
+        "original_url": "http://www.domin.co.kr/news/articleView.html?idxno=1569793",
+        "naver_url": "http://www.domin.co.kr/news/articleView.html?idxno=1569793",
+        "published_at": "2026-09-22T09:54:00Z",
+        "description": "전문체육 경쟁력 강화와 생활체육 확대, 도농 간 시설 격차 해소, 장애인 체육 접근성, 학교체육과 지역 체육의 연계 등 지역별·계층별 격차를 줄일 정책 도 요구된다. 4년 전보다 강화된 선거제도와 후보 검증 절차가...",
+        "matched_source": null,
+        "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
@@ -51779,21 +51798,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "이계철 의장 \" 장애인 생활체육 더 가까이\"...한마음 체육대회서 지원 약...",
-        "original_url": "https://www.ajunews.com/view/20260922172207048",
-        "naver_url": "https://www.ajunews.com/view/20260922172207048",
-        "published_at": "2026-09-22T08:34:00Z",
-        "description": "한편 화성특례시의회는 2027년 전국 장애인 체육대회 개최 준비와 연계해 장애인 생활체육 참여 기회와 시설 접근성을 지속적으로 살피고, 장애인 선수와 체육단체 현장의 의견을 바탕으로 관련 정책 과 지원 방안을 점검해...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "LH 하반기 5·6급 신입사원 235명 공채, 29일까지 원서 접수",
         "original_url": "https://www.businesspost.co.kr/BP?command=article_view&num=447780",
         "naver_url": "https://www.businesspost.co.kr/BP?command=article_view&num=447780",
         "published_at": "2026-09-22T08:34:00Z",
         "description": "국가유공자와 장애인 은 법정 의무고용 비율에 맞춰 별도 모집단위로 나눠 뽑는다. 지원서는 LH 홈페이지에서 접수할 수 있다. 이성훈 LH 사장은 \"정부의 주택공급 확대 정책 을 차질 없이 이행해 국민의 주거 안정을...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "이계철 의장 \" 장애인 생활체육 더 가까이\"...한마음 체육대회서 지원 약...",
+        "original_url": "https://www.ajunews.com/view/20260922172207048",
+        "naver_url": "https://www.ajunews.com/view/20260922172207048",
+        "published_at": "2026-09-22T08:34:00Z",
+        "description": "한편 화성특례시의회는 2027년 전국 장애인 체육대회 개최 준비와 연계해 장애인 생활체육 참여 기회와 시설 접근성을 지속적으로 살피고, 장애인 선수와 체육단체 현장의 의견을 바탕으로 관련 정책 과 지원 방안을 점검해...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -51806,6 +51825,16 @@
         "description": "이번 위문 대상은 노인, 장애인 , 여성, 아동 등이 생활하고 있는 사회복지시설 47개소다. 양산시는 사전에... 한편, 양산시는 앞으로도 취약계층을 위한 다양한 지원 정책 을 통해 따뜻한 지역사회 조성에 힘쓸 방침이다.",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "장애인 이 비정상인 것이 아니라 '정상'의 기준이 너무 좁다",
+        "original_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=233491",
+        "naver_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=233491",
+        "published_at": "2026-09-22T08:30:00Z",
+        "description": "푸코가 직접 장애인 정책 을 연구한 것은 아니다. 하지만 그는 우리가 너무나 자연스럽다고 생각하는 '정상', '비정상', '질병', '인간'이라는 개념조차 처음부터 존재했던 것이 아니라 역사 속에서 만들어졌다고 보았다....",
+        "matched_source": "ablenews",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -51824,16 +51853,6 @@
         "naver_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=233526",
         "published_at": "2026-09-22T08:30:00Z",
         "description": "도입 ▲ 정책 수립 과정에서 장애인 당사자 의견을 반영할 수 있는 민관 합동 이동권 개선 위원회 구성 등을 요구했다. 이에 9월 21일 수원시와 관광마케팀을 비롯해 수원문화재단, 수원행차 차량 개조 관계자, 소담IL센터 등...",
-        "matched_source": "ablenews",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
-        "title": "장애인 이 비정상인 것이 아니라 '정상'의 기준이 너무 좁다",
-        "original_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=233491",
-        "naver_url": "https://www.ablenews.co.kr/news/articleView.html?idxno=233491",
-        "published_at": "2026-09-22T08:30:00Z",
-        "description": "푸코가 직접 장애인 정책 을 연구한 것은 아니다. 하지만 그는 우리가 너무나 자연스럽다고 생각하는 '정상', '비정상', '질병', '인간'이라는 개념조차 처음부터 존재했던 것이 아니라 역사 속에서 만들어졌다고 보았다....",
         "matched_source": "ablenews",
         "in_deterministic_collection": true
       },
@@ -51939,21 +51958,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "문정우 금산군수 \"지방 살리려면 말 아닌 예산…소멸지역 더 지원해야\"",
-        "original_url": "https://cc.newdaily.co.kr/site/data/html/2026/09/22/2026092200303.html",
-        "naver_url": "https://cc.newdaily.co.kr/site/data/html/2026/09/22/2026092200303.html",
-        "published_at": "2026-09-22T08:04:00Z",
-        "description": "균형발전 정책 이 필요하다는 것이다. 중앙정부가 각종 복지·생활SOC 시설의 운영 기준과 의무인력을 정하면서 정작 인건비는 기초자치단체가 부담하도록 하는 구조도 개선해야 할 문제로 꼽았다. 문 군수는 장애인 복지관과...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "태안군의회, 15일간 정례회 마무리…행정사무감사 193건 처분 요구",
         "original_url": "https://www.m-i.kr/news/articleView.html?idxno=1417590",
         "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=1417590",
         "published_at": "2026-09-22T08:04:00Z",
         "description": "체육센터에는 장애인 이용 편의를 고려한 차량·보행 동선과 주차공간, 비가림시설 등의 보완을 주문했다.... 의원들은 집행부로부터 256건의 자료를 제출받아 주요 정책 과 사업 추진 상황, 예산 집행의 적정성, 사업...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "문정우 금산군수 \"지방 살리려면 말 아닌 예산…소멸지역 더 지원해야\"",
+        "original_url": "https://cc.newdaily.co.kr/site/data/html/2026/09/22/2026092200303.html",
+        "naver_url": "https://cc.newdaily.co.kr/site/data/html/2026/09/22/2026092200303.html",
+        "published_at": "2026-09-22T08:04:00Z",
+        "description": "균형발전 정책 이 필요하다는 것이다. 중앙정부가 각종 복지·생활SOC 시설의 운영 기준과 의무인력을 정하면서 정작 인건비는 기초자치단체가 부담하도록 하는 구조도 개선해야 할 문제로 꼽았다. 문 군수는 장애인 복지관과...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52169,16 +52188,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "전동휠체어 못 타는 '무장애 관광차량' 지적에…수원시 \"개선하겠다\"",
-        "original_url": "https://www.beminor.com/news/articleView.html?idxno=30462",
-        "naver_url": "https://www.beminor.com/news/articleView.html?idxno=30462",
-        "published_at": "2026-09-22T07:02:00Z",
-        "description": "사진 소담 장애인 자립생활센터 수원시가 '무장애 관광차량'이라고 홍보했지만 전동휠체어 이용자는 탈 수... 특히 수원시 관계자들은 국비 사업으로 추진되는 무장애 관광열차인 '화성어차'와 다목적 밴 도입 시 정책 ...",
-        "matched_source": "beminor",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "[위클리오늘] 남양주시, 퇴계원읍서 16개 읍·면·동 '현장시장실' 첫 순...",
         "original_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795701",
         "naver_url": "http://www.weeklytoday.com/news/articleView.html?idxno=795701",
@@ -52186,6 +52195,16 @@
         "description": "시는 시민의 일상과 맞닿은 다양한 정책 과 사업을 추진하고 있다. 오늘 발표된 주요 소식을 한데 모았다.... 특히 24시간 돌봄이 필요한 최중증 장애인 가정에서는 장애인 활동지원 서비스 이용과 돌봄 부담에 대한...",
         "matched_source": null,
         "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "전동휠체어 못 타는 '무장애 관광차량' 지적에…수원시 \"개선하겠다\"",
+        "original_url": "https://www.beminor.com/news/articleView.html?idxno=30462",
+        "naver_url": "https://www.beminor.com/news/articleView.html?idxno=30462",
+        "published_at": "2026-09-22T07:02:00Z",
+        "description": "사진 소담 장애인 자립생활센터 수원시가 '무장애 관광차량'이라고 홍보했지만 전동휠체어 이용자는 탈 수... 특히 수원시 관계자들은 국비 사업으로 추진되는 무장애 관광열차인 '화성어차'와 다목적 밴 도입 시 정책 ...",
+        "matched_source": "beminor",
+        "in_deterministic_collection": true
       },
       {
         "query": "장애인 정책",
@@ -52206,66 +52225,6 @@
         "description": "행정안전부는 22일 정부세종청사에서 정책 설명회를 열고 이 같은 내용을 담은 '노후주택 화재안전 관리 강화... 가스 분야에서는 노인· 장애인 ·아동이 거주하는 화재취약가구를 대상으로 가스타이머콕 설치 지원을...",
         "matched_source": null,
         "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "대구달성군, '제6기 달성군 지역사회보장계획' 최종보고 및 심의 개최",
-        "original_url": "https://www.pressian.com/pages/articles/2026092213092943834",
-        "naver_url": "https://n.news.naver.com/mnews/article/002/0002457994?sid=102",
-        "published_at": "2026-09-22T06:57:00Z",
-        "description": "복지 정책 밑그림으로, 22일 대표협의체 회의를 열고 '제6기 달성군 지역사회보장계획'최종보고와 심의를... 또한 달성군은 아동·청소년부터 청년, 노인, 장애인 까지 생애주기별 복지 수요 대응, 취약계층 위한...",
-        "matched_source": "pressian",
-        "in_deterministic_collection": false
-      },
-      {
-        "query": "장애인 정책",
-        "title": "치매·중증·고령 수용자, 출소해도 갈 곳이 없다",
-        "original_url": "https://h21.hani.co.kr/arti/society/society_general/59929.html",
-        "naver_url": "https://n.news.naver.com/mnews/article/036/0000054222?sid=102",
-        "published_at": "2026-09-22T06:56:00Z",
-        "description": "사실을 장애인 차별행위로 판단해 법무부 장관에게 간병 실태 점검과 소장 주의 조치를 권고했고, 법무부는... 김대근 한국형사·법무 정책 연구원 연구위원은 “(고령·환자 수용자의 경우) 사회·경제적 취약성과 주거...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[금융권 이모저모]한국산업은행, IBK기업은행과 1200억원 '넥스트스테이...",
-        "original_url": "https://www.businessplus.kr/news/articleView.html?idxno=117253",
-        "naver_url": "https://www.businessplus.kr/news/articleView.html?idxno=117253",
-        "published_at": "2026-09-22T06:56:00Z",
-        "description": "금융권에서는 정책 금융기관이 상장을 준비하는 혁신기업 등에 투자하는 1200억원 규모 펀드를 조성하고... 평소 은행 점포가 없는 지역이나 은행 방문이 어려운 고령층· 장애인 등을 대상으로 복지관 등을 찾아...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "[충남에듀있슈] 이병도 교육감 도민과의 약속 이행 본격화",
-        "original_url": "https://www.kukinews.com/article/view/kuk202609220169",
-        "naver_url": "https://www.kukinews.com/article/view/kuk202609220169",
-        "published_at": "2026-09-22T06:54:00Z",
-        "description": "참석한 자문위원들은 공약의 안정적 실행과 지속 가능한 미래 교육 정책 추진 방안을 논의하고, 교육 현장... 이병도 교육감은 대회 현장에서 충남 장애인 체육회, 교육지원청 교육장, 특수학교장 등과 차담회를 갖고 장애...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "“버스가 눈앞에서 지나가” 휠체어 승객 설움…‘예약앱’ 깔고 심야시...",
-        "original_url": "https://biz.heraldcorp.com/article/10882365",
-        "naver_url": "https://n.news.naver.com/mnews/article/016/0002701009?sid=101",
-        "published_at": "2026-09-22T06:52:00Z",
-        "description": "보도에 턱은 없는지, 건물 출입구로 진입할 수 있는지, 장애인 화장실은 어디에 있는지 하나씩 확인하기... 김미경 대전시 버스 정책 과장은 “추운 크리스마스에 휠체어 이용자가 예약하고 정류장에서 기다렸지만 기사가...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "토스, 청년 금융·자립 지원 공로…국무총리 표창 받았다",
-        "original_url": "http://www.thefirstmedia.net/news/articleView.html?idxno=209360",
-        "naver_url": "http://www.thefirstmedia.net/news/articleView.html?idxno=209360",
-        "published_at": "2026-09-22T06:50:00Z",
-        "description": "토스 운영사 비바리퍼블리카는 '2026 청년 정책 유공 포상'에서 국무총리 표창을 수상했다고 22일 밝혔다.... 시각 장애인 , 외국인 유학생 등으로 교육 대상도 확대했다. 청년 채용도 지속했다. 토스는 최근 3년간 만 19~34세...",
-        "matched_source": null,
-        "in_deterministic_collection": null
       }
     ],
     "potential_gaps": [
@@ -52277,16 +52236,6 @@
         "published_at": "2026-09-22T08:26:00Z",
         "description": "장애인 권 활동가 47명에게 쌓인 벌금 5,120만 원 가운데 두 사람이 먼저 몸으로 갚기 시작한 몫이다.... 주거취약계층을 위한 정책 은 기존 제도를 소폭 넓힌 수준이라는 평가다. 3. 내란 가담 군 사령관 5명의 1심 선고에...",
         "matched_source": "newscham",
-        "in_deterministic_collection": false
-      },
-      {
-        "query": "장애인 정책",
-        "title": "대구달성군, '제6기 달성군 지역사회보장계획' 최종보고 및 심의 개최",
-        "original_url": "https://www.pressian.com/pages/articles/2026092213092943834",
-        "naver_url": "https://n.news.naver.com/mnews/article/002/0002457994?sid=102",
-        "published_at": "2026-09-22T06:57:00Z",
-        "description": "복지 정책 밑그림으로, 22일 대표협의체 회의를 열고 '제6기 달성군 지역사회보장계획'최종보고와 심의를... 또한 달성군은 아동·청소년부터 청년, 노인, 장애인 까지 생애주기별 복지 수요 대응, 취약계층 위한...",
-        "matched_source": "pressian",
         "in_deterministic_collection": false
       }
     ],
@@ -53418,23 +53367,23 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-09-22T23:22:41.604609Z",
+    "status": "complete",
+    "checked_at": "2026-09-22T23:32:53.579671Z",
     "checks": [
       {
         "issue_title": "장애인 시외이동권 헌재 재판소원, 국가인권위 의견제출 촉구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "발달장애 학생 시험 차별구제소송 임시조치, 법원 첫 심문",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -53447,18 +53396,18 @@
       },
       {
         "issue_title": "장애인거주시설 학대 합동점검 형식화, 국정조사 촉구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "왜소증 장애판정 기준 26년째 미비, 개편 요구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -53471,10 +53420,10 @@
       },
       {
         "issue_title": "'보호자 반대'로 멈춘 한길마을 자립조사, 안성시 탈시설 계획 부재",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -53495,10 +53444,10 @@
       },
       {
         "issue_title": "코레일 자회사 노동자 1,300명, 처우개선·직접고용 요구 파업",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -53527,18 +53476,18 @@
       },
       {
         "issue_title": "레미콘 제조노동자 10명 중 6명, 연장·야간·휴일수당 미지급 경험",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "공무원 초과근무 매시간 확인 도입에 공무원노조 반발",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
