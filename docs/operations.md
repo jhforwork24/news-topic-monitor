@@ -120,6 +120,23 @@ candidate_id를 관련 섹션(`disability` 또는 `labor`) 이슈에 넣거나, 
 배정하며, 후보 줄에 `인사 소식 감시 대상` 힌트를 붙인다. 이 힌트가 없으면 그날 그 인사 소식이
 없었다는 뜻이지 후보가 걸러졌다는 뜻이 아니다.
 
+## 초안·감사 페이지의 날짜 속성 누락
+
+finalize가 "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 초안 · YYYY-MM-DD (found=0)"
+또는 "... Claude 독립 감사 · YYYY-MM-DD (found=0)"로 실패하면서, 해당 페이지가 Notion에 실제로
+존재하고 제목도 정확하며 본문 JSON의 `report_date`도 맞다면 — 원인은 페이지 자체의 구조화된
+`날짜` 속성이 비어 있는 것이다(2026-09-22 실제 발생 사례: 감사 서브에이전트가 JSON 본문의
+`report_date`는 정확히 썼지만 Notion 페이지 속성 패널의 `날짜`를 설정하지 않았다). finalizer는
+제목과 `날짜` 속성을 함께 필터링해 페이지를 찾으므로(`notion_publish.py`의 `_query_exact`), 본문에
+적힌 날짜 문자열은 이 조회와 무관하다.
+
+`notion-fetch`로 해당 페이지의 `properties`를 확인해 `date:날짜:start`가 report_date로 채워져
+있는지 본다. 비어 있으면 `notion-update-page`(command=`update_properties`)로
+`{"date:날짜:start": "YYYY-MM-DD", "date:날짜:is_datetime": 0}`를 설정하고, finalize를 재트리거한다
+— 초안·감사 내용 자체를 다시 쓸 필요는 없다. `docs/claude-editorial-instructions.md`·
+`docs/claude-auditor-task.md`의 제출 계약에 날짜 속성을 재확인하라는 지침이 있으니, 페이지 생성
+직후 반드시 재조회해 이 속성이 비어 있지 않은지 눈으로 확인한다.
+
 ## Publish gate 차단
 
 1. `health/publish_gate/latest.json`에서 `allowed`, `fatal_errors`, `degraded_warnings`,

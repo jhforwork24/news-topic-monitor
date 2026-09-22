@@ -64,9 +64,15 @@ candidate_id가 없으면 `fatal`이다(누락). 동시에 `plan.exclusions`에�
 ## 제출 계약
 
 정확한 제목 `Claude 독립 감사 · YYYY-MM-DD`의 활성 페이지가 없으면 `대기열 초안 감사 등`
-data source에 만들고, 있으면 갱신한다. 같은 제목의 활성 페이지를 둘 이상 만들지 않는다. 설명문과 별개로 아래
-구조의 **JSON code block을 정확히 하나** 둔다. `submitted_at`은 실제 제출시각의 timezone-aware
-ISO 8601이어야 하며 초안 제출시각보다 늦어야 한다.
+data source에 만들고, 있으면 갱신한다. 같은 제목의 활성 페이지를 둘 이상 만들지 않는다.
+페이지를 새로 만들 때는 제목뿐 아니라 `날짜` 속성도 반드시 `report_date`로 설정한다 — finalizer는
+제목과 `날짜` 속성을 함께 필터링해 페이지를 찾으므로, `날짜` 속성이 비어 있으면 제목이 정확해도
+"활성 Notion 페이지가 정확히 1개여야 함(found=0)"으로 발행이 실패한다(2026-09-22 1차 시도에서
+실제로 발생: JSON 본문의 `report_date`는 맞았지만 페이지 속성 `날짜`가 비어 있어 finalizer가
+감사 페이지를 찾지 못했다). "날짜"는 본문·JSON에 적힌 날짜 문자열이 아니라 Notion 페이지 자체의
+구조화된 `날짜` 속성(Notion UI의 속성 패널, notion-fetch 결과의 `properties.date:날짜:start`)을
+가리킨다. 설명문과 별개로 아래 구조의 **JSON code block을 정확히 하나** 둔다. `submitted_at`은
+실제 제출시각의 timezone-aware ISO 8601이어야 하며 초안 제출시각보다 늦어야 한다.
 
 ```json
 {
@@ -91,5 +97,6 @@ ISO 8601이어야 하며 초안 제출시각보다 늦어야 한다.
 ```
 
 finding이 없으면 `findings`를 빈 배열로 둔다. `severity`는 `fatal` 또는 `warning`만 허용한다.
-제출 뒤 제목·날짜·queue_id·draft_id와 JSON code block 1개를 다시 읽어 확인한다. 실패하면 기존
-감사를 성공으로 재사용하지 말고 이 작업에 원인·대체경로·결과·다음 조치를 보고한다.
+제출 뒤 제목·날짜 속성·queue_id·draft_id와 JSON code block 1개를 다시 읽어 확인한다 — 페이지
+속성의 `날짜`가 실제로 `report_date`로 채워져 있는지(비어 있지 않은지)를 포함해서 확인한다.
+실패하면 기존 감사를 성공으로 재사용하지 말고 이 작업에 원인·대체경로·결과·다음 조치를 보고한다.
