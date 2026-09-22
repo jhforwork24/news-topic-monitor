@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "report_date": "2026-09-19",
-  "checked_at": "2026-09-19T03:33:54.170292Z",
+  "report_date": "2026-09-22",
+  "checked_at": "2026-09-22T01:05:36.544960Z",
   "allowed": true,
   "fatal_errors": [],
   "degraded_warnings": [
@@ -11,13 +11,13 @@
   "unclassified_failures": 0,
   "reporting_items": [
     {
-      "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 추미애, 민주당과 첫 예산 정책 협의회…\"경기도 현안 국비 확보 총력\"",
+      "cause": "newscham: 결정론적 수집에 없는 검색 후보 ‘평탄화’ 사흘 뒤 공적주택 119만 호, 새 임대 62%는 2029년 이후다",
       "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
       "result": "potential_gap",
       "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
     },
     {
-      "cause": "newscham: 결정론적 수집에 없는 검색 후보 파병은 없다는 대통령, 청해부대 강화는 고심 중이다",
+      "cause": "pressian: 결정론적 수집에 없는 검색 후보 고속도로 통행료 감면 5.4조원…정부 보전은 17년째 '0원'",
       "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
       "result": "potential_gap",
       "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"

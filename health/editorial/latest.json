@@ -1,11 +1,23 @@
 {
   "prompt_version": 1,
   "report_date": "2026-09-22",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 360,
+  "included_after_first_pass": 0,
+  "published_issue_count": 15,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 2.041,
-    "total": 3.156
+    "api_preflight": 1.726,
+    "assurance": 0.006,
+    "bridge_import_validation": 10.111,
+    "census_retry": 0.0,
+    "final_state_recrawl": 503.42,
+    "gap_reverse_search": 119.853,
+    "render_briefing": 3.806,
+    "total": 643.767
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: Claude 독립 감사 · 2026-09-22 (found=0)",
-  "completed_at": "2026-09-22T00:38:11.765348Z"
+  "error": null,
+  "completed_at": "2026-09-22T01:05:42.897717Z"
 }
