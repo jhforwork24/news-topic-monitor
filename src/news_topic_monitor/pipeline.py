@@ -29,7 +29,11 @@ from .models import (
     StoreResult,
     VerificationStatus,
 )
-from .sources import is_mandatory_opinion_column, monitored_personnel_match
+from .sources import (
+    DESIGNATED_COLUMN_SOURCES,
+    is_mandatory_opinion_column,
+    monitored_personnel_match,
+)
 from .storage import JsonlStorage
 from .utils import (
     content_hash,
@@ -328,6 +332,18 @@ class Collector:
             discovery.section,
             discovery.summary,
         )
+        # mediaus는 RSS가 없고 sitemap.xml로만 발견되는데, sitemap 발견은 summary 필드를
+        # 아예 제공하지 않는다(khan도 sitemap만 쓰지만 "[고병권의 묵묵]"처럼 필자명이 제목
+        # 자체에 있어 title만으로 위 판정이 통과한다 — mediaus는 필자 표기가 본문/og:description
+        # 안에만 있어 제목에 아무 단서가 없다). 그 결과 위 판정은 discovery 시점에 summary가
+        # 비어 있는 한 절대 True가 될 수 없어 본문을 영영 못 가져오고, DB에는
+        # byline=summary=null·classification=irrelevant가 영구히 남는다(2026-09-22 미디어스
+        # 김민하 칼럼 "'기승전 김현지' 타령, 이제 끝내려면"이 실제로 이렇게 갇혀, 편집
+        # 대기열은 별도의 capture_all_bodies 수집으로 본문을 확보해 III절 고정 칼럼으로 올바르게
+        # 선정했지만 그 결과가 이 영속 저장소에는 반영되지 않아 발행 게이트가 같은 칼럼을 "허용
+        # 범위 밖의 칼럼"으로 거부했다). DESIGNATED_COLUMN_SOURCES는 summary 없이도 본문 확인을
+        # 강제해 이 간극을 없앤다.
+        designated_column_source = discovery.source in DESIGNATED_COLUMN_SOURCES
         # 인사 소식 감시 대상(기관+직위+인사 이벤트 용어)도 같은 이유로 title-only 판정과
         # 무관하게 본문 확인을 강제한다 — 장애정책 핵심 기관의 인사는 disability_rights
         # 토픽 용어를 전혀 쓰지 않는 경우가 흔하다(예: "보건복지부, 장애인정책국장에 OOO
@@ -339,7 +355,11 @@ class Collector:
             discovery.summary,
         )
         if (
-            first.candidate or capture_body or mandatory_column or monitored_personnel is not None
+            first.candidate
+            or capture_body
+            or mandatory_column
+            or monitored_personnel is not None
+            or designated_column_source
         ) and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")

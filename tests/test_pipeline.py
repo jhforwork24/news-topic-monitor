@@ -202,6 +202,30 @@ class HaniMandatoryColumnAdapter(GoodAdapter):
         return "합성 칼럼 본문으로 필자명이 summary에만 있어도 걸러지지 않는지 확인한다."
 
 
+class MediausMandatoryColumnAdapter(GoodAdapter):
+    source = "mediaus"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        # 실제 mediaus는 RSS가 없고 sitemap.xml로만 발견되며, sitemap 발견은 summary
+        # 필드를 아예 제공하지 않는다. khan("[고병권의 묵묵]...")과 달리 필자 표기가
+        # 제목에도 없어 title-only 판정과 title+summary 판정 둘 다 통과할 단서가 없다.
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url="https://good.test/article/mediaus-sitemap-column",
+                    title="'기승전 김현지' 타령, 이제 끝내려면",
+                    published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "[미디어스=김민하 칼럼] sitemap 발견엔 summary가 없어도 걸러지지 않는지 확인용 본문"
+
+
 class UnconfiguredAdapter(GoodAdapter):
     source = "unconfigured"
 
@@ -303,6 +327,35 @@ def test_mandatory_opinion_column_matches_a_byline_that_is_only_in_the_summary(
         storage=storage,
         classifier=RuleClassifier(topics_path),
         adapters=[HaniMandatoryColumnAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert record.body_status == BodyStatus.FETCHED
+    assert record.verification_status == VerificationStatus.BODY_VERIFIED
+
+
+def test_mediaus_mandatory_column_is_fetched_without_any_discovery_time_summary(
+    tmp_path, topics_path
+) -> None:
+    # 2026-09-23 사고: mediaus는 sitemap.xml로만 발견되고 sitemap 발견은 summary
+    # 필드를 제공하지 않으므로, title/byline/section/summary만 보는
+    # is_mandatory_opinion_column은 본문을 가져오기 전엔 항상 False다(khan은 필자
+    # 표기가 제목 자체에 있어 이 문제가 없다). 실제로 "'기승전 김현지' 타령, 이제
+    # 끝내려면"(미디어스 김민하 칼럼)이 body_status=skipped_irrelevant로 영구히
+    # 갇혀 byline·summary가 계속 null로 남았고, 편집 대기열은 별도 수집으로 본문을
+    # 확보해 III절 고정 칼럼으로 올바르게 선정했는데도 그 결과가 이 영속 저장소에는
+    # 반영되지 않아 발행 게이트가 같은 칼럼을 "허용 범위 밖의 칼럼"으로 거부했다.
+    # 지정 칼럼 출처는 summary 매치 여부와 무관하게 소스 이름만으로 본문 확인을
+    # 강제해야 한다.
+    http = StubHttp()
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=http,
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[MediausMandatoryColumnAdapter()],
     ).run(
         datetime(2026, 8, 15, 0, tzinfo=UTC),
         datetime(2026, 8, 15, 2, tzinfo=UTC),
