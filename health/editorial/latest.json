@@ -3,14 +3,10 @@
   "report_date": "2026-09-23",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 2.553,
-    "assurance": 0.003,
-    "bridge_import_validation": 8.016,
-    "census_retry": 0.0,
-    "final_state_recrawl": 71.946,
-    "gap_reverse_search": 126.446,
-    "total": 217.848
+    "api_preflight": 2.087,
+    "bridge_import_validation": 6.488,
+    "total": 8.589
   },
-  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / '기승전 김현지' 타령, 이제 끝내려면: 허용 범위 밖의 칼럼이 포함됨",
-  "completed_at": "2026-09-22T23:35:08.899858Z"
+  "error": "보고 경계가 8시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
+  "completed_at": "2026-09-23T06:03:57.087390Z"
 }
