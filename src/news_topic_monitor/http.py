@@ -16,6 +16,9 @@ from .settings import Settings
 
 LOGGER = logging.getLogger(__name__)
 RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+# Only these final answers mean "this origin publishes no robots.txt". They are read as
+# allow-all solely for hosts a source registry entry opted in (robots_absent_policy).
+ROBOTS_ABSENT_STATUS = frozenset({404, 410})
 
 
 class RobotsUnavailableError(RuntimeError):
@@ -54,6 +57,7 @@ class CachedRobots:
     fetched_at: datetime
     error: str | None
     robots_url: str
+    absent: bool = False
 
 
 class DomainRateLimiter:
@@ -80,8 +84,11 @@ class SafeHttpClient:
     """HTTP client that checks robots.txt before every non-robots request.
 
     Robots retrieval failures are cached as failures for this run and all requests to
-    that origin fail closed. One client processes requests serially, so the per-domain
-    concurrency limit is one; DomainRateLimiter additionally enforces spacing.
+    that origin fail closed. The single exception is a 404/410 robots.txt on a host in
+    ``robots_absent_allowed_hosts``: that origin publishes no robots.txt, so it is read
+    as allow-all and reported through ``robots_absent_origins``. One client processes
+    requests serially, so the per-domain concurrency limit is one; DomainRateLimiter
+    additionally enforces spacing.
     """
 
     def __init__(
@@ -90,8 +97,12 @@ class SafeHttpClient:
         *,
         transport: httpx.BaseTransport | None = None,
         sleeper=time.sleep,
+        robots_absent_allowed_hosts: frozenset[str] = frozenset(),
     ) -> None:
         self.settings = settings
+        self.robots_absent_allowed_hosts = frozenset(
+            host.lower() for host in robots_absent_allowed_hosts
+        )
         timeout = httpx.Timeout(
             connect=settings.connect_timeout_seconds,
             read=settings.read_timeout_seconds,
@@ -122,6 +133,12 @@ class SafeHttpClient:
     def close(self) -> None:
         self.client.close()
 
+    @property
+    def robots_absent_origins(self) -> frozenset[str]:
+        """Origins read as allow-all this run because robots.txt was 404/410."""
+
+        return frozenset(origin for origin, cached in self._robots.items() if cached.absent)
+
     def robots_decision(self, url: str) -> RobotsDecision:
         origin, robots_url = self._origin_and_robots(url)
         cached = self._robots.get(origin)
@@ -132,6 +149,13 @@ class SafeHttpClient:
             return RobotsDecision(
                 allowed=False,
                 status="unavailable",
+                robots_url=cached.robots_url,
+                detail=cached.error,
+            )
+        if cached.absent:
+            return RobotsDecision(
+                allowed=True,
+                status="absent_allowed",
                 robots_url=cached.robots_url,
                 detail=cached.error,
             )
@@ -199,7 +223,34 @@ class SafeHttpClient:
                 error=None,
                 robots_url=str(response.url),
             )
-        except (httpx.HTTPError, HttpRequestError) as exc:
+        except HttpRequestError as exc:
+            if (
+                exc.status_code in ROBOTS_ABSENT_STATUS
+                and urlsplit(origin).hostname in self.robots_absent_allowed_hosts
+            ):
+                LOGGER.info(
+                    "robots.txt absent (HTTP %s) for opted-in origin %s; no rules apply",
+                    exc.status_code,
+                    origin,
+                )
+                parser = RobotFileParser()
+                parser.set_url(robots_url)
+                parser.parse([])
+                return CachedRobots(
+                    parser=parser,
+                    fetched_at=datetime.now(UTC),
+                    error=f"robots.txt returned HTTP {exc.status_code}",
+                    robots_url=robots_url,
+                    absent=True,
+                )
+            LOGGER.warning("robots.txt unavailable for %s: %s", origin, exc)
+            return CachedRobots(
+                parser=None,
+                fetched_at=datetime.now(UTC),
+                error=str(exc),
+                robots_url=robots_url,
+            )
+        except httpx.HTTPError as exc:
             LOGGER.warning("robots.txt unavailable for %s: %s", origin, exc)
             return CachedRobots(
                 parser=None,

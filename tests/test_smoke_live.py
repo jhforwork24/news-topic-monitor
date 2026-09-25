@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 import pytest
 
@@ -9,6 +10,7 @@ from news_topic_monitor.adapters import ALL_ADAPTERS
 from news_topic_monitor.adapters.base import metadata_from_html
 from news_topic_monitor.adapters.hani import HaniAdapter
 from news_topic_monitor.http import RobotsDeniedError, RobotsUnavailableError, SafeHttpClient
+from news_topic_monitor.policy import load_source_registry
 from news_topic_monitor.settings import ContactRequiredError, Settings
 
 pytestmark = pytest.mark.smoke
@@ -27,7 +29,10 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
     start = end - timedelta(hours=48)
     discovered = []
     discovery_outcomes = []
-    with SafeHttpClient(settings) as http:
+    registry = load_source_registry(Path(__file__).parents[1] / "config" / "source-registry.yaml")
+    with SafeHttpClient(
+        settings, robots_absent_allowed_hosts=registry.robots_absent_allowed_hosts()
+    ) as http:
         for url in adapter.initial_discovery_urls(start, end)[:2]:
             try:
                 response = http.get(
@@ -41,10 +46,6 @@ def test_live_discovery_robots_and_body_parser(adapter_type, tmp_path) -> None:
             except (RobotsDeniedError, RobotsUnavailableError) as exc:
                 discovery_outcomes.append((url, type(exc).__name__))
         assert discovery_outcomes
-        if adapter.source == "newscham":
-            assert all(outcome == "RobotsUnavailableError" for _url, outcome in discovery_outcomes)
-            assert not discovered
-            return
         assert discovered, f"no article URLs found: {discovery_outcomes}"
         article = discovered[0]
         decision = http.robots_decision(article.canonical_url)

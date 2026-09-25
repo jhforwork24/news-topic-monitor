@@ -25,3 +25,15 @@ def test_stable_policy_files_define_exact_census_and_reverse_search_sets() -> No
         for source in policy.publish_gate.designated_reverse_search_required
     )
     assert registry.gap_detectors["naver_api_hub"].original_validation_replacement is False
+
+
+def test_only_newscham_opts_into_reading_an_absent_robots_file_as_allow_all() -> None:
+    root = Path(__file__).parents[1]
+    registry = load_source_registry(root / "config" / "source-registry.yaml")
+    opted_in = {
+        source
+        for source, policy in registry.sources.items()
+        if policy.robots_absent_policy == "allow_if_absent"
+    }
+    assert opted_in == {"newscham"}
+    assert registry.robots_absent_allowed_hosts() == frozenset({"www.newscham.net", "newscham.net"})

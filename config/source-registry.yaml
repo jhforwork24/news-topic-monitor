@@ -44,8 +44,11 @@ sources:
     label: 참세상
     tier: designated_reverse_search
     domains: [www.newscham.net, newscham.net]
-    discovery_routes: [official_origin_fail_closed]
+    discovery_routes: [official_article_list]
     fallbacks: [naver_gap_detection]
+    # 2026-09-25 사용자 승인: robots.txt 404/410은 "robots.txt 없음 = 제한 없음"(RFC 9309)으로
+    # 해석한다. 403/429/5xx·시간초과는 그대로 fail-closed. health의 robots_absent_origins에 기록.
+    robots_absent_policy: allow_if_absent
   chosun:
     label: 조선일보
     tier: designated_reverse_search

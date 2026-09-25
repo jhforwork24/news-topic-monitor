@@ -134,7 +134,46 @@ def test_verified_expanded_body_selectors(adapter, selector) -> None:
     assert "짧은 판별용" in adapter.extract_body(html, "https://example.test/article")
 
 
-def test_newscham_remains_fail_closed() -> None:
+def test_newscham_article_list_parser(fixture_dir) -> None:
     adapter = NewschamAdapter()
-    with pytest.raises(StructureChangedError, match="fail-closed"):
-        adapter.parse_discovery(b"<html></html>", adapter.discovery_url)
+    urls = adapter.initial_discovery_urls(
+        datetime(2026, 9, 22, tzinfo=UTC), datetime(2026, 9, 23, tzinfo=UTC)
+    )
+    assert urls[0] == "https://www.newscham.net/articles/?page=1"
+    assert all(url.startswith(adapter.date_ordered_list_prefix) for url in urls)
+    page = adapter.parse_discovery((fixture_dir / "newscham_list.html").read_bytes(), urls[0])
+    # The sidebar "recent articles" widget and the 기사수정 edit link are not list items.
+    assert [article.article_id for article in page.articles] == ["900002", "900001"]
+    first, second = page.articles
+    assert first.canonical_url == "https://www.newscham.net/articles/900002"
+    assert first.title == "시험용 노동 기사 제목"
+    assert first.section == "노동"
+    assert first.byline == "시험 기자"
+    assert first.summary == "시험용 요약 문장이다."
+    # Displayed times are KST; a single-digit hour is still parsed.
+    assert first.published_at == datetime(2026, 9, 23, 8, 11, tzinfo=UTC)
+    assert second.published_at == datetime(2026, 9, 22, 0, 51, tzinfo=UTC)
+    assert all(adapter.validate_article_url(article.canonical_url) for article in page.articles)
+
+
+def test_newscham_list_without_items_is_structure_change() -> None:
+    with pytest.raises(StructureChangedError, match=r"article\.figure"):
+        NewschamAdapter().parse_discovery(
+            b"<html><section class='mainContents'></section></html>",
+            "https://www.newscham.net/articles/?page=1",
+        )
+
+
+def test_newscham_body_selector() -> None:
+    html = (
+        "<html><article id='news-article-post'><header id='news-article-header'>"
+        "<hgroup class='news-article-subject'><h1>제목</h1></hgroup></header>"
+        "<div id='news-article-content' class='content zoom'><p>짧은 판별용 문장</p></div>"
+        "</article></html>"
+    )
+    adapter = NewschamAdapter()
+    assert adapter.extract_body(html, "https://www.newscham.net/articles/900001") == (
+        "짧은 판별용 문장"
+    )
+    with pytest.raises(StructureChangedError):
+        adapter.extract_body("<html></html>", "https://www.newscham.net/articles/900001")

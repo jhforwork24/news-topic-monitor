@@ -32,6 +32,11 @@
    남긴다.
 4. timeout, 403, 429, 5xx, 파싱 불가이면 일시 장애일 수 있으나 허용으로 추정하지 않는다.
    다음 예약 실행의 재시도를 기다린다.
+   404/410(robots.txt 없음)도 기본은 fail-closed다. 사용자가 승인해
+   `config/source-registry.yaml`에 `robots_absent_policy: allow_if_absent`를 둔 출처(현재
+   참세상만)에 한해 RFC 9309에 따라 "robots.txt 없음 = 제한 없음"으로 읽고, health
+   `robots_absent_origins`와 대기열 매니페스트 `출처 점검`에 그 사실을 남긴다. 그런 출처가
+   robots.txt를 새로 게시하면 그 규칙을 그대로 따른다.
 5. robots가 가리키는 새 공식 sitemap이 있다면 그 경로 자체의 허용 여부와 형식을 별도로 검증한
    뒤 어댑터 변경을 검토한다.
 

@@ -89,6 +89,11 @@ KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 �
   요청하지 않았다. 별도 Google API origin에서는 MBCNEWS 공식 채널의 문서화된 메타데이터
   엔드포인트만 사용한다.
 - 참세상은 `/robots.txt`가 404여서 허용으로 추정하지 않고 홈페이지·기사 URL을 요청하지 않았다.
+  (2026-09-25 갱신: 사용자가 404를 "robots.txt 없음"으로 해석하는 출처별 opt-in을 승인했다.
+  같은 날 live로 `/articles/` 목록의 `section.mainContents article.figure`, `h3 a`,
+  `time.pubdate`(KST 표시시각), `p.summary`, `address.author`와 기사 페이지의
+  `article#news-article-post div#news-article-content` 구조를 확인했다. `/rss/`는 빈 응답,
+  `/rss.xml`·`/sitemap.xml`은 404였다. 본문·HTML은 저장하지 않았다.)
 - 각 매체 robots에 명시된 검색·로그인·구매·관리·API 금지 경로는 사용하지 않았다.
 - JTBC의 클라이언트 API나 브라우저 렌더링을 추정·호출하지 않았다.
 - 오마이뉴스의 별도 `star.ohmynews.com` origin은 어댑터 허용 host 밖이므로 요청하지 않았다.

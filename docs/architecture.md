@@ -59,6 +59,8 @@ flowchart LR
 모든 origin은 첫 요청 전에 `scheme://host/robots.txt`를 같은 정직한 User-Agent로 받는다.
 200 응답을 파싱할 수 있을 때만 대상 URL을 평가한다. 연결 오류, 4xx/5xx, 과도한 리다이렉트,
 cross-origin robots 리다이렉트는 모두 `unavailable`이며 대상 URL을 요청하지 않는다.
+예외는 source-registry에서 `robots_absent_policy: allow_if_absent`로 승인된 host의 404/410
+하나뿐이다. 이때 robots 판정은 `absent_allowed`이고 health `robots_absent_origins`에 기록된다.
 
 기사 페이지 리다이렉트는 자동 추적하지 않는다. 각 `Location`을 절대 URL로 바꾼 뒤 새 URL의
 origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 최종 경로가 금지된 경우의 우회를
@@ -83,7 +85,7 @@ origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 �
 
 XML 기반 매체는 공용 `XmlSyndicationAdapter` 계약을 재사용하되 출처별 모듈이 공식 URL,
 허용 host와 live 검증 선택자를 독립적으로 선언한다. 더인디고는 본문 필드를 요청하지 않는
-WordPress REST 어댑터를 사용한다. 참세상은 우회 경로를 두지 않는 fail-closed 어댑터이다.
+WordPress REST 어댑터를 사용한다. 참세상은 공식 전체기사 목록 HTML을 최신순으로 읽고, 조사 시작 이전 기사가 나오면 다음 쪽을 요청하지 않는다(한겨레와 같은 `date_ordered_list_prefix` 계약).
 
 KBS·MBC·SBS·JTBC 방송 4사는 한때 별도 방송 어댑터로 수집했으나, 뉴스9·8시 뉴스·뉴스룸·
 뉴스데스크 같은 특정 프로그램 단위로 장애 보도를 정확히 추릴 방법이 없어 프로젝트에서

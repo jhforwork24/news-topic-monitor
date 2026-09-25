@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
@@ -44,6 +45,12 @@ class SourcePolicy(BaseModel):
     census: CensusPolicy | None = None
     discovery_routes: list[str] = Field(default_factory=list)
     fallbacks: list[str] = Field(default_factory=list)
+    # RFC 9309 §2.3.1.3: a robots.txt answered with 4xx means no crawl rules apply.
+    # This repository stays stricter by default and treats every non-200 answer as a
+    # fail-closed stop. A source may opt in, after a user-approved review, to reading
+    # only a 404/410 "no robots.txt" answer as allow-all. 403/429/5xx, timeouts and
+    # unparseable answers stay fail-closed for every source.
+    robots_absent_policy: Literal["fail_closed", "allow_if_absent"] = "fail_closed"
 
 
 class GapDetectorPolicy(BaseModel):
@@ -71,6 +78,14 @@ class SourceRegistry(BaseModel):
             ):
                 raise ValueError(f"{source} requires at least one registered domain")
         return self
+
+    def robots_absent_allowed_hosts(self) -> frozenset[str]:
+        return frozenset(
+            domain.lower()
+            for policy in self.sources.values()
+            if policy.robots_absent_policy == "allow_if_absent"
+            for domain in policy.domains
+        )
 
     def source_for_url_host(self, host: str | None) -> str | None:
         normalized = (host or "").lower().removeprefix("www.")

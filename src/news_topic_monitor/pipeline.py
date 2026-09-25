@@ -112,6 +112,12 @@ class Collector:
                 health.unclassified_failures += 1
                 health.discovery_status = _failure_status(exc)
             finally:
+                source_hosts = adapter.allowed_discovery_hosts | adapter.allowed_article_hosts
+                health.robots_absent_origins = sorted(
+                    origin
+                    for origin in getattr(self.http, "robots_absent_origins", frozenset())
+                    if urlsplit(origin).hostname in source_hosts
+                )
                 if health.success:
                     health.discovery_status = (
                         DiscoveryStatus.PARTIAL if health.errors else DiscoveryStatus.COMPLETE
@@ -157,11 +163,16 @@ class Collector:
         child_count = 0
         successful_pages = 0
         page_errors: list[str] = []
-        hani_pagination_stopped = False
+        list_prefix = adapter.date_ordered_list_prefix
+        list_pagination_stopped = False
         for discovery_url in queue:
             if discovery_url in visited:
                 continue
-            if hani_pagination_stopped and discovery_url.startswith("https://www.hani.co.kr/arti?"):
+            if (
+                list_pagination_stopped
+                and list_prefix is not None
+                and discovery_url.startswith(list_prefix)
+            ):
                 continue
             visited.add(discovery_url)
             try:
@@ -214,14 +225,12 @@ class Collector:
                     queue.append(child_url)
                     child_count += 1
                     health.discovery_paths_attempted += 1
-                if adapter.source == "hani" and discovery_url.startswith(
-                    "https://www.hani.co.kr/arti?"
-                ):
+                if list_prefix is not None and discovery_url.startswith(list_prefix):
                     dated = [
                         article for article in page.articles if article.published_at is not None
                     ]
                     if dated and min(article.published_at for article in dated) < start:
-                        hani_pagination_stopped = True
+                        list_pagination_stopped = True
             except (
                 RobotsDeniedError,
                 RobotsUnavailableError,

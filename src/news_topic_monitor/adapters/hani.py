@@ -18,6 +18,7 @@ class HaniAdapter(SourceAdapter):
     allowed_discovery_hosts = frozenset({"www.hani.co.kr"})
     allowed_article_hosts = frozenset({"www.hani.co.kr"})
     LIST_URL = "https://www.hani.co.kr/arti?page={page}"
+    date_ordered_list_prefix = "https://www.hani.co.kr/arti?"
     RSS_URL = "https://www.hani.co.kr/rss/"
 
     def __init__(self, max_pages: int = 50) -> None:

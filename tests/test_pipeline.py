@@ -631,3 +631,63 @@ def test_targeted_recrawl_records_rolling_completion_boundary(tmp_path, topics_p
 
     assert health.window_end == health.run_finished_at
     assert health.window_end >= requested_end
+
+
+class DateOrderedListAdapter(SourceAdapter):
+    source = "listed"
+    allowed_discovery_hosts = frozenset({"good.test"})
+    allowed_article_hosts = frozenset({"good.test"})
+    date_ordered_list_prefix = "https://good.test/list?page="
+
+    def initial_discovery_urls(self, start, end):
+        del start, end
+        return [f"https://good.test/list?page={page}" for page in (1, 2, 3)]
+
+    def parse_discovery(self, content, url):
+        del content
+        page = int(url.rsplit("=", 1)[1])
+        published = (
+            datetime(2026, 8, 15, 1, 30, tzinfo=UTC)
+            if page == 1
+            else datetime(2026, 8, 14, 23, tzinfo=UTC)
+        )
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url=f"https://good.test/article/list-{page}",
+                    title="일반 경제 기사",
+                    published_at=published,
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "synthetic"
+
+
+class RobotsAbsentStubHttp(StubHttp):
+    robots_absent_origins = frozenset({"https://good.test", "https://elsewhere.test"})
+
+
+def test_date_ordered_list_stops_paging_and_reports_absent_robots(tmp_path, topics_path) -> None:
+    http = RobotsAbsentStubHttp()
+    health = Collector(
+        http=http,
+        storage=JsonlStorage(tmp_path),
+        classifier=RuleClassifier(topics_path),
+        adapters=[DateOrderedListAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    list_requests = [url for url, purpose in http.requested if purpose == "discovery"]
+    # Page 2 already reaches before the window start, so page 3 is never requested.
+    assert list_requests == [
+        "https://good.test/list?page=1",
+        "https://good.test/list?page=2",
+    ]
+    source_health = health.sources["listed"]
+    assert source_health.success
+    assert source_health.robots_absent_origins == ["https://good.test"]

@@ -589,3 +589,90 @@ def test_queue_refuses_to_rebuild_over_an_existing_manifest(topics_path: Path) -
             queue_settings=EditorialQueueSettings(max_candidates=20, chunk_size=2),
             labor_classifier=_labor_classifier(topics_path),
         )
+
+
+def _manifest_text(blocks: list[dict]) -> list[str]:
+    texts = []
+    for block in blocks:
+        payload = block[block["type"]]
+        texts.append("".join(item["text"]["content"] for item in payload.get("rich_text", [])))
+    return texts
+
+
+def test_queue_manifest_lists_newscham_gap_titles_only_as_unverified_cross_check() -> None:
+    from news_topic_monitor.assurance import SearchHit
+    from news_topic_monitor.chat_bridge import ChatEditorialQueueManifest
+    from news_topic_monitor.notion_publish import _queue_manifest_blocks
+
+    manifest = ChatEditorialQueueManifest(
+        report_date="2026-09-29",
+        queue_id="a" * 64,
+        generated_at=datetime(2026, 9, 28, 21, tzinfo=UTC),
+        report_start=datetime(2026, 9, 25, 20, tzinfo=UTC),
+        report_end=datetime(2026, 9, 28, 20, tzinfo=UTC),
+        initial_health_finished_at=datetime(2026, 9, 28, 20, 30, tzinfo=UTC),
+        candidate_count=1,
+        part_count=1,
+        gap_detection_status="complete",
+        gap_detection_route="naver_api_hub",
+        gap_queries_attempted=5,
+        gap_queries_completed=5,
+        gap_potential_count=1,
+    )
+    hit = SearchHit(
+        query="장애인",
+        title="시험용 참세상 칼럼 제목",
+        original_url="https://www.newscham.net/opinions/column/900001",
+        naver_url=None,
+        published_at=datetime(2026, 9, 28, 1, tzinfo=UTC),
+        description="검색 설명",
+        matched_source="newscham",
+        in_deterministic_collection=False,
+    )
+    blocks = _queue_manifest_blocks(
+        manifest=manifest,
+        part_pages=[],
+        source_failures=[],
+        cross_check_gaps=[hit],
+    )
+    texts = _manifest_text(blocks)
+    assert "교차확인용 잠재 누락 제목 (임시·미검증)" in texts
+    assert any("후보가 아니며 candidate_id도 없다" in text for text in texts)
+    assert "참세상 · 09-28 10:00 · 시험용 참세상 칼럼 제목" in texts
+    # The search description is never copied into the queue.
+    assert not any("검색 설명" in text for text in texts)
+    # The machine-readable manifest JSON is unchanged, so queue_id validation is too.
+    code = next(block for block in blocks if block["type"] == "code")
+    payload = json.loads("".join(item["text"]["content"] for item in code["code"]["rich_text"]))
+    assert "cross_check_gaps" not in payload
+
+    without = _manifest_text(
+        _queue_manifest_blocks(manifest=manifest, part_pages=[], source_failures=[])
+    )
+    assert "교차확인용 잠재 누락 제목 (임시·미검증)" not in without
+
+
+def test_run_source_failures_surfaces_an_absent_robots_file_without_calling_it_a_failure() -> None:
+    from news_topic_monitor.cli import _run_source_failures
+    from news_topic_monitor.models import RunHealth, SourceHealth
+
+    started = datetime(2026, 9, 28, 20, tzinfo=UTC)
+    health = RunHealth(
+        run_started_at=started,
+        run_finished_at=started,
+        window_start=started,
+        window_end=started,
+        all_sources_failed=False,
+        sources={
+            "newscham": SourceHealth(
+                source="newscham",
+                success=True,
+                started_at=started,
+                robots_absent_origins=["https://www.newscham.net"],
+            ),
+            "hani": SourceHealth(source="hani", success=True, started_at=started),
+        },
+    )
+    assert _run_source_failures(health) == [
+        "newscham: robots.txt 없음(404/410) — 승인된 정책으로 https://www.newscham.net 수집"
+    ]
