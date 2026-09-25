@@ -1567,12 +1567,21 @@ REPORT_WINDOW_TRANSITION_START_HOUR = 7
 # 그대로다. 발행 요일이 바뀌거나 하루를 건너뛰어도 같은 규칙으로 공백이 메워진다.
 PUBLICATION_WEEKDAYS = frozenset({1, 2, 3, 4, 5})  # 화~토 (월=0)
 PUBLICATION_LOOKBACK_LIMIT_DAYS = 7
+# 화~토 요일이어도 실제로 예약 발행이 일어나지 않은 날짜(공휴일 등으로 사용자가 건너뛰기로
+# 결정한 날). _previous_publication_date가 이 날짜를 건너뛰어 그 직전 실제 발행일까지
+# 거슬러 올라가므로, 다음 발행의 창이 자동으로 넓어져 빠진 날짜의 보도를 포함한다.
+# 2026-09-26(토, 추석)을 사용자가 명시적으로 건너뛰기로 함에 따라 다음 화요일
+# (2026-09-29)의 창이 2026-09-25(금) 05:00 KST까지 넓어진다.
+SKIPPED_PUBLICATION_DATES = frozenset({date(2026, 9, 26)})
 
 
 def _previous_publication_date(date_value: date) -> date:
     for offset in range(1, PUBLICATION_LOOKBACK_LIMIT_DAYS + 1):
         candidate = date_value - timedelta(days=offset)
-        if candidate.weekday() in PUBLICATION_WEEKDAYS:
+        if (
+            candidate.weekday() in PUBLICATION_WEEKDAYS
+            and candidate not in SKIPPED_PUBLICATION_DATES
+        ):
             return candidate
     return date_value - timedelta(days=1)
 

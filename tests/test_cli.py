@@ -61,6 +61,20 @@ def test_report_window_on_saturday_stays_a_24h_window() -> None:
     assert end - start == timedelta(days=1)
 
 
+def test_report_window_on_the_tuesday_after_a_skipped_saturday_reaches_back_to_friday() -> None:
+    # 2026-09-26(토, 추석)은 사용자 결정으로 건너뛰었다. 그대로면 다음 화요일 창은
+    # 평소처럼 토요일 경계(09-26 05:00)까지만 내려가 금 05:00~토 05:00 보도가 어느
+    # 창에도 들지 못한다. SKIPPED_PUBLICATION_DATES가 이 날짜를 건너뛰게 해 창이
+    # 하루 더 넓어져야 한다.
+    args = argparse.Namespace(date="2026-09-29", start=None, end=None)  # 화요일
+
+    _date_value, start, end = _report_window(args)
+
+    assert end == datetime(2026, 9, 28, 20, tzinfo=UTC)  # 2026-09-29 05:00 KST
+    assert start == datetime(2026, 9, 24, 20, tzinfo=UTC)  # 2026-09-25 05:00 KST (금)
+    assert end - start == timedelta(days=4)
+
+
 def test_report_window_bridges_the_0700_to_0500_transition_on_2026_09_16() -> None:
     args = argparse.Namespace(date="2026-09-16", start=None, end=None)
 
