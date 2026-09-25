@@ -12,7 +12,7 @@
 - 수집 실패나 robots 차단을 기사 부재로 해석하지 않고 보고서·health에 명시한다.
 - 노션 발행은 정확한 제목·날짜와 관리 표식을 확인하고 사용자 작성 페이지를 덮어쓰지 않는다.
 - 공개 저장소 산출물에 개인 노션 페이지 URL·token·data source ID를 기록하지 않는다.
-- `config/source-registry.yaml`의 장애언론 census 3곳과 지정매체 reverse-search 9곳을 임의로
+- `config/source-registry.yaml`의 장애언론 census 3곳과 지정매체 reverse-search 10곳을 임의로
   축소하지 않는다. 변경이 필요하면 정책 파일·문서·회귀시험을 함께 갱신한다.
 - Naver API Hub·외부 검색 결과는 누락 탐지와 역검색 상태 확인에만 사용하며 원문 검증 등급을
   올리는 근거로 사용하지 않는다.

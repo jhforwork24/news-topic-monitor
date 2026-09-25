@@ -217,10 +217,14 @@ DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal 
 대체경로·결과·다음 조치를 남긴다. Naver 원문 URL은 결정론적 수집 URL 집합과 대조하며, 장애언론
 census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간주하지 않고 gate를 차단한다.
 
-09:25 편집 작업은 [`docs/chat-editorial-instructions.md`](docs/chat-editorial-instructions.md),
-09:38 감사 작업은 [`docs/claude-auditor-task.md`](docs/claude-auditor-task.md)를 따른다. 10:00
-기존 예약 작업은 [`docs/claude-supervisory-task.md`](docs/claude-supervisory-task.md)에 따라
-GitHub 결과와 gate만 확인하며 수집·편집·Notion 발행을 반복하지 않는다.
+연결형 Claude 편집 작업은
+[`docs/claude-editorial-instructions.md`](docs/claude-editorial-instructions.md), 독립 감사
+작업은 [`docs/claude-auditor-task.md`](docs/claude-auditor-task.md)를 따른다. 두 작업 모두
+매일 예약 트리거가 대기열 확보 뒤 순서대로 깨우며, GitHub 예약 지연으로 실제 실행 시각은
+날마다 달라진다 — 문서에 고정 시각을 적지 않는다.
+[`docs/claude-supervisory-task.md`](docs/claude-supervisory-task.md)는 별도 감독 예약이 있던
+시기의 문서로, 현재는 예약된 트리거가 없어 보관 상태다(아래 편집·감사 작업이 발행까지 직접
+확인한다).
 
 ## 주제 키워드 수정
 
