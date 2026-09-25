@@ -207,3 +207,73 @@ def test_sensitive_request_header_skips_robots_and_cross_origin_redirect(tmp_pat
         ("other.test/robots.txt", None),
         ("other.test/result", None),
     ]
+
+
+@pytest.mark.parametrize("status", [404, 410])
+def test_absent_robots_is_allow_all_only_for_an_opted_in_host(tmp_path, status) -> None:
+    requested: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requested.append(f"{request.url.host}{request.url.path}")
+        if request.url.path == "/robots.txt":
+            return httpx.Response(status, text="not found")
+        return httpx.Response(200, text="ok")
+
+    with SafeHttpClient(
+        settings(tmp_path),
+        transport=httpx.MockTransport(handler),
+        sleeper=lambda _: None,
+        robots_absent_allowed_hosts=frozenset({"opted.test"}),
+    ) as client:
+        assert client.get("https://opted.test/articles/1").text == "ok"
+        decision = client.robots_decision("https://opted.test/articles/2")
+        assert decision.allowed
+        assert decision.status == "absent_allowed"
+        with pytest.raises(RobotsUnavailableError):
+            client.get("https://other.test/articles/1")
+        assert client.robots_absent_origins == frozenset({"https://opted.test"})
+    assert requested == [
+        "opted.test/robots.txt",
+        "opted.test/articles/1",
+        "other.test/robots.txt",
+    ]
+
+
+@pytest.mark.parametrize("status", [401, 403, 429, 500, 503])
+def test_opted_in_host_still_fails_closed_on_non_absent_robots_errors(tmp_path, status) -> None:
+    requested: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requested.append(request.url.path)
+        return httpx.Response(status, text="error")
+
+    with (
+        SafeHttpClient(
+            settings(tmp_path),
+            transport=httpx.MockTransport(handler),
+            sleeper=lambda _: None,
+            robots_absent_allowed_hosts=frozenset({"opted.test"}),
+        ) as client,
+        pytest.raises(RobotsUnavailableError),
+    ):
+        client.get("https://opted.test/articles/1")
+    assert requested == ["/robots.txt"]
+    assert client.robots_absent_origins == frozenset()
+
+
+def test_opted_in_host_still_obeys_a_published_robots_file(tmp_path) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nDisallow: /\n")
+        return httpx.Response(200, text="ok")
+
+    with (
+        SafeHttpClient(
+            settings(tmp_path),
+            transport=httpx.MockTransport(handler),
+            sleeper=lambda _: None,
+            robots_absent_allowed_hosts=frozenset({"opted.test"}),
+        ) as client,
+        pytest.raises(RobotsDeniedError),
+    ):
+        client.get("https://opted.test/articles/1")

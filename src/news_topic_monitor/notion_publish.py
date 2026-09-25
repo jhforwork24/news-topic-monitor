@@ -14,7 +14,7 @@ from urllib.parse import urlsplit
 import httpx
 from pydantic import ValidationError as PydanticValidationError
 
-from .assurance import GapDetectionResult
+from .assurance import GapDetectionResult, SearchHit
 from .briefing import (
     ENTERTAINMENT_PATHS,
     ENTERTAINMENT_SECTION_TERMS,
@@ -60,6 +60,12 @@ NOTION_MAX_RICH_TEXT_ITEMS = 100
 NOTION_MACHINE_CODE_MAX_CHARS = NOTION_RICH_TEXT_CHUNK_SIZE * NOTION_MAX_RICH_TEXT_ITEMS
 # 한 번의 페이지 생성·children PATCH 요청이 담을 수 있는 블록 수 상한.
 NOTION_MAX_CHILDREN_PER_REQUEST = 100
+# Temporary (2026-09-25): until the new official 참세상 article-list route has run
+# stably for a while, Naver potential-gap titles from these sources are listed in the
+# queue manifest so the editor can check whether another designated outlet covered
+# the same event. They are search results, never candidates or evidence.
+CROSS_CHECK_GAP_SOURCES = frozenset({"newscham"})
+CROSS_CHECK_GAP_LIMIT = 20
 
 
 class NotionConfigurationError(ValueError):
@@ -548,6 +554,11 @@ class NotionPublisher:
                         ),
                         part_pages=part_pages,
                         source_failures=source_failures or [],
+                        cross_check_gaps=[
+                            hit
+                            for hit in gap_detection.potential_gaps
+                            if hit.matched_source in CROSS_CHECK_GAP_SOURCES
+                        ],
                     ),
                 },
             )
@@ -1094,6 +1105,7 @@ def _queue_manifest_blocks(
     manifest: ChatEditorialQueueManifest,
     part_pages: list[dict[str, Any]],
     source_failures: list[str],
+    cross_check_gaps: list[SearchHit] | None = None,
 ) -> list[dict[str, Any]]:
     start_text = manifest.report_start.astimezone(KST).strftime("%Y-%m-%d %H:%M")
     end_text = manifest.report_end.astimezone(KST).strftime("%Y-%m-%d %H:%M")
@@ -1128,6 +1140,35 @@ def _queue_manifest_blocks(
         blocks.extend(_bullet(item) for item in source_failures[:30])
     else:
         blocks.append(_bullet("수집 실패로 기록된 출처 없음"))
+    if cross_check_gaps:
+        blocks.append(_heading("교차확인용 잠재 누락 제목 (임시·미검증)", 2))
+        blocks.append(
+            _paragraph(
+                "아래는 Naver 검색이 찾았지만 공식 수집에 없는 참세상 제목이다. 편집 후보가 "
+                "아니며 candidate_id도 없다. 같은 사건을 다른 지정매체가 보도했는지 대기열에서 "
+                "확인하는 데만 쓰고, 이 제목·설명을 근거로 서술하거나 선정하지 않는다."
+            )
+        )
+        ordered = sorted(
+            cross_check_gaps,
+            key=lambda hit: hit.published_at or datetime.min.replace(tzinfo=UTC),
+            reverse=True,
+        )
+        for hit in ordered[:CROSS_CHECK_GAP_LIMIT]:
+            label = SOURCE_LABELS.get(hit.matched_source or "", hit.matched_source or "")
+            when = (
+                hit.published_at.astimezone(KST).strftime("%m-%d %H:%M")
+                if hit.published_at
+                else "시각 미상"
+            )
+            blocks.append(
+                _bullet(
+                    f"{label} · {when} · {hit.title}",
+                    href=hit.original_url or hit.naver_url,
+                )
+            )
+        if len(ordered) > CROSS_CHECK_GAP_LIMIT:
+            blocks.append(_bullet(f"외 {len(ordered) - CROSS_CHECK_GAP_LIMIT}건 생략"))
     return blocks
 
 

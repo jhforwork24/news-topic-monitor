@@ -34,7 +34,7 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 오마이뉴스 | 공식 최신기사 news sitemap | `[itemprop='articleBody']` |
 | 프레시안 | 공식 최신뉴스 RSS API | `.article_body` |
 | 시사인 | 공식 sitemap | `#article-view-content-div` |
-| 참세상 | robots.txt 확인 실패로 안전 중단 | 요청하지 않음 |
+| 참세상 | `https://www.newscham.net/articles/?page=N` (robots.txt 404 — 승인된 opt-in) | `#news-article-content` |
 | 매일노동뉴스 | news sitemap | `#article-view-content-div` |
 | 미디어스 | 공식 sitemap | `#article-view-content-div` |
 | 비마이너 | news sitemap | `#article-view-content-div` |
@@ -280,7 +280,9 @@ KDF, 일반논평은
 ## robots.txt·저작권 준수
 
 - 모든 발견 경로와 기사 URL 요청 전에 해당 origin의 `/robots.txt`를 현재 User-Agent로 평가한다.
-- robots.txt를 가져오지 못하거나 비정상 응답이면 그 origin에 대해 실패 폐쇄한다.
+- robots.txt를 가져오지 못하거나 비정상 응답이면 그 origin에 대해 실패 폐쇄한다. 단,
+  source-registry에서 사용자 승인으로 `robots_absent_policy: allow_if_absent`를 둔 출처(현재
+  참세상)는 robots.txt 404/410을 "robots.txt 없음 = 제한 없음"으로 읽고 health에 기록한다.
 - 리다이렉트된 URL도 새 origin의 robots.txt를 다시 확인한다. robots.txt 자체의 cross-origin
   리다이렉트는 거부한다.
 - 금지 URL은 요청하지 않고 `blocked_by_robots`로 기록한다.
@@ -301,7 +303,9 @@ KDF, 일반논평은
 - 규칙 기반 판별은 풍자·은유·복합 맥락을 완전히 이해하지 못하므로 `review`가 필요하다.
 - 사이트 구조나 robots.txt가 바뀌면 해당 출처는 안전하게 중단되며 파서 갱신 전까지 공백이 생긴다.
 - 본문 접근이 금지되거나 robots.txt 확인에 실패하면 공개 메타데이터만으로 판별한다.
-- 참세상은 robots.txt가 404인 동안 전체 요청을 안전 중단한다.
+- 참세상은 공식 전체기사 목록(`/articles/`)만 수집하며 `/opinions/` 칼럼 목록은 아직 공식
+  경로에 없다. 칼럼 등은 Naver 누락 탐지로만 보이며 대기열 매니페스트에 교차확인용 제목으로
+  표시된다(임시).
 - 14개 매체 48시간 실측은 수천 건 규모이므로 JSONL 저장소가 장기적으로 커질 수 있다.
 
 이 한계 때문에 **수집 실패를 기사 부재로 해석해서는 안 된다.** 장애인권 의제의 언론 비가시성을

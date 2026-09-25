@@ -233,6 +233,9 @@ class SourceAdapter(ABC):
     media_group: str = "general"
     supports_opinion_scan: bool = False
     fetch_candidate_bodies: bool = True
+    # Newest-first paginated list URLs start with this prefix. Once a page's oldest
+    # dated article precedes the window start, the remaining pages are skipped.
+    date_ordered_list_prefix: str | None = None
 
     @abstractmethod
     def initial_discovery_urls(self, start: datetime, end: datetime) -> list[str]:

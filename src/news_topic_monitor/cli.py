@@ -230,7 +230,7 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
     storage = JsonlStorage(settings.root)
     adapters = _build_adapters(settings, storage, set(args.sources or []))
     classifier = RuleClassifier(settings.root / "config" / "topics.yml")
-    with SafeHttpClient(settings) as http:
+    with _http_client(settings) as http:
         health = Collector(
             http=http,
             storage=storage,
@@ -352,7 +352,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 classifier = RuleClassifier(settings.root / "config" / "topics.yml")
                 LOGGER.info("editorial phase=initial_collection status=started")
                 phase_started = perf_counter()
-                with SafeHttpClient(settings) as http:
+                with _http_client(settings) as http:
                     health = Collector(
                         http=http,
                         storage=storage,
@@ -422,7 +422,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 )
                 phase_started = perf_counter()
                 revalidation_adapters = _build_adapters(settings, storage, selected_sources)
-                with SafeHttpClient(settings) as http:
+                with _http_client(settings) as http:
                     revalidation_health = Collector(
                         http=http,
                         storage=storage,
@@ -671,7 +671,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                     settings.root / "config" / "topics.yml", topic="labor_care_poverty"
                 )
                 seed_discoveries = _known_relevant_seed_discoveries(storage, start=start, end=end)
-                with SafeHttpClient(settings) as http:
+                with _http_client(settings) as http:
                     health = Collector(
                         http=http,
                         storage=storage,
@@ -943,7 +943,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                     ",".join(sorted(selected_sources)),
                 )
                 phase_started = perf_counter()
-                with SafeHttpClient(settings) as http:
+                with _http_client(settings) as http:
                     revalidation_health = Collector(
                         http=http,
                         storage=storage,
@@ -1244,6 +1244,15 @@ def _build_adapters(
     return adapters
 
 
+def _http_client(settings: Settings) -> SafeHttpClient:
+    """Build the crawler client with the registry's approved robots.txt-absent opt-ins."""
+
+    registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
+    return SafeHttpClient(
+        settings, robots_absent_allowed_hosts=registry.robots_absent_allowed_hosts()
+    )
+
+
 def _collect_single_source(
     settings: Settings,
     storage: JsonlStorage,
@@ -1253,7 +1262,7 @@ def _collect_single_source(
     end: datetime,
 ) -> RunHealth:
     adapters = _build_adapters(settings, storage, {source})
-    with SafeHttpClient(settings) as http:
+    with _http_client(settings) as http:
         return Collector(
             http=http,
             storage=storage,
@@ -1371,6 +1380,10 @@ def _known_relevant_seed_discoveries(
 def _run_source_failures(health: RunHealth) -> list[str]:
     failures: list[str] = []
     for source, detail in health.sources.items():
+        for origin in detail.robots_absent_origins:
+            # Not a failure, but never silent: the approved per-source policy read a
+            # 404/410 robots.txt as "no robots.txt, no rules" for this origin.
+            failures.append(f"{source}: robots.txt 없음(404/410) — 승인된 정책으로 {origin} 수집")
         if detail.success:
             continue
         message = detail.errors[0] if detail.errors else detail.discovery_status.value

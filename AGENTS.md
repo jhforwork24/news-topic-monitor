@@ -2,6 +2,10 @@
 
 - 장애인을 권리의 주체·동등한 시민·노동자로 보는 진보적 장애인운동의 관점을 유지한다.
 - robots.txt를 무시·우회하지 않으며, 확인 실패 시 해당 origin 요청을 안전하게 중단한다.
+  유일한 예외는 `config/source-registry.yaml`에서 사용자 승인으로 `robots_absent_policy:
+  allow_if_absent`를 둔 출처의 robots.txt **404/410**(robots.txt 없음)이며, 이 경우만 제한 없음으로
+  해석하고 health `robots_absent_origins`에 남긴다. 403·429·5xx·시간초과·파싱 불가는 모든
+  출처에서 fail-closed다. 새 출처에 이 opt-in을 추가하려면 사용자 승인이 먼저 필요하다.
 - 브라우저 자동제어, 프록시·IP 우회, CAPTCHA·로그인·유료기사 우회, User-Agent 위장을 금지한다.
 - 기사 본문·원본 HTML을 장기 저장하거나 fixture·로그·보고서에 복제하지 않는다.
 - 출처별 파서나 선택자를 바꾸면 최소 fixture와 단위시험을 함께 갱신한다.

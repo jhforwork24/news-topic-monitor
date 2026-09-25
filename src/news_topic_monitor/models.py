@@ -193,6 +193,9 @@ class SourceHealth(BaseModel):
     oldest_discovered_at: datetime | None = None
     newest_discovered_at: datetime | None = None
     unclassified_failures: int = 0
+    # Origins whose robots.txt was 404/410 and, by an approved per-source registry
+    # opt-in, read as "no robots.txt, no rules". Recorded so a report never hides it.
+    robots_absent_origins: list[str] = Field(default_factory=list)
 
 
 class RunHealth(BaseModel):
