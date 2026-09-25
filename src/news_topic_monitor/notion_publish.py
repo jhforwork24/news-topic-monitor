@@ -679,11 +679,57 @@ class NotionPublisher:
 
     def _require_exact_page(self, title: str, report_date: str) -> dict[str, Any]:
         pages = self._query_exact(self.settings.data_source_id, title, report_date)
-        if len(pages) != 1:
-            raise EditorialQueueValidationError(
-                f"활성 Notion 페이지가 정확히 1개여야 함: {title} (found={len(pages)})"
-            )
-        return pages[0]
+        if len(pages) == 1:
+            return pages[0]
+        if not pages:
+            recovered = self._recover_page_with_missing_date_property(title, report_date)
+            if recovered is not None:
+                return recovered
+        raise EditorialQueueValidationError(
+            f"활성 Notion 페이지가 정확히 1개여야 함: {title} (found={len(pages)})"
+        )
+
+    def _recover_page_with_missing_date_property(
+        self, title: str, report_date: str
+    ) -> dict[str, Any] | None:
+        """Self-heal the exact bug that blocked publish on 2026-09-22/23: a
+        draft/audit subagent writes the correct report_date into its JSON body
+        but leaves the page's own 날짜 property empty or wrong, so the
+        title+date filter above finds nothing even though the right page
+        exists. Recovery proceeds only when exactly one page in this data
+        source has this precise title and that page's own JSON body already
+        states the requested report_date — i.e. the page unambiguously
+        identifies itself as today's page through content finalize already
+        treats as authoritative. The 날짜 property is then corrected to match
+        rather than bypassing the date check.
+        """
+
+        candidates = [
+            page
+            for page in self._query_title_only(self.settings.data_source_id, title)
+            if _page_title(page) == title
+        ]
+        if len(candidates) != 1:
+            return None
+        page = candidates[0]
+        try:
+            document = self._page_json_document(page)
+        except EditorialQueueValidationError:
+            return None
+        if document.get("report_date") != report_date:
+            return None
+        page_id = _required_page_id(page)
+        self._request(
+            "PATCH",
+            f"/pages/{page_id}",
+            json={"properties": {"날짜": {"date": {"start": report_date}}}},
+        )
+        page = dict(page)
+        page["properties"] = {
+            **page.get("properties", {}),
+            "날짜": {"date": {"start": report_date}},
+        }
+        return page
 
     def _page_json_document(self, page: dict[str, Any]) -> dict[str, Any]:
         page_id = str(page.get("id") or "")
@@ -771,6 +817,18 @@ class NotionPublisher:
                         {"property": "날짜", "date": {"equals": report_date}},
                     ]
                 },
+                "page_size": 10,
+            },
+        )
+        results = payload.get("results", [])
+        return [item for item in results if isinstance(item, dict)]
+
+    def _query_title_only(self, data_source_id: str, title: str) -> list[dict[str, Any]]:
+        payload = self._request(
+            "POST",
+            f"/data_sources/{data_source_id}/query",
+            json={
+                "filter": {"property": "이름", "title": {"equals": title}},
                 "page_size": 10,
             },
         )

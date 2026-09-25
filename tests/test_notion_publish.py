@@ -21,6 +21,7 @@ from news_topic_monitor.models import (
     VerificationStatus,
 )
 from news_topic_monitor.notion_publish import (
+    EditorialQueueValidationError,
     NotionConfigurationError,
     NotionPublisher,
     NotionPublishSettings,
@@ -372,6 +373,118 @@ def test_notion_query_retries_retry_after() -> None:
     assert publisher._query_date("ds-1", "2026-08-16") == []
     assert calls == 2
     assert delays == [0.25]
+
+
+def test_require_exact_page_self_heals_a_missing_date_property() -> None:
+    # 2026-09-22/23: an audit subagent wrote the correct report_date into its JSON
+    # body but left the page's own 날짜 property empty, so the title+date filter
+    # that _require_exact_page relies on found nothing even though the right page
+    # existed — the fix had to be applied by hand via update_properties. Recovery
+    # falls back to a title-only lookup and, only when exactly one such page exists
+    # and its own JSON body already states today's report_date, patches the 날짜
+    # property to match instead of failing outright.
+    title = "Claude 독립 감사 · 2026-09-23"
+    document = {
+        "schema_version": 1,
+        "report_date": "2026-09-23",
+        "queue_id": "a" * 64,
+        "draft_id": "draft-20260923-080700",
+        "submitted_at": "2026-09-23T08:20:00+09:00",
+        "audit": {"findings": [], "progressive_issue_titles": []},
+    }
+    page = {
+        "id": "audit-page",
+        "properties": {
+            "이름": {"title": [{"plain_text": title}]},
+            "날짜": {"date": None},
+        },
+    }
+    patch_bodies: list[dict] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.method == "POST" and request.url.path.endswith("/query"):
+            body = json.loads(request.content)
+            filt = body.get("filter", {})
+            if "and" in filt:
+                return httpx.Response(200, json={"results": [], "has_more": False})
+            if filt.get("property") == "이름":
+                return httpx.Response(200, json={"results": [page], "has_more": False})
+            return httpx.Response(200, json={"results": [], "has_more": False})
+        if request.method == "GET" and request.url.path == "/v1/blocks/audit-page/children":
+            content = json.dumps(document, ensure_ascii=False)
+            return httpx.Response(
+                200,
+                json={
+                    "results": [{"type": "code", "code": {"rich_text": [{"plain_text": content}]}}],
+                    "has_more": False,
+                },
+            )
+        if request.method == "PATCH" and request.url.path == "/v1/pages/audit-page":
+            patch_bodies.append(json.loads(request.content))
+            return httpx.Response(200, json={"id": "audit-page"})
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="queue-ds"),
+        client=client,
+    )
+
+    recovered = publisher._require_exact_page(title, "2026-09-23")
+
+    assert recovered["id"] == "audit-page"
+    assert patch_bodies == [{"properties": {"날짜": {"date": {"start": "2026-09-23"}}}}]
+
+
+def test_require_exact_page_does_not_recover_a_report_date_mismatch() -> None:
+    # A page can share this exact title from a stale or unrelated run. Recovery
+    # must only trust a title-only match when the page's own JSON body already
+    # names the requested report_date — otherwise it must fail loudly like before.
+    title = "Claude 독립 감사 · 2026-09-23"
+    document = {
+        "schema_version": 1,
+        "report_date": "2026-09-22",
+        "queue_id": "a" * 64,
+        "draft_id": "draft-20260922-092612",
+        "submitted_at": "2026-09-22T09:36:57+09:00",
+        "audit": {"findings": [], "progressive_issue_titles": []},
+    }
+    page = {
+        "id": "stale-page",
+        "properties": {
+            "이름": {"title": [{"plain_text": title}]},
+            "날짜": {"date": {"start": "2026-09-22"}},
+        },
+    }
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.method == "POST" and request.url.path.endswith("/query"):
+            body = json.loads(request.content)
+            filt = body.get("filter", {})
+            if "and" in filt:
+                return httpx.Response(200, json={"results": [], "has_more": False})
+            if filt.get("property") == "이름":
+                return httpx.Response(200, json={"results": [page], "has_more": False})
+            return httpx.Response(200, json={"results": [], "has_more": False})
+        if request.method == "GET" and request.url.path == "/v1/blocks/stale-page/children":
+            content = json.dumps(document, ensure_ascii=False)
+            return httpx.Response(
+                200,
+                json={
+                    "results": [{"type": "code", "code": {"rich_text": [{"plain_text": content}]}}],
+                    "has_more": False,
+                },
+            )
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    client = httpx.Client(base_url="https://api.notion.com", transport=httpx.MockTransport(handler))
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="queue-ds"),
+        client=client,
+    )
+
+    with pytest.raises(EditorialQueueValidationError, match="found=0"):
+        publisher._require_exact_page(title, "2026-09-23")
 
 
 def test_opinion_queue_hint_flags_mandatory_column_even_when_byline_is_only_in_summary() -> None:

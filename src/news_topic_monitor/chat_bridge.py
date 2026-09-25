@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -14,6 +14,16 @@ from .models import EditorialAudit, EditorialCandidate, EditorialPlan
 CHAT_BRIDGE_SCHEMA_VERSION = 1
 QUEUE_ID_PATTERN = re.compile(r"[0-9a-f]{64}")
 DRAFT_ID_PATTERN = re.compile(r"[A-Za-z0-9_.:-]{8,128}")
+
+# 2026-09-23: an audit subagent wrote submitted_at ~15 minutes ahead of real
+# time. It still passed every ordering check below (it was later than the
+# draft's submitted_at), so nothing here caught the actual mistake — it only
+# surfaced downstream as a confusing "재수집 증거 없음" final-state rejection,
+# because the post-draft recrawl could never finish after a timestamp that
+# hadn't happened yet. A small tolerance absorbs Notion's minute-level
+# timestamp truncation and ordinary clock skew without accepting a genuinely
+# future-dated submission.
+FUTURE_SUBMISSION_TOLERANCE = timedelta(minutes=5)
 
 
 class ChatEditorialQueuePart(BaseModel):
@@ -213,7 +223,9 @@ def editorial_queue_id(candidates: list[EditorialCandidate]) -> str:
     )
 
 
-def validate_chat_editorial_bridge(bundle: ChatEditorialBridgeBundle) -> None:
+def validate_chat_editorial_bridge(
+    bundle: ChatEditorialBridgeBundle, *, now: datetime | None = None
+) -> None:
     manifest = bundle.queue.manifest
     draft = bundle.draft
     audit = bundle.audit
@@ -228,6 +240,11 @@ def validate_chat_editorial_bridge(bundle: ChatEditorialBridgeBundle) -> None:
         errors.append("draft predates the verified editorial queue")
     if audit.submitted_at < draft.submitted_at:
         errors.append("audit predates the editorial draft")
+    reference = now or datetime.now(UTC)
+    if draft.submitted_at > reference + FUTURE_SUBMISSION_TOLERANCE:
+        errors.append("draft submitted_at is in the future")
+    if audit.submitted_at > reference + FUTURE_SUBMISSION_TOLERANCE:
+        errors.append("audit submitted_at is in the future")
     if errors:
         raise EditorialValidationError("Claude bridge validation failed: " + "; ".join(errors))
     validate_external_editorial(

@@ -125,6 +125,29 @@ def test_chat_bridge_validates_bound_queue_draft_and_audit() -> None:
         validate_chat_editorial_bridge(mismatched)
 
 
+def test_chat_bridge_rejects_a_future_dated_submission() -> None:
+    # 2026-09-23: an audit subagent wrote submitted_at ~15 minutes ahead of real
+    # time. It passed every ordering check (still later than the draft's
+    # submitted_at) and only surfaced downstream as a confusing "재수집 증거
+    # 없음" final-state rejection. This must be caught here, by name, instead.
+    bundle = _bundle()
+    reference = bundle.audit.submitted_at - timedelta(minutes=30)
+    future_audit = bundle.audit.model_copy(
+        update={"submitted_at": reference + timedelta(minutes=20)}
+    )
+    future_bundle = bundle.model_copy(update={"audit": future_audit})
+
+    with pytest.raises(EditorialValidationError, match="audit submitted_at is in the future"):
+        validate_chat_editorial_bridge(future_bundle, now=reference)
+
+
+def test_chat_bridge_allows_a_submission_within_the_clock_skew_tolerance() -> None:
+    bundle = _bundle()
+    reference = bundle.audit.submitted_at - timedelta(minutes=3)
+
+    validate_chat_editorial_bridge(bundle, now=reference)
+
+
 def test_chat_bridge_rejects_candidate_not_in_verified_queue() -> None:
     bundle = _bundle()
     bad_plan = bundle.draft.plan.model_copy(deep=True)
