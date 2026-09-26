@@ -1,12 +1,11 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-09-25",
+  "report_date": "2026-09-26",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.303,
-    "bridge_import_validation": 5.245,
-    "total": 6.562
+    "api_preflight": 1.827,
+    "total": 2.825
   },
-  "error": "보고 경계가 8시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
-  "completed_at": "2026-09-25T09:04:00.319820Z"
+  "error": "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 초안 · 2026-09-26 (found=0)",
+  "completed_at": "2026-09-26T08:48:39.081267Z"
 }
