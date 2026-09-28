@@ -269,6 +269,65 @@ class BriefingSection:
     issues: list[BriefingIssue]
 
 
+# II절("노동·돌봄·빈곤") 안에서 돌봄 → 빈곤 → 노동 순으로 읽히도록 하는 정렬 우선순위.
+# 후보나 편집 계획에 별도 하위분류 필드가 없으므로, 확정된 이슈의 제목·키워드·요약·논조를
+# config/topics.yml의 labor_care_poverty 용어에서 돌봄·빈곤 쪽만 추려 만든 아래 목록과
+# 대조해 판정한다. 두 쪽 다 안 걸리거나 동점이면 이 섹션의 기본값인 노동으로 둔다.
+CARE_SUBSECTION_TERMS = (
+    "돌봄노동",
+    "돌봄서비스",
+    "돌봄",
+    "요양보호사",
+    "활동지원사",
+    "활동지원",
+    "간병",
+    "공공돌봄",
+    "노인장기요양보험",
+    "장기요양",
+    "사회서비스원",
+)
+POVERTY_SUBSECTION_TERMS = (
+    "빈곤",
+    "생계급여",
+    "생계",
+    "기초생활보장",
+    "기초생활",
+    "노숙",
+    "부양의무자",
+    "차상위계층",
+    "자활사업",
+    "자활근로",
+    "복지사각지대",
+    "위기가구",
+    "수급자",
+    "주거급여",
+    "주거권",
+    "소득보장",
+    "긴급복지지원",
+    "기초연금",
+    "근로장려금",
+)
+
+
+def _labor_subsection_priority(issue: BriefingIssue) -> int:
+    haystack = " ".join(
+        value for value in (issue.title, issue.keyword, issue.summary, issue.tone_analysis) if value
+    )
+    care_hits = sum(1 for term in CARE_SUBSECTION_TERMS if term in haystack)
+    poverty_hits = sum(1 for term in POVERTY_SUBSECTION_TERMS if term in haystack)
+    if care_hits and care_hits >= poverty_hits:
+        return 0
+    if poverty_hits:
+        return 1
+    return 2
+
+
+def _sort_labor_subsection(issues: list[BriefingIssue]) -> list[BriefingIssue]:
+    # list.sort/sorted is stable, so issues tied on priority keep their original
+    # (editorial or score) order — this only breaks ties across the three groups.
+    return sorted(issues, key=_labor_subsection_priority)
+
+
 @dataclass
 class BriefingDocument:
     report_date: str
@@ -373,10 +432,12 @@ def build_briefing(
         BriefingSection("I. 장애정책·장애인운동", disability_issues),
         BriefingSection(
             "II. 노동·돌봄·빈곤",
-            cluster_issues(
-                [item for item, _score in labor],
-                history=history,
-                max_issues=7,
+            _sort_labor_subsection(
+                cluster_issues(
+                    [item for item, _score in labor],
+                    history=history,
+                    max_issues=7,
+                )
             ),
         ),
     ]
@@ -456,7 +517,9 @@ def build_editorial_briefing(
 
     sections = [
         BriefingSection("I. 장애정책·장애인운동", issues_by_section[EditorialSection.DISABILITY]),
-        BriefingSection("II. 노동·돌봄·빈곤", issues_by_section[EditorialSection.LABOR]),
+        BriefingSection(
+            "II. 노동·돌봄·빈곤", _sort_labor_subsection(issues_by_section[EditorialSection.LABOR])
+        ),
     ]
     opinion_issues = issues_by_section[EditorialSection.OPINION]
     if opinion_issues:

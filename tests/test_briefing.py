@@ -840,3 +840,60 @@ def test_previous_coverage_notes_are_capped() -> None:
     notes = previous_coverage_notes([BriefingSection("I. 장애정책·장애인운동", issues)])
     assert len(notes) == PREVIOUS_COVERAGE_NOTE_LIMIT + 1
     assert notes[-1].endswith("5건을 생략함")
+
+
+def test_labor_subsection_orders_care_then_poverty_then_labor() -> None:
+    from news_topic_monitor.briefing import _sort_labor_subsection
+
+    labor_issue = BriefingIssue(
+        title="사업장 산업재해 은폐 논란",
+        articles=[],
+        summary="중대재해가 산업안전보건법 위반으로 은폐됐다는 의혹이 제기됐다.",
+        tone_analysis="노동조합은 진상규명을 요구했다.",
+        keyword="산업재해 은폐",
+    )
+    poverty_issue = BriefingIssue(
+        title="기초생활보장 부양의무자 기준 논란",
+        articles=[],
+        summary="빈곤층이 부양의무자 기준 탓에 생계급여를 받지 못한다는 지적이 나왔다.",
+        tone_analysis="복지사각지대 해소가 필요하다는 지적이 이어졌다.",
+        keyword="부양의무자 기준",
+    )
+    care_issue = BriefingIssue(
+        title="요양보호사 처우 개선 요구",
+        articles=[],
+        summary="돌봄노동 종사자들이 활동지원사 처우 개선을 요구했다.",
+        tone_analysis="공공돌봄 확대가 필요하다는 목소리가 나왔다.",
+        keyword="요양보호사 처우",
+    )
+
+    ordered = _sort_labor_subsection([labor_issue, poverty_issue, care_issue])
+
+    assert [issue.title for issue in ordered] == [
+        "요양보호사 처우 개선 요구",
+        "기초생활보장 부양의무자 기준 논란",
+        "사업장 산업재해 은폐 논란",
+    ]
+
+
+def test_labor_subsection_sort_is_stable_within_the_same_group() -> None:
+    from news_topic_monitor.briefing import _sort_labor_subsection
+
+    first_labor = BriefingIssue(
+        title="파업 첫 번째",
+        articles=[],
+        summary="노동조합이 파업을 예고했다.",
+        tone_analysis="",
+        keyword="파업",
+    )
+    second_labor = BriefingIssue(
+        title="파업 두 번째",
+        articles=[],
+        summary="다른 사업장에서도 파업이 이어졌다.",
+        tone_analysis="",
+        keyword="파업",
+    )
+
+    ordered = _sort_labor_subsection([first_labor, second_labor])
+
+    assert [issue.title for issue in ordered] == ["파업 첫 번째", "파업 두 번째"]
