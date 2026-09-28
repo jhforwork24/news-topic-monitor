@@ -438,3 +438,63 @@ def test_editorial_briefing_rejects_summary_in_formal_register(tmp_path) -> None
     )
     with pytest.raises(BriefingValidationError, match="중립적 서술체가 아님"):
         validate_briefing(document)
+
+
+def test_editorial_briefing_reorders_labor_section_care_then_poverty_then_labor(
+    tmp_path,
+) -> None:
+    labor_article = _article(source="labortoday")
+    poverty_article = _article(source="pressian")
+    care_article = _article(source="beminor")
+    storage = JsonlStorage(tmp_path)
+    for article in (labor_article, poverty_article, care_article):
+        storage.upsert(article)
+
+    # Submitted in an arbitrary order — 노동, 빈곤, 돌봄 — to prove the section is
+    # reordered by build_editorial_briefing rather than by the plan's own order.
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="사업장 산업재해 은폐 논란",
+                keyword="산업재해 은폐",
+                candidate_ids=[article_candidate_id(labor_article)],
+                summary="중대재해가 산업안전보건법 위반으로 은폐됐다는 의혹이 제기됐다.",
+                tone_analysis="노동조합은 진상규명을 요구했다.",
+            ),
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="기초생활보장 부양의무자 기준 논란",
+                keyword="부양의무자 기준",
+                candidate_ids=[article_candidate_id(poverty_article)],
+                summary="빈곤층이 부양의무자 기준 탓에 생계급여를 받지 못한다는 지적이 나왔다.",
+                tone_analysis="복지사각지대 해소가 필요하다는 지적이 이어졌다.",
+            ),
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="요양보호사 처우 개선 요구",
+                keyword="요양보호사 처우",
+                candidate_ids=[article_candidate_id(care_article)],
+                summary="돌봄노동 종사자들이 활동지원사 처우 개선을 요구했다.",
+                tone_analysis="공공돌봄 확대가 필요하다는 목소리가 나왔다.",
+            ),
+        ],
+        exclusions=[],
+    )
+
+    document = build_editorial_briefing(
+        storage,
+        plan=plan,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+
+    labor_section = next(
+        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤"
+    )
+    assert [issue.title for issue in labor_section.issues] == [
+        "요양보호사 처우 개선 요구",
+        "기초생활보장 부양의무자 기준 논란",
+        "사업장 산업재해 은폐 논란",
+    ]
