@@ -1,11 +1,16 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-09-26",
+  "report_date": "2026-09-29",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.827,
-    "total": 2.825
+    "api_preflight": 1.195,
+    "assurance": 0.008,
+    "bridge_import_validation": 8.43,
+    "census_retry": 0.0,
+    "final_state_recrawl": 504.183,
+    "gap_reverse_search": 270.835,
+    "total": 794.382
   },
-  "error": "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 초안 · 2026-09-26 (found=0)",
-  "completed_at": "2026-09-26T08:48:39.081267Z"
+  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / 권리중심 일자리 노동자, 두 달 계약이 끝나면 다시 실직: 허용 범위 밖의 칼럼이 포함됨",
+  "completed_at": "2026-09-29T02:25:58.616955Z"
 }
