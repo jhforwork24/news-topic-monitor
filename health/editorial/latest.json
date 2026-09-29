@@ -1,16 +1,23 @@
 {
   "prompt_version": 1,
   "report_date": "2026-09-29",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 360,
+  "included_after_first_pass": 0,
+  "published_issue_count": 15,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.195,
+    "api_preflight": 1.223,
     "assurance": 0.008,
-    "bridge_import_validation": 8.43,
+    "bridge_import_validation": 9.773,
     "census_retry": 0.0,
-    "final_state_recrawl": 504.183,
-    "gap_reverse_search": 270.835,
-    "total": 794.382
+    "final_state_recrawl": 551.289,
+    "gap_reverse_search": 114.048,
+    "render_briefing": 4.261,
+    "total": 685.892
   },
-  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / 권리중심 일자리 노동자, 두 달 계약이 끝나면 다시 실직: 허용 범위 밖의 칼럼이 포함됨",
-  "completed_at": "2026-09-29T02:25:58.616955Z"
+  "error": null,
+  "completed_at": "2026-09-29T02:53:00.038905Z"
 }
