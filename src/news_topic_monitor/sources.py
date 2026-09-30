@@ -63,6 +63,24 @@ MANDATORY_OPINION_COLUMNS: dict[str, tuple[str, ...]] = {
 }
 
 
+# 언론사 자체 분류(기사 페이지 메타 `article:section`)가 오피니언인 기사를 전부 III절에 싣는
+# 출처. 사용자가 비마이너 한 곳에 한해 지정했고 다른 장애 언론(에이블뉴스·더인디고)은
+# 해당하지 않는다. 비마이너의 오피니언 분류는 실제 기사 페이지 4건(문애린·전근배·김도현 기고)
+# 에서 `<meta property="article:section" content="오피니언">`으로 확인했다. sitemap
+# 발견 단계에는 섹션이 없어 본문 페이지를 열어야만 알 수 있으므로 pipeline이 이 출처의
+# 기사는 본문 확인을 강제한다.
+SECTION_OPINION_SOURCES: dict[str, str] = {"beminor": "오피니언"}
+
+
+def is_section_opinion_column(source: str, *texts: str | None) -> bool:
+    """True when the outlet's own section label marks the article as 오피니언."""
+
+    label = SECTION_OPINION_SOURCES.get(source)
+    if label is None:
+        return False
+    return any(value is not None and value.strip() == label for value in texts)
+
+
 def is_mandatory_opinion_column(source: str, *texts: str | None) -> bool:
     """Match a designated column across whatever metadata fields the caller has.
 
@@ -73,6 +91,8 @@ def is_mandatory_opinion_column(source: str, *texts: str | None) -> bool:
     left summary out.
     """
 
+    if is_section_opinion_column(source, *texts):
+        return True
     terms = MANDATORY_OPINION_COLUMNS.get(source)
     if not terms:
         return False

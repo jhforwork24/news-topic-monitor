@@ -673,3 +673,34 @@ def test_strict_plan_schema_lists_every_property_as_required() -> None:
     assert set(decision["required"]) == set(decision["properties"])
     assert "subsection" in decision["required"]
     assert "default" not in decision["properties"]["subsection"]
+
+
+def test_beminor_opinion_candidate_cannot_be_placed_outside_the_opinion_section() -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+
+    article = _article(source="beminor").model_copy(update={"section": "오피니언"})
+    candidate = _candidate(article)
+    audit = _empty_audit()
+
+    def plan_for(section: EditorialSection) -> EditorialPlan:
+        return EditorialPlan(
+            issues=[
+                EditorialIssueDecision(
+                    section=section,
+                    title="합성 기고 이동권",
+                    keyword="기고 이동권",
+                    candidate_ids=[candidate.candidate_id],
+                    summary="필자는 이동권이 여가와 이어진 권리라고 주장했다.",
+                    tone_analysis="",
+                )
+            ],
+            exclusions=[],
+        )
+
+    validate_external_editorial(
+        plan=plan_for(EditorialSection.OPINION), audit=audit, candidates=[candidate]
+    )
+    with pytest.raises(EditorialValidationError, match="opinion 섹션에만 배치"):
+        validate_external_editorial(
+            plan=plan_for(EditorialSection.DISABILITY), audit=audit, candidates=[candidate]
+        )

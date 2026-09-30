@@ -22,7 +22,12 @@ from .models import (
     LaborSubsection,
     VerificationStatus,
 )
-from .sources import PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS, is_mandatory_opinion_column
+from .sources import (
+    PRIMARY_COMPARISON_SOURCES,
+    SOURCE_LABELS,
+    is_mandatory_opinion_column,
+    is_section_opinion_column,
+)
 from .storage import JsonlStorage
 from .utils import KST, kst_display, short_text, stable_article_key
 
@@ -648,6 +653,7 @@ def is_opinion(article: ArticleRecord) -> bool:
         any(term.lower() in haystack for term in OPINION_TERMS)
         or any(marker in path for marker in OPINION_PATHS)
         or bool(article.title and NAMED_COLUMN_TITLE_PATTERN.search(article.title))
+        or is_section_opinion_column(article.source, article.section)
     )
 
 

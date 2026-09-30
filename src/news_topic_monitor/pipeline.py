@@ -31,6 +31,7 @@ from .models import (
 )
 from .sources import (
     DESIGNATED_COLUMN_SOURCES,
+    SECTION_OPINION_SOURCES,
     is_mandatory_opinion_column,
     monitored_personnel_match,
 )
@@ -352,7 +353,12 @@ class Collector:
         # 선정했지만 그 결과가 이 영속 저장소에는 반영되지 않아 발행 게이트가 같은 칼럼을 "허용
         # 범위 밖의 칼럼"으로 거부했다). DESIGNATED_COLUMN_SOURCES는 summary 없이도 본문 확인을
         # 강제해 이 간극을 없앤다.
-        designated_column_source = discovery.source in DESIGNATED_COLUMN_SOURCES
+        # 비마이너처럼 언론사 자체 섹션이 오피니언인 기사를 전부 싣는 출처도 sitemap에는
+        # 섹션이 없으므로 본문 페이지의 article:section을 읽으려면 본문 확인을 강제해야 한다.
+        designated_column_source = (
+            discovery.source in DESIGNATED_COLUMN_SOURCES
+            or discovery.source in SECTION_OPINION_SOURCES
+        )
         # 인사 소식 감시 대상(기관+직위+인사 이벤트 용어)도 같은 이유로 title-only 판정과
         # 무관하게 본문 확인을 강제한다 — 장애정책 핵심 기관의 인사는 disability_rights
         # 토픽 용어를 전혀 쓰지 않는 경우가 흔하다(예: "보건복지부, 장애인정책국장에 OOO

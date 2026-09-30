@@ -821,3 +821,83 @@ def test_publish_gate_is_silent_when_no_fixed_column_ran_that_day() -> None:
 
     assert allowed.allowed is True
     assert not any("고정 칼럼" in error for error in allowed.fatal_errors)
+
+
+def _beminor_opinion_candidate(now: datetime) -> EditorialCandidate:
+    return EditorialCandidate(
+        candidate_id="beminor-opinion",
+        source="beminor",
+        canonical_url="https://www.beminor.com/news/articleView.html?idxno=99999",
+        title="합성 기고 제목 / 홍길동",
+        byline=None,
+        section="오피니언",
+        published_at=now - timedelta(hours=9),
+        summary="권리와 이동을 다룬 합성 검증용 요약문입니다. " * 3,
+        evidence_text="권리와 이동을 다룬 합성 검증용 본문입니다. " * 5,
+        body_status=BodyStatus.FETCHED,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+        rule_classification=Classification.IRRELEVANT,
+        rule_score=0.0,
+    )
+
+
+def _gate_with(plan, candidates, now, policy):
+    census, reverse, final_state = _gate_inputs(policy, now, plan)
+    return evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=candidates,
+        health=_health(now),
+    )
+
+
+def test_publish_gate_requires_every_beminor_opinion_even_if_excluded_with_a_reason() -> None:
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    column = _beminor_opinion_candidate(now)
+    base = _plan(selected.candidate_id)
+
+    omitted = _gate_with(base, [selected, column], now, policy)
+    assert omitted.allowed is False
+    assert any("비마이너 오피니언" in error for error in omitted.fatal_errors)
+
+    # 고정 칼럼과 달리 제외 사유를 남겨도 면책되지 않는다.
+    excluded = EditorialPlan(
+        issues=base.issues,
+        exclusions=[
+            EditorialExclusion(candidate_id=column.candidate_id, reason="개인 기고라 제외")
+        ],
+    )
+    still_blocked = _gate_with(excluded, [selected, column], now, policy)
+    assert still_blocked.allowed is False
+    assert any("비마이너 오피니언" in error for error in still_blocked.fatal_errors)
+
+    included = EditorialPlan(
+        issues=[
+            *base.issues,
+            EditorialIssueDecision(
+                section=EditorialSection.OPINION,
+                title="합성 기고 이동권",
+                keyword="기고 이동권",
+                candidate_ids=[column.candidate_id],
+                summary="필자는 이동권이 여가와 이어진 권리라고 주장했다.",
+                tone_analysis="",
+            ),
+        ],
+        exclusions=[],
+    )
+    allowed = _gate_with(included, [selected, column], now, policy)
+    assert not any("비마이너 오피니언" in error for error in allowed.fatal_errors)

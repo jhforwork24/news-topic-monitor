@@ -691,3 +691,57 @@ def test_date_ordered_list_stops_paging_and_reports_absent_robots(tmp_path, topi
     source_health = health.sources["listed"]
     assert source_health.success
     assert source_health.robots_absent_origins == ["https://good.test"]
+
+
+class SectionMetaHttp(StubHttp):
+    class Response(StubHttp.Response):
+        text = (
+            '<html><head><meta property="article:section" content="오피니언"></head>'
+            "<body>synthetic public article text</body></html>"
+        )
+
+
+class BeminorSectionOpinionAdapter(GoodAdapter):
+    source = "beminor"
+
+    def parse_discovery(self, content, url):
+        del content, url
+        # sitemap 발견은 섹션도 요약도 주지 않고, 제목은 장애 용어도 칼럼 표지도 없다.
+        return DiscoveryPage(
+            articles=[
+                ArticleDiscovery(
+                    source=self.source,
+                    canonical_url="https://good.test/article/beminor-opinion",
+                    title="합성 기고 제목 / 홍길동",
+                    published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                )
+            ]
+        )
+
+    def extract_body(self, html_text, url):
+        del html_text, url
+        return "합성 기고 본문으로 섹션 메타 확인용 문장이다."
+
+
+def test_beminor_article_page_is_opened_to_read_its_own_section_label(
+    tmp_path, topics_path
+) -> None:
+    from news_topic_monitor.briefing import editorial_opinion_allowed, is_opinion, select_opinions
+
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=SectionMetaHttp(),
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[BeminorSectionOpinionAdapter()],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert record.body_status == BodyStatus.FETCHED
+    assert record.section == "오피니언"
+    # 제목·요약이 장애 분류(classification)와 무관해도 III절 후보로 취급된다.
+    assert is_opinion(record)
+    assert editorial_opinion_allowed(record)
+    assert select_opinions([record]) == [record]

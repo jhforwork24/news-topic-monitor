@@ -53,6 +53,11 @@ candidate_id가 없으면 `fatal`이다(누락). 동시에 `plan.exclusions`에�
 무관해 보인다는 이유로 빠뜨린 경우가 실제로 있었다(2026-09-18, 미디어스 김민하 칼럼 누락).
 `rule_hint.classification`이 irrelevant여도 이 힌트가 있으면 선정 대상이다.
 
+후보 묶음에 `III절 비마이너 오피니언` 힌트가 붙은 candidate_id가 초안의 `opinion` 섹션에 없으면
+`fatal`이다. 고정 칼럼과 달리 `plan.exclusions`에 있어도 면책되지 않는다 — 비마이너 오피니언은
+주제·형식과 무관하게 전부 싣는 상시 조건이다(다른 장애 언론에는 적용하지 않는다). 이 후보가
+`disability`·`labor`에 들어가 있는 것도 `fatal`이다.
+
 후보 묶음에 `인사 소식 감시 대상` 힌트가 붙은 candidate_id가 있는데 초안의 `disability`나
 `labor` 어느 섹션에도, `plan.exclusions`에도 그 candidate_id가 없으면 힌트에 표시된 등급에 따라
 판정한다. 힌트에 "발행 차단"(원장·이사장·장관·차관·국장급)이 표시돼 있으면 `fatal`이다 —

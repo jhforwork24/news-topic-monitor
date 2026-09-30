@@ -10,6 +10,7 @@ from .editorial import (
     article_candidate_id,
     mandatory_opinion_candidate,
     monitored_personnel_candidate,
+    section_opinion_candidate,
 )
 from .models import (
     ArticleRecord,
@@ -343,6 +344,30 @@ def evaluate_publish_gate(
                         ),
                     )
                 )
+
+    # 비마이너 오피니언은 "모두 싣는" 조건이라 고정 칼럼과 달리 제외 사유로 면책되지 않는다.
+    omitted_section_opinion = [
+        candidate
+        for candidate in candidates
+        if section_opinion_candidate(candidate) and candidate.candidate_id not in planned_ids
+    ]
+    if omitted_section_opinion:
+        fatal.append("대기열에 있는 비마이너 오피니언이 초안 opinion 섹션에 선정되지 않음")
+        for candidate in omitted_section_opinion:
+            reporting.append(
+                ReportingItem(
+                    cause=(
+                        f"{candidate.source} 오피니언 미선정: {candidate.title} "
+                        f"({candidate.candidate_id})"
+                    ),
+                    fallback="발행을 막고 초안을 다시 편집",
+                    result="fatal",
+                    next_action=(
+                        "해당 candidate_id를 opinion 이슈에 넣은 뒤 다시 발행 — "
+                        "비마이너 오피니언은 제외 사유로 면책되지 않음"
+                    ),
+                )
+            )
 
     # 인사 소식 감시 대상(기관+직위+인사 이벤트 용어)도 고정 칼럼과 같은 원리로 강제한다.
     # 등급(원장·이사장·장관·차관·국장급=fatal, 하위 조직장·과장급=warning)에 따라 발행을

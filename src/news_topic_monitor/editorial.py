@@ -39,6 +39,7 @@ from .sources import (
     SOURCE_CAMP,
     PersonnelTarget,
     is_mandatory_opinion_column,
+    is_section_opinion_column,
     monitored_personnel_match,
 )
 from .storage import JsonlStorage
@@ -159,6 +160,18 @@ def select_chat_editorial_candidates(
 
 def mandatory_opinion_candidate(candidate: EditorialCandidate) -> bool:
     return is_mandatory_opinion_column(
+        candidate.source,
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    )
+
+
+def section_opinion_candidate(candidate: EditorialCandidate) -> bool:
+    """비마이너 오피니언처럼 언론사 자체 섹션이 오피니언이라 전부 III절에 싣는 후보."""
+
+    return is_section_opinion_column(
         candidate.source,
         candidate.title,
         candidate.byline,
@@ -685,6 +698,11 @@ def _validate_plan(
                 errors.append(f"{issue.title}: 1차 포함 판정을 받지 않은 기사임")
             if assessment.section != issue.section:
                 errors.append(f"{issue.title}: 1차·2차 섹션 판정이 다름")
+            if issue.section != EditorialSection.OPINION and section_opinion_candidate(candidate):
+                errors.append(
+                    f"{issue.title}: {candidate.source} 오피니언 기사는 "
+                    "opinion 섹션에만 배치할 수 있음"
+                )
             if (
                 issue.section == EditorialSection.LABOR
                 and candidate.source not in LABOR_SECTION_ALLOWED_SOURCES
