@@ -44,6 +44,7 @@ from .sources import (
     LABOR_SECTION_ALLOWED_SOURCES,
     SOURCE_LABELS,
     is_mandatory_opinion_column,
+    is_section_opinion_column,
     monitored_personnel_match,
 )
 from .storage import JsonlStorage
@@ -1206,6 +1207,14 @@ def _opinion_queue_hint(candidate: EditorialCandidate) -> str | None:
     to miss among ~180 candidates. This mirrors _labor_queue_hint's role for II절.
     """
 
+    if is_section_opinion_column(
+        candidate.source,
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    ):
+        return "III절 비마이너 오피니언 — 제외 사유와 무관하게 opinion에 반드시 선정(예외 없음)"
     if is_mandatory_opinion_column(
         candidate.source,
         candidate.title,

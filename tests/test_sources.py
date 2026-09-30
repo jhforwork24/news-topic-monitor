@@ -95,3 +95,19 @@ def test_personnel_match_checks_every_field_the_caller_passes() -> None:
     )
     assert target is not None
     assert target.label == "국민연금공단 이사장"
+
+
+def test_section_opinion_applies_to_beminor_only_and_needs_the_exact_section_label() -> None:
+    from news_topic_monitor.sources import is_mandatory_opinion_column, is_section_opinion_column
+
+    # 비마이너 기사 페이지의 article:section이 "오피니언"인 경우만 해당한다.
+    assert is_section_opinion_column("beminor", "제목 / 필자", None, "오피니언", None)
+    assert is_mandatory_opinion_column("beminor", "제목 / 필자", None, "오피니언", None)
+    # 다른 섹션, 섹션 미확인(sitemap keywords), 부분 일치는 해당하지 않는다.
+    assert not is_section_opinion_column("beminor", "제목", None, "장애일반", None)
+    assert not is_section_opinion_column("beminor", "오피니언 관련 기사", None, None, None)
+    assert not is_section_opinion_column("beminor", "제목", None, "비마이너, 제목,", None)
+    # 다른 장애 언론은 같은 섹션명이어도 해당하지 않는다.
+    for other in ("ablenews", "theindigo", "labortoday", "newscham"):
+        assert not is_section_opinion_column(other, "제목", None, "오피니언", None)
+        assert not is_mandatory_opinion_column(other, "제목", None, "오피니언", None)

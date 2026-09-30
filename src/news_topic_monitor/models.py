@@ -219,6 +219,12 @@ class EditorialSection(StrEnum):
     OPINION = "opinion"
 
 
+class LaborSubsection(StrEnum):
+    CARE = "care"
+    POVERTY = "poverty"
+    LABOR = "labor"
+
+
 class EditorialVerdict(StrEnum):
     INCLUDE = "include"
     EXCLUDE = "exclude"
@@ -287,6 +293,9 @@ class EditorialIssueDecision(BaseModel):
     candidate_ids: list[str]
     summary: str
     tone_analysis: str
+    # II절(labor) 이슈의 하위 주제. 다른 섹션은 null이며, labor에서 생략(null)하면
+    # labor_subsections.classify_labor_subsection의 용어 대조 결과를 쓴다.
+    subsection: LaborSubsection | None = None
 
 
 class EditorialExclusion(BaseModel):

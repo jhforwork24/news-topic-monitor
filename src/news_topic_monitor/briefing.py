@@ -7,14 +7,27 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from .classifier import RuleClassifier
+from .labor_subsections import (
+    LABOR_SECTION_MAX_ISSUES,
+    LABOR_SUBSECTION_MAX_ISSUES,
+    LABOR_SUBSECTION_ORDER,
+    classify_labor_subsection,
+    labor_subsection_rank,
+)
 from .models import (
     ArticleRecord,
     Classification,
     EditorialPlan,
     EditorialSection,
+    LaborSubsection,
     VerificationStatus,
 )
-from .sources import PRIMARY_COMPARISON_SOURCES, SOURCE_LABELS, is_mandatory_opinion_column
+from .sources import (
+    PRIMARY_COMPARISON_SOURCES,
+    SOURCE_LABELS,
+    is_mandatory_opinion_column,
+    is_section_opinion_column,
+)
 from .storage import JsonlStorage
 from .utils import KST, kst_display, short_text, stable_article_key
 
@@ -261,6 +274,7 @@ class BriefingIssue:
     tone_analysis: str
     previous_coverage: list[PreviousCoverage] = field(default_factory=list)
     keyword: str = ""
+    subsection: LaborSubsection | None = None
 
 
 @dataclass
@@ -269,63 +283,36 @@ class BriefingSection:
     issues: list[BriefingIssue]
 
 
-# II절("노동·돌봄·빈곤") 안에서 돌봄 → 빈곤 → 노동 순으로 읽히도록 하는 정렬 우선순위.
-# 후보나 편집 계획에 별도 하위분류 필드가 없으므로, 확정된 이슈의 제목·키워드·요약·논조를
-# config/topics.yml의 labor_care_poverty 용어에서 돌봄·빈곤 쪽만 추려 만든 아래 목록과
-# 대조해 판정한다. 두 쪽 다 안 걸리거나 동점이면 이 섹션의 기본값인 노동으로 둔다.
-CARE_SUBSECTION_TERMS = (
-    "돌봄노동",
-    "돌봄서비스",
-    "돌봄",
-    "요양보호사",
-    "활동지원사",
-    "활동지원",
-    "간병",
-    "공공돌봄",
-    "노인장기요양보험",
-    "장기요양",
-    "사회서비스원",
-)
-POVERTY_SUBSECTION_TERMS = (
-    "빈곤",
-    "생계급여",
-    "생계",
-    "기초생활보장",
-    "기초생활",
-    "노숙",
-    "부양의무자",
-    "차상위계층",
-    "자활사업",
-    "자활근로",
-    "복지사각지대",
-    "위기가구",
-    "수급자",
-    "주거급여",
-    "주거권",
-    "소득보장",
-    "긴급복지지원",
-    "기초연금",
-    "근로장려금",
-)
-
-
-def _labor_subsection_priority(issue: BriefingIssue) -> int:
-    haystack = " ".join(
-        value for value in (issue.title, issue.keyword, issue.summary, issue.tone_analysis) if value
-    )
-    care_hits = sum(1 for term in CARE_SUBSECTION_TERMS if term in haystack)
-    poverty_hits = sum(1 for term in POVERTY_SUBSECTION_TERMS if term in haystack)
-    if care_hits and care_hits >= poverty_hits:
-        return 0
-    if poverty_hits:
-        return 1
-    return 2
+def labor_issue_subsection(issue: BriefingIssue) -> LaborSubsection:
+    if issue.subsection is not None:
+        return issue.subsection
+    return classify_labor_subsection(issue.title, issue.keyword, issue.summary, issue.tone_analysis)
 
 
 def _sort_labor_subsection(issues: list[BriefingIssue]) -> list[BriefingIssue]:
-    # list.sort/sorted is stable, so issues tied on priority keep their original
-    # (editorial or score) order — this only breaks ties across the three groups.
-    return sorted(issues, key=_labor_subsection_priority)
+    # list.sort/sorted is stable, so issues tied on subsection keep their original
+    # (editorial importance or score) order — major issues stay first within each group.
+    return sorted(issues, key=lambda issue: labor_subsection_rank(labor_issue_subsection(issue)))
+
+
+def select_labor_issues(issues: list[BriefingIssue]) -> list[BriefingIssue]:
+    """Apply the II절 per-subsection and total caps to issues ranked by importance.
+
+    The caps are maxima, not targets: nothing is added to reach them. Walking in
+    the given rank order keeps the highest-ranked issues when a cap is exceeded.
+    """
+
+    counts = {subsection: 0 for subsection in LABOR_SUBSECTION_ORDER}
+    kept: list[BriefingIssue] = []
+    for issue in issues:
+        subsection = labor_issue_subsection(issue)
+        if len(kept) >= LABOR_SECTION_MAX_ISSUES:
+            break
+        if counts[subsection] >= LABOR_SUBSECTION_MAX_ISSUES[subsection]:
+            continue
+        counts[subsection] += 1
+        kept.append(issue)
+    return _sort_labor_subsection(kept)
 
 
 @dataclass
@@ -432,11 +419,11 @@ def build_briefing(
         BriefingSection("I. 장애정책·장애인운동", disability_issues),
         BriefingSection(
             "II. 노동·돌봄·빈곤",
-            _sort_labor_subsection(
+            select_labor_issues(
                 cluster_issues(
                     [item for item, _score in labor],
                     history=history,
-                    max_issues=7,
+                    max_issues=LABOR_SECTION_MAX_ISSUES * 2,
                 )
             ),
         ),
@@ -512,6 +499,7 @@ def build_editorial_briefing(
                 tone_analysis=decision.tone_analysis,
                 previous_coverage=previous_coverage_for(articles, history),
                 keyword=decision.keyword,
+                subsection=decision.subsection,
             )
         )
 
@@ -665,6 +653,7 @@ def is_opinion(article: ArticleRecord) -> bool:
         any(term.lower() in haystack for term in OPINION_TERMS)
         or any(marker in path for marker in OPINION_PATHS)
         or bool(article.title and NAMED_COLUMN_TITLE_PATTERN.search(article.title))
+        or is_section_opinion_column(article.source, article.section)
     )
 
 
@@ -961,6 +950,8 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
         if section.title == "III. 주요 칼럼" and not section.issues:
             continue
         lines.extend([f"# {section.title}", ""])
+        if not section.issues:
+            lines.extend(["이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다.", ""])
         for number, issue in enumerate(section.issues, start=1):
             lines.extend([f"## {number}. {issue.title}", "", "### 주요 언론 보도", ""])
             for article in issue.articles:

@@ -498,3 +498,209 @@ def test_editorial_briefing_reorders_labor_section_care_then_poverty_then_labor(
         "기초생활보장 부양의무자 기준 논란",
         "사업장 산업재해 은폐 논란",
     ]
+
+
+def _labor_plan_and_candidates(subsections: list[str | None], titles: list[str] | None = None):
+    from news_topic_monitor.models import LaborSubsection
+
+    candidates: list[EditorialCandidate] = []
+    issues: list[EditorialIssueDecision] = []
+    for index, subsection in enumerate(subsections):
+        article = _article(source="labortoday").model_copy(
+            update={
+                "article_id": f"labortoday-{index}",
+                "canonical_url": f"https://example.com/labortoday/{index}",
+            }
+        )
+        candidate = _candidate(article)
+        candidates.append(candidate)
+        issues.append(
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title=(titles[index] if titles else f"이슈 {index}"),
+                keyword=f"키워드 {index}",
+                candidate_ids=[candidate.candidate_id],
+                summary="사업장에서 일어난 사안을 정리한 문장이다.",
+                tone_analysis="",
+                subsection=LaborSubsection(subsection) if subsection else None,
+            )
+        )
+    return EditorialPlan(issues=issues, exclusions=[]), candidates
+
+
+def _empty_audit():
+    from news_topic_monitor.models import EditorialAudit
+
+    return EditorialAudit(findings=[], progressive_issue_titles=[])
+
+
+def test_labor_subsection_caps_accept_maximum_and_zero() -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+
+    plan, candidates = _labor_plan_and_candidates(["care"] * 4 + ["poverty"] * 3)
+    validate_external_editorial(plan=plan, audit=_empty_audit(), candidates=candidates)
+
+    # 0 issues in II절 is allowed as long as another section carries the briefing.
+    disability = _candidate(_article(source="beminor"))
+    zero_labor = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 제도 개편 요구",
+                keyword="활동지원 개편",
+                candidate_ids=[disability.candidate_id],
+                summary="장애인단체가 제도 개편을 요구했다.",
+                tone_analysis="",
+            )
+        ],
+        exclusions=[],
+    )
+    validate_external_editorial(plan=zero_labor, audit=_empty_audit(), candidates=[disability])
+
+
+@pytest.mark.parametrize(
+    ("subsections", "expected"),
+    [
+        (["care"] * 5, "돌봄(care) 하위 주제의 이슈가 4개를 초과함"),
+        (["poverty"] * 4, "빈곤(poverty) 하위 주제의 이슈가 3개를 초과함"),
+        (["labor"] * 4, "노동(labor) 하위 주제의 이슈가 3개를 초과함"),
+        (["care"] * 4 + ["poverty"] * 3 + ["labor"], "labor 섹션의 이슈가 7개를 초과함"),
+    ],
+)
+def test_labor_subsection_caps_reject_overflow(subsections: list[str], expected: str) -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+
+    plan, candidates = _labor_plan_and_candidates(subsections)
+
+    with pytest.raises(
+        EditorialValidationError, match=expected.replace("(", r"\(").replace(")", r"\)")
+    ):
+        validate_external_editorial(plan=plan, audit=_empty_audit(), candidates=candidates)
+
+
+def test_labor_subsection_falls_back_to_term_matching_when_omitted() -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+
+    # Five issues whose titles all contain care terms, no explicit subsection.
+    plan, candidates = _labor_plan_and_candidates(
+        [None] * 5, titles=[f"요양보호사 처우 {index}" for index in range(5)]
+    )
+
+    with pytest.raises(EditorialValidationError, match="돌봄"):
+        validate_external_editorial(plan=plan, audit=_empty_audit(), candidates=candidates)
+
+
+def test_subsection_is_rejected_outside_labor_section() -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+    from news_topic_monitor.models import LaborSubsection
+
+    candidate = _candidate(_article(source="beminor"))
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 제도 개편 요구",
+                keyword="활동지원 개편",
+                candidate_ids=[candidate.candidate_id],
+                summary="장애인단체가 제도 개편을 요구했다.",
+                tone_analysis="",
+                subsection=LaborSubsection.CARE,
+            )
+        ],
+        exclusions=[],
+    )
+
+    with pytest.raises(EditorialValidationError, match="subsection을 지정할 수 없음"):
+        validate_external_editorial(plan=plan, audit=_empty_audit(), candidates=[candidate])
+
+
+def test_explicit_subsection_overrides_term_matching_in_order(tmp_path) -> None:
+    from news_topic_monitor.models import LaborSubsection
+
+    first = _article(source="labortoday")
+    second = _article(source="beminor")
+    storage = JsonlStorage(tmp_path)
+    for article in (first, second):
+        storage.upsert(article)
+    # Titles carry no care/poverty terms, so only the explicit label can move 돌봄 first.
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="사업장 임금 체불 논란",
+                keyword="임금 체불",
+                candidate_ids=[article_candidate_id(first)],
+                summary="사업장에서 임금이 체불됐다는 주장이 나왔다.",
+                tone_analysis="",
+                subsection=LaborSubsection.LABOR,
+            ),
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="지역 서비스 종사자 처우 논란",
+                keyword="종사자 처우",
+                candidate_ids=[article_candidate_id(second)],
+                summary="서비스 종사자 처우가 낮다는 지적이 나왔다.",
+                tone_analysis="",
+                subsection=LaborSubsection.CARE,
+            ),
+        ],
+        exclusions=[],
+    )
+
+    document = build_editorial_briefing(
+        storage,
+        plan=plan,
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        report_date="2026-08-16",
+    )
+
+    labor_section = next(
+        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤"
+    )
+    assert [issue.title for issue in labor_section.issues] == [
+        "지역 서비스 종사자 처우 논란",
+        "사업장 임금 체불 논란",
+    ]
+
+
+def test_strict_plan_schema_lists_every_property_as_required() -> None:
+    from news_topic_monitor.editorial import _strict_json_schema
+
+    schema = _strict_json_schema(EditorialPlan.model_json_schema())
+
+    decision = schema["$defs"]["EditorialIssueDecision"]
+    assert set(decision["required"]) == set(decision["properties"])
+    assert "subsection" in decision["required"]
+    assert "default" not in decision["properties"]["subsection"]
+
+
+def test_beminor_opinion_candidate_cannot_be_placed_outside_the_opinion_section() -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+
+    article = _article(source="beminor").model_copy(update={"section": "오피니언"})
+    candidate = _candidate(article)
+    audit = _empty_audit()
+
+    def plan_for(section: EditorialSection) -> EditorialPlan:
+        return EditorialPlan(
+            issues=[
+                EditorialIssueDecision(
+                    section=section,
+                    title="합성 기고 이동권",
+                    keyword="기고 이동권",
+                    candidate_ids=[candidate.candidate_id],
+                    summary="필자는 이동권이 여가와 이어진 권리라고 주장했다.",
+                    tone_analysis="",
+                )
+            ],
+            exclusions=[],
+        )
+
+    validate_external_editorial(
+        plan=plan_for(EditorialSection.OPINION), audit=audit, candidates=[candidate]
+    )
+    with pytest.raises(EditorialValidationError, match="opinion 섹션에만 배치"):
+        validate_external_editorial(
+            plan=plan_for(EditorialSection.DISABILITY), audit=audit, candidates=[candidate]
+        )
