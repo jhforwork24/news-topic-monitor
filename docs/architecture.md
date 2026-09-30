@@ -42,6 +42,7 @@ flowchart LR
 - `gap_detection.py`: Naver API Hub 원문 URL을 결정론적 수집 URL 집합과 대조한 잠재 누락 탐지,
   지정 10개 매체 역검색 상태 기록
 - `final_state.py`: 진행형 사건의 발행 직전 공식 출처 재수집 결과 비교
+- `labor_subsections.py`: II절 하위 주제(돌봄·빈곤·노동) 순서·상한·용어 분류
 - `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
 - `chat_bridge.py`: 대기열·초안·감사의 고정 스키마, SHA-256 queue binding, 제출 순서와 후보 ID 검증
 - `storage.py`: 멱등 JSONL upsert, 수집 실행 단위 배치 flush, review 동기화,
@@ -119,6 +120,8 @@ YouTube 업로드도 여러 프로그램이 섞여 있어 신뢰할 수 있는 �
 상위 10개 검토군을 먼저 고정하고 단순 홍보·모집·의전성 보도를 제외하며 빈자리를 차순위로
 채우지 않는다. CRPD 20주년 행사는 연간 핵심의제로 보아 예외적으로 최하단에 둔다. II절은 별도
 `labor_care_poverty` 규칙의 `relevant` 기사만 사용하고 사진·화보·연예·스포츠 보도를 제외한다.
+II절은 돌봄(0~4) → 빈곤(0~3) → 노동(0~3) 순으로 배치하고 전체는 0~7개이며, 상한은 최대치일
+뿐이라 0개 발행도 허용한다(`labor_subsections.py`, `editorial._labor_subsection_errors`).
 III절은 3개 지정 칼럼과 8개 종합매체의 장애 관련 칼럼만 선정하며, 결과가 없으면 절 자체를
 생략한다. 생성 문서는 형식·문장·분류 검증을 통과해야만 노션 발행 단계로 진행한다.
 

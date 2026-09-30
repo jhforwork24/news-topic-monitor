@@ -897,3 +897,65 @@ def test_labor_subsection_sort_is_stable_within_the_same_group() -> None:
     ordered = _sort_labor_subsection([first_labor, second_labor])
 
     assert [issue.title for issue in ordered] == ["파업 첫 번째", "파업 두 번째"]
+
+
+def _labor_issue(title: str, subsection: str | None = None) -> BriefingIssue:
+    from news_topic_monitor.models import LaborSubsection
+
+    return BriefingIssue(
+        title=title,
+        articles=[],
+        summary="사안을 정리한 문장이다.",
+        tone_analysis="",
+        keyword=title,
+        subsection=LaborSubsection(subsection) if subsection else None,
+    )
+
+
+def test_select_labor_issues_applies_subsection_and_total_caps_in_rank_order() -> None:
+    from news_topic_monitor.briefing import select_labor_issues
+
+    # Ranked most-important first; 노동 issues lead so the caps must trim within groups.
+    ranked = (
+        [_labor_issue(f"노동 {index}", "labor") for index in range(5)]
+        + [_labor_issue(f"빈곤 {index}", "poverty") for index in range(5)]
+        + [_labor_issue(f"돌봄 {index}", "care") for index in range(6)]
+    )
+
+    selected = select_labor_issues(ranked)
+
+    assert len(selected) == 7
+    titles = [issue.title for issue in selected]
+    # Walking in rank order fills 노동 3 → 빈곤 3 → 돌봄 1 before the total cap (7) stops it,
+    # and the section is then presented 돌봄 → 빈곤 → 노동 with rank order inside each group.
+    assert titles == ["돌봄 0", "빈곤 0", "빈곤 1", "빈곤 2", "노동 0", "노동 1", "노동 2"]
+
+
+def test_select_labor_issues_allows_empty_and_never_pads() -> None:
+    from news_topic_monitor.briefing import select_labor_issues
+
+    assert select_labor_issues([]) == []
+    assert [issue.title for issue in select_labor_issues([_labor_issue("노동 0", "labor")])] == [
+        "노동 0"
+    ]
+
+
+def test_render_marks_empty_section_instead_of_leaving_a_bare_heading() -> None:
+    from news_topic_monitor.briefing import BriefingDocument, render_briefing_markdown
+
+    document = BriefingDocument(
+        report_date="2026-08-16",
+        start=datetime(2026, 8, 15, tzinfo=UTC),
+        end=datetime(2026, 8, 16, tzinfo=UTC),
+        overview="총평.",
+        telegram_summary="요약.",
+        sections=[BriefingSection("II. 노동·돌봄·빈곤", [])],
+        source_failures=[],
+        editorial_notes=[],
+    )
+
+    markdown = render_briefing_markdown(document, crpd_url=None)
+
+    assert (
+        "# II. 노동·돌봄·빈곤\n\n이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다." in markdown
+    )

@@ -14,6 +14,13 @@ from typing import Any
 import httpx
 from pydantic import ValidationError as PydanticValidationError
 
+from .labor_subsections import (
+    LABOR_SECTION_MAX_ISSUES,
+    LABOR_SUBSECTION_LABELS,
+    LABOR_SUBSECTION_MAX_ISSUES,
+    LABOR_SUBSECTION_ORDER,
+    classify_labor_subsection,
+)
 from .models import (
     ArticleRecord,
     EditorialAssessment,
@@ -23,6 +30,7 @@ from .models import (
     EditorialPlan,
     EditorialSection,
     EditorialVerdict,
+    LaborSubsection,
     VerificationStatus,
 )
 from .sources import (
@@ -40,7 +48,7 @@ EDITORIAL_PROMPT_VERSION = 1
 
 SECTION_MAX_ISSUES = {
     EditorialSection.DISABILITY: 10,
-    EditorialSection.LABOR: 7,
+    EditorialSection.LABOR: LABOR_SECTION_MAX_ISSUES,
     EditorialSection.OPINION: 10,
 }
 
@@ -360,7 +368,7 @@ class OpenAIEditorialClient:
             payload.append(item)
         response_text = self._request_structured(
             name="news_editorial_plan",
-            schema=EditorialPlan.model_json_schema(),
+            schema=_strict_json_schema(EditorialPlan.model_json_schema()),
             developer_prompt=_planning_prompt(),
             user_payload={"candidates": payload},
         )
@@ -699,6 +707,7 @@ def _validate_plan(
     for section, count in section_counts.items():
         if count > SECTION_MAX_ISSUES[section]:
             errors.append(f"{section.value} 섹션의 이슈가 {SECTION_MAX_ISSUES[section]}개를 초과함")
+    errors.extend(_labor_subsection_errors(plan))
     if not plan.issues:
         errors.append("최종 선정 이슈가 없음")
     known = set(candidate_by_id)
@@ -713,6 +722,52 @@ def _validate_plan(
         errors.append("최종 선정 기사와 제외 기록이 중복됨")
     if errors:
         raise EditorialValidationError("GPT 편집 결과 검증 실패: " + "; ".join(errors))
+
+
+def _strict_json_schema(schema: Any) -> Any:
+    """OpenAI strict json_schema needs every property listed in `required` and no defaults.
+
+    Optional pydantic fields (e.g. EditorialIssueDecision.subsection) are nullable, so
+    the model can still answer null.
+    """
+
+    if isinstance(schema, dict):
+        strict = {key: _strict_json_schema(value) for key, value in schema.items()}
+        if isinstance(strict.get("properties"), dict):
+            strict["required"] = list(strict["properties"])
+            for prop in strict["properties"].values():
+                if isinstance(prop, dict):
+                    prop.pop("default", None)
+        return strict
+    if isinstance(schema, list):
+        return [_strict_json_schema(item) for item in schema]
+    return schema
+
+
+def _labor_subsection_errors(plan: EditorialPlan) -> list[str]:
+    """Check the II절 sub-topic caps (돌봄 ≤4, 빈곤 ≤3, 노동 ≤3; caps are maxima, 0 is allowed)."""
+
+    errors: list[str] = []
+    by_subsection: dict[LaborSubsection, list[str]] = {
+        subsection: [] for subsection in LABOR_SUBSECTION_ORDER
+    }
+    for issue in plan.issues:
+        if issue.section != EditorialSection.LABOR:
+            if issue.subsection is not None:
+                errors.append(f"{issue.title}: labor가 아닌 섹션에는 subsection을 지정할 수 없음")
+            continue
+        subsection = issue.subsection or classify_labor_subsection(
+            issue.title, issue.keyword, issue.summary, issue.tone_analysis
+        )
+        by_subsection[subsection].append(issue.title)
+    for subsection, titles in by_subsection.items():
+        limit = LABOR_SUBSECTION_MAX_ISSUES[subsection]
+        if len(titles) > limit:
+            errors.append(
+                f"labor {LABOR_SUBSECTION_LABELS[subsection]}({subsection.value}) 하위 주제의 "
+                f"이슈가 {limit}개를 초과함({len(titles)}개: {', '.join(titles)})"
+            )
+    return errors
 
 
 def _validate_audit(
@@ -814,6 +869,10 @@ tone_analysis는 단일 보도면 0~1문장, 복수 보도면 1~4문장으로 �
 본문을 읽지 않은 채 매체 성향만으로 내용을 추정하는 근거로 쓰지 않는다. 직접 인용은 매체당 1회,
 15단어 이내로 제한한다. evidence_text가 요약 수준이라 본문을 확보하지 못한 후보가 섞인 경우
 그 사실을 tone_analysis에 명시하고 확인한 범위를 넘어선 비교를 하지 않는다.
+
+labor 섹션 이슈에는 subsection을 care(돌봄)·poverty(빈곤)·labor(노동) 중 하나로 표시하고,
+labor 이외 섹션은 subsection을 null로 둔다. 상한은 돌봄 4개·빈곤 3개·노동 3개, labor 전체 7개이며
+목표가 아니라 최대치다. 발행할 만한 이슈가 없으면 하위 주제나 labor 전체를 0개로 둔다.
 
 title도 선정 기사들의 공통 이슈를 나타내며 선정 기사 제목을 기계적으로 이어 붙이지 않는다.
 exclusions에는 중요도가 높았지만 최종 제외한 후보만 최대 20개까지 기록한다.
