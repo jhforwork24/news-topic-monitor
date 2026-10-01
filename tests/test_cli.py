@@ -7,8 +7,10 @@ from pathlib import Path
 from news_topic_monitor.cli import (
     REVALIDATION_BODY_LIMIT_BASE,
     REVALIDATION_BODY_LIMIT_MAX,
+    _finalize_late_recovered_items,
     _known_relevant_seed_discoveries,
     _report_window,
+    _retry_timed_out_sources,
     _revalidate_failed_census_sources,
     _revalidation_body_limit,
     _scale_queue_settings,
@@ -354,3 +356,166 @@ def test_revalidation_body_limit_grows_with_the_delay_since_the_window_closed() 
         )
         == REVALIDATION_BODY_LIMIT_BASE
     )
+
+
+ROBOTS_TIMEOUT = (
+    "all discovery paths failed: https://www.pressian.com/api/v3/site/rss/news: "
+    "robots.txt unavailable for www.pressian.com: GET failed after retries: "
+    "https://www.pressian.com/robots.txt: timed out"
+)
+
+
+def _source_health(source: str, now: datetime, *, errors: list[str] | None = None) -> SourceHealth:
+    failed = bool(errors)
+    return SourceHealth(
+        source=source,
+        success=not failed,
+        discovery_status=DiscoveryStatus.UNAVAILABLE if failed else DiscoveryStatus.COMPLETE,
+        started_at=now,
+        finished_at=now,
+        errors=errors or [],
+    )
+
+
+def _run_health(now: datetime, sources: dict[str, SourceHealth]) -> RunHealth:
+    return RunHealth(
+        run_started_at=now,
+        run_finished_at=now,
+        window_start=now - timedelta(hours=24),
+        window_end=now,
+        all_sources_failed=all(not detail.success for detail in sources.values()),
+        sources=sources,
+    )
+
+
+def test_timed_out_source_is_retried_and_reported_when_it_recovers() -> None:
+    now = datetime(2026, 10, 1, 0, tzinfo=UTC)
+    health = _run_health(
+        now,
+        {
+            "pressian": _source_health("pressian", now, errors=[ROBOTS_TIMEOUT]),
+            "hani": _source_health("hani", now),
+        },
+    )
+    calls: list[set[str]] = []
+    sleeps: list[float] = []
+
+    def collect(names: set[str]) -> RunHealth:
+        calls.append(names)
+        later = now + timedelta(minutes=3)
+        return _run_health(later, {name: _source_health(name, later) for name in names})
+
+    merged, notes = _retry_timed_out_sources(
+        health, collect=collect, rounds=2, delay_seconds=180, sleeper=sleeps.append
+    )
+
+    assert calls == [{"pressian"}]  # 성공한 출처는 다시 수집하지 않고, 복구되면 멈춘다
+    assert sleeps == [180]
+    assert merged.sources["pressian"].success
+    assert merged.sources["hani"] is health.sources["hani"]
+    assert merged.run_finished_at == now + timedelta(minutes=3)
+    assert not merged.all_sources_failed
+    assert len(notes) == 1 and "pressian" in notes[0] and "복구" in notes[0]
+
+
+def test_timed_out_source_still_failing_is_flagged_as_missing_not_as_absent() -> None:
+    now = datetime(2026, 10, 1, 0, tzinfo=UTC)
+    health = _run_health(
+        now,
+        {
+            "pressian": _source_health("pressian", now, errors=[ROBOTS_TIMEOUT]),
+            "hani": _source_health("hani", now),
+        },
+    )
+    rounds_seen: list[int] = []
+
+    def collect(names: set[str]) -> RunHealth:
+        rounds_seen.append(len(rounds_seen) + 1)
+        return _run_health(
+            now, {name: _source_health(name, now, errors=[ROBOTS_TIMEOUT]) for name in names}
+        )
+
+    merged, notes = _retry_timed_out_sources(
+        health, collect=collect, rounds=2, delay_seconds=0, sleeper=lambda _seconds: None
+    )
+
+    assert rounds_seen == [1, 2]
+    assert not merged.sources["pressian"].success
+    assert len(notes) == 1
+    assert "기사 부재가 아님" in notes[0] and "재시도 2회" in notes[0]
+
+
+def test_only_timeouts_are_retried_other_failures_stay_fail_closed() -> None:
+    now = datetime(2026, 10, 1, 0, tzinfo=UTC)
+    blocked = "robots.txt unavailable for www.example.com: robots.txt returned HTTP 403"
+    health = _run_health(
+        now,
+        {
+            "chosun": _source_health("chosun", now, errors=[blocked]),
+            "hani": _source_health("hani", now),
+        },
+    )
+
+    def collect(names: set[str]) -> RunHealth:
+        raise AssertionError("403 robots failures must not be retried")
+
+    merged, notes = _retry_timed_out_sources(
+        health, collect=collect, rounds=2, delay_seconds=0, sleeper=lambda _seconds: None
+    )
+
+    assert merged is health and notes == []
+    # rounds=0 turns the retry off entirely.
+    disabled, disabled_notes = _retry_timed_out_sources(
+        _run_health(now, {"pressian": _source_health("pressian", now, errors=[ROBOTS_TIMEOUT])}),
+        collect=collect,
+        rounds=0,
+        delay_seconds=0,
+    )
+    assert disabled_notes == [] and not disabled.sources["pressian"].success
+
+
+def test_late_recovered_source_articles_are_reported_but_never_block(tmp_path) -> None:
+    now = datetime(2026, 10, 1, 0, tzinfo=UTC)
+    start = now - timedelta(hours=24)
+    initial = _run_health(
+        now,
+        {
+            "pressian": _source_health("pressian", now, errors=[ROBOTS_TIMEOUT]),
+            "hani": _source_health("hani", now),
+        },
+    )
+    storage = JsonlStorage(tmp_path)
+    missed = _article(
+        "missed", classification=Classification.RELEVANT, published_at=now - timedelta(hours=4)
+    ).model_copy(update={"source": "pressian"})
+    irrelevant = _article(
+        "plain", classification=Classification.IRRELEVANT, published_at=now - timedelta(hours=5)
+    ).model_copy(update={"source": "pressian"})
+    other_source = _article(
+        "other", classification=Classification.RELEVANT, published_at=now - timedelta(hours=3)
+    )
+    for article in (missed, irrelevant, other_source):
+        storage.upsert(article)
+    recollected: list[str] = []
+
+    def collect(source: str) -> RunHealth:
+        recollected.append(source)
+        return _run_health(now, {source: _source_health(source, now)})
+
+    settings = type("S", (), {"root": Path(__file__).parents[1]})()
+    items = _finalize_late_recovered_items(
+        settings,
+        storage,
+        None,
+        initial,
+        [],
+        start=start,
+        end=now,
+        collect=collect,
+    )
+
+    assert recollected == ["pressian"]  # 시간초과로 빠진 출처만 다시 수집한다
+    assert len(items) == 1
+    assert items[0].result == "warning"
+    assert "pressian" in items[0].cause and "1건" in items[0].cause
+    assert "기사 missed" in items[0].cause

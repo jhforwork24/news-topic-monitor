@@ -901,3 +901,43 @@ def test_publish_gate_requires_every_beminor_opinion_even_if_excluded_with_a_rea
     )
     allowed = _gate_with(included, [selected, column], now, policy)
     assert not any("비마이너 오피니언" in error for error in allowed.fatal_errors)
+
+
+def test_publish_gate_keeps_extra_warning_items_without_blocking() -> None:
+    from news_topic_monitor.assurance import ReportingItem
+
+    root = __import__("pathlib").Path(__file__).parents[1]
+    policy = load_briefing_policy(root / "config" / "briefing-policy.yaml")
+    now = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    selected = _candidate("selected", "권리중심공공일자리 농성", now - timedelta(hours=2))
+    plan = _plan(selected.candidate_id)
+    item = ReportingItem(
+        cause="pressian: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 1건",
+        fallback="발행은 진행하되 해당 기사를 보고사항에 남김",
+        result="warning",
+        next_action="기사 원문을 확인해 필요하면 사후 보완",
+    )
+
+    decision = _gate_with(plan, [selected], now, policy)
+    with_extra = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=_gate_inputs(policy, now, plan)[0],
+        gap_detection=GapDetectionResult(
+            status=CheckStatus.COMPLETE,
+            route="naver_api_hub",
+            queries_attempted=5,
+            queries_completed=5,
+        ),
+        reverse_search=_gate_inputs(policy, now, plan)[1],
+        final_state=_gate_inputs(policy, now, plan)[2],
+        audit=EditorialAudit(findings=[], progressive_issue_titles=[]),
+        plan=plan,
+        candidates=[selected],
+        health=_health(now),
+        extra_warning_items=[item],
+    )
+
+    assert with_extra.allowed is decision.allowed
+    assert item in with_extra.reporting_items
+    assert item.cause in with_extra.degraded_warnings

@@ -19,6 +19,7 @@ from .adapters.base import SourceAdapter
 from .adapters.hani import HaniAdapter
 from .assurance import (
     PublishGateDecision,
+    ReportingItem,
     build_evidence_manifest,
     evaluate_census,
     evaluate_publish_gate,
@@ -58,6 +59,7 @@ from .models import (
     EditorialCandidate,
     EditorialPlan,
     RunHealth,
+    SourceHealth,
 )
 from .notion_publish import (
     QUEUE_BODY_LIMIT_PER_SOURCE_CEILING,
@@ -684,6 +686,35 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         capture_body_limit_per_source=(queue_settings.body_fetch_limit_per_source),
                         seed_discoveries=seed_discoveries,
                     ).run(collection_start, end)
+
+                def collect_sources(names: set[str]) -> RunHealth:
+                    # 새 HTTP 클라이언트는 robots.txt 판정 캐시도 새로 시작하므로, 앞선 시간초과
+                    # 판정이 재시도에 그대로 남지 않는다.
+                    with _http_client(settings) as retry_http:
+                        return Collector(
+                            http=retry_http,
+                            storage=storage,
+                            classifier=classifier,
+                            adapters=_build_adapters(settings, storage, names),
+                            max_discovery_children=settings.max_discovery_children,
+                            evidence_store=evidence_store,
+                            capture_all_bodies=True,
+                            capture_body_start=start,
+                            capture_body_limit_per_source=(
+                                queue_settings.body_fetch_limit_per_source
+                            ),
+                            seed_discoveries=seed_discoveries,
+                            write_health=False,
+                        ).run(collection_start, end)
+
+                health, retry_notes = _retry_timed_out_sources(
+                    health,
+                    collect=collect_sources,
+                    rounds=_queue_timeout_retry_rounds(),
+                    delay_seconds=_queue_timeout_retry_delay_seconds(),
+                )
+                if retry_notes:
+                    storage.write_health(health.model_dump(mode="json"))
                 if health.all_sources_failed:
                     raise EditorialQueueValidationError(
                         "모든 출처 수집에 실패하여 편집 대기열 생성을 중단함"
@@ -779,7 +810,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         gap_detection=gap_detection,
                         queue_settings=queue_settings,
                         labor_classifier=labor_classifier,
-                        source_failures=_run_source_failures(health),
+                        source_failures=[*_run_source_failures(health), *retry_notes],
                         force=bool(getattr(args, "force", False)),
                     )
                 _write_initial_health_snapshot(
@@ -1027,6 +1058,18 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             phase_durations["census_retry"] = perf_counter() - phase_started
 
             phase_started = perf_counter()
+            late_recovered_items = _finalize_late_recovered_items(
+                settings,
+                storage,
+                classifier,
+                initial_health,
+                bundle.queue.candidates,
+                start=start,
+                end=end,
+            )
+            phase_durations["late_recovered_sources"] = perf_counter() - phase_started
+
+            phase_started = perf_counter()
             census = evaluate_census(
                 census_health,
                 window_start=start,
@@ -1054,6 +1097,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                 candidates=bundle.queue.candidates,
                 health=census_health,
                 revalidation_health=revalidation_health,
+                extra_warning_items=late_recovered_items,
             )
             phase_durations["assurance"] = perf_counter() - phase_started
 
@@ -1375,6 +1419,219 @@ def _known_relevant_seed_discoveries(
             )
         )
     return seeds
+
+
+# 편집 대기열을 만들 때 출처가 응답 시간초과(robots.txt 확인 포함)로 실패하면 그 출처의
+# 당일 기사가 후보에서 통째로 빠진다. 2026-10-01 프레시안 robots.txt 시간초과로 장애 관련
+# 기사 1건이 편집·감사를 거치지 않고 발행됐다(수집 기록상 9월 1일 이후 약 10%가 같은 실패).
+# 시간초과만 몇 분 간격으로 다시 시도한다 — robots.txt 판정을 우회하는 것이 아니라 같은 확인을
+# 새 클라이언트로 다시 하는 것이며, 403·429·5xx·파싱 불가 등 다른 실패는 재시도하지 않고
+# 기존대로 안전하게 중단(fail-closed)한다.
+DEFAULT_QUEUE_TIMEOUT_RETRY_ROUNDS = 2
+DEFAULT_QUEUE_TIMEOUT_RETRY_DELAY_SECONDS = 180.0
+
+
+def _queue_timeout_retry_rounds() -> int:
+    try:
+        return max(
+            0, int(os.getenv("QUEUE_TIMEOUT_RETRY_ROUNDS", DEFAULT_QUEUE_TIMEOUT_RETRY_ROUNDS))
+        )
+    except ValueError:
+        return DEFAULT_QUEUE_TIMEOUT_RETRY_ROUNDS
+
+
+def _queue_timeout_retry_delay_seconds() -> float:
+    try:
+        return max(
+            0.0,
+            float(
+                os.getenv(
+                    "QUEUE_TIMEOUT_RETRY_DELAY_SECONDS", DEFAULT_QUEUE_TIMEOUT_RETRY_DELAY_SECONDS
+                )
+            ),
+        )
+    except ValueError:
+        return DEFAULT_QUEUE_TIMEOUT_RETRY_DELAY_SECONDS
+
+
+def _is_timed_out_failure(detail: SourceHealth) -> bool:
+    return not detail.success and any("timed out" in error for error in detail.errors)
+
+
+def _timed_out_failed_sources(health: RunHealth) -> list[str]:
+    return sorted(
+        source for source, detail in health.sources.items() if _is_timed_out_failure(detail)
+    )
+
+
+def _retry_timed_out_sources(
+    health: RunHealth,
+    *,
+    collect: Callable[[set[str]], RunHealth],
+    rounds: int,
+    delay_seconds: float,
+    sleeper: Callable[[float], None] = sleep,
+) -> tuple[RunHealth, list[str]]:
+    """Re-collect only the sources that failed by timeout, a few minutes apart.
+
+    Returns the health with each retried source's latest entry swapped in, plus
+    manifest notes: a recovered source is still reported (never silent), and a
+    source that keeps timing out is flagged as "missing from candidates", not
+    as "no articles".
+    """
+
+    pending = _timed_out_failed_sources(health)
+    if not pending or rounds <= 0:
+        return health, []
+    sources = dict(health.sources)
+    finished_at = health.run_finished_at
+    notes: list[str] = []
+    for round_number in range(1, rounds + 1):
+        if not pending:
+            break
+        LOGGER.info(
+            "editorial queue: retrying timed-out sources=%s round=%d/%d",
+            ",".join(pending),
+            round_number,
+            rounds,
+        )
+        sleeper(delay_seconds)
+        retry_health = collect(set(pending))
+        finished_at = max(finished_at, retry_health.run_finished_at)
+        still_pending: list[str] = []
+        for source in pending:
+            detail = retry_health.sources.get(source)
+            if detail is None:
+                still_pending.append(source)
+                continue
+            sources[source] = detail
+            if detail.success:
+                notes.append(
+                    f"{source}: 응답 시간초과로 1차 수집이 실패했으나 재시도 {round_number}회차에 "
+                    "복구되어 후보에 포함됨"
+                )
+            elif _is_timed_out_failure(detail):
+                still_pending.append(source)
+        pending = still_pending
+    for source in pending:
+        notes.append(
+            f"{source}: 응답 시간초과가 재시도 {rounds}회 뒤에도 이어져 이 출처의 당일 기사가 "
+            "후보에서 빠짐 — 기사 부재가 아님"
+        )
+    merged = health.model_copy(
+        update={
+            "sources": sources,
+            "run_finished_at": finished_at,
+            "all_sources_failed": all(not detail.success for detail in sources.values()),
+        }
+    )
+    return merged, notes
+
+
+def _late_recovered_source_items(
+    health: RunHealth,
+    *,
+    articles: list[ArticleRecord],
+    queue_urls: set[str],
+    start: datetime,
+    end: datetime,
+    is_relevant: Callable[[ArticleRecord], bool],
+) -> list[ReportingItem]:
+    """Report articles from sources that timed out at queue time but later recovered.
+
+    Those sources were absent from the editorial queue, so nothing they published
+    in the window was reviewed. Called after a live re-collection of the same
+    sources; it never blocks publication, it only keeps the gap visible.
+    """
+
+    items: list[ReportingItem] = []
+    for source in _timed_out_failed_sources(health):
+        missed = sorted(
+            (
+                article
+                for article in articles
+                if article.source == source
+                and article.canonical_url not in queue_urls
+                and article.published_at is not None
+                and start <= article.published_at < end
+                and is_relevant(article)
+            ),
+            key=lambda article: article.published_at or start,
+        )
+        if not missed:
+            continue
+        titles = " / ".join(article.title[:50] for article in missed[:3])
+        more = f" 외 {len(missed) - 3}건" if len(missed) > 3 else ""
+        items.append(
+            ReportingItem(
+                cause=(
+                    f"{source}: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 "
+                    f"{len(missed)}건이 편집·감사를 거치지 않음 ({titles}{more})"
+                ),
+                fallback="발행은 진행하되 해당 기사를 보고사항에 남김",
+                result="warning",
+                next_action="기사 원문을 확인해 필요하면 사후 보완하고 브리핑 정정 이력에 기록",
+            )
+        )
+    return items
+
+
+def _finalize_late_recovered_items(
+    settings: Settings,
+    storage: JsonlStorage,
+    classifier: RuleClassifier,
+    initial_health: RunHealth,
+    queue_candidates: list[EditorialCandidate],
+    *,
+    start: datetime,
+    end: datetime,
+    collect: Callable[[str], RunHealth] | None = None,
+) -> list[ReportingItem]:
+    """Surface what a source missed when it timed out at queue-build time.
+
+    Best effort: one live re-collection of each timed-out source, then a report
+    of window articles that never reached the editor. A failure here never
+    blocks publication; it only means nothing extra is reported.
+    """
+
+    failing = _timed_out_failed_sources(initial_health)
+    if not failing:
+        return []
+    collect_source = collect or (
+        lambda source: _collect_single_source(
+            settings,
+            storage,
+            classifier,
+            source,
+            initial_health.window_start,
+            initial_health.window_end,
+        )
+    )
+    for source in failing:
+        try:
+            collect_source(source)
+        except Exception as exc:  # best effort: never block the publish gate
+            LOGGER.warning("editorial finalize: re-collecting %s failed: %s", source, exc)
+    labor_classifier = RuleClassifier(
+        settings.root / "config" / "topics.yml", topic="labor_care_poverty"
+    )
+
+    def is_relevant(article: ArticleRecord) -> bool:
+        if article.classification == Classification.RELEVANT:
+            return True
+        result = labor_classifier.classify(
+            title=article.title, summary=article.summary, section=article.section
+        )
+        return result.classification == Classification.RELEVANT
+
+    return _late_recovered_source_items(
+        initial_health,
+        articles=list(storage.iter_articles()),
+        queue_urls={candidate.canonical_url for candidate in queue_candidates},
+        start=start,
+        end=end,
+        is_relevant=is_relevant,
+    )
 
 
 def _run_source_failures(health: RunHealth) -> list[str]:
