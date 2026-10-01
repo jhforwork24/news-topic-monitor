@@ -66,38 +66,36 @@
       "last_success_at": "2026-09-30T23:53:44.522972Z"
     },
     "labortoday": {
-      "last_run_at": "2026-09-30T23:54:29.558686Z",
+      "last_run_at": "2026-09-30T23:58:32.141366Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-30T23:54:29.558686Z",
+      "last_success_at": "2026-09-30T23:58:32.141366Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-09-30T23:55:29.680274Z",
+      "last_run_at": "2026-09-30T23:58:35.022510Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-30T23:55:29.680274Z",
+      "last_success_at": "2026-09-30T23:58:35.022510Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-09-30T23:56:43.956059Z",
+      "last_run_at": "2026-09-30T23:58:37.281047Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-09-30T23:56:43.956059Z",
+      "last_success_at": "2026-09-30T23:58:37.281047Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-09-30T23:56:44.624162Z",
-      "success": false,
-      "discovered": 0,
-      "errors": [
-        "all discovery paths failed: https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-09-28T20%3A00%3A00Z&before=2026-09-30T20%3A00%3A00Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories: robots.txt unavailable for theindigo.co.kr: GET failed: https://theindigo.co.kr/robots.txt: HTTP 415"
-      ],
-      "last_success_at": "2026-09-30T22:48:49.978048Z",
-      "discovery_status": "unavailable"
+      "last_run_at": "2026-09-30T23:58:44.204093Z",
+      "success": true,
+      "discovered": 2,
+      "errors": [],
+      "last_success_at": "2026-09-30T23:58:44.204093Z",
+      "discovery_status": "complete"
     },
     "kbs": {
       "last_run_at": "2026-08-22T11:40:50.052534Z",
