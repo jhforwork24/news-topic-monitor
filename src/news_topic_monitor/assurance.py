@@ -291,10 +291,17 @@ def evaluate_publish_gate(
     candidates: list[EditorialCandidate],
     health: RunHealth,
     revalidation_health: RunHealth | None = None,
+    extra_warning_items: list[ReportingItem] | None = None,
 ) -> PublishGateDecision:
     fatal: list[str] = []
     warnings: list[str] = []
     reporting: list[ReportingItem] = []
+
+    # 발행은 막지 않되 보고사항에 남기는 외부 점검 결과(예: 대기열 생성 때 시간초과로 빠진
+    # 출처가 뒤늦게 복구돼 편집·감사를 거치지 않은 기사가 확인된 경우).
+    for item in extra_warning_items or []:
+        warnings.append(item.cause)
+        reporting.append(item)
 
     incomplete_census = [check for check in census if check.status != CheckStatus.COMPLETE]
     if incomplete_census:
