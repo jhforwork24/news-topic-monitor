@@ -117,6 +117,36 @@ fatal이 없는 상태가 확인되면 `editorial-finalize.yml`을 workflow_disp
 - 한국어를 `\uXXXX` 이스케이프로 손으로 쓰지 않는다. 평문 한국어로 쓴다.
 - 서브에이전트는 최종 브리핑을 발행하지 않는다.
 
+### 호출 템플릿
+
+서브에이전트 프롬프트는 아래 틀에 값만 채운다. 절차와 기준은 문서가 정본이므로 틀에 옮겨 적지
+않는다. 괄호는 대기열 data source의 페이지 ID 등 이번 실행의 값이다.
+
+편집:
+
+```
+report_date={report_date}. GitHub main의 docs/daily-routine.md "서브에이전트 호출 규칙"과
+docs/claude-editorial-instructions.md를 읽고 그대로 따라 'Claude 편집 초안 · {report_date}'를
+제출하라. 최종 브리핑은 발행하지 않는다.
+- data source: {대기열 data source ID}
+- 매니페스트: {page id}, queue_id={queue_id}, 후보 {N}개 / {M}묶음
+- 후보 묶음 page id: 01={..}, 02={..}, …
+- 출처 점검 요약: {매니페스트 "출처 점검" 절의 요지}
+```
+
+감사:
+
+```
+report_date={report_date}. GitHub main의 docs/daily-routine.md "서브에이전트 호출 규칙"과
+docs/claude-auditor-task.md를 읽고 그대로 따라 'Claude 독립 감사 · {report_date}'를 제출하라.
+편집자의 보고는 모른다. 최종 브리핑은 발행하지 않는다.
+- data source: {대기열 data source ID}
+- 매니페스트·후보 묶음: 편집과 같음
+- 초안: {page id}, draft_id={draft_id}, submitted_at={값}
+```
+
+감사 템플릿에는 편집 에이전트의 보고 내용(선정 이유, 판단이 애매했던 지점)을 넣지 않는다.
+
 ### 편집 서브에이전트
 
 - `movement-position-canon` 스킬을 요약 작성 전에 로드한다.
