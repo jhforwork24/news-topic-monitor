@@ -217,6 +217,10 @@ DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal 
 대체경로·결과·다음 조치를 남긴다. Naver 원문 URL은 결정론적 수집 URL 집합과 대조하며, 장애언론
 census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간주하지 않고 gate를 차단한다.
 
+일간 예약 루틴의 전체 절차(대기열 확보 → 편집 → 감사 → fatal 처리 → 발행, 서브에이전트 호출
+규칙, 보고 원칙, 문서·프롬프트 우선순위)는 [`docs/daily-routine.md`](docs/daily-routine.md)가
+정본이며 예약 프롬프트는 날짜·ID 같은 매개변수만 넘긴다.
+
 연결형 Claude 편집 작업은
 [`docs/claude-editorial-instructions.md`](docs/claude-editorial-instructions.md), 독립 감사
 작업은 [`docs/claude-auditor-task.md`](docs/claude-auditor-task.md)를 따른다. 두 작업 모두

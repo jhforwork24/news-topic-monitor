@@ -62,3 +62,19 @@ def test_data_writers_checkout_latest_branch_after_concurrency_wait() -> None:
         assert checkout["uses"] == "actions/checkout@v7"
         assert checkout["with"]["ref"] == "${{ github.ref_name }}"
         assert checkout["with"]["fetch-depth"] == "0"
+
+
+def test_daily_routine_doc_exists_and_carries_no_notion_identifiers() -> None:
+    import re
+
+    root = Path(__file__).parents[1]
+    text = (root / "docs" / "daily-routine.md").read_text(encoding="utf-8")
+
+    # 절차 문서는 단계와 기준 문서를 가리키되, AGENTS.md대로 개인 Notion 식별자를 담지 않는다.
+    for heading in ("### 1단계", "### 2단계", "### 3단계", "### 4단계", "### 5단계"):
+        assert heading in text
+    assert "claude-editorial-instructions.md" in text
+    assert "claude-auditor-task.md" in text
+    assert "notion.so" not in text and "notion.com" not in text
+    assert not re.search(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", text)
+    assert not re.search(r"\b[0-9a-f]{32}\b", text)
