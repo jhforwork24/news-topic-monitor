@@ -9,6 +9,7 @@ from .briefing import (
     render_briefing_markdown,
 )
 from .models import ArticleRecord, Classification
+from .sources import SOURCE_LABELS
 from .utils import stable_article_key
 
 FORBIDDEN_SUMMARY_MARKERS = ('"', "'", "“", "”", "\u2018", "\u2019", "...", "…")
@@ -16,6 +17,10 @@ FORBIDDEN_TONE_LABELS = ("(진보)", "(보수)", "(전문지)")
 # "필자"는 칼럼·사설(III절)의 서술자를 가리킬 때만 쓴다. I·II절 보도는 취재기사이므로
 # 서술 주체가 기자 개인이 아니라 매체다 — 이름을 밝히지 않는 게 아니라 애초에 틀린 지칭이다.
 FORBIDDEN_AUTHOR_TERM = "필자"
+# 이슈 요약(summary)은 매체를 언급하지 않는 사안 요약이다. 매체별 보도 방식은 tone_analysis의
+# 몫이므로, I·II절 요약에 언론사 이름이 있으면 역할이 섞인 것으로 보고 거부한다. III절은
+# 필자의 주장을 요약하므로 이 검사에서 제외한다.
+OUTLET_NAMES = tuple(sorted(set(SOURCE_LABELS.values()), key=len, reverse=True))
 # Flags 해요체/합쇼체 sentence endings (e.g. "...입니다.", "...습니다.", "...하죠.").
 # "니다" is excluded when preceded by "아" so the plain-register negative copula
 # "아니다" (e.g. "확정된 금액은 아니다.") isn't mistaken for the "-습니다"/"-입니다"
@@ -52,6 +57,14 @@ def validate_briefing(document: BriefingDocument) -> None:
                 errors.append(
                     f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨"
                 )
+            if not section.title.startswith("III."):
+                named = [name for name in OUTLET_NAMES if name in issue.summary]
+                if named:
+                    outlets = ", ".join(named)
+                    errors.append(
+                        f"{section.title} / {issue.title}: 이슈 요약에 언론사({outlets})를 "
+                        "언급함 — 매체별 보도 방식은 보도 논조에 쓴다"
+                    )
             if not section.title.startswith("III.") and FORBIDDEN_AUTHOR_TERM in (
                 issue.summary + issue.tone_analysis
             ):

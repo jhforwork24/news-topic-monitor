@@ -959,3 +959,46 @@ def test_render_marks_empty_section_instead_of_leaving_a_bare_heading() -> None:
     assert (
         "# II. 노동·돌봄·빈곤\n\n이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다." in markdown
     )
+
+
+def _summary_document(section_title: str, summary: str) -> BriefingDocument:
+    issue = BriefingIssue(
+        title="합성 이슈 제목",
+        articles=[],
+        summary=summary,
+        tone_analysis="",
+        keyword="합성 키워드",
+    )
+    return BriefingDocument(
+        report_date="2026-10-02",
+        start=datetime(2026, 10, 1, tzinfo=UTC),
+        end=datetime(2026, 10, 2, tzinfo=UTC),
+        overview="총평.",
+        telegram_summary="요약.",
+        sections=[BriefingSection(section_title, [issue])],
+        source_failures=[],
+        editorial_notes=[],
+    )
+
+
+def test_issue_summary_must_not_name_an_outlet_in_news_sections() -> None:
+    import pytest
+
+    from news_topic_monitor.briefing_validation import BriefingValidationError
+
+    unattributed = "서울시가 정류장 120곳의 단차를 올해 안에 정비하겠다고 밝혔다."
+    validate_briefing(_summary_document("I. 장애정책·장애인운동", unattributed))
+    validate_briefing(_summary_document("II. 노동·돌봄·빈곤", unattributed))
+
+    for title in ("I. 장애정책·장애인운동", "II. 노동·돌봄·빈곤"):
+        for outlet in ("에이블뉴스", "매일노동뉴스", "한겨레"):
+            with pytest.raises(BriefingValidationError, match=f"이슈 요약에 언론사\\({outlet}\\)"):
+                validate_briefing(
+                    _summary_document(title, f"{outlet}는 서울시가 정류장을 정비한다고 전했다.")
+                )
+
+
+def test_opinion_summary_is_exempt_from_the_outlet_rule_and_keeps_the_author_term() -> None:
+    validate_briefing(
+        _summary_document("III. 주요 칼럼", "필자는 이동권이 여가와 이어진 권리라고 주장했다.")
+    )
