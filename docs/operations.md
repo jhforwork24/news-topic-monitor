@@ -1,5 +1,8 @@
 # 운영 점검 절차
 
+일간 예약 루틴이 따르는 단계별 절차는 [`daily-routine.md`](daily-routine.md)에 있다. 이 문서는
+그 절차 중 막혔을 때의 장애 대응을 다룬다.
+
 ## 공통 원칙
 
 `health/latest.json`의 `success`, `discovery_status`, `errors`, `structure_warnings`,
