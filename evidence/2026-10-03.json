@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-10-03",
-  "generated_at": "2026-10-03T01:58:39.363440Z",
+  "generated_at": "2026-10-03T02:03:46.271460Z",
   "articles": [
     {
       "candidate_id": "ea9e485d5c80c131071ee1f5ce34ed325b33b129d4c7d46cda299a23d1aa64cc",
@@ -35132,7 +35132,7 @@
       "published_at": "2026-10-02T21:19:49Z",
       "modified_at": null,
       "discovered_at": "2026-10-02T22:16:47.132091Z",
-      "last_checked_at": "2026-10-03T01:56:44.258035Z",
+      "last_checked_at": "2026-10-03T02:01:49.522136Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -39688,21 +39688,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "현정은 현대그룹 회장, 충북도 명예도지사 재위촉…상생·투자 확대",
-        "original_url": "https://www.m-i.kr/news/articleView.html?idxno=2002476",
-        "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=2002476",
-        "published_at": "2026-10-02T09:54:00Z",
-        "description": "충북도 명예도지사는 지역 발전에 크게 기여한 저명인사를 위촉해 도정 주요 정책 자문과 협력을 구하는... 현대엘리베이터는 '오르락(樂)' 장애인 합창단 운영을 비롯해 충주공업고등학교와 산학연계 교육과정을...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "민변 2026 국회 입법감시 의견서 발표",
         "original_url": "https://www.newsclaim.co.kr/news/articleView.html?idxno=3077352",
         "naver_url": "https://www.newsclaim.co.kr/news/articleView.html?idxno=3077352",
         "published_at": "2026-10-02T09:54:00Z",
         "description": "돌봄 정책 기본법, 돌봄노동자의 노동조건 개선 및 지위 향상에 관한 법률(돌봄권을 보장하는 돌봄기본법 제정) 모자보건법 일부개정법률안 (여성의 자기결정권 및 건강권을 위한 임신중지 관련 규정 개정) 장애인 차별금지...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "현정은 현대그룹 회장, 충북도 명예도지사 재위촉…상생·투자 확대",
+        "original_url": "https://www.m-i.kr/news/articleView.html?idxno=2002476",
+        "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=2002476",
+        "published_at": "2026-10-02T09:54:00Z",
+        "description": "충북도 명예도지사는 지역 발전에 크게 기여한 저명인사를 위촉해 도정 주요 정책 자문과 협력을 구하는... 현대엘리베이터는 '오르락(樂)' 장애인 합창단 운영을 비롯해 충주공업고등학교와 산학연계 교육과정을...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -39938,21 +39938,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "현대엘리베이터 충주 이전 7년…현정은, 충북 명예도지사 다시 맡아",
-        "original_url": "https://www.straightnews.co.kr/news/articleView.html?idxno=312457",
-        "naver_url": "https://www.straightnews.co.kr/news/articleView.html?idxno=312457",
-        "published_at": "2026-10-02T07:58:00Z",
-        "description": "충북도 명예도지사는 지역 발전에 기여한 인사를 위촉해 정책 제언과 자문 등 도정 지원 활동에 참여하도록... 현대엘리베이터는 장애인 합창단 '오르락(樂)'을 창단하고 장애인 고용과 장학·취약계층 지원을 이어가고...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "NH농협은행 6급 신규직원 380명 채용",
         "original_url": "https://www.newsclaim.co.kr/news/articleView.html?idxno=3077322",
         "naver_url": "https://www.newsclaim.co.kr/news/articleView.html?idxno=3077322",
         "published_at": "2026-10-02T07:58:00Z",
         "description": "국가유공자 및 장애인 등 관련 법령에 따른 대상자는 우대 혜택을 받을 수 있습니다. 자세한 전형 일정은... IT 및 테크 전문 인력을 대거 확보하는 한편 지역 인재 채용을 통한 상생 정책 을 지속해서 강화하고 있습니다.",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "현대엘리베이터 충주 이전 7년…현정은, 충북 명예도지사 다시 맡아",
+        "original_url": "https://www.straightnews.co.kr/news/articleView.html?idxno=312457",
+        "naver_url": "https://www.straightnews.co.kr/news/articleView.html?idxno=312457",
+        "published_at": "2026-10-02T07:58:00Z",
+        "description": "충북도 명예도지사는 지역 발전에 기여한 인사를 위촉해 정책 제언과 자문 등 도정 지원 활동에 참여하도록... 현대엘리베이터는 장애인 합창단 '오르락(樂)'을 창단하고 장애인 고용과 장학·취약계층 지원을 이어가고...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -40273,16 +40273,6 @@
         "naver_url": "http://www.the-biz.co.kr/news/articleView.html?idxno=728743",
         "published_at": "2026-10-02T06:40:00Z",
         "description": "충북도 명예도지사는 지역 발전에 기여한 인사를 위촉해 정책 제언과 자문 등 도정 지원 활동에 참여하도록... 현대엘리베이터는 장애인 합창단 '오르락(樂)'을 창단해 장애인 을 직접 고용하고, 장학·취약계층 지원...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "현정은 현대그룹 회장 \"지역사회와 동반성장 앞장\"",
-        "original_url": "https://www.financialpost.co.kr/news/articleView.html?idxno=278551",
-        "naver_url": "https://www.financialpost.co.kr/news/articleView.html?idxno=278551",
-        "published_at": "2026-10-02T06:38:00Z",
-        "description": "충북도 명예도지사는 지역 발전에 공헌한 저명인사를 위촉해 정책 제언·자문 등 다양한 도정 지원 활동에... 현대엘리베이터는 '오르락' 장애인 합창단을 창단하는 등 장애인 고용과 장학·취약계층 지원 등 지역 밀착형...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -41197,8 +41187,8 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-10-03T01:56:58.929641Z",
+    "status": "complete",
+    "checked_at": "2026-10-03T02:02:03.901269Z",
     "checks": [
       {
         "issue_title": "국회 신청주의 개선 6법 의결, 장애인연금 신청 간주 확대와 3급 장애인 수급",
@@ -41210,10 +41200,10 @@
       },
       {
         "issue_title": "장애인권리보장법 하위법령 조문안 검토, 장애계 공동 요구 구체화",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -41226,10 +41216,10 @@
       },
       {
         "issue_title": "한국피플퍼스트대회, 새 발달장애인 권리선언문 공개와 피플퍼스트법 제정 요구",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
@@ -41242,34 +41232,34 @@
       },
       {
         "issue_title": "서울시 권리중심공공일자리 조례 개정안 재의요구, 전장연과 갈등 격화",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "개정 노조법 시행 뒤 원청 교섭 책임 다툼 이어져, 한화오션 교섭 착수·은행 콜센터 의제 합의·네이버 시정신청",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "학교급식 노동자 인력충원 요구, 개정 학교급식법 시행 앞두고 예산 미비 지적",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
         "issue_title": "공공기관 기능개혁에 따른 장애인고용공단·장애인기업종합지원센터 통합, 노조 반대",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
