@@ -50,11 +50,11 @@
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-10-03T00:07:22.263293Z",
+      "last_run_at": "2026-10-03T01:51:15.748818Z",
       "success": true,
       "discovered": 25,
       "errors": [],
-      "last_success_at": "2026-10-03T00:07:22.263293Z",
+      "last_success_at": "2026-10-03T01:51:15.748818Z",
       "discovery_status": "complete"
     },
     "newscham": {
@@ -66,35 +66,35 @@
       "last_success_at": "2026-10-03T00:07:33.903262Z"
     },
     "labortoday": {
-      "last_run_at": "2026-10-03T00:07:39.130883Z",
+      "last_run_at": "2026-10-03T01:51:18.586225Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-03T00:07:39.130883Z",
+      "last_success_at": "2026-10-03T01:51:18.586225Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-10-03T00:09:08.900018Z",
+      "last_run_at": "2026-10-03T01:51:26.243713Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-03T00:09:08.900018Z",
+      "last_success_at": "2026-10-03T01:51:26.243713Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-10-03T00:10:19.232723Z",
+      "last_run_at": "2026-10-03T01:51:28.433927Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-03T00:10:19.232723Z",
+      "last_success_at": "2026-10-03T01:51:28.433927Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-10-03T00:10:51.363701Z",
+      "last_run_at": "2026-10-03T01:51:30.776919Z",
       "success": true,
-      "discovered": 6,
+      "discovered": 0,
       "errors": [],
-      "last_success_at": "2026-10-03T00:10:51.363701Z",
+      "last_success_at": "2026-10-03T01:51:30.776919Z",
       "discovery_status": "complete"
     },
     "kbs": {
@@ -130,12 +130,12 @@
       "discovery_status": "complete"
     },
     "mediaus": {
-      "last_run_at": "2026-10-03T00:08:45.448291Z",
+      "last_run_at": "2026-10-03T01:51:23.246394Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-03T00:08:45.448291Z"
+      "last_success_at": "2026-10-03T01:51:23.246394Z"
     },
     "sisain": {
       "last_run_at": "2026-10-03T00:07:27.481435Z",

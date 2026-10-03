@@ -1,12 +1,17 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-10-02",
+  "report_date": "2026-10-03",
   "status": "failed",
   "phase_durations_seconds": {
-    "api_preflight": 1.39,
-    "bridge_import_validation": 6.411,
-    "total": 7.81
+    "api_preflight": 2.071,
+    "assurance": 0.002,
+    "bridge_import_validation": 8.794,
+    "census_retry": 0.0,
+    "final_state_recrawl": 56.101,
+    "gap_reverse_search": 103.934,
+    "late_recovered_sources": 0.0,
+    "total": 181.375
   },
-  "error": "보고 경계가 8시간 이상 지나 발행 직전 최종상태를 완전하게 재검증할 수 없음",
-  "completed_at": "2026-10-02T10:01:28.851550Z"
+  "error": "브리핑 발행 검증 실패: III. 주요 칼럼 / 발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로: 허용 범위 밖의 칼럼이 포함됨",
+  "completed_at": "2026-10-03T01:53:25.171200Z"
 }
