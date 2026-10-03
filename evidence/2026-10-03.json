@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-10-03",
-  "generated_at": "2026-10-03T01:53:20.552798Z",
+  "generated_at": "2026-10-03T01:58:39.363440Z",
   "articles": [
     {
       "candidate_id": "ea9e485d5c80c131071ee1f5ce34ed325b33b129d4c7d46cda299a23d1aa64cc",
@@ -18197,7 +18197,7 @@
       "full_body_status": "fetched",
       "body_hash": "7651eb7a3ac3e5f286344c56101e2789f11186e087d1fd81fd3a4b80e64c6e95",
       "verification_grade": "A",
-      "issue_id": "2026-10-03-issue-13",
+      "issue_id": "2026-10-03-issue-12",
       "primary_source_validation": "pending"
     },
     {
@@ -27662,7 +27662,7 @@
       "full_body_status": "fetched",
       "body_hash": "5061071fe5c327980692366a84dd24768001ce2431aeaad101b34c9173aed948",
       "verification_grade": "A",
-      "issue_id": "2026-10-03-issue-12",
+      "issue_id": null,
       "primary_source_validation": "pending"
     },
     {
@@ -35132,7 +35132,7 @@
       "published_at": "2026-10-02T21:19:49Z",
       "modified_at": null,
       "discovered_at": "2026-10-02T22:16:47.132091Z",
-      "last_checked_at": "2026-10-03T01:51:20.856213Z",
+      "last_checked_at": "2026-10-03T01:56:44.258035Z",
       "discovery_route": [
         "official:https://www.mediaus.co.kr/sitemap.xml"
       ],
@@ -41125,76 +41125,6 @@
         "reason": "독립 날짜순 역검색 완료"
       },
       {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "labortoday",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "newscham",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "chosun",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "joongang",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "donga",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "khan",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "hani",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "ohmynews",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "pressian",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
-        "source": "sisain",
-        "status": "complete",
-        "match_count": 0,
-        "reason": "독립 날짜순 역검색 완료"
-      },
-      {
         "issue_title": "중수청·공소청 출범과 검찰개혁의 운영 능력 문제",
         "source": "labortoday",
         "status": "complete",
@@ -41267,8 +41197,8 @@
     ]
   },
   "final_state": {
-    "status": "complete",
-    "checked_at": "2026-10-03T01:51:30.777930Z",
+    "status": "failed",
+    "checked_at": "2026-10-03T01:56:58.929641Z",
     "checks": [
       {
         "issue_title": "국회 신청주의 개선 6법 의결, 장애인연금 신청 간주 확대와 3급 장애인 수급",
@@ -41280,10 +41210,10 @@
       },
       {
         "issue_title": "장애인권리보장법 하위법령 조문안 검토, 장애계 공동 요구 구체화",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
@@ -41296,10 +41226,10 @@
       },
       {
         "issue_title": "한국피플퍼스트대회, 새 발달장애인 권리선언문 공개와 피플퍼스트법 제정 요구",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
@@ -41312,34 +41242,34 @@
       },
       {
         "issue_title": "서울시 권리중심공공일자리 조례 개정안 재의요구, 전장연과 갈등 격화",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
         "issue_title": "개정 노조법 시행 뒤 원청 교섭 책임 다툼 이어져, 한화오션 교섭 착수·은행 콜센터 의제 합의·네이버 시정신청",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
         "issue_title": "학교급식 노동자 인력충원 요구, 개정 학교급식법 시행 앞두고 예산 미비 지적",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
         "issue_title": "공공기관 기능개혁에 따른 장애인고용공단·장애인기업종합지원센터 통합, 노조 반대",
-        "status": "complete",
+        "status": "failed",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
+        "reason": "GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
         "evidence_urls": []
       },
       {
@@ -41352,14 +41282,6 @@
       },
       {
         "issue_title": "유엔 장애인권리위원회 참정권 일반논평 제11호와 장애 여성 교차차별 가이드라인 채택",
-        "status": "complete",
-        "progressive": false,
-        "changed_after_draft": false,
-        "reason": "진행형 사건 탐지 조건에 해당하지 않음",
-        "evidence_urls": []
-      },
-      {
-        "issue_title": "발달장애인 국가책임제, 돌봄 프레임을 넘어 기회와 지원으로",
         "status": "complete",
         "progressive": false,
         "changed_after_draft": false,

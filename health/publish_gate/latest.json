@@ -1,15 +1,53 @@
 {
   "schema_version": 1,
   "report_date": "2026-10-03",
-  "checked_at": "2026-10-03T01:53:17.639498Z",
-  "allowed": true,
-  "fatal_errors": [],
+  "checked_at": "2026-10-03T01:58:36.232033Z",
+  "allowed": false,
+  "fatal_errors": [
+    "final-state revalidation이 COMPLETE가 아님"
+  ],
   "degraded_warnings": [
     "독립 검색에서 결정론적 수집에 없는 잠재 누락 2건"
   ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
   "reporting_items": [
+    {
+      "cause": "장애인권리보장법 하위법령 조문안 검토, 장애계 공동 요구 구체화: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "한국피플퍼스트대회, 새 발달장애인 권리선언문 공개와 피플퍼스트법 제정 요구: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "서울시 권리중심공공일자리 조례 개정안 재의요구, 전장연과 갈등 격화: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "개정 노조법 시행 뒤 원청 교섭 책임 다툼 이어져, 한화오션 교섭 착수·은행 콜센터 의제 합의·네이버 시정신청: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "학교급식 노동자 인력충원 요구, 개정 학교급식법 시행 앞두고 예산 미비 지적: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
+    {
+      "cause": "공공기관 기능개혁에 따른 장애인고용공단·장애인기업종합지원센터 통합, 노조 반대: GPT 초안·감사 완료 뒤에 수행된 공식 재수집 증거가 없음",
+      "fallback": "초안의 현재상태 서술을 발행하지 않고 확인된 원문만 보존",
+      "result": "failed",
+      "next_action": "선정 출처를 공식 경로로 재수집하고 final-state를 다시 판정"
+    },
     {
       "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 발달장애 성인 자녀 관리 소홀로 4억 배상 판결, 그 부모가 던진 질문",
       "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
