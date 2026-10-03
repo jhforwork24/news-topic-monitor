@@ -78,6 +78,9 @@ findings에 fatal이 없으면 5단계로. 있으면 이 세션이 해당 후보
   포함한다.
 - 고정 칼럼·인사 소식 미처리 지적은 해당 후보를 알맞은 섹션에 넣거나 `plan.exclusions`에 이유를
   남겨 해소한다. 비마이너 오피니언은 제외 사유로 면책되지 않는다.
+- 발행 검증이 "허용 범위 밖의 칼럼이 포함됨"으로 막으면 해당 이슈를 `opinion`에서 빼고
+  `plan.exclusions`에 사유를 남긴다. 대기열이 칼럼으로 판정하지 않은 외부 필자 기고는 매체가
+  허용 목록에 있어도 `opinion`에 넣을 수 없다.
 - 수정 뒤 `draft_id`/`submitted_at`을 새 KST 시각으로 갱신해 초안 페이지를 고치고, 감사 페이지의
   findings를 그 항목만 재검증해 비우거나 그대로 둔다. 감사 제출시각은 갱신한 초안보다 늦어야 한다.
 - 스스로 판단하기 애매하거나 명백히 해소되지 않는 fatal은 통과시키지 말고 **발행을 보류**하고
@@ -113,8 +116,12 @@ fatal이 없는 상태가 확인되면 `editorial-finalize.yml`을 workflow_disp
   늘 수 있고 이는 이상 신호가 아니다. 섹션 상한은 창 길이와 무관하게 그대로다.
 - notion-fetch 결과가 토큰 초과로 파일에 저장되면 `Read`의 offset/limit이 아니라 Bash(python)로
   파싱한다. 후보 본문은 `{"candidates":[…]}` JSON이므로 `json.JSONDecoder().raw_decode`로 읽는다.
-- **시각은 반드시 `TZ=Asia/Seoul date -Iseconds`로 확인한 실제 시각을 쓴다.** 미래 시각은
-  실제보다 5분 넘게 앞서면 거부된다. `draft_id`는 `draft-{날짜 숫자}-HHMMSS`다.
+- **시각은 반드시 `TZ=Asia/Seoul date -Iseconds`로 확인한 실제 시각을 쓰고, 지금 시각보다 앞서
+  적지 않는다.** 실제보다 5분 넘게 앞서면 제출이 거부되며, 5분 이내라도 final-state 판정이 어긋난다:
+  finalize의 공식 재수집은 감사 `submitted_at` 뒤에 이뤄진 것만 인정하므로, 감사 시각을 아직 오지
+  않은 시각으로 적으면 재수집이 "감사 완료 전"으로 판정돼 진행형 이슈가 전부 `final-state revalidation이
+  COMPLETE가 아님`으로 막힌다(2026-10-03). 제출 시각을 적은 뒤에 finalize를 실행하고, 이미 막혔다면
+  시각이 지난 뒤 내용 수정 없이 다시 실행하면 된다. `draft_id`는 `draft-{날짜 숫자}-HHMMSS`다.
 - 제출 페이지의 제목과 `날짜` 속성(`report_date`, 날짜형)을 반드시 채우고, 제출 뒤 다시 읽어
   제목·날짜 속성·`queue_id`·`draft_id`·JSON code block이 **정확히 1개**인지 확인한다.
 - 한국어를 `\uXXXX` 이스케이프로 손으로 쓰지 않는다. 평문 한국어로 쓴다.
