@@ -43,7 +43,14 @@
       "Bash(.venv/bin/pytest*)",
       "Bash(.venv/bin/ruff*)",
       "Bash(python3*)",
-      "Bash(TZ=Asia/Seoul date*)"
+      "Bash(TZ=Asia/Seoul date*)",
+      "Agent",
+      "Read",
+      "Glob",
+      "Grep",
+      "ToolSearch",
+      "Edit",
+      "Write"
     ]
   }
 }

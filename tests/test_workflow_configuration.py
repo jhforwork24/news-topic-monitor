@@ -78,3 +78,16 @@ def test_daily_routine_doc_exists_and_carries_no_notion_identifiers() -> None:
     assert "notion.so" not in text and "notion.com" not in text
     assert not re.search(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", text)
     assert not re.search(r"\b[0-9a-f]{32}\b", text)
+
+
+def test_pre_approval_scope_keeps_pr_and_paid_paths_outside() -> None:
+    root = Path(__file__).parents[1]
+    agents = (root / "AGENTS.md").read_text(encoding="utf-8")
+    routine = (root / "docs" / "daily-routine.md").read_text(encoding="utf-8")
+
+    scope = agents.split("# 사전 승인 범위", 1)[1]
+    # PR 생성·병합과 AGENTS.md가 승인을 요구하는 항목은 사전 승인 범위로 풀리지 않는다.
+    assert "PR 생성과\n병합은 이 범위에 없으며" in scope
+    for kept in ("유료 API", "robots_absent_policy", "census", "발행 게이트", "덮어쓰기"):
+        assert kept in scope.split("다음은 이 범위로도 풀리지 않으며", 1)[1]
+    assert "PR 생성·병합은 사전 승인" in routine
