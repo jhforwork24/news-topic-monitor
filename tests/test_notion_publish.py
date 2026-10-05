@@ -704,3 +704,48 @@ def test_record_selection_report_is_idempotent() -> None:
 
     assert result == "https://notion.so/existing"
     assert not any(method == "POST" and path == "/v1/pages" for method, path, _ in requests)
+
+
+def _briefing_query_handler(pages: list[dict]):
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/query"):
+            return httpx.Response(200, json={"results": pages, "has_more": False})
+        return httpx.Response(404, json={"message": "unexpected"})
+
+    return handler
+
+
+def _titled_page(page_id: str, title: str) -> dict:
+    return {
+        "id": page_id,
+        "url": f"https://notion.so/{page_id}",
+        "properties": {"이름": {"title": [{"plain_text": title}]}},
+    }
+
+
+def test_find_published_briefing_returns_newest_version_or_none() -> None:
+    pages = [
+        _titled_page("v1", "일간 장애·노동 뉴스 브리핑 (2026-08-16)"),
+        _titled_page("v3", "편집 검수판 v3 · 일간 장애·노동 뉴스 브리핑 (2026-08-16)"),
+        _titled_page("other", "GitHub 브리핑 자동발행 실패 (2026-08-16)"),
+    ]
+    client = httpx.Client(
+        base_url="https://api.notion.com",
+        transport=httpx.MockTransport(_briefing_query_handler(pages)),
+    )
+    publisher = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="ds-1"), client=client
+    )
+    found = publisher.find_published_briefing("2026-08-16")
+    assert found is not None and found["id"] == "v3"
+
+    empty_client = httpx.Client(
+        base_url="https://api.notion.com",
+        transport=httpx.MockTransport(
+            _briefing_query_handler([_titled_page("x", "GitHub 브리핑 자동발행 실패 (2026-08-16)")])
+        ),
+    )
+    empty = NotionPublisher(
+        NotionPublishSettings(token="test", data_source_id="ds-1"), client=empty_client
+    )
+    assert empty.find_published_briefing("2026-08-16") is None

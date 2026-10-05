@@ -270,15 +270,8 @@ class NotionPublisher:
         document: BriefingDocument,
     ) -> NotionPublishResult:
         fingerprint = briefing_fingerprint(document)
-        dated_pages = self._query_date(self.settings.data_source_id, document.report_date)
-        briefing_pages = [
-            page for page in dated_pages if BRIEFING_TITLE_FRAGMENT in _page_title(page)
-        ]
-        if briefing_pages:
-            existing = max(
-                briefing_pages,
-                key=lambda page: _briefing_version(_page_title(page)),
-            )
+        existing = self.find_published_briefing(document.report_date)
+        if existing is not None:
             return NotionPublishResult(
                 status="already_published",
                 page_id=str(existing["id"]),
@@ -287,9 +280,7 @@ class NotionPublisher:
                 version=_briefing_version(_page_title(existing)),
                 fingerprint=fingerprint,
             )
-        version = (
-            max((_briefing_version(_page_title(page)) for page in briefing_pages), default=0) + 1
-        )
+        version = 1
         title = f"{BRIEFING_TITLE_FRAGMENT} ({document.report_date})"
         properties = _page_properties(title, document)
         page = self._request(
@@ -321,6 +312,16 @@ class NotionPublisher:
             version=version,
             fingerprint=fingerprint,
         )
+
+    def find_published_briefing(self, report_date: str) -> dict[str, Any] | None:
+        """Return the newest already-published briefing page for the date, if any."""
+        dated_pages = self._query_date(self.settings.data_source_id, report_date)
+        briefing_pages = [
+            page for page in dated_pages if BRIEFING_TITLE_FRAGMENT in _page_title(page)
+        ]
+        if not briefing_pages:
+            return None
+        return max(briefing_pages, key=lambda page: _briefing_version(_page_title(page)))
 
     def record_report(self, document: BriefingDocument, result: NotionPublishResult) -> str | None:
         if not self.settings.reports_data_source_id:

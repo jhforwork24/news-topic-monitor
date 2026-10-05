@@ -106,7 +106,7 @@ news-topic-monitor report \
 5. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
 6. 무료 production 발행은 repository variable `CHAT_EDITORIAL_BRIDGE_ENABLED=true`,
-   `PUBLICATION_OWNER=claude_editorial_bridge`와 09:25 편집·09:38 독립 감사 Claude 예약 작업을
+   `PUBLICATION_OWNER=claude_editorial_bridge`와 화~토 07:35 KST 단일 Claude 예약 실행(편집·독립 감사·발행 확인)을
    사용한다. GitHub의 유료 `OPENAI_API_KEY`는 필요하지 않다. 독립 누락 탐지를 활성화하려면
    `NAVER_API_HUB_CLIENT_ID`와 `NAVER_API_HUB_CLIENT_SECRET`을 secret으로 등록한다. Naver
    미설정은 명시적 `DEGRADED`로 남지만 원문 검증 등급을 올리지 않는다.
@@ -118,15 +118,20 @@ news-topic-monitor report \
 - `.github/workflows/backfill.yml`: `20 22 * * *`(UTC), 매일 07:20 KST에 최근 48시간 재확인
 - `.github/workflows/report.yml`: `2 0 * * *`(UTC), 매일 09:02 KST에 전날 05:00부터
   당일 05:00 KST까지 보고
-- `.github/workflows/editorial-queue.yml`: `5 0 * * *`(UTC), 매일 09:05에 48시간 공식 목록과
-  본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
+- `.github/workflows/editorial-queue.yml`: `10 20 * * 1-5`(UTC), 화~토 05:10 KST가 명목 시각이다.
+  GitHub 예약 트리거가 늦어 실제로는 07:55~08:50 KST에 발동하는 날이 많아, 일간 예약 실행이
+  07:35에 대기열이 없으면 직접 실행한다(늦게 온 예약 실행은 `already_built`로 무동작).
+  보고 구간의 공식 목록과 본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
   기사는 모두, 그 밖의 일반 기사는 매체별 최신 24건까지 본문을 확인함. 수집 단계의 자동 판별은
   `disability_rights` 토픽만 적용하므로, 대기열의 각 후보 옆에는 `labor_care_poverty` 토픽으로
   다시 계산한 힌트(`II절 노동·돌봄·빈곤 관련 가능성(점수 N.N)` 또는 `II절 검토 가능`)를 함께
   표시해 장애 의제로는 걸러지지 않는 노동·돌봄·빈곤 기사를 편집자가 놓치지 않도록 함
-- 연결된 Claude 예약 작업: 09:25에 대기열을 편집해 구조화 초안을 쓰고, 별도 09:38 작업이
-  같은 원근거와 초안을 독립 감사함. 두 작업 모두 최종 브리핑을 직접 발행하지 않음
-- `.github/workflows/editorial-finalize.yml`: `48 0 * * *`(UTC), 매일 09:48에 대기열·초안·감사의
+- 연결된 Claude 예약 실행(화~토 07:35 KST): 대기열을 확보하고 편집 서브에이전트가 구조화 초안을
+  쓰며, 별도 독립 감사 서브에이전트가 같은 원근거와 초안을 감사함. 어느 쪽도 최종 브리핑을
+  직접 발행하지 않음
+- `.github/workflows/editorial-finalize.yml`: 예약 실행이 감사 직후 workflow_dispatch로 실행한다.
+  `34 3 * * 2-6`(UTC) 예약은 늦은 안전망일 뿐이고, 그날 최종 브리핑이 이미 있으면 아무것도 하지
+  않고 종료한다. 대기열·초안·감사의
   날짜·queue_id·draft_id·후보 ID·스키마·제출순서를 검증하고, 선정 출처 final-state 재수집,
   Naver gap detection·10개 지정매체 역검색, 장애언론 census, publish gate를 거쳐 유일하게
   Notion 최종 발행을 수행함

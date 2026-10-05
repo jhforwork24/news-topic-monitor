@@ -89,8 +89,8 @@ source에 있다. `NOTION_REPORTS_DATA_SOURCE_ID`(브리핑 보고사항)는 별
 
 ## 대기열이 제때 없을 때
 
-`editorial-queue.yml`의 예약은 05:10 KST지만 GitHub 예약 트리거 자체가 1.5~2.5시간 늦게
-발동하는 일이 흔하다(드물게 8시간). 기다리지 말고 workflow_dispatch로 직접 실행한다
+`editorial-queue.yml`의 예약은 05:10 KST지만 GitHub 예약 트리거 자체가 늦게 발동한다.
+2026-09 하순 이후에는 거의 매일 07:55~08:50 KST였고 드물게 8시간까지 늦었다. 기다리지 말고 workflow_dispatch로 직접 실행한다
 (`date=YYYY-MM-DD`, `dry_run=false`). 실행은 보통 10~15분 걸린다.
 
 - 이미 오늘 매니페스트가 있으면 그 실행은 `status=already_built`로 아무것도 하지 않고 정상
