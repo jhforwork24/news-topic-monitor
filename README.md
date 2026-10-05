@@ -106,32 +106,34 @@ news-topic-monitor report \
 5. 노션 발행을 쓸 때만 아래 노션 변수를 등록하고 통합 secret을 공유한 뒤
    `NOTION_PUBLISH_ENABLED=true`로 전환한다. 비활성 상태에서는 예약 job이 안전하게 skip된다.
 6. 무료 production 발행은 repository variable `CHAT_EDITORIAL_BRIDGE_ENABLED=true`,
-   `PUBLICATION_OWNER=claude_editorial_bridge`와 화~토 07:35 KST 단일 Claude 예약 실행(편집·독립 감사·발행 확인)을
-   사용한다. GitHub의 유료 `OPENAI_API_KEY`는 필요하지 않다. 독립 누락 탐지를 활성화하려면
+   `PUBLICATION_OWNER=claude_editorial_bridge`와 일간 편집·감사·발행 Claude 예약 루틴(화~토
+   07:35 KST 시작)을 사용한다. GitHub의 유료 `OPENAI_API_KEY`는 필요하지 않다. 독립 누락 탐지를 활성화하려면
    `NAVER_API_HUB_CLIENT_ID`와 `NAVER_API_HUB_CLIENT_SECRET`을 secret으로 등록한다. Naver
    미설정은 명시적 `DEGRADED`로 남지만 원문 검증 등급을 올리지 않는다.
 
 워크플로는 다음과 같다.
 
-- `.github/workflows/collect.yml`: `17 2-23/3 * * *`(UTC), 3시간 간격으로 최근 6시간을
-  재확인하며 최종 사전 실행은 08:17 KST에 시작
-- `.github/workflows/backfill.yml`: `20 22 * * *`(UTC), 매일 07:20 KST에 최근 48시간 재확인
+- `.github/workflows/collect.yml`: `17 21,0,3,6,9,12,15,18 * * *`(UTC), 3시간 간격으로 최근
+  6시간을 재확인하며 대기열 생성 전 마지막 사전 실행은 06:17 KST에 시작
+- `.github/workflows/backfill.yml`: `20 20 * * *`(UTC), 매일 05:20 KST에 최근 48시간 재확인
 - `.github/workflows/report.yml`: `2 0 * * *`(UTC), 매일 09:02 KST에 전날 05:00부터
   당일 05:00 KST까지 보고
 - `.github/workflows/editorial-queue.yml`: `10 20 * * 1-5`(UTC), 화~토 05:10 KST가 명목 시각이다.
   GitHub 예약 트리거가 늦어 실제로는 07:55~08:50 KST에 발동하는 날이 많아, 일간 예약 실행이
   07:35에 대기열이 없으면 직접 실행한다(늦게 온 예약 실행은 `already_built`로 무동작).
-  보고 구간의 공식 목록과 본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
+  48시간 공식 목록과 본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
   기사는 모두, 그 밖의 일반 기사는 매체별 최신 24건까지 본문을 확인함. 수집 단계의 자동 판별은
   `disability_rights` 토픽만 적용하므로, 대기열의 각 후보 옆에는 `labor_care_poverty` 토픽으로
   다시 계산한 힌트(`II절 노동·돌봄·빈곤 관련 가능성(점수 N.N)` 또는 `II절 검토 가능`)를 함께
   표시해 장애 의제로는 걸러지지 않는 노동·돌봄·빈곤 기사를 편집자가 놓치지 않도록 함
-- 연결된 Claude 예약 실행(화~토 07:35 KST): 대기열을 확보하고 편집 서브에이전트가 구조화 초안을
-  쓰며, 별도 독립 감사 서브에이전트가 같은 원근거와 초안을 감사함. 어느 쪽도 최종 브리핑을
-  직접 발행하지 않음
-- `.github/workflows/editorial-finalize.yml`: 예약 실행이 감사 직후 workflow_dispatch로 실행한다.
-  `34 3 * * 2-6`(UTC) 예약은 늦은 안전망일 뿐이고, 그날 최종 브리핑이 이미 있으면 아무것도 하지
-  않고 종료한다. 대기열·초안·감사의
+- 연결된 Claude 예약 루틴(화~토 07:35 KST 시작): 하나의 예약 실행 안에서 독립 편집 서브에이전트가
+  대기열을 편집해 구조화 초안을 쓰고, 별도의 독립 감사 서브에이전트가 같은 원근거와 초안을 감사한 뒤
+  fatal을 처리하고 `editorial-finalize`를 실행해 발행 여부까지 확인함. 루틴은 최종 브리핑을 직접
+  발행하지 않음
+- `.github/workflows/editorial-finalize.yml`: 평시에는 위 루틴이 감사 직후 직접 실행하며, 예약
+  `34 3 * * 2-6`(UTC, 화~토 12:34 KST)은 루틴이 작동하지 않았을 때를 위한 예비 안전망이다(그날 최종 브리핑이
+  이미 있으면 아무것도 하지 않고 종료하고, 발행이 안 된 날 8시간 재검증 한도를 넘겨 발동하면
+  실패로 보고됨). 대기열·초안·감사의
   날짜·queue_id·draft_id·후보 ID·스키마·제출순서를 검증하고, 선정 출처 final-state 재수집,
   Naver gap detection·10개 지정매체 역검색, 장애언론 census, publish gate를 거쳐 유일하게
   Notion 최종 발행을 수행함
@@ -172,7 +174,7 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `NOTION_DATA_SOURCE_ID` | 노션 사용 시 | 없음 | 브리핑 대상 data source UUID |
 | `NOTION_QUEUE_DATA_SOURCE_ID` | Claude 편집 브리지 사용 시 | 없음 | 대기열·초안·독립 감사가 쌓이는 `대기열 초안 감사 등` data source UUID(고빈도 기계 판독용, 보고사항과 분리) |
 | `NOTION_REPORTS_DATA_SOURCE_ID` | 아니오 | 없음 | 발행 성공·실패 등 특이 보고사항만 쌓는 `브리핑 보고사항` data source UUID |
-| `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | CRPD 조문별 통합참조표 URL |
+| `NOTION_CRPD_REFERENCE_URL` | 아니오 | 없음 | 현재 일간 본문 렌더링에서 사용하지 않음(CRPD 연결 폐지 후 읽기만 하고 버림) |
 | `NOTION_PUBLISH_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 발행 job 실행 |
 | `PUBLICATION_OWNER` | production | 없음 | `claude_editorial_bridge`일 때만 무료 예약 finalizer 발행 |
 | `OPENAI_EDITOR_ENABLED` | 아니오 | `false` 취급 | `true`일 때만 수동 유료 API fallback 허용 |
@@ -228,11 +230,11 @@ census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간�
 
 연결형 Claude 편집 작업은
 [`docs/claude-editorial-instructions.md`](docs/claude-editorial-instructions.md), 독립 감사
-작업은 [`docs/claude-auditor-task.md`](docs/claude-auditor-task.md)를 따른다. 두 작업 모두
-매일 예약 트리거가 대기열 확보 뒤 순서대로 깨우며, GitHub 예약 지연으로 실제 실행 시각은
-날마다 달라진다 — 문서에 고정 시각을 적지 않는다.
+작업은 [`docs/claude-auditor-task.md`](docs/claude-auditor-task.md)를 따른다. 두 작업은 하나의
+예약 루틴이 서브에이전트로 차례로 호출하며, 대기열 생성과 검증 완료 시점에 따라 실제 발행
+시각은 날마다 달라진다. 문서에 고정 발행 시각을 적지 않는다.
 [`docs/claude-supervisory-task.md`](docs/claude-supervisory-task.md)는 별도 감독 예약이 있던
-시기의 문서로, 현재는 예약된 트리거가 없어 보관 상태다(아래 편집·감사 작업이 발행까지 직접
+시기의 문서로, 현재는 예약된 트리거가 없어 보관 상태다(예약 루틴이 발행 여부까지 직접
 확인한다).
 
 ## 주제 키워드 수정
@@ -284,13 +286,11 @@ II절 안에서는 돌봄 → 빈곤 → 노동 순으로 이슈를 배치하고
 (`labor_subsections.py`의 `LABOR_SUBSECTION_MAX_ISSUES`, `LABOR_SECTION_MAX_ISSUES`), 같은
 하위 주제 안의 순서는 편집 계획 제출 순서(또는 결정론적 경로의 점수 순서)를 그대로 유지한다.
 
-각 의제는 `주요 언론 보도 불릿 → 이슈 요약·보도 논조 → 추가 자료·더 알아보기`로 구성한다.
+각 의제는 `주요 언론 보도 불릿 → 이슈 요약·보도 논조 → 동일 주제 이전 보도`로 구성한다.
 기자명이 공개 메타데이터에서 확인되면 보도 불릿에 함께 표시한다. 이전 보도는 별도 항목을 만들지
-않고 더 알아보기 토글의 첫 행에 최대 3개만 표시한다. II절의 추가 자료는 `이전 보도 → 현행 제도 →
-관련 연구 및 문서`만 허용하며 국제 규범과 관련 단체 입장은 넣지 않는다. 다른 절의 CRPD 조문 전문은
-KDF, 일반논평은
-국가인권위원회 색인표의 직접 링크를 사용하고 둘 다 `국제 규범`으로 분류한다. 기술적 설명,
-선정·제외 사유, 출처 장애 정보는 브리핑에 넣지 않고 따로 연결된 보고사항 data source에
+않고 `동일 주제 이전 보도` 토글에 최대 3개만 표시한다. CRPD 조항·일반논평 연결, 현행법 매핑,
+단체 입장, 정책연구자료 매핑은 일간 본문에 넣지 않으며(주간 브리핑에서 수행), 기술적 설명,
+선정·제외 사유, 출처 장애 정보도 브리핑에 넣지 않고 따로 연결된 보고사항 data source에
 기록한다.
 
 날짜·시간 필드는 UTC ISO 8601로 직렬화하고 화면 보고서는 KST로 변환하되 `KST` 약칭을 붙이지

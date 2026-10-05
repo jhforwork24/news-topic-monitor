@@ -5,7 +5,7 @@ on:
     # 12:34 Asia/Seoul = 03:34 UTC. Late safety-net fallback only: the daily
     # editor+auditor automation normally dispatches this workflow itself
     # (workflow_dispatch) immediately after writing the draft and independent
-    # audit, targeting ~10:00-10:30 KST publication. This schedule exists in
+    # audit, as soon as verification completes. This schedule exists in
     # case that automation never fires; a run here after publication already
     # succeeded exits immediately without doing anything (the command checks
     # for the day's briefing first). GitHub often delays this trigger by hours,
