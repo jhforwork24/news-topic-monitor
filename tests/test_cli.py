@@ -7,6 +7,8 @@ from pathlib import Path
 from news_topic_monitor.cli import (
     REVALIDATION_BODY_LIMIT_BASE,
     REVALIDATION_BODY_LIMIT_MAX,
+    _briefing_already_published,
+    _editorial_finalize,
     _finalize_late_recovered_items,
     _known_relevant_seed_discoveries,
     _report_window,
@@ -27,6 +29,7 @@ from news_topic_monitor.models import (
 from news_topic_monitor.notion_publish import (
     QUEUE_MAX_CANDIDATES_CEILING,
     EditorialQueueSettings,
+    NotionConfigurationError,
 )
 from news_topic_monitor.policy import load_briefing_policy
 from news_topic_monitor.storage import JsonlStorage
@@ -519,3 +522,65 @@ def test_late_recovered_source_articles_are_reported_but_never_block(tmp_path) -
     assert items[0].result == "warning"
     assert "pressian" in items[0].cause and "1건" in items[0].cause
     assert "기사 missed" in items[0].cause
+
+
+class _FakePublisher:
+    def __init__(self, page: dict | None = None, error: Exception | None = None) -> None:
+        self.page = page
+        self.error = error
+
+    def __enter__(self) -> _FakePublisher:
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        return None
+
+    def find_published_briefing(self, report_date: str) -> dict | None:
+        if self.error is not None:
+            raise self.error
+        return self.page
+
+
+def _patch_publisher(monkeypatch, publisher: _FakePublisher) -> None:
+    monkeypatch.setattr("news_topic_monitor.cli.NotionPublisher", lambda settings: publisher)
+    monkeypatch.setattr(
+        "news_topic_monitor.cli.NotionPublishSettings.from_env", classmethod(lambda cls: object())
+    )
+
+
+def test_briefing_already_published_skips_without_touching_health(monkeypatch, tmp_path) -> None:
+    _patch_publisher(monkeypatch, _FakePublisher(page={"id": "p1"}))
+
+    assert _briefing_already_published("2026-10-03") is True
+    assert not (tmp_path / "health").exists()
+
+
+def test_briefing_already_published_falls_back_to_the_normal_flow(monkeypatch, tmp_path) -> None:
+    _patch_publisher(monkeypatch, _FakePublisher(page=None))
+    assert _briefing_already_published("2026-10-03") is False
+
+    _patch_publisher(monkeypatch, _FakePublisher(error=RuntimeError("notion down")))
+    assert _briefing_already_published("2026-10-03") is False
+
+    monkeypatch.setattr(
+        "news_topic_monitor.cli.NotionPublishSettings.from_env",
+        classmethod(lambda cls: (_ for _ in ()).throw(NotionConfigurationError("no token"))),
+    )
+    assert _briefing_already_published("2026-10-03") is False
+    assert not (tmp_path / "health").exists()
+
+
+def test_editorial_finalize_exits_early_when_the_day_is_already_published(
+    monkeypatch, tmp_path
+) -> None:
+    calls: list[str] = []
+    monkeypatch.setattr(
+        "news_topic_monitor.cli._briefing_already_published",
+        lambda report_date: calls.append(report_date) or True,
+    )
+    args = argparse.Namespace(date="2026-10-03", start=None, end=None, dry_run=False)
+    settings = argparse.Namespace(root=tmp_path)
+
+    # Returns before any policy loading, recrawl or gate evaluation: none are stubbed.
+    assert _editorial_finalize(args, settings) == 0
+    assert calls == ["2026-10-03"]

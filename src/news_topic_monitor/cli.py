@@ -866,9 +866,36 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
         return 3
 
 
+def _briefing_already_published(report_date: str) -> bool:
+    """True when the day's final briefing already exists in Notion.
+
+    The late scheduled safety net runs after the connected routine has normally
+    published. Publishing is idempotent per date, so there is nothing to do; going
+    on would only trip the stale-revalidation guard, post a failure report and
+    overwrite the health records of the published day. Any lookup problem falls back
+    to the normal flow rather than skipping a publication.
+    """
+    try:
+        with NotionPublisher(NotionPublishSettings.from_env()) as publisher:
+            existing = publisher.find_published_briefing(report_date)
+    except NotionConfigurationError:
+        return False
+    except Exception as exc:
+        LOGGER.warning("could not check for an existing briefing: %s", exc)
+        return False
+    if existing is None:
+        return False
+    # Deliberately writes no health: the published day's gate and Notion records stay as
+    # the real run left them.
+    LOGGER.info("editorial finalize: briefing for %s already published; nothing to do", report_date)
+    return True
+
+
 def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
     date_value, start, end = _report_window(args)
     report_date = date_value.isoformat()
+    if not args.dry_run and _briefing_already_published(report_date):
+        return 0
     command_started = perf_counter()
     phase_durations: dict[str, float] = {}
     storage = JsonlStorage(settings.root)

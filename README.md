@@ -118,8 +118,10 @@ news-topic-monitor report \
 - `.github/workflows/backfill.yml`: `20 20 * * *`(UTC), 매일 05:20 KST에 최근 48시간 재확인
 - `.github/workflows/report.yml`: `2 0 * * *`(UTC), 매일 09:02 KST에 전날 05:00부터
   당일 05:00 KST까지 보고
-- `.github/workflows/editorial-queue.yml`: `10 20 * * 1-5`(UTC), 화~토 05:10 KST에 48시간 공식 목록과
-  본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
+- `.github/workflows/editorial-queue.yml`: `10 20 * * 1-5`(UTC), 화~토 05:10 KST가 명목 시각이다.
+  GitHub 예약 트리거가 늦어 실제로는 07:55~08:50 KST에 발동하는 날이 많아, 일간 예약 실행이
+  07:35에 대기열이 없으면 직접 실행한다(늦게 온 예약 실행은 `already_built`로 무동작).
+  48시간 공식 목록과 본문 근거를 재수집해 private Notion에 SHA-256으로 묶인 구조화 대기열을 만듦. 규칙상 관련
   기사는 모두, 그 밖의 일반 기사는 매체별 최신 24건까지 본문을 확인함. 수집 단계의 자동 판별은
   `disability_rights` 토픽만 적용하므로, 대기열의 각 후보 옆에는 `labor_care_poverty` 토픽으로
   다시 계산한 힌트(`II절 노동·돌봄·빈곤 관련 가능성(점수 N.N)` 또는 `II절 검토 가능`)를 함께
@@ -129,8 +131,9 @@ news-topic-monitor report \
   fatal을 처리하고 `editorial-finalize`를 실행해 발행 여부까지 확인함. 루틴은 최종 브리핑을 직접
   발행하지 않음
 - `.github/workflows/editorial-finalize.yml`: 평시에는 위 루틴이 감사 직후 직접 실행하며, 예약
-  `34 3 * * 2-6`(UTC, 화~토 12:34 KST)은 루틴이 작동하지 않았을 때를 위한 예비 안전망이다(발행이
-  이미 끝났으면 무해한 no-op). 대기열·초안·감사의
+  `34 3 * * 2-6`(UTC, 화~토 12:34 KST)은 루틴이 작동하지 않았을 때를 위한 예비 안전망이다(그날 최종 브리핑이
+  이미 있으면 아무것도 하지 않고 종료하고, 발행이 안 된 날 8시간 재검증 한도를 넘겨 발동하면
+  실패로 보고됨). 대기열·초안·감사의
   날짜·queue_id·draft_id·후보 ID·스키마·제출순서를 검증하고, 선정 출처 final-state 재수집,
   Naver gap detection·10개 지정매체 역검색, 장애언론 census, publish gate를 거쳐 유일하게
   Notion 최종 발행을 수행함
