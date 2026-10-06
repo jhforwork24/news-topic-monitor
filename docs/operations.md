@@ -267,3 +267,22 @@ finalize가 "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 
 필요 최소한으로 줄일 수 있지만, 코드가 `data/articles`, `data/review`, `reports`, `health`를
 일괄 삭제해서는 안 된다. 저장소 용량이 커지면 D1 이전 절차를 따르되 유료 서비스가 필요하면
 먼저 사용자 승인을 받는다.
+
+## 노션 쓰기 도구가 승인 대기에 걸림
+
+연결형 Claude 서브에이전트(편집·감사)의 `notion-create-pages`·`notion-update-page`가 응답하지 않고
+멈추는 장애다. 2026-09-29부터 간헐적으로 나타났고(그 전 9/19~9/25에는 쓰기가 1초 안에 끝남), 10-03에는
+2시간 21분, 10-06에는 최대 65분을 기다렸다. 읽기 도구(`notion-fetch`·`search`·`query`)는 한 번도
+막히지 않았다. 대기 중 컨테이너가 재시작되면 서브에이전트가 소멸하고 초안·감사 페이지가 만들어지지 않는다.
+
+- **진단:** `python3 scripts/notion_write_latency.py --since <UTC 시각>`로 세션 기록에서 쓰기 호출의
+  대기 시간을 확인한다. 응답 없이 사라진 호출은 `UNANSWERED`로 표시된다.
+- **원인 후보(가능성 순):** (1) 노션 서버 업데이트나 커넥터 재인증으로 도구별 권한이 기본값(쓰기는 승인
+  필요)으로 돌아감 — 10-06 07:35에 새 도구(`notion-restore-pages`)가 추가된 것과 시점이 맞음,
+  (2) 노션 커넥터가 서버 이름과 UUID로 두 벌 보여 설정한 쪽과 세션이 쓰는 쪽이 다름(패치노트 5.21의
+  MCP 접두사 혼용 참조), (3) 여러 기기에서 설정이 서로 덮어씀, (4) 조직 관리자 상한. 저장소
+  `.claude/settings.json`의 `mcp__Notion__*` 허용은 이 승인을 막지 못했다.
+- **해소:** 사용자가 claude.ai → Customize → Connectors → Notion의 도구 권한에서
+  `notion-create-pages`·`notion-update-page`를 항상 허용으로 둔다(이 세션은 바꿀 수 없다). 다시 풀리면
+  풀린 날짜·시각을 기록해 위 후보를 좁힌다.
+- **임시 대응:** `docs/daily-routine.md`의 "반환 모드"로 서브에이전트가 Notion에 쓰지 않게 한다.

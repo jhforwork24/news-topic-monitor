@@ -91,3 +91,70 @@ def test_pre_approval_scope_keeps_pr_and_paid_paths_outside() -> None:
     for kept in ("유료 API", "robots_absent_policy", "census", "발행 게이트", "덮어쓰기"):
         assert kept in scope.split("다음은 이 범위로도 풀리지 않으며", 1)[1]
     assert "PR 생성·병합은 사전 승인" in routine
+
+
+def _load_latency_script():
+    import importlib.util
+    import sys
+
+    path = Path(__file__).parents[1] / "scripts" / "notion_write_latency.py"
+    spec = importlib.util.spec_from_file_location("notion_write_latency", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module  # dataclasses resolve annotations through sys.modules
+    spec.loader.exec_module(module)
+    return module
+
+
+def _log_line(kind: str, stamp: str, **fields) -> str:
+    import json
+
+    block = {"type": kind, **fields}
+    return json.dumps({"timestamp": stamp, "message": {"content": [block]}})
+
+
+def test_notion_write_latency_flags_waits_and_unanswered_calls(tmp_path, capsys) -> None:
+    sub = tmp_path / "proj" / "sess" / "subagents"
+    sub.mkdir(parents=True)
+    lines = [
+        _log_line(
+            "tool_use", "2026-10-06T00:00:00Z", id="a", name="mcp__Notion__notion-create-pages"
+        ),
+        _log_line("tool_result", "2026-10-06T00:30:00Z", tool_use_id="a"),
+        _log_line(
+            "tool_use", "2026-10-06T00:31:00Z", id="b", name="mcp__Notion__notion-update-page"
+        ),
+        _log_line("tool_result", "2026-10-06T00:31:02Z", tool_use_id="b"),
+        _log_line(
+            "tool_use", "2026-10-06T00:40:00Z", id="c", name="mcp__Notion__notion-create-pages"
+        ),
+        _log_line("tool_use", "2026-10-06T00:41:00Z", id="d", name="mcp__Notion__notion-fetch"),
+        _log_line("tool_result", "2026-10-06T00:41:01Z", tool_use_id="d"),
+    ]
+    (sub / "agent-abcdef123456.jsonl").write_text("\n".join(lines), encoding="utf-8")
+    module = _load_latency_script()
+
+    code = module.main(["--root", str(tmp_path), "--since", "2026-10-05T23:00:00Z"])
+
+    out = capsys.readouterr().out
+    assert code == 0
+    assert "create-pages agent=abcdef12 1800s WAIT" in out
+    assert "update-page agent=abcdef12 2s ok" in out
+    assert "UNANSWERED" in out
+    assert "notion-fetch" not in out  # reads are never reported
+    assert "WAITS_DETECTED count=2" in out
+
+
+def test_notion_write_latency_reports_no_waits(tmp_path, capsys) -> None:
+    sub = tmp_path / "proj" / "sess" / "subagents"
+    sub.mkdir(parents=True)
+    lines = [
+        _log_line(
+            "tool_use", "2026-10-06T00:00:00Z", id="a", name="mcp__Notion__notion-create-pages"
+        ),
+        _log_line("tool_result", "2026-10-06T00:00:01Z", tool_use_id="a"),
+    ]
+    (sub / "agent-abcdef123456.jsonl").write_text("\n".join(lines), encoding="utf-8")
+
+    _load_latency_script().main(["--root", str(tmp_path), "--since", "2026-10-05T23:00:00Z"])
+
+    assert "NO_WAITS" in capsys.readouterr().out
