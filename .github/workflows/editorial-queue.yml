@@ -108,3 +108,28 @@ jobs:
       - name: Commit metadata and queue health
         if: ${{ always() }}
         run: bash scripts/commit_outputs.sh
+      - name: Start private model-free briefing preflight after a ready queue
+        if: ${{ success() && inputs.dry_run != true }}
+        env:
+          GH_TOKEN: ${{ secrets.BRIEFING_TRIAL_DISPATCH_TOKEN }}
+        run: |
+          if test -z "$GH_TOKEN"; then
+            echo "::warning::Private preflight dispatch token is absent; the private scheduled fallback remains active."
+            exit 0
+          fi
+          health_file=health/editorial_queue/latest.json
+          if test ! -f "$health_file"; then
+            echo "::warning::Queue health file is absent; private preflight will use its scheduled fallback."
+            exit 0
+          fi
+          report_date=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["report_date"])' "$health_file")
+          status=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["status"])' "$health_file")
+          today=$(TZ=Asia/Seoul date +%F)
+          if ! [[ "$report_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || test "$report_date" != "$today" || test "$status" != ready; then
+            echo "Queue is not ready for today's private preflight; scheduled fallback remains active."
+            exit 0
+          fi
+          gh workflow run preflight.yml \
+            --repo jhforwork24/news-briefing-codex-trial \
+            --ref main \
+            --raw-field date="$report_date"
