@@ -126,6 +126,11 @@ news-topic-monitor report \
   `disability_rights` 토픽만 적용하므로, 대기열의 각 후보 옆에는 `labor_care_poverty` 토픽으로
   다시 계산한 힌트(`II절 노동·돌봄·빈곤 관련 가능성(점수 N.N)` 또는 `II절 검토 가능`)를 함께
   표시해 장애 의제로는 걸러지지 않는 노동·돌봄·빈곤 기사를 편집자가 놓치지 않도록 함
+  오늘 대기열의 준비 상태가 확인되고 메타데이터 커밋이 성공하면 비공개 GPT 시험 저장소의
+  모델 없는 사전검사를 즉시 요청한다. 이 연결은 공개 저장소 secret
+  `BRIEFING_TRIAL_DISPATCH_TOKEN`이 있을 때만 작동한다. 비공개 저장소의 Actions
+  쓰기 권한만 가진 저장소 한정 fine-grained PAT를 사용하며, 토큰이 없으면 비공개
+  저장소의 정기 사전검사가 대체한다. 공개 저장소에는 Codex 인증을 넣지 않는다.
 - 연결된 Claude 예약 루틴(화~토 07:35 KST 시작): 하나의 예약 실행 안에서 독립 편집 서브에이전트가
   대기열을 편집해 구조화 초안을 쓰고, 별도의 독립 감사 서브에이전트가 같은 원근거와 초안을 감사한 뒤
   fatal을 처리하고 `editorial-finalize`를 실행해 발행 여부까지 확인함. 루틴은 최종 브리핑을 직접
@@ -188,6 +193,7 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `NAVER_API_HUB_CLIENT_ID` | gap detector | 없음 | Naver API Hub client ID, repository secret |
 | `NAVER_API_HUB_CLIENT_SECRET` | gap detector | 없음 | Naver API Hub client secret, repository secret |
 | `CHAT_EDITORIAL_BRIDGE_ENABLED` | production | `false` | `true`일 때 private Claude 편집 대기열 예약 생성 |
+| `BRIEFING_TRIAL_DISPATCH_TOKEN` | GPT 시험 연결 | 없음 | 비공개 GPT 시험 저장소의 Actions 쓰기만 허용하는 secret. 준비된 오늘 대기열의 모델 없는 사전검사를 즉시 요청 |
 | `CHAT_EDITORIAL_MAX_CANDIDATES` | 아니오 | `180` | Claude 예약 작업에 제공할 검증 후보 상한 |
 | `CHAT_EDITORIAL_CHUNK_SIZE` | 아니오 | `24` | Notion 임시 대기열 한 페이지의 후보 수(최대 24) |
 | `CHAT_EDITORIAL_EVIDENCE_CHARS` | 아니오 | `1600` | 후보별 임시 확인 근거 글자 상한(최대 1800) |
