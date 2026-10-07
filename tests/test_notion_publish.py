@@ -160,8 +160,10 @@ def test_notion_issue_uses_article_bullets_and_previous_coverage_toggle() -> Non
                             if block["type"] == "heading_3"
                             and block["heading_3"]["rich_text"][0]["text"]["content"]
                             == "이슈 요약·보도 논조")
-    assert blocks[analysis_heading + 1]["paragraph"]["rich_text"][0]["text"]["content"] == issue.summary
-    assert blocks[analysis_heading + 2]["paragraph"]["rich_text"][0]["text"]["content"] == issue.tone_analysis
+    summary_text = blocks[analysis_heading + 1]["paragraph"]["rich_text"][0]["text"]["content"]
+    tone_text = blocks[analysis_heading + 2]["paragraph"]["rich_text"][0]["text"]["content"]
+    assert summary_text == issue.summary
+    assert tone_text == issue.tone_analysis
     assert "기사 요약" not in rendered
     assert "이전 보도 참고" not in rendered
     assert "KST" not in rendered
