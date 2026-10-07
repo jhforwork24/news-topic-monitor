@@ -16,6 +16,7 @@ from news_topic_monitor.cli import (
     _revalidate_failed_census_sources,
     _revalidation_body_limit,
     _scale_queue_settings,
+    _scheduled_run_on_skipped_publication_day,
 )
 from news_topic_monitor.models import (
     ArticleRecord,
@@ -78,6 +79,51 @@ def test_report_window_on_the_tuesday_after_a_skipped_saturday_reaches_back_to_f
     assert end == datetime(2026, 9, 28, 20, tzinfo=UTC)  # 2026-09-29 05:00 KST
     assert start == datetime(2026, 9, 24, 20, tzinfo=UTC)  # 2026-09-25 05:00 KST (금)
     assert end - start == timedelta(days=4)
+
+
+def test_report_window_on_the_tuesday_after_the_skipped_2026_10_10_reaches_back_to_friday() -> None:
+    # 2026-10-10(토)을 건너뛰기로 했다. 다음 발행일 10/13(화)의 창은 직전 실제 발행일
+    # 10/9(금) 05:00 KST부터 96시간이다. 10/12(월)은 발행일이 아니라 따로 생기지 않는다.
+    args = argparse.Namespace(date="2026-10-13", start=None, end=None)  # 화요일
+
+    _date_value, start, end = _report_window(args)
+
+    assert end == datetime(2026, 10, 12, 20, tzinfo=UTC)  # 2026-10-13 05:00 KST
+    assert start == datetime(2026, 10, 8, 20, tzinfo=UTC)  # 2026-10-09 05:00 KST (금)
+    assert end - start == timedelta(days=4)
+
+
+def test_scheduled_safety_net_exits_quietly_only_on_a_skipped_publication_day(
+    monkeypatch,
+) -> None:
+    skipped = datetime(2026, 10, 10, tzinfo=UTC).date()
+    normal = datetime(2026, 10, 9, tzinfo=UTC).date()
+
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "schedule")
+    assert _scheduled_run_on_skipped_publication_day(skipped, dry_run=False) is True
+    assert _scheduled_run_on_skipped_publication_day(normal, dry_run=False) is False
+    assert _scheduled_run_on_skipped_publication_day(skipped, dry_run=True) is False
+
+    # A manual dispatch for a skipped date is an explicit instruction and still runs.
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "workflow_dispatch")
+    assert _scheduled_run_on_skipped_publication_day(skipped, dry_run=False) is False
+    monkeypatch.delenv("GITHUB_EVENT_NAME")
+    assert _scheduled_run_on_skipped_publication_day(skipped, dry_run=False) is False
+
+
+def test_editorial_finalize_scheduled_run_on_a_skipped_day_exits_before_any_work(
+    monkeypatch, tmp_path
+) -> None:
+    monkeypatch.setenv("GITHUB_EVENT_NAME", "schedule")
+    monkeypatch.setattr(
+        "news_topic_monitor.cli._briefing_already_published",
+        lambda report_date: (_ for _ in ()).throw(AssertionError("must not look up Notion")),
+    )
+    args = argparse.Namespace(date="2026-10-10", start=None, end=None, dry_run=False)
+    settings = argparse.Namespace(root=tmp_path)
+
+    assert _editorial_finalize(args, settings) == 0
+    assert not (tmp_path / "health").exists()
 
 
 def test_report_window_bridges_the_0700_to_0500_transition_on_2026_09_16() -> None:

@@ -891,9 +891,26 @@ def _briefing_already_published(report_date: str) -> bool:
     return True
 
 
+def _scheduled_run_on_skipped_publication_day(date_value: date, *, dry_run: bool) -> bool:
+    """True when the scheduled safety net lands on a day publication was skipped.
+
+    Nothing is published on a skipped day, so the late scheduled run would only trip the
+    stale-revalidation guard and post a failure report. Only the schedule trigger exits
+    here: a manual dispatch for a skipped date is an explicit instruction and proceeds.
+    """
+    if dry_run or os.environ.get("GITHUB_EVENT_NAME") != "schedule":
+        return False
+    if date_value not in SKIPPED_PUBLICATION_DATES:
+        return False
+    LOGGER.info("editorial finalize: %s is a skipped publication day; nothing to do", date_value)
+    return True
+
+
 def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
     date_value, start, end = _report_window(args)
     report_date = date_value.isoformat()
+    if _scheduled_run_on_skipped_publication_day(date_value, dry_run=args.dry_run):
+        return 0
     if not args.dry_run and _briefing_already_published(report_date):
         return 0
     command_started = perf_counter()
@@ -1856,7 +1873,9 @@ PUBLICATION_LOOKBACK_LIMIT_DAYS = 7
 # 거슬러 올라가므로, 다음 발행의 창이 자동으로 넓어져 빠진 날짜의 보도를 포함한다.
 # 2026-09-26(토, 추석)을 사용자가 명시적으로 건너뛰기로 함에 따라 다음 화요일
 # (2026-09-29)의 창이 2026-09-25(금) 05:00 KST까지 넓어진다.
-SKIPPED_PUBLICATION_DATES = frozenset({date(2026, 9, 26)})
+# 2026-10-10(토)도 사용자가 건너뛰기로 결정했다(10/9 한글날 연휴). 다음 발행일 10/13(화)의 창은
+# 10/9(금) 05:00 KST부터 96시간이 된다(10/12 월요일은 발행일이 아니다).
+SKIPPED_PUBLICATION_DATES = frozenset({date(2026, 9, 26), date(2026, 10, 10)})
 
 
 def _previous_publication_date(date_value: date) -> date:
