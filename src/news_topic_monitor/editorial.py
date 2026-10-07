@@ -47,6 +47,10 @@ from .utils import normalize_text, stable_article_key
 
 EDITORIAL_PROMPT_VERSION = 1
 
+# 편집 계획의 exclusions 최대 개수. 편집 지침·편집 프롬프트가 같은 숫자를 말한다
+# (tests/test_rule_doc_sync.py가 일치를 고정한다).
+MAX_EXCLUSIONS = 20
+
 SECTION_MAX_ISSUES = {
     EditorialSection.DISABILITY: 10,
     EditorialSection.LABOR: LABOR_SECTION_MAX_ISSUES,
@@ -729,8 +733,8 @@ def _validate_plan(
     if not plan.issues:
         errors.append("최종 선정 이슈가 없음")
     known = set(candidate_by_id)
-    if len(plan.exclusions) > 20:
-        errors.append("제외 기록이 20개를 초과함")
+    if len(plan.exclusions) > MAX_EXCLUSIONS:
+        errors.append(f"제외 기록이 {MAX_EXCLUSIONS}개를 초과함")
     excluded_ids = [item.candidate_id for item in plan.exclusions]
     if len(excluded_ids) != len(set(excluded_ids)):
         errors.append("제외 기록에 중복 candidate_id가 있음")

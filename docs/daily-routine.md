@@ -43,7 +43,7 @@ Notion data source ID, 페이지 URL, token은 이 저장소(문서·코드·fix
 
 ### 0단계 — 발행일 확인
 
-`report_date`가 발행일(화~토)이 아니거나 코드의 `SKIPPED_PUBLICATION_DATES`에 든 날이면 아무것도
+`report_date`가 발행일(화~토)이 아니거나 `config/publication-calendar.yaml`의 `skipped_publication_dates`에 든 날이면 아무것도
 시작하지 않고 그 사실을 보고한다. 일요일·월요일 분은 화요일 발행에 포함되며, 그 시각에는 보고
 경계에서 이미 오래 지나 재검증 지연 고지가 붙고 화요일 분과 보도가 겹친다. 사용자가 그날 발행을
 명시적으로 지시한 경우에만 진행한다.
