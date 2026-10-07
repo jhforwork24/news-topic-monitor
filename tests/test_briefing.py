@@ -114,14 +114,19 @@ def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> Non
 def test_column_uses_its_article_title_and_summary_only() -> None:
     article = _article("khan", "[칼럼] 장애인의 시민권과 공적 책임", section="오피니언")
     issue = BriefingIssue(
-        title="편집자가 붙인 이슈 제목", articles=[article],
+        title="편집자가 붙인 이슈 제목",
+        articles=[article],
         summary="필자는 시민권 보장을 요구했다. 공적 책임을 강조했다.",
         tone_analysis="",
     )
     document = BriefingDocument(
-        report_date="2026-10-08", start=datetime(2026, 10, 7, tzinfo=UTC),
-        end=datetime(2026, 10, 8, tzinfo=UTC), overview="총평", telegram_summary="총평",
-        sections=[BriefingSection("III. 주요 칼럼", [issue])], source_failures=[],
+        report_date="2026-10-08",
+        start=datetime(2026, 10, 7, tzinfo=UTC),
+        end=datetime(2026, 10, 8, tzinfo=UTC),
+        overview="총평",
+        telegram_summary="총평",
+        sections=[BriefingSection("III. 주요 칼럼", [issue])],
+        source_failures=[],
     )
     validate_briefing(document)
     rendered = render_briefing_markdown(document, crpd_url=None)
@@ -134,7 +139,8 @@ def test_column_uses_its_article_title_and_summary_only() -> None:
 
 def test_sentence_limits_for_cross_outlet_issue_and_column() -> None:
     issue = BriefingIssue(
-        title="장애인 이동권", articles=[
+        title="장애인 이동권",
+        articles=[
             _article("hani", "장애인 이동권 보장 촉구", article_id="1"),
             _article("khan", "장애인 이동권 보장 촉구", article_id="2"),
         ],
@@ -142,9 +148,13 @@ def test_sentence_limits_for_cross_outlet_issue_and_column() -> None:
         tone_analysis="한겨레는 요구안을 먼저 전했다. 경향신문은 정부의 답변을 먼저 전했다.",
     )
     document = BriefingDocument(
-        report_date="2026-10-08", start=datetime(2026, 10, 7, tzinfo=UTC),
-        end=datetime(2026, 10, 8, tzinfo=UTC), overview="총평", telegram_summary="총평",
-        sections=[BriefingSection("I. 장애정책·장애인운동", [issue])], source_failures=[],
+        report_date="2026-10-08",
+        start=datetime(2026, 10, 7, tzinfo=UTC),
+        end=datetime(2026, 10, 8, tzinfo=UTC),
+        overview="총평",
+        telegram_summary="총평",
+        sections=[BriefingSection("I. 장애정책·장애인운동", [issue])],
+        source_failures=[],
     )
     validate_briefing(document)
     issue.tone_analysis = "두 매체가 보도했다."
