@@ -22,7 +22,6 @@ from .briefing import (
     BriefingDocument,
     BriefingIssue,
     article_listing_prefix,
-    issue_analysis_text,
     render_briefing_markdown,
 )
 from .chat_bridge import (
