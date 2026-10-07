@@ -17,6 +17,12 @@ FORBIDDEN_TONE_LABELS = ("(진보)", "(보수)", "(전문지)")
 # "필자"는 칼럼·사설(III절)의 서술자를 가리킬 때만 쓴다. I·II절 보도는 취재기사이므로
 # 서술 주체가 기자 개인이 아니라 매체다 — 이름을 밝히지 않는 게 아니라 애초에 틀린 지칭이다.
 FORBIDDEN_AUTHOR_TERM = "필자"
+# 논조(tone_analysis) 문장 수 규칙. 편집 지침(docs/claude-editorial-instructions.md)·감사 과제
+# (docs/claude-auditor-task.md)·편집 프롬프트(editorial.py)가 같은 숫자를 말하며,
+# tests/test_rule_doc_sync.py가 셋의 일치를 고정한다. 값을 바꾸면 세 곳과 시험을 함께 고친다.
+TONE_SINGLE_MAX_SENTENCES = 1
+TONE_MULTI_MIN_SENTENCES = 1
+TONE_MULTI_MAX_SENTENCES = 4
 # 이슈 요약(summary)은 매체를 언급하지 않는 사안 요약이다. 매체별 보도 방식은 tone_analysis의
 # 몫이므로, I·II절 요약에 언론사 이름이 있으면 역할이 섞인 것으로 보고 거부한다. III절은
 # 필자의 주장을 요약하므로 이 검사에서 제외한다.
@@ -49,10 +55,19 @@ def validate_briefing(document: BriefingDocument) -> None:
                 errors.append(f"{section.title} / {issue.title}: 요약이 중립적 서술체가 아님")
 
             tone_sentences = _sentence_count(issue.tone_analysis)
-            if len(issue.articles) == 1 and issue.tone_analysis.strip() and tone_sentences != 1:
+            if (
+                len(issue.articles) == 1
+                and issue.tone_analysis.strip()
+                and tone_sentences != TONE_SINGLE_MAX_SENTENCES
+            ):
                 errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
-            if len(issue.articles) > 1 and not 1 <= tone_sentences <= 4:
-                errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
+            if len(issue.articles) > 1 and not (
+                TONE_MULTI_MIN_SENTENCES <= tone_sentences <= TONE_MULTI_MAX_SENTENCES
+            ):
+                errors.append(
+                    f"{section.title} / {issue.title}: 복수 보도 논조가 "
+                    f"{TONE_MULTI_MIN_SENTENCES}~{TONE_MULTI_MAX_SENTENCES}문장이 아님"
+                )
             if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
                 errors.append(
                     f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨"

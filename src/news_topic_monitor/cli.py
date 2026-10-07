@@ -82,6 +82,7 @@ from .policy import (
     load_source_registry,
     validate_policy_contract,
 )
+from .publication_calendar import load_skipped_publication_dates
 from .reporting import generate_report
 from .selection_review import build_selection_review
 from .settings import ContactRequiredError, Settings
@@ -900,7 +901,7 @@ def _scheduled_run_on_skipped_publication_day(date_value: date, *, dry_run: bool
     """
     if dry_run or os.environ.get("GITHUB_EVENT_NAME") != "schedule":
         return False
-    if date_value not in SKIPPED_PUBLICATION_DATES:
+    if date_value not in _skipped_publication_dates():
         return False
     LOGGER.info("editorial finalize: %s is a skipped publication day; nothing to do", date_value)
     return True
@@ -1869,22 +1870,21 @@ REPORT_WINDOW_TRANSITION_START_HOUR = 7
 PUBLICATION_WEEKDAYS = frozenset({1, 2, 3, 4, 5})  # 화~토 (월=0)
 PUBLICATION_LOOKBACK_LIMIT_DAYS = 7
 # 화~토 요일이어도 실제로 예약 발행이 일어나지 않은 날짜(공휴일 등으로 사용자가 건너뛰기로
-# 결정한 날). _previous_publication_date가 이 날짜를 건너뛰어 그 직전 실제 발행일까지
-# 거슬러 올라가므로, 다음 발행의 창이 자동으로 넓어져 빠진 날짜의 보도를 포함한다.
-# 2026-09-26(토, 추석)을 사용자가 명시적으로 건너뛰기로 함에 따라 다음 화요일
-# (2026-09-29)의 창이 2026-09-25(금) 05:00 KST까지 넓어진다.
-# 2026-10-10(토)도 사용자가 건너뛰기로 결정했다(10/9 한글날 연휴). 다음 발행일 10/13(화)의 창은
-# 10/9(금) 05:00 KST부터 96시간이 된다(10/12 월요일은 발행일이 아니다).
-SKIPPED_PUBLICATION_DATES = frozenset({date(2026, 9, 26), date(2026, 10, 10)})
+# 결정한 날)는 config/publication-calendar.yaml에 둔다. _previous_publication_date가 이
+# 날짜를 건너뛰어 그 직전 실제 발행일까지 거슬러 올라가므로, 다음 발행의 창이 자동으로 넓어져
+# 빠진 날짜의 보도를 포함한다(예: 9/26을 건너뛴 9/29(화)의 창은 9/25(금) 05:00 KST부터).
+PUBLICATION_CALENDAR_FILE = "publication-calendar.yaml"
+
+
+def _skipped_publication_dates() -> frozenset[date]:
+    return load_skipped_publication_dates(project_root() / "config" / PUBLICATION_CALENDAR_FILE)
 
 
 def _previous_publication_date(date_value: date) -> date:
+    skipped = _skipped_publication_dates()
     for offset in range(1, PUBLICATION_LOOKBACK_LIMIT_DAYS + 1):
         candidate = date_value - timedelta(days=offset)
-        if (
-            candidate.weekday() in PUBLICATION_WEEKDAYS
-            and candidate not in SKIPPED_PUBLICATION_DATES
-        ):
+        if candidate.weekday() in PUBLICATION_WEEKDAYS and candidate not in skipped:
             return candidate
     return date_value - timedelta(days=1)
 
