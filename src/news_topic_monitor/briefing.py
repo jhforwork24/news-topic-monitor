@@ -705,8 +705,13 @@ def summarize_issue(articles: list[ArticleRecord]) -> str:
 
 
 def analyze_tone(articles: list[ArticleRecord]) -> str:
-    if len({article.source for article in articles}) < 2:
-        return ""
+    if len(articles) == 1:
+        article = articles[0]
+        focus = _tone_focus(article)
+        if focus == "사건의 사실관계와 공적 책임을 중심으로 전달하는 논조다.":
+            return ""
+        label = SOURCE_LABELS.get(article.source, article.source)
+        return f"{label}{_korean_particle(label, '은', '는')} {focus}"
 
     grouped: dict[str, list[str]] = {}
     for article in articles:
@@ -948,14 +953,7 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
         if not section.issues:
             lines.extend(["이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다.", ""])
         for number, issue in enumerate(section.issues, start=1):
-            is_column = section.title.startswith("III.")
-            if is_column:
-                heading = issue.articles[0].title if issue.articles else issue.title
-            else:
-                heading = f"{number}. {issue.title}"
-            lines.extend([f"## {heading}", ""])
-            if not is_column:
-                lines.extend(["### 주요 언론 보도", ""])
+            lines.extend([f"## {number}. {issue.title}", "", "### 주요 언론 보도", ""])
             for article in issue.articles:
                 label = _markdown_table_text(article.title)
                 lines.append(
@@ -964,9 +962,9 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
             lines.extend(
                 [
                     "",
-                    "### 요약" if is_column else "### 이슈 요약·보도 논조",
+                    "### 이슈 요약·보도 논조",
                     "",
-                    issue.summary if is_column else issue_analysis_text(issue),
+                    issue_analysis_text(issue),
                     "",
                 ]
             )
