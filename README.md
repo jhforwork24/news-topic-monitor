@@ -34,7 +34,7 @@ SHA-256 해시, 일치어, 점수, 판정 근거만 남는다.
 | 오마이뉴스 | 공식 최신기사 news sitemap | `[itemprop='articleBody']` |
 | 프레시안 | 공식 최신뉴스 RSS API | `.article_body` |
 | 시사인 | 공식 sitemap | `#article-view-content-div` |
-| 참세상 | `https://www.newscham.net/articles/?page=N` (robots.txt 404 — 승인된 opt-in) | `#news-article-content` |
+| 참세상 | `https://newscham.net/all-articles/?_paged=N` (실제 robots.txt 준수) | `article.post-content .ep-single-content` |
 | 매일노동뉴스 | news sitemap | `#article-view-content-div` |
 | 미디어스 | 공식 sitemap | `#article-view-content-div` |
 | 비마이너 | news sitemap | `#article-view-content-div` |
@@ -309,7 +309,7 @@ II절 안에서는 돌봄 → 빈곤 → 노동 순으로 이슈를 배치하고
 - 모든 발견 경로와 기사 URL 요청 전에 해당 origin의 `/robots.txt`를 현재 User-Agent로 평가한다.
 - robots.txt를 가져오지 못하거나 비정상 응답이면 그 origin에 대해 실패 폐쇄한다. 단,
   source-registry에서 사용자 승인으로 `robots_absent_policy: allow_if_absent`를 둔 출처(현재
-  참세상)는 robots.txt 404/410을 "robots.txt 없음 = 제한 없음"으로 읽고 health에 기록한다.
+  없음)는 robots.txt 404/410을 "robots.txt 없음 = 제한 없음"으로 읽고 health에 기록한다.
 - 리다이렉트된 URL도 새 origin의 robots.txt를 다시 확인한다. robots.txt 자체의 cross-origin
   리다이렉트는 거부한다.
 - 금지 URL은 요청하지 않고 `blocked_by_robots`로 기록한다.

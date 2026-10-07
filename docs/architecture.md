@@ -61,7 +61,7 @@ flowchart LR
 200 응답을 파싱할 수 있을 때만 대상 URL을 평가한다. 연결 오류, 4xx/5xx, 과도한 리다이렉트,
 cross-origin robots 리다이렉트는 모두 `unavailable`이며 대상 URL을 요청하지 않는다.
 예외는 source-registry에서 `robots_absent_policy: allow_if_absent`로 승인된 host의 404/410
-하나뿐이다. 이때 robots 판정은 `absent_allowed`이고 health `robots_absent_origins`에 기록된다.
+하나뿐이다(현재 승인된 출처 없음). 이때 robots 판정은 `absent_allowed`이고 health `robots_absent_origins`에 기록된다.
 
 기사 페이지 리다이렉트는 자동 추적하지 않는다. 각 `Location`을 절대 URL로 바꾼 뒤 새 URL의
 origin별 robots를 다시 평가한다. 이로써 최초 URL만 허용되고 최종 경로가 금지된 경우의 우회를

@@ -39,7 +39,7 @@
    (아래 "출처 시간초과로 후보가 빠짐" 참조). 403·429·5xx·파싱 불가는 재시도하지 않는다.
    404/410(robots.txt 없음)도 기본은 fail-closed다. 사용자가 승인해
    `config/source-registry.yaml`에 `robots_absent_policy: allow_if_absent`를 둔 출처(현재
-   참세상만)에 한해 RFC 9309에 따라 "robots.txt 없음 = 제한 없음"으로 읽고, health
+   없음; 참세상은 2026-10-07 robots.txt 게시로 철회)에 한해 RFC 9309에 따라 "robots.txt 없음 = 제한 없음"으로 읽고, health
    `robots_absent_origins`와 대기열 매니페스트 `출처 점검`에 그 사실을 남긴다. 그런 출처가
    robots.txt를 새로 게시하면 그 규칙을 그대로 따른다.
 5. robots가 가리키는 새 공식 sitemap이 있다면 그 경로 자체의 허용 여부와 형식을 별도로 검증한

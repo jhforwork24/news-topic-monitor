@@ -139,41 +139,42 @@ def test_newscham_article_list_parser(fixture_dir) -> None:
     urls = adapter.initial_discovery_urls(
         datetime(2026, 9, 22, tzinfo=UTC), datetime(2026, 9, 23, tzinfo=UTC)
     )
-    assert urls[0] == "https://www.newscham.net/articles/?page=1"
+    assert urls[0] == "https://newscham.net/all-articles/?_paged=1"
     assert all(url.startswith(adapter.date_ordered_list_prefix) for url in urls)
     page = adapter.parse_discovery((fixture_dir / "newscham_list.html").read_bytes(), urls[0])
-    # The sidebar "recent articles" widget and the 기사수정 edit link are not list items.
-    assert [article.article_id for article in page.articles] == ["900002", "900001"]
-    first, second = page.articles
-    assert first.canonical_url == "https://www.newscham.net/articles/900002"
+    # Items without a link and links outside the loop (sidebar) are not list items.
+    assert [article.article_id for article in page.articles] == ["900002", "900001", "900004"]
+    first, second, third = page.articles
+    assert first.canonical_url == "https://newscham.net/900002/"
     assert first.title == "시험용 노동 기사 제목"
     assert first.section == "노동"
     assert first.byline == "시험 기자"
     assert first.summary == "시험용 요약 문장이다."
     # Displayed times are KST; a single-digit hour is still parsed.
     assert first.published_at == datetime(2026, 9, 23, 8, 11, tzinfo=UTC)
+    assert second.section == "칼럼"
     assert second.published_at == datetime(2026, 9, 22, 0, 51, tzinfo=UTC)
+    assert third.section is None
+    assert third.byline is None
     assert all(adapter.validate_article_url(article.canonical_url) for article in page.articles)
+    assert not adapter.validate_article_url("https://www.newscham.net/articles/900001")
 
 
 def test_newscham_list_without_items_is_structure_change() -> None:
-    with pytest.raises(StructureChangedError, match=r"article\.figure"):
+    with pytest.raises(StructureChangedError, match=r"gb-loop-item"):
         NewschamAdapter().parse_discovery(
-            b"<html><section class='mainContents'></section></html>",
-            "https://www.newscham.net/articles/?page=1",
+            b"<html><div class='article-loop_default'></div></html>",
+            "https://newscham.net/all-articles/?_paged=1",
         )
 
 
 def test_newscham_body_selector() -> None:
     html = (
-        "<html><article id='news-article-post'><header id='news-article-header'>"
-        "<hgroup class='news-article-subject'><h1>제목</h1></hgroup></header>"
-        "<div id='news-article-content' class='content zoom'><p>짧은 판별용 문장</p></div>"
+        "<html><article class='post-content'><h1>제목</h1>"
+        "<div class='ep-single-content'><p>짧은 판별용 문장</p></div>"
         "</article></html>"
     )
     adapter = NewschamAdapter()
-    assert adapter.extract_body(html, "https://www.newscham.net/articles/900001") == (
-        "짧은 판별용 문장"
-    )
+    assert adapter.extract_body(html, "https://newscham.net/900001/") == "짧은 판별용 문장"
     with pytest.raises(StructureChangedError):
-        adapter.extract_body("<html></html>", "https://www.newscham.net/articles/900001")
+        adapter.extract_body("<html></html>", "https://newscham.net/900001/")

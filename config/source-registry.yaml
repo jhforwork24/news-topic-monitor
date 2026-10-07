@@ -46,9 +46,9 @@ sources:
     domains: [www.newscham.net, newscham.net]
     discovery_routes: [official_article_list]
     fallbacks: [naver_gap_detection]
-    # 2026-09-25 사용자 승인: robots.txt 404/410은 "robots.txt 없음 = 제한 없음"(RFC 9309)으로
-    # 해석한다. 403/429/5xx·시간초과는 그대로 fail-closed. health의 robots_absent_origins에 기록.
-    robots_absent_policy: allow_if_absent
+    # 2026-10-07: 사이트가 www.newscham.net에서 newscham.net으로 이전하며 robots.txt를 게시했다
+    # (200). 더 이상 "robots.txt 없음"이 아니므로 2026-09-25의 allow_if_absent opt-in을 철회하고
+    # 실제 robots.txt 규칙을 따른다. 이 항목에 opt-in을 다시 두려면 사용자 승인이 먼저다.
   chosun:
     label: 조선일보
     tier: designated_reverse_search
