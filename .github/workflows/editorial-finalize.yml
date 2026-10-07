@@ -8,7 +8,8 @@ on:
     # audit, as soon as verification completes. This schedule exists in
     # case that automation never fires; a run here after publication already
     # succeeded exits immediately without doing anything (the command checks
-    # for the day's briefing first). GitHub often delays this trigger by hours,
+    # for the day's briefing first), and so does a run on a day listed in
+    # SKIPPED_PUBLICATION_DATES (cli.py), where nothing is published. GitHub often delays this trigger by hours,
     # so it can also land past the 8-hour stale-revalidation limit and fail
     # when nothing was published; that failure is genuine and stays reported.
     # Minute 34 is deliberately off the top of the hour, for the same reason
