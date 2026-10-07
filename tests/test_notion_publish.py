@@ -95,6 +95,7 @@ def test_notion_column_uses_article_title_and_summary_without_news_subheading() 
         first_seen_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
         last_seen_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
         body_status=BodyStatus.FETCHED, classification=Classification.RELEVANT,
+        topic_score=10.0, classification_reason="시험 판정",
         verification_status=VerificationStatus.BODY_VERIFIED,
     )
     issue = BriefingIssue(
