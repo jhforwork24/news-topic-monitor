@@ -949,7 +949,10 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
             lines.extend(["이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다.", ""])
         for number, issue in enumerate(section.issues, start=1):
             is_column = section.title.startswith("III.")
-            heading = issue.articles[0].title if is_column else f"{number}. {issue.title}"
+            if is_column:
+                heading = issue.articles[0].title if issue.articles else issue.title
+            else:
+                heading = f"{number}. {issue.title}"
             lines.extend([f"## {heading}", ""])
             if not is_column:
                 lines.extend(["### 주요 언론 보도", ""])
