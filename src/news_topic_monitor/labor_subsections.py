@@ -16,7 +16,7 @@ LABOR_SUBSECTION_LABELS = {
     LaborSubsection.LABOR: "노동",
 }
 LABOR_SUBSECTION_MAX_ISSUES = {
-    LaborSubsection.CARE: 4,
+    LaborSubsection.CARE: 3,
     LaborSubsection.POVERTY: 3,
     LaborSubsection.LABOR: 3,
 }
