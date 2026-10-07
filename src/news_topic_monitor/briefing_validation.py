@@ -35,6 +35,7 @@ class BriefingValidationError(ValueError):
 def validate_briefing(document: BriefingDocument) -> None:
     errors: list[str] = []
     editorial_ids = set(document.editorially_selected_ids)
+    strict_format = document.report_date >= "2026-10-08"
     rendered_article_ids: set[str] = set()
     for section in document.sections:
         for issue in section.issues:
@@ -48,14 +49,33 @@ def validate_briefing(document: BriefingDocument) -> None:
             if _NON_NEUTRAL_ENDING.search(issue.summary):
                 errors.append(f"{section.title} / {issue.title}: 요약이 중립적 서술체가 아님")
 
+            is_column = section.title.startswith("III.")
+            if strict_format:
+                summary_sentences = _sentence_count(issue.summary)
+                summary_limit = 4 if is_column else 3
+                if not 1 <= summary_sentences <= summary_limit:
+                    errors.append(
+                        f"{section.title} / {issue.title}: 요약이 1~{summary_limit}문장이 아님"
+                    )
             tone_sentences = _sentence_count(issue.tone_analysis)
-            if len(issue.articles) == 1 and issue.tone_analysis.strip() and tone_sentences != 1:
-                errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
             # A comparison needs independent outlets. Several reports from one
             # outlet can form an issue, but cannot support an outlet comparison.
             distinct_outlets = {article.source for article in issue.articles}
-            if len(distinct_outlets) > 1 and not 1 <= tone_sentences <= 4:
-                errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
+            if not strict_format:
+                if len(issue.articles) == 1 and issue.tone_analysis.strip() and tone_sentences != 1:
+                    errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
+                if len(distinct_outlets) > 1 and not 1 <= tone_sentences <= 4:
+                    errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
+            elif is_column:
+                if len(issue.articles) != 1:
+                    errors.append(f"{section.title} / {issue.title}: 칼럼 한 건씩 별도 항목이어야 함")
+                if issue.tone_analysis.strip():
+                    errors.append(f"{section.title} / {issue.title}: 칼럼에는 보도 논조를 쓰지 않음")
+            elif len(distinct_outlets) < 2:
+                if issue.tone_analysis.strip():
+                    errors.append(f"{section.title} / {issue.title}: 단일 매체는 논조 비교를 쓰지 않음")
+            elif not 2 <= tone_sentences <= 5:
+                errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 2~5문장이 아님")
             if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
                 errors.append(
                     f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨"
