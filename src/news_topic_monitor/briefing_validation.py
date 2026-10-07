@@ -51,10 +51,7 @@ def validate_briefing(document: BriefingDocument) -> None:
             tone_sentences = _sentence_count(issue.tone_analysis)
             if len(issue.articles) == 1 and issue.tone_analysis.strip() and tone_sentences != 1:
                 errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
-            # A comparison needs independent outlets. Several reports from one
-            # outlet can form an issue, but cannot support an outlet comparison.
-            distinct_outlets = {article.source for article in issue.articles}
-            if len(distinct_outlets) > 1 and not 1 <= tone_sentences <= 4:
+            if len(issue.articles) > 1 and not 1 <= tone_sentences <= 4:
                 errors.append(f"{section.title} / {issue.title}: 복수 보도 논조가 1~4문장이 아님")
             if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
                 errors.append(
