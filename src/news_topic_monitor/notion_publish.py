@@ -1279,7 +1279,10 @@ def _environment_integer(name: str, default: int) -> int:
 def _issue_blocks(
     index: int, issue: BriefingIssue, *, is_column: bool = False
 ) -> list[dict[str, Any]]:
-    heading = issue.articles[0].title if is_column else f"{index}. {issue.title}"
+    if is_column:
+        heading = issue.articles[0].title if issue.articles else issue.title
+    else:
+        heading = f"{index}. {issue.title}"
     blocks = [_heading(heading, 2)]
     if not is_column:
         blocks.append(_heading("주요 언론 보도", 3))
