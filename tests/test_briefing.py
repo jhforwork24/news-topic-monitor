@@ -19,7 +19,7 @@ from news_topic_monitor.briefing import (
     render_briefing_markdown,
     summarize_issue,
 )
-from news_topic_monitor.briefing_validation import validate_briefing
+from news_topic_monitor.briefing_validation import BriefingValidationError, validate_briefing
 from news_topic_monitor.models import (
     ArticleRecord,
     BodyStatus,
@@ -686,6 +686,36 @@ def test_issue_summary_and_tone_sentence_limits() -> None:
     other = _article("donga", "장애인 이동권 정책 발표", article_id="other")
     tone = analyze_tone([single, other])
     assert 1 <= tone.count(".") <= 4
+
+
+def test_tone_comparison_requires_distinct_outlets() -> None:
+    first = _article("hani", "장애인 이동권 보장 촉구", article_id="first")
+    second = _article("hani", "장애인 이동권 정책 발표", article_id="second")
+    issue = BriefingIssue(
+        title="장애인 이동권 정책",
+        articles=[first, second],
+        summary="장애인 이동권 정책을 둘러싼 요구와 발표가 이어졌다.",
+        tone_analysis="",
+        previous_coverage=[],
+    )
+    document = BriefingDocument(
+        report_date="2026-08-16",
+        start=datetime(2026, 8, 15, 0, tzinfo=UTC),
+        end=datetime(2026, 8, 16, 0, tzinfo=UTC),
+        overview="총평",
+        telegram_summary="텔레그램 총평",
+        sections=[BriefingSection("I. 장애정책·장애인운동", [issue])],
+        source_failures=[],
+    )
+    validate_briefing(document)
+
+    issue.articles.append(_article("donga", "장애인 이동권 후속 보도", article_id="third"))
+    try:
+        validate_briefing(document)
+    except BriefingValidationError as exc:
+        assert "복수 보도 논조가 1~4문장이 아님" in str(exc)
+    else:
+        raise AssertionError("Two distinct outlets need an evidence-based tone comparison")
 
 
 def test_previous_coverage_is_only_inside_toggle_and_limited_to_three(
