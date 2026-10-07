@@ -87,6 +87,32 @@ def test_notion_blocks_keep_technical_notes_out_of_briefing() -> None:
     assert "점검" not in rendered
 
 
+def test_notion_column_uses_article_title_and_summary_without_news_subheading() -> None:
+    article = ArticleRecord(
+        source="khan", article_id="column-1", canonical_url="https://example.com/column",
+        title="[칼럼] 장애인의 시민권과 공적 책임", section="오피니언",
+        published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+        first_seen_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+        last_seen_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+        body_status=BodyStatus.FETCHED, classification=Classification.RELEVANT,
+        verification_status=VerificationStatus.BODY_VERIFIED,
+    )
+    issue = BriefingIssue(
+        title="편집용 제목", articles=[article],
+        summary="필자는 정책의 공적 책임을 강조했다.", tone_analysis="",
+    )
+    document = _document()
+    document.sections = [BriefingSection("III. 주요 칼럼", [issue])]
+    blocks = notion_blocks(document, crpd_url=None)
+    headings = [block[block["type"]]["rich_text"][0]["text"]["content"]
+                for block in blocks if block["type"].startswith("heading_")]
+    assert headings == ["III. 주요 칼럼", article.title, "요약"]
+    rendered = json.dumps(blocks, ensure_ascii=False)
+    assert article.canonical_url in rendered
+    assert "주요 언론 보도" not in rendered
+    assert "이슈 요약·보도 논조" not in rendered
+
+
 def test_notion_issue_uses_article_bullets_and_previous_coverage_toggle() -> None:
     now = datetime(2026, 8, 15, 1, tzinfo=UTC)
     article = ArticleRecord(
@@ -129,6 +155,12 @@ def test_notion_issue_uses_article_bullets_and_previous_coverage_toggle() -> Non
     assert len(bullets) == 1
     assert "홍길동 기자" in rendered
     assert "이슈 요약·보도 논조" in rendered
+    analysis_heading = next(index for index, block in enumerate(blocks)
+                            if block["type"] == "heading_3"
+                            and block["heading_3"]["rich_text"][0]["text"]["content"]
+                            == "이슈 요약·보도 논조")
+    assert blocks[analysis_heading + 1]["paragraph"]["rich_text"][0]["text"]["content"] == issue.summary
+    assert blocks[analysis_heading + 2]["paragraph"]["rich_text"][0]["text"]["content"] == issue.tone_analysis
     assert "기사 요약" not in rendered
     assert "이전 보도 참고" not in rendered
     assert "KST" not in rendered
