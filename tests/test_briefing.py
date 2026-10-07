@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 
+import pytest
+
 from news_topic_monitor.briefing import (
     PREVIOUS_COVERAGE_MAX_AGE_DAYS,
     PREVIOUS_COVERAGE_NOTE_LIMIT,
@@ -107,6 +109,54 @@ def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> Non
     assert "오늘의 변화" not in text
     assert "# 점검" not in text
     validate_briefing(document)
+
+
+def test_column_uses_its_article_title_and_summary_only() -> None:
+    article = _article("khan", "[칼럼] 장애인의 시민권과 공적 책임", section="오피니언")
+    issue = BriefingIssue(
+        title="편집자가 붙인 이슈 제목", articles=[article],
+        summary="필자는 시민권 보장을 요구했다. 공적 책임을 강조했다.",
+        tone_analysis="",
+    )
+    document = BriefingDocument(
+        report_date="2026-10-08", start=datetime(2026, 10, 7, tzinfo=UTC),
+        end=datetime(2026, 10, 8, tzinfo=UTC), overview="총평", telegram_summary="총평",
+        sections=[BriefingSection("III. 주요 칼럼", [issue])], source_failures=[],
+    )
+    validate_briefing(document)
+    rendered = render_briefing_markdown(document, crpd_url=None)
+    assert "## [칼럼] 장애인의 시민권과 공적 책임" in rendered
+    assert "### 요약" in rendered
+    assert "### 주요 언론 보도" not in rendered
+    assert "### 이슈 요약·보도 논조" not in rendered
+    assert article.canonical_url in rendered
+
+
+def test_sentence_limits_for_cross_outlet_issue_and_column() -> None:
+    issue = BriefingIssue(
+        title="장애인 이동권", articles=[
+            _article("hani", "장애인 이동권 보장 촉구", article_id="1"),
+            _article("khan", "장애인 이동권 보장 촉구", article_id="2"),
+        ],
+        summary="장애인단체가 이동권 보장을 요구했다.",
+        tone_analysis="한겨레는 요구안을 먼저 전했다. 경향신문은 정부의 답변을 먼저 전했다.",
+    )
+    document = BriefingDocument(
+        report_date="2026-10-08", start=datetime(2026, 10, 7, tzinfo=UTC),
+        end=datetime(2026, 10, 8, tzinfo=UTC), overview="총평", telegram_summary="총평",
+        sections=[BriefingSection("I. 장애정책·장애인운동", [issue])], source_failures=[],
+    )
+    validate_briefing(document)
+    issue.tone_analysis = "두 매체가 보도했다."
+    with pytest.raises(BriefingValidationError, match="2~5문장"):
+        validate_briefing(document)
+    issue.tone_analysis = "하나. 둘. 셋. 넷. 다섯. 여섯."
+    with pytest.raises(BriefingValidationError, match="2~5문장"):
+        validate_briefing(document)
+    issue.tone_analysis = "한겨레는 요구안을 먼저 전했다. 경향신문은 정부의 답변을 먼저 전했다."
+    issue.summary = "하나. 둘. 셋. 넷."
+    with pytest.raises(BriefingValidationError, match="1~3문장"):
+        validate_briefing(document)
 
 
 def test_issue_analysis_text_separates_summary_and_tone_with_blank_line() -> None:
@@ -430,7 +480,7 @@ def test_korean_particles_for_single_and_multi_article_tone() -> None:
     assert analyze_tone([column]) == ""
 
     movement = _article("khan", "장애인 이동권 보장 촉구")
-    assert analyze_tone([movement]).startswith("경향신문은 ")
+    assert analyze_tone([movement]) == ""
 
 
 def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, topics_path) -> None:
