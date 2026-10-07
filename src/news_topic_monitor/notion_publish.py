@@ -934,7 +934,7 @@ def notion_blocks(document: BriefingDocument, *, crpd_url: str | None) -> list[d
             continue
         blocks.append(_heading(section.title, 1))
         for index, issue in enumerate(section.issues, start=1):
-            blocks.extend(_issue_blocks(index, issue))
+            blocks.extend(_issue_blocks(index, issue, is_column=section.title.startswith("III.")))
     return blocks
 
 
@@ -1276,11 +1276,13 @@ def _environment_integer(name: str, default: int) -> int:
         raise NotionConfigurationError(f"{name} must be an integer") from exc
 
 
-def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
-    blocks = [
-        _heading(f"{index}. {issue.title}", 2),
-        _heading("주요 언론 보도", 3),
-    ]
+def _issue_blocks(
+    index: int, issue: BriefingIssue, *, is_column: bool = False
+) -> list[dict[str, Any]]:
+    heading = issue.articles[0].title if is_column else f"{index}. {issue.title}"
+    blocks = [_heading(heading, 2)]
+    if not is_column:
+        blocks.append(_heading("주요 언론 보도", 3))
     for article in issue.articles:
         blocks.append(
             _bullet_rich_text(
@@ -1290,12 +1292,10 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 ]
             )
         )
-    blocks.extend(
-        [
-            _heading("이슈 요약·보도 논조", 3),
-            _paragraph(issue_analysis_text(issue)),
-        ]
-    )
+    blocks.append(_heading("요약" if is_column else "이슈 요약·보도 논조", 3))
+    blocks.append(_paragraph(issue.summary))
+    if not is_column and issue.tone_analysis:
+        blocks.append(_paragraph(issue.tone_analysis))
     if issue.previous_coverage:
         coverage_rows = [
             _table_row(
