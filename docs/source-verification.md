@@ -90,6 +90,11 @@ KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 �
   엔드포인트만 사용한다.
 - 참세상은 `/robots.txt`가 404여서 허용으로 추정하지 않고 홈페이지·기사 URL을 요청하지 않았다.
   (2026-09-25 갱신: 사용자가 404를 "robots.txt 없음"으로 해석하는 출처별 opt-in을 승인했다.
+  2026-10-07: 참세상이 www.newscham.net에서 newscham.net으로 이전해 robots.txt(200,
+  `/wp/wp-admin/`만 금지)를 게시했고, opt-in은 철회했다. 같은 날 live로 확인한 새 구조는
+  `/all-articles/?_paged=N` 목록의 `div.article-loop_default div.gb-loop-item`(`h3`,
+  `a.link`, `p.summary`, `div.author`, `div.date`, `div.taxonomy a`)와 기사 페이지의
+  `article.post-content div.ep-single-content`다. 아래 괄호는 철회 전 기록이다.
   같은 날 live로 `/articles/` 목록의 `section.mainContents article.figure`, `h3 a`,
   `time.pubdate`(KST 표시시각), `p.summary`, `address.author`와 기사 페이지의
   `article#news-article-post div#news-article-content` 구조를 확인했다. `/rss/`는 빈 응답,

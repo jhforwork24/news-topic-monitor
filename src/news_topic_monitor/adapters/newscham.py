@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
+from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup
 
@@ -9,21 +10,22 @@ from ..models import ArticleDiscovery, DiscoveryPage
 from ..utils import KST, normalize_text, short_text
 from .base import SourceAdapter, StructureChangedError
 
-# Verified against the live site on 2026-09-25 (www.newscham.net/articles/ and an
-# /articles/N page). The site publishes no RSS or sitemap (/rss/ is empty, /rss.xml
-# and /sitemap.xml are 404) and its robots.txt is 404, which the source registry
-# reads as "no robots.txt" by an approved per-source opt-in.
-ARTICLE_PATH = re.compile(r"^/articles/(\d+)/?(?:\?.*)?$")
+# Verified against the live site on 2026-10-07 (newscham.net/all-articles/ and an
+# /N/ article page). The site moved from www.newscham.net/articles/N to the apex host
+# newscham.net (WordPress); the old URLs 301 to /N/. The apex robots.txt exists (200) and
+# only disallows /wp/wp-admin/, so no robots.txt opt-in is needed. The list is paged with
+# the FacetWP query parameter ``_paged`` and is date-descending.
+ARTICLE_PATH = re.compile(r"^/(\d+)/?$")
 LIST_DATETIME = re.compile(r"(\d{4})\.(\d{1,2})\.(\d{1,2})\.?\s+(\d{1,2}):(\d{2})")
 
 
 class NewschamAdapter(SourceAdapter):
     source = "newscham"
     media_group = "labor_alternative"
-    allowed_discovery_hosts = frozenset({"www.newscham.net"})
-    allowed_article_hosts = frozenset({"www.newscham.net"})
-    LIST_URL = "https://www.newscham.net/articles/?page={page}"
-    date_ordered_list_prefix = "https://www.newscham.net/articles/?page="
+    allowed_discovery_hosts = frozenset({"newscham.net"})
+    allowed_article_hosts = frozenset({"newscham.net"})
+    LIST_URL = "https://newscham.net/all-articles/?_paged={page}"
+    date_ordered_list_prefix = "https://newscham.net/all-articles/?_paged="
 
     def __init__(self, max_pages: int = 20) -> None:
         self.max_pages = max_pages
@@ -35,39 +37,34 @@ class NewschamAdapter(SourceAdapter):
     def parse_discovery(self, content: bytes, url: str) -> DiscoveryPage:
         del url
         soup = BeautifulSoup(content, "html.parser")
-        items = soup.select("section.mainContents article.figure")
+        items = soup.select("div.article-loop_default div.gb-loop-item")
         if not items:
-            raise StructureChangedError("section.mainContents article.figure not found")
+            raise StructureChangedError("div.article-loop_default div.gb-loop-item not found")
         articles: list[ArticleDiscovery] = []
         for item in items:
-            link = item.select_one("h3 a[href]")
-            if link is None:
+            link = item.select_one("a.link[href]")
+            title_node = item.select_one("h3")
+            if link is None or title_node is None:
                 continue
-            match = ARTICLE_PATH.match(str(link.get("href")))
-            title = normalize_text(link.get_text(" ", strip=True))
+            match = ARTICLE_PATH.match(urlsplit(str(link.get("href"))).path)
+            title = normalize_text(title_node.get_text(" ", strip=True))
             if not match or not title:
                 continue
             article_id = match.group(1)
-            time_node = item.select_one("time.pubdate")
+            date_node = item.select_one("div.date")
             published_at = (
-                parse_newscham_datetime(
-                    str(time_node.get("datetime") or time_node.get_text(" ", strip=True))
-                )
-                if time_node
-                else None
+                parse_newscham_datetime(date_node.get_text(" ", strip=True)) if date_node else None
             )
-            category = item.select_one("div.category")
-            author = item.select_one("address.author")
             summary = item.select_one("p.summary")
             try:
                 articles.append(
                     ArticleDiscovery(
                         source=self.source,
                         article_id=article_id,
-                        canonical_url=f"https://www.newscham.net/articles/{article_id}",
+                        canonical_url=f"https://newscham.net/{article_id}/",
                         title=title,
-                        byline=_text_or_none(author),
-                        section=_section(category),
+                        byline=_text_or_none(item.select_one("div.author")),
+                        section=_text_or_none(item.select_one("div.taxonomy a")),
                         published_at=published_at,
                         summary=short_text(summary.get_text(" ", strip=True)) if summary else None,
                     )
@@ -81,17 +78,17 @@ class NewschamAdapter(SourceAdapter):
     def extract_body(self, html_text: str, url: str) -> str:
         del url
         soup = BeautifulSoup(html_text, "html.parser")
-        node = soup.select_one("article#news-article-post div#news-article-content")
+        node = soup.select_one("article.post-content div.ep-single-content")
         if not node:
-            raise StructureChangedError("div#news-article-content not found")
+            raise StructureChangedError("article.post-content div.ep-single-content not found")
         text = node.get_text("\n", strip=True)
         if not text:
-            raise StructureChangedError("div#news-article-content was empty")
+            raise StructureChangedError("div.ep-single-content was empty")
         return text
 
 
 def parse_newscham_datetime(value: str) -> datetime | None:
-    """Parse the site's KST display time, e.g. ``2026.09.23. 9:51``."""
+    """Parse the site's KST display time, e.g. ``2026.10.06 9:43``."""
 
     match = LIST_DATETIME.search(value)
     if not match:
@@ -108,10 +105,3 @@ def _text_or_none(node: object) -> str | None:
         return None
     text = normalize_text(node.get_text(" ", strip=True))  # type: ignore[attr-defined]
     return text or None
-
-
-def _section(node: object) -> str | None:
-    text = _text_or_none(node)
-    if not text:
-        return None
-    return text.strip("[] ") or None
