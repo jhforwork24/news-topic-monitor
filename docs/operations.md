@@ -99,6 +99,26 @@ source에 있다. `NOTION_REPORTS_DATA_SOURCE_ID`(브리핑 보고사항)는 별
 - `force` 입력은 이 보호를 끄고 대기열을 새로 만든다. 새 queue_id가 생기므로 그 시점에 이미
   제출된 초안은 finalize에서 queue_id 불일치로 거부된다. 초안을 버릴 의도가 분명할 때만 쓴다.
 
+## 큐 run이 preflight 단계만 실패
+
+`editorial-queue.yml`의 마지막 단계 `Start private model-free briefing preflight after a ready queue`는
+대기열이 준비되면 비공개 시험 저장소의 `preflight.yml`을 dispatch한다. 시크릿
+`BRIEFING_TRIAL_DISPATCH_TOKEN`이 없으면 경고만 내고 통과하지만, 값이 있는데 권한이 모자라면 run이
+`failure`로 끝난다. 대기열 데이터는 이 단계 전에 이미 만들어져 커밋되므로 대기열·초안·감사·발행에는
+영향이 없고, 일간 루틴은 이 단계만 실패한 run에서 중단하지 않는다(`docs/daily-routine.md` 1단계 3항).
+오류 코드별 원인은 다음과 같다.
+
+- `403 Resource not accessible by personal access token`: 토큰이 대상 저장소에 접근하지 못하거나
+  `Actions` 쓰기 권한이 없다. fine-grained 토큰의 Repository access에 시험 저장소가 선택돼 있고
+  Repository permissions의 **Actions: Read and write**가 있어야 한다(`Secrets` 권한과는 다르다).
+- `404`: 토큰이 저장소를 볼 수 없거나 시험 저장소 `main`에 `preflight.yml`이 없다.
+- `401`: 토큰이 틀렸거나 만료됐다. 시크릿 이름은 정확히 `BRIEFING_TRIAL_DISPATCH_TOKEN`이어야 한다.
+- `422`: 시험 저장소의 `preflight.yml`이 `workflow_dispatch`나 `date` 입력을 받지 않는다.
+
+시크릿에는 필요한 권한(대상 저장소 하나의 Actions 쓰기)만 가진 전용 토큰을 쓴다. 공개 저장소의
+시크릿이므로 다른 저장소의 시크릿 쓰기 같은 권한이 있는 토큰을 두지 않는다. 확인용으로 대기열을
+미리 만들지 않는다(그날 대기열이 오래된 수집으로 고정된다). 다음 정규 큐 run의 결과로 확인한다.
+
 ## 발행을 건너뛰는 날 (공휴일 등)
 
 화~토 가운데 쉬기로 한 날은 사용자가 정하며 `config/publication-calendar.yaml`의
@@ -296,3 +316,15 @@ finalize가 "활성 Notion 페이지가 정확히 1개여야 함: Claude 편집 
   `notion-create-pages`·`notion-update-page`를 항상 허용으로 둔다(이 세션은 바꿀 수 없다). 다시 풀리면
   풀린 날짜·시각을 기록해 위 후보를 좁힌다.
 - **임시 대응:** `docs/daily-routine.md`의 "반환 모드"로 서브에이전트가 Notion에 쓰지 않게 한다.
+
+## Notion 쿼리 도구 한도 초과
+
+증상: 연결된 Notion 도구 `notion-query-data-sources`가 `usage_limit_reached`(Query Data Source usage
+limit)를 반환한다. 원인은 SQL 모드에 걸린 요금제의 워크스페이스 공유 한도다(Business·Enterprise와
+Notion AI에서는 무제한). 정확한 한도와 초기화 주기는 공개되어 있지 않고, 같은 워크스페이스의 다른
+세션과 연결이 몫을 함께 쓴다. `rows` 모드, `notion-search`, `notion-fetch`와 쓰기 도구는 이 한도에
+걸리지 않았다(2026-10-08 확인). 최종 발행은 GitHub Actions의 Notion API라 영향이 없다.
+
+대응: SQL 모드를 쓰지 않는다(모드를 생략하면 SQL이다). `docs/daily-routine.md` "Notion 조회 방법"의
+순서(`rows` → 검색 → `fetch`)를 따른다. 한도를 완전히 없애려면 Notion Business 요금제가 필요하며 이는
+유료 서비스 도입이라 사용자 승인이 먼저다.

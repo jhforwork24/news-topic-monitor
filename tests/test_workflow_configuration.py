@@ -158,3 +158,22 @@ def test_notion_write_latency_reports_no_waits(tmp_path, capsys) -> None:
     _load_latency_script().main(["--root", str(tmp_path), "--since", "2026-10-05T23:00:00Z"])
 
     assert "NO_WAITS" in capsys.readouterr().out
+
+
+def test_routine_avoids_notion_sql_mode_and_documents_the_preflight_exception() -> None:
+    root = Path(__file__).parents[1]
+    routine = (root / "docs" / "daily-routine.md").read_text(encoding="utf-8")
+    operations = (root / "docs" / "operations.md").read_text(encoding="utf-8")
+
+    # SQL 모드는 요금제 공유 한도에 걸렸다. 기본값이 SQL이라 문서가 명시하지 않으면 다시 쓰게 된다.
+    assert "## Notion 조회 방법" in routine
+    assert '`mode: "rows"`' in routine
+    assert "SQL 모드를 쓰지 않는다" in routine
+    assert "## Notion 쿼리 도구 한도 초과" in operations
+    assert "usage_limit_reached" in operations
+
+    # preflight 단계만 실패한 큐 run에서 일간 루틴이 중단하지 않는다.
+    assert "Start private model-free" in routine
+    assert "하나뿐이고" in routine
+    assert "## 큐 run이 preflight 단계만 실패" in operations
+    assert "Actions: Read and write" in operations

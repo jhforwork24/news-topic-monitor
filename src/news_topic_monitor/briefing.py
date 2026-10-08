@@ -906,8 +906,12 @@ def build_overview(start: datetime, end: datetime, sections: list[BriefingSectio
         )
     columns = by_title.get("III. 주요 칼럼")
     if columns and columns.issues:
+        column_keywords = _issue_keywords(columns.issues, 3)
         section_sentences.append(
-            "주요 칼럼으로는 " + _issue_keywords(columns.issues, 3) + "을 함께 소개한다."
+            "주요 칼럼으로는 "
+            + column_keywords
+            + _korean_particle(column_keywords, "을", "를")
+            + " 함께 소개한다."
         )
     return " ".join(section_sentences)
 
@@ -917,10 +921,12 @@ def build_telegram_summary(sections: list[BriefingSection]) -> str:
     sentences: list[str] = []
     disability = by_title.get("I. 장애정책·장애인운동")
     if disability and disability.issues:
+        disability_keywords = _issue_keywords(disability.issues, 4)
         sentences.append(
             "장애 의제에서는 "
-            + _issue_keywords(disability.issues, 4)
-            + "을 주요 후속 감시 대상으로 정리하였다."
+            + disability_keywords
+            + _korean_particle(disability_keywords, "을", "를")
+            + " 주요 후속 감시 대상으로 정리하였다."
         )
     labor = by_title.get("II. 노동·돌봄·빈곤")
     if labor and labor.issues:

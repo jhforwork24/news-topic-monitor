@@ -1002,3 +1002,35 @@ def test_opinion_summary_is_exempt_from_the_outlet_rule_and_keeps_the_author_ter
     validate_briefing(
         _summary_document("III. 주요 칼럼", "필자는 이동권이 여가와 이어진 권리라고 주장했다.")
     )
+
+
+def _keyword_issue(keyword: str) -> BriefingIssue:
+    return BriefingIssue(
+        title=f"{keyword} 관련 제목",
+        articles=[],
+        summary="요약이다.",
+        tone_analysis="",
+        keyword=keyword,
+    )
+
+
+def test_summary_particles_follow_the_last_syllable_of_the_keyword_list() -> None:
+    from news_topic_monitor.briefing import build_overview, build_telegram_summary
+
+    # 2026-10-08 텔레그램 요약이 "…통합돌봄 저조을 주요 후속 감시 대상으로"로 나갔다. 조사가
+    # "을"로 고정돼 받침 없는 키워드가 끝에 오면 틀렸다.
+    for keyword, particle in (("통합돌봄 저조", "를"), ("자립지원 예산 공백", "을")):
+        sections = [BriefingSection("I. 장애정책·장애인운동", [_keyword_issue(keyword)])]
+        telegram = build_telegram_summary(sections)
+        assert f"{keyword}{particle} 주요 후속 감시 대상으로 정리하였다." in telegram
+
+    for keyword, particle in (
+        ("이동권 논쟁", "을"),
+        ("택시 월급제 쟁점", "을"),
+        ("복지 사각지대", "를"),
+    ):
+        sections = [BriefingSection("III. 주요 칼럼", [_keyword_issue(keyword)])]
+        overview = build_overview(
+            datetime(2026, 10, 7, tzinfo=UTC), datetime(2026, 10, 8, tzinfo=UTC), sections
+        )
+        assert f"주요 칼럼으로는 {keyword}{particle} 함께 소개한다." in overview
