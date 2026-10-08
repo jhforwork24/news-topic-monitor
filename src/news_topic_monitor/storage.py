@@ -5,7 +5,7 @@ import os
 from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Any
@@ -31,8 +31,21 @@ class ArticleStorage(ABC):
 
 
 class JsonlStorage(ArticleStorage):
-    def __init__(self, root: Path) -> None:
+    """JSONL article store.
+
+    ``last_seen_refresh_interval`` throttles a pure "seen again" update. Every collection run
+    re-discovers the articles still listed by each source, and rewriting ``last_seen_at`` for
+    all of them made 85-95% of each data commit's changed rows differ in that field alone,
+    so the repository grew by whole-file rewrites. With an interval set, a duplicate (nothing
+    but ``first_seen_at``/``last_seen_at`` differs) seen again within the interval leaves the
+    stored record untouched. Any other change, and any article older than the interval, is
+    written as before. ``None`` keeps the original behaviour of refreshing on every sighting,
+    which the evidence-producing commands (queue, finalize) rely on.
+    """
+
+    def __init__(self, root: Path, *, last_seen_refresh_interval: timedelta | None = None) -> None:
         self.root = root
+        self.last_seen_refresh_interval = last_seen_refresh_interval
         self.articles_dir = root / "data" / "articles"
         self.review_dir = root / "data" / "review"
         self.state_path = root / "data" / "state" / "source_state.json"
@@ -109,6 +122,12 @@ class JsonlStorage(ArticleStorage):
             )
             semantic_changed = self._semantic_payload(existing) != self._semantic_payload(article)
             result = StoreResult.UPDATED if semantic_changed else StoreResult.DUPLICATE
+            if (
+                not semantic_changed
+                and self.last_seen_refresh_interval is not None
+                and article.last_seen_at - existing.last_seen_at < self.last_seen_refresh_interval
+            ):
+                return result
 
         if self._batch_depth:
             self._pending[key] = (destination, article)

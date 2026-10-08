@@ -177,7 +177,8 @@ finalizer는 이 날짜별 스냅샷을 로드해 queue_id와 `initial_health_fi
 저장키 우선순위는 정규화 canonical URL, `source + article_id`,
 `source + title + published_at` SHA-256이다. URL에서 fragment와 알려진 추적 파라미터를 제거하고
 query를 정렬한다. 같은 기사를 다시 보면 새 행을 추가하지 않고 `last_seen_at`과 변경된 판별·
-메타데이터만 갱신한다. write는 같은 디렉터리 임시파일을 만든 뒤 `os.replace`하여 원자적으로
+메타데이터만 갱신한다(일반 수집은 변경이 없으면 `last_seen_at`을 24시간에 한 번만 갱신해 쓰기를
+줄인다. `docs/operations.md` "저장량과 보존"). write는 같은 디렉터리 임시파일을 만든 뒤 `os.replace`하여 원자적으로
 교체한다.
 
 `ArticleStorage` 추상 클래스와 `JsonlStorage` 구현을 분리했다. D1 등으로 이전할 때에는 다음
