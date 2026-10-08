@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from news_topic_monitor.models import (
     ArticleRecord,
@@ -125,3 +125,82 @@ def test_report_uses_half_open_window_and_contains_no_body(tmp_path) -> None:
     assert "완전 확인" in text
     assert "확인 불능" in text
     assert "원문 보관: 하지 않음" in text
+
+
+def _only(storage: JsonlStorage) -> ArticleRecord:
+    records = list(storage.iter_articles())
+    assert len(records) == 1
+    return records[0]
+
+
+def _seen_again(item: ArticleRecord, *, hours: float) -> ArticleRecord:
+    again = item.model_copy(deep=True)
+    again.last_seen_at = item.last_seen_at + timedelta(hours=hours)
+    return again
+
+
+def _stored_bytes(tmp_path) -> bytes:
+    return b"".join(path.read_bytes() for path in sorted((tmp_path / "data").rglob("*.jsonl")))
+
+
+def test_default_storage_refreshes_last_seen_on_every_sighting(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path)
+    item = record()
+    storage.upsert(item)
+
+    assert storage.upsert(_seen_again(item, hours=1)) == StoreResult.DUPLICATE
+    assert _only(storage).last_seen_at == item.last_seen_at + timedelta(hours=1)
+
+
+def test_throttled_storage_leaves_an_unchanged_article_alone_within_the_interval(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path, last_seen_refresh_interval=timedelta(hours=24))
+    item = record()
+    assert storage.upsert(item) == StoreResult.NEW
+    before = _stored_bytes(tmp_path)
+
+    assert storage.upsert(_seen_again(item, hours=3)) == StoreResult.DUPLICATE
+    assert storage.upsert(_seen_again(item, hours=23)) == StoreResult.DUPLICATE
+
+    assert _stored_bytes(tmp_path) == before  # 파일이 다시 쓰이지 않는다
+    assert _only(storage).last_seen_at == item.last_seen_at
+
+
+def test_throttled_storage_refreshes_once_the_interval_has_passed(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path, last_seen_refresh_interval=timedelta(hours=24))
+    item = record()
+    storage.upsert(item)
+
+    assert storage.upsert(_seen_again(item, hours=24)) == StoreResult.DUPLICATE
+    assert _only(storage).last_seen_at == item.last_seen_at + timedelta(hours=24)
+
+
+def test_throttled_storage_still_writes_real_changes_immediately(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path, last_seen_refresh_interval=timedelta(hours=24))
+    item = record()
+    storage.upsert(item)
+
+    changed = _seen_again(item, hours=1)
+    changed.title = "장애인 이동권 논의 (수정)"
+    changed.summary = "바뀐 공개 요약"
+    assert storage.upsert(changed) == StoreResult.UPDATED
+    stored = list(storage.iter_articles())
+    assert len(stored) == 1
+    assert stored[0].summary == "바뀐 공개 요약"
+    assert stored[0].last_seen_at == item.last_seen_at + timedelta(hours=1)
+
+    routed = _seen_again(changed, hours=2)
+    routed.discovery_route = ["official:https://www.hani.co.kr/rss/new"]
+    assert storage.upsert(routed) == StoreResult.UPDATED
+    assert "official:https://www.hani.co.kr/rss/new" in _only(storage).discovery_route
+
+
+def test_throttled_storage_skips_the_write_inside_a_batch_too(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path, last_seen_refresh_interval=timedelta(hours=24))
+    item = record()
+    storage.upsert(item)
+    before = _stored_bytes(tmp_path)
+
+    with storage.batch():
+        assert storage.upsert(_seen_again(item, hours=2)) == StoreResult.DUPLICATE
+
+    assert _stored_bytes(tmp_path) == before

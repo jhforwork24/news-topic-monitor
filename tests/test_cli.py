@@ -4,10 +4,15 @@ import argparse
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
+import pytest
+
 from news_topic_monitor.cli import (
+    LAST_SEEN_REFRESH_HOURS,
     REVALIDATION_BODY_LIMIT_BASE,
     REVALIDATION_BODY_LIMIT_MAX,
     _briefing_already_published,
+    _collect,
+    _collection_storage,
     _editorial_finalize,
     _finalize_late_recovered_items,
     _known_relevant_seed_discoveries,
@@ -630,3 +635,29 @@ def test_editorial_finalize_exits_early_when_the_day_is_already_published(
     # Returns before any policy loading, recrawl or gate evaluation: none are stubbed.
     assert _editorial_finalize(args, settings) == 0
     assert calls == ["2026-10-03"]
+
+
+def test_routine_collection_throttles_last_seen_but_queue_and_finalize_do_not(
+    monkeypatch, tmp_path
+) -> None:
+    captured = {}
+
+    def stop(settings, storage, sources):
+        captured["storage"] = storage
+        raise RuntimeError("stop after the storage is built")
+
+    monkeypatch.setattr("news_topic_monitor.cli._build_adapters", stop)
+    args = argparse.Namespace(
+        command="collect", end=None, start=None, since_hours=6, sources=[], hours=48
+    )
+    settings = argparse.Namespace(root=tmp_path)
+
+    with pytest.raises(RuntimeError, match="stop after"):
+        _collect(args, settings)
+
+    assert captured["storage"].last_seen_refresh_interval == timedelta(
+        hours=LAST_SEEN_REFRESH_HOURS
+    )
+    assert _collection_storage(tmp_path).last_seen_refresh_interval is not None
+    # 증거를 만드는 명령은 기본 저장소(매번 갱신)를 쓴다.
+    assert JsonlStorage(tmp_path).last_seen_refresh_interval is None

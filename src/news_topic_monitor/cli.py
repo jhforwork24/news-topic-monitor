@@ -219,6 +219,16 @@ def main(argv: list[str] | None = None) -> int:
     return _collect(args, settings)
 
 
+# 일반 수집(collect·backfill)이 이미 저장된 기사를 다시 볼 때 last_seen_at을 갱신하는 최소
+# 간격. 매 수집마다 목록에 남은 모든 기사의 last_seen_at만 바뀌어 data 커밋이 파일 전체
+# 재작성으로 커졌다. 대기열·finalize는 증거(last_checked_at)를 만들므로 매번 갱신한다.
+LAST_SEEN_REFRESH_HOURS = 24
+
+
+def _collection_storage(root: Path) -> JsonlStorage:
+    return JsonlStorage(root, last_seen_refresh_interval=timedelta(hours=LAST_SEEN_REFRESH_HOURS))
+
+
 def _collect(args: argparse.Namespace, settings: Settings) -> int:
     end = parse_datetime(args.end) if args.end else datetime.now(UTC)
     assert end is not None
@@ -230,7 +240,7 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
     assert start is not None
     if start >= end:
         raise SystemExit("start must be earlier than end")
-    storage = JsonlStorage(settings.root)
+    storage = _collection_storage(settings.root)
     adapters = _build_adapters(settings, storage, set(args.sources or []))
     classifier = RuleClassifier(settings.root / "config" / "topics.yml")
     with _http_client(settings) as http:
