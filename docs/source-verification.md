@@ -94,7 +94,10 @@ KBS 1건은 후보였으나 `.detail-body`가 빈 구조여서 메타데이터 �
   `/wp/wp-admin/`만 금지)를 게시했고, opt-in은 철회했다. 같은 날 live로 확인한 새 구조는
   `/all-articles/?_paged=N` 목록의 `div.article-loop_default div.gb-loop-item`(`h3`,
   `a.link`, `p.summary`, `div.author`, `div.date`, `div.taxonomy a`)와 기사 페이지의
-  `article.post-content div.ep-single-content`다. 아래 괄호는 철회 전 기록이다.
+  `article.post-content div.ep-single-content`다. 2026-10-09 live 확인: 별도 목록
+  `/all-articles/curation/?_paged=N`(큐레이션, 같은 마크업, 하루 1건꼴)에만 있는 기사가 있어
+  (130022·130013·130006) 어댑터가 1~2쪽을 추가 발견 경로로 수집한다. 아래 괄호는 철회 전
+  기록이다.
   같은 날 live로 `/articles/` 목록의 `section.mainContents article.figure`, `h3 a`,
   `time.pubdate`(KST 표시시각), `p.summary`, `address.author`와 기사 페이지의
   `article#news-article-post div#news-article-content` 구조를 확인했다. `/rss/`는 빈 응답,

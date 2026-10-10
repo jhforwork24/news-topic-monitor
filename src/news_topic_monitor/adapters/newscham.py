@@ -14,7 +14,10 @@ from .base import SourceAdapter, StructureChangedError
 # /N/ article page). The site moved from www.newscham.net/articles/N to the apex host
 # newscham.net (WordPress); the old URLs 301 to /N/. The apex robots.txt exists (200) and
 # only disallows /wp/wp-admin/, so no robots.txt opt-in is needed. The list is paged with
-# the FacetWP query parameter ``_paged`` and is date-descending.
+# the FacetWP query parameter ``_paged`` and is date-descending. 2026-10-09: the separate
+# curation list (/all-articles/curation/, same markup, about one item a day) holds articles
+# that never appear in the main list (e.g. 130022, 130013, 130006), so it is a second
+# discovery path. It is not under ``date_ordered_list_prefix``, so its pages are always fetched.
 ARTICLE_PATH = re.compile(r"^/(\d+)/?$")
 LIST_DATETIME = re.compile(r"(\d{4})\.(\d{1,2})\.(\d{1,2})\.?\s+(\d{1,2}):(\d{2})")
 
@@ -25,14 +28,18 @@ class NewschamAdapter(SourceAdapter):
     allowed_discovery_hosts = frozenset({"newscham.net"})
     allowed_article_hosts = frozenset({"newscham.net"})
     LIST_URL = "https://newscham.net/all-articles/?_paged={page}"
+    CURATION_LIST_URL = "https://newscham.net/all-articles/curation/?_paged={page}"
     date_ordered_list_prefix = "https://newscham.net/all-articles/?_paged="
 
-    def __init__(self, max_pages: int = 20) -> None:
+    def __init__(self, max_pages: int = 20, curation_pages: int = 2) -> None:
         self.max_pages = max_pages
+        self.curation_pages = curation_pages
 
     def initial_discovery_urls(self, start: datetime, end: datetime) -> list[str]:
         del start, end
-        return [self.LIST_URL.format(page=page) for page in range(1, self.max_pages + 1)]
+        return [self.LIST_URL.format(page=page) for page in range(1, self.max_pages + 1)] + [
+            self.CURATION_LIST_URL.format(page=page) for page in range(1, self.curation_pages + 1)
+        ]
 
     def parse_discovery(self, content: bytes, url: str) -> DiscoveryPage:
         del url

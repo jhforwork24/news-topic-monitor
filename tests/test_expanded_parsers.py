@@ -140,7 +140,13 @@ def test_newscham_article_list_parser(fixture_dir) -> None:
         datetime(2026, 9, 22, tzinfo=UTC), datetime(2026, 9, 23, tzinfo=UTC)
     )
     assert urls[0] == "https://newscham.net/all-articles/?_paged=1"
-    assert all(url.startswith(adapter.date_ordered_list_prefix) for url in urls)
+    main_urls = [url for url in urls if url.startswith(adapter.date_ordered_list_prefix)]
+    assert len(main_urls) == adapter.max_pages
+    # The curation list is a separate discovery path that date-ordered pagination never skips.
+    assert urls[len(main_urls) :] == [
+        "https://newscham.net/all-articles/curation/?_paged=1",
+        "https://newscham.net/all-articles/curation/?_paged=2",
+    ]
     page = adapter.parse_discovery((fixture_dir / "newscham_list.html").read_bytes(), urls[0])
     # Items without a link and links outside the loop (sidebar) are not list items.
     assert [article.article_id for article in page.articles] == ["900002", "900001", "900004"]
