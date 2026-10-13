@@ -2,99 +2,99 @@
   "version": 1,
   "sources": {
     "chosun": {
-      "last_run_at": "2026-10-13T02:01:16.971814Z",
+      "last_run_at": "2026-10-13T02:25:35.572839Z",
       "success": true,
       "discovered": 140,
       "errors": [],
-      "last_success_at": "2026-10-13T02:01:16.971814Z",
+      "last_success_at": "2026-10-13T02:25:35.572839Z",
       "discovery_status": "complete"
     },
     "joongang": {
-      "last_run_at": "2026-10-13T02:04:43.641191Z",
+      "last_run_at": "2026-10-13T02:25:50.183646Z",
       "success": true,
-      "discovered": 876,
+      "discovered": 592,
       "errors": [],
-      "last_success_at": "2026-10-13T02:04:43.641191Z",
+      "last_success_at": "2026-10-13T02:25:50.183646Z",
       "discovery_status": "complete"
     },
     "donga": {
-      "last_run_at": "2026-10-13T02:08:14.637656Z",
+      "last_run_at": "2026-10-13T02:26:01.164023Z",
       "success": true,
-      "discovered": 532,
+      "discovered": 546,
       "errors": [],
-      "last_success_at": "2026-10-13T02:08:14.637656Z",
+      "last_success_at": "2026-10-13T02:26:01.164023Z",
       "discovery_status": "complete"
     },
     "hani": {
-      "last_run_at": "2026-10-13T02:12:56.907246Z",
+      "last_run_at": "2026-10-13T02:27:05.554436Z",
       "success": true,
-      "discovered": 495,
+      "discovered": 330,
       "errors": [],
-      "last_success_at": "2026-10-13T02:12:56.907246Z",
+      "last_success_at": "2026-10-13T02:27:05.554436Z",
       "discovery_status": "complete"
     },
     "khan": {
-      "last_run_at": "2026-10-13T02:16:32.982326Z",
+      "last_run_at": "2026-10-13T02:27:12.498949Z",
       "success": true,
-      "discovered": 298,
+      "discovered": 300,
       "errors": [],
-      "last_success_at": "2026-10-13T02:16:32.982326Z",
+      "last_success_at": "2026-10-13T02:27:12.498949Z",
       "discovery_status": "complete"
     },
     "ohmynews": {
-      "last_run_at": "2026-10-13T02:20:19.268978Z",
+      "last_run_at": "2026-10-13T02:27:17.006344Z",
       "success": true,
-      "discovered": 220,
+      "discovered": 219,
       "errors": [],
-      "last_success_at": "2026-10-13T02:20:19.268978Z",
+      "last_success_at": "2026-10-13T02:27:17.006344Z",
       "discovery_status": "complete"
     },
     "pressian": {
-      "last_run_at": "2026-10-13T02:20:27.516867Z",
+      "last_run_at": "2026-10-13T02:27:19.213999Z",
       "success": true,
       "discovered": 25,
       "errors": [],
-      "last_success_at": "2026-10-13T02:20:27.516867Z",
+      "last_success_at": "2026-10-13T02:27:19.213999Z",
       "discovery_status": "complete"
     },
     "newscham": {
-      "last_run_at": "2026-10-13T02:21:25.455618Z",
+      "last_run_at": "2026-10-13T02:27:31.561105Z",
       "success": true,
-      "discovered": 29,
+      "discovered": 38,
       "errors": [],
       "discovery_status": "complete",
-      "last_success_at": "2026-10-13T02:21:25.455618Z"
+      "last_success_at": "2026-10-13T02:27:31.561105Z"
     },
     "labortoday": {
-      "last_run_at": "2026-10-13T02:22:00.264085Z",
+      "last_run_at": "2026-10-13T02:27:36.532063Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-13T02:22:00.264085Z",
+      "last_success_at": "2026-10-13T02:27:36.532063Z",
       "discovery_status": "complete"
     },
     "beminor": {
-      "last_run_at": "2026-10-13T02:23:23.916082Z",
+      "last_run_at": "2026-10-13T02:28:41.720076Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-13T02:23:23.916082Z",
+      "last_success_at": "2026-10-13T02:28:41.720076Z",
       "discovery_status": "complete"
     },
     "ablenews": {
-      "last_run_at": "2026-10-13T02:24:14.234894Z",
+      "last_run_at": "2026-10-13T02:29:21.952448Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-13T02:24:14.234894Z",
+      "last_success_at": "2026-10-13T02:29:21.952448Z",
       "discovery_status": "complete"
     },
     "theindigo": {
-      "last_run_at": "2026-10-13T02:24:34.935632Z",
+      "last_run_at": "2026-10-13T02:29:38.688508Z",
       "success": true,
-      "discovered": 9,
+      "discovered": 8,
       "errors": [],
-      "last_success_at": "2026-10-13T02:24:34.935632Z",
+      "last_success_at": "2026-10-13T02:29:38.688508Z",
       "discovery_status": "complete"
     },
     "kbs": {
@@ -130,20 +130,20 @@
       "discovery_status": "complete"
     },
     "mediaus": {
-      "last_run_at": "2026-10-13T02:22:54.590118Z",
+      "last_run_at": "2026-10-13T02:28:16.762884Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-13T02:22:54.590118Z"
+      "last_success_at": "2026-10-13T02:28:16.762884Z"
     },
     "sisain": {
-      "last_run_at": "2026-10-13T02:20:53.753951Z",
+      "last_run_at": "2026-10-13T02:27:21.486117Z",
       "success": true,
       "discovery_status": "complete",
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-10-13T02:20:53.753951Z"
+      "last_success_at": "2026-10-13T02:27:21.486117Z"
     }
   }
 }
