@@ -323,6 +323,15 @@ finalize 같은 증거를 만드는 실행은 매번 갱신해 증거 매니페�
   (2) 노션 커넥터가 서버 이름과 UUID로 두 벌 보여 설정한 쪽과 세션이 쓰는 쪽이 다름(패치노트 5.21의
   MCP 접두사 혼용 참조), (3) 여러 기기에서 설정이 서로 덮어씀, (4) 조직 관리자 상한. 저장소
   `.claude/settings.json`의 `mcp__Notion__*` 허용은 이 승인을 막지 못했다.
+- **"항상 허용"으로 둔 뒤에도 재발한 사례(2026-10-13):** 같은 날 아침 편집·감사의 `notion-create-pages`는 즉시
+  (0초) 응답했고, 직후 감사의 `notion-update-page`가 응답 없이 소멸(`UNANSWERED`)했으며, 저녁에는 `update-page`
+  (`replace_content` 포함)가 847초·580초 대기했다. `create-pages`는 통과하고 `update-page`만 걸렸고, 같은
+  `update-page`가 10-09에는 즉시 통과했다. 설정이 몇 초 사이에 바뀌었다기보다 10-09~10-13 사이 도구 분류가
+  바뀐 것(서버 업데이트로 `update-page`의 위험도 표시가 바뀌어 저장한 허용이 풀림)으로 본다. 설정을 확인할 때는
+  (1) 커넥터 목록에 Notion이 한 벌인지 두 벌(이름·UUID)인지, (2) `update-page`가 허용으로 되어 있는지(쓰기·삭제
+  도구 묶음 포함), (3) 조직 관리자 상한이 있는지, (4) 풀린 시각을 본다. 세션 권한 모드(Accept edits·Plan·Auto)는
+  커넥터 도구 권한과 별개다. 이 승인 대기는 연결된 Claude 세션의 Notion MCP 쓰기에만 걸리고, GitHub Actions의
+  Notion API 토큰(finalize 발행)은 영향이 없다.
 - **해소:** 사용자가 claude.ai → Customize → Connectors → Notion의 도구 권한에서
   `notion-create-pages`·`notion-update-page`를 항상 허용으로 둔다(이 세션은 바꿀 수 없다). 다시 풀리면
   풀린 날짜·시각을 기록해 위 후보를 좁힌다.
