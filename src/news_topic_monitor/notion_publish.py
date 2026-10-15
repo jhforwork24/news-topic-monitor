@@ -39,9 +39,11 @@ from .chat_bridge import (
 from .classifier import RuleClassifier
 from .editorial import select_chat_editorial_candidates
 from .models import AuditSeverity, Classification, EditorialCandidate
+from .previous_briefing import PreviousBriefing
 from .selection_review import NearMissTopic, ScoredArticle, SelectionReview
 from .sources import (
     LABOR_SECTION_ALLOWED_SOURCES,
+    PRIMARY_COMPARISON_SOURCES,
     SOURCE_LABELS,
     is_mandatory_opinion_column,
     is_section_opinion_column,
@@ -67,6 +69,12 @@ NOTION_MAX_CHILDREN_PER_REQUEST = 100
 # the same event. They are search results, never candidates or evidence.
 CROSS_CHECK_GAP_SOURCES = frozenset({"newscham"})
 CROSS_CHECK_GAP_LIMIT = 20
+# 종합매체 후보 가운데 규칙상 장애·노동 모두 무관하고 힌트도 없는 후보는 읽기 분류를 "앞부분"으로
+# 표시한다. 사람이 보는 본문 줄에는 근거 앞 이 글자 수만 싣고, 기계 판독용 JSON의 `evidence_text`는
+# 그대로 둔다(queue_id·검증 불변). 앞부분이 장애·노동·돌봄·빈곤을 가리키면 전문을 읽는다.
+QUEUE_LEAD_PREVIEW_CHARS = 300
+READING_TIER_FULL = "full"
+READING_TIER_LEAD = "lead"
 
 
 class NotionConfigurationError(ValueError):
@@ -465,6 +473,7 @@ class NotionPublisher:
         queue_settings: EditorialQueueSettings,
         labor_classifier: RuleClassifier,
         source_failures: list[str] | None = None,
+        previous_briefing: PreviousBriefing | None = None,
         force: bool = False,
     ) -> EditorialQueueResult:
         # The title is re-checked against the returned pages rather than trusted
@@ -494,6 +503,7 @@ class NotionPublisher:
         ]
         queue_id = editorial_queue_id(bounded)
         generated_at = datetime.now(UTC)
+        reading_tier_counts = reading_tier_summary(bounded, labor_classifier)
         parts = _partition_queue_candidates(
             bounded,
             queue_id=queue_id,
@@ -539,6 +549,8 @@ class NotionPublisher:
                     },
                     "properties": _queue_page_properties(manifest_title, report_date),
                     "children": _queue_manifest_blocks(
+                        reading_tier_counts=reading_tier_counts,
+                        previous_briefing=previous_briefing,
                         manifest=ChatEditorialQueueManifest(
                             report_date=report_date,
                             queue_id=queue_id,
@@ -1069,7 +1081,19 @@ def _queue_part_blocks(
         labor_guard = _labor_queue_hint(candidate, labor_classifier)
         opinion_hint = _opinion_queue_hint(candidate)
         personnel_hint = _personnel_queue_hint(candidate)
-        guards = " · ".join(part for part in (labor_guard, opinion_hint, personnel_hint) if part)
+        lead_only = queue_reading_tier(candidate, labor_classifier) == READING_TIER_LEAD
+        reading_hint = (
+            f"읽기=앞부분({QUEUE_LEAD_PREVIEW_CHARS}자) — 규칙상 장애·노동 무관·힌트 없음, "
+            "전문은 기계 판독용 JSON의 evidence_text"
+            if lead_only
+            else None
+        )
+        guards = " · ".join(
+            part for part in (labor_guard, opinion_hint, personnel_hint, reading_hint) if part
+        )
+        evidence = normalize_text(candidate.evidence_text) or "근거 없음"
+        if lead_only and len(evidence) > QUEUE_LEAD_PREVIEW_CHARS:
+            evidence = evidence[:QUEUE_LEAD_PREVIEW_CHARS] + " …"
         blocks.extend(
             [
                 _heading(candidate.title, 3),
@@ -1078,9 +1102,7 @@ def _queue_part_blocks(
                     f"기자={byline} · 발행={published} · {guards}"
                 ),
                 _bullet("원문 링크", href=candidate.canonical_url),
-                _paragraph(
-                    "확인 근거: " + (normalize_text(candidate.evidence_text) or "근거 없음")
-                ),
+                _paragraph(("확인 근거(앞부분): " if lead_only else "확인 근거: ") + evidence),
             ]
         )
     machine_payload = ChatEditorialQueuePart(
@@ -1108,6 +1130,8 @@ def _queue_manifest_blocks(
     part_pages: list[dict[str, Any]],
     source_failures: list[str],
     cross_check_gaps: list[SearchHit] | None = None,
+    reading_tier_counts: tuple[int, int] | None = None,
+    previous_briefing: PreviousBriefing | None = None,
 ) -> list[dict[str, Any]]:
     start_text = manifest.report_start.astimezone(KST).strftime("%Y-%m-%d %H:%M")
     end_text = manifest.report_end.astimezone(KST).strftime("%Y-%m-%d %H:%M")
@@ -1127,9 +1151,19 @@ def _queue_manifest_blocks(
             "이 매니페스트와 아래 모든 묶음의 candidate_id만 사용한다. 발행시각이 없거나 "
             "본문 확인에 실패한 일반 기사는 대기열 작성 전에 제외했다."
         ),
-        _code_json(manifest.model_dump(mode="json")),
-        _heading("후보 묶음", 2),
     ]
+    if reading_tier_counts is not None:
+        full_count, lead_count = reading_tier_counts
+        blocks.append(
+            _paragraph(
+                f"읽기 분류: 전문 {full_count}개 · 앞부분 {lead_count}개. "
+                "`읽기=앞부분` 표시 후보는 종합매체 기사 가운데 규칙상 장애·노동·돌봄·빈곤이 "
+                "모두 무관하고 힌트가 없는 후보다. "
+                f"근거 앞 {QUEUE_LEAD_PREVIEW_CHARS}자로 먼저 거르고, 앞부분이 해당 의제를 "
+                "가리키면 기계 판독용 JSON의 전문을 읽는다. 후보 ID와 JSON 근거는 줄이지 않았다."
+            )
+        )
+    blocks.extend([_code_json(manifest.model_dump(mode="json")), _heading("후보 묶음", 2)])
     for index, page in enumerate(part_pages, start=1):
         blocks.append(
             _bullet(
@@ -1142,6 +1176,15 @@ def _queue_manifest_blocks(
         blocks.extend(_bullet(item) for item in source_failures[:30])
     else:
         blocks.append(_bullet("수집 실패로 기록된 출처 없음"))
+    if previous_briefing is not None:
+        blocks.append(_heading(f"직전 발행 브리핑 이슈 ({previous_briefing.report_date}, 참고)", 2))
+        blocks.append(
+            _paragraph(
+                "직전 브리핑이 실은 이슈 제목이다. 같은 사안의 새 보도는 새 사실이 있을 때만 "
+                "선정하고, 없으면 제외 사유에 직전 발행 이슈임을 적는다. 이 목록은 후보가 아니다."
+            )
+        )
+        blocks.extend(_bullet(title) for title in previous_briefing.issue_titles[:40])
     if cross_check_gaps:
         blocks.append(_heading("교차확인용 잠재 누락 제목 (임시·미검증)", 2))
         blocks.append(
@@ -1264,6 +1307,39 @@ def _labor_queue_exclusion(candidate: EditorialCandidate) -> str | None:
     if any(marker in path for marker in ENTERTAINMENT_PATHS):
         return "II절 제외: 연예·스포츠·사진 경로 보도"
     return None
+
+
+def queue_reading_tier(candidate: EditorialCandidate, labor_classifier: RuleClassifier) -> str:
+    """Return how fully the editor must read a candidate: ``full`` or ``lead``.
+
+    Only mainstream-outlet candidates that the disability and the labor/care/poverty
+    rules both call irrelevant, with no fixed-column or personnel hint, are ``lead``.
+    Designated disability, labor and column outlets are always ``full``. The label
+    never removes evidence: the machine JSON keeps the whole ``evidence_text``.
+    """
+
+    if candidate.source not in PRIMARY_COMPARISON_SOURCES:
+        return READING_TIER_FULL
+    if candidate.rule_classification != Classification.IRRELEVANT:
+        return READING_TIER_FULL
+    if _opinion_queue_hint(candidate) or _personnel_queue_hint(candidate):
+        return READING_TIER_FULL
+    result = labor_classifier.classify(
+        title=candidate.title,
+        summary=candidate.summary or candidate.evidence_text,
+        section=candidate.section,
+    )
+    if result.classification != Classification.IRRELEVANT:
+        return READING_TIER_FULL
+    return READING_TIER_LEAD
+
+
+def reading_tier_summary(
+    candidates: list[EditorialCandidate], labor_classifier: RuleClassifier
+) -> tuple[int, int]:
+    tiers = [queue_reading_tier(candidate, labor_classifier) for candidate in candidates]
+    lead = tiers.count(READING_TIER_LEAD)
+    return len(tiers) - lead, lead
 
 
 def _environment_integer(name: str, default: int) -> int:

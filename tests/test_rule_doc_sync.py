@@ -92,3 +92,11 @@ def test_editorial_instructions_and_auditor_state_the_labor_subsection_caps() ->
 def test_exclusion_cap_matches_the_instructions_and_the_prompt() -> None:
     assert f"exclusions는 최대 {MAX_EXCLUSIONS}개" in EDITORIAL
     assert f"최대 {MAX_EXCLUSIONS}개까지 기록한다" in PROMPT
+
+
+def test_editorial_instructions_state_the_queue_lead_preview_length() -> None:
+    from news_topic_monitor.notion_publish import QUEUE_LEAD_PREVIEW_CHARS
+
+    assert f"읽기=앞부분({QUEUE_LEAD_PREVIEW_CHARS}자)" in EDITORIAL
+    assert f"앞 {QUEUE_LEAD_PREVIEW_CHARS}자" in EDITORIAL
+    assert "직전 발행 브리핑 이슈" in EDITORIAL

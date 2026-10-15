@@ -82,6 +82,7 @@ from .policy import (
     load_source_registry,
     validate_policy_contract,
 )
+from .previous_briefing import load_previous_briefing
 from .publication_calendar import load_skipped_publication_dates
 from .reporting import generate_report
 from .selection_review import build_selection_review
@@ -822,6 +823,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         queue_settings=queue_settings,
                         labor_classifier=labor_classifier,
                         source_failures=[*_run_source_failures(health), *retry_notes],
+                        previous_briefing=load_previous_briefing(settings.root, report_date),
                         force=bool(getattr(args, "force", False)),
                     )
                 _write_initial_health_snapshot(
