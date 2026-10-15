@@ -110,3 +110,11 @@ def test_auditor_task_states_the_targeted_reading_scope() -> None:
     assert "직전 발행 브리핑 이슈" in AUDITOR
     routine = _doc("daily-routine.md")
     assert '"읽기 범위"' in routine
+
+
+def test_instructions_state_that_non_text_elements_need_text_evidence() -> None:
+    assert (
+        "비텍스트 요소(도표·그래프·사진·영상)는 `evidence_text`에서 확인될 때만 쓴다" in EDITORIAL
+    )
+    assert "비텍스트 요소 점검(`warning`)" in AUDITOR
+    assert "fatal`이 아니다" in AUDITOR
