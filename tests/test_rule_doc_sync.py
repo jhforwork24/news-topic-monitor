@@ -100,3 +100,13 @@ def test_editorial_instructions_state_the_queue_lead_preview_length() -> None:
     assert f"읽기=앞부분({QUEUE_LEAD_PREVIEW_CHARS}자)" in EDITORIAL
     assert f"앞 {QUEUE_LEAD_PREVIEW_CHARS}자" in EDITORIAL
     assert "직전 발행 브리핑 이슈" in EDITORIAL
+
+
+def test_auditor_task_states_the_targeted_reading_scope() -> None:
+    from news_topic_monitor.notion_publish import QUEUE_LEAD_PREVIEW_CHARS
+
+    assert "## 읽기 범위" in (ROOT / "docs" / "claude-auditor-task.md").read_text(encoding="utf-8")
+    assert f"앞 {QUEUE_LEAD_PREVIEW_CHARS}자" in AUDITOR
+    assert "직전 발행 브리핑 이슈" in AUDITOR
+    routine = _doc("daily-routine.md")
+    assert '"읽기 범위"' in routine
