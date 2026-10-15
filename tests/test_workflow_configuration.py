@@ -177,3 +177,61 @@ def test_routine_avoids_notion_sql_mode_and_documents_the_preflight_exception() 
     assert "하나뿐이고" in routine
     assert "## 큐 run이 preflight 단계만 실패" in operations
     assert "Actions: Read and write" in operations
+
+
+def _load_token_report_script():
+    import importlib.util
+    import sys
+
+    path = Path(__file__).parents[1] / "scripts" / "subagent_token_report.py"
+    spec = importlib.util.spec_from_file_location("subagent_token_report", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def _assistant_line(stamp: str, message_id: str, output: int, *, creation=0, read=0, tools=0):
+    import json
+
+    content = [{"type": "tool_use", "id": f"t{message_id}{n}", "name": "x"} for n in range(tools)]
+    usage = {
+        "input_tokens": 2,
+        "cache_creation_input_tokens": creation,
+        "cache_read_input_tokens": read,
+        "output_tokens": output,
+    }
+    message = {"id": message_id, "content": content, "usage": usage}
+    return json.dumps({"type": "assistant", "timestamp": stamp, "message": message})
+
+
+def test_subagent_token_report_sums_turns_and_counts_each_message_once(tmp_path, capsys) -> None:
+    sub = tmp_path / "proj" / "sess" / "subagents"
+    sub.mkdir(parents=True)
+    lines = [
+        # The same API message is logged once per content block; the last record wins.
+        _assistant_line("2026-10-15T00:00:00Z", "m1", 3, creation=1000, read=0, tools=1),
+        _assistant_line("2026-10-15T00:00:01Z", "m1", 50, creation=1000, read=0, tools=1),
+        _assistant_line("2026-10-15T00:01:00Z", "m2", 20, creation=100, read=1000, tools=2),
+    ]
+    (sub / "agent-abcdef123456.jsonl").write_text("\n".join(lines), encoding="utf-8")
+    (sub / "agent-abcdef123456.meta.json").write_text(
+        '{"description": "Editor draft for 2026-10-15"}', encoding="utf-8"
+    )
+    module = _load_token_report_script()
+
+    code = module.main(["--root", str(tmp_path), "--since", "2026-10-14T00:00:00Z"])
+
+    out = capsys.readouterr().out
+    assert code == 0
+    assert "abcdef12  Editor draft for 2026-10-15" in out
+    # billed = (2+1000+50) + (2+100+20); cache reads and peak context are reported apart.
+    assert f"{(2 + 1000 + 50) + (2 + 100 + 20):>8}" in out
+    assert "TOTAL_BILLED=1174" in out
+    assert "1102" in out  # peak context of the second turn: 2 + 100 + 1000
+
+
+def test_subagent_token_report_handles_empty_roots(tmp_path, capsys) -> None:
+    _load_token_report_script().main(["--root", str(tmp_path)])
+
+    assert "no agent transcripts found" in capsys.readouterr().out
