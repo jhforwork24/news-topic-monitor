@@ -46,6 +46,7 @@ flowchart LR
 - `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
 - `chat_bridge.py`: 대기열·초안·감사의 고정 스키마, SHA-256 queue binding, 제출 순서와 후보 ID 검증
 - `previous_briefing.py`: 직전 발행 브리핑(`reports/briefings/`)의 이슈 제목만 읽어 매니페스트 참고 목록으로 쓴다(기사 본문 없음)
+- `scripts/draft_grounding_check.py`: 편집 초안의 수치·직함·기관명·인용을 근거 후보와 기계 대조하고 `--preflight`로 finalize와 같은 스키마·계획·문형 검증(`briefing_validation.issue_text_errors`, `editorial.validate_external_plan`)을 제출 전에 돌린다(출력에 기사 본문 없음, 힌트이며 판정이 아니다)
 - `storage.py`: 멱등 JSONL upsert, 수집 실행 단위 배치 flush, review 동기화,
   state·health 원자적 쓰기
 - `reporting.py`: 05:00 KST 반개방 구간 보고서와 출처 장애 표시

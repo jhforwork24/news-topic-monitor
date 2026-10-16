@@ -819,6 +819,13 @@ def validate_external_editorial(
 ) -> None:
     """Apply the same fail-closed checks to a connected Claude submission."""
 
+    validate_external_plan(plan, candidates)
+    _validate_audit(audit, plan, candidates)
+
+
+def validate_external_plan(plan: EditorialPlan, candidates: list[EditorialCandidate]) -> None:
+    """Plan checks of a connected Claude draft; the draft preflight runs this before submission."""
+
     candidate_by_id = {candidate.candidate_id: candidate for candidate in candidates}
     assessments: list[EditorialAssessment] = []
     for issue in plan.issues:
@@ -836,7 +843,6 @@ def validate_external_editorial(
                 )
             )
     _validate_plan(plan, candidates, assessments)
-    _validate_audit(audit, plan, candidates)
 
 
 def _response_output_text(data: dict[str, Any]) -> str | None:

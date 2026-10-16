@@ -29,19 +29,9 @@ Notion data source ID, 페이지 URL, token은 이 저장소(문서·코드·fix
 
 ## Notion 조회 방법
 
-연결된 Notion 도구의 `notion-query-data-sources` **SQL 모드**는 요금제의 워크스페이스 공유 한도가
-있어 2026-10-08 `usage_limit_reached`로 막혔다(모드를 생략하면 기본값이 SQL이다). 최종 발행은
-GitHub Actions의 Notion API 토큰이 쓰므로 영향이 없고, 이 세션과 서브에이전트의 조회만 해당한다.
-조회는 다음 순서로 하며 **SQL 모드를 쓰지 않는다.**
-
-1. `notion-query-data-sources`의 `mode: "rows"` — 구조화 필터다. 대기열 DB는 `이름`(제목)이
-   `… · 매니페스트`를 포함하는 행, 최종 브리핑 DB는 `날짜`가 `report_date`인 행으로 찾는다. 속성
-   이름은 DB 스키마(`notion-fetch`)에서 확인한다.
-2. `notion-search` — 제목 키워드로 찾고 `data_source_url`로 범위를 제한한다.
-3. `notion-fetch` — 이미 아는 페이지 ID(예: 큐 워크플로 로그가 출력하는 `manifest_page_id`)로 직접 읽는다.
-
-한도 오류가 나면 같은 호출을 되풀이하지 말고 위 다른 방법으로 바꾼다. 쓰기 도구와 `fetch`·`search`는
-이 한도에 걸리지 않았다. 한도 오류가 있었으면 발행 성공 보고(a)에 한 줄로 남긴다.
+조회 순서(SQL 모드 금지, `mode: "rows"` → `notion-search` → `notion-fetch`)의 정본은
+[`subagent-rules.md`](subagent-rules.md) "Notion 조회 방법"이며 메인 세션도 같은 순서를 따른다.
+한도 오류가 있었으면 발행 성공 보고(a)에 한 줄로 남긴다.
 
 ## 매개변수 (프롬프트가 넘기는 값)
 
@@ -167,27 +157,12 @@ code block 1개를 다시 읽어 확인한다. 감사 내용은 그대로 쓰며
 ### 공통
 
 - 프롬프트에는 `report_date`, 매니페스트·후보 묶음·초안 페이지 ID, `queue_id`, 후보 수, 필요하면
-  `draft_id`만 넣는다. 절차와 기준은 문서를 읽게 한다. 이 문서 자체도 읽게 한다.
+  `draft_id`만 넣는다. 절차와 기준은 문서를 읽게 한다.
 - 매니페스트를 먼저 읽고 `출처 점검`에 적힌 사실(수집 실패, 시간초과 후 복구, 승인된 robots 예외)을
   에이전트에게 요약해 알린다. 수집 실패를 기사 부재로 해석하지 않는다.
-- 후보 묶음은 순번과 후보 합계가 매니페스트와 일치하는지 검증한다. 화요일은 후보가 최대 360개까지
-  늘 수 있고 이는 이상 신호가 아니다. 섹션 상한은 창 길이와 무관하게 그대로다.
-- notion-fetch 결과가 토큰 초과로 파일에 저장되면 `Read`의 offset/limit이 아니라 Bash(python)로
-  파싱한다. 후보 본문은 `{"candidates":[…]}` JSON이므로 `json.JSONDecoder().raw_decode`로 읽는다.
-- **시각은 반드시 `TZ=Asia/Seoul date -Iseconds`로 확인한 실제 시각을 쓰고, 지금 시각보다 앞서
-  적지 않는다.** 실제보다 5분 넘게 앞서면 제출이 거부되며, 5분 이내라도 final-state 판정이 어긋난다:
-  finalize의 공식 재수집은 감사 `submitted_at` 뒤에 이뤄진 것만 인정하므로, 감사 시각을 아직 오지
-  않은 시각으로 적으면 재수집이 "감사 완료 전"으로 판정돼 진행형 이슈가 전부 `final-state revalidation이
-  COMPLETE가 아님`으로 막힌다(2026-10-03). 제출 시각을 적은 뒤에 finalize를 실행하고, 이미 막혔다면
-  시각이 지난 뒤 내용 수정 없이 다시 실행하면 된다. `draft_id`는 `draft-{날짜 숫자}-HHMMSS`다.
-- 제출 페이지의 제목과 `날짜` 속성(`report_date`, 날짜형)을 반드시 채우고, 제출 뒤 다시 읽어
-  제목·날짜 속성·`queue_id`·`draft_id`·JSON code block이 **정확히 1개**인지 확인한다.
-- 한국어를 `\uXXXX` 이스케이프로 손으로 쓰지 않는다. 평문 한국어로 쓴다.
-- Notion 조회는 위 "Notion 조회 방법"을 따른다. SQL 모드(와 모드를 생략한 호출)는 쓰지 않는다.
-- 서브에이전트는 최종 브리핑을 발행하지 않는다.
-- 프롬프트에 `제출 방식: 반환`이 있으면 Notion에 쓰지 않는다(위 "노션 쓰기 승인 대기"의 반환 모드). 제출
-  페이지의 제목, `날짜` 속성 값, 헤더 줄, JSON code block을 제출 형식 그대로 최종 답에 돌려주고, 이
-  세션이 그대로 제출한다. 시각 규칙은 동일하게 적용한다.
+- 서브에이전트가 따르는 나머지 공통 규칙(후보 묶음 파싱, 시각, 제출 확인, 반환 모드 등)은
+  [`subagent-rules.md`](subagent-rules.md)가 정본이다. 에이전트에게는 이 문서(`daily-routine.md`)가 아니라
+  `subagent-rules.md`와 각자의 지침 문서만 읽게 한다.
 
 ### 호출 템플릿
 
@@ -197,7 +172,7 @@ code block 1개를 다시 읽어 확인한다. 감사 내용은 그대로 쓰며
 편집:
 
 ```
-report_date={report_date}. GitHub main의 docs/daily-routine.md "서브에이전트 호출 규칙"과
+report_date={report_date}. GitHub main의 docs/subagent-rules.md와
 docs/claude-editorial-instructions.md를 읽고 그대로 따라 'Claude 편집 초안 · {report_date}'를
 제출하라. 최종 브리핑은 발행하지 않는다.
 - data source: {대기열 data source ID}
@@ -209,7 +184,7 @@ docs/claude-editorial-instructions.md를 읽고 그대로 따라 'Claude 편집 
 감사:
 
 ```
-report_date={report_date}. GitHub main의 docs/daily-routine.md "서브에이전트 호출 규칙"과
+report_date={report_date}. GitHub main의 docs/subagent-rules.md와
 docs/claude-auditor-task.md를 읽고 그대로 따라 'Claude 독립 감사 · {report_date}'를 제출하라.
 편집자의 보고는 모른다. 최종 브리핑은 발행하지 않는다.
 - data source: {대기열 data source ID}
@@ -218,29 +193,6 @@ docs/claude-auditor-task.md를 읽고 그대로 따라 'Claude 독립 감사 · 
 ```
 
 감사 템플릿에는 편집 에이전트의 보고 내용(선정 이유, 판단이 애매했던 지점)을 넣지 않는다.
-
-### 편집 서브에이전트
-
-- `movement-position-canon` 스킬을 요약 작성 전에 로드한다.
-- 이슈 요약 구성은 편집 지침을 따른다. `summary`는 언론사를 언급하지 않는 사안 요약, `tone_analysis`는
-  매체별 보도 방식이다. **호출 프롬프트에 "매체명을 주어로 쓴다" 같은 지시를 따로 넣지 않는다.**
-  2026-10-01·10-02 발행본에서 요약 첫 문단이 거의 모두 매체를 주어로 쓴 것은 호출 프롬프트의 그런
-  문구가 원인으로 보인다(9/29·9/30 발행본은 대부분 매체를 쓰지 않았다).
-- 후보 전수를 검토하고, 힌트가 붙은 후보(`III절 고정 칼럼`, `III절 비마이너 오피니언`,
-  `인사 소식 감시 대상`, `II절 비지정 매체`)의 처리 규칙은 편집 지침을 따른다.
-- 완료 보고에 선정 건수(섹션별, 노동은 하위 주제별), 힌트 후보 처리 결과(`candidate_id` 포함),
-  `draft_id`, 판단이 애매했던 지점을 포함한다.
-- 감사에서 반복적으로 fatal이 된 서술 패턴을 피한다: 근거에 없는 게재면·기고 성격 단정, 기사 본문의
-  서술을 인물 발언으로 귀속, 한 매체 근거를 다른 매체로 확대 귀속, 서로 다른 사건의 병합.
-
-### 감사 서브에이전트
-
-- 편집자의 보고나 판단을 읽지 않고 대기열 원자료와 초안만 처음부터 대조한다. 읽기 범위는
-  `claude-auditor-task.md`의 "읽기 범위"를 따른다(선정 후보 전문 대조, 힌트 후보 문자열 검색, 나머지는
-  제목·앞부분).
-- 힌트 후보는 초안 보고를 믿지 말고 대기열 전수에서 직접 검색해 대조한다.
-- 완료 보고에 findings 개수와 심각도, 각 finding의 `candidate_id`·이슈 제목·핵심, 힌트 대조 결과,
-  발행 가능 여부 판단을 포함한다.
 
 ## 보고 원칙
 

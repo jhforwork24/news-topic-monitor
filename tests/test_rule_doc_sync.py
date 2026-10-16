@@ -108,8 +108,7 @@ def test_auditor_task_states_the_targeted_reading_scope() -> None:
     assert "## 읽기 범위" in (ROOT / "docs" / "claude-auditor-task.md").read_text(encoding="utf-8")
     assert f"앞 {QUEUE_LEAD_PREVIEW_CHARS}자" in AUDITOR
     assert "직전 발행 브리핑 이슈" in AUDITOR
-    routine = _doc("daily-routine.md")
-    assert '"읽기 범위"' in routine
+    assert '"읽기 범위"' in _doc("subagent-rules.md")
 
 
 def test_instructions_state_that_non_text_elements_need_text_evidence() -> None:
@@ -118,3 +117,26 @@ def test_instructions_state_that_non_text_elements_need_text_evidence() -> None:
     )
     assert "비텍스트 요소 점검(`warning`)" in AUDITOR
     assert "fatal`이 아니다" in AUDITOR
+
+
+def test_subagents_read_the_small_rules_document_not_the_whole_routine() -> None:
+    routine = _doc("daily-routine.md")
+    rules = _doc("subagent-rules.md")
+
+    # 에이전트 프롬프트 템플릿은 daily-routine.md 전체가 아니라 subagent-rules.md를 읽게 한다.
+    for template in routine.split("```")[1::2]:
+        if "report_date={report_date}" in template:
+            assert "docs/subagent-rules.md" in template
+            assert "docs/daily-routine.md" not in template
+    # 에이전트에게 필요 없는 절차(재시도·발행·보고)는 에이전트용 문서에 들어가지 않는다.
+    for heading in ("### 5단계", "## 보고 원칙", "### 4단계"):
+        assert heading not in rules
+    assert len(rules) < len(routine)
+
+
+def test_submission_checks_use_rows_query_and_the_preflight_script() -> None:
+    rules = _doc("subagent-rules.md")
+    assert 'mode: "rows"' in rules and "전체를 다시 가져오지 않고" in rules
+    assert "scripts/draft_grounding_check.py" in EDITORIAL and "--preflight" in EDITORIAL
+    assert "scripts/draft_grounding_check.py" in AUDITOR and "기계 점검 먼저" in AUDITOR
+    assert "figure" in EDITORIAL and "의미·귀속·논조" in AUDITOR

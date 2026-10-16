@@ -354,6 +354,17 @@ python3 scripts/subagent_token_report.py --since {UTC ISO-8601}
   차이가 작아 비용은 후보 수보다 묶음 전체 읽기와 선정 이슈 본문 대조가 좌우한다. 10-13 재감사는 승인 대기
   580초 동안 캐시가 만료되어 `billed`가 약 56만으로 `peak`의 두 배였다.
 
+### 토큰 절감 장치 (2026-10-16)
+
+모두 정밀성 규칙은 그대로 두고 읽는 분량·중복을 줄이는 장치다. 효과는 위 측정으로 확인한다.
+
+- 서브에이전트는 `daily-routine.md` 전체 대신 [`subagent-rules.md`](subagent-rules.md)와 각자의 지침만 읽는다.
+  기록으로 보면 문서 읽기는 컨텍스트의 작은 부분이라(감사 지침·루틴 문서 합계 약 2만 자) 절감 폭은 작다.
+- 제출 후 확인은 페이지 전체 재열람 대신 `mode: "rows"`로 제목 중복·`날짜` 속성만 본다.
+- `scripts/draft_grounding_check.py`는 초안의 수치·직함·기관명·인용을 근거 후보와 기계적으로 대조하고
+  `--preflight`로 finalize와 같은 스키마·계획·문형 검증을 제출 전에 돌린다. 감사는 이 결과를 먼저 보고
+  의심 항목부터 근거로 확인한다. 이 검사는 힌트일 뿐 발행 판정이나 감사를 대체하지 않는다.
+
 ## Notion 쿼리 도구 한도 초과
 
 증상: 연결된 Notion 도구 `notion-query-data-sources`가 `usage_limit_reached`(Query Data Source usage
@@ -362,6 +373,6 @@ Notion AI에서는 무제한). 정확한 한도와 초기화 주기는 공개되
 세션과 연결이 몫을 함께 쓴다. `rows` 모드, `notion-search`, `notion-fetch`와 쓰기 도구는 이 한도에
 걸리지 않았다(2026-10-08 확인). 최종 발행은 GitHub Actions의 Notion API라 영향이 없다.
 
-대응: SQL 모드를 쓰지 않는다(모드를 생략하면 SQL이다). `docs/daily-routine.md` "Notion 조회 방법"의
+대응: SQL 모드를 쓰지 않는다(모드를 생략하면 SQL이다). `docs/subagent-rules.md` "Notion 조회 방법"의
 순서(`rows` → 검색 → `fetch`)를 따른다. 한도를 완전히 없애려면 Notion Business 요금제가 필요하며 이는
 유료 서비스 도입이라 사용자 승인이 먼저다.

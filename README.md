@@ -231,7 +231,7 @@ DEGRADED, 핵심기사 본문 확인, final-state COMPLETE, 독립 감사 fatal 
 census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간주하지 않고 gate를 차단한다.
 
 일간 예약 루틴의 전체 절차(대기열 확보 → 편집 → 감사 → fatal 처리 → 발행, 서브에이전트 호출
-규칙, 보고 원칙, 문서·프롬프트 우선순위)는 [`docs/daily-routine.md`](docs/daily-routine.md)가
+규칙, 보고 원칙, 문서·프롬프트 우선순위)는 [`docs/daily-routine.md`](docs/daily-routine.md)(서브에이전트 공통 규칙은 [`docs/subagent-rules.md`](docs/subagent-rules.md))가
 정본이며 예약 프롬프트는 날짜·ID 같은 매개변수만 넘긴다.
 
 연결형 Claude 편집 작업은

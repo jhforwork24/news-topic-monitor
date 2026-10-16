@@ -165,10 +165,14 @@ def test_routine_avoids_notion_sql_mode_and_documents_the_preflight_exception() 
     routine = (root / "docs" / "daily-routine.md").read_text(encoding="utf-8")
     operations = (root / "docs" / "operations.md").read_text(encoding="utf-8")
 
+    rules = (root / "docs" / "subagent-rules.md").read_text(encoding="utf-8")
+
     # SQL 모드는 요금제 공유 한도에 걸렸다. 기본값이 SQL이라 문서가 명시하지 않으면 다시 쓰게 된다.
-    assert "## Notion 조회 방법" in routine
-    assert '`mode: "rows"`' in routine
-    assert "SQL 모드를 쓰지 않는다" in routine
+    # 정본은 서브에이전트가 읽는 subagent-rules.md이고, 루틴 문서는 그곳을 가리킨다.
+    assert "## Notion 조회 방법" in rules
+    assert '`mode: "rows"`' in rules
+    assert "SQL 모드를 쓰지 않는다" in rules
+    assert "subagent-rules.md" in routine
     assert "## Notion 쿼리 도구 한도 초과" in operations
     assert "usage_limit_reached" in operations
 
