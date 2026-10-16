@@ -38,6 +38,58 @@ class BriefingValidationError(ValueError):
     pass
 
 
+def issue_text_errors(
+    *,
+    label: str,
+    title: str,
+    summary: str,
+    tone_analysis: str,
+    keyword: str,
+    article_count: int,
+    opinion_section: bool,
+    check_keyword: bool = True,
+) -> list[str]:
+    """Mechanical text rules for one issue, shared by publish validation and the draft preflight."""
+
+    errors: list[str] = []
+    if any(marker in summary for marker in FORBIDDEN_SUMMARY_MARKERS):
+        errors.append(f"{label}: 요약에 인용·말줄임 표지가 있음")
+    if not summary.endswith("."):
+        errors.append(f"{label}: 요약이 완성형 문장이 아님")
+    if _NON_NEUTRAL_ENDING.search(summary):
+        errors.append(f"{label}: 요약이 중립적 서술체가 아님")
+
+    tone_sentences = _sentence_count(tone_analysis)
+    if article_count == 1 and tone_analysis.strip() and tone_sentences != TONE_SINGLE_MAX_SENTENCES:
+        errors.append(f"{label}: 단일 보도 논조가 한 문장이 아님")
+    if article_count > 1 and not (
+        TONE_MULTI_MIN_SENTENCES <= tone_sentences <= TONE_MULTI_MAX_SENTENCES
+    ):
+        errors.append(
+            f"{label}: 복수 보도 논조가 "
+            f"{TONE_MULTI_MIN_SENTENCES}~{TONE_MULTI_MAX_SENTENCES}문장이 아님"
+        )
+    if any(item in tone_analysis for item in FORBIDDEN_TONE_LABELS):
+        errors.append(f"{label}: 논조 비교에 매체 진영 라벨이 노출됨")
+    if not opinion_section:
+        named = [name for name in OUTLET_NAMES if name in summary]
+        if named:
+            outlets = ", ".join(named)
+            errors.append(
+                f"{label}: 이슈 요약에 언론사({outlets})를 "
+                "언급함 — 매체별 보도 방식은 보도 논조에 쓴다"
+            )
+        if FORBIDDEN_AUTHOR_TERM in (summary + tone_analysis):
+            errors.append(f"{label}: 칼럼이 아닌데 '필자'로 지칭함")
+    if check_keyword:
+        stripped = keyword.strip()
+        if not stripped:
+            errors.append(f"{label}: 키워드 요약이 비어 있음")
+        elif stripped == title.strip():
+            errors.append(f"{label}: 키워드 요약이 제목을 그대로 인용함")
+    return errors
+
+
 def validate_briefing(document: BriefingDocument) -> None:
     errors: list[str] = []
     editorial_ids = set(document.editorially_selected_ids)
@@ -47,52 +99,18 @@ def validate_briefing(document: BriefingDocument) -> None:
             rendered_article_ids.update(_article_id(article) for article in issue.articles)
             if len(issue.previous_coverage) > 3:
                 errors.append(f"{section.title} / {issue.title}: 이전 보도가 3개를 초과함")
-            if any(marker in issue.summary for marker in FORBIDDEN_SUMMARY_MARKERS):
-                errors.append(f"{section.title} / {issue.title}: 요약에 인용·말줄임 표지가 있음")
-            if not issue.summary.endswith("."):
-                errors.append(f"{section.title} / {issue.title}: 요약이 완성형 문장이 아님")
-            if _NON_NEUTRAL_ENDING.search(issue.summary):
-                errors.append(f"{section.title} / {issue.title}: 요약이 중립적 서술체가 아님")
-
-            tone_sentences = _sentence_count(issue.tone_analysis)
-            if (
-                len(issue.articles) == 1
-                and issue.tone_analysis.strip()
-                and tone_sentences != TONE_SINGLE_MAX_SENTENCES
-            ):
-                errors.append(f"{section.title} / {issue.title}: 단일 보도 논조가 한 문장이 아님")
-            if len(issue.articles) > 1 and not (
-                TONE_MULTI_MIN_SENTENCES <= tone_sentences <= TONE_MULTI_MAX_SENTENCES
-            ):
-                errors.append(
-                    f"{section.title} / {issue.title}: 복수 보도 논조가 "
-                    f"{TONE_MULTI_MIN_SENTENCES}~{TONE_MULTI_MAX_SENTENCES}문장이 아님"
+            errors.extend(
+                issue_text_errors(
+                    label=f"{section.title} / {issue.title}",
+                    title=issue.title,
+                    summary=issue.summary,
+                    tone_analysis=issue.tone_analysis,
+                    keyword=issue.keyword,
+                    article_count=len(issue.articles),
+                    opinion_section=section.title.startswith("III."),
+                    check_keyword=bool(document.editorially_selected_ids),
                 )
-            if any(label in issue.tone_analysis for label in FORBIDDEN_TONE_LABELS):
-                errors.append(
-                    f"{section.title} / {issue.title}: 논조 비교에 매체 진영 라벨이 노출됨"
-                )
-            if not section.title.startswith("III."):
-                named = [name for name in OUTLET_NAMES if name in issue.summary]
-                if named:
-                    outlets = ", ".join(named)
-                    errors.append(
-                        f"{section.title} / {issue.title}: 이슈 요약에 언론사({outlets})를 "
-                        "언급함 — 매체별 보도 방식은 보도 논조에 쓴다"
-                    )
-            if not section.title.startswith("III.") and FORBIDDEN_AUTHOR_TERM in (
-                issue.summary + issue.tone_analysis
-            ):
-                errors.append(f"{section.title} / {issue.title}: 칼럼이 아닌데 '필자'로 지칭함")
-
-            if document.editorially_selected_ids:
-                keyword = issue.keyword.strip()
-                if not keyword:
-                    errors.append(f"{section.title} / {issue.title}: 키워드 요약이 비어 있음")
-                elif keyword == issue.title.strip():
-                    errors.append(
-                        f"{section.title} / {issue.title}: 키워드 요약이 제목을 그대로 인용함"
-                    )
+            )
 
             if section.title.startswith("I."):
                 invalid = [
