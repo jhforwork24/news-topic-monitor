@@ -142,6 +142,39 @@ def test_notion_write_latency_flags_waits_and_unanswered_calls(tmp_path, capsys)
     assert "UNANSWERED" in out
     assert "notion-fetch" not in out  # reads are never reported
     assert "WAITS_DETECTED count=2" in out
+    assert "NO_STALLS" in out
+
+
+def test_notion_write_latency_flags_stalled_non_write_subagent_calls(tmp_path, capsys) -> None:
+    sub = tmp_path / "proj" / "sess" / "subagents"
+    sub.mkdir(parents=True)
+    lines = [
+        _log_line("tool_use", "2026-10-17T00:00:00Z", id="a", name="Bash"),
+        _log_line("tool_result", "2026-10-17T01:00:19Z", tool_use_id="a"),
+        _log_line("tool_use", "2026-10-17T01:01:00Z", id="b", name="Bash"),
+        _log_line("tool_result", "2026-10-17T01:01:03Z", tool_use_id="b"),
+    ]
+    (sub / "agent-abcdef123456.jsonl").write_text("\n".join(lines), encoding="utf-8")
+    # The main session waits on purpose (background polling, subagent runs): never a stall.
+    main_log = tmp_path / "proj" / "sess.jsonl"
+    main_log.write_text(
+        "\n".join(
+            [
+                _log_line("tool_use", "2026-10-17T00:00:00Z", id="m", name="Bash"),
+                _log_line("tool_result", "2026-10-17T02:00:00Z", tool_use_id="m"),
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    _load_latency_script().main(["--root", str(tmp_path), "--since", "2026-10-16T23:00:00Z"])
+
+    out = capsys.readouterr().out
+    assert "Bash agent=abcdef12 3619s STALL" in out
+    assert "agent=main" not in out
+    assert "3s" not in out  # ordinary quick calls are never listed
+    assert "NO_WAITS" in out
+    assert "STALLS_DETECTED count=1 longest=3619s" in out
 
 
 def test_notion_write_latency_reports_no_waits(tmp_path, capsys) -> None:
