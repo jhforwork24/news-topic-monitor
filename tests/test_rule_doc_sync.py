@@ -140,3 +140,11 @@ def test_submission_checks_use_rows_query_and_the_preflight_script() -> None:
     assert "scripts/draft_grounding_check.py" in EDITORIAL and "--preflight" in EDITORIAL
     assert "scripts/draft_grounding_check.py" in AUDITOR and "기계 점검 먼저" in AUDITOR
     assert "figure" in EDITORIAL and "의미·귀속·논조" in AUDITOR
+
+
+def test_subagent_rules_ban_delete_commands_and_routine_reports_stalls() -> None:
+    rules = _doc("subagent-rules.md")
+    assert "삭제 명령(`rm`" in rules and "덮어" in rules
+    routine = _doc("daily-routine.md")
+    assert "STALLS_DETECTED" in routine and "STALL" in routine
+    assert "STALL" in _doc("operations.md")
