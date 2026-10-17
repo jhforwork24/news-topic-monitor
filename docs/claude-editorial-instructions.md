@@ -276,7 +276,10 @@ python3 scripts/draft_grounding_check.py --draft draft.json --candidates part*.j
 ```
 
 - `PREFLIGHT` 줄은 finalize가 그대로 거부할 오류다 — 스키마, 섹션·하위 주제 상한, 제외 기록, 지정 매체
-  자격, `queue_id`, 요약 문형, 논조 문장 수, 언론사 이름, 키워드. 모두 고친 뒤 제출한다.
+  자격, 요약 문형, 논조 문장 수, 언론사 이름, 키워드. 모두 고친 뒤 제출한다. `queue_id` digest 대조는
+  `--check-queue-id`를 줄 때만 하며, 모든 묶음을 한 글자도 바꾸지 않고 파일로 저장한 경우에만 쓴다(작은
+  묶음은 fetch 결과가 파일이 아니라 화면에 바로 오는 일이 있어 복원본으로는 digest가 어긋난다. finalize가
+  같은 대조를 하므로 생략해도 된다).
 - 그 밖의 줄(`figure`·`unit`·`title`·`entity`·`quote`·`id`)은 초안의 수치·직함·기관명·인용이 이슈에 묶은
   기사 `evidence_text`에 없다는 **힌트**다. 파생 수치("10만 → 12만"을 "2만 명 늘"로 쓴 경우)나 바꿔 쓴
   이름도 걸리므로 근거 문장으로 하나씩 확인해 틀린 것은 고치고, 맞는 파생 서술은 그대로 둔다. 깨끗하게

@@ -314,12 +314,14 @@ def check_draft(draft: dict[str, Any], candidates: dict[str, str]) -> list[Findi
     return findings
 
 
-def preflight(draft: dict[str, Any], rows: list[dict[str, Any]]) -> list[str]:
+def preflight(
+    draft: dict[str, Any], rows: list[dict[str, Any]], *, check_queue_id: bool = False
+) -> list[str]:
     """The checks finalize applies to a draft, run locally before it is submitted.
 
     Covers the draft schema, the plan rules (candidate ids, section and subsection limits,
-    exclusions, section-eligible outlets), the queue_id digest and the mechanical text rules
-    (summary form, tone sentence counts, outlet names, keyword). Nothing here reads meaning.
+    exclusions, section-eligible outlets), optionally the queue_id digest and the mechanical text
+    rules (summary form, tone sentence counts, outlet names, keyword). Nothing here reads meaning.
     """
 
     root = Path(__file__).resolve().parents[1] / "src"
@@ -341,7 +343,7 @@ def preflight(draft: dict[str, Any], rows: list[dict[str, Any]]) -> list[str]:
         candidates = [EditorialCandidate.model_validate(row) for row in rows]
     except ValidationError as exc:
         return [f"candidates: {exc.errors()[0]['loc']} {exc.errors()[0]['msg']}"]
-    if editorial_queue_id(candidates) != parsed.queue_id:
+    if check_queue_id and editorial_queue_id(candidates) != parsed.queue_id:
         errors.append(
             f"queue_id: 입력 후보 {len(candidates)}개의 digest가 초안 queue_id와 다름 "
             "(후보 묶음이 모두 입력되지 않았거나 queue_id가 틀림)"
@@ -384,6 +386,12 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="also run the finalize-side schema, plan and text-form checks (needs all parts)",
     )
+    parser.add_argument(
+        "--check-queue-id",
+        action="store_true",
+        help="with --preflight, also compare the digest of the given candidates with queue_id; "
+        "only meaningful when every part was saved byte for byte (finalize checks it anyway)",
+    )
     args = parser.parse_args(argv)
     draft = load_draft(args.draft)
     rows = load_candidate_rows(args.candidates)
@@ -392,7 +400,7 @@ def main(argv: list[str] | None = None) -> int:
         print("no candidates found in the given files", file=sys.stderr)
         return 2
     findings = check_draft(draft, candidates)
-    problems = preflight(draft, rows) if args.preflight else []
+    problems = preflight(draft, rows, check_queue_id=args.check_queue_id) if args.preflight else []
     issues = (draft.get("plan") or {}).get("issues") or []
     print(
         f"candidates={len(candidates)} issues={len(issues)} findings={len(findings)} "

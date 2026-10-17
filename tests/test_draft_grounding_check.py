@@ -174,4 +174,8 @@ def test_preflight_passes_a_valid_draft_and_reports_finalize_side_errors(tmp_pat
 
     wrong_queue = _preflight_draft(tmp_path, "0" * 64)
     module.main(["--draft", str(wrong_queue), "--candidates", str(part), "--preflight"])
+    assert "queue_id:" not in capsys.readouterr().out  # digest check is opt-in
+    module.main(
+        ["--draft", str(wrong_queue), "--candidates", str(part), "--preflight", "--check-queue-id"]
+    )
     assert "queue_id: 입력 후보 1개의 digest" in capsys.readouterr().out
