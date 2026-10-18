@@ -89,7 +89,7 @@ sources:
     label: 프레시안
     tier: designated_reverse_search
     domains: [www.pressian.com, pressian.com]
-    discovery_routes: [official_rss_api]
+    discovery_routes: [official_rss_api, official_news_sitemap]
     fallbacks: [naver_gap_detection]
   sisain:
     label: 시사인

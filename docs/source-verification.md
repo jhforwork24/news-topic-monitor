@@ -17,7 +17,7 @@
 | 한겨레 | `/arti?page=N`, 보조 RSS | 허용·URL 발견 | `article#renewal2023` |
 | 경향신문 | `/sitemap/latest-articles.xml` | 허용·URL 발견 | `#articleBody` |
 | 오마이뉴스 | `/NWS_Web/View/latestnews.aspx` news sitemap | 허용·URL 발견 | `[itemprop='articleBody']` |
-| 프레시안 | `/api/v3/site/rss/news` | 허용·URL 발견 | `.article_body` |
+| 프레시안 | `/api/v3/site/rss/news`(최근 25건), `/sitemap/news.xml`(약 2.5일, 제목·시각 포함) | 허용·URL 발견 | `.article_body` |
 | 참세상 | 공식 origin | robots.txt HTTP 404, 전체 요청 안전 중단 | 요청하지 않음 |
 | 매일노동뉴스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
 | 미디어스 | `/sitemap.xml` | 허용·URL 발견 | `#article-view-content-div` |
@@ -116,3 +116,18 @@ pytest -m smoke -vv
 선택자를 바꾸기 전에는 실제 허용 기사에서 존재·비어 있지 않음을 다시 확인한다. 금지 또는
 robots 확인 실패이면 기사 URL을 요청하지 않았음을 명시한다. 응답 HTML이나 기사 본문은
 문서·fixture·로그에 복제하지 않는다.
+
+## 프레시안 뉴스 사이트맵 추가 (2026-10-19)
+
+- 배경: 프레시안 RSS는 최근 25건만 제공한다. 2026-10-14·10-18에 `robots.txt` 확인 실패로 수집이
+  중단된 뒤 복구된 시점의 RSS는 8~9시간 전 기사까지 닿지 않아 그 시간대 기사를 놓쳤다
+  (health 기록의 직전 정상 수집 최신 기사와 복구 시점 목록 최고(最古) 기사 사이 공백).
+- 확인(live, 같은 날): `robots.txt`의 `User-agent: *`는 `/admin/`·댓글·검색(`/pages/search`)만 금지하고
+  `/sitemap/news.xml`은 막지 않는다. `Sitemap: https://www.pressian.com/sitemap.xml`이 선언돼 있고
+  색인 아래 `/sitemap/news.xml`은 Google News 형식(`news:publication_date`, `news:title`)으로 117건,
+  약 2.5일분이다. 기존 sitemap 파서(`parse_xml_feed`)가 그대로 처리한다. 월별
+  `/sitemap/articles/YYYY-MM.xml`은 제목이 없어 쓰지 않는다. 본문·HTML은 저장하지 않았다.
+- 한계: 이 경로도 같은 origin이므로 `robots.txt`를 확인하지 못한 회차에는 함께 중단된다. 줄이는 것은
+  복구 뒤 RSS 25건 제한으로 놓치던 기사다. 네이버·다음 뉴스는 `robots.txt`가 전체 금지(네이버는 AI
+  학습·검색증강 사용도 금지)이거나(`search.daum.net`) `robots.txt`가 없어(`news.daum.net`,
+  `v.daum.net`) 사용하지 않는다. Naver API Hub는 계속 누락 탐지에만 쓴다.
