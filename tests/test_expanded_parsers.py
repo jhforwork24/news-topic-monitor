@@ -98,6 +98,29 @@ def test_pressian_double_escaped_tracking_parameter_is_removed(fixture_dir) -> N
     assert article.canonical_url == "https://www.pressian.com/pages/articles/2026081512340000001"
 
 
+def test_pressian_news_sitemap_is_a_second_discovery_path(fixture_dir) -> None:
+    adapter = PressianAdapter()
+    urls = adapter.initial_discovery_urls(
+        datetime(2026, 10, 18, tzinfo=UTC), datetime(2026, 10, 19, tzinfo=UTC)
+    )
+    # RSS keeps only the latest 25 items; the news sitemap covers the hours a failed run missed.
+    assert urls == [
+        "https://www.pressian.com/api/v3/site/rss/news",
+        "https://www.pressian.com/sitemap/news.xml",
+    ]
+    page = adapter.parse_discovery(
+        (fixture_dir / "pressian_news_sitemap.xml").read_bytes(), urls[1]
+    )
+    assert [article.title for article in page.articles] == [
+        "장애인 이동권 보도 제목",
+        "노동 보도 제목",
+    ]
+    first = page.articles[0]
+    assert first.source == "pressian"
+    assert first.canonical_url == "https://www.pressian.com/pages/articles/2026101901184513894"
+    assert first.published_at == datetime(2026, 10, 18, 16, 52, 45, tzinfo=UTC)
+
+
 def test_theindigo_wordpress_metadata_parser_and_window(fixture_dir) -> None:
     adapter = TheindigoAdapter()
     urls = adapter.initial_discovery_urls(
