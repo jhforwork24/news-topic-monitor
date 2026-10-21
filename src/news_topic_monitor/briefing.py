@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import re
+from collections import Counter
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -23,6 +25,7 @@ from .models import (
     VerificationStatus,
 )
 from .sources import (
+    LABOR_SECTION_ALLOWED_SOURCES,
     PRIMARY_COMPARISON_SOURCES,
     SOURCE_LABELS,
     is_mandatory_opinion_column,
@@ -219,6 +222,184 @@ GENERIC_OVERLAP_MIN = 4
 # 어휘만 닮은 다른 사건일 가능성이 높다.
 PREVIOUS_COVERAGE_MAX_AGE_DAYS = 180
 
+# 토글에 붙이는 이전 보도 상한. 근거가 약하면 0건이 정상 결과다.
+PREVIOUS_COVERAGE_MAX_ITEMS = 5
+
+# 공유 토큰이 이력 풀에서 이 비율(최소 PREVIOUS_ANCHOR_MIN_DF건) 이하로만 나오면 사안을
+# 특정하는 말(앵커)로 본다. 2026-10 장애 이력 1,964건 실측에서 '반구대병원' 10건·'추미애'
+# 6건은 1% 미만이었고, 무관한 사안을 '피터팬 아빠' 기사로 묶은 '발달장애' 304건·
+# '발달장애인' 128건·'최중증' 33건은 그보다 흔했다. 빈도는 풀마다 다시 센다.
+PREVIOUS_ANCHOR_MAX_DF_RATIO = 0.01
+PREVIOUS_ANCHOR_MIN_DF = 5
+
+# 앵커가 없으면 앵커 기준의 이 배수 이하로 나오는 비일반 토큰이 이만큼 겹쳐야 한다
+# (예: '65세'·'중증장애인'·'통합돌봄'을 함께 공유하는 통합돌봄 신청 저조 연속 보도).
+PREVIOUS_SUPPORTING_DF_MULTIPLIER = 3
+PREVIOUS_SUPPORTING_MIN_SHARED = 3
+
+# 이력 풀이 작아 빈도만으로는 걸러지지 않지만 어느 사안에나 붙는 말이다.
+GENERIC_PREVIOUS_TOKENS = frozenset(
+    {
+        "사망",
+        "요구",
+        "시설",
+        "학대",
+        "신청",
+        "환자",
+        "병원",
+        "폭행",
+        "의원",
+        "가족",
+        "연장",
+        "미만",
+        "장애인들",
+        "대책",
+        "문제",
+        "확대",
+        "강화",
+        "개선",
+        "마련",
+        "발표",
+        "결과",
+        "국회",
+        "기자회견",
+        "규탄",
+        "성명",
+        "장애계",
+        "노동계",
+        "복지부",
+        "보건복지부",
+        "노동부",
+        "고용노동부",
+        "교육부",
+        # 노사 교섭 절차어: 서로 다른 사업장의 교섭을 하나로 묶었다.
+        "노사",
+        "협상",
+        "결렬",
+        "타결",
+        "합의",
+        "임금",
+        "파업",
+        "예고",
+        "돌입",
+        "전면",
+        # 통계·시기 어휘: 서로 다른 통계 발표를 하나로 묶었다.
+        "역대",
+        "최대",
+        "최저",
+        "지난해",
+        "올해",
+        "내년",
+        "시행",
+        "본격화",
+        "ai",
+        "청년",
+        # 사고 유형어: 서로 다른 현장의 사고를 하나로 묶었다.
+        "공사장",
+        "붕괴",
+        "추락",
+        "화재",
+        "사고",
+    }
+)
+
+# 앵커가 있으면 흔하지 않은 공유어(앵커 기준의 PREVIOUS_SUPPORTING_DF_MULTIPLIER배 이하
+# 빈도) 3개로도 같은 사안으로 본다(예: 'HL만도'·'유족'·'평택'). 앵커 없이 쓰는 기존
+# 기준은 공유어 4개(GENERIC_OVERLAP_MIN)다.
+ANCHORED_OVERLAP_MIN = 3
+
+# 사건 흐름이 바뀐 지점을 알리는 제목 어휘와 사안 전반을 정리한 보도의 표지다. 같은
+# 사안의 후보 가운데 전환점·종합 보도를 앞세우는 데만 쓰고, 연관성 판정에는 쓰지 않는다.
+TURNING_POINT_TERMS = (
+    "폐원",
+    "폐쇄",
+    "폐업",
+    "기소",
+    "고발",
+    "직권조사",
+    "판결",
+    "선고",
+    "합의",
+    "타결",
+    "결렬",
+    "통과",
+    "의결",
+    "가결",
+    "부결",
+    "철회",
+    "권고",
+    "시행",
+    "개정",
+    "제정",
+    "사망",
+    "숨져",
+    "숨진",
+    "파업",
+    "농성",
+    "점거",
+    "해고",
+    "승소",
+    "패소",
+    "확정",
+    "출범",
+)
+# 앵커·공유어 개수에서 빼는 말: 불용어, 위 일반어, 범주어.
+PREVIOUS_GENERIC_TOKENS = frozenset(
+    STOPWORDS | GENERIC_PREVIOUS_TOKENS | {term.lower() for term in CATEGORY_PREVIOUS_CONCEPTS}
+)
+
+# '4명'·'30건'처럼 수를 세는 말은 서로 다른 사건에도 두루 나와 앵커로 쓰지 않는다.
+# '65세'·'325일'처럼 사안을 가리키는 수치 표현은 앵커가 될 수 있다.
+COUNT_TOKEN_PATTERN = re.compile(r"^\d+(?:명|건|개|곳|차례|차|번|회)$")
+
+# 제목 토큰 끝에 붙은 조사. 길이가 긴 것부터 떼고, 어간이 3자 미만이면 떼지 않는다
+# ('어린이'→'어린' 같은 오분리를 막기 위함).
+TRAILING_PARTICLES = (
+    "에서는",
+    "으로는",
+    "에서",
+    "에게",
+    "으로",
+    "까지",
+    "부터",
+    "에는",
+    "서",
+    "은",
+    "는",
+    "이",
+    "가",
+    "을",
+    "를",
+    "의",
+    "에",
+    "로",
+    "와",
+    "과",
+    "만",
+    "들",
+)
+PARTICLE_STEM_MIN_CHARS = 3
+
+# 제목 단어가 이 비율 이상 겹치면 같은 보도의 재게재로 보고 하나만 남긴다.
+NEAR_DUPLICATE_TITLE_RATIO = 0.8
+
+COMPREHENSIVE_REPORT_MARKERS = (
+    "단독",
+    "기획",
+    "르포",
+    "심층",
+    "탐사",
+    "종합",
+    "쟁점",
+    "짚어보니",
+    "분석",
+    "진단",
+    "총정리",
+    "전말",
+    "결산",
+    "팩트체크",
+)
+
 # 이전 보도 요약으로 인정할 최소 길이. 이보다 짧으면 앞 문장의 꼬리 조각이다.
 MINIMUM_PREVIOUS_SUMMARY_CHARS = 8
 
@@ -249,6 +430,7 @@ PREVIOUS_MATCH_FIXED_LIST = "고정목록"
 PREVIOUS_MATCH_PROPER_NOUN = "고유명"
 PREVIOUS_MATCH_CATEGORY_CONCEPT = "범주어+토큰"
 PREVIOUS_MATCH_TOKEN_OVERLAP = "토큰4개이상"
+PREVIOUS_MATCH_ANCHORED = "앵커+공유어3개"
 
 # `record_report`가 children을 한 번에 POST하므로 Notion의 블록 상한을 넘기지
 # 않도록 이전 보도 기록을 제한한다.
@@ -264,6 +446,50 @@ class PreviousCoverage:
     comparison: str
     match_rule: str = ""
     matched_tokens: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class PreviousCoveragePool:
+    """History articles with their tokens and per-pool document frequency, built once."""
+
+    entries: tuple[tuple[ArticleRecord, frozenset[str]], ...]
+    document_frequency: dict[str, int]
+
+    @property
+    def anchor_max_df(self) -> int:
+        return max(PREVIOUS_ANCHOR_MIN_DF, round(len(self.entries) * PREVIOUS_ANCHOR_MAX_DF_RATIO))
+
+
+def previous_coverage_pool(history: Iterable[ArticleRecord]) -> PreviousCoveragePool:
+    entries = tuple((article, previous_coverage_tokens(article)) for article in history)
+    frequency: Counter[str] = Counter()
+    for _article, tokens in entries:
+        frequency.update(tokens)
+    return PreviousCoveragePool(entries, dict(frequency))
+
+
+def labor_previous_history(
+    all_articles: Iterable[ArticleRecord], *, start: datetime, topics_path: Path
+) -> list[ArticleRecord]:
+    """Earlier reports the labor classifier accepts, as the II절 이전 보도 pool.
+
+    The stored ``classification`` is the disability topic, so labor reports are almost
+    all ``irrelevant`` there and never reached the history pool before.
+    """
+
+    classifier = RuleClassifier(topics_path, topic="labor_care_poverty")
+    oldest = start - timedelta(days=PREVIOUS_COVERAGE_MAX_AGE_DAYS)
+    history: list[ArticleRecord] = []
+    for article in all_articles:
+        published = article.published_at or article.first_seen_at
+        if not oldest <= published < start or article.source not in LABOR_SECTION_ALLOWED_SOURCES:
+            continue
+        result = classifier.classify(
+            title=article.title, summary=article.summary, section=article.section
+        )
+        if result.classification == Classification.RELEVANT:
+            history.append(article)
+    return history
 
 
 @dataclass
@@ -341,12 +567,15 @@ def build_briefing(
         item for item in all_articles if start <= (item.published_at or item.first_seen_at) < end
     ]
     articles.sort(key=lambda item: item.published_at or item.first_seen_at, reverse=True)
-    history = [
+    history = previous_coverage_pool(
         item
         for item in all_articles
         if (item.published_at or item.first_seen_at) < start
         and item.classification == Classification.RELEVANT
-    ]
+    )
+    labor_history = previous_coverage_pool(
+        labor_previous_history(all_articles, start=start, topics_path=topics_path)
+    )
     editorial_notes: list[str] = []
 
     disability_candidates: list[ArticleRecord] = []
@@ -422,7 +651,7 @@ def build_briefing(
             select_labor_issues(
                 cluster_issues(
                     [item for item, _score in labor],
-                    history=history,
+                    history=labor_history,
                     max_issues=LABOR_SECTION_MAX_ISSUES * 2,
                 )
             ),
@@ -462,6 +691,7 @@ def build_editorial_briefing(
     start: datetime,
     end: datetime,
     report_date: str,
+    topics_path: Path | None = None,
 ) -> BriefingDocument:
     all_articles = list(storage.iter_articles())
     current = [
@@ -469,12 +699,20 @@ def build_editorial_briefing(
         for article in all_articles
         if start <= (article.published_at or article.first_seen_at) < end
     ]
-    history = [
+    history = previous_coverage_pool(
         article
         for article in all_articles
         if (article.published_at or article.first_seen_at) < start
         and article.classification == Classification.RELEVANT
-    ]
+    )
+    labor_history = (
+        previous_coverage_pool(
+            labor_previous_history(all_articles, start=start, topics_path=topics_path)
+        )
+        if topics_path is not None
+        and any(decision.section == EditorialSection.LABOR for decision in plan.issues)
+        else history
+    )
     by_id = {_editorial_candidate_id(article): article for article in current}
     issues_by_section: dict[EditorialSection, list[BriefingIssue]] = {
         section: [] for section in EditorialSection
@@ -497,7 +735,10 @@ def build_editorial_briefing(
                 articles=articles,
                 summary=decision.summary,
                 tone_analysis=decision.tone_analysis,
-                previous_coverage=previous_coverage_for(articles, history),
+                previous_coverage=previous_coverage_for(
+                    articles,
+                    labor_history if decision.section == EditorialSection.LABOR else history,
+                ),
                 keyword=decision.keyword,
                 subsection=decision.subsection,
             )
@@ -590,7 +831,7 @@ def labor_editorial_exclusion(article: ArticleRecord) -> str | None:
 def cluster_issues(
     articles: list[ArticleRecord],
     *,
-    history: list[ArticleRecord] | None = None,
+    history: Sequence[ArticleRecord] | PreviousCoveragePool | None = None,
     max_issues: int = 10,
 ) -> list[BriefingIssue]:
     anniversary_articles = [
@@ -601,7 +842,12 @@ def cluster_issues(
     clusters = _cluster_article_groups(regular_articles, max_issues=max_issues - reserved)
     if anniversary_articles:
         clusters.extend(_cluster_article_groups(anniversary_articles, max_issues=1))
-    return [_briefing_issue(cluster, history or []) for cluster in clusters]
+    pool = (
+        history
+        if isinstance(history, PreviousCoveragePool)
+        else previous_coverage_pool(history or [])
+    )
+    return [_briefing_issue(cluster, pool) for cluster in clusters]
 
 
 def _cluster_article_groups(
@@ -630,7 +876,7 @@ def _cluster_article_groups(
 
 def _briefing_issue(
     cluster: list[ArticleRecord],
-    history: list[ArticleRecord],
+    history: PreviousCoveragePool,
 ) -> BriefingIssue:
     lead = max(cluster, key=lambda item: (_disability_priority(item), item.topic_score))
     articles = _sort_cluster_articles(cluster)
@@ -728,16 +974,20 @@ def analyze_tone(articles: list[ArticleRecord]) -> str:
 
 
 def previous_coverage_for(
-    articles: list[ArticleRecord], history: list[ArticleRecord]
+    articles: list[ArticleRecord],
+    history: Sequence[ArticleRecord] | PreviousCoveragePool,
 ) -> list[PreviousCoverage]:
-    """Pick 1-3 prior articles on the same topic, ranked by relevance then detail.
+    """Pick 0-5 prior reports on the same topic, favouring turning points and overviews.
 
-    Relevance is the shared-token overlap with the current issue. Detail is a proxy
-    for how substantive the earlier article was — body text is never retained past
-    the collection run, so verification status, designated-source membership, and
-    summary length stand in for "was this a thorough report or a short notice".
+    A candidate must pass the shared-concept rule and also share a word that pins the
+    topic down: an anchor that is rare in this history pool, or several moderately rare
+    words. Among qualifying reports, those marking a turning point or summing the topic
+    up rank first, at most one per publication day, shown oldest first. Body text is
+    never retained past the collection run, so verification status, designated-source
+    membership and summary length stand in for how substantive a report was.
     """
 
+    pool = history if isinstance(history, PreviousCoveragePool) else previous_coverage_pool(history)
     text = " ".join(_article_text(article) for article in articles)
     result: list[PreviousCoverage] = []
     for triggers, published, label, url, outlet, comparison in KNOWN_PREVIOUS_COVERAGE:
@@ -754,7 +1004,7 @@ def previous_coverage_for(
                 )
             )
 
-    tokens = set().union(*(issue_tokens(article) for article in articles))
+    tokens = set().union(*(previous_coverage_tokens(article) for article in articles))
     proper_tokens = {term.lower() for term in PROPER_NOUN_PREVIOUS_CONCEPTS} & tokens
     category_tokens = {term.lower() for term in CATEGORY_PREVIOUS_CONCEPTS} & tokens
     strong_tokens = proper_tokens | category_tokens
@@ -763,8 +1013,10 @@ def previous_coverage_for(
         (article.published_at or article.first_seen_at for article in articles),
         default=None,
     )
-    candidates: list[tuple[int, float, datetime, ArticleRecord, frozenset[str]]] = []
-    for article in history:
+    candidates: list[
+        tuple[float, datetime, ArticleRecord, frozenset[str], frozenset[str], bool]
+    ] = []
+    for article, article_tokens in pool.entries:
         if article.canonical_url in current_urls or is_opinion(article):
             continue
         if is_routine_local_training_notice(article):
@@ -774,45 +1026,131 @@ def previous_coverage_for(
             days=PREVIOUS_COVERAGE_MAX_AGE_DAYS
         ):
             continue
-        overlap = tokens & issue_tokens(article)
-        if not _previous_coverage_overlap_qualifies(overlap, proper_tokens, category_tokens):
+        overlap = tokens & article_tokens
+        anchors, supporting = _previous_coverage_specific_tokens(overlap, pool)
+        anchored = bool(anchors) and len(supporting) >= ANCHORED_OVERLAP_MIN
+        concept_rule = _previous_coverage_overlap_qualifies(overlap, proper_tokens, category_tokens)
+        if not (anchored or concept_rule):
             continue
-        candidates.append(
-            (
-                len(overlap),
-                _detail_score(article),
-                article.published_at or article.first_seen_at,
-                article,
-                frozenset(overlap),
-            )
+        if not (
+            overlap & proper_tokens or anchors or len(supporting) >= PREVIOUS_SUPPORTING_MIN_SHARED
+        ):
+            continue
+        score = (
+            3 * len(anchors)
+            + len(supporting)
+            + _turning_point_score(article)
+            + _detail_score(article) / 2
         )
-    candidates.sort(key=lambda item: (item[0], item[1], item[2]), reverse=True)
+        candidates.append((score, published_at, article, frozenset(overlap), anchors, concept_rule))
+    # 같은 사안의 가장 이른 보도는 흐름의 출발점이라 한 단계 앞세운다.
+    first_published = min((item[1] for item in candidates), default=None)
+    candidates.sort(
+        key=lambda item: (item[0] + (1.0 if item[1] == first_published else 0.0), item[1]),
+        reverse=True,
+    )
+
     known_urls = {item.url for item in result}
-    for _relevance, _detail, published, article, overlap in candidates:
-        if article.canonical_url in known_urls:
+    used_dates = {item.published for item in result}
+    for _score, published, article, overlap, anchors, concept_rule in candidates:
+        if len(result) >= PREVIOUS_COVERAGE_MAX_ITEMS:
+            break
+        published_date = published.astimezone(KST).date().isoformat()
+        if article.canonical_url in known_urls or published_date in used_dates:
+            continue
+        if any(_near_duplicate_title(article.title, item.label) for item in result):
             continue
         shared_strong = overlap & strong_tokens
-        if overlap & proper_tokens:
+        if not concept_rule:
+            rule = PREVIOUS_MATCH_ANCHORED
+        elif overlap & proper_tokens:
             rule = PREVIOUS_MATCH_PROPER_NOUN
         elif overlap & category_tokens:
             rule = PREVIOUS_MATCH_CATEGORY_CONCEPT
         else:
             rule = PREVIOUS_MATCH_TOKEN_OVERLAP
+        leading = sorted(shared_strong | anchors)
         result.append(
             PreviousCoverage(
-                published.astimezone(KST).date().isoformat(),
+                published_date,
                 article.title,
                 article.canonical_url,
                 SOURCE_LABELS.get(article.source, article.source),
                 _previous_coverage_summary(article),
                 match_rule=rule,
-                matched_tokens=tuple(sorted(shared_strong) + sorted(overlap - shared_strong)),
+                matched_tokens=tuple(leading + sorted(overlap - set(leading))),
             )
         )
         known_urls.add(article.canonical_url)
-        if len(result) >= 3:
-            break
-    return result[:3]
+        used_dates.add(published_date)
+    return sorted(result, key=lambda item: item.published)
+
+
+def _previous_coverage_specific_tokens(
+    overlap: set[str], pool: PreviousCoveragePool
+) -> tuple[frozenset[str], frozenset[str]]:
+    """Split shared tokens into rare anchors and moderately rare supporting words."""
+
+    # 고정 고유명(예: 권리중심공공일자리)은 그 자체로 후보 자격을 주지만, 여러 지역·국면을
+    # 아우르는 제도명이기도 해서 순위에서는 함께 겹친 다른 특정어(지역·인물·기관)를 본다.
+    excluded = PREVIOUS_GENERIC_TOKENS | {term.lower() for term in PROPER_NOUN_PREVIOUS_CONCEPTS}
+    anchor_limit = pool.anchor_max_df
+    supporting_limit = anchor_limit * PREVIOUS_SUPPORTING_DF_MULTIPLIER
+    anchors: set[str] = set()
+    supporting: set[str] = set()
+    for token in overlap - excluded:
+        frequency = pool.document_frequency.get(token, 0)
+        if frequency <= supporting_limit:
+            supporting.add(token)
+        if frequency <= anchor_limit and not COUNT_TOKEN_PATTERN.match(token):
+            anchors.add(token)
+    return frozenset(anchors), frozenset(supporting)
+
+
+def previous_coverage_tokens(article: ArticleRecord) -> frozenset[str]:
+    """Issue tokens with trailing particles removed, for prior-coverage matching only.
+
+    Titles keep particles attached ("정신병원서"), so the same institution failed to
+    match itself across reports. The stripped form replaces the raw one rather than
+    joining it, so one word is never counted twice toward the overlap thresholds.
+    Clustering keeps using ``issue_tokens`` unchanged.
+    """
+
+    return frozenset(_strip_particle(token) for token in issue_tokens(article))
+
+
+def _strip_particle(token: str) -> str:
+    for particle in TRAILING_PARTICLES:
+        stem = token[: -len(particle)]
+        if token.endswith(particle) and len(stem) >= PARTICLE_STEM_MIN_CHARS:
+            return stem
+    return token
+
+
+def _near_duplicate_title(left: str, right: str) -> bool:
+    """Same report re-run on another day, not the next instalment of a series.
+
+    Instalments share most topic words ("통합돌봄 65세 미만 신청" at 0.04% and later
+    at 1.3%), so the looser ``_similar_text`` would drop exactly the progression the
+    toggle is meant to show.
+    """
+
+    left_tokens = set(re.findall(r"[가-힣A-Za-z0-9]{2,}", left.lower()))
+    right_tokens = set(re.findall(r"[가-힣A-Za-z0-9]{2,}", right.lower()))
+    if not left_tokens or not right_tokens:
+        return left == right
+    shared = len(left_tokens & right_tokens)
+    return shared / min(len(left_tokens), len(right_tokens)) >= NEAR_DUPLICATE_TITLE_RATIO
+
+
+def _turning_point_score(article: ArticleRecord) -> float:
+    title = article.title
+    score = 0.0
+    if any(term in title for term in TURNING_POINT_TERMS):
+        score += 1.5
+    if any(marker in title for marker in COMPREHENSIVE_REPORT_MARKERS):
+        score += 1.5
+    return score
 
 
 def _previous_coverage_overlap_qualifies(
@@ -982,7 +1320,7 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                         "|---|---|---|",
                     ]
                 )
-                for item in issue.previous_coverage[:3]:
+                for item in issue.previous_coverage[:PREVIOUS_COVERAGE_MAX_ITEMS]:
                     label = _markdown_table_text(item.label)
                     material = f"[{label}]({item.url})" if item.url else label
                     meta = _markdown_table_text(f"{item.published} · {item.outlet}")

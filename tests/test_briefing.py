@@ -4,7 +4,9 @@ from datetime import UTC, datetime, timedelta
 
 from news_topic_monitor.briefing import (
     PREVIOUS_COVERAGE_MAX_AGE_DAYS,
+    PREVIOUS_COVERAGE_MAX_ITEMS,
     PREVIOUS_COVERAGE_NOTE_LIMIT,
+    PREVIOUS_MATCH_ANCHORED,
     PREVIOUS_MATCH_PROPER_NOUN,
     BriefingDocument,
     BriefingIssue,
@@ -14,6 +16,7 @@ from news_topic_monitor.briefing import (
     build_briefing,
     is_opinion,
     issue_analysis_text,
+    labor_previous_history,
     previous_coverage_for,
     previous_coverage_notes,
     render_briefing_markdown,
@@ -425,6 +428,154 @@ def test_previous_coverage_excludes_routine_local_center_training_notices() -> N
     assert any(item.url == national_policy.canonical_url for item in previous_with_policy)
 
 
+def _dated(article: ArticleRecord, day: int, hour: int = 1) -> ArticleRecord:
+    article.published_at = datetime(2026, 9, day, hour, tzinfo=UTC)
+    article.first_seen_at = article.published_at
+    article.last_seen_at = article.published_at
+    return article
+
+
+def test_previous_coverage_needs_a_rare_shared_word_when_concepts_are_common() -> None:
+    """Regression: '최중증'+'발달장애' alone tied unrelated issues to '피터팬 아빠' reports.
+
+    In a realistic pool those words appear in many titles, so they no longer pin a
+    topic down. A word rare in the pool (a hospital name) still does.
+    """
+
+    filler = [
+        _article(
+            "ablenews",
+            f"최중증 발달장애인 돌봄 지원 사업 안내 {index}",
+            article_id=f"filler-{index}",
+        )
+        for index in range(30)
+    ]
+    for item in filler:
+        item.summary = "최중증 발달장애인 돌봄 서비스를 안내했다."
+    petition = _article(
+        "ablenews",
+        "주간이용시설 국고보조 전환 국민동의청원",
+        article_id="petition",
+    )
+    petition.summary = "최중증 발달장애인이 다니는 주간이용시설의 국고보조 전환을 요구했다."
+    peter_pan = _article(
+        "joongang",
+        "'피터팬 아빠'가 남긴 숙제, 가족이 감당하던 발달장애인 돌봄 지원 강화",
+        article_id="peter-pan",
+    )
+    peter_pan.summary = "최중증 발달장애인 돌봄에 대한 정부 지원이 강화된다."
+    assert previous_coverage_for([petition], [*filler, peter_pan]) == []
+
+    transfer = _article(
+        "hani",
+        "반구대병원 전원 환자 또 재전원",
+        article_id="transfer",
+    )
+    transfer.summary = "폐업한 정신의료기관 반구대병원에서 옮겨간 환자들이 다시 전원됐다."
+    closure = _article("hani", "반구대병원 폐원 앞두고 환자 전원 계획", article_id="closure")
+    closure.summary = "울산 정신의료기관 반구대병원이 폐원을 앞두고 환자 전원 계획을 냈다."
+    matched = previous_coverage_for([transfer], [*filler, closure])
+    assert [item.url for item in matched] == [closure.canonical_url]
+
+
+def test_previous_coverage_shows_a_dated_timeline_of_turning_points() -> None:
+    # 실제 이력 풀 규모(수백~수천 건)에서 사안명은 드물다. 작은 풀에서는 모든 기사에
+    # 들어간 사안명이 흔한 말로 계산되므로 무관한 기사로 풀 크기를 맞춘다.
+    unrelated = [
+        _article("ablenews", f"지역 소식 {index}", article_id=f"local-{index}")
+        for index in range(800)
+    ]
+    current = _dated(_article("hani", "반구대병원 전원 환자 또 재전원", article_id="current"), 30)
+    current.summary = "정신의료기관 반구대병원에서 옮겨간 환자들이 다시 전원됐다."
+    history = [
+        _dated(_article("hani", "반구대병원 폐원 결정 환자 전원 계획", article_id="a"), 1),
+        _dated(_article("hani", "반구대병원 환자 82% 다시 정신병원으로", article_id="b"), 7),
+        _dated(_article("donga", "반구대병원 환자 다시 정신병원 전원 논란", article_id="c"), 7, 5),
+        _dated(_article("hani", "반구대병원 발달장애인 창틀 강박 병원 전원", article_id="d"), 12),
+        _dated(_article("khan", "반구대병원 학대 정황 확인", article_id="e"), 15),
+        _dated(_article("hani", "반구대병원 테라스 폭행 사건 드러나", article_id="f"), 20),
+        _dated(_article("ablenews", "반구대병원 관련 소식", article_id="g"), 22),
+        _dated(_article("beminor", "반구대병원 전원 대책 촉구", article_id="h"), 25),
+    ]
+    for item in history:
+        item.summary = "울산의 정신의료기관 반구대병원 관련 보도다."
+    matched = previous_coverage_for([current], [*unrelated, *history])
+
+    assert len(matched) == PREVIOUS_COVERAGE_MAX_ITEMS
+    published = [item.published for item in matched]
+    assert published == sorted(published)
+    assert len(set(published)) == len(published)
+    # 폐원 결정은 첫 보도이자 전환점이라 반드시 남는다.
+    assert history[0].canonical_url in {item.url for item in matched}
+
+
+def test_previous_coverage_matches_a_name_with_a_particle_attached() -> None:
+    current = _article("beminor", "정신병원서 잇단 사망, 국가 책임 촉구", article_id="current")
+    current.summary = "정신의료기관 입원 환자의 잇단 사망에 단체들이 국가 책임을 촉구했다."
+    earlier = _article("joongang", "반년간 4명 숨진 정신병원 충격", article_id="earlier")
+    earlier.summary = "인천의 정신의료기관에서 환자 4명이 숨졌다."
+    matched = previous_coverage_for([current], [earlier])
+    assert [item.url for item in matched] == [earlier.canonical_url]
+
+
+def test_previous_coverage_accepts_three_shared_words_when_one_pins_the_topic() -> None:
+    current = _article("labortoday", "HL만도 중대재해 안전대책 발표에 유족 반발", article_id="cur")
+    current.summary = "평택공장 사망사고 유족이 회사 대책을 비판했다."
+    earlier = _article("pressian", "HL만도 끼임사 청년 유족, 회장 책임 촉구", article_id="prev")
+    earlier.summary = "평택공장에서 숨진 하청노동자의 유족이 책임을 물었다."
+    matched = previous_coverage_for([current], [earlier])
+    assert [item.url for item in matched] == [earlier.canonical_url]
+    assert matched[0].match_rule == PREVIOUS_MATCH_ANCHORED
+
+
+def test_labor_previous_history_uses_the_labor_classifier(topics_path) -> None:
+    start = datetime(2026, 10, 9, 0, tzinfo=UTC)
+    sit_in = _dated(
+        _article(
+            "labortoday",
+            "한화오션 하청노동자 고공농성 돌입, 원청교섭 요구",
+            classification=Classification.IRRELEVANT,
+            article_id="sit-in",
+        ),
+        30,
+    )
+    sit_in.summary = "하청노동자들이 원청 사용자와의 교섭을 요구했다."
+    baseball = _dated(
+        _article(
+            "hani",
+            "프로야구 개막전 매진",
+            classification=Classification.IRRELEVANT,
+            article_id="baseball",
+        ),
+        30,
+    )
+    baseball.summary = "개막전 입장권이 모두 팔렸다."
+    not_designated = _dated(
+        _article(
+            "ablenews",
+            "한화오션 하청노동자 고공농성 돌입, 원청교섭 요구",
+            classification=Classification.IRRELEVANT,
+            article_id="not-designated",
+        ),
+        30,
+    )
+    not_designated.summary = sit_in.summary
+
+    history = labor_previous_history(
+        [sit_in, baseball, not_designated], start=start, topics_path=topics_path
+    )
+    assert history == [sit_in]
+
+    talks = _article(
+        "labortoday",
+        "한화오션 하청노동자 고공농성 해제, 원청교섭 시작",
+        classification=Classification.IRRELEVANT,
+        article_id="talks",
+    )
+    matched = previous_coverage_for([talks], history)
+    assert [item.url for item in matched] == [sit_in.canonical_url]
+
+
 def test_korean_particles_for_single_and_multi_article_tone() -> None:
     column = _article("khan", "장애인 이동권 보도")
     assert analyze_tone([column]) == ""
@@ -688,9 +839,7 @@ def test_issue_summary_and_tone_sentence_limits() -> None:
     assert 1 <= tone.count(".") <= 4
 
 
-def test_previous_coverage_is_only_inside_toggle_and_limited_to_three(
-    tmp_path, topics_path
-) -> None:
+def test_previous_coverage_is_only_inside_toggle_and_limited(tmp_path, topics_path) -> None:
     storage = JsonlStorage(tmp_path)
     current = _article(
         "ablenews",
@@ -717,7 +866,7 @@ def test_previous_coverage_is_only_inside_toggle_and_limited_to_three(
         report_date="2026-08-16",
     )
     issue = document.sections[0].issues[0]
-    assert 0 <= len(issue.previous_coverage) <= 3
+    assert 0 <= len(issue.previous_coverage) <= PREVIOUS_COVERAGE_MAX_ITEMS
     text = render_briefing_markdown(document, crpd_url=None)
     assert "### 동일 주제 이전 보도" not in text
     summary_index = text.index("<summary>동일 주제 이전 보도</summary>")

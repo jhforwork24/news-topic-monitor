@@ -317,6 +317,57 @@ def test_editorial_briefing_accepts_verified_gpt_selection_and_preserves_format(
     assert "활동지원 제도 개편 요구" not in document.telegram_summary
 
 
+def test_editorial_briefing_gives_labor_issues_labor_previous_coverage(
+    tmp_path, topics_path
+) -> None:
+    """II절 이슈는 노동 분류기로 고른 이력에서 이전 보도를 찾는다.
+
+    저장된 classification은 장애 주제 판정이라 노동 기사는 거의 irrelevant다. 장애 이력만
+    쓰던 때는 노동 사안에 이전 보도가 사실상 붙지 않았다.
+    """
+
+    current = _article("labortoday", classification=Classification.IRRELEVANT)
+    current.title = "한화오션 하청노동자 고공농성 해제, 원청교섭 시작"
+    current.summary = "하청노동자들이 원청 사용자와 첫 교섭을 시작했다."
+    earlier = _article("labortoday", classification=Classification.IRRELEVANT)
+    earlier.article_id = "labortoday-earlier"
+    earlier.canonical_url = "https://example.com/labortoday/earlier"
+    earlier.title = "한화오션 하청노동자 고공농성 돌입, 원청교섭 요구"
+    earlier.summary = "하청노동자들이 원청 사용자와의 교섭을 요구하며 고공농성에 들어갔다."
+    earlier.published_at = datetime(2026, 8, 1, 1, tzinfo=UTC)
+    earlier.first_seen_at = earlier.published_at
+    earlier.last_seen_at = earlier.published_at
+    storage = JsonlStorage(tmp_path)
+    storage.upsert(current)
+    storage.upsert(earlier)
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.LABOR,
+                title="한화오션 하청노조와 첫 원청교섭",
+                keyword="한화오션 원청교섭",
+                candidate_ids=[article_candidate_id(current)],
+                summary="한화오션 하청노동자들이 고공농성을 풀고 원청과 첫 교섭을 시작했다.",
+                tone_analysis="",
+            )
+        ],
+        exclusions=[],
+    )
+    kwargs = {
+        "plan": plan,
+        "start": datetime(2026, 8, 15, 0, tzinfo=UTC),
+        "end": datetime(2026, 8, 16, 0, tzinfo=UTC),
+        "report_date": "2026-08-16",
+    }
+
+    without_labor_pool = build_editorial_briefing(storage, **kwargs)
+    assert without_labor_pool.sections[1].issues[0].previous_coverage == []
+
+    document = build_editorial_briefing(storage, topics_path=topics_path, **kwargs)
+    issue = document.sections[1].issues[0]
+    assert [item.url for item in issue.previous_coverage] == [earlier.canonical_url]
+
+
 def test_editorial_briefing_rejects_tone_analysis_with_leaning_labels(tmp_path) -> None:
     article = _article(classification=Classification.IRRELEVANT)
     storage = JsonlStorage(tmp_path)
