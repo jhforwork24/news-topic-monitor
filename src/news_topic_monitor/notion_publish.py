@@ -19,6 +19,7 @@ from .briefing import (
     ENTERTAINMENT_PATHS,
     ENTERTAINMENT_SECTION_TERMS,
     PHOTO_NEWS_TERMS,
+    PREVIOUS_COVERAGE_MAX_ITEMS,
     BriefingDocument,
     BriefingIssue,
     article_listing_prefix,
@@ -1382,7 +1383,7 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 ]
             )
         ]
-        for item in issue.previous_coverage[:3]:
+        for item in issue.previous_coverage[:PREVIOUS_COVERAGE_MAX_ITEMS]:
             coverage_rows.append(
                 _table_row(
                     [

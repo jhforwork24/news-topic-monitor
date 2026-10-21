@@ -582,6 +582,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 start=start,
                 end=end,
                 report_date=report_date,
+                topics_path=settings.root / "config" / "topics.yml",
             )
             document.source_failures.extend(
                 (
@@ -1195,6 +1196,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             start=start,
             end=end,
             report_date=report_date,
+            topics_path=settings.root / "config" / "topics.yml",
         )
         document.source_failures.extend(
             (
