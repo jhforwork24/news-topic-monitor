@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 
 from .briefing import (
+    PREVIOUS_COVERAGE_MAX_ITEMS,
     BriefingDocument,
     editorial_opinion_allowed,
     labor_editorial_exclusion,
@@ -97,8 +98,11 @@ def validate_briefing(document: BriefingDocument) -> None:
     for section in document.sections:
         for issue in section.issues:
             rendered_article_ids.update(_article_id(article) for article in issue.articles)
-            if len(issue.previous_coverage) > 3:
-                errors.append(f"{section.title} / {issue.title}: 이전 보도가 3개를 초과함")
+            if len(issue.previous_coverage) > PREVIOUS_COVERAGE_MAX_ITEMS:
+                errors.append(
+                    f"{section.title} / {issue.title}: "
+                    f"이전 보도가 {PREVIOUS_COVERAGE_MAX_ITEMS}개를 초과함"
+                )
             errors.extend(
                 issue_text_errors(
                     label=f"{section.title} / {issue.title}",
