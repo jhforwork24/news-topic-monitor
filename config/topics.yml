@@ -59,6 +59,10 @@ topics:
       - {term: 소득보장, score: 2.5}
       - {term: 거주시설, score: 3.0}
       - {term: 시설 인권침해, score: 6.0}
+      - {term: 정신병원, score: 2.0}
+      - {term: 정신의료기관, score: 2.5}
+      - {term: 강제입원, score: 3.0}
+      - {term: 비자의입원, score: 3.0}
     laws:
       - {term: 장애인복지법, score: 7.0}
       - {term: 장애인차별금지법, score: 8.0}
@@ -130,6 +134,7 @@ topics:
       - {all: [거주시설, 인권], score: 5.0}
       - {all: [거주인, 자립], score: 6.0}
       - {all: [정신의료기관, 입원환자], score: 6.0}
+      - {all: [격리, 강박], score: 3.0}
       - {all: [화면해설, 방송], score: 4.0}
   labor_care_poverty:
     label: 노동·돌봄·빈곤

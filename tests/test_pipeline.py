@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
+import pytest
+
 from news_topic_monitor.adapters.base import (
     SourceAdapter,
     SourceConfigurationError,
@@ -153,6 +155,60 @@ class MonitoredPersonnelAdapter(GoodAdapter):
     def extract_body(self, html_text, url):
         del html_text, url
         return "합성 인사 소식 본문으로 disability_rights 토픽 용어를 쓰지 않는다."
+
+
+def _recheck_adapter(source: str, title: str, summary: str | None = None) -> GoodAdapter:
+    class RecheckAdapter(GoodAdapter):
+        def parse_discovery(self, content, url):
+            del content, url
+            return DiscoveryPage(
+                articles=[
+                    ArticleDiscovery(
+                        source=source,
+                        canonical_url="https://good.test/article/recheck",
+                        title=title,
+                        summary=summary,
+                        published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                    )
+                ]
+            )
+
+        def extract_body(self, html_text, url):
+            del html_text, url
+            return "합성 본문으로 장애 용어를 쓰지 않는다."
+
+    adapter = RecheckAdapter()
+    adapter.source = source
+    return adapter
+
+
+@pytest.mark.parametrize(
+    ("source", "title", "summary", "fetched"),
+    [
+        ("hani", "[단독] AI가 만든 세계에서 '소수자'는 지워진다", None, True),
+        ("chosun", "인천 정신병원 환자 4명 사망", None, True),
+        ("donga", "통합돌봄 지역 격차 심화", None, True),
+        ("hani", "AI가 만든 세계에서 '소수자'는 지워진다", None, False),
+        ("hani", "[단독] 경제성장률은 좋은데 연체 급증", None, False),
+        ("ohmynews", "[단독] AI가 만든 세계에서 '소수자'는 지워진다", None, False),
+        ("ohmynews", "통합돌봄 지역 격차 심화", None, False),
+    ],
+)
+def test_core_daily_body_recheck_forces_body_fetch(
+    tmp_path, topics_path, source, title, summary, fetched
+) -> None:
+    storage = JsonlStorage(tmp_path)
+    Collector(
+        http=StubHttp(),
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[_recheck_adapter(source, title, summary)],
+    ).run(
+        datetime(2026, 8, 15, 0, tzinfo=UTC),
+        datetime(2026, 8, 15, 2, tzinfo=UTC),
+    )
+    record = next(storage.iter_articles())
+    assert (record.body_status == BodyStatus.FETCHED) is fetched
 
 
 class KhanMandatoryColumnAdapter(GoodAdapter):

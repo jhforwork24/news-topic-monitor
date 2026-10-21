@@ -190,6 +190,72 @@ def monitored_personnel_match(*texts: str | None) -> PersonnelTarget | None:
     return None
 
 
+# 핵심 일간지(조선·중앙·동아·한겨레·경향)는 제목·요약에 장애 용어가 없어도 본문에서 장애인권
+# 의제를 다루는 기사가 나올 수 있다(2026-10-20 한겨레 "AI 소수자 배제" 연구 보도는 제목·요약에
+# 장애 용어가 없어 title-only 판정이 irrelevant로 끝났고 본문은 읽히지 않았다). 아래 두 층의
+# 단서 중 하나라도 제목·요약·섹션에 있으면 분류와 무관하게 본문 확인을 강제해 본문 기준으로
+# 다시 분류한다. 본문 재분류에서도 장애 관련성이 없으면 종전처럼 irrelevant로 남는다.
+BODY_RECHECK_SOURCES = frozenset({"chosun", "joongang", "donga", "hani", "khan"})
+
+# 층 A: "단독" 보도 + 소수자·약자 등 상위어. 단독 표지는 제목에 있어야 한다.
+EXCLUSIVE_REPORT_MARKER = "단독"
+BODY_RECHECK_HYPERNYM_TERMS: tuple[str, ...] = (
+    "소수자",
+    "사회적 약자",
+    "취약계층",
+    "사각지대",
+    "인권",
+    "혐오",
+    "배제",
+)
+# 층 B: 단독 여부와 무관하게 장애 의제와 맞닿은 정책 용어. "격리"·"학대"처럼 일반 사건 기사에
+# 흔한 단어는 단독으로 쓰지 않는다.
+BODY_RECHECK_ADJACENT_TERMS: tuple[str, ...] = (
+    "정신병원",
+    "정신의료기관",
+    "정신질환",
+    "정신건강복지법",
+    "강제입원",
+    "비자의입원",
+    "격리·강박",
+    "수용시설",
+    "거주시설",
+    "교통약자",
+    "이동권",
+    "접근성",
+    "배리어프리",
+    "보조기기",
+    "특수교육",
+    "돌봄",
+    "요양",
+    "고독사",
+    "기초생활",
+    "의료급여",
+)
+
+
+def body_recheck_match(source: str, *texts: str | None) -> str | None:
+    """Return "A" or "B" when a core daily's title/summary warrants a body recheck.
+
+    texts는 (title, summary, section) 순서로 넘기며 첫 항목을 제목으로 취급한다. 분류기는
+    이 함수와 독립이므로 본문 확인 강제 여부만 결정한다.
+    """
+
+    if source not in BODY_RECHECK_SOURCES or not texts:
+        return None
+    title = texts[0] or ""
+    haystack = " ".join(value for value in texts if value)
+    if not haystack:
+        return None
+    if any(term in haystack for term in BODY_RECHECK_ADJACENT_TERMS):
+        return "B"
+    if EXCLUSIVE_REPORT_MARKER in title and any(
+        term in haystack for term in BODY_RECHECK_HYPERNYM_TERMS
+    ):
+        return "A"
+    return None
+
+
 # 논조 비교에서 실제 기사 텍스트를 읽은 뒤 결과를 묶어 설명하는 용도로만 쓴다.
 # 매체 내용을 읽지 않고 이 라벨만으로 논조를 추정하는 데 쓰지 않는다.
 SOURCE_CAMP = {

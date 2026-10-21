@@ -9,6 +9,7 @@ from news_topic_monitor.sources import (
     PRIMARY_COMPARISON_SOURCES,
     SOURCE_CAMP,
     SOURCE_LABELS,
+    body_recheck_match,
     monitored_personnel_match,
 )
 
@@ -111,3 +112,27 @@ def test_section_opinion_applies_to_beminor_only_and_needs_the_exact_section_lab
     for other in ("ablenews", "theindigo", "labortoday", "newscham"):
         assert not is_section_opinion_column(other, "제목", None, "오피니언", None)
         assert not is_mandatory_opinion_column(other, "제목", None, "오피니언", None)
+
+
+def test_body_recheck_layer_a_needs_exclusive_marker_in_title_and_hypernym() -> None:
+    title = "[단독] AI가 만든 세계에서 '소수자'는 지워진다"
+    assert body_recheck_match("hani", title, None, None) == "A"
+    assert body_recheck_match("hani", "AI가 만든 세계에서 '소수자'는 지워진다", None) is None
+    assert body_recheck_match("hani", "[단독] 연체 18만명", "소수자 배려") == "A"
+    assert body_recheck_match("hani", "연체 18만명", "소수자 배려") is None
+    assert body_recheck_match("hani", "[단독] 40대 복지 사각지대 급증", None) == "A"
+
+
+def test_body_recheck_layer_b_matches_adjacent_policy_terms_without_exclusive() -> None:
+    assert body_recheck_match("donga", "인천 정신병원 환자 4명 사망", None) == "B"
+    assert body_recheck_match("hani", "환자 4명 사망, 격리·강박 안전 불합격", None) == "B"
+    assert body_recheck_match("khan", "제목", "교통약자 이동권") == "B"
+    # 격리·학대 같은 일반 사건어는 단독 단서가 아니다.
+    assert body_recheck_match("chosun", "격리 조치된 학생 학대 의혹", None) is None
+
+
+def test_body_recheck_is_limited_to_five_core_dailies() -> None:
+    for source in ("chosun", "joongang", "donga", "hani", "khan"):
+        assert body_recheck_match(source, "정신병원 사망", None) == "B"
+    for source in ("ohmynews", "pressian", "sisain", "beminor", "newscham"):
+        assert body_recheck_match(source, "정신병원 사망", None) is None
