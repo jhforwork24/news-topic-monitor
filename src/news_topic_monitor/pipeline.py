@@ -32,6 +32,7 @@ from .models import (
 from .sources import (
     DESIGNATED_COLUMN_SOURCES,
     SECTION_OPINION_SOURCES,
+    body_recheck_match,
     is_mandatory_opinion_column,
     monitored_personnel_match,
 )
@@ -369,12 +370,21 @@ class Collector:
             discovery.section,
             discovery.summary,
         )
+        # 핵심 일간지는 제목·요약에 장애 용어가 없어도 소수자·약자 상위어(단독 보도)나 인접
+        # 정책 용어가 있으면 본문 기준으로 다시 분류한다(sources.body_recheck_match 참고).
+        body_recheck = body_recheck_match(
+            discovery.source,
+            discovery.title,
+            discovery.summary,
+            discovery.section,
+        )
         if (
             first.candidate
             or capture_body
             or mandatory_column
             or monitored_personnel is not None
             or designated_column_source
+            or body_recheck is not None
         ) and adapter.fetch_candidate_bodies:
             try:
                 response = self.http.get(discovery.canonical_url, purpose="article body")
