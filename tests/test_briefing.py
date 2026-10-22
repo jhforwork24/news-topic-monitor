@@ -1130,6 +1130,32 @@ def _summary_document(section_title: str, summary: str) -> BriefingDocument:
     )
 
 
+def test_previous_coverage_limit_matches_the_selection_limit() -> None:
+    import pytest
+
+    from news_topic_monitor.briefing import PreviousCoverage
+    from news_topic_monitor.briefing_validation import BriefingValidationError
+
+    def document_with(count: int) -> BriefingDocument:
+        document = _summary_document("I. 장애정책·장애인운동", "서울시가 정류장을 정비한다.")
+        document.sections[0].issues[0].previous_coverage = [
+            PreviousCoverage(
+                published=f"2026-09-{day:02d}",
+                label=f"합성 이전 보도 {day}",
+                url=None,
+                outlet="합성",
+                comparison="",
+            )
+            for day in range(1, count + 1)
+        ]
+        return document
+
+    # 선정 단계가 PREVIOUS_COVERAGE_MAX_ITEMS건까지 붙이므로 검증은 같은 수까지 허용해야 한다.
+    validate_briefing(document_with(PREVIOUS_COVERAGE_MAX_ITEMS))
+    with pytest.raises(BriefingValidationError, match="이전 보도가"):
+        validate_briefing(document_with(PREVIOUS_COVERAGE_MAX_ITEMS + 1))
+
+
 def test_issue_summary_must_not_name_an_outlet_in_news_sections() -> None:
     import pytest
 
