@@ -1,17 +1,24 @@
 {
   "prompt_version": 1,
   "report_date": "2026-10-22",
-  "status": "failed",
+  "status": "completed",
+  "model": "connected_claude_editor",
+  "auditor_model": "connected_claude_independent_auditor",
+  "candidate_count": 180,
+  "included_after_first_pass": 0,
+  "published_issue_count": 11,
+  "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.676,
-    "assurance": 0.002,
-    "bridge_import_validation": 8.823,
+    "api_preflight": 2.045,
+    "assurance": 0.014,
+    "bridge_import_validation": 6.009,
     "census_retry": 0.0,
-    "final_state_recrawl": 298.224,
-    "gap_reverse_search": 85.649,
+    "final_state_recrawl": 455.386,
+    "gap_reverse_search": 91.743,
     "late_recovered_sources": 0.0,
-    "total": 408.98
+    "render_briefing": 11.142,
+    "total": 574.663
   },
-  "error": "브리핑 발행 검증 실패: I. 장애정책·장애인운동 / 색동원 거주인 13명 중 11명 자립지원 신청 어려움…시설폐쇄 유예 종료 두 달여 앞두고 지침 한계 지적: 이전 보도가 3개를 초과함",
-  "completed_at": "2026-10-21T23:18:58.784210Z"
+  "error": null,
+  "completed_at": "2026-10-22T00:54:34.206947Z"
 }
