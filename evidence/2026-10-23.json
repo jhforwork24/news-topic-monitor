@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "report_date": "2026-10-23",
-  "generated_at": "2026-10-22T23:13:42.831237Z",
+  "generated_at": "2026-10-22T23:25:25.496233Z",
   "articles": [
     {
       "candidate_id": "7f53dce2a488a53cdb2caddc66fe13797d141611f792e2cf1365177f2d4dc81b",
@@ -46236,7 +46236,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T20:00:00Z",
       "discovered_at": "2026-10-22T21:38:18.096974Z",
-      "last_checked_at": "2026-10-22T23:08:34.658902Z",
+      "last_checked_at": "2026-10-22T23:18:15.821613Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -46256,7 +46256,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:23:00Z",
       "discovered_at": "2026-10-22T21:38:36.552258Z",
-      "last_checked_at": "2026-10-22T23:09:23.214240Z",
+      "last_checked_at": "2026-10-22T23:19:06.199113Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -46276,7 +46276,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:24:00Z",
       "discovered_at": "2026-10-22T21:38:36.551973Z",
-      "last_checked_at": "2026-10-22T23:09:20.914868Z",
+      "last_checked_at": "2026-10-22T23:19:04.223281Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=2"
@@ -46296,7 +46296,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:25:00Z",
       "discovered_at": "2026-10-22T21:38:36.551712Z",
-      "last_checked_at": "2026-10-22T23:09:18.919012Z",
+      "last_checked_at": "2026-10-22T23:19:02.126055Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -46317,7 +46317,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:27:00Z",
       "discovered_at": "2026-10-22T21:38:36.551379Z",
-      "last_checked_at": "2026-10-22T23:09:16.909223Z",
+      "last_checked_at": "2026-10-22T23:19:00.310588Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -46338,7 +46338,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:31:00Z",
       "discovered_at": "2026-10-22T21:38:36.551084Z",
-      "last_checked_at": "2026-10-22T23:09:14.919054Z",
+      "last_checked_at": "2026-10-22T23:18:58.129452Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1",
@@ -46359,10 +46359,11 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:33:00Z",
       "discovered_at": "2026-10-22T21:38:36.550831Z",
-      "last_checked_at": "2026-10-22T23:09:12.990094Z",
+      "last_checked_at": "2026-10-22T23:18:56.250971Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
-        "official:https://www.hani.co.kr/arti?page=1"
+        "official:https://www.hani.co.kr/arti?page=1",
+        "official:https://www.hani.co.kr/arti?page=2"
       ],
       "full_body_status": "fetched",
       "body_hash": "7ecb53e0571b9e52292a5b76f14d4ef0784e46300cfc468c7a8dca1fbbbe175c",
@@ -46379,7 +46380,7 @@
       "published_at": "2026-10-22T20:00:00Z",
       "modified_at": "2026-10-22T22:15:00Z",
       "discovered_at": "2026-10-22T21:38:36.550580Z",
-      "last_checked_at": "2026-10-22T23:09:10.922834Z",
+      "last_checked_at": "2026-10-22T23:18:54.134068Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46857,7 +46858,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:07:00Z",
       "discovered_at": "2026-10-22T21:38:36.549442Z",
-      "last_checked_at": "2026-10-22T23:09:02.914886Z",
+      "last_checked_at": "2026-10-22T23:18:46.134462Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46877,7 +46878,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:32:00Z",
       "discovered_at": "2026-10-22T21:38:36.550013Z",
-      "last_checked_at": "2026-10-22T23:09:06.907622Z",
+      "last_checked_at": "2026-10-22T23:18:49.950813Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46897,7 +46898,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:18:00Z",
       "discovered_at": "2026-10-22T21:38:36.549726Z",
-      "last_checked_at": "2026-10-22T23:09:04.913175Z",
+      "last_checked_at": "2026-10-22T23:18:48.194642Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46917,7 +46918,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:34:00Z",
       "discovered_at": "2026-10-22T21:38:34.522711Z",
-      "last_checked_at": "2026-10-22T23:09:00.918730Z",
+      "last_checked_at": "2026-10-22T23:18:44.141019Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46937,7 +46938,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:38:00Z",
       "discovered_at": "2026-10-22T21:38:34.522231Z",
-      "last_checked_at": "2026-10-22T23:08:57.107242Z",
+      "last_checked_at": "2026-10-22T23:18:39.948242Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46957,7 +46958,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:39:00Z",
       "discovered_at": "2026-10-22T21:38:34.521954Z",
-      "last_checked_at": "2026-10-22T23:08:54.916560Z",
+      "last_checked_at": "2026-10-22T23:18:38.127418Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46977,7 +46978,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:40:00Z",
       "discovered_at": "2026-10-22T21:38:34.521694Z",
-      "last_checked_at": "2026-10-22T23:08:52.731295Z",
+      "last_checked_at": "2026-10-22T23:18:36.244042Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -46997,7 +46998,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:49:00Z",
       "discovered_at": "2026-10-22T21:38:34.521325Z",
-      "last_checked_at": "2026-10-22T23:08:50.921857Z",
+      "last_checked_at": "2026-10-22T23:18:34.132985Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -47017,7 +47018,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:32:00Z",
       "discovered_at": "2026-10-22T21:38:36.550314Z",
-      "last_checked_at": "2026-10-22T23:09:09.011874Z",
+      "last_checked_at": "2026-10-22T23:18:52.226621Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -47037,7 +47038,7 @@
       "published_at": "2026-10-22T20:01:00Z",
       "modified_at": "2026-10-22T22:36:00Z",
       "discovered_at": "2026-10-22T21:38:34.522476Z",
-      "last_checked_at": "2026-10-22T23:08:58.920443Z",
+      "last_checked_at": "2026-10-22T23:18:42.136334Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -47652,7 +47653,7 @@
       "published_at": "2026-10-22T20:39:10Z",
       "modified_at": "2026-10-22T20:39:10Z",
       "discovered_at": "2026-10-22T21:38:18.096646Z",
-      "last_checked_at": "2026-10-22T23:08:32.702598Z",
+      "last_checked_at": "2026-10-22T23:18:13.819009Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -47791,7 +47792,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:03:00Z",
       "discovered_at": "2026-10-22T21:38:40.737241Z",
-      "last_checked_at": "2026-10-22T23:10:06.370262Z",
+      "last_checked_at": "2026-10-22T23:19:53.239582Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47810,7 +47811,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:02:00Z",
       "discovered_at": "2026-10-22T21:38:39.530451Z",
-      "last_checked_at": "2026-10-22T23:10:04.673398Z",
+      "last_checked_at": "2026-10-22T23:19:51.281777Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47829,7 +47830,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:02:00Z",
       "discovered_at": "2026-10-22T21:38:39.530302Z",
-      "last_checked_at": "2026-10-22T23:10:02.353669Z",
+      "last_checked_at": "2026-10-22T23:19:49.045583Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47848,7 +47849,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:05:00Z",
       "discovered_at": "2026-10-22T21:38:39.530140Z",
-      "last_checked_at": "2026-10-22T23:10:00.409470Z",
+      "last_checked_at": "2026-10-22T23:19:47.616453Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47867,7 +47868,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:06:00Z",
       "discovered_at": "2026-10-22T21:38:39.529924Z",
-      "last_checked_at": "2026-10-22T23:09:58.380044Z",
+      "last_checked_at": "2026-10-22T23:19:44.620083Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47886,7 +47887,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:06:00Z",
       "discovered_at": "2026-10-22T21:38:39.529752Z",
-      "last_checked_at": "2026-10-22T23:09:56.350519Z",
+      "last_checked_at": "2026-10-22T23:19:43.333988Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47905,7 +47906,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:05:00Z",
       "discovered_at": "2026-10-22T21:38:39.529599Z",
-      "last_checked_at": "2026-10-22T23:09:54.381188Z",
+      "last_checked_at": "2026-10-22T23:19:41.039578Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47924,7 +47925,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:00:15Z",
       "discovered_at": "2026-10-22T21:38:39.529447Z",
-      "last_checked_at": "2026-10-22T23:09:52.215621Z",
+      "last_checked_at": "2026-10-22T23:19:39.678003Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47943,7 +47944,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:01:00Z",
       "discovered_at": "2026-10-22T21:38:39.529290Z",
-      "last_checked_at": "2026-10-22T23:09:50.406870Z",
+      "last_checked_at": "2026-10-22T23:19:37.274789Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47962,7 +47963,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T22:32:00Z",
       "discovered_at": "2026-10-22T21:38:39.529086Z",
-      "last_checked_at": "2026-10-22T23:09:48.716630Z",
+      "last_checked_at": "2026-10-22T23:19:35.396648Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -47981,7 +47982,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:00:01Z",
       "discovered_at": "2026-10-22T21:38:39.528905Z",
-      "last_checked_at": "2026-10-22T23:09:46.373222Z",
+      "last_checked_at": "2026-10-22T23:19:33.418072Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48000,7 +48001,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T21:04:00Z",
       "discovered_at": "2026-10-22T21:38:39.528688Z",
-      "last_checked_at": "2026-10-22T23:09:44.410927Z",
+      "last_checked_at": "2026-10-22T23:19:31.513560Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48019,7 +48020,7 @@
       "published_at": "2026-10-22T21:00:00Z",
       "modified_at": "2026-10-22T22:23:00Z",
       "discovered_at": "2026-10-22T21:38:39.528361Z",
-      "last_checked_at": "2026-10-22T23:09:42.429838Z",
+      "last_checked_at": "2026-10-22T23:19:29.093877Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -48983,9 +48984,9 @@
       "outlet": "donga",
       "reporter": "송치훈",
       "published_at": "2026-10-22T21:20:00Z",
-      "modified_at": "2026-10-22T22:50:12Z",
+      "modified_at": "2026-10-22T23:11:58Z",
       "discovered_at": "2026-10-22T21:38:18.096291Z",
-      "last_checked_at": "2026-10-22T23:08:31.057400Z",
+      "last_checked_at": "2026-10-22T23:18:12.222420Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49197,18 +49198,18 @@
       "canonical_url": "https://www.pressian.com/pages/articles/2026102222022973780",
       "title": "'명태균 여론조사 대납' 오세훈 2심 결과는? \"시켰다는 증거 없어 무죄 가능성 높아\"",
       "outlet": "pressian",
-      "reporter": null,
+      "reporter": "허환주 기자",
       "published_at": "2026-10-22T21:29:21Z",
-      "modified_at": null,
+      "modified_at": "2026-10-22T21:29:21Z",
       "discovered_at": "2026-10-22T21:38:48.006760Z",
-      "last_checked_at": "2026-10-22T21:38:48.006760Z",
+      "last_checked_at": "2026-10-22T23:20:07.555269Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news",
         "official:https://www.pressian.com/sitemap/news.xml"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "baa7a6df90bf10705c48d664b2f5960763314fc197fea68acbc19a8ef2c73f32",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "not_required"
     },
@@ -49217,18 +49218,18 @@
       "canonical_url": "https://www.pressian.com/pages/articles/2026102222390155330",
       "title": "검찰총장 대행 \"윤석열, 자백 안하면 3년~5년 재판받아서 고통받게 해야한다고 해\"",
       "outlet": "pressian",
-      "reporter": null,
+      "reporter": "허환주 기자",
       "published_at": "2026-10-22T21:29:32Z",
-      "modified_at": null,
+      "modified_at": "2026-10-22T21:29:32Z",
       "discovered_at": "2026-10-22T21:38:48.006502Z",
-      "last_checked_at": "2026-10-22T21:38:48.006502Z",
+      "last_checked_at": "2026-10-22T23:20:05.545212Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news",
         "official:https://www.pressian.com/sitemap/news.xml"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "c11ed3f1fb034143cce2764a6a02e57fe59657a37ad8309a3fbebbf0575f726f",
+      "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
     },
@@ -49237,20 +49238,20 @@
       "canonical_url": "https://www.pressian.com/pages/articles/2026102119020020240",
       "title": "내가 찾은 역사학의 길",
       "outlet": "pressian",
-      "reporter": null,
+      "reporter": "김기협 역사학자",
       "published_at": "2026-10-22T21:29:47Z",
-      "modified_at": null,
+      "modified_at": "2026-10-22T21:29:47Z",
       "discovered_at": "2026-10-22T21:38:48.006103Z",
-      "last_checked_at": "2026-10-22T21:38:48.006103Z",
+      "last_checked_at": "2026-10-22T23:20:03.532018Z",
       "discovery_route": [
         "official:https://www.pressian.com/api/v3/site/rss/news",
         "official:https://www.pressian.com/sitemap/news.xml"
       ],
-      "full_body_status": "skipped_irrelevant",
-      "body_hash": null,
-      "verification_grade": "B",
+      "full_body_status": "fetched",
+      "body_hash": "28e450d48760b12d7cb05792a471d96f342add2e15dee4f96b1b3cec0776c285",
+      "verification_grade": "A",
       "issue_id": null,
-      "primary_source_validation": "not_required"
+      "primary_source_validation": "pending"
     },
     {
       "candidate_id": "e5a7ea5b1ed0ed47ce24b5b53c5629846b450af05c9a1804686efef440bcaff0",
@@ -49301,7 +49302,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.412980Z",
-      "last_checked_at": "2026-10-22T23:11:32.697300Z",
+      "last_checked_at": "2026-10-22T23:20:59.204814Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49320,7 +49321,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.412813Z",
-      "last_checked_at": "2026-10-22T23:11:30.432726Z",
+      "last_checked_at": "2026-10-22T23:20:57.393520Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49339,7 +49340,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.412649Z",
-      "last_checked_at": "2026-10-22T23:11:28.498540Z",
+      "last_checked_at": "2026-10-22T23:20:55.386823Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49358,7 +49359,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.412481Z",
-      "last_checked_at": "2026-10-22T23:11:26.714101Z",
+      "last_checked_at": "2026-10-22T23:20:53.443268Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49377,7 +49378,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.412315Z",
-      "last_checked_at": "2026-10-22T23:11:24.654000Z",
+      "last_checked_at": "2026-10-22T23:20:51.206365Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49396,7 +49397,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.412141Z",
-      "last_checked_at": "2026-10-22T23:11:22.494858Z",
+      "last_checked_at": "2026-10-22T23:20:49.459852Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49415,7 +49416,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.411957Z",
-      "last_checked_at": "2026-10-22T23:11:20.445141Z",
+      "last_checked_at": "2026-10-22T23:20:47.210958Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49434,7 +49435,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.411786Z",
-      "last_checked_at": "2026-10-22T23:11:18.524544Z",
+      "last_checked_at": "2026-10-22T23:20:45.449957Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49453,7 +49454,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.411616Z",
-      "last_checked_at": "2026-10-22T23:11:17.089176Z",
+      "last_checked_at": "2026-10-22T23:20:43.344025Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49472,7 +49473,7 @@
       "published_at": "2026-10-22T21:30:03Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.411455Z",
-      "last_checked_at": "2026-10-22T23:11:14.682587Z",
+      "last_checked_at": "2026-10-22T23:20:41.232482Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49491,7 +49492,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.411288Z",
-      "last_checked_at": "2026-10-22T23:11:12.788024Z",
+      "last_checked_at": "2026-10-22T23:20:39.436214Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49510,7 +49511,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.411090Z",
-      "last_checked_at": "2026-10-22T23:11:10.808131Z",
+      "last_checked_at": "2026-10-22T23:20:37.417511Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49529,7 +49530,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.410917Z",
-      "last_checked_at": "2026-10-22T23:11:08.783197Z",
+      "last_checked_at": "2026-10-22T23:20:35.934985Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49548,7 +49549,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.410747Z",
-      "last_checked_at": "2026-10-22T23:11:06.566750Z",
+      "last_checked_at": "2026-10-22T23:20:33.236935Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49567,7 +49568,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.410580Z",
-      "last_checked_at": "2026-10-22T23:11:05.517732Z",
+      "last_checked_at": "2026-10-22T23:20:31.347848Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49586,7 +49587,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.410411Z",
-      "last_checked_at": "2026-10-22T23:11:02.547956Z",
+      "last_checked_at": "2026-10-22T23:20:29.335063Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49605,7 +49606,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.410241Z",
-      "last_checked_at": "2026-10-22T23:11:00.581434Z",
+      "last_checked_at": "2026-10-22T23:20:27.593538Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49624,7 +49625,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.410034Z",
-      "last_checked_at": "2026-10-22T23:10:58.606547Z",
+      "last_checked_at": "2026-10-22T23:20:25.450219Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49643,7 +49644,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.409850Z",
-      "last_checked_at": "2026-10-22T23:10:56.465727Z",
+      "last_checked_at": "2026-10-22T23:20:23.252357Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49662,7 +49663,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.409662Z",
-      "last_checked_at": "2026-10-22T23:10:54.601169Z",
+      "last_checked_at": "2026-10-22T23:20:21.484462Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49681,7 +49682,7 @@
       "published_at": "2026-10-22T21:30:04Z",
       "modified_at": null,
       "discovered_at": "2026-10-22T21:39:00.409380Z",
-      "last_checked_at": "2026-10-22T23:10:52.320943Z",
+      "last_checked_at": "2026-10-22T23:20:19.072622Z",
       "discovery_route": [
         "official:https://www.labortoday.co.kr/sitemap.xml"
       ],
@@ -49816,7 +49817,7 @@
       "published_at": "2026-10-22T21:35:06Z",
       "modified_at": "2026-10-22T21:35:06Z",
       "discovered_at": "2026-10-22T21:38:18.095813Z",
-      "last_checked_at": "2026-10-22T23:08:28.659972Z",
+      "last_checked_at": "2026-10-22T23:18:09.840650Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49836,7 +49837,7 @@
       "published_at": "2026-10-22T21:52:00Z",
       "modified_at": "2026-10-22T22:14:38Z",
       "discovered_at": "2026-10-22T23:08:26.670660Z",
-      "last_checked_at": "2026-10-22T23:08:26.670660Z",
+      "last_checked_at": "2026-10-22T23:18:07.824713Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml",
         "official:https://www.donga.com/sitemap/donga-newsmap.xml"
@@ -49856,7 +49857,7 @@
       "published_at": "2026-10-22T22:00:00Z",
       "modified_at": "2026-10-22T22:11:00Z",
       "discovered_at": "2026-10-22T23:08:48.915401Z",
-      "last_checked_at": "2026-10-22T23:08:48.915401Z",
+      "last_checked_at": "2026-10-22T23:18:31.952092Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -49876,7 +49877,7 @@
       "published_at": "2026-10-22T22:00:00Z",
       "modified_at": "2026-10-22T22:01:00Z",
       "discovered_at": "2026-10-22T23:09:41.025934Z",
-      "last_checked_at": "2026-10-22T23:09:41.025934Z",
+      "last_checked_at": "2026-10-22T23:19:27.449022Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -49895,7 +49896,7 @@
       "published_at": "2026-10-22T22:00:00Z",
       "modified_at": "2026-10-22T22:00:02Z",
       "discovered_at": "2026-10-22T23:09:38.376328Z",
-      "last_checked_at": "2026-10-22T23:09:38.376328Z",
+      "last_checked_at": "2026-10-22T23:19:25.385756Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -49914,9 +49915,10 @@
       "published_at": "2026-10-22T22:00:00Z",
       "modified_at": "2026-10-22T15:29:56Z",
       "discovered_at": "2026-10-22T23:11:41.610289Z",
-      "last_checked_at": "2026-10-22T23:11:41.610289Z",
+      "last_checked_at": "2026-10-22T23:21:08.670663Z",
       "discovery_route": [
-        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-10-22T20%3A00%3A00Z&before=2026-10-22T23%3A07%3A58Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-10-22T20%3A00%3A00Z&before=2026-10-22T23%3A07%3A58Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories",
+        "official:https://theindigo.co.kr/wp-json/wp/v2/posts?per_page=100&after=2026-10-22T20%3A00%3A00Z&before=2026-10-22T23%3A17%3A40Z&orderby=date&order=desc&_fields=id%2Cdate_gmt%2Cmodified_gmt%2Clink%2Ctitle%2Cexcerpt%2Ccategories"
       ],
       "full_body_status": "fetched",
       "body_hash": "e6e48e972ee2287e8f0366c4c8342fe35cd1aa8276388966d1783815c84fb01a",
@@ -49933,9 +49935,10 @@
       "published_at": "2026-10-22T22:11:00Z",
       "modified_at": "2026-10-22T22:19:51Z",
       "discovered_at": "2026-10-22T23:08:24.658711Z",
-      "last_checked_at": "2026-10-22T23:08:24.658711Z",
+      "last_checked_at": "2026-10-22T23:18:05.819113Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "67afe0c69454d6641253b3ecee14da714e94ba0782072bc82f41b7f8f242e66e",
@@ -49952,9 +49955,10 @@
       "published_at": "2026-10-22T22:11:08Z",
       "modified_at": "2026-10-22T22:11:08Z",
       "discovered_at": "2026-10-22T23:08:22.667749Z",
-      "last_checked_at": "2026-10-22T23:08:22.667749Z",
+      "last_checked_at": "2026-10-22T23:18:03.815100Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "db34176fa08d3c8188897538d311f3a4f5e6bf45cca3f345f72fb3a8a1fe3974",
@@ -49971,9 +49975,10 @@
       "published_at": "2026-10-22T22:14:24Z",
       "modified_at": "2026-10-22T22:14:24Z",
       "discovered_at": "2026-10-22T23:08:20.661992Z",
-      "last_checked_at": "2026-10-22T23:08:20.661992Z",
+      "last_checked_at": "2026-10-22T23:18:01.824102Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "2b745599d6887844e49db0220ea9593ceea597163e5091af8fc816638c265608",
@@ -49990,9 +49995,10 @@
       "published_at": "2026-10-22T22:31:00Z",
       "modified_at": "2026-10-22T22:34:56Z",
       "discovered_at": "2026-10-22T23:08:18.665618Z",
-      "last_checked_at": "2026-10-22T23:08:18.665618Z",
+      "last_checked_at": "2026-10-22T23:17:59.831691Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "24b89941559938b0a9218ab36aef13bdd3c42865f271a70a905678a6783f7d90",
@@ -50009,7 +50015,7 @@
       "published_at": "2026-10-22T22:31:00Z",
       "modified_at": "2026-10-22T22:31:00Z",
       "discovered_at": "2026-10-22T23:09:36.370106Z",
-      "last_checked_at": "2026-10-22T23:09:36.370106Z",
+      "last_checked_at": "2026-10-22T23:19:23.725537Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50028,7 +50034,7 @@
       "published_at": "2026-10-22T22:35:00Z",
       "modified_at": "2026-10-22T22:35:00Z",
       "discovered_at": "2026-10-22T23:09:33.201094Z",
-      "last_checked_at": "2026-10-22T23:09:33.201094Z",
+      "last_checked_at": "2026-10-22T23:19:21.147643Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50047,9 +50053,10 @@
       "published_at": "2026-10-22T22:37:00Z",
       "modified_at": "2026-10-22T22:47:53Z",
       "discovered_at": "2026-10-22T23:08:16.798703Z",
-      "last_checked_at": "2026-10-22T23:08:16.798703Z",
+      "last_checked_at": "2026-10-22T23:17:57.823278Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "3248a8c516b0d38d934b8de010183a9fcfbc5cf4ffd88afb7a467928845a14c0",
@@ -50066,7 +50073,7 @@
       "published_at": "2026-10-22T22:39:00Z",
       "modified_at": "2026-10-22T22:46:00Z",
       "discovered_at": "2026-10-22T23:08:46.929504Z",
-      "last_checked_at": "2026-10-22T23:08:46.929504Z",
+      "last_checked_at": "2026-10-22T23:18:30.144291Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
@@ -50086,7 +50093,7 @@
       "published_at": "2026-10-22T22:40:00Z",
       "modified_at": "2026-10-22T23:01:00Z",
       "discovered_at": "2026-10-22T23:09:32.341609Z",
-      "last_checked_at": "2026-10-22T23:09:32.341609Z",
+      "last_checked_at": "2026-10-22T23:19:19.077053Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50105,7 +50112,7 @@
       "published_at": "2026-10-22T22:43:00Z",
       "modified_at": "2026-10-22T22:56:00Z",
       "discovered_at": "2026-10-22T23:09:30.336018Z",
-      "last_checked_at": "2026-10-22T23:09:30.336018Z",
+      "last_checked_at": "2026-10-22T23:19:17.197696Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50124,9 +50131,10 @@
       "published_at": "2026-10-22T22:46:42Z",
       "modified_at": "2026-10-22T22:46:42Z",
       "discovered_at": "2026-10-22T23:08:14.665961Z",
-      "last_checked_at": "2026-10-22T23:08:14.665961Z",
+      "last_checked_at": "2026-10-22T23:17:55.827542Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "1561146bdb3ba6982c674dc8eeb4098deb85ab9074664956f2f23c8b41d3d92c",
@@ -50143,12 +50151,33 @@
       "published_at": "2026-10-22T22:47:18Z",
       "modified_at": "2026-10-22T22:47:18Z",
       "discovered_at": "2026-10-22T23:08:13.301275Z",
-      "last_checked_at": "2026-10-22T23:08:13.301275Z",
+      "last_checked_at": "2026-10-22T23:17:54.363408Z",
       "discovery_route": [
-        "official:https://rss.donga.com/total.xml"
+        "official:https://rss.donga.com/total.xml",
+        "official:https://www.donga.com/sitemap/donga-newsmap.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "131e941de7a084012a0d8080af3b80e173e0d6c70887d8526ec4309b6082123e",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "c11666d5aaec6927f23ad9301df9c01038b1863369d475372ffbe3e2b83b4328",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026102307535315385",
+      "title": "[속보] '한동훈 딸 허위 스펙 수사 무마' 의혹, 경찰 수사 착수…고발인 조사 진행",
+      "outlet": "pressian",
+      "reporter": "허환주 기자",
+      "published_at": "2026-10-22T22:53:53Z",
+      "modified_at": "2026-10-22T22:53:53Z",
+      "discovered_at": "2026-10-22T23:20:01.555812Z",
+      "last_checked_at": "2026-10-22T23:20:01.555812Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news",
+        "official:https://www.pressian.com/sitemap/news.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "0db802b3e477a0ab679f90c0b59950507707ddd8ee3c1d3e5c8e5df5a2f96a9b",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -50162,7 +50191,7 @@
       "published_at": "2026-10-22T22:55:00Z",
       "modified_at": "2026-10-22T22:55:00Z",
       "discovered_at": "2026-10-22T23:09:27.405455Z",
-      "last_checked_at": "2026-10-22T23:09:27.405455Z",
+      "last_checked_at": "2026-10-22T23:19:15.236596Z",
       "discovery_route": [
         "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
       ],
@@ -50181,13 +50210,32 @@
       "published_at": "2026-10-22T23:00:00Z",
       "modified_at": "2026-10-22T23:03:00Z",
       "discovered_at": "2026-10-22T23:08:44.967929Z",
-      "last_checked_at": "2026-10-22T23:08:44.967929Z",
+      "last_checked_at": "2026-10-22T23:18:27.947077Z",
       "discovery_route": [
         "official:https://www.hani.co.kr/rss/",
         "official:https://www.hani.co.kr/arti?page=1"
       ],
       "full_body_status": "fetched",
       "body_hash": "f650c6353b5cc3484f542a0971b2a2bec6a39e25098c851b88ea5134b6381694",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "b82426601b5868dcee91a8122473cdb79755527124d87d58ca1d368bfcafab6d",
+      "canonical_url": "https://www.khan.co.kr/article/202610230800005",
+      "title": "매콤달콤 빨간 양념에 세월 한 스푼, 서울 떡볶이 노포",
+      "outlet": "khan",
+      "reporter": "김지윤",
+      "published_at": "2026-10-22T23:00:00Z",
+      "modified_at": "2026-10-22T23:01:00Z",
+      "discovered_at": "2026-10-22T23:19:13.240288Z",
+      "last_checked_at": "2026-10-22T23:19:13.240288Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "1bbcbdf8748df6c52329639acfed7ad385c68eb1cfdbbbfda7a5533a824291e7",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -50201,7 +50249,7 @@
       "published_at": "2026-10-22T23:01:41Z",
       "modified_at": "2026-10-22T23:01:41Z",
       "discovered_at": "2026-10-22T23:08:12.285931Z",
-      "last_checked_at": "2026-10-22T23:08:12.285931Z",
+      "last_checked_at": "2026-10-22T23:17:53.467143Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
@@ -50214,18 +50262,77 @@
     {
       "candidate_id": "a5fe80a07f730ff20a6a3a470ac78e673ebdf302b83e9bcf0cedd755b29b28c1",
       "canonical_url": "https://www.donga.com/news/Economy/article/all/20261023/134894255/1",
-      "title": "SK하이닉스, 솔리다임 IPO 검토 중단…“시장 여건 변화”",
+      "title": "[속보]중복상장 논란에…SK하닉, 솔리다임 美상장 철회",
       "outlet": "donga",
       "reporter": "박성진",
-      "published_at": "2026-10-22T23:04:19Z",
-      "modified_at": "2026-10-22T23:04:19Z",
+      "published_at": "2026-10-22T23:04:00Z",
+      "modified_at": "2026-10-22T23:09:32Z",
       "discovered_at": "2026-10-22T23:08:03.603743Z",
-      "last_checked_at": "2026-10-22T23:08:03.603743Z",
+      "last_checked_at": "2026-10-22T23:17:44.637914Z",
       "discovery_route": [
         "official:https://rss.donga.com/total.xml"
       ],
       "full_body_status": "fetched",
       "body_hash": "f942522af0886434ada26f77931ef06ac53c84de3a7b056841d0ad63b4d5d259",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "bb772c5108d3c23ebca6eea54a79b1f9fc4a7abe6f54c5e4f2a6cba268c462c2",
+      "canonical_url": "https://www.khan.co.kr/article/202610230805001",
+      "title": "오세훈 서울시장 ‘정치자금법 위반’ 항소심 오늘 선고…재판 생중계",
+      "outlet": "khan",
+      "reporter": "오경민",
+      "published_at": "2026-10-22T23:05:00Z",
+      "modified_at": "2026-10-22T23:05:51Z",
+      "discovered_at": "2026-10-22T23:19:10.899597Z",
+      "last_checked_at": "2026-10-22T23:19:10.899597Z",
+      "discovery_route": [
+        "official:https://www.khan.co.kr/sitemap/latest-articles.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "7909dfca1ab7ae8a228beba7976130bb63f27aa38bc03d4c9d598f8c005e91b0",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "pending"
+    },
+    {
+      "candidate_id": "d461cb8e2fbae397a32c5d16956b4bfb1a12e628dc1ce8833859137e02ae153b",
+      "canonical_url": "https://www.pressian.com/pages/articles/2026102221154915553",
+      "title": "장윤기 사건 지역에 도입된 'AI 순찰로봇', 정작 사건 발생시간엔 순찰 안해",
+      "outlet": "pressian",
+      "reporter": "강병석 기자(=전남광주)",
+      "published_at": "2026-10-22T23:07:00Z",
+      "modified_at": "2026-10-22T23:07:00Z",
+      "discovered_at": "2026-10-22T23:19:59.632563Z",
+      "last_checked_at": "2026-10-22T23:19:59.632563Z",
+      "discovery_route": [
+        "official:https://www.pressian.com/api/v3/site/rss/news",
+        "official:https://www.pressian.com/sitemap/news.xml"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "211edabaae0bdc84a34b77c76f99d86685b5e361c471c115e30538beea36f3c1",
+      "verification_grade": "A",
+      "issue_id": null,
+      "primary_source_validation": "not_required"
+    },
+    {
+      "candidate_id": "bf6c244ea18c8ccc66c17cbd9bce46d9a63849da196601f07cce623ddd0c8626",
+      "canonical_url": "https://www.hani.co.kr/arti/economy/finance/1283780.html",
+      "title": "은행 연체율 상승폭 또 확대…중앙그룹 구조조정 영향",
+      "outlet": "hani",
+      "reporter": "이재연",
+      "published_at": "2026-10-22T23:13:00Z",
+      "modified_at": "2026-10-22T23:13:00Z",
+      "discovered_at": "2026-10-22T23:18:26.168755Z",
+      "last_checked_at": "2026-10-22T23:18:26.168755Z",
+      "discovery_route": [
+        "official:https://www.hani.co.kr/rss/",
+        "official:https://www.hani.co.kr/arti?page=1"
+      ],
+      "full_body_status": "fetched",
+      "body_hash": "a7b0b24e047b0047d3aff2e90f0a82a1f1f992b59aa34a35421c793688246c00",
       "verification_grade": "A",
       "issue_id": null,
       "primary_source_validation": "pending"
@@ -50268,21 +50375,21 @@
     "hits": [
       {
         "query": "장애인 정책",
-        "title": "“첼로 배우고 싶어요” 16세 장애 소녀 꿈 이뤄준 ‘개인예산제’",
-        "original_url": "https://www.donga.com/news/Society/article/all/20261023/134893305/2",
-        "naver_url": "https://n.news.naver.com/mnews/article/020/0003757118?sid=102",
-        "published_at": "2026-10-22T19:36:00Z",
-        "description": "박문수 복지부 장애인정책 과장은 “내년에 진행될 4차 시범사업에서는 전자 바우처 카드를 도입해 사후 정산으로 인한 어려움을 해소할 계획”이라며 “지원 기간, 산정 방식 등도 정비할 것”이라고 설명했다.",
-        "matched_source": "donga",
-        "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
         "title": "뉴질랜드 “장애아동 돌보는 조부모 교통비도 지원”",
         "original_url": "https://www.donga.com/news/Society/article/all/20261023/134893302/2",
         "naver_url": "https://n.news.naver.com/mnews/article/020/0003757119?sid=102",
         "published_at": "2026-10-22T19:36:00Z",
         "description": "하연 양은 지난해부터 ‘ 장애인 개인예산제’를 활용해 활동 지원 시간 120시간 중 24시간을 언어치료를 받는... 위한 정책 으로 풀이된다. 기존 서비스의 일정 비율을 개인 예산으로 떼어내는 한국과 달리 호주는 처음부터...",
+        "matched_source": "donga",
+        "in_deterministic_collection": true
+      },
+      {
+        "query": "장애인 정책",
+        "title": "“첼로 배우고 싶어요” 16세 장애 소녀 꿈 이뤄준 ‘개인예산제’",
+        "original_url": "https://www.donga.com/news/Society/article/all/20261023/134893305/2",
+        "naver_url": "https://n.news.naver.com/mnews/article/020/0003757118?sid=102",
+        "published_at": "2026-10-22T19:36:00Z",
+        "description": "박문수 복지부 장애인정책 과장은 “내년에 진행될 4차 시범사업에서는 전자 바우처 카드를 도입해 사후 정산으로 인한 어려움을 해소할 계획”이라며 “지원 기간, 산정 방식 등도 정비할 것”이라고 설명했다.",
         "matched_source": "donga",
         "in_deterministic_collection": true
       },
@@ -50398,21 +50505,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "“민형배 시장, 대통령급 보좌 조직” 국감서 질타",
-        "original_url": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8692915",
-        "naver_url": "https://n.news.naver.com/mnews/article/056/0012279166?sid=102",
-        "published_at": "2026-10-22T12:34:00Z",
-        "description": "여기에 특보와 보좌관이 붙고 비서실장 아래 별정직 비서진이 있고 정책 자문관, 정책 고문, 특별보좌관도... 의혹, 장애인 등 교통약자 대상 콜택시 '새빛콜' 운영 부실 문제 등도 지적됐습니다. KBS 뉴스 김호입니다....",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "태백시, 여성친화도시 2단계 '진입'…2026년 지정심사 최종 통과",
         "original_url": "https://www.gukjenews.com/news/articleView.html?idxno=3729980",
         "naver_url": "https://www.gukjenews.com/news/articleView.html?idxno=3729980",
         "published_at": "2026-10-22T12:34:00Z",
         "description": "여성친화도시 지정제도는 지방자치단체가 지역 정책 을 추진할 때 여성과 남성이 동등하게 참여할 수 있도록... 아동, 어르신, 장애인 등 모두가 평등하고 안전하게 생활할 수 있도록 여성친화도시 조성에 힘쓰겠다\"고 밝혔다.",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "“민형배 시장, 대통령급 보좌 조직” 국감서 질타",
+        "original_url": "https://news.kbs.co.kr/news/pc/view/view.do?ncd=8692915",
+        "naver_url": "https://n.news.naver.com/mnews/article/056/0012279166?sid=102",
+        "published_at": "2026-10-22T12:34:00Z",
+        "description": "여기에 특보와 보좌관이 붙고 비서실장 아래 별정직 비서진이 있고 정책 자문관, 정책 고문, 특별보좌관도... 의혹, 장애인 등 교통약자 대상 콜택시 '새빛콜' 운영 부실 문제 등도 지적됐습니다. KBS 뉴스 김호입니다....",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -50698,21 +50805,21 @@
       },
       {
         "query": "장애인 정책",
-        "title": "대전시의회 복지환경위, 세종·대구 우수사례 현장 점검",
-        "original_url": "http://www.breaknews.com/1245046",
-        "naver_url": "http://www.breaknews.com/1245046",
-        "published_at": "2026-10-22T09:04:00Z",
-        "description": "대전시의회 복지환경위원회가 세종과 대구의 복지·환경 분야 우수시설을 찾아 장애인 체육활동 확대와 재활승마 활성화, 친환경 녹지공간 조성 등 대전시 정책 ...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "대전시의회 복지환경위, 복지·환경 우수사례 벤치마킹",
         "original_url": "https://www.newspim.com/news/view/20261022001307",
         "naver_url": "https://www.newspim.com/news/view/20261022001307",
         "published_at": "2026-10-22T09:04:00Z",
         "description": "대전시의회 복지환경위원회가 세종과 대구를 방문해 복지·환경 분야 우수사례를 살펴보고 대전시 정책 ... [사진=대전시의회] 2026.10.22 vincent977@newspim.com 위원들은 장애인 스크린파크골프 시설과 재활승마 프로그램 운영...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "대전시의회 복지환경위, 세종·대구 우수사례 현장 점검",
+        "original_url": "http://www.breaknews.com/1245046",
+        "naver_url": "http://www.breaknews.com/1245046",
+        "published_at": "2026-10-22T09:04:00Z",
+        "description": "대전시의회 복지환경위원회가 세종과 대구의 복지·환경 분야 우수시설을 찾아 장애인 체육활동 확대와 재활승마 활성화, 친환경 녹지공간 조성 등 대전시 정책 ...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -50848,6 +50955,16 @@
       },
       {
         "query": "장애인 정책",
+        "title": "\"시민의 일상 먼저\" 최서연 전주시의회 전반기 도시건설위원장",
+        "original_url": "http://www.jeollailbo.com/news/articleView.html?idxno=814514",
+        "naver_url": "http://www.jeollailbo.com/news/articleView.html?idxno=814514",
+        "published_at": "2026-10-22T08:14:00Z",
+        "description": "전주의 지속 가능한 발전과 시민 삶의 질 향상을 위해 도시 정책 의 방향을 고민하는 최서연 전주시의회... 교통 분야에서는 고령층과 장애인 등 교통약자, 외곽지역 주민의 이동권을 보장하는 것이 중요하다. 전주의 미래...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
         "title": "대전시, 장애인 취·창업박람회 개최…815명 참여",
         "original_url": "https://www.m-i.kr/news/articleView.html?idxno=2008916",
         "naver_url": "https://www.m-i.kr/news/articleView.html?idxno=2008916",
@@ -50865,16 +50982,6 @@
         "description": "노동 부는 한겨레에 산업재해 조사표 작성 가이드라인을 내년까지 만들겠다고 밝혔다. #쿠팡 #장덕준... 인력은 교섭 대상이 아니라고 답했다. 파업 이 실행되면 노조법 2조가 바뀐 뒤 하청 노동 자가 원청을 상대로 벌이는...",
         "matched_source": "newscham",
         "in_deterministic_collection": true
-      },
-      {
-        "query": "장애인 정책",
-        "title": "\"시민의 일상 먼저\" 최서연 전주시의회 전반기 도시건설위원장",
-        "original_url": "http://www.jeollailbo.com/news/articleView.html?idxno=814514",
-        "naver_url": "http://www.jeollailbo.com/news/articleView.html?idxno=814514",
-        "published_at": "2026-10-22T08:14:00Z",
-        "description": "전주의 지속 가능한 발전과 시민 삶의 질 향상을 위해 도시 정책 의 방향을 고민하는 최서연 전주시의회... 교통 분야에서는 고령층과 장애인 등 교통약자, 외곽지역 주민의 이동권을 보장하는 것이 중요하다. 전주의 미래...",
-        "matched_source": null,
-        "in_deterministic_collection": null
       },
       {
         "query": "장애인 정책",
@@ -51098,26 +51205,6 @@
       },
       {
         "query": "장애인 정책",
-        "title": "진천소방서 발전위원회 10월 정기회 개최",
-        "original_url": "https://www.inews365.com/news/article.html?no=940407",
-        "naver_url": "https://www.inews365.com/news/article.html?no=940407",
-        "published_at": "2026-10-22T07:00:00Z",
-        "description": "지역특성에 맞춘 소방 정책 협의 ［충북일보］ 진천소방서발전위원회는 22일 진천소방서 3층 대회의실에서... 참석자들은 기초생활수급자, 홀몸 어르신, 장애인 등에게 안심겨울나기를 위한 소방용품을 지원하는 방안에...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
-        "title": "\"거쳐 가는 도시에서 머무는 도시로의 '대전환'\"…박찬대 시장, '인천 도...",
-        "original_url": "http://www.bizwnews.com/news/articleView.html?idxno=149714",
-        "naver_url": "http://www.bizwnews.com/news/articleView.html?idxno=149714",
-        "published_at": "2026-10-22T07:00:00Z",
-        "description": "아울러 고속버스 환승허브 구축, 원도심 주차장 확충, 전동킥보드 운행 금지구역 확대, 다인승 장애인 콜택시 도입 및 운영시간 확대 등 시민 생활과 밀접한 교통 정책 도 함께 추진한다. 박찬대 시장은 \"G20 정상회의는...",
-        "matched_source": null,
-        "in_deterministic_collection": null
-      },
-      {
-        "query": "장애인 정책",
         "title": "천안시, 장애인 복지시설 종사자 '심리지원서비스' 운영",
         "original_url": "http://www.dtnews24.com/news/articleView.html?idxno=816378",
         "naver_url": "http://www.dtnews24.com/news/articleView.html?idxno=816378",
@@ -51133,6 +51220,26 @@
         "naver_url": "https://n.news.naver.com/mnews/article/586/0000140635?sid=102",
         "published_at": "2026-10-22T07:00:00Z",
         "description": "오 시장은 시각 장애인 안마사가 어르신 건강관리를 돕는 '어르신 건강채움 안마서비스'를 둘러본 뒤 현장... 시는 이날 나온 현장 의견을 정책 에 반영하고, 10월30일 전문가 정책 포럼을 열어 제도 개선 방향을 논의할...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "진천소방서 발전위원회 10월 정기회 개최",
+        "original_url": "https://www.inews365.com/news/article.html?no=940407",
+        "naver_url": "https://www.inews365.com/news/article.html?no=940407",
+        "published_at": "2026-10-22T07:00:00Z",
+        "description": "지역특성에 맞춘 소방 정책 협의 ［충북일보］ 진천소방서발전위원회는 22일 진천소방서 3층 대회의실에서... 참석자들은 기초생활수급자, 홀몸 어르신, 장애인 등에게 안심겨울나기를 위한 소방용품을 지원하는 방안에...",
+        "matched_source": null,
+        "in_deterministic_collection": null
+      },
+      {
+        "query": "장애인 정책",
+        "title": "\"거쳐 가는 도시에서 머무는 도시로의 '대전환'\"…박찬대 시장, '인천 도...",
+        "original_url": "http://www.bizwnews.com/news/articleView.html?idxno=149714",
+        "naver_url": "http://www.bizwnews.com/news/articleView.html?idxno=149714",
+        "published_at": "2026-10-22T07:00:00Z",
+        "description": "아울러 고속버스 환승허브 구축, 원도심 주차장 확충, 전동킥보드 운행 금지구역 확대, 다인승 장애인 콜택시 도입 및 운영시간 확대 등 시민 생활과 밀접한 교통 정책 도 함께 추진한다. 박찬대 시장은 \"G20 정상회의는...",
         "matched_source": null,
         "in_deterministic_collection": null
       },
@@ -52146,8 +52253,8 @@
     ]
   },
   "final_state": {
-    "status": "failed",
-    "checked_at": "2026-10-22T23:11:44.042334Z",
+    "status": "complete",
+    "checked_at": "2026-10-22T23:21:11.054302Z",
     "checks": [
       {
         "issue_title": "장애인 지역사회 자립지원 본사업 예산 미반영, 전담인력 1대4 구조와 학대 피해자 시설 이동 문제 국정감사서 지적",
@@ -52239,10 +52346,10 @@
       },
       {
         "issue_title": "김정관 산업부 장관, 국감서 메가특구법에 주52시간제 예외 등 노동 특례 포함 희망, 민주당 특례 포함·제외 법안 각각 발의",
-        "status": "failed",
+        "status": "complete",
         "progressive": true,
         "changed_after_draft": false,
-        "reason": "선정 기사 출처의 발행 직전 공식 재수집 실패: pressian",
+        "reason": "초안·감사 뒤 공식 출처 재수집에서 더 새로운 최종상태 보도를 찾지 못함",
         "evidence_urls": []
       },
       {
