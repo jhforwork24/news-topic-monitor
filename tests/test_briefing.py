@@ -181,6 +181,36 @@ def test_previous_coverage_requires_a_specific_shared_concept() -> None:
     assert any(item.url == earlier_access.canonical_url for item in access_previous)
 
 
+def test_previous_coverage_attaches_a_shared_system_name_even_without_other_shared_words() -> None:
+    current = _article(
+        "donga",
+        "첼로 배우고 싶어요 16세 소녀 꿈 이뤄준 개인예산제",
+        article_id="system-current",
+    )
+    critical = _article(
+        "ablenews",
+        "선택권 보장 개인예산제 영양제·가전제품 구매 부적절",
+        article_id="system-critical",
+    )
+    unrelated = _article(
+        "beminor",
+        "장애인 활동지원 시간 확대 요구 기자회견",
+        article_id="system-unrelated",
+    )
+    previous = previous_coverage_for([current], [critical, unrelated])
+    assert [item.url for item in previous] == [critical.canonical_url]
+    assert previous[0].match_rule == PREVIOUS_MATCH_PROPER_NOUN
+
+    bill_current = _article("hani", "메가특구법 주52시간 예외 장관 발언", article_id="bill-current")
+    bill_earlier = _article(
+        "joongang",
+        "메가특구법 첫 사회적 대화 노동계 첫마디는 노동권 후퇴",
+        article_id="bill-earlier",
+    )
+    bill_previous = previous_coverage_for([bill_current], [bill_earlier])
+    assert [item.url for item in bill_previous] == [bill_earlier.canonical_url]
+
+
 def test_previous_coverage_links_differently_worded_reports_via_concept_terms() -> None:
     current = _article(
         "ablenews",
