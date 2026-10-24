@@ -122,6 +122,11 @@ candidate_id가 없으면 `fatal`이다(누락). 동시에 `plan.exclusions`에�
 기계적 검증(`briefing_validation.py`)에서 그대로 거부되므로, 감사에서 미리 걸러내면 불필요한
 finalize 재시도를 줄일 수 있다.
 
+제목 점검(`warning`, 발행을 막지 않는다): 이슈 `title`이 공백 포함 70자를 넘는지, 발언을 큰따옴표 없이 단정
+서술로 옮겼는지, 한쪽의 주장을 확정 사실로 썼는지, 사업·법안명이 근거의 명칭과 다른지 확인한다
+([`claude-editorial-instructions.md`](claude-editorial-instructions.md)의 "이슈 제목" 기준). 길이 초과는
+이슈마다 한 줄이 아니라 한 건으로 묶어 남긴다.
+
 비텍스트 요소 점검(`warning`): `summary`·`tone_analysis`가 도표·그래프·사진·영상 같은 비텍스트 요소를
 서술하는데 `evidence_text`의 캡션·표 셀·본문 문장으로 확인되지 않으면 `warning`(`code`에 "비텍스트 요소
 확인 불가")으로 표시한다. 대기열 근거는 텍스트 발췌라 요소가 실제로 있어도 입력으로 검증할 수 없으므로
