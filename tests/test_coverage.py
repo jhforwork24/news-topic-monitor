@@ -7,6 +7,7 @@ import pytest
 from news_topic_monitor.adapters.base import SourceAdapter, StructureChangedError
 from news_topic_monitor.adapters.chosun import ChosunAdapter
 from news_topic_monitor.coverage import (
+    LIST_LAG_MARGIN,
     MISSING_LIST_LIMIT,
     STATUS_ERROR,
     STATUS_FAIL,
@@ -92,9 +93,12 @@ def test_articles_newer_than_the_last_successful_collection_are_not_missing() ->
     last_success = NOW - timedelta(hours=8)
     result = _evaluate(items, {"1"}, last_success=last_success)
     # 8시간 전 수집 이후에 올라온 기사(5시간 전)는 아직 수집 회차를 만나지 못했을 수 있어 뺀다.
-    assert result.judged_until == last_success
+    # 마지막 수집 직전 1시간(목록 반영 지연)도 뺀다.
+    assert result.judged_until == last_success - LIST_LAG_MARGIN
     assert (result.listed, result.missing_total) == (2, 1)
     assert result.missing[0]["url"] == "https://good.test/article/2"
+    near_run = _evaluate([_item(1, 30), _item(2, 8.5)], {"1"}, last_success=last_success)
+    assert (near_run.listed, near_run.missing_total) == (1, 0)
 
 
 def test_undated_listing_items_are_judged_by_presence() -> None:

@@ -39,6 +39,9 @@ TARGET_GENERAL = 0.99
 SPECIALIST_SOURCES = DISABILITY_PRESS_SOURCES | LABOR_ALTERNATIVE_SOURCES
 # 방금 올라온 기사는 다음 수집 회차를 기다려야 하므로 점검 대상에서 뺀다.
 RECENT_GRACE = timedelta(hours=3)
+# 목록에는 기사가 올라온 뒤 한참 있다가 나타나기도 한다(2026-10-26 경향신문은 마지막 수집 직전 10여
+# 분 안에 발행된 기사가 그 회차 목록에 없었다). 마지막 성공 수집 직전 이만큼은 판정하지 않는다.
+LIST_LAG_MARGIN = timedelta(hours=1)
 MISSING_LIST_LIMIT = 30
 
 STATUS_PASS = "pass"
@@ -184,7 +187,7 @@ def evaluate(
     dated = [item.listed_at for item in items if item.listed_at is not None]
     until = now - RECENT_GRACE
     if last_success is not None:
-        until = min(until, last_success)
+        until = min(until, last_success - LIST_LAG_MARGIN)
     coverage.judged_until = until
     if not dated:
         coverage.status = STATUS_NOT_JUDGED
