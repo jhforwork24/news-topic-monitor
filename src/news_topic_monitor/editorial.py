@@ -39,6 +39,7 @@ from .sources import (
     SOURCE_CAMP,
     PersonnelTarget,
     is_mandatory_opinion_column,
+    is_non_news_opinion_section,
     is_section_opinion_column,
     monitored_personnel_match,
 )
@@ -182,6 +183,14 @@ def section_opinion_candidate(candidate: EditorialCandidate) -> bool:
         candidate.section,
         candidate.summary,
     )
+
+
+def non_news_opinion_candidate(candidate: EditorialCandidate) -> bool:
+    """에이블뉴스 오피니언처럼 사실 보도 이슈의 근거로 쓸 수 없는 오피니언·기고면 후보."""
+
+    return is_non_news_opinion_section(
+        candidate.source, candidate.section
+    ) and not mandatory_opinion_candidate(candidate)
 
 
 def monitored_personnel_candidate(candidate: EditorialCandidate) -> PersonnelTarget | None:
@@ -706,6 +715,11 @@ def _validate_plan(
                 errors.append(
                     f"{issue.title}: {candidate.source} 오피니언 기사는 "
                     "opinion 섹션에만 배치할 수 있음"
+                )
+            if issue.section != EditorialSection.OPINION and non_news_opinion_candidate(candidate):
+                errors.append(
+                    f"{issue.title}: {candidate.source} 오피니언·기고면 기사는 "
+                    "사실 보도 이슈의 근거로 쓸 수 없음"
                 )
             if (
                 issue.section == EditorialSection.LABOR

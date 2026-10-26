@@ -47,6 +47,7 @@ from .sources import (
     PRIMARY_COMPARISON_SOURCES,
     SOURCE_LABELS,
     is_mandatory_opinion_column,
+    is_non_news_opinion_section,
     is_section_opinion_column,
     monitored_personnel_match,
 )
@@ -1080,7 +1081,7 @@ def _queue_part_blocks(
         source = SOURCE_LABELS.get(candidate.source, candidate.source)
         byline = candidate.byline or "기자명 확인 안 됨"
         labor_guard = _labor_queue_hint(candidate, labor_classifier)
-        opinion_hint = _opinion_queue_hint(candidate)
+        opinion_hint = _opinion_queue_hint(candidate) or _non_news_opinion_hint(candidate)
         personnel_hint = _personnel_queue_hint(candidate)
         lead_only = queue_reading_tier(candidate, labor_classifier) == READING_TIER_LEAD
         reading_hint = (
@@ -1268,6 +1269,30 @@ def _opinion_queue_hint(candidate: EditorialCandidate) -> str | None:
         candidate.summary,
     ):
         return "III절 고정 칼럼 — 장애 주제 분류와 무관하게 opinion 후보로 반드시 검토"
+    return None
+
+
+def _non_news_opinion_hint(candidate: EditorialCandidate) -> str | None:
+    """Flag the 오피니언·기고면 pieces that can never be fact-reporting evidence.
+
+    2026-10-27 draft cited a 에이블뉴스 오피니언 단체 성명 as news evidence in a
+    disability issue while three similar pieces were excluded as "not fact reporting".
+    The plan validation now rejects them; this hint tells the editor beforehand.
+    """
+
+    if is_mandatory_opinion_column(
+        candidate.source,
+        candidate.title,
+        candidate.byline,
+        candidate.section,
+        candidate.summary,
+    ):
+        return None
+    if is_non_news_opinion_section(candidate.source, candidate.section):
+        return (
+            "오피니언·기고면 — 사실 보도 근거로 쓸 수 없음(disability·labor 배치 불가, "
+            "opinion 허용 매체도 아님, 제외 사유에 남김)"
+        )
     return None
 
 

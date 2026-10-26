@@ -51,6 +51,7 @@ from .gap_detection import (
     NaverConfigurationError,
     NaverSearchClient,
     NaverSearchSettings,
+    known_title_keys,
     run_gap_detection,
     run_reverse_search,
 )
@@ -528,6 +529,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 revalidation_end = revalidation_health.run_finished_at
                 all_candidates = evidence_store.candidates(start=start, end=revalidation_end)
                 known_canonical_urls = {candidate.canonical_url for candidate in all_candidates}
+                known_titles = known_title_keys(all_candidates)
                 LOGGER.info("editorial phase=gap_reverse_search status=started")
                 phase_started = perf_counter()
 
@@ -538,6 +540,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         policy=briefing_policy,
                         registry=source_registry,
                         known_canonical_urls=known_canonical_urls,
+                        known_titles=known_titles,
                         start=start,
                         end=end,
                     )
@@ -558,6 +561,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                             policy=briefing_policy,
                             registry=source_registry,
                             known_canonical_urls=known_canonical_urls,
+                            known_titles=known_titles,
                             start=start,
                             end=end,
                         )
@@ -813,6 +817,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                 known_canonical_urls = {
                     article.canonical_url for article in storage.iter_articles()
                 } | {candidate.canonical_url for candidate in candidates}
+                known_titles = known_title_keys([*storage.iter_articles(), *candidates])
                 if naver_settings is None:
                     gap_detection = run_gap_detection(
                         client=None,
@@ -820,6 +825,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         policy=briefing_policy,
                         registry=source_registry,
                         known_canonical_urls=known_canonical_urls,
+                        known_titles=known_titles,
                         start=start,
                         end=end,
                     )
@@ -831,6 +837,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                             policy=briefing_policy,
                             registry=source_registry,
                             known_canonical_urls=known_canonical_urls,
+                            known_titles=known_titles,
                             start=start,
                             end=end,
                         )
@@ -1126,6 +1133,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             known_canonical_urls = {candidate.canonical_url for candidate in all_candidates} | {
                 article.canonical_url for article in storage.iter_articles()
             }
+            known_titles = known_title_keys([*all_candidates, *storage.iter_articles()])
 
             phase_started = perf_counter()
             if naver_settings is None:
@@ -1135,6 +1143,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                     policy=briefing_policy,
                     registry=source_registry,
                     known_canonical_urls=known_canonical_urls,
+                    known_titles=known_titles,
                     start=start,
                     end=end,
                 )
@@ -1155,6 +1164,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                         policy=briefing_policy,
                         registry=source_registry,
                         known_canonical_urls=known_canonical_urls,
+                        known_titles=known_titles,
                         start=start,
                         end=end,
                     )
