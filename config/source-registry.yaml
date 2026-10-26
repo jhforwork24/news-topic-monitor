@@ -53,7 +53,7 @@ sources:
     label: 조선일보
     tier: designated_reverse_search
     domains: [www.chosun.com, chosun.com]
-    discovery_routes: [official_rss, official_news_sitemap]
+    discovery_routes: [official_rss, official_news_sitemap, official_story_feed_api]
     fallbacks: [naver_gap_detection]
   joongang:
     label: 중앙일보
