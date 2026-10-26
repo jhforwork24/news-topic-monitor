@@ -18,19 +18,36 @@ import argparse
 import json
 import re
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta, timezone
 from pathlib import Path
 
 KST = timezone(timedelta(hours=9))
 LABELS = {
-    "beminor": "비마이너", "ablenews": "에이블뉴스", "theindigo": "더인디고", "labortoday": "매일노동뉴스",
-    "newscham": "참세상", "chosun": "조선일보", "joongang": "중앙일보", "donga": "동아일보", "khan": "경향신문",
-    "hani": "한겨레", "ohmynews": "오마이뉴스", "pressian": "프레시안", "sisain": "시사IN", "mediaus": "미디어스",
+    "beminor": "비마이너",
+    "ablenews": "에이블뉴스",
+    "theindigo": "더인디고",
+    "labortoday": "매일노동뉴스",
+    "newscham": "참세상",
+    "chosun": "조선일보",
+    "joongang": "중앙일보",
+    "donga": "동아일보",
+    "khan": "경향신문",
+    "hani": "한겨레",
+    "ohmynews": "오마이뉴스",
+    "pressian": "프레시안",
+    "sisain": "시사IN",
+    "mediaus": "미디어스",
 }
-SECTION = {"I": re.compile(r"^# I\. "), "II": re.compile(r"^# II\. "), "III": re.compile(r"^# III\. ")}
+SECTION = {
+    "I": re.compile(r"^# I\. "),
+    "II": re.compile(r"^# II\. "),
+    "III": re.compile(r"^# III\. "),
+}
 CLUSTER = re.compile(r"^## (\d+)\. (.+)$")
 LINK = re.compile(r"\]\((https?://[^)\s]+)\)\s*$")
-WINDOW = re.compile(r"조사기간:\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) 이상,\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) 미만")
+WINDOW = re.compile(
+    r"조사기간:\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) 이상,\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}) 미만"
+)
 
 
 def norm(url: str) -> str:
@@ -60,8 +77,14 @@ def parse_briefing(path: Path) -> list[dict]:
                 section, current = name, None
         m = CLUSTER.match(line)
         if m and section:
-            current = {"section": section, "number": int(m.group(1)), "title": m.group(2).strip(), "block": None,
-                       "issue_id": None, "urls": []}
+            current = {
+                "section": section,
+                "number": int(m.group(1)),
+                "title": m.group(2).strip(),
+                "block": None,
+                "issue_id": None,
+                "urls": [],
+            }
             clusters.append(current)
             continue
         if current and line.startswith("- "):
@@ -77,7 +100,7 @@ def put(archive: Path, rel: str, text: str) -> None:
         if dest.read_text(encoding="utf-8") == text:
             print(f"동일해서 건너뜀: {rel}")
             return
-        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
         dest = dest.with_name(f"{dest.stem}.rev-{stamp}{dest.suffix}")
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(text, encoding="utf-8")
@@ -105,7 +128,10 @@ def main(argv: list[str] | None = None) -> int:
 
     ledger: dict[str, dict] = {}
     for p in sorted(Path("data/articles").glob("20*.jsonl")):
-        if p.stem < (start - timedelta(days=3)).date().isoformat() or p.stem > (end + timedelta(days=1)).date().isoformat():
+        if (
+            p.stem < (start - timedelta(days=3)).date().isoformat()
+            or p.stem > (end + timedelta(days=1)).date().isoformat()
+        ):
             continue
         for line in p.open(encoding="utf-8"):
             if not line.strip():
@@ -122,37 +148,93 @@ def main(argv: list[str] | None = None) -> int:
         r = ledger.get(u, {})
         c = cited.get(u)
         t = kst(r.get("published_at"))
-        rows.append({
-            "schema": "briefing-archive/articles/v1", "pipeline": "daily", "issue_date": day,
-            "window_start_kst": start.isoformat(), "window_end_kst": end.isoformat(),
-            "url": u, "source": r.get("source"), "media": LABELS.get(r.get("source"), r.get("source")),
-            "title": r.get("title"), "section": r.get("section"),
-            "summary": (r.get("summary") or "")[:300] or None,
-            "published_kst": t.isoformat() if t else None,
-            "published_date_kst": t.date().isoformat() if t else None,
-            "screen": {"classification": r.get("classification"), "topic_score": r.get("topic_score"),
-                       "matched_terms": r.get("matched_terms"), "found_by": r.get("discovery_route"),
-                       "in_ledger": bool(r)},
-            "review": ({"status": "cited", "section": c["section"], "cluster_no": c["number"],
-                        "cluster_title": c["title"], "block": None, "issue_id": None, "reason": None} if c else
-                       {"status": "not_selected", "section": None, "cluster_no": None, "cluster_title": None,
-                        "block": None, "issue_id": None, "reason": None}),
-            "body_sha256": r.get("content_hash"),
-        })
-    issues = [{"schema": "briefing-archive/issues/v1", "issue_id": None, "name": c["title"], "pipeline": "daily",
-               "issue_date": day, "section": c["section"], "cluster_no": c["number"], "block": None,
-               "article_count": len(c["urls"]),
-               "media": sorted({LABELS.get(ledger.get(u, {}).get("source"), "?") for u in c["urls"]})}
-              for c in clusters]
+        rows.append(
+            {
+                "schema": "briefing-archive/articles/v1",
+                "pipeline": "daily",
+                "issue_date": day,
+                "window_start_kst": start.isoformat(),
+                "window_end_kst": end.isoformat(),
+                "url": u,
+                "source": r.get("source"),
+                "media": LABELS.get(r.get("source"), r.get("source")),
+                "title": r.get("title"),
+                "section": r.get("section"),
+                "summary": (r.get("summary") or "")[:300] or None,
+                "published_kst": t.isoformat() if t else None,
+                "published_date_kst": t.date().isoformat() if t else None,
+                "screen": {
+                    "classification": r.get("classification"),
+                    "topic_score": r.get("topic_score"),
+                    "matched_terms": r.get("matched_terms"),
+                    "found_by": r.get("discovery_route"),
+                    "in_ledger": bool(r),
+                },
+                "review": (
+                    {
+                        "status": "cited",
+                        "section": c["section"],
+                        "cluster_no": c["number"],
+                        "cluster_title": c["title"],
+                        "block": None,
+                        "issue_id": None,
+                        "reason": None,
+                    }
+                    if c
+                    else {
+                        "status": "not_selected",
+                        "section": None,
+                        "cluster_no": None,
+                        "cluster_title": None,
+                        "block": None,
+                        "issue_id": None,
+                        "reason": None,
+                    }
+                ),
+                "body_sha256": r.get("content_hash"),
+            }
+        )
+    issues = [
+        {
+            "schema": "briefing-archive/issues/v1",
+            "issue_id": None,
+            "name": c["title"],
+            "pipeline": "daily",
+            "issue_date": day,
+            "section": c["section"],
+            "cluster_no": c["number"],
+            "block": None,
+            "article_count": len(c["urls"]),
+            "media": sorted({LABELS.get(ledger.get(u, {}).get("source"), "?") for u in c["urls"]}),
+        }
+        for c in clusters
+    ]
     dump = lambda rs: "".join(json.dumps(x, ensure_ascii=False, sort_keys=True) + "\n" for x in rs)  # noqa: E731
     put(args.archive, f"daily/{day}.articles.jsonl", dump(rows))
-    put(args.archive, f"daily/{day}.clusters.json", json.dumps({
-        "schema": "briefing-archive/clusters/v1", "pipeline": "daily", "issue_date": day,
-        "window": {"start_kst": start.isoformat(), "end_kst": end.isoformat()}, "clusters": clusters,
-    }, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+    put(
+        args.archive,
+        f"daily/{day}.clusters.json",
+        json.dumps(
+            {
+                "schema": "briefing-archive/clusters/v1",
+                "pipeline": "daily",
+                "issue_date": day,
+                "window": {"start_kst": start.isoformat(), "end_kst": end.isoformat()},
+                "clusters": clusters,
+            },
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+    )
     put(args.archive, f"issues/{day}.daily.jsonl", dump(issues))
-    print(json.dumps({"date": day, "articles": len(rows), "cited": len(cited), "clusters": len(clusters)},
-                     ensure_ascii=False))
+    print(
+        json.dumps(
+            {"date": day, "articles": len(rows), "cited": len(cited), "clusters": len(clusters)},
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 
