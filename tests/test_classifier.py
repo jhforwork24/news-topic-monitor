@@ -72,3 +72,12 @@ def test_labor_topic_excludes_north_korean_party_usage(topics_path) -> None:
     )
     assert result.classification == Classification.IRRELEVANT
     assert result.excluded_terms
+
+
+def test_special_transport_headline_without_disability_word_is_kept_for_review(topics_path) -> None:
+    result = RuleClassifier(topics_path).classify(
+        title='김예지 의원 "광주 새빛콜, 3시간 대기…운전원은 1시간 조기 퇴근"'
+    )
+    assert result.candidate
+    assert result.classification in {Classification.REVIEW, Classification.RELEVANT}
+    assert "새빛콜" in result.matched_terms

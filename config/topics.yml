@@ -58,6 +58,15 @@ topics:
       - {term: ADHD, score: 3.5}
       - {term: 소득보장, score: 2.5}
       - {term: 거주시설, score: 3.0}
+      # 2026-10-26 주간 대조에서 제목에 '장애'가 없어 놓친 이동권·접근권 보도(광주 새빛콜 대기 등)
+      - {term: 장애인콜택시, score: 5.0}
+      - {term: 장애인 콜택시, score: 5.0}
+      - {term: 특별교통수단, score: 5.0}
+      - {term: 새빛콜, score: 4.0}
+      - {term: 두리발, score: 4.0}
+      - {term: 교통약자, score: 3.0}
+      - {term: 저상버스, score: 3.0}
+      - {term: 배리어프리, score: 3.0}
       - {term: 시설 인권침해, score: 6.0}
       - {term: 정신병원, score: 2.0}
       - {term: 정신의료기관, score: 2.5}

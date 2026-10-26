@@ -204,3 +204,22 @@ def test_throttled_storage_skips_the_write_inside_a_batch_too(tmp_path) -> None:
         assert storage.upsert(_seen_again(item, hours=2)) == StoreResult.DUPLICATE
 
     assert _stored_bytes(tmp_path) == before
+
+
+def test_resighting_without_dates_keeps_existing_published_at(tmp_path) -> None:
+    storage = JsonlStorage(tmp_path)
+    first = record()
+    storage.upsert(first)
+    later = first.model_copy(
+        update={
+            "published_at": None,
+            "updated_at": None,
+            "first_seen_at": first.first_seen_at + timedelta(days=1),
+            "last_seen_at": first.last_seen_at + timedelta(days=1),
+        }
+    )
+    storage.upsert(later)
+    stored = list(storage.iter_articles())
+    assert len(stored) == 1
+    assert stored[0].published_at == datetime(2026, 8, 15, 0, 30, tzinfo=UTC)
+    assert stored[0].first_seen_at == first.first_seen_at
