@@ -1,0 +1,48 @@
+{
+ "content_elements": [
+  {
+   "canonical_url": "/national/regional/2026/10/26/AAAAAAAAAAAAAAAAAAAAAAAAAA/",
+   "first_publish_date": "2026-10-26T01:00:00Z",
+   "display_date": "2026-10-26T01:00:00Z",
+   "last_updated_date": "2026-10-26T01:05:00Z",
+   "headlines": {
+    "basic": "합성 지역 기사 제목"
+   }
+  },
+  {
+   "canonical_url": "/economy/industry-company/2026/10/26/BBBBBBBBBBBBBBBBBBBBBBBBBB/",
+   "first_publish_date": "2026-10-25T23:30:00Z",
+   "display_date": "2026-10-25T23:30:00Z",
+   "last_updated_date": "2026-10-25T23:30:00Z",
+   "headlines": {
+    "basic": "합성 산업 기사 제목"
+   }
+  },
+  {
+   "canonical_url": "/jp/politics-national-jp/2026/10/26/CCCCCCCCCCCCCCCCCCCCCCCCCC/",
+   "first_publish_date": "2026-10-25T23:00:00Z",
+   "display_date": "2026-10-25T23:00:00Z",
+   "last_updated_date": "2026-10-25T23:00:00Z",
+   "headlines": {
+    "basic": "합성 일본어판 제목"
+   }
+  },
+  {
+   "canonical_url": "/national/national_general/2026/10/25/DDDDDDDDDDDDDDDDDDDDDDDDDD/",
+   "first_publish_date": "2026-10-25T22:00:00Z",
+   "display_date": "2026-10-25T22:00:00Z",
+   "last_updated_date": "2026-10-25T22:00:00Z",
+   "headlines": {}
+  },
+  {
+   "canonical_url": "/national/court_law/2026/09/01/EEEEEEEEEEEEEEEEEEEEEEEEEE/",
+   "first_publish_date": "2026-09-01T00:00:00Z",
+   "display_date": "2026-10-25T21:00:00Z",
+   "last_updated_date": "2026-10-25T21:00:00Z",
+   "headlines": {
+    "basic": "합성 수정된 옛 기사 제목"
+   }
+  }
+ ],
+ "count": 5
+}

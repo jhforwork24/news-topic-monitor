@@ -11,7 +11,7 @@
 
 | 출처 | 공식 발견 경로 | robots·발견 결과 | 본문 live 검증 |
 |---|---|---|---|
-| 조선일보 | 통합 RSS, news sitemap | 허용·URL 발견 | `Fusion.globalContent.content_elements` |
+| 조선일보 | 통합 RSS, news sitemap, 분야별 news-sitemap 9개, 기사피드 API(`/pf/api/v3/content/fetch/story-feed`) | 허용·URL 발견 | `Fusion.globalContent.content_elements` |
 | 중앙일보 | latest 및 날짜별 sitemap | 허용·URL 발견 | `#article_body` |
 | 동아일보 | 통합 RSS, newsmap | 두 origin 허용·URL 발견 | `.news_view` |
 | 한겨레 | `/arti?page=N`, 보조 RSS | 허용·URL 발견 | `article#renewal2023` |
@@ -131,3 +131,23 @@ robots 확인 실패이면 기사 URL을 요청하지 않았음을 명시한다.
   복구 뒤 RSS 25건 제한으로 놓치던 기사다. 네이버·다음 뉴스는 `robots.txt`가 전체 금지(네이버는 AI
   학습·검색증강 사용도 금지)이거나(`search.daum.net`) `robots.txt`가 없어(`news.daum.net`,
   `v.daum.net`) 사용하지 않는다. Naver API Hub는 계속 누락 탐지에만 쓴다.
+
+## 조선일보 기사피드 API (2026-10-26 확인)
+
+조선일보 통합 RSS·news-sitemap·분야 sitemap은 모두 최근 100건만 담는다. 2026-10-26 실측으로
+낮 시간대에는 RSS가 1~2시간, 분야 sitemap이 경제 약 8시간·스포츠 약 2시간 분량이어서, 수집
+회차가 비면 그 사이 기사를 놓친다. 같은 날 대조 구간(2026-10-24 19:00~10-26 01:00 KST)에서
+기사피드 639건 중 329건이 저장분에 없었다.
+
+- robots.txt(www.chosun.com)는 `/pf/api`를 막지 않는다. 수집기 User-Agent로 `robots_decision`이
+  허용으로 판정함을 직접 확인했다.
+- 요청: `/pf/api/v3/content/fetch/story-feed?query=<JSON>&_website=chosun&filter=<필드>`.
+  `query`는 `includeContentTypes`·`excludeContentTypes`·`includeSections`(`/national` 등)·`size`
+  (100)·`offset`이다. `filter`가 없으면 한 쪽이 약 8MB(본문 포함)이므로 반드시 붙인다(있으면 약
+  34KB).
+- 피드는 표시 시각(`display_date`) 내림차순이다. 수정으로 표시 시각이 갱신된 옛 기사가 앞쪽에
+  섞이므로 넘김 중단은 표시 시각으로 판단하고, 기사의 `published_at`은 `first_publish_date`를
+  쓴다. 일본어판(`/jp/`)·영문판(`/english/`)은 저장하지 않는다.
+- 브리핑 대상이 아닌 스포츠·연예 분야는 이 경로에서 뺀다(분야 sitemap으로는 계속 수집한다).
+- 일시 HTTP 503이 있었다. 공통 HTTP 클라이언트의 재시도·대기를 따르고, 실패해도 기존 경로는
+  그대로 쓴다(health의 `errors`에 남는다).

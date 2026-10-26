@@ -233,6 +233,9 @@ class SourceAdapter(ABC):
     media_group: str = "general"
     supports_opinion_scan: bool = False
     fetch_candidate_bodies: bool = True
+    # 쪽수가 많은 발견 경로(예: 조선일보 기사피드)는 다음 쪽을 자식 URL로 이어 붙인다. 출처마다
+    # 필요한 상한이 달라 기본 자식 URL 상한(Collector.max_discovery_children)보다 크게 잡을 때 쓴다.
+    discovery_child_limit: int | None = None
     # Newest-first paginated list URLs start with this prefix. Once a page's oldest
     # dated article precedes the window start, the remaining pages are skipped.
     date_ordered_list_prefix: str | None = None

@@ -69,6 +69,24 @@ class GoodAdapter(SourceAdapter):
         raise AssertionError("irrelevant article body must not be requested")
 
 
+class PagedDiscoveryAdapter(GoodAdapter):
+    """Chains 30 child pages, like a paginated feed that has to reach back many pages."""
+
+    source = "paged"
+    pages = 30
+
+    def parse_discovery(self, content, url):
+        del content
+        number = int(url.rsplit("=", 1)[-1]) if "page=" in url else 0
+        children = [f"https://good.test/feed?page={number + 1}"] if number < self.pages else []
+        return DiscoveryPage(articles=[], child_urls=children)
+
+
+class PagedWithOwnLimitAdapter(PagedDiscoveryAdapter):
+    source = "paged_own_limit"
+    discovery_child_limit = 40
+
+
 class BadAdapter(GoodAdapter):
     source = "bad"
     allowed_discovery_hosts = frozenset({"bad.test"})
@@ -885,3 +903,25 @@ def test_partial_run_does_not_advance_the_continuity_anchor(tmp_path, topics_pat
     state = storage.load_state()["sources"]["dated"]
     assert state["last_success_at"] != "2026-08-15T04:00:00Z"
     assert state["last_complete_at"] == "2026-08-15T04:00:00Z"
+
+
+def test_adapter_child_url_limit_overrides_the_default_cap(tmp_path, topics_path) -> None:
+    def pages_visited(adapter) -> tuple[int, list[str]]:
+        health = Collector(
+            http=StubHttp(),
+            storage=JsonlStorage(tmp_path / adapter.source),
+            classifier=RuleClassifier(topics_path),
+            adapters=[adapter],
+            max_discovery_children=20,
+        ).run(datetime(2026, 8, 15, 0, tzinfo=UTC), datetime(2026, 8, 15, 2, tzinfo=UTC))
+        source = health.sources[adapter.source]
+        return source.discovery_paths_succeeded, source.discovery_warnings
+
+    default_pages, default_warnings = pages_visited(PagedDiscoveryAdapter())
+    own_pages, own_warnings = pages_visited(PagedWithOwnLimitAdapter())
+    # 기본 상한(20)에서는 시작 URL 1개 + 자식 20개에서 멈추고 경고를 남긴다.
+    assert default_pages == 21
+    assert "child sitemap limit reached" in default_warnings
+    # 어댑터가 더 큰 상한을 선언하면 30쪽 끝까지 따라간다.
+    assert own_pages == 31
+    assert own_warnings == []
