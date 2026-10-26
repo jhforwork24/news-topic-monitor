@@ -167,6 +167,7 @@ class Collector:
         page_errors: list[str] = []
         list_prefix = adapter.date_ordered_list_prefix
         list_pagination_stopped = False
+        child_limit = max(self.max_discovery_children, adapter.discovery_child_limit or 0)
         for discovery_url in queue:
             if discovery_url in visited:
                 continue
@@ -213,7 +214,7 @@ class Collector:
                     )
                     discoveries[key] = _prefer_richer(discoveries.get(key), article)
                 for child_url in page.child_urls:
-                    if child_count >= self.max_discovery_children:
+                    if child_count >= child_limit:
                         warning = "child sitemap limit reached"
                         health.structure_warnings.append(warning)
                         health.discovery_warnings.append(warning)
