@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from pathlib import Path
+from urllib.parse import urlparse
 
 import pytest
 
@@ -9,6 +11,8 @@ from news_topic_monitor.adapters.chosun import ChosunAdapter
 from news_topic_monitor.adapters.donga import DongaAdapter
 from news_topic_monitor.adapters.hani import HaniAdapter
 from news_topic_monitor.adapters.joongang import JoongangAdapter
+
+FIXTURES = Path(__file__).parent / "fixtures"
 
 
 @pytest.mark.parametrize(
@@ -82,3 +86,26 @@ def test_model_rejects_empty_title() -> None:
             title=" ",
             published_at=datetime(2026, 8, 15, tzinfo=UTC),
         )
+
+
+def test_chosun_discovery_includes_category_news_sitemaps() -> None:
+    adapter = ChosunAdapter()
+    urls = adapter.initial_discovery_urls(
+        datetime(2026, 10, 19, tzinfo=UTC), datetime(2026, 10, 26, tzinfo=UTC)
+    )
+    assert urls[:2] == [ChosunAdapter.RSS_URL, ChosunAdapter.SITEMAP_URL]
+    assert len(adapter.CATEGORY_SITEMAP_URLS) == 9
+    assert all(
+        u.startswith("https://www.chosun.com/arc/outboundfeeds/news-sitemap/category/")
+        for u in urls[2:]
+    )
+    assert all(urlparse(u).hostname in adapter.allowed_discovery_hosts for u in urls)
+
+
+def test_chosun_category_sitemap_fixture_parses_titles_and_urls() -> None:
+    page = ChosunAdapter().parse_discovery(
+        (FIXTURES / "chosun_category_sitemap.xml").read_bytes(),
+        ChosunAdapter.CATEGORY_SITEMAP_URLS[0],
+    )
+    assert "박순관 대표 징역 4년 확정" in page.articles[1].title
+    assert all(a.canonical_url.startswith("https://www.chosun.com/") for a in page.articles)

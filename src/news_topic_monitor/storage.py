@@ -13,6 +13,8 @@ from typing import Any
 from .models import ArticleRecord, Classification, StoreResult
 from .utils import kst_date, stable_article_key
 
+PRESERVED_METADATA_FIELDS = ("published_at", "updated_at", "byline", "section", "summary")
+
 
 class ArticleStorage(ABC):
     """Storage boundary that can later be implemented by D1 or another database."""
@@ -107,10 +109,21 @@ class JsonlStorage(ArticleStorage):
     def upsert(self, article: ArticleRecord) -> StoreResult:
         index = self._ensure_index()
         key = self._key(article)
+        existing_pair = index.get(key)
+        if existing_pair:
+            # 다시 관측한 기록이 발행 시각 등 메타를 싣지 못하면(날짜 없는 목록·RSS 재관측)
+            # 저장분에서 발행 시각이 사라진다(2026-10-24~25 한겨레 15건).
+            # 비어 있는 칸만 기존 값으로 채운다.
+            previous = existing_pair[1]
+            for field in PRESERVED_METADATA_FIELDS:
+                if getattr(article, field) in (None, "") and getattr(previous, field) not in (
+                    None,
+                    "",
+                ):
+                    setattr(article, field, getattr(previous, field))
         destination = (
             self.articles_dir / f"{kst_date(article.published_at or article.first_seen_at)}.jsonl"
         )
-        existing_pair = index.get(key)
         result = StoreResult.NEW
         affected = {destination}
         if existing_pair:
