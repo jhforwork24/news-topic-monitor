@@ -196,6 +196,9 @@ class SourceHealth(BaseModel):
     # Origins whose robots.txt was 404/410 and, by an approved per-source registry
     # opt-in, read as "no robots.txt, no rules". Recorded so a report never hides it.
     robots_absent_origins: list[str] = Field(default_factory=list)
+    # 직전 성공 수집 시각에서 이어 붙이려고 수집 창 시작을 앞당긴 경우의 실제 시작 시각
+    # (앞당기지 않았으면 None). 실행 간격이 창보다 길어진 구간이 있었음을 health에 남긴다.
+    extended_window_start: datetime | None = None
 
 
 class RunHealth(BaseModel):

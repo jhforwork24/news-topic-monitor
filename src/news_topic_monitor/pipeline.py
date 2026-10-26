@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 import re
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
@@ -74,6 +74,8 @@ class Collector:
         write_health: bool = True,
         rolling_window_end: bool = False,
         seed_discoveries: dict[str, list[ArticleDiscovery]] | None = None,
+        continuity_max_hours: float | None = None,
+        continuity_overlap_hours: float = 1.0,
     ) -> None:
         self.http = http
         self.storage = storage
@@ -87,6 +89,22 @@ class Collector:
         self.write_health = write_health
         self.rolling_window_end = rolling_window_end
         self.seed_discoveries = seed_discoveries or {}
+        # 예약 수집 전용: 출처별 직전 성공 시각에서 이어지도록 수집 창 시작을 앞당긴다.
+        # GitHub 예약이 일부 슬롯을 건너뛰어 실행 간격이 창(기본 6시간)보다 길어지면 그 사이에
+        # 게재된 기사는 발견되어도 창 밖이라 저장되지 않기 때문이다.
+        self.continuity_max_hours = continuity_max_hours
+        self.continuity_overlap_hours = continuity_overlap_hours
+
+    def _source_start(self, adapter: SourceAdapter, start: datetime, end: datetime) -> datetime:
+        if not self.continuity_max_hours:
+            return start
+        state = self.storage.load_state().get("sources", {}).get(adapter.source, {})
+        anchor = parse_datetime(state.get("last_complete_at") or state.get("last_success_at"))
+        if anchor is None:
+            return start
+        reach = anchor - timedelta(hours=self.continuity_overlap_hours)
+        earliest = end - timedelta(hours=self.continuity_max_hours)
+        return min(start, max(reach, earliest))
 
     def run(self, start: datetime, end: datetime) -> RunHealth:
         with self.storage.batch():
@@ -134,6 +152,10 @@ class Collector:
                 }
                 if health.success:
                     state_values["last_success_at"] = utc_iso(health.finished_at)
+                    if not health.errors:
+                        # 일부 발견 경로가 실패한 회차는 그 경로의 몫이 빠졌으므로 창을 이어 붙이는
+                        # 기준(_source_start)으로 삼지 않는다.
+                        state_values["last_complete_at"] = utc_iso(health.finished_at)
                 self.storage.update_source_state(
                     adapter.source,
                     state_values,
@@ -158,6 +180,10 @@ class Collector:
         end: datetime,
         health: SourceHealth,
     ) -> None:
+        source_start = self._source_start(adapter, start, end)
+        if source_start < start:
+            health.extended_window_start = source_start
+            start = source_start
         queue = list(adapter.initial_discovery_urls(start, end))
         health.discovery_paths_attempted = len(queue)
         visited: set[str] = set()

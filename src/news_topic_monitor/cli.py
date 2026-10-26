@@ -224,6 +224,10 @@ def main(argv: list[str] | None = None) -> int:
 # 간격. 매 수집마다 목록에 남은 모든 기사의 last_seen_at만 바뀌어 data 커밋이 파일 전체
 # 재작성으로 커졌다. 대기열·finalize는 증거(last_checked_at)를 만들므로 매번 갱신한다.
 LAST_SEEN_REFRESH_HOURS = 24
+# 예약 수집이 건너뛴 슬롯만큼 수집 창을 거슬러 이어 붙일 수 있는 최대 시간. 2026-10-17~26 실측에서
+# 실행 간격이 최대 8.6시간까지 벌어졌다(창은 6시간). 출처가 오래 실패했더라도 한 번에 이 시간을
+# 넘겨 거슬러 올라가지 않는다.
+COLLECT_CONTINUITY_MAX_HOURS = 48.0
 
 
 def _collection_storage(root: Path) -> JsonlStorage:
@@ -251,6 +255,11 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
             classifier=classifier,
             adapters=adapters,
             max_discovery_children=settings.max_discovery_children,
+            continuity_max_hours=(
+                COLLECT_CONTINUITY_MAX_HOURS
+                if args.command == "collect" and not args.start
+                else None
+            ),
         ).run(start, end)
     print(json.dumps(health.model_dump(mode="json"), ensure_ascii=False, indent=2))
     return 1 if health.all_sources_failed else 0
