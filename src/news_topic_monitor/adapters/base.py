@@ -255,6 +255,16 @@ class SourceAdapter(ABC):
     def validate_child_url(self, url: str) -> bool:
         return urlsplit(url).hostname in self.allowed_discovery_hosts
 
+    def excluded_from_coverage(self, url: str) -> bool:
+        """True for listed articles the collector intentionally does not target.
+
+        The capture-rate check (coverage.py) leaves these out so a deliberate choice, such as
+        조선일보 스포츠·연예·일본어판·영문판, is not counted as a miss.
+        """
+
+        del url
+        return False
+
     def validate_article_url(self, url: str) -> bool:
         return urlsplit(url).hostname in self.allowed_article_hosts
 

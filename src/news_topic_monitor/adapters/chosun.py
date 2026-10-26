@@ -31,6 +31,8 @@ STORY_FEED_FILTER = (
 STORY_FEED_FLOOR_MARGIN = timedelta(hours=1)
 # 일본어판(/jp/)·영문판(/english/)은 브리핑 대상이 아니라 이 경로에서는 저장하지 않는다.
 FOREIGN_EDITION_PREFIXES = ("/jp/", "/english/")
+# 브리핑 대상이 아닌 분야. 기사피드에서 빼고 분야 sitemap으로만 수집하므로 포착률 점검에서도 뺀다.
+NON_TARGET_SECTION_PREFIXES = ("/sports/", "/entertainments/")
 
 
 class ChosunAdapter(SourceAdapter):
@@ -96,6 +98,10 @@ class ChosunAdapter(SourceAdapter):
         if url.startswith(self.STORY_FEED_URL):
             return self._parse_story_feed(content, url)
         return parse_xml_feed(content, self.source)
+
+    def excluded_from_coverage(self, url: str) -> bool:
+        path = urlsplit(url).path
+        return path.startswith(FOREIGN_EDITION_PREFIXES + NON_TARGET_SECTION_PREFIXES)
 
     def _story_feed_url(self, section: str, offset: int) -> str:
         query = json.dumps(
