@@ -1,0 +1,40 @@
+name: Archive access check (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install deploy key
+        env:
+          ARCHIVE_DEPLOY_KEY: ${{ secrets.ARCHIVE_DEPLOY_KEY }}
+        run: |
+          if [ -z "$ARCHIVE_DEPLOY_KEY" ]; then echo "::error::ARCHIVE_DEPLOY_KEY 시크릿이 비어 있다"; exit 1; fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$ARCHIVE_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          head -1 ~/.ssh/id_ed25519 | grep -q 'BEGIN OPENSSH PRIVATE KEY' || { echo "::error::개인 키 형식이 아니다"; exit 1; }
+          echo "공개 키 지문: $(ssh-keygen -lf ~/.ssh/id_ed25519)"
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Read check
+        run: git ls-remote git@github.com:jhforwork24/briefing-archive.git
+
+      - name: Write check (append a check record)
+        run: |
+          git clone --depth 1 git@github.com:jhforwork24/briefing-archive.git archive
+          cd archive
+          git config user.name "news-topic-monitor-bot"
+          git config user.email "news-topic-monitor-bot@users.noreply.github.com"
+          stamp=$(date -u +%Y%m%dT%H%M%SZ)
+          mkdir -p checks
+          printf 'source=news-topic-monitor\nrun_id=%s\nchecked_at=%s\n' "${{ github.run_id }}" "$stamp" > "checks/${stamp}-news-topic-monitor.txt"
+          git add checks
+          git commit -m "access check from news-topic-monitor (${stamp})"
+          git push origin HEAD
