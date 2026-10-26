@@ -1,0 +1,52 @@
+name: Daily archive (briefing-archive)
+
+# 일간 브리핑이 확정되면 그날의 1차 검토 풀(자동 판별 relevant·review + 브리핑 게재 기사)을
+# 비공개 보관소 jhforwork24/briefing-archive의 daily/·issues/에 추가한다. 보관소는 추가만 한다.
+on:
+  workflow_run:
+    workflows: ["Finalize connected Claude briefing"]
+    types: [completed]
+  schedule:
+    - cron: "47 4 * * 2-6"   # 화~토 13:47 KST, 확정 작업이 늦거나 빠졌을 때의 안전망
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "브리핑 날짜(YYYY-MM-DD). 비우면 reports/briefings/의 가장 최근 날짜"
+        required: false
+
+concurrency:
+  group: briefing-archive-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Install deploy key
+        env:
+          ARCHIVE_DEPLOY_KEY: ${{ secrets.ARCHIVE_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$ARCHIVE_DEPLOY_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+      - name: Export and push
+        run: |
+          set -e
+          git clone --depth 1 git@github.com:jhforwork24/briefing-archive.git archive
+          python3 scripts/archive_export.py --archive archive ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+          cd archive
+          git config user.name "news-topic-monitor-bot"
+          git config user.email "news-topic-monitor-bot@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "보관소에 새로 더할 것이 없다"; exit 0; fi
+          git commit -m "daily: 1차 검토 풀 기록"
+          for i in 1 2 3 4 5; do git push origin HEAD:main && exit 0; git pull --rebase origin main; done
+          exit 1
