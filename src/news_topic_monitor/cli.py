@@ -30,6 +30,9 @@ from .briefing_validation import BriefingValidationError, validate_briefing
 from .chat_bridge import ChatEditorialQueueManifest, validate_chat_editorial_bridge
 from .classifier import RuleClassifier
 from .constants import project_root
+from .coverage import build_report as build_coverage_report
+from .coverage import merge_into_health as merge_coverage_health
+from .coverage import run_check as run_coverage_check
 from .editorial import (
     EditorialApiError,
     EditorialConfigurationError,
@@ -118,6 +121,24 @@ def build_parser() -> argparse.ArgumentParser:
     backfill.add_argument(
         "--sources", nargs="*", choices=[adapter.source for adapter in ALL_ADAPTERS]
     )
+
+    coverage = subparsers.add_parser(
+        "coverage-check",
+        help="compare stored articles with each source's own article lists (no model, no bodies)",
+    )
+    coverage.add_argument(
+        "--scope",
+        choices=["chosun", "all"],
+        default="chosun",
+        help="chosun: 조선일보만(매일), all: 전 매체(주 1회)",
+    )
+    coverage.add_argument(
+        "--hours",
+        type=float,
+        default=None,
+        help="check window (default 48 for chosun, 168 for all)",
+    )
+    coverage.add_argument("--no-write", action="store_true", help="print only; keep health as is")
 
     report = subparsers.add_parser("report", help="generate a KST daily report")
     report.add_argument("--date", help="KST report end date YYYY-MM-DD; default today")
@@ -211,6 +232,8 @@ def main(argv: list[str] | None = None) -> int:
     except ContactRequiredError as exc:
         LOGGER.error("%s; no network request was made", exc)
         return 2
+    if args.command == "coverage-check":
+        return _coverage_check(args, settings)
     if args.command == "editorial-publish":
         return _editorial_publish(args, settings)
     if args.command == "editorial-queue":
@@ -263,6 +286,38 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
         ).run(start, end)
     print(json.dumps(health.model_dump(mode="json"), ensure_ascii=False, indent=2))
     return 1 if health.all_sources_failed else 0
+
+
+COVERAGE_DEFAULT_HOURS = {"chosun": 48.0, "all": 168.0}
+
+
+def _coverage_check(args: argparse.Namespace, settings: Settings) -> int:
+    scope = args.scope
+    hours = args.hours or COVERAGE_DEFAULT_HOURS[scope]
+    storage = JsonlStorage(settings.root)
+    adapters = _build_adapters(settings, storage, {"chosun"} if scope == "chosun" else set())
+    now = datetime.now(UTC)
+    with _http_client(settings) as http:
+        results = run_coverage_check(
+            adapters=adapters,
+            http=http,
+            storage=storage,
+            hours=hours,
+            child_limit=settings.max_discovery_children,
+            now=now,
+        )
+    report = build_coverage_report(results, scope=scope, hours=hours, now=now)
+    if not args.no_write:
+        path = settings.root / "health" / "coverage" / "latest.json"
+        existing = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        JsonlStorage.atomic_write_json(path, merge_coverage_health(existing, report))
+    for name, item in report["sources"].items():
+        rate = "-" if item["rate"] is None else f"{item['rate']:.1%}"
+        print(
+            f"{name:12s} {item['status']:10s} rate={rate:>7s} "
+            f"listed={item['listed']:5d} missing={item['missing_total']:4d}"
+        )
+    return 1 if report["failing_sources"] or report["errored_sources"] else 0
 
 
 def _report(args: argparse.Namespace, root: Path) -> int:
