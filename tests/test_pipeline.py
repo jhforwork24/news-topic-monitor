@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -819,6 +819,90 @@ def test_beminor_article_page_is_opened_to_read_its_own_section_label(
     assert is_opinion(record)
     assert editorial_opinion_allowed(record)
     assert select_opinions([record]) == [record]
+
+
+def _dated_adapter(published_at: datetime, extra_url: str | None = None):
+    class DatedAdapter(GoodAdapter):
+        source = "dated"
+        allowed_discovery_hosts = frozenset({"good.test", "bad.test"})
+
+        def initial_discovery_urls(self, start, end):
+            del start, end
+            return ["https://good.test/feed", *([extra_url] if extra_url else [])]
+
+        def parse_discovery(self, content, url):
+            del content, url
+            return DiscoveryPage(
+                articles=[
+                    ArticleDiscovery(
+                        source=self.source,
+                        canonical_url="https://good.test/article/dated",
+                        title="일반 경제 기사",
+                        published_at=published_at,
+                    )
+                ]
+            )
+
+    return DatedAdapter()
+
+
+def _collect_dated(tmp_path, topics_path, *, continuity, anchor, extra_url=None):
+    end = datetime(2026, 8, 15, 12, tzinfo=UTC)
+    storage = JsonlStorage(tmp_path)
+    if anchor is not None:
+        storage.update_source_state(
+            "dated", {"last_complete_at": anchor, "last_success_at": anchor}
+        )
+    health = Collector(
+        http=StubHttp(),
+        storage=storage,
+        classifier=RuleClassifier(topics_path),
+        adapters=[_dated_adapter(end - timedelta(hours=7), extra_url)],
+        continuity_max_hours=continuity,
+    ).run(end - timedelta(hours=6), end)
+    return storage, health.sources["dated"]
+
+
+def test_collect_window_reaches_back_to_the_last_complete_run(tmp_path, topics_path) -> None:
+    # 직전 완료 수집은 8시간 전이고 기사는 7시간 전에 게재됐다. 6시간 창 밖이라 이어 붙이지
+    # 않으면 발견되어도 저장되지 않는다.
+    anchor = "2026-08-15T04:00:00Z"
+    _, plain = _collect_dated(tmp_path / "plain", topics_path, continuity=None, anchor=anchor)
+    assert plain.in_window == 0
+    assert plain.extended_window_start is None
+
+    _, bridged = _collect_dated(tmp_path / "bridged", topics_path, continuity=48.0, anchor=anchor)
+    assert bridged.in_window == 1
+    # 직전 완료 시각(04:00)에서 겹침 1시간을 더 거슬러 올라간 03:00부터 읽는다.
+    assert bridged.extended_window_start == datetime(2026, 8, 15, 3, tzinfo=UTC)
+
+
+def test_collect_window_extension_is_capped(tmp_path, topics_path) -> None:
+    # 오래 실패한 출처도 한 번에 최대 시간보다 더 거슬러 올라가지 않는다.
+    _, capped = _collect_dated(
+        tmp_path, topics_path, continuity=10.0, anchor="2026-08-01T00:00:00Z"
+    )
+    assert capped.extended_window_start == datetime(2026, 8, 15, 2, tzinfo=UTC)
+
+
+def test_collect_window_is_unchanged_without_a_previous_run(tmp_path, topics_path) -> None:
+    _, first = _collect_dated(tmp_path, topics_path, continuity=48.0, anchor=None)
+    assert first.extended_window_start is None
+
+
+def test_partial_run_does_not_advance_the_continuity_anchor(tmp_path, topics_path) -> None:
+    # 발견 경로 하나가 실패한 회차는 성공으로 기록되지만 창을 이어 붙이는 기준은 되지 않는다.
+    storage, health = _collect_dated(
+        tmp_path,
+        topics_path,
+        continuity=48.0,
+        anchor="2026-08-15T04:00:00Z",
+        extra_url="https://bad.test/feed",
+    )
+    assert health.success and health.errors
+    state = storage.load_state()["sources"]["dated"]
+    assert state["last_success_at"] != "2026-08-15T04:00:00Z"
+    assert state["last_complete_at"] == "2026-08-15T04:00:00Z"
 
 
 def test_adapter_child_url_limit_overrides_the_default_cap(tmp_path, topics_path) -> None:
