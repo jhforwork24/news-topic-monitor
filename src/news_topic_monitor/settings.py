@@ -75,5 +75,5 @@ class Settings:
             max_retries=max(0, int(os.getenv("MAX_RETRIES", DEFAULT_MAX_RETRIES))),
             max_discovery_children=max(1, int(os.getenv("MAX_DISCOVERY_CHILDREN", "20"))),
             hani_max_pages=max(1, int(os.getenv("HANI_MAX_PAGES", "50"))),
-            collect_workers=min(8, max(1, int(os.getenv("COLLECT_WORKERS", "4")))),
+            collect_workers=min(8, max(1, int(os.getenv("COLLECT_WORKERS") or "4"))),
         )
