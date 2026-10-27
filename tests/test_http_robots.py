@@ -277,3 +277,58 @@ def test_opted_in_host_still_obeys_a_published_robots_file(tmp_path) -> None:
         pytest.raises(RobotsDeniedError),
     ):
         client.get("https://opted.test/articles/1")
+
+
+def test_rate_limiter_waits_per_host_without_blocking_other_hosts() -> None:
+    import threading
+
+    from news_topic_monitor.http import DomainRateLimiter
+
+    # Both hosts must be sleeping at the same moment for the barrier to open; a limiter that
+    # sleeps while holding one global lock would time the barrier out.
+    barrier = threading.Barrier(2, timeout=5)
+    limiter = DomainRateLimiter(30.0, sleeper=lambda _seconds: barrier.wait())
+    errors: list[BaseException] = []
+
+    def hit(host: str) -> None:
+        try:
+            limiter.wait(host)
+            limiter.wait(host)
+        except BaseException as exc:
+            errors.append(exc)
+
+    threads = [threading.Thread(target=hit, args=(host,)) for host in ("a.test", "b.test")]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    assert errors == []
+
+
+def test_rate_limiter_slot_keeps_one_request_in_flight_per_host() -> None:
+    import threading
+    import time
+
+    from news_topic_monitor.http import DomainRateLimiter
+
+    limiter = DomainRateLimiter(0.0)
+    in_flight = 0
+    peak = 0
+    guard = threading.Lock()
+
+    def request() -> None:
+        nonlocal in_flight, peak
+        with limiter.slot("same.test"):
+            with guard:
+                in_flight += 1
+                peak = max(peak, in_flight)
+            time.sleep(0.02)
+            with guard:
+                in_flight -= 1
+
+    threads = [threading.Thread(target=request) for _ in range(6)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    assert peak == 1

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import logging
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
+from threading import RLock
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
 
@@ -76,6 +78,7 @@ class Collector:
         seed_discoveries: dict[str, list[ArticleDiscovery]] | None = None,
         continuity_max_hours: float | None = None,
         continuity_overlap_hours: float = 1.0,
+        max_workers: int = 1,
     ) -> None:
         self.http = http
         self.storage = storage
@@ -94,11 +97,17 @@ class Collector:
         # 게재된 기사는 발견되어도 창 밖이라 저장되지 않기 때문이다.
         self.continuity_max_hours = continuity_max_hours
         self.continuity_overlap_hours = continuity_overlap_hours
+        # 출처별 수집을 스레드로 동시에 돈다. 네트워크 대기가 대부분이고 도메인별 간격·동시 1건은
+        # SafeHttpClient가 지키므로 출처가 다르면 서로 기다리지 않는다. 1이면 예전처럼 순차다.
+        self.max_workers = max(1, max_workers)
+        # 저장소·증거 저장소는 스레드 안전하지 않아 접근을 이 락으로 직렬화한다.
+        self._state_lock = RLock()
 
     def _source_start(self, adapter: SourceAdapter, start: datetime, end: datetime) -> datetime:
         if not self.continuity_max_hours:
             return start
-        state = self.storage.load_state().get("sources", {}).get(adapter.source, {})
+        with self._state_lock:
+            state = self.storage.load_state().get("sources", {}).get(adapter.source, {})
         anchor = parse_datetime(state.get("last_complete_at") or state.get("last_success_at"))
         if anchor is None:
             return start
@@ -113,53 +122,20 @@ class Collector:
     def _run_batched(self, start: datetime, end: datetime) -> RunHealth:
         started = datetime.now(UTC)
         sources: dict[str, SourceHealth] = {}
-        for adapter in self.adapters:
-            health = SourceHealth(source=adapter.source, started_at=datetime.now(UTC))
-            sources[adapter.source] = health
-            try:
-                self._run_source(adapter, start, end, health)
-            except SourceConfigurationError as exc:
-                LOGGER.warning("source %s is not configured: %s", adapter.source, exc)
-                health.errors.append(short_error(exc) or "source configuration is missing")
-                health.discovery_status = DiscoveryStatus.CONFIGURATION_MISSING
-            except DiscoveryPathsFailed as exc:
-                LOGGER.warning("source %s discovery failed: %s", adapter.source, exc)
-                health.errors.append(short_error(exc) or "all discovery paths failed")
-                health.discovery_status = _failure_status(exc)
-            except Exception as exc:  # source isolation boundary
-                LOGGER.exception("source %s failed", adapter.source)
-                health.errors.append(short_error(exc) or "unknown error")
-                health.unclassified_failures += 1
-                health.discovery_status = _failure_status(exc)
-            finally:
-                source_hosts = adapter.allowed_discovery_hosts | adapter.allowed_article_hosts
-                health.robots_absent_origins = sorted(
-                    origin
-                    for origin in getattr(self.http, "robots_absent_origins", frozenset())
-                    if urlsplit(origin).hostname in source_hosts
-                )
-                if health.success:
-                    health.discovery_status = (
-                        DiscoveryStatus.PARTIAL if health.errors else DiscoveryStatus.COMPLETE
-                    )
-                health.finished_at = datetime.now(UTC)
-                state_values = {
-                    "last_run_at": utc_iso(health.finished_at),
-                    "success": health.success,
-                    "discovery_status": health.discovery_status.value,
-                    "discovered": health.discovered,
-                    "errors": health.errors,
-                }
-                if health.success:
-                    state_values["last_success_at"] = utc_iso(health.finished_at)
-                    if not health.errors:
-                        # 일부 발견 경로가 실패한 회차는 그 경로의 몫이 빠졌으므로 창을 이어 붙이는
-                        # 기준(_source_start)으로 삼지 않는다.
-                        state_values["last_complete_at"] = utc_iso(health.finished_at)
-                self.storage.update_source_state(
-                    adapter.source,
-                    state_values,
-                )
+        if self.max_workers <= 1 or len(self.adapters) <= 1:
+            for adapter in self.adapters:
+                sources[adapter.source] = self._collect_source(adapter, start, end)
+        else:
+            with ThreadPoolExecutor(
+                max_workers=min(self.max_workers, len(self.adapters)),
+                thread_name_prefix="collect",
+            ) as pool:
+                futures = [
+                    (adapter.source, pool.submit(self._collect_source, adapter, start, end))
+                    for adapter in self.adapters
+                ]
+                for source, future in futures:
+                    sources[source] = future.result()
         finished = datetime.now(UTC)
         run_health = RunHealth(
             run_started_at=started,
@@ -172,6 +148,54 @@ class Collector:
         if self.write_health:
             self.storage.write_health(run_health.model_dump(mode="json"))
         return run_health
+
+    def _collect_source(
+        self, adapter: SourceAdapter, start: datetime, end: datetime
+    ) -> SourceHealth:
+        health = SourceHealth(source=adapter.source, started_at=datetime.now(UTC))
+        try:
+            self._run_source(adapter, start, end, health)
+        except SourceConfigurationError as exc:
+            LOGGER.warning("source %s is not configured: %s", adapter.source, exc)
+            health.errors.append(short_error(exc) or "source configuration is missing")
+            health.discovery_status = DiscoveryStatus.CONFIGURATION_MISSING
+        except DiscoveryPathsFailed as exc:
+            LOGGER.warning("source %s discovery failed: %s", adapter.source, exc)
+            health.errors.append(short_error(exc) or "all discovery paths failed")
+            health.discovery_status = _failure_status(exc)
+        except Exception as exc:  # source isolation boundary
+            LOGGER.exception("source %s failed", adapter.source)
+            health.errors.append(short_error(exc) or "unknown error")
+            health.unclassified_failures += 1
+            health.discovery_status = _failure_status(exc)
+        finally:
+            source_hosts = adapter.allowed_discovery_hosts | adapter.allowed_article_hosts
+            health.robots_absent_origins = sorted(
+                origin
+                for origin in getattr(self.http, "robots_absent_origins", frozenset())
+                if urlsplit(origin).hostname in source_hosts
+            )
+            if health.success:
+                health.discovery_status = (
+                    DiscoveryStatus.PARTIAL if health.errors else DiscoveryStatus.COMPLETE
+                )
+            health.finished_at = datetime.now(UTC)
+            state_values = {
+                "last_run_at": utc_iso(health.finished_at),
+                "success": health.success,
+                "discovery_status": health.discovery_status.value,
+                "discovered": health.discovered,
+                "errors": health.errors,
+            }
+            if health.success:
+                state_values["last_success_at"] = utc_iso(health.finished_at)
+                if not health.errors:
+                    # 일부 발견 경로가 실패한 회차는 그 경로의 몫이 빠졌으므로 창을 이어 붙이는
+                    # 기준(_source_start)으로 삼지 않는다.
+                    state_values["last_complete_at"] = utc_iso(health.finished_at)
+            with self._state_lock:
+                self.storage.update_source_state(adapter.source, state_values)
+        return health
 
     def _run_source(
         self,
@@ -213,9 +237,10 @@ class Collector:
                 page = adapter.parse_discovery(response.content, str(response.url))
                 successful_pages += 1
                 health.discovery_paths_succeeded += 1
-                health.removed += self.storage.delete_by_source_article_ids(
-                    adapter.source, page.removed_article_ids
-                )
+                with self._state_lock:
+                    health.removed += self.storage.delete_by_source_article_ids(
+                        adapter.source, page.removed_article_ids
+                    )
                 for article in page.articles:
                     try:
                         article.canonical_url = normalize_url(article.canonical_url)
@@ -483,11 +508,13 @@ class Collector:
             collection_error=error,
         )
         if self.evidence_store is not None:
-            self.evidence_store.upsert(record, body_text)
+            with self._state_lock:
+                self.evidence_store.upsert(record, body_text)
         # The evidence store is scoped to the current editorial run. Do not retain
         # article text in the repository-backed ArticleRecord.
         body_text = None
-        stored = self.storage.upsert(record)
+        with self._state_lock:
+            stored = self.storage.upsert(record)
         if discovery.refresh_only:
             return
         if stored == StoreResult.NEW:

@@ -218,7 +218,8 @@ class EditorialEvidenceStore:
     def __init__(self, path: Path) -> None:
         self.path = path
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.connection = sqlite3.connect(path)
+        # The collector serializes writes with its own lock but may call from worker threads.
+        self.connection = sqlite3.connect(path, check_same_thread=False)
         self.connection.execute(
             """
             CREATE TABLE IF NOT EXISTS editorial_candidates (
