@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import html
 import os
+import re
 import time
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
@@ -21,6 +23,55 @@ from .assurance import (
 from .models import EditorialPlan
 from .policy import BriefingPolicy, SourceRegistry
 from .utils import normalize_text, normalize_url, short_error
+
+
+def title_key(title: str) -> str:
+    """Title identity that ignores spacing, quotes and ellipses."""
+    return re.sub(r"[\W_]+", "", normalize_text(title))
+
+
+def known_title_keys(articles: Iterable[object]) -> dict[str, set[str]]:
+    """Per-source title keys of articles (stored or queued) the collector already holds."""
+    keys: dict[str, set[str]] = {}
+    for article in articles:
+        source = getattr(article, "source", None)
+        title = getattr(article, "title", None)
+        if source and title:
+            keys.setdefault(source, set()).add(title_key(title))
+    return keys
+
+
+def _url_identity(url: str) -> str:
+    """URL identity that ignores scheme, ``www.`` and the order of query keys."""
+    try:
+        parts = urlsplit(normalize_url(url))
+    except ValueError:
+        return url
+    host = (parts.hostname or "").removeprefix("www.")
+    return f"{host}{parts.path}?{parts.query}"
+
+
+def _is_known(
+    hit: SearchHit,
+    known_urls: set[str],
+    known_identities: set[str],
+    known_titles: dict[str, set[str]],
+) -> bool:
+    """Whether a search hit is an article the deterministic collection already holds.
+
+    Naver's ``originallink`` often differs from the collector's canonical URL only by
+    scheme or a trailing page number, which made already-stored articles look missing
+    (6 of 7 ``잠재 누락`` reports between 2026-10-15 and 2026-10-27 were stored). A hit
+    therefore also counts as collected when its scheme-insensitive URL or, for the same
+    source, its title matches.
+    """
+    if hit.original_url in known_urls:
+        return True
+    if hit.original_url and _url_identity(hit.original_url) in known_identities:
+        return True
+    return bool(
+        hit.matched_source and title_key(hit.title) in known_titles.get(hit.matched_source, set())
+    )
 
 
 class NaverConfigurationError(ValueError):
@@ -143,6 +194,7 @@ def run_gap_detection(
     policy: BriefingPolicy,
     registry: SourceRegistry,
     known_canonical_urls: set[str],
+    known_titles: dict[str, set[str]] | None = None,
     start: datetime,
     end: datetime,
 ) -> GapDetectionResult:
@@ -157,6 +209,8 @@ def run_gap_detection(
     hits: list[SearchHit] = []
     errors: list[str] = []
     completed = 0
+    known_titles = known_titles or {}
+    known_identities = {_url_identity(url) for url in known_canonical_urls}
     for query in policy.gap_detection.queries:
         try:
             results = client.search(query, display=policy.gap_detection.maximum_results_per_query)
@@ -171,7 +225,9 @@ def run_gap_detection(
                 urlsplit(item.original_url or item.naver_url or "").hostname
             )
             if item.original_url and item.matched_source:
-                item.in_deterministic_collection = item.original_url in known_canonical_urls
+                item.in_deterministic_collection = _is_known(
+                    item, known_canonical_urls, known_identities, known_titles
+                )
             hits.append(item)
     unique: dict[str, SearchHit] = {}
     for hit in hits:

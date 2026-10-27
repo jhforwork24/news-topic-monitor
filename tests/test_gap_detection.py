@@ -9,6 +9,7 @@ from news_topic_monitor.assurance import CheckStatus
 from news_topic_monitor.gap_detection import (
     NaverSearchClient,
     NaverSearchSettings,
+    known_title_keys,
     run_gap_detection,
     run_reverse_search,
 )
@@ -78,6 +79,49 @@ def test_naver_api_hub_headers_and_gap_result_are_discovery_only() -> None:
     )
     assert collected.hits[0].in_deterministic_collection is True
     assert collected.potential_gaps == []
+
+
+def _gap(known_urls: set[str], titles: dict[str, set[str]] | None = None):
+    root = __import__("pathlib").Path(__file__).parents[1]
+    end = datetime(2026, 8, 20, 1, tzinfo=UTC)
+    return run_gap_detection(
+        client=_client([]),
+        configuration_error=None,
+        policy=load_briefing_policy(root / "config" / "briefing-policy.yaml"),
+        registry=load_source_registry(root / "config" / "source-registry.yaml"),
+        known_canonical_urls=known_urls,
+        known_titles=titles,
+        start=end - timedelta(days=1),
+        end=end,
+    )
+
+
+def test_search_hit_matches_stored_article_despite_scheme_and_www_difference() -> None:
+    # The collector stores https://; Naver may return the same article as http:// or without www.
+    result = _gap({"http://hani.co.kr/arti/society/1.html"})
+    assert result.hits[0].in_deterministic_collection is True
+    assert result.potential_gaps == []
+
+
+def test_search_hit_matches_stored_article_by_source_and_title() -> None:
+    class Stored:
+        source = "hani"
+        title = "장애인  이동권 보도"
+
+    # URL differs (page suffix / query), but the same source already holds this title.
+    result = _gap(
+        {"https://www.hani.co.kr/arti/society/1_other.html"}, known_title_keys([Stored()])
+    )
+    assert result.hits[0].in_deterministic_collection is True
+
+    class OtherSource:
+        source = "donga"
+        title = "장애인 이동권 보도"
+
+    # The same title under another source is not a match.
+    result = _gap(set(), known_title_keys([OtherSource()]))
+    assert result.hits[0].in_deterministic_collection is False
+    assert len(result.potential_gaps) == 1
 
 
 def test_reverse_search_records_explicit_degraded_10_of_10_without_credentials() -> None:

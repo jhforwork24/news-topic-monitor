@@ -755,3 +755,69 @@ def test_beminor_opinion_candidate_cannot_be_placed_outside_the_opinion_section(
         validate_external_editorial(
             plan=plan_for(EditorialSection.DISABILITY), audit=audit, candidates=[candidate]
         )
+
+
+def test_non_news_opinion_pages_cannot_support_fact_reporting_issues() -> None:
+    from news_topic_monitor.editorial import validate_external_editorial
+
+    audit = _empty_audit()
+
+    def plan_for(candidate_id: str, section: EditorialSection) -> EditorialPlan:
+        return EditorialPlan(
+            issues=[
+                EditorialIssueDecision(
+                    section=section,
+                    title="합성 단체 성명 이슈",
+                    keyword="단체 성명",
+                    candidate_ids=[candidate_id],
+                    summary="단체는 결정에 유감을 밝혔다.",
+                    tone_analysis="",
+                )
+            ],
+            exclusions=[],
+        )
+
+    # 에이블뉴스 오피니언면의 단체 성명은 어느 사실 보도 섹션에도 들어갈 수 없다.
+    statement = _candidate(_article(source="ablenews").model_copy(update={"section": "오피니언"}))
+    for section in (EditorialSection.DISABILITY, EditorialSection.LABOR):
+        with pytest.raises(EditorialValidationError, match="사실 보도 이슈의 근거로 쓸 수 없음"):
+            validate_external_editorial(
+                plan=plan_for(statement.candidate_id, section),
+                audit=audit,
+                candidates=[statement],
+            )
+
+    # 같은 매체의 일반 기사(다른 섹션)는 영향이 없다.
+    news = _candidate(_article(source="ablenews").model_copy(update={"section": "인권"}))
+    validate_external_editorial(
+        plan=plan_for(news.candidate_id, EditorialSection.DISABILITY),
+        audit=audit,
+        candidates=[news],
+    )
+
+
+def test_non_news_opinion_section_labels_follow_the_verified_outlet_labels() -> None:
+    from news_topic_monitor.sources import is_non_news_opinion_section
+
+    assert is_non_news_opinion_section("ablenews", "오피니언")
+    assert is_non_news_opinion_section("labortoday", None, " 오피니언 ")
+    assert is_non_news_opinion_section("newscham", "기고")
+    assert not is_non_news_opinion_section("ablenews", "인권")
+    # 비마이너 오피니언은 별도 규칙(III절 필수)이고 일간지 칼럼은 opinion 허용 매체다.
+    assert not is_non_news_opinion_section("beminor", "오피니언")
+    assert not is_non_news_opinion_section("hani", "opinion")
+
+
+def test_queue_hint_flags_non_news_opinion_pages_but_not_fixed_columns() -> None:
+    from news_topic_monitor.notion_publish import _non_news_opinion_hint
+
+    statement = _candidate(_article(source="ablenews").model_copy(update={"section": "오피니언"}))
+    assert "사실 보도 근거로 쓸 수 없음" in (_non_news_opinion_hint(statement) or "")
+    news = _candidate(_article(source="ablenews").model_copy(update={"section": "인권"}))
+    assert _non_news_opinion_hint(news) is None
+    fixed = _candidate(
+        _article(source="mediaus").model_copy(
+            update={"title": "[미디어스 김민하 칼럼] 합성", "section": "오피니언"}
+        )
+    )
+    assert _non_news_opinion_hint(fixed) is None

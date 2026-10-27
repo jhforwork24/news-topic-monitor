@@ -172,6 +172,10 @@ finalizer는 이 날짜별 스냅샷을 로드해 queue_id와 `initial_health_fi
 `primary_source_validation`을 기록한다. 같은 파일에 장애언론 census, Naver gap detection,
 지정매체 reverse-search, final-state 결과도 함께 둬 최종 gate 판단을 재현할 수 있게 한다.
 독립 검색 결과 중 등록 출처의 원문 URL이 결정론적 수집 집합에 없으면 `potential_gaps`로 남긴다.
+검색 결과의 URL은 수집기의 정규화 URL과 스킴·`www.`·꼬리 번호가 달라도 같은 기사일 수 있으므로,
+스킴·`www.`를 무시한 URL이 같거나 같은 출처에서 제목(공백·따옴표·말줄임표 무시)이 같으면 수집된
+것으로 본다. 2026-10-15~27 `잠재 누락` 7건 중 6건이 이미 저장된 기사의 URL 표기 차이였다
+(오마이뉴스 5건·동아일보 1건; 조선일보 1건만 실제 미수집).
 장애언론 3곳의 potential gap은 census COMPLETE와 모순되므로 gate를 차단하고, 다른 출처의 gap은
 명시적 경고와 다음 조치로 보고한다.
 

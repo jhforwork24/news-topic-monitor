@@ -81,6 +81,28 @@ def is_section_opinion_column(source: str, *texts: str | None) -> bool:
     return any(value is not None and value.strip() == label for value in texts)
 
 
+# opinion 섹션 허용 매체가 아니면서 자체 오피니언·기고면을 두어, 그 면의 글은 사실 보도 이슈
+# (`disability`·`labor`)의 근거도 `opinion` 후보도 될 수 없는 출처와 섹션 표기. 저장된 기사의
+# 실제 `section` 값으로 확인한 표기만 둔다(2026-10-27 기준 에이블뉴스 '오피니언' 158건,
+# 매일노동뉴스 '오피니언' 14건, 미디어스 '오피니언' 22건, 뉴스참 '기고'·'칼럼' 각 4·3건).
+# 미디어스 김민하 같은 고정 칼럼은 `is_mandatory_opinion_column`이 먼저 III절로 보낸다.
+NON_NEWS_OPINION_SECTIONS: dict[str, tuple[str, ...]] = {
+    "ablenews": ("오피니언",),
+    "labortoday": ("오피니언",),
+    "mediaus": ("오피니언",),
+    "newscham": ("기고", "칼럼"),
+}
+
+
+def is_non_news_opinion_section(source: str, *texts: str | None) -> bool:
+    """True when the outlet's own 오피니언·기고 label puts the piece outside fact reporting."""
+
+    labels = NON_NEWS_OPINION_SECTIONS.get(source)
+    if labels is None:
+        return False
+    return any(value is not None and value.strip() in labels for value in texts)
+
+
 def is_mandatory_opinion_column(source: str, *texts: str | None) -> bool:
     """Match a designated column across whatever metadata fields the caller has.
 

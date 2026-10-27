@@ -39,6 +39,7 @@ from .sources import (
     SOURCE_CAMP,
     PersonnelTarget,
     is_mandatory_opinion_column,
+    is_non_news_opinion_section,
     is_section_opinion_column,
     monitored_personnel_match,
 )
@@ -182,6 +183,14 @@ def section_opinion_candidate(candidate: EditorialCandidate) -> bool:
         candidate.section,
         candidate.summary,
     )
+
+
+def non_news_opinion_candidate(candidate: EditorialCandidate) -> bool:
+    """에이블뉴스 오피니언처럼 사실 보도 이슈의 근거로 쓸 수 없는 오피니언·기고면 후보."""
+
+    return is_non_news_opinion_section(
+        candidate.source, candidate.section
+    ) and not mandatory_opinion_candidate(candidate)
 
 
 def monitored_personnel_candidate(candidate: EditorialCandidate) -> PersonnelTarget | None:
@@ -707,6 +716,11 @@ def _validate_plan(
                     f"{issue.title}: {candidate.source} 오피니언 기사는 "
                     "opinion 섹션에만 배치할 수 있음"
                 )
+            if issue.section != EditorialSection.OPINION and non_news_opinion_candidate(candidate):
+                errors.append(
+                    f"{issue.title}: {candidate.source} 오피니언·기고면 기사는 "
+                    "사실 보도 이슈의 근거로 쓸 수 없음"
+                )
             if (
                 issue.section == EditorialSection.LABOR
                 and candidate.source not in LABOR_SECTION_ALLOWED_SOURCES
@@ -872,6 +886,8 @@ section 값은 disability, labor, opinion 가운데 하나다.
 opinion은 명시적인 사설·칼럼 중 조선일보·중앙일보·
 동아일보·한겨레·경향신문·오마이뉴스·프레시안의 장애 관련 칼럼, 한겨레 세계의 창 지제크,
 미디어스 김민하, 경향신문 고병권의 묵묵에만 사용한다.
+에이블뉴스·매일노동뉴스·미디어스의 오피니언면과 뉴스참의 기고·칼럼면 기사는 사실 보도 근거가
+아니므로 disability·labor에 넣지 않는다(미디어스 김민하 고정 칼럼만 opinion).
 기사의 정책적·운동적 중요도를 importance 정수로 표시하되 값의 범위보다 기사 간 상대순위를
 일관되게 유지한다. 확인된 근거가 부족하면 include가 아니라 review 또는 exclude로 판정한다.
 """.strip()
