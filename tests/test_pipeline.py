@@ -982,7 +982,7 @@ def test_sources_are_collected_concurrently_with_the_same_result(tmp_path, topic
             candidates = len(evidence.candidates(start=window[0], end=window[1]))
         return storage, health, stored, candidates
 
-    serial_storage, serial, serial_urls, serial_candidates = collect(tmp_path / "serial", 1)
+    _, serial, serial_urls, serial_candidates = collect(tmp_path / "serial", 1)
     parallel_storage, parallel, parallel_urls, parallel_candidates = collect(
         tmp_path / "parallel", 3
     )
