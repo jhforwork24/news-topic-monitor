@@ -925,3 +925,87 @@ def test_adapter_child_url_limit_overrides_the_default_cap(tmp_path, topics_path
     # 어댑터가 더 큰 상한을 선언하면 30쪽 끝까지 따라간다.
     assert own_pages == 31
     assert own_warnings == []
+
+
+class _ConcurrentHttp(StubHttp):
+    """Only answers once every worker is inside ``get`` at the same time."""
+
+    def __init__(self, parties: int) -> None:
+        super().__init__()
+        import threading
+
+        self.barrier = threading.Barrier(parties, timeout=5)
+
+    def get(self, url: str, *, purpose: str = "metadata", headers=None):
+        if purpose == "discovery":
+            self.barrier.wait()
+        return super().get(url, purpose=purpose, headers=headers)
+
+
+def _evidence_adapter(name: str):
+    class Adapter(BroadEvidenceAdapter):
+        source = name
+
+        def parse_discovery(self, content, url):
+            del content, url
+            return DiscoveryPage(
+                articles=[
+                    ArticleDiscovery(
+                        source=name,
+                        canonical_url=f"https://good.test/{name}/1",
+                        title="일반 경제 기사",
+                        published_at=datetime(2026, 8, 15, 1, tzinfo=UTC),
+                    )
+                ]
+            )
+
+    return Adapter()
+
+
+def test_sources_are_collected_concurrently_with_the_same_result(tmp_path, topics_path) -> None:
+    names = ["alpha", "beta", "gamma"]
+    window = (datetime(2026, 8, 15, 0, tzinfo=UTC), datetime(2026, 8, 15, 2, tzinfo=UTC))
+
+    def collect(root, workers):
+        storage = JsonlStorage(root)
+        with EditorialEvidenceStore(root / "evidence.sqlite") as evidence:
+            health = Collector(
+                http=_ConcurrentHttp(3) if workers > 1 else StubHttp(),
+                storage=storage,
+                classifier=RuleClassifier(topics_path),
+                adapters=[_evidence_adapter(name) for name in names],
+                evidence_store=evidence,
+                capture_all_bodies=True,
+                max_workers=workers,
+            ).run(*window)
+            stored = sorted(a.canonical_url for a in storage.iter_articles())
+            candidates = len(evidence.candidates(start=window[0], end=window[1]))
+        return storage, health, stored, candidates
+
+    _, serial, serial_urls, serial_candidates = collect(tmp_path / "serial", 1)
+    parallel_storage, parallel, parallel_urls, parallel_candidates = collect(
+        tmp_path / "parallel", 3
+    )
+
+    # A sequential run could never pass the barrier, so reaching here proves overlap.
+    assert list(parallel.sources) == names
+    assert parallel_urls == serial_urls and len(parallel_urls) == 3
+    assert parallel_candidates == serial_candidates == 3
+    for name in names:
+        assert parallel.sources[name].success
+        assert parallel.sources[name].new == serial.sources[name].new == 1
+        assert parallel_storage.load_state()["sources"][name]["success"] is True
+        assert "last_complete_at" in parallel_storage.load_state()["sources"][name]
+
+
+def test_one_failing_source_does_not_break_concurrent_collection(tmp_path, topics_path) -> None:
+    health = Collector(
+        http=StubHttp(),
+        storage=JsonlStorage(tmp_path),
+        classifier=RuleClassifier(topics_path),
+        adapters=[GoodAdapter(), BadAdapter()],
+        max_workers=2,
+    ).run(datetime(2026, 8, 15, 0, tzinfo=UTC), datetime(2026, 8, 15, 2, tzinfo=UTC))
+    assert list(health.sources) == ["good", "bad"]
+    assert health.sources["good"].success
+    assert not health.sources["bad"].success

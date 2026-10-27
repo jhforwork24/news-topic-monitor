@@ -65,7 +65,7 @@ Notion data source ID, 페이지 URL, token은 이 저장소(문서·코드·fix
    있으면 `already_built`로 아무것도 하지 않는다([`operations.md`](operations.md) "대기열이 제때
    없을 때").
 3. 2분 간격으로 완료를 확인한다. 평소 10~15분(시간초과 재시도가 돌면 몇 분 더), 화요일은 더
-   걸릴 수 있다. 화요일 35분, 그 외 요일 25분이 지나도 끝나지 않거나 실패하면 실패 job 로그로
+   걸릴 수 있다(2026-10-27 화요일은 조선일보 기사피드가 더해져 28분, 출처별 병렬 수집을 넣기 전). 화요일 45분, 그 외 요일 25분이 지나도 끝나지 않거나 실패하면 실패 job 로그로
    원인을 진단해 사용자에게 보고하고 중단한다(원인 후보: `CHAT_EDITORIAL_BRIDGE_ENABLED` 변수,
    출처 수집 실패 등). **예외:** run이 `failure`여도 실패한 단계가 `Start private model-free
    briefing preflight after a ready queue` 하나뿐이고(수집·대기열 생성·커밋 단계가 모두 성공)

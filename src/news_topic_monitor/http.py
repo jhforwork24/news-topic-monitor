@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import logging
 import time
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
-from threading import Lock
+from threading import Lock, RLock
 from urllib.parse import urlsplit
 from urllib.robotparser import RobotFileParser
 
@@ -61,15 +62,30 @@ class CachedRobots:
 
 
 class DomainRateLimiter:
+    """Per-host spacing and concurrency of one.
+
+    Each host has its own lock, held while a request is in flight (see ``slot``), so
+    sources collected in parallel never overlap on a host and one host's wait never
+    delays another host.
+    """
+
     def __init__(self, interval_seconds: float, clock=time.monotonic, sleeper=time.sleep) -> None:
         self.interval_seconds = interval_seconds
         self.clock = clock
         self.sleeper = sleeper
         self._last_request: dict[str, float] = {}
-        self._lock = Lock()
+        self._host_locks: dict[str, RLock] = {}
+        self._guard = Lock()
+
+    def _host_lock(self, host: str) -> RLock:
+        with self._guard:
+            lock = self._host_locks.get(host)
+            if lock is None:
+                lock = self._host_locks[host] = RLock()
+            return lock
 
     def wait(self, host: str) -> None:
-        with self._lock:
+        with self._host_lock(host):
             now = self.clock()
             previous = self._last_request.get(host)
             if previous is not None:
@@ -79,6 +95,14 @@ class DomainRateLimiter:
                     now = self.clock()
             self._last_request[host] = now
 
+    @contextmanager
+    def slot(self, host: str) -> Iterator[None]:
+        """Wait out the host's spacing, then keep other threads off the host until done."""
+
+        with self._host_lock(host):
+            self.wait(host)
+            yield
+
 
 class SafeHttpClient:
     """HTTP client that checks robots.txt before every non-robots request.
@@ -86,9 +110,9 @@ class SafeHttpClient:
     Robots retrieval failures are cached as failures for this run and all requests to
     that origin fail closed. The single exception is a 404/410 robots.txt on a host in
     ``robots_absent_allowed_hosts``: that origin publishes no robots.txt, so it is read
-    as allow-all and reported through ``robots_absent_origins``. One client processes
-    requests serially, so the per-domain concurrency limit is one; DomainRateLimiter
-    additionally enforces spacing.
+    as allow-all and reported through ``robots_absent_origins``. The per-domain concurrency
+    limit is one even when sources are collected in parallel threads: DomainRateLimiter
+    keeps a request in flight per host exclusive and enforces spacing between requests.
     """
 
     def __init__(
@@ -123,6 +147,8 @@ class SafeHttpClient:
         self.sleeper = sleeper
         self.limiter = DomainRateLimiter(settings.request_interval_seconds, sleeper=sleeper)
         self._robots: dict[str, CachedRobots] = {}
+        self._robots_guard = Lock()
+        self._robots_origin_locks: dict[str, Lock] = {}
 
     def __enter__(self) -> SafeHttpClient:
         return self
@@ -137,14 +163,23 @@ class SafeHttpClient:
     def robots_absent_origins(self) -> frozenset[str]:
         """Origins read as allow-all this run because robots.txt was 404/410."""
 
-        return frozenset(origin for origin, cached in self._robots.items() if cached.absent)
+        with self._robots_guard:
+            snapshot = list(self._robots.items())
+        return frozenset(origin for origin, cached in snapshot if cached.absent)
 
     def robots_decision(self, url: str) -> RobotsDecision:
         origin, robots_url = self._origin_and_robots(url)
         cached = self._robots.get(origin)
         if cached is None:
-            cached = self._fetch_robots(origin, robots_url)
-            self._robots[origin] = cached
+            # One fetch per origin even when several threads ask at once.
+            with self._robots_guard:
+                origin_lock = self._robots_origin_locks.setdefault(origin, Lock())
+            with origin_lock:
+                cached = self._robots.get(origin)
+                if cached is None:
+                    cached = self._fetch_robots(origin, robots_url)
+                    with self._robots_guard:
+                        self._robots[origin] = cached
         if cached.parser is None:
             return RobotsDecision(
                 allowed=False,
@@ -265,9 +300,9 @@ class SafeHttpClient:
         host = urlsplit(url).netloc.lower()
         last_error: Exception | None = None
         for attempt in range(self.settings.max_retries + 1):
-            self.limiter.wait(host)
             try:
-                response = self.client.get(url, headers=headers)
+                with self.limiter.slot(host):
+                    response = self.client.get(url, headers=headers)
             except httpx.TransportError as exc:
                 last_error = exc
                 if attempt >= self.settings.max_retries:

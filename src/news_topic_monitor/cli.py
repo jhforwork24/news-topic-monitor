@@ -279,6 +279,7 @@ def _collect(args: argparse.Namespace, settings: Settings) -> int:
             classifier=classifier,
             adapters=adapters,
             max_discovery_children=settings.max_discovery_children,
+            max_workers=settings.collect_workers,
             continuity_max_hours=(
                 COLLECT_CONTINUITY_MAX_HOURS
                 if args.command == "collect" and not args.start
@@ -438,6 +439,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         classifier=classifier,
                         adapters=adapters,
                         max_discovery_children=settings.max_discovery_children,
+                        max_workers=settings.collect_workers,
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
                         # The 48-hour overlap is for late discovery. Fetching every
@@ -508,6 +510,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                         classifier=classifier,
                         adapters=revalidation_adapters,
                         max_discovery_children=settings.max_discovery_children,
+                        max_workers=settings.collect_workers,
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
                         capture_body_start=revalidation_start,
@@ -761,6 +764,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                         classifier=classifier,
                         adapters=adapters,
                         max_discovery_children=settings.max_discovery_children,
+                        max_workers=settings.collect_workers,
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
                         capture_body_start=start,
@@ -778,6 +782,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                             classifier=classifier,
                             adapters=_build_adapters(settings, storage, names),
                             max_discovery_children=settings.max_discovery_children,
+                            max_workers=settings.collect_workers,
                             evidence_store=evidence_store,
                             capture_all_bodies=True,
                             capture_body_start=start,
@@ -1110,6 +1115,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                         classifier=classifier,
                         adapters=revalidation_adapters,
                         max_discovery_children=settings.max_discovery_children,
+                        max_workers=settings.collect_workers,
                         evidence_store=evidence_store,
                         capture_all_bodies=True,
                         capture_body_start=revalidation_start,
@@ -1446,6 +1452,7 @@ def _collect_single_source(
             classifier=classifier,
             adapters=adapters,
             max_discovery_children=settings.max_discovery_children,
+            max_workers=settings.collect_workers,
             write_health=False,
         ).run(start, end)
 

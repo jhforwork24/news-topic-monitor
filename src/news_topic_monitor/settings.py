@@ -50,6 +50,8 @@ class Settings:
     max_retries: int = DEFAULT_MAX_RETRIES
     max_discovery_children: int = 20
     hani_max_pages: int = 50
+    # 출처(도메인)가 서로 다르면 동시에 수집해도 도메인별 간격·동시 1건 제한이 지켜진다.
+    collect_workers: int = 4
 
     @property
     def user_agent(self) -> str:
@@ -73,4 +75,5 @@ class Settings:
             max_retries=max(0, int(os.getenv("MAX_RETRIES", DEFAULT_MAX_RETRIES))),
             max_discovery_children=max(1, int(os.getenv("MAX_DISCOVERY_CHILDREN", "20"))),
             hani_max_pages=max(1, int(os.getenv("HANI_MAX_PAGES", "50"))),
+            collect_workers=min(8, max(1, int(os.getenv("COLLECT_WORKERS") or "4"))),
         )
