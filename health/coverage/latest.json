@@ -4,7 +4,7 @@
     "chosun": {
       "schema_version": 1,
       "scope": "chosun",
-      "generated_at": "2026-10-29T01:17:25.390227Z",
+      "generated_at": "2026-10-29T23:07:58.138249Z",
       "check_hours": 48.0,
       "targets": {
         "specialist": 1.0,
@@ -16,17 +16,32 @@
         "chosun": {
           "status": "pass",
           "target": 0.99,
-          "rate": 0.9956,
-          "listed": 901,
-          "captured": 897,
+          "rate": 0.9934,
+          "listed": 1061,
+          "captured": 1054,
           "undated": 0,
-          "judged_from": "2026-10-27T01:17:25.390227Z",
-          "judged_until": "2026-10-28T22:17:25.390227Z",
+          "judged_from": "2026-10-27T23:07:58.138249Z",
+          "judged_until": "2026-10-29T20:07:58.138249Z",
           "paths_attempted": 26,
           "paths_succeeded": 26,
           "errors": [],
-          "missing_total": 4,
+          "missing_total": 7,
           "missing": [
+            {
+              "url": "https://www.chosun.com/international/international_general/2026/10/30/G452N46WSNHYLEXAOYFIQ26WH4",
+              "title": "[단독] “中과의 군사 충돌 원치 않지만 물러서지도 않을 것”",
+              "published_at": "2026-10-29T20:00:00Z"
+            },
+            {
+              "url": "https://www.chosun.com/economy/industry-company/2026/10/30/BFKF626CANGO3A5TWP5ZXYXYTI",
+              "title": "[단독] ‘휘발유 대란’ 겪는 인도네시아… 韓정유업체에 공급 확대 ‘SOS’",
+              "published_at": "2026-10-29T20:00:00Z"
+            },
+            {
+              "url": "https://www.chosun.com/economy/startup_story/2026/10/27/MYSBDMKBG5FFHBL47ROONIAGFY",
+              "title": "진짜 질 좋은 돼지만 골라 굽기 좋게 손질, 100g 당 2840원 초특가",
+              "published_at": "2026-10-29T20:00:00Z"
+            },
             {
               "url": "https://www.chosun.com/medical/healthchosun/2026/10/27/G5SWINZUHE2DQYZVHBSTGYZTMU",
               "title": "당뇨병 환자 7명 중 1명만 지켰다”… 혈당만 보면 놓치는 ‘위험 수치 셋’",
