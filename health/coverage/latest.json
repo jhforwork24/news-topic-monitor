@@ -4,115 +4,48 @@
     "chosun": {
       "schema_version": 1,
       "scope": "chosun",
-      "generated_at": "2026-10-28T00:46:35.113231Z",
+      "generated_at": "2026-10-29T01:17:25.390227Z",
       "check_hours": 48.0,
       "targets": {
         "specialist": 1.0,
         "general": 0.99
       },
-      "failing_sources": [
-        "chosun"
-      ],
+      "failing_sources": [],
       "errored_sources": [],
       "sources": {
         "chosun": {
-          "status": "fail",
+          "status": "pass",
           "target": 0.99,
-          "rate": 0.9809,
-          "listed": 888,
-          "captured": 871,
+          "rate": 0.9956,
+          "listed": 901,
+          "captured": 897,
           "undated": 0,
-          "judged_from": "2026-10-26T00:46:35.113231Z",
-          "judged_until": "2026-10-27T21:46:35.113231Z",
-          "paths_attempted": 25,
-          "paths_succeeded": 25,
+          "judged_from": "2026-10-27T01:17:25.390227Z",
+          "judged_until": "2026-10-28T22:17:25.390227Z",
+          "paths_attempted": 26,
+          "paths_succeeded": 26,
           "errors": [],
-          "missing_total": 17,
+          "missing_total": 4,
           "missing": [
             {
-              "url": "https://www.chosun.com/economy/startup_story/2026/06/15/WFHXDE747BB3RAISS72ETCJ7WM",
-              "title": "미쉐린 가이드 나온 ‘대가방’ 간짜장, 2인분 같은 1인분에 6000원 단독 최저가",
-              "published_at": "2026-10-27T20:25:00.542000Z"
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/27/G5SWINZUHE2DQYZVHBSTGYZTMU",
+              "title": "당뇨병 환자 7명 중 1명만 지켰다”… 혈당만 보면 놓치는 ‘위험 수치 셋’",
+              "published_at": "2026-10-28T01:25:05.870000Z"
             },
             {
-              "url": "https://www.chosun.com/national/weekend/2026/10/24/YQLK3A6EVZFC7BDHGWAGGJUR7A",
-              "title": "민둥산엔 은빛 억새, 함백산엔 단풍 산사… 가을 여행의 정석, 정선",
-              "published_at": "2026-10-27T10:12:39.699000Z"
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/28/GQ2WENBQGFRDKMLBMU4WMYRTME",
+              "title": "혈당 잡으려다 삶이 피폐해졌다… 완벽히 관리할수록 겪는 ‘반전’",
+              "published_at": "2026-10-28T01:23:34.534000Z"
             },
             {
               "url": "https://www.chosun.com/medical/healthchosun/2026/10/16/GM4GGODGMEZGCZJTMQ4TOYZTGI",
               "title": "미트볼 한 알도 건강하게! 동글동글 ‘새우 미트볼’",
-              "published_at": "2026-10-26T07:06:57.611000Z"
+              "published_at": "2026-10-28T01:22:37.386000Z"
             },
             {
-              "url": "https://www.chosun.com/medical/healthchosun/2026/10/15/ME3DKNRYGA2TINTBGI2GIYZZGQ",
-              "title": "암 환자 무너뜨리는 건 불안… “가족의 단단한 지지가 약”",
-              "published_at": "2026-10-26T07:00:32.493000Z"
-            },
-            {
-              "url": "https://www.chosun.com/medical/healthchosun/2026/10/14/GAYDKOJZGEZWCYZQHAZGKMRUMQ",
-              "title": "마음 한편에, 나를 위한 쉼터 하나",
-              "published_at": "2026-10-26T06:59:32.937000Z"
-            },
-            {
-              "url": "https://www.chosun.com/opinion/correspondent_column/2026/10/23/IEQCGQ65IJEHBFT57AZSLZS25A",
-              "title": "[특파원 리포트] 안보리 문턱 앞에 멈추지 마라",
-              "published_at": "2026-10-26T01:26:53.435000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/NWJ7VX7R5BBPVCR2N73YF566GA",
-              "title": "약점 먼저 털어놓을 때 면접·데이트 성공률 올라",
-              "published_at": "2026-10-26T01:23:35.268000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/5TICOTWG6NDMNJ4N7TG4UQ4KGA",
-              "title": "[장강명의 벽돌책] 사이비 교주는 어떻게 대중을 홀렸나",
-              "published_at": "2026-10-26T01:23:22.053000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/XJMBTANRPBCBFOYSW6I26W4YIM",
-              "title": "“언론은 적”이라던 트럼프… 워싱턴포스트를 ‘조종’하다",
-              "published_at": "2026-10-26T01:22:26.490000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/CVO4JRCMBZA6ZLZGOZHBPAVS5Q",
-              "title": "“흑백으로 가를 수 없는 인간사”… K문학 근원엔 박경리 있었다",
-              "published_at": "2026-10-26T01:21:51.055000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/3IQ6DVHX3ZG7JAGGW74DLROG4E",
-              "title": "[요즘 서점가] 박정희 삶 다룬 ‘정희’ 교보 정치사회 1위",
-              "published_at": "2026-10-26T01:20:41.558000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/3V5FVDUGSBFCZKRLKMCUGANVC4",
-              "title": "[한줄읽기] ‘금의 역사’ 외",
-              "published_at": "2026-10-26T01:20:28.245000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/2YRPEO22VFDXZO45MJ3OXUO3BY",
-              "title": "[편집자 레터] 김동률 콘서트 예매전쟁",
-              "published_at": "2026-10-26T01:19:40.769000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/V4GAKCGHMRENJCQQMHCC4XHEIU",
-              "title": "AI 이전에도 기계는 예술의 도구였다",
-              "published_at": "2026-10-26T01:19:29.693000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/book/2026/10/24/CHSUCNMYIVCRVDRL3UCI5W4OZ4",
-              "title": "[북카페] ‘왜 다시 아시아인가’ 외",
-              "published_at": "2026-10-26T01:19:05.594000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/culture_general/2026/10/24/FOTLW6OBJ5G25JVTHPE4MYRUKE",
-              "title": "적국의 시인·화가까지도 사로잡은 바그너의 매력",
-              "published_at": "2026-10-26T01:18:44.476000Z"
-            },
-            {
-              "url": "https://www.chosun.com/culture-life/culture_general/2026/10/24/DSER4P63YNAOZPWU3CT72YW7HY",
-              "title": "양윤석 SBS 대표이사 사장",
-              "published_at": "2026-10-26T01:16:08.937000Z"
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/14/GQZTMZBZGUZDGNJTG43WMNLBGI",
+              "title": "잠 제대로 못 자도 당뇨병 위험 높아지나요?",
+              "published_at": "2026-10-28T00:30:01.148000Z"
             }
           ],
           "notes": []
