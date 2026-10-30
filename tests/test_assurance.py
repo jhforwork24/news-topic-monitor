@@ -520,6 +520,42 @@ def test_publish_gate_is_machine_checkable_and_fail_closed() -> None:
     )
     assert blocked_by_census_gap.allowed is False
     assert any("census와 모순" in error for error in blocked_by_census_gap.fatal_errors)
+    # 검색 후보 URL이 보고에 남아야 어느 목록 경로가 빠졌는지 추적할 수 있다.
+    assert any(
+        "https://www.beminor.com/news/articleView.html?idxno=99999" in item.cause
+        for item in blocked_by_census_gap.reporting_items
+        if item.result == "potential_gap"
+    )
+
+    other_gap = gap.model_copy(
+        update={
+            "potential_gaps": [
+                census_gap.potential_gaps[0].model_copy(
+                    update={
+                        "matched_source": "chosun",
+                        "original_url": "https://www.chosun.com/national/2026/10/29/ABC",
+                    }
+                )
+            ]
+        }
+    )
+    warned = evaluate_publish_gate(
+        report_date="2026-08-20",
+        policy=policy,
+        census=census,
+        gap_detection=other_gap,
+        reverse_search=reverse,
+        final_state=final_state,
+        audit=audit.model_copy(update={"fatal_error_count": 0}),
+        plan=plan,
+        candidates=[candidate],
+        health=_health(now),
+    )
+    assert any(
+        "https://www.chosun.com/national/2026/10/29/ABC" in item.cause
+        for item in warned.reporting_items
+        if item.result == "potential_gap"
+    )
 
 
 def _gate_inputs(policy, now, plan):
