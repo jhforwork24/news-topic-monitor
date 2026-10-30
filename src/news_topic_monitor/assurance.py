@@ -439,7 +439,10 @@ def evaluate_publish_gate(
         for hit in census_gap_hits:
             reporting.append(
                 ReportingItem(
-                    cause=f"{hit.matched_source}: 공식 목록에 없는 Naver 색인 후보 {hit.title}",
+                    cause=(
+                        f"{hit.matched_source}: 공식 목록에 없는 Naver 색인 후보 {hit.title}"
+                        f"{_gap_url_note(hit)}"
+                    ),
                     fallback="검색 색인을 원문 검증으로 승격하지 않고 후보 URL만 보존",
                     result="potential_gap",
                     next_action="공식 목록 경로에서 원문을 재발견·검증하고 census를 다시 판정",
@@ -607,7 +610,10 @@ def evaluate_publish_gate(
         for hit in non_census_gaps[:20]:
             reporting.append(
                 ReportingItem(
-                    cause=f"{hit.matched_source}: 결정론적 수집에 없는 검색 후보 {hit.title}",
+                    cause=(
+                        f"{hit.matched_source}: 결정론적 수집에 없는 검색 후보 {hit.title}"
+                        f"{_gap_url_note(hit)}"
+                    ),
                     fallback="검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
                     result="potential_gap",
                     next_action=(
@@ -642,3 +648,14 @@ def write_assurance_outputs(
         root / "health" / "publish_gate" / "latest.json",
         gate.model_dump(mode="json"),
     )
+
+
+def _gap_url_note(hit: SearchHit) -> str:
+    """검색 후보의 URL을 보고에 남긴다(없으면 빈 문자열).
+
+    제목만으로는 어느 섹션·경로가 공식 목록에서 빠졌는지 알 수 없어 원인 추적이 막혔다
+    (2026-10-30 조선일보 '온통대전' 기사). 검색 결과 URL은 본문 근거가 아니라 위치 단서다.
+    """
+
+    url = hit.original_url or hit.naver_url
+    return f" ({url})" if url else ""
