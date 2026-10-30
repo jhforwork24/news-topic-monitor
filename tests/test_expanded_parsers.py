@@ -207,3 +207,28 @@ def test_newscham_body_selector() -> None:
     assert adapter.extract_body(html, "https://newscham.net/900001/") == "짧은 판별용 문장"
     with pytest.raises(StructureChangedError):
         adapter.extract_body("<html></html>", "https://newscham.net/900001/")
+
+
+def test_ablenews_list_page_supplements_the_sitemap_for_the_newest_articles(fixture_dir) -> None:
+    adapter = AblenewsAdapter()
+    urls = adapter.initial_discovery_urls(
+        datetime(2026, 10, 30, tzinfo=UTC), datetime(2026, 10, 31, tzinfo=UTC)
+    )
+    # sitemap.xml and RSS omitted articles 234303/234304 for hours (verified 2026-10-31).
+    assert urls == [
+        "https://www.ablenews.co.kr/sitemap.xml",
+        "https://www.ablenews.co.kr/news/articleList.html?view_type=sm",
+    ]
+    page = adapter.parse_discovery((fixture_dir / "ablenews_list.html").read_bytes(), urls[1])
+    # The client-side sample <li> without an article link is skipped.
+    assert [article.article_id for article in page.articles] == ["900002", "900001"]
+    first, second = page.articles
+    assert first.canonical_url == "https://www.ablenews.co.kr/news/articleView.html?idxno=900002"
+    assert first.title == "합성 단체 행사 보도 제목"
+    assert first.section == "단체"
+    assert first.published_at == datetime(2026, 10, 30, 8, 0, tzinfo=UTC)
+    assert first.summary == "합성 리드 문장이다."
+    # Two byline fields: the section is the first, the last is the date.
+    assert second.published_at == datetime(2026, 10, 30, 0, 11, tzinfo=UTC)
+    with pytest.raises(StructureChangedError):
+        adapter.parse_discovery(b"<html><body><ul></ul></body></html>", urls[1])

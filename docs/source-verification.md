@@ -151,3 +151,20 @@ robots 확인 실패이면 기사 URL을 요청하지 않았음을 명시한다.
 - 브리핑 대상이 아닌 스포츠·연예 분야는 이 경로에서 뺀다(분야 sitemap으로는 계속 수집한다).
 - 일시 HTTP 503이 있었다. 공통 HTTP 클라이언트의 재시도·대기를 따르고, 실패해도 기존 경로는
   그대로 쓴다(health의 `errors`에 남는다).
+
+## 에이블뉴스 최신 기사 목록 (2026-10-31 확인)
+
+에이블뉴스 `sitemap.xml`과 `rss/allArticle.xml`은 가장 최근에 등록된 기사를 몇 시간 동안 싣지
+않는다. 2026-10-31 07:41 KST에 sitemap의 최대 `idxno`는 234302였지만 등록 순서가 그다음인
+234303·234304(게재 시각 2026-10-30 17:00 KST)는 sitemap·RSS에 없었고, 기사 목록
+`/news/articleList.html?view_type=sm`(robots.txt 허용)에는 있었다. 이 때문에 게이트가 장애언론
+census 모순으로 발행을 막았다.
+
+- 목록은 최신 20건이며 `page` 쿼리값을 바꿔도 같은 20건이 왔다(1~3쪽 확인). 그래서 첫 쪽만
+  읽고 sitemap을 대체하지 않고 보완한다.
+- 항목 구조: `li > h4.titles > a[href=/news/articleView.html?idxno=N]`, `p.lead`,
+  `span.byline > em`(분류, 기자, `YYYY.MM.DD HH:MM`). 클라이언트 템플릿용 견본 `li`는 기사 링크가
+  없어 건너뛴다.
+- 삭제·비공개로 보이는 `idxno`(예: 234292)는 200 응답이지만 `og:title`·`article:published_time`
+  메타가 없다. 번호 빈틈을 하나씩 열어 보는 방식은 쓰지 않는다.
+
