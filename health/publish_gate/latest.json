@@ -1,20 +1,28 @@
 {
   "schema_version": 1,
-  "report_date": "2026-10-30",
-  "checked_at": "2026-10-29T23:03:51.927249Z",
-  "allowed": true,
-  "fatal_errors": [],
+  "report_date": "2026-10-31",
+  "checked_at": "2026-10-30T23:06:15.095666Z",
+  "allowed": false,
+  "fatal_errors": [
+    "독립 gap detector가 장애언론 census와 모순되는 잠재 누락을 발견함"
+  ],
   "degraded_warnings": [
-    "독립 검색에서 결정론적 수집에 없는 잠재 누락 1건"
+    "pressian: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 7건이 편집·감사를 거치지 않음 (김민석, 단식농성장 찾아 \"LS전선 특별근로감독·수사 속도 촉구\" / '노동 약자 별도 법으로 보호하자'는 여야…당사자들 \"노동법 놔두고 왜?\" / 추미애 지사 \"버스 파업 없이 협상 합의…노사 양측에 감사\" 외 4건)"
   ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
   "reporting_items": [
     {
-      "cause": "chosun: 결정론적 수집에 없는 검색 후보 지역화폐 ‘온통대전’ 부활 한 달… 충전·결제 20% 증가",
-      "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
+      "cause": "pressian: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 7건이 편집·감사를 거치지 않음 (김민석, 단식농성장 찾아 \"LS전선 특별근로감독·수사 속도 촉구\" / '노동 약자 별도 법으로 보호하자'는 여야…당사자들 \"노동법 놔두고 왜?\" / 추미애 지사 \"버스 파업 없이 협상 합의…노사 양측에 감사\" 외 4건)",
+      "fallback": "발행은 진행하되 해당 기사를 보고사항에 남김",
+      "result": "warning",
+      "next_action": "기사 원문을 확인해 필요하면 사후 보완하고 브리핑 정정 이력에 기록"
+    },
+    {
+      "cause": "ablenews: 공식 목록에 없는 Naver 색인 후보 '여주시의원과 시각 장애인 이 함께하는 텐덤바이크 대회' 성료 (https://www.ablenews.co.kr/news/articleView.html?idxno=234303)",
+      "fallback": "검색 색인을 원문 검증으로 승격하지 않고 후보 URL만 보존",
       "result": "potential_gap",
-      "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
+      "next_action": "공식 목록 경로에서 원문을 재발견·검증하고 census를 다시 판정"
     }
   ]
 }
