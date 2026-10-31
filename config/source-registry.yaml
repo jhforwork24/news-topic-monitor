@@ -21,7 +21,7 @@ sources:
       mode: rolling_official_list
       page_size: 100
       requires_window_boundary: true
-    discovery_routes: [official_sitemap]
+    discovery_routes: [official_sitemap, official_latest_list]
     fallbacks: [naver_gap_detection]
   theindigo:
     label: 더인디고
