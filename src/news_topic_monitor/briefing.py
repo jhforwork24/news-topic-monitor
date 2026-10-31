@@ -1486,6 +1486,9 @@ def _clean_summary_sentences(value: str | None) -> list[str]:
             continue
         if sentence.endswith(("인데요.", "는데요.")):
             continue
+        # 중앙일보 요약 끝의 "- 키워드,키워드" 목록은 문장이 아니다.
+        if sentence.startswith("-"):
+            continue
         if any(marker in sentence for marker in ('"', "'", "“", "”", "\u2018", "\u2019")):
             continue
         sentence = _neutral_text(sentence)
@@ -1514,6 +1517,13 @@ def _neutral_text(value: str) -> str:
     return re.sub(r"\s+", " ", cleaned).strip()
 
 
+# 지운 인용 자리에 남기는 표식. 인용만 지우면 "…사무국장은 며 이라고 했다."처럼 발언을 이끄는
+# 말만 남은 문장이 요약으로 뽑혔다(2026-10-30·31 이전 보도). 표식(작은따옴표 쌍)은 아래 인용부호
+# 검사에 걸리므로 인용이 있던 문장은 통째로 버려진다. 큰따옴표를 표식으로 쓰면 이 함수의 반복이
+# 끝나지 않는다.
+QUOTE_REMOVED_MARKER = " \u2018\u2019 "
+
+
 def _remove_quoted_spans(value: str) -> str:
     cleaned = value
     for opening, closing in (("“", "”"),):
@@ -1521,16 +1531,16 @@ def _remove_quoted_spans(value: str) -> str:
             start = cleaned.find(opening)
             end = cleaned.find(closing, start + 1)
             if end < 0:
-                cleaned = cleaned[:start]
+                cleaned = cleaned[:start] + QUOTE_REMOVED_MARKER
                 break
-            cleaned = cleaned[:start] + " " + cleaned[end + 1 :]
+            cleaned = cleaned[:start] + QUOTE_REMOVED_MARKER + cleaned[end + 1 :]
     while '"' in cleaned:
         start = cleaned.find('"')
         end = cleaned.find('"', start + 1)
         if end < 0:
-            cleaned = cleaned[:start]
+            cleaned = cleaned[:start] + QUOTE_REMOVED_MARKER
             break
-        cleaned = cleaned[:start] + " " + cleaned[end + 1 :]
+        cleaned = cleaned[:start] + QUOTE_REMOVED_MARKER + cleaned[end + 1 :]
     return cleaned
 
 

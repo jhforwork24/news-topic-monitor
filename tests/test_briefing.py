@@ -1323,3 +1323,25 @@ def test_summary_particles_follow_the_last_syllable_of_the_keyword_list() -> Non
             datetime(2026, 10, 7, tzinfo=UTC), datetime(2026, 10, 8, tzinfo=UTC), sections
         )
         assert f"주요 칼럼으로는 {keyword}{particle} 함께 소개한다." in overview
+
+
+def test_previous_coverage_summary_skips_sentences_whose_quotes_were_removed() -> None:
+    """Regression: 2026-10-30·31 — 인용을 지운 뒤 '…은 며 이라고 했다.'만 남은 문장이 뽑혔다."""
+
+    from news_topic_monitor.briefing import _previous_coverage_summary
+
+    article = _article("joongang", "진술 지원 제도 시행 10년 점검", article_id="quote")
+    article.summary = (
+        "\u2018입말\u2019 진술에 기대는 수사의 한계가 드러났다. "
+        "대책위 사무국장은 “조사 직전에야 처음 만난다”며 “질문 몇 개로 끝난다”고 했다. "
+        "전문가들은 조사 방식 개선이 필요하다고 지적했다. - 진술조력,조사"
+    )
+    assert _previous_coverage_summary(article) == "전문가들은 조사 방식 개선이 필요하다고 지적했다."
+
+    keywords_only = _article("joongang", "진술 지원 제도 시행 10년 점검", article_id="tags")
+    keywords_only.summary = "대책위는 “조사 직전에야 만난다”고 했다. - 발달장애인,진술조력"
+    assert _previous_coverage_summary(keywords_only) == "진술 지원 제도 시행 10년 점검을 보도했다."
+
+    unclosed = _article("joongang", "진술 지원 제도 시행 10년 점검", article_id="unclosed")
+    unclosed.summary = "대책위는 “조사 방식이 문제다"
+    assert _previous_coverage_summary(unclosed) == "진술 지원 제도 시행 10년 점검을 보도했다."
