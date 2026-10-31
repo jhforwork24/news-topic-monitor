@@ -542,7 +542,7 @@ def test_editorial_briefing_reorders_labor_section_care_then_poverty_then_labor(
     )
 
     labor_section = next(
-        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤"
+        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤·소수자"
     )
     assert [issue.title for issue in labor_section.issues] == [
         "요양보호사 처우 개선 요구",
@@ -588,7 +588,7 @@ def _empty_audit():
 def test_labor_subsection_caps_accept_maximum_and_zero() -> None:
     from news_topic_monitor.editorial import validate_external_editorial
 
-    plan, candidates = _labor_plan_and_candidates(["care"] * 4 + ["poverty"] * 3)
+    plan, candidates = _labor_plan_and_candidates(["care"] * 3 + ["poverty"] * 3 + ["minority"] * 2)
     validate_external_editorial(plan=plan, audit=_empty_audit(), candidates=candidates)
 
     # 0 issues in II절 is allowed as long as another section carries the briefing.
@@ -612,10 +612,14 @@ def test_labor_subsection_caps_accept_maximum_and_zero() -> None:
 @pytest.mark.parametrize(
     ("subsections", "expected"),
     [
-        (["care"] * 5, "돌봄(care) 하위 주제의 이슈가 4개를 초과함"),
+        (["care"] * 4, "돌봄(care) 하위 주제의 이슈가 3개를 초과함"),
         (["poverty"] * 4, "빈곤(poverty) 하위 주제의 이슈가 3개를 초과함"),
-        (["labor"] * 4, "노동(labor) 하위 주제의 이슈가 3개를 초과함"),
-        (["care"] * 4 + ["poverty"] * 3 + ["labor"], "labor 섹션의 이슈가 7개를 초과함"),
+        (["minority"] * 3, "소수자(minority) 하위 주제의 이슈가 2개를 초과함"),
+        (["labor"] * 3, "노동(labor) 하위 주제의 이슈가 2개를 초과함"),
+        (
+            ["care"] * 3 + ["poverty"] * 3 + ["minority"] * 2 + ["labor"],
+            "labor 섹션의 이슈가 8개를 초과함",
+        ),
     ],
 )
 def test_labor_subsection_caps_reject_overflow(subsections: list[str], expected: str) -> None:
@@ -707,7 +711,7 @@ def test_explicit_subsection_overrides_term_matching_in_order(tmp_path) -> None:
     )
 
     labor_section = next(
-        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤"
+        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤·소수자"
     )
     assert [issue.title for issue in labor_section.issues] == [
         "지역 서비스 종사자 처우 논란",

@@ -715,7 +715,7 @@ def build_briefing(
     sections = [
         BriefingSection("I. 장애정책·장애인운동", disability_issues),
         BriefingSection(
-            "II. 노동·돌봄·빈곤",
+            "II. 노동·돌봄·빈곤·소수자",
             select_labor_issues(
                 cluster_issues(
                     [item for item, _score in labor],
@@ -815,7 +815,8 @@ def build_editorial_briefing(
     sections = [
         BriefingSection("I. 장애정책·장애인운동", issues_by_section[EditorialSection.DISABILITY]),
         BriefingSection(
-            "II. 노동·돌봄·빈곤", _sort_labor_subsection(issues_by_section[EditorialSection.LABOR])
+            "II. 노동·돌봄·빈곤·소수자",
+            _sort_labor_subsection(issues_by_section[EditorialSection.LABOR]),
         ),
     ]
     opinion_issues = issues_by_section[EditorialSection.OPINION]
@@ -1322,10 +1323,10 @@ def build_overview(start: datetime, end: datetime, sections: list[BriefingSectio
             + _issue_keywords(disability.issues, 4)
             + " 등을 중심으로 지역사회에서 살아갈 권리와 공적 책임의 이행 여부를 살폈다."
         )
-    labor = by_title.get("II. 노동·돌봄·빈곤")
+    labor = by_title.get("II. 노동·돌봄·빈곤·소수자")
     if labor and labor.issues:
         section_sentences.append(
-            "노동·돌봄·빈곤 부문에서는 "
+            "노동·돌봄·빈곤·소수자 부문에서는 "
             + _issue_keywords(labor.issues, 4)
             + " 등을 통해 원청·사용자와 국가의 책임을 점검하였다."
         )
@@ -1353,11 +1354,11 @@ def build_telegram_summary(sections: list[BriefingSection]) -> str:
             + _korean_particle(disability_keywords, "을", "를")
             + " 주요 후속 감시 대상으로 정리하였다."
         )
-    labor = by_title.get("II. 노동·돌봄·빈곤")
+    labor = by_title.get("II. 노동·돌봄·빈곤·소수자")
     if labor and labor.issues:
         labor_titles = _issue_keywords(labor.issues, 3)
         sentences.append(
-            "노동·돌봄·빈곤 의제에서는 "
+            "노동·돌봄·빈곤·소수자 의제에서는 "
             + labor_titles
             + _korean_particle(labor_titles, "을", "를")
             + " 중심으로 생명·고용·생존권을 살폈다."

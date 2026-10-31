@@ -146,10 +146,10 @@ topics:
       - {all: [격리, 강박], score: 3.0}
       - {all: [화면해설, 방송], score: 4.0}
   labor_care_poverty:
-    label: 노동·돌봄·빈곤
+    label: 노동·돌봄·빈곤·소수자
     description: >-
       노동자의 권리와 노동조합 활동, 산업재해, 임금·고용·해고, 공공돌봄과
-      돌봄노동, 빈곤·주거·소득보장 의제를 포괄한다.
+      돌봄노동, 빈곤·주거·소득보장, 이주민·성소수자·차별금지·성평등 등 소수자 의제를 포괄한다.
     thresholds:
       candidate: 3.0
       review: 5.0
@@ -171,6 +171,13 @@ topics:
       - {term: 산업재해, score: 7.0}
       - {term: 산재, score: 6.0}
       - {term: 기초연금, score: 7.0}
+      # 소수자 하위 주제(2026-10-31 사용자 결정): 이주민·난민, 성소수자, 차별금지법·혐오·인권위,
+      # 여성·성평등. 장애 사안은 disability_rights에서 다룬다.
+      - {term: 이주민, score: 6.0}
+      - {term: 미등록 이주, score: 7.0}
+      - {term: 성소수자, score: 7.0}
+      - {term: 차별금지법, score: 8.0}
+      - {term: 평등법, score: 7.0}
     supporting_terms:
       - {term: 노조, score: 5.0}
       - {term: 파업, score: 5.0}
@@ -199,6 +206,27 @@ topics:
       - {term: 복지사각지대, score: 5.0}
       - {term: 위기가구, score: 4.0}
       - {term: 수급자, score: 3.0, ambiguous: true}
+      # '성평등'은 성평등가족부·양성평등 행사명에 두루 붙고, '난민'·'트랜스젠더'는 스포츠·공연·
+      # 예능 기사에도 나와 단독으로는 relevant가 되지 않게 보조어로 둔다(9/1 이후 재생에서 확인).
+      - {term: 난민, score: 5.0}
+      - {term: 트랜스젠더, score: 5.0}
+      - {term: 성평등, score: 4.0, ambiguous: true}
+      - {term: 고용허가제, score: 5.0}
+      - {term: 계절근로, score: 5.0}
+      - {term: 이주노동, score: 5.0}
+      - {term: 퀴어, score: 5.0}
+      - {term: 동성혼, score: 5.0}
+      - {term: 동성 부부, score: 5.0}
+      - {term: 혐오, score: 4.0, ambiguous: true}
+      - {term: 소수자, score: 4.0}
+      - {term: 국가인권위원회, score: 4.0}
+      - {term: 인권위, score: 3.0, ambiguous: true}
+      - {term: 성차별, score: 5.0}
+      - {term: 성별 임금, score: 5.0}
+      - {term: 젠더폭력, score: 5.0}
+      - {term: 교제폭력, score: 4.0}
+      - {term: 디지털 성범죄, score: 4.0}
+      - {term: 여성가족부, score: 3.0, ambiguous: true}
     laws:
       - {term: 노동조합 및 노동관계조정법, score: 8.0}
       - {term: 근로기준법, score: 7.0}
