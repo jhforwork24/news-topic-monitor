@@ -9,15 +9,15 @@
   "published_issue_count": 14,
   "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 2.193,
+    "api_preflight": 1.278,
     "assurance": 0.002,
-    "bridge_import_validation": 5.597,
+    "bridge_import_validation": 6.437,
     "census_retry": 0.0,
-    "final_state_recrawl": 29.071,
-    "gap_reverse_search": 117.47,
-    "late_recovered_sources": 23.243,
-    "total": 192.384
+    "final_state_recrawl": 46.164,
+    "gap_reverse_search": 112.971,
+    "late_recovered_sources": 22.867,
+    "total": 202.349
   },
   "error": "publish gate blocked publication: 독립 gap detector가 장애언론 census와 모순되는 잠재 누락을 발견함",
-  "completed_at": "2026-10-30T23:06:20.906150Z"
+  "completed_at": "2026-10-31T00:26:22.812675Z"
 }
