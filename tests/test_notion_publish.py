@@ -136,6 +136,11 @@ def test_notion_issue_uses_article_bullets_and_previous_coverage_toggle() -> Non
     toggle_text = json.dumps(toggle, ensure_ascii=False)
     assert "동일 주제 이전 보도" in toggle_text
     assert "이전 이동권 보도" in toggle_text
+    # 요약 열은 싣지 않는다(2026-10-31 사용자 결정): 자료·날짜·매체 두 열만 남는다.
+    assert "이전 보도 요약" not in toggle_text
+    assert "정책 변화 여부를 대조한다." not in toggle_text
+    table = toggle["toggle"]["children"][0]
+    assert table["table"]["table_width"] == 2
 
 
 def test_notion_issue_omits_reference_toggle_when_nothing_to_show() -> None:

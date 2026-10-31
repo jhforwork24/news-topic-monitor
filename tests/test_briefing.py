@@ -960,6 +960,9 @@ def test_previous_coverage_is_only_inside_toggle_and_limited(tmp_path, topics_pa
     assert "### 동일 주제 이전 보도" not in text
     summary_index = text.index("<summary>동일 주제 이전 보도</summary>")
     assert summary_index < text.index("|", summary_index)
+    if issue.previous_coverage:
+        assert "| 자료 | 날짜·매체 |\n|---|---|" in text
+    assert "이전 보도 요약" not in text
     assert "홍길동 기자" in text
     assert "| 언론사 | 기사 | 발행 |" not in text
 
