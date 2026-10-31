@@ -1404,16 +1404,17 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                 lines.extend(["<details>", "<summary>동일 주제 이전 보도</summary>", ""])
                 lines.extend(
                     [
-                        "| 자료 | 날짜·매체 | 이전 보도 요약 |",
-                        "|---|---|---|",
+                        "| 자료 | 날짜·매체 |",
+                        "|---|---|",
                     ]
                 )
+                # 요약 열은 2026-10-31 사용자 결정으로 싣지 않는다. 기사 요약 메타데이터에서
+                # 기계적으로 뽑은 문장이 잘리거나 제목·도입부만 남아 어색했다.
                 for item in issue.previous_coverage[:PREVIOUS_COVERAGE_MAX_ITEMS]:
                     label = _markdown_table_text(item.label)
                     material = f"[{label}]({item.url})" if item.url else label
                     meta = _markdown_table_text(f"{item.published} · {item.outlet}")
-                    summary = _markdown_table_text(item.comparison)
-                    lines.append(f"| {material} | {meta} | {summary} |")
+                    lines.append(f"| {material} | {meta} |")
                 lines.extend(["", "</details>", ""])
     return "\n".join(lines)
 

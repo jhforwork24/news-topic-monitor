@@ -1405,7 +1405,6 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 [
                     [_rich_text("자료")],
                     [_rich_text("날짜·매체")],
-                    [_rich_text("이전 보도 요약")],
                 ]
             )
         ]
@@ -1415,7 +1414,6 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                     [
                         [_rich_text(item.label, href=item.url)],
                         [_rich_text(f"{item.published} · {item.outlet}")],
-                        [_rich_text(item.comparison)],
                     ]
                 )
             )
@@ -1425,7 +1423,7 @@ def _issue_blocks(index: int, issue: BriefingIssue) -> list[dict[str, Any]]:
                 "type": "toggle",
                 "toggle": {
                     "rich_text": [_rich_text("동일 주제 이전 보도")],
-                    "children": [_table(coverage_rows, width=3)],
+                    "children": [_table(coverage_rows, width=2)],
                 },
             }
         )
