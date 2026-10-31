@@ -4,7 +4,7 @@
     "chosun": {
       "schema_version": 1,
       "scope": "chosun",
-      "generated_at": "2026-10-30T01:22:30.633677Z",
+      "generated_at": "2026-10-31T01:05:39.288378Z",
       "check_hours": 48.0,
       "targets": {
         "specialist": 1.0,
@@ -16,33 +16,17 @@
         "chosun": {
           "status": "pass",
           "target": 0.99,
-          "rate": 0.9969,
-          "listed": 959,
-          "captured": 956,
+          "rate": 1.0,
+          "listed": 883,
+          "captured": 883,
           "undated": 0,
-          "judged_from": "2026-10-28T01:22:30.633677Z",
-          "judged_until": "2026-10-29T22:22:30.633677Z",
-          "paths_attempted": 26,
-          "paths_succeeded": 26,
+          "judged_from": "2026-10-29T01:05:39.288378Z",
+          "judged_until": "2026-10-30T22:05:39.288378Z",
+          "paths_attempted": 24,
+          "paths_succeeded": 24,
           "errors": [],
-          "missing_total": 3,
-          "missing": [
-            {
-              "url": "https://www.chosun.com/medical/healthchosun/2026/10/27/G5SWINZUHE2DQYZVHBSTGYZTMU",
-              "title": "당뇨병 환자 7명 중 1명만 지켰다”… 혈당만 보면 놓치는 ‘위험 수치 셋’",
-              "published_at": "2026-10-28T01:25:05.870000Z"
-            },
-            {
-              "url": "https://www.chosun.com/medical/healthchosun/2026/10/28/GQ2WENBQGFRDKMLBMU4WMYRTME",
-              "title": "혈당 잡으려다 삶이 피폐해졌다… 완벽히 관리할수록 겪는 ‘반전’",
-              "published_at": "2026-10-28T01:23:34.534000Z"
-            },
-            {
-              "url": "https://www.chosun.com/medical/healthchosun/2026/10/16/GM4GGODGMEZGCZJTMQ4TOYZTGI",
-              "title": "미트볼 한 알도 건강하게! 동글동글 ‘새우 미트볼’",
-              "published_at": "2026-10-28T01:22:37.386000Z"
-            }
-          ],
+          "missing_total": 0,
+          "missing": [],
           "notes": []
         }
       }
