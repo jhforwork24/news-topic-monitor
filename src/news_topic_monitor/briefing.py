@@ -195,7 +195,7 @@ PROPER_NOUN_PREVIOUS_CONCEPTS = frozenset(
         # '개인예산제' 하나만 겹쳤다) 같은 사안을 가리킨다. 빈도가 비슷한 '자립지원'·'공백'
         # 같은 일상어와는 빈도로 구분되지 않아 목록으로 정한다.
         "개인예산제",
-        "메가특구법",
+        # 개명 전 이름 '메가특구법'은 PREVIOUS_TOKEN_ALIASES로 이 이름에 모인다.
         "초광역특구법",
     }
 )
@@ -217,6 +217,59 @@ CATEGORY_PREVIOUS_CONCEPTS = frozenset(
 )
 
 STRONG_PREVIOUS_CONCEPTS = PROPER_NOUN_PREVIOUS_CONCEPTS | CATEGORY_PREVIOUS_CONCEPTS
+
+# 같은 사안을 가리키는 다른 표기·개명 전 이름을 하나로 모은다. 이전 보도 매칭에만 쓰고
+# 클러스터링(issue_tokens)에는 쓰지 않는다. 2026-10-27 초광역특구법 이슈는 8~10월의
+# '메가특구법' 보도와 '주52시간제'·'주52시간' 표기 차이 때문에 서로 이어지지 않았다.
+PREVIOUS_TOKEN_ALIASES = {
+    "메가특구법": "초광역특구법",
+    "메가특구법안": "초광역특구법",
+    "메가특구특별법": "초광역특구법",
+    "초광역특구법안": "초광역특구법",
+    "주52시간제": "주52시간",
+    "52시간제": "52시간",
+}
+
+# 요약에서 법률명을 읽을 때의 최소 길이('노조법' 3자 이상). '방법'·'불법' 같은 2자 낱말과
+# 아래 일반어는 법률명이 아니다. '현행법'·'특별법'은 어느 법안 기사에나 붙어 서로 다른
+# 의원 발의안을 하나로 묶었다(9/1 이후 재생에서 확인).
+PREVIOUS_LAW_NAME_MIN_CHARS = 3
+NON_LAW_NAME_TOKENS = frozenset(
+    {
+        "입법",
+        "사법",
+        "헌법",
+        "위법",
+        "합법",
+        "편법",
+        "불법",
+        "방법",
+        "해법",
+        "적법",
+        "현행법",
+        "개정법",
+        "특별법",
+        "관련법",
+        "해당법",
+        "모법",
+    }
+)
+
+# II절 이력 풀 전용 보조어. 노동 분류기(config/topics.yml)는 수집 판정에도 쓰여 손대지
+# 않고, 노동시간·특례·사회적 대화처럼 장기 입법 사안의 보도가 분류기에서 빠지는 것만
+# 이력 풀에서 보완한다(2026-10-27 초광역특구법 사안: 8~10월 보도 약 130건 중 20여 건만
+# 풀에 들어감). 이 말이 있어도 노동 지정매체·180일 조건은 그대로 적용한다.
+LABOR_HISTORY_EXTRA_TERMS = (
+    "52시간",
+    "노동시간",
+    "근로시간",
+    "특별연장근로",
+    "노동특례",
+    "근로기준법",
+    "사회적 대화",
+    "경사노위",
+    "노동계",
+)
 
 # 범주어만 겹쳤을 때 추가로 요구하는 최소 공유 토큰 수(범주어 자신을 포함).
 CATEGORY_CONCEPT_MIN_OVERLAP = 2
@@ -306,6 +359,10 @@ GENERIC_PREVIOUS_TOKENS = frozenset(
         "추락",
         "화재",
         "사고",
+        # 정책 일반어: 이력 풀을 넓힌 뒤(노동시간 보조어) 서로 다른 대통령 발언을 묶었다.
+        "검토",
+        "제도",
+        "대통령",
     }
 )
 
@@ -493,9 +550,14 @@ def labor_previous_history(
         result = classifier.classify(
             title=article.title, summary=article.summary, section=article.section
         )
-        if result.classification == Classification.RELEVANT:
+        if result.classification == Classification.RELEVANT or _labor_history_extra(article):
             history.append(article)
     return history
+
+
+def _labor_history_extra(article: ArticleRecord) -> bool:
+    text = " ".join(value for value in (article.title, article.summary) if value)
+    return any(term in text for term in LABOR_HISTORY_EXTRA_TERMS)
 
 
 @dataclass
@@ -1119,10 +1181,29 @@ def previous_coverage_tokens(article: ArticleRecord) -> frozenset[str]:
     Titles keep particles attached ("정신병원서"), so the same institution failed to
     match itself across reports. The stripped form replaces the raw one rather than
     joining it, so one word is never counted twice toward the overlap thresholds.
-    Clustering keeps using ``issue_tokens`` unchanged.
+    Clustering keeps using ``issue_tokens`` unchanged. Law names are also read from
+    the summary, since a headline often names the bill only in passing or not at all,
+    and spelling variants and renamed bills are folded onto one token.
     """
 
-    return frozenset(_strip_particle(token) for token in issue_tokens(article))
+    tokens = {_strip_particle(token) for token in issue_tokens(article)}
+    tokens.update(_summary_law_names(article.summary))
+    return frozenset(PREVIOUS_TOKEN_ALIASES.get(token, token) for token in tokens)
+
+
+def _summary_law_names(summary: str | None) -> set[str]:
+    names: set[str] = set()
+    for raw in re.findall(r"[가-힣A-Za-z0-9]{2,}", (summary or "").lower()):
+        token = _strip_particle(raw)
+        if token.endswith("법안"):
+            token = token[:-1]
+        if (
+            token.endswith("법")
+            and len(token) >= PREVIOUS_LAW_NAME_MIN_CHARS
+            and token not in NON_LAW_NAME_TOKENS
+        ):
+            names.add(token)
+    return names
 
 
 def _strip_particle(token: str) -> str:

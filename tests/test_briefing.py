@@ -19,6 +19,7 @@ from news_topic_monitor.briefing import (
     labor_previous_history,
     previous_coverage_for,
     previous_coverage_notes,
+    previous_coverage_tokens,
     render_briefing_markdown,
     summarize_issue,
 )
@@ -604,6 +605,64 @@ def test_labor_previous_history_uses_the_labor_classifier(topics_path) -> None:
     )
     matched = previous_coverage_for([talks], history)
     assert [item.url for item in matched] == [sit_in.canonical_url]
+
+
+def test_labor_previous_history_keeps_working_hours_reports(topics_path) -> None:
+    """Regression: 2026-10-27 초광역특구법 — 노동시간 특례 보도가 분류기에서 빠졌다."""
+
+    start = datetime(2026, 10, 9, 0, tzinfo=UTC)
+    hours = _dated(
+        _article(
+            "hani",
+            "반도체 연구직 주52시간 예외 두고 정부 이견",
+            classification=Classification.IRRELEVANT,
+            article_id="hours",
+        ),
+        30,
+    )
+    hours.summary = "정부 부처가 연구개발 인력의 노동시간 특례 기준을 놓고 맞섰다."
+    baseball = _dated(
+        _article(
+            "hani",
+            "프로야구 개막전 매진",
+            classification=Classification.IRRELEVANT,
+            article_id="baseball",
+        ),
+        30,
+    )
+    baseball.summary = "개막전 입장권이 모두 팔렸다."
+
+    history = labor_previous_history([hours, baseball], start=start, topics_path=topics_path)
+    assert history == [hours]
+
+
+def test_previous_coverage_reads_law_names_from_the_summary_and_folds_renames() -> None:
+    """Regression: 2026-10-27 — 법명이 요약에만 있고, 메가특구법이 초광역특구법으로 개명됐다."""
+
+    earlier = _dated(
+        _article("hani", "당정, 이달 발의 방침…연구 개발자 예외 검토", article_id="mega"),
+        4,
+    )
+    earlier.summary = "당정이 메가특구법을 이달 중 발의하기로 했다."
+    unrelated = _dated(
+        _article("hani", "김정재 의원, 주차구역 이용 개정안 발의", article_id="parking"),
+        5,
+    )
+    unrelated.summary = "현행법은 장애인 전용 주차구역 이용 대상을 정하고 있다."
+    current = _article("donga", "李 시행령 수정 검토 주문", article_id="today")
+    current.published_at = datetime(2026, 10, 24, 1, tzinfo=UTC)
+    current.summary = "대통령이 초광역특구법안의 노동 특례 대신 현행법 시행령 수정을 주문했다."
+
+    matched = previous_coverage_for([current], [earlier, unrelated])
+    assert [item.url for item in matched] == [earlier.canonical_url]
+    assert matched[0].match_rule == PREVIOUS_MATCH_PROPER_NOUN
+    assert "초광역특구법" in matched[0].matched_tokens
+
+
+def test_previous_coverage_folds_52_hour_spellings() -> None:
+    first = _article("khan", "주52시간제 예외 논란", article_id="a")
+    second = _article("donga", "반도체 주52시간 예외 재검토", article_id="b")
+    assert "주52시간" in previous_coverage_tokens(first) & previous_coverage_tokens(second)
 
 
 def test_korean_particles_for_single_and_multi_article_tone() -> None:
