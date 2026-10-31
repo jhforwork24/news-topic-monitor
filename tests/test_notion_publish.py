@@ -620,7 +620,7 @@ def _selection_review() -> SelectionReview:
                 articles=[_scored_article("near", topic_score=7.9)],
             ),
             NearMissTopic(
-                topic_label="II절 노동·돌봄·빈곤",
+                topic_label="II절 노동·돌봄·빈곤·소수자",
                 relevant_threshold=9.0,
                 articles=[],
             ),
@@ -673,7 +673,7 @@ def test_record_selection_report_creates_page_with_pool_and_near_miss_tables() -
     assert "기사 second" in rendered
     assert "기사 near" in rendered
     assert "I절 장애정책·장애인운동" in rendered
-    assert "II절 노동·돌봄·빈곤" in rendered
+    assert "II절 노동·돌봄·빈곤·소수자" in rendered
     assert "커트라인 근접 낙선 기사 없음" in rendered
 
 

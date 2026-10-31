@@ -80,13 +80,27 @@ def test_editorial_instructions_state_the_section_issue_caps() -> None:
 def test_editorial_instructions_and_auditor_state_the_labor_subsection_caps() -> None:
     care = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.CARE]
     poverty = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.POVERTY]
+    minority = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.MINORITY]
     labor = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.LABOR]
     total = LABOR_SECTION_MAX_ISSUES
     assert (
         f"돌봄(`care`) 0~{care}개, 빈곤(`poverty`) 0~{poverty}개, "
-        f"노동(`labor`) 0~{labor}개, II절 전체 0~{total}개"
+        f"소수자(`minority`) 0~{minority}개, 노동(`labor`) 0~{labor}개, II절 전체 0~{total}개"
     ) in EDITORIAL
-    assert f"(돌봄 ≤{care}, 빈곤 ≤{poverty}, 노동 ≤{labor}, 전체 ≤{total})" in AUDITOR
+    assert (
+        f"(돌봄 ≤{care}, 빈곤 ≤{poverty}, 소수자 ≤{minority}, 노동 ≤{labor}, 전체 ≤{total})"
+    ) in AUDITOR
+
+
+def test_planning_prompt_states_the_labor_subsection_caps() -> None:
+    care = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.CARE]
+    poverty = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.POVERTY]
+    minority = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.MINORITY]
+    labor = LABOR_SUBSECTION_MAX_ISSUES[LaborSubsection.LABOR]
+    assert (
+        f"돌봄 {care}개·빈곤 {poverty}개·소수자 {minority}개·노동 {labor}개, "
+        f"labor 전체 {LABOR_SECTION_MAX_ISSUES}개"
+    ) in PROMPT
 
 
 def test_exclusion_cap_matches_the_instructions_and_the_prompt() -> None:

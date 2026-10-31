@@ -272,7 +272,7 @@ def test_queue_flags_labor_relevance_for_candidates_disability_classifier_missed
 
     creates = [body for method, path, body in requests if method == "POST" and path == "/v1/pages"]
     rendered = json.dumps(creates, ensure_ascii=False)
-    assert "II절 노동·돌봄·빈곤 관련 가능성" in rendered
+    assert "II절 노동·돌봄·빈곤·소수자 관련 가능성" in rendered
     assert "II절 검토 가능" in rendered
 
 

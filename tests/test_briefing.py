@@ -96,7 +96,7 @@ def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> Non
     )
     assert [section.title for section in document.sections] == [
         "I. 장애정책·장애인운동",
-        "II. 노동·돌봄·빈곤",
+        "II. 노동·돌봄·빈곤·소수자",
         "III. 주요 칼럼",
     ]
     assert document.sections[1].issues
@@ -685,7 +685,7 @@ def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, to
     )
     assert [section.title for section in document.sections] == [
         "I. 장애정책·장애인운동",
-        "II. 노동·돌봄·빈곤",
+        "II. 노동·돌봄·빈곤·소수자",
     ]
     assert "주요 칼럼" not in document.overview
     assert "칼럼 0" not in document.overview
@@ -1157,16 +1157,40 @@ def test_select_labor_issues_applies_subsection_and_total_caps_in_rank_order() -
     ranked = (
         [_labor_issue(f"노동 {index}", "labor") for index in range(5)]
         + [_labor_issue(f"빈곤 {index}", "poverty") for index in range(5)]
+        + [_labor_issue(f"소수자 {index}", "minority") for index in range(4)]
         + [_labor_issue(f"돌봄 {index}", "care") for index in range(6)]
     )
 
     selected = select_labor_issues(ranked)
 
-    assert len(selected) == 7
+    assert len(selected) == 8
     titles = [issue.title for issue in selected]
-    # Walking in rank order fills 노동 3 → 빈곤 3 → 돌봄 1 before the total cap (7) stops it,
-    # and the section is then presented 돌봄 → 빈곤 → 노동 with rank order inside each group.
-    assert titles == ["돌봄 0", "빈곤 0", "빈곤 1", "빈곤 2", "노동 0", "노동 1", "노동 2"]
+    # Walking in rank order fills 노동 2 → 빈곤 3 → 소수자 2 → 돌봄 1 before the total cap (8)
+    # stops it, and the section is then presented 돌봄 → 빈곤 → 소수자 → 노동.
+    assert titles == [
+        "돌봄 0",
+        "빈곤 0",
+        "빈곤 1",
+        "빈곤 2",
+        "소수자 0",
+        "소수자 1",
+        "노동 0",
+        "노동 1",
+    ]
+
+
+def test_classify_labor_subsection_recognises_minority_issues() -> None:
+    from news_topic_monitor.labor_subsections import classify_labor_subsection
+    from news_topic_monitor.models import LaborSubsection
+
+    assert (
+        classify_labor_subsection("고용허가제 이주노동자 사업장 변경 제한 위헌 소송")
+        == LaborSubsection.MINORITY
+    )
+    assert classify_labor_subsection("차별금지법 제정 촉구 기자회견") == LaborSubsection.MINORITY
+    # 동점이면 돌봄 > 빈곤 > 소수자 순이다.
+    assert classify_labor_subsection("이주민 요양보호사 처우") == LaborSubsection.CARE
+    assert classify_labor_subsection("동성로 상권 임금 체불") == LaborSubsection.LABOR
 
 
 def test_select_labor_issues_allows_empty_and_never_pads() -> None:
@@ -1187,7 +1211,7 @@ def test_render_marks_empty_section_instead_of_leaving_a_bare_heading() -> None:
         end=datetime(2026, 8, 16, tzinfo=UTC),
         overview="총평.",
         telegram_summary="요약.",
-        sections=[BriefingSection("II. 노동·돌봄·빈곤", [])],
+        sections=[BriefingSection("II. 노동·돌봄·빈곤·소수자", [])],
         source_failures=[],
         editorial_notes=[],
     )
@@ -1195,7 +1219,8 @@ def test_render_marks_empty_section_instead_of_leaving_a_bare_heading() -> None:
     markdown = render_briefing_markdown(document, crpd_url=None)
 
     assert (
-        "# II. 노동·돌봄·빈곤\n\n이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다." in markdown
+        "# II. 노동·돌봄·빈곤·소수자\n\n이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다."
+        in markdown
     )
 
 
@@ -1252,9 +1277,9 @@ def test_issue_summary_must_not_name_an_outlet_in_news_sections() -> None:
 
     unattributed = "서울시가 정류장 120곳의 단차를 올해 안에 정비하겠다고 밝혔다."
     validate_briefing(_summary_document("I. 장애정책·장애인운동", unattributed))
-    validate_briefing(_summary_document("II. 노동·돌봄·빈곤", unattributed))
+    validate_briefing(_summary_document("II. 노동·돌봄·빈곤·소수자", unattributed))
 
-    for title in ("I. 장애정책·장애인운동", "II. 노동·돌봄·빈곤"):
+    for title in ("I. 장애정책·장애인운동", "II. 노동·돌봄·빈곤·소수자"):
         for outlet in ("에이블뉴스", "매일노동뉴스", "한겨레"):
             with pytest.raises(BriefingValidationError, match=f"이슈 요약에 언론사\\({outlet}\\)"):
                 validate_briefing(

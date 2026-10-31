@@ -42,7 +42,7 @@ flowchart LR
 - `gap_detection.py`: Naver API Hub 원문 URL을 결정론적 수집 URL 집합과 대조한 잠재 누락 탐지,
   지정 10개 매체 역검색 상태 기록
 - `final_state.py`: 진행형 사건의 발행 직전 공식 출처 재수집 결과 비교
-- `labor_subsections.py`: II절 하위 주제(돌봄·빈곤·노동) 순서·상한·용어 분류
+- `labor_subsections.py`: II절 하위 주제(돌봄·빈곤·소수자·노동) 순서·상한·용어 분류
 - `assurance.py`: evidence manifest, 장애언론 census, publish gate 판정
 - `chat_bridge.py`: 대기열·초안·감사의 고정 스키마, SHA-256 queue binding, 제출 순서와 후보 ID 검증
 - `previous_briefing.py`: 직전 발행 브리핑(`reports/briefings/`)의 이슈 제목만 읽어 매니페스트 참고 목록으로 쓴다(기사 본문 없음)

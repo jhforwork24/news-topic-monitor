@@ -40,7 +40,7 @@ OPINION_FULL_SCAN_SOURCES = PRIMARY_COMPARISON_SOURCES
 # 일반 전문 언론(매일노동뉴스·참세상)은 노동 섹션 전용이라 여기서 제외된다.
 DISABILITY_SECTION_ALLOWED_SOURCES = DISABILITY_PRESS_SOURCES | PRIMARY_COMPARISON_SOURCES
 
-# II절(노동·돌봄·빈곤)의 당일 신규 선정 기사는 일반 전문 언론 2사(매일노동뉴스·참세상)와
+# II절(노동·돌봄·빈곤·소수자)의 당일 신규 선정 기사는 일반 전문 언론 2사(매일노동뉴스·참세상)와
 # 보수·진보 종합매체 8사, 그리고 장애 전문 언론 가운데 비마이너 1사로 구성된 11개
 # 지정매체로 한정한다. 에이블뉴스·더인디고는 장애 섹션 전용이라 여기서 제외된다.
 # mediaus(DESIGNATED_COLUMN_SOURCES)는 애초에 포함되지 않으므로 동일 주제 이전 보도

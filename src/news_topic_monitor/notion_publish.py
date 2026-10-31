@@ -73,7 +73,8 @@ CROSS_CHECK_GAP_SOURCES = frozenset({"newscham"})
 CROSS_CHECK_GAP_LIMIT = 20
 # 종합매체 후보 가운데 규칙상 장애·노동 모두 무관하고 힌트도 없는 후보는 읽기 분류를 "앞부분"으로
 # 표시한다. 사람이 보는 본문 줄에는 근거 앞 이 글자 수만 싣고, 기계 판독용 JSON의 `evidence_text`는
-# 그대로 둔다(queue_id·검증 불변). 앞부분이 장애·노동·돌봄·빈곤을 가리키면 전문을 읽는다.
+# 그대로 둔다(queue_id·검증 불변). 앞부분이 장애·노동·돌봄·빈곤·소수자 의제를 가리키면
+# 전문을 읽는다.
 QUEUE_LEAD_PREVIEW_CHARS = 300
 READING_TIER_FULL = "full"
 READING_TIER_LEAD = "lead"
@@ -1159,8 +1160,8 @@ def _queue_manifest_blocks(
         blocks.append(
             _paragraph(
                 f"읽기 분류: 전문 {full_count}개 · 앞부분 {lead_count}개. "
-                "`읽기=앞부분` 표시 후보는 종합매체 기사 가운데 규칙상 장애·노동·돌봄·빈곤이 "
-                "모두 무관하고 힌트가 없는 후보다. "
+                "`읽기=앞부분` 표시 후보는 종합매체 기사 가운데 규칙상 "
+                "장애·노동·돌봄·빈곤·소수자 의제가 모두 무관하고 힌트가 없는 후보다. "
                 f"근거 앞 {QUEUE_LEAD_PREVIEW_CHARS}자로 먼저 거르고, 앞부분이 해당 의제를 "
                 "가리키면 기계 판독용 JSON의 전문을 읽는다. 후보 ID와 JSON 근거는 줄이지 않았다."
             )
@@ -1239,7 +1240,7 @@ def _labor_queue_hint(candidate: EditorialCandidate, labor_classifier: RuleClass
         section=candidate.section,
     )
     if result.classification in (Classification.RELEVANT, Classification.REVIEW):
-        return f"II절 노동·돌봄·빈곤 관련 가능성(점수 {result.topic_score:.1f})"
+        return f"II절 노동·돌봄·빈곤·소수자 관련 가능성(점수 {result.topic_score:.1f})"
     return "II절 검토 가능"
 
 

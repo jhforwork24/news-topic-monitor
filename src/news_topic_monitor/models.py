@@ -225,6 +225,7 @@ class EditorialSection(StrEnum):
 class LaborSubsection(StrEnum):
     CARE = "care"
     POVERTY = "poverty"
+    MINORITY = "minority"
     LABOR = "labor"
 
 
