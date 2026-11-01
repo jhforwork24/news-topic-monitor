@@ -30,6 +30,313 @@
           "notes": []
         }
       }
+    },
+    "all": {
+      "schema_version": 1,
+      "scope": "all",
+      "generated_at": "2026-11-01T18:52:17.712427Z",
+      "check_hours": 168.0,
+      "targets": {
+        "specialist": 1.0,
+        "general": 0.99
+      },
+      "failing_sources": [
+        "donga"
+      ],
+      "errored_sources": [],
+      "sources": {
+        "ablenews": {
+          "status": "pass",
+          "target": 1.0,
+          "rate": 1.0,
+          "listed": 102,
+          "captured": 102,
+          "undated": 0,
+          "judged_from": "2026-10-26T08:20:30Z",
+          "judged_until": "2026-11-01T12:28:22.911346Z",
+          "paths_attempted": 2,
+          "paths_succeeded": 2,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "beminor": {
+          "status": "pass",
+          "target": 1.0,
+          "rate": 1.0,
+          "listed": 26,
+          "captured": 26,
+          "undated": 0,
+          "judged_from": "2026-10-25T18:52:17.712427Z",
+          "judged_until": "2026-11-01T12:28:20.096544Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "chosun": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 0.9956,
+          "listed": 2048,
+          "captured": 2039,
+          "undated": 0,
+          "judged_from": "2026-10-25T18:52:17.712427Z",
+          "judged_until": "2026-11-01T12:28:42.167448Z",
+          "paths_attempted": 36,
+          "paths_succeeded": 36,
+          "errors": [],
+          "missing_total": 9,
+          "missing": [
+            {
+              "url": "https://www.chosun.com/international/international_general/2026/11/01/GE2GKNRZG4YTCNLDGEYTAZTCHE",
+              "title": "美FBI “北, 바이낸스 가상화폐 63억달러 탈취 배후”",
+              "published_at": "2026-11-01T09:07:14.916000Z"
+            },
+            {
+              "url": "https://www.chosun.com/economy/stock-finance/2026/11/01/MQYDAODBGZTGEYTEHAZTOMRRMY",
+              "title": "FIU, 국제자금세탁방지기구 총회 참석… 가상자산 악용 점검 강화",
+              "published_at": "2026-11-01T03:00:00Z"
+            },
+            {
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/27/G5SWINZUHE2DQYZVHBSTGYZTMU",
+              "title": "당뇨병 환자 7명 중 1명만 지켰다”… 혈당만 보면 놓치는 ‘위험 수치 셋’",
+              "published_at": "2026-10-28T01:25:05.870000Z"
+            },
+            {
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/28/GQ2WENBQGFRDKMLBMU4WMYRTME",
+              "title": "혈당 잡으려다 삶이 피폐해졌다… 완벽히 관리할수록 겪는 ‘반전’",
+              "published_at": "2026-10-28T01:23:34.534000Z"
+            },
+            {
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/16/GM4GGODGMEZGCZJTMQ4TOYZTGI",
+              "title": "미트볼 한 알도 건강하게! 동글동글 ‘새우 미트볼’",
+              "published_at": "2026-10-28T01:22:37.386000Z"
+            },
+            {
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/14/GQZTMZBZGUZDGNJTG43WMNLBGI",
+              "title": "잠 제대로 못 자도 당뇨병 위험 높아지나요?",
+              "published_at": "2026-10-28T00:30:01.148000Z"
+            },
+            {
+              "url": "https://www.chosun.com/economy/stock-finance/2026/10/28/GBQTSYZWGIYWCOLDMQ4TMMJXMU",
+              "title": "파이온엑스, 이례적인 실물 CB 발행… ‘어둠의 통로’ 투자자들 노리나",
+              "published_at": "2026-10-27T21:00:01Z"
+            },
+            {
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/15/ME3DKNRYGA2TINTBGI2GIYZZGQ",
+              "title": "암 환자 무너뜨리는 건 불안… “가족의 단단한 지지가 약”",
+              "published_at": "2026-10-26T07:00:32.493000Z"
+            },
+            {
+              "url": "https://www.chosun.com/medical/healthchosun/2026/10/14/GAYDKOJZGEZWCYZQHAZGKMRUMQ",
+              "title": "마음 한편에, 나를 위한 쉼터 하나",
+              "published_at": "2026-10-26T06:59:32.937000Z"
+            }
+          ],
+          "notes": []
+        },
+        "donga": {
+          "status": "fail",
+          "target": 0.99,
+          "rate": 0.964,
+          "listed": 111,
+          "captured": 107,
+          "undated": 0,
+          "judged_from": "2026-10-31T15:00:10Z",
+          "judged_until": "2026-11-01T12:28:06.042775Z",
+          "paths_attempted": 2,
+          "paths_succeeded": 2,
+          "errors": [],
+          "missing_total": 4,
+          "missing": [
+            {
+              "url": "https://www.donga.com/news/article/all/20261101/134944340/1",
+              "title": "커피에 약물 몰래 넣어 내기 골프…7500만원 가로챈 일당 검거",
+              "published_at": "2026-11-01T05:07:00Z"
+            },
+            {
+              "url": "https://www.donga.com/news/article/all/20261101/134944017/1",
+              "title": "‘낮은 주가 꼬리표’ 붙는 저PBR 기업 151곳 공개…한화생명·이마트 등",
+              "published_at": "2026-11-01T05:05:00Z"
+            },
+            {
+              "url": "https://www.donga.com/news/article/all/20261101/134943955/1",
+              "title": "한국계 美의원 5명으로 늘까…최초 주지사 탄생도 관심",
+              "published_at": "2026-11-01T04:59:00Z"
+            },
+            {
+              "url": "https://www.donga.com/news/article/all/20261101/134943039/1",
+              "title": "美FBI “바이낸스 63억 달러 해킹 배후는 北…자금세탁 포착”",
+              "published_at": "2026-10-31T23:09:00Z"
+            }
+          ],
+          "notes": []
+        },
+        "hani": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 750,
+          "captured": 750,
+          "undated": 30,
+          "judged_from": "2026-10-27T12:55:00Z",
+          "judged_until": "2026-11-01T12:28:14.229368Z",
+          "paths_attempted": 51,
+          "paths_succeeded": 51,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "joongang": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 1898,
+          "captured": 1898,
+          "undated": 0,
+          "judged_from": "2026-10-25T18:52:17.712427Z",
+          "judged_until": "2026-11-01T12:28:07.518836Z",
+          "paths_attempted": 9,
+          "paths_succeeded": 9,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "khan": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 164,
+          "captured": 164,
+          "undated": 0,
+          "judged_from": "2026-10-31T21:43:00Z",
+          "judged_until": "2026-11-01T12:28:12.163043Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "labortoday": {
+          "status": "pass",
+          "target": 1.0,
+          "rate": 1.0,
+          "listed": 100,
+          "captured": 100,
+          "undated": 0,
+          "judged_from": "2026-10-25T21:30:05Z",
+          "judged_until": "2026-11-01T12:28:17.277457Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "mediaus": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 91,
+          "captured": 91,
+          "undated": 0,
+          "judged_from": "2026-10-25T18:52:17.712427Z",
+          "judged_until": "2026-11-01T12:28:18.463463Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "newscham": {
+          "status": "pass",
+          "target": 1.0,
+          "rate": 1.0,
+          "listed": 25,
+          "captured": 25,
+          "undated": 0,
+          "judged_from": "2026-10-25T18:52:17.712427Z",
+          "judged_until": "2026-11-01T12:28:21.439932Z",
+          "paths_attempted": 22,
+          "paths_succeeded": 5,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "ohmynews": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 112,
+          "captured": 112,
+          "undated": 0,
+          "judged_from": "2026-10-30T23:39:57Z",
+          "judged_until": "2026-11-01T12:28:09.741243Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "pressian": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 100,
+          "captured": 100,
+          "undated": 0,
+          "judged_from": "2026-10-31T00:25:52Z",
+          "judged_until": "2026-11-01T12:28:16.174748Z",
+          "paths_attempted": 2,
+          "paths_succeeded": 2,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "sisain": {
+          "status": "pass",
+          "target": 0.99,
+          "rate": 1.0,
+          "listed": 62,
+          "captured": 62,
+          "undated": 0,
+          "judged_from": "2026-10-25T18:52:17.712427Z",
+          "judged_until": "2026-11-01T12:28:14.384807Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        },
+        "theindigo": {
+          "status": "pass",
+          "target": 1.0,
+          "rate": 1.0,
+          "listed": 23,
+          "captured": 23,
+          "undated": 0,
+          "judged_from": "2026-10-25T20:17:00Z",
+          "judged_until": "2026-11-01T12:28:24.645794Z",
+          "paths_attempted": 1,
+          "paths_succeeded": 1,
+          "errors": [],
+          "missing_total": 0,
+          "missing": [],
+          "notes": []
+        }
+      }
     }
   }
 }
