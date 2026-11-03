@@ -1348,3 +1348,30 @@ def test_previous_coverage_summary_skips_sentences_whose_quotes_were_removed() -
     unclosed = _article("joongang", "진술 지원 제도 시행 10년 점검", article_id="unclosed")
     unclosed.summary = "대책위는 “조사 방식이 문제다"
     assert _previous_coverage_summary(unclosed) == "진술 지원 제도 시행 10년 점검을 보도했다."
+
+
+def test_collection_notice_is_rendered_after_the_overview() -> None:
+    from news_topic_monitor.notion_publish import notion_blocks
+
+    document = BriefingDocument(
+        report_date="2026-11-03",
+        start=datetime(2026, 10, 30, 20, tzinfo=UTC),
+        end=datetime(2026, 11, 2, 20, tzinfo=UTC),
+        overview="총평.",
+        telegram_summary="요약.",
+        sections=[BriefingSection("I. 장애정책·장애인운동", [])],
+        source_failures=[],
+        collection_notices=["더인디고 기사는 대기열을 만들 때 수집되지 않았다."],
+    )
+    markdown = render_briefing_markdown(document, crpd_url=None)
+    assert "총평.\n\n수집 점검: 더인디고 기사는" in markdown
+    blocks = notion_blocks(document, crpd_url=None)
+    texts = [
+        block["paragraph"]["rich_text"][0]["text"]["content"]
+        for block in blocks
+        if block["type"] == "paragraph"
+    ]
+    assert texts[:2] == ["총평.", "수집 점검: 더인디고 기사는 대기열을 만들 때 수집되지 않았다."]
+
+    document.collection_notices = []
+    assert "수집 점검" not in render_briefing_markdown(document, crpd_url=None)

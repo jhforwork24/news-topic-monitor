@@ -12,6 +12,7 @@ from news_topic_monitor.cli import (
     REVALIDATION_BODY_LIMIT_MAX,
     _briefing_already_published,
     _collect,
+    _collection_notices,
     _collection_storage,
     _editorial_finalize,
     _finalize_late_recovered_items,
@@ -573,6 +574,53 @@ def test_late_recovered_source_articles_are_reported_but_never_block(tmp_path) -
     assert items[0].result == "warning"
     assert "pressian" in items[0].cause and "1건" in items[0].cause
     assert "기사 missed" in items[0].cause
+
+
+def test_robots_check_failure_is_rechecked_at_finalize_and_noticed(tmp_path) -> None:
+    """Regression: 2026-11-03 — 더인디고 robots.txt HTTP 415로 관련 기사 8건이 편집에서 빠졌다.
+
+    대기열에서는 재시도하지 않지만(fail-closed), 발행 직전 robots.txt를 새로 확인해 다시
+    수집하고, 대기열에 없던 관련 기사를 경고로 남기며, 발행본에 해당 매체를 고지한다.
+    """
+
+    now = datetime(2026, 11, 2, 23, tzinfo=UTC)
+    start = now - timedelta(hours=72)
+    blocked = (
+        "all discovery paths failed: https://theindigo.co.kr/wp-json/wp/v2/posts: "
+        "robots.txt unavailable for theindigo.co.kr: GET failed: "
+        "https://theindigo.co.kr/robots.txt: HTTP 415"
+    )
+    initial = _run_health(
+        now,
+        {
+            "theindigo": _source_health("theindigo", now, errors=[blocked]),
+            "beminor": _source_health("beminor", now),
+        },
+    )
+    storage = JsonlStorage(tmp_path)
+    missed = _article(
+        "abuse", classification=Classification.RELEVANT, published_at=now - timedelta(hours=30)
+    ).model_copy(update={"source": "theindigo"})
+    storage.upsert(missed)
+    recollected: list[str] = []
+
+    def collect(source: str) -> RunHealth:
+        recollected.append(source)
+        return _run_health(now, {source: _source_health(source, now)})
+
+    settings = type("S", (), {"root": Path(__file__).parents[1]})()
+    items = _finalize_late_recovered_items(
+        settings, storage, None, initial, [], start=start, end=now, collect=collect
+    )
+
+    assert recollected == ["theindigo"]
+    assert len(items) == 1 and items[0].result == "warning"
+    assert "robots.txt 확인 실패" in items[0].cause and "1건" in items[0].cause
+
+    notices = _collection_notices(initial)
+    assert len(notices) == 1
+    assert notices[0].startswith("더인디고 기사는 대기열을 만들 때 robots.txt 확인 실패로")
+    assert "보도하지 않았다는 뜻은 아니다" in notices[0]
 
 
 class _FakePublisher:
