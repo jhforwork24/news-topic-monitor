@@ -614,8 +614,8 @@ def test_labor_subsection_caps_accept_maximum_and_zero() -> None:
     [
         (["care"] * 4, "돌봄(care) 하위 주제의 이슈가 3개를 초과함"),
         (["poverty"] * 4, "빈곤(poverty) 하위 주제의 이슈가 3개를 초과함"),
-        (["minority"] * 3, "소수자(minority) 하위 주제의 이슈가 2개를 초과함"),
-        (["labor"] * 3, "노동(labor) 하위 주제의 이슈가 2개를 초과함"),
+        (["minority"] * 4, "소수자(minority) 하위 주제의 이슈가 3개를 초과함"),
+        (["labor"] * 4, "노동(labor) 하위 주제의 이슈가 3개를 초과함"),
         (
             ["care"] * 3 + ["poverty"] * 3 + ["minority"] * 2 + ["labor"],
             "labor 섹션의 이슈가 8개를 초과함",

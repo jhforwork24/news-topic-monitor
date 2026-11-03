@@ -3,7 +3,8 @@ from __future__ import annotations
 from .models import LaborSubsection
 
 # II절("노동·돌봄·빈곤·소수자")은 돌봄 → 빈곤 → 소수자 → 노동 순으로 배치하고, 하위 주제별
-# 상한을 둔다(2026-10-31 사용자 결정: 소수자 하위 주제 신설, 상한 3·3·2·2, 전체 8).
+# 상한을 둔다(2026-10-31 사용자 결정: 소수자 하위 주제 신설, 전체 8; 2026-11-03 사용자 결정:
+# 네 하위 주제 모두 3. 11-03 발행에서 돌봄 0건인데 노동이 상한 2에 걸려 8건이 빠졌다).
 # 상한은 최대치이며 목표가 아니다. 발행할 만한 이슈가 없으면 하위 주제나 II절 전체를 0개로
 # 발행할 수 있다.
 LABOR_SUBSECTION_ORDER: tuple[LaborSubsection, ...] = (
@@ -21,8 +22,8 @@ LABOR_SUBSECTION_LABELS = {
 LABOR_SUBSECTION_MAX_ISSUES = {
     LaborSubsection.CARE: 3,
     LaborSubsection.POVERTY: 3,
-    LaborSubsection.MINORITY: 2,
-    LaborSubsection.LABOR: 2,
+    LaborSubsection.MINORITY: 3,
+    LaborSubsection.LABOR: 3,
 }
 LABOR_SECTION_MAX_ISSUES = 8
 

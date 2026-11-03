@@ -782,7 +782,7 @@ def _strict_json_schema(schema: Any) -> Any:
 
 
 def _labor_subsection_errors(plan: EditorialPlan) -> list[str]:
-    """Check the II절 sub-topic caps (돌봄 ≤3, 빈곤 ≤3, 소수자 ≤2, 노동 ≤2; caps are maxima)."""
+    """Check the II절 sub-topic caps (each ≤3, section ≤8; caps are maxima, 0 is allowed)."""
 
     errors: list[str] = []
     by_subsection: dict[LaborSubsection, list[str]] = {
@@ -920,7 +920,7 @@ tone_analysis는 단일 보도면 0~1문장, 복수 보도면 1~4문장으로 �
 labor 섹션 이슈에는 subsection을 care(돌봄)·poverty(빈곤)·minority(소수자)·labor(노동) 중
 하나로 표시하고, labor 이외 섹션은 subsection을 null로 둔다. 소수자는 이주민·이주노동자·난민,
 성소수자, 차별금지법·혐오·인권위, 여성·성평등 의제이며 장애 사안은 disability 섹션에서만 다룬다.
-상한은 돌봄 3개·빈곤 3개·소수자 2개·노동 2개, labor 전체 8개이며
+상한은 돌봄 3개·빈곤 3개·소수자 3개·노동 3개, labor 전체 8개이며
 목표가 아니라 최대치다. 발행할 만한 이슈가 없으면 하위 주제나 labor 전체를 0개로 둔다.
 
 title도 선정 기사들의 공통 이슈를 나타내며 선정 기사 제목을 기계적으로 이어 붙이지 않는다.
