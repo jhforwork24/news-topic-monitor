@@ -1168,10 +1168,9 @@ def test_select_labor_issues_applies_subsection_and_total_caps_in_rank_order() -
 
     assert len(selected) == 8
     titles = [issue.title for issue in selected]
-    # Walking in rank order fills 노동 2 → 빈곤 3 → 소수자 2 → 돌봄 1 before the total cap (8)
-    # stops it, and the section is then presented 돌봄 → 빈곤 → 소수자 → 노동.
+    # Walking in rank order fills 노동 3 → 빈곤 3 → 소수자 2 before the total cap (8) stops
+    # it, and the section is then presented 돌봄 → 빈곤 → 소수자 → 노동.
     assert titles == [
-        "돌봄 0",
         "빈곤 0",
         "빈곤 1",
         "빈곤 2",
@@ -1179,6 +1178,7 @@ def test_select_labor_issues_applies_subsection_and_total_caps_in_rank_order() -
         "소수자 1",
         "노동 0",
         "노동 1",
+        "노동 2",
     ]
 
 
