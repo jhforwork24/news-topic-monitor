@@ -91,6 +91,7 @@ from .publication_calendar import load_skipped_publication_dates
 from .reporting import generate_report
 from .selection_review import build_selection_review
 from .settings import ContactRequiredError, Settings
+from .sources import SOURCE_LABELS
 from .storage import JsonlStorage
 from .utils import KST, parse_datetime, short_error
 
@@ -1278,6 +1279,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
             report_date=report_date,
             topics_path=settings.root / "config" / "topics.yml",
         )
+        document.collection_notices.extend(_collection_notices(initial_health))
         document.source_failures.extend(
             (
                 f"원인={item.cause} · 대체경로={item.fallback} · "
@@ -1604,6 +1606,50 @@ def _timed_out_failed_sources(health: RunHealth) -> list[str]:
     )
 
 
+def _is_robots_unavailable_failure(detail: SourceHealth) -> bool:
+    # robots.txt를 확인하지 못한 실패(403·415·429·5xx·파싱 불가 등)다. 대기열에서는 종전처럼
+    # 재시도하지 않고 안전하게 중단하지만, 발행 직전에는 robots.txt를 새로 확인해 허용될 때만
+    # 다시 수집한다(2026-11-03 더인디고 robots.txt HTTP 415로 관련 기사 8건이 편집에서 빠짐).
+    return not detail.success and any("robots.txt unavailable" in error for error in detail.errors)
+
+
+def _rechecked_failed_sources(health: RunHealth) -> list[str]:
+    """Sources missing from the queue that finalize re-collects and reports on."""
+
+    return sorted(
+        source
+        for source, detail in health.sources.items()
+        if _is_timed_out_failure(detail) or _is_robots_unavailable_failure(detail)
+    )
+
+
+def _queue_failure_reason(detail: SourceHealth) -> str:
+    if _is_timed_out_failure(detail):
+        return "응답 시간초과"
+    if _is_robots_unavailable_failure(detail):
+        return "robots.txt 확인 실패"
+    return "수집 오류"
+
+
+def _collection_notices(health: RunHealth) -> list[str]:
+    """Public notice for the briefing body: which outlets never reached the editor.
+
+    A source that failed while the queue was built had none of its window articles
+    reviewed, so readers must not read its absence as "this outlet did not report".
+    """
+
+    notices: list[str] = []
+    for source, detail in sorted(health.sources.items()):
+        if detail.success:
+            continue
+        label = SOURCE_LABELS.get(source, source)
+        notices.append(
+            f"{label} 기사는 대기열을 만들 때 {_queue_failure_reason(detail)}로 수집되지 않아 이번 "
+            "브리핑의 편집·감사 대상에서 빠졌다. 해당 매체가 보도하지 않았다는 뜻은 아니다."
+        )
+    return notices
+
+
 def _retry_timed_out_sources(
     health: RunHealth,
     *,
@@ -1677,7 +1723,7 @@ def _late_recovered_source_items(
     end: datetime,
     is_relevant: Callable[[ArticleRecord], bool],
 ) -> list[ReportingItem]:
-    """Report articles from sources that timed out at queue time but later recovered.
+    """Report articles from sources that failed at queue time but later recovered.
 
     Those sources were absent from the editorial queue, so nothing they published
     in the window was reviewed. Called after a live re-collection of the same
@@ -1685,7 +1731,7 @@ def _late_recovered_source_items(
     """
 
     items: list[ReportingItem] = []
-    for source in _timed_out_failed_sources(health):
+    for source in _rechecked_failed_sources(health):
         missed = sorted(
             (
                 article
@@ -1705,8 +1751,9 @@ def _late_recovered_source_items(
         items.append(
             ReportingItem(
                 cause=(
-                    f"{source}: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 "
-                    f"{len(missed)}건이 편집·감사를 거치지 않음 ({titles}{more})"
+                    f"{source}: 대기열 생성 때 {_queue_failure_reason(health.sources[source])}로 "
+                    f"빠진 출처의 관련 기사 {len(missed)}건이 편집·감사를 거치지 않음 "
+                    f"({titles}{more})"
                 ),
                 fallback="발행은 진행하되 해당 기사를 보고사항에 남김",
                 result="warning",
@@ -1727,14 +1774,17 @@ def _finalize_late_recovered_items(
     end: datetime,
     collect: Callable[[str], RunHealth] | None = None,
 ) -> list[ReportingItem]:
-    """Surface what a source missed when it timed out at queue-build time.
+    """Surface what a source missed when it failed at queue-build time.
 
-    Best effort: one live re-collection of each timed-out source, then a report
+    Covers timeouts and robots.txt check failures. The re-collection fetches
+    robots.txt afresh and stops again if it is still unavailable or disallows
+    the path, so nothing is collected without a fresh allow. Best effort: one
+    live re-collection of each such source, then a report
     of window articles that never reached the editor. A failure here never
     blocks publication; it only means nothing extra is reported.
     """
 
-    failing = _timed_out_failed_sources(initial_health)
+    failing = _rechecked_failed_sources(initial_health)
     if not failing:
         return []
     collect_source = collect or (

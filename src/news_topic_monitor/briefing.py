@@ -620,6 +620,9 @@ class BriefingDocument:
     source_failures: list[str]
     editorial_notes: list[str] = field(default_factory=list)
     editorially_selected_ids: list[str] = field(default_factory=list)
+    # 대기열을 만들 때 수집에 실패해 편집·감사를 거치지 못한 매체를 독자에게 알리는 문장.
+    # 개요 바로 뒤에 싣는다(수집 실패를 보도 부재로 읽히지 않게 하기 위함).
+    collection_notices: list[str] = field(default_factory=list)
 
 
 def build_briefing(
@@ -1378,6 +1381,8 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
         document.overview,
         "",
     ]
+    if document.collection_notices:
+        lines.extend([collection_notice_text(document.collection_notices), ""])
     for section in document.sections:
         if section.title == "III. 주요 칼럼" and not section.issues:
             continue
@@ -1417,6 +1422,10 @@ def render_briefing_markdown(document: BriefingDocument, *, crpd_url: str | None
                     lines.append(f"| {material} | {meta} |")
                 lines.extend(["", "</details>", ""])
     return "\n".join(lines)
+
+
+def collection_notice_text(notices: list[str]) -> str:
+    return "수집 점검: " + " ".join(notices)
 
 
 def issue_analysis_text(issue: BriefingIssue) -> str:

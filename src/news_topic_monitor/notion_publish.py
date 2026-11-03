@@ -23,6 +23,7 @@ from .briefing import (
     BriefingDocument,
     BriefingIssue,
     article_listing_prefix,
+    collection_notice_text,
     issue_analysis_text,
     render_briefing_markdown,
 )
@@ -944,6 +945,8 @@ def notion_blocks(document: BriefingDocument, *, crpd_url: str | None) -> list[d
     blocks: list[dict[str, Any]] = [
         _paragraph(paragraph) for paragraph in document.overview.split("\n\n") if paragraph
     ]
+    if document.collection_notices:
+        blocks.append(_paragraph(collection_notice_text(document.collection_notices)))
     for section in document.sections:
         if section.title == "III. 주요 칼럼" and not section.issues:
             continue
