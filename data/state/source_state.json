@@ -65,49 +65,49 @@
       "last_complete_at": "2026-11-06T01:04:03.060478Z"
     },
     "newscham": {
-      "last_run_at": "2026-11-06T01:04:14.242524Z",
+      "last_run_at": "2026-11-06T03:32:07.593222Z",
       "success": true,
       "discovered": 28,
       "errors": [],
       "discovery_status": "complete",
-      "last_success_at": "2026-11-06T01:04:14.242524Z",
-      "last_complete_at": "2026-11-06T01:04:14.242524Z"
+      "last_success_at": "2026-11-06T03:32:07.593222Z",
+      "last_complete_at": "2026-11-06T03:32:07.593222Z"
     },
     "labortoday": {
-      "last_run_at": "2026-11-06T01:04:06.907046Z",
+      "last_run_at": "2026-11-06T03:32:32.076342Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-11-06T01:04:06.907046Z",
+      "last_success_at": "2026-11-06T03:32:32.076342Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-06T01:04:06.907046Z"
+      "last_complete_at": "2026-11-06T03:32:32.076342Z"
     },
     "beminor": {
-      "last_run_at": "2026-11-06T01:04:35.932086Z",
+      "last_run_at": "2026-11-06T03:31:48.288507Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-11-06T01:04:35.932086Z",
+      "last_success_at": "2026-11-06T03:31:48.288507Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-06T01:04:35.932086Z"
+      "last_complete_at": "2026-11-06T03:31:48.288507Z"
     },
     "ablenews": {
-      "last_run_at": "2026-11-06T01:05:52.253767Z",
+      "last_run_at": "2026-11-06T03:32:09.075649Z",
       "success": true,
-      "discovered": 102,
+      "discovered": 107,
       "errors": [],
-      "last_success_at": "2026-11-06T01:05:52.253767Z",
+      "last_success_at": "2026-11-06T03:32:09.075649Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-06T01:05:52.253767Z"
+      "last_complete_at": "2026-11-06T03:32:09.075649Z"
     },
     "theindigo": {
-      "last_run_at": "2026-11-06T01:05:01.712891Z",
+      "last_run_at": "2026-11-06T03:32:03.494427Z",
       "success": true,
-      "discovered": 11,
+      "discovered": 3,
       "errors": [],
-      "last_success_at": "2026-11-06T01:05:01.712891Z",
+      "last_success_at": "2026-11-06T03:32:03.494427Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-06T01:05:01.712891Z"
+      "last_complete_at": "2026-11-06T03:32:03.494427Z"
     },
     "kbs": {
       "last_run_at": "2026-08-22T11:40:50.052534Z",
