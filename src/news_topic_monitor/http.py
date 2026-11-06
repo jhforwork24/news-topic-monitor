@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import time
 from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
@@ -20,6 +21,16 @@ RETRYABLE_STATUS = {429, 500, 502, 503, 504}
 # Only these final answers mean "this origin publishes no robots.txt". They are read as
 # allow-all solely for hosts a source registry entry opted in (robots_absent_policy).
 ROBOTS_ABSENT_STATUS = frozenset({404, 410})
+# robots.txt 확인 실패 진단용으로만 남기는 응답 헤더(값은 짧은 안전 문자열로 줄인다).
+ROBOTS_DIAGNOSTIC_VALUE_HEADERS = ("Server", "Content-Type", "Via", "X-Cache", "CF-Cache-Status")
+# 값 없이 존재 여부만 남기는 CDN·WAF 식별 헤더.
+ROBOTS_DIAGNOSTIC_PRESENCE_HEADERS = (
+    "CF-Ray",
+    "X-Sucuri-ID",
+    "X-Amz-Cf-Id",
+    "X-Akamai-Transformed",
+)
+_UNSAFE_DIAGNOSTIC_CHARS = re.compile(r"[^A-Za-z0-9 ._/=+-]")
 
 
 class RobotsUnavailableError(RuntimeError):
@@ -324,12 +335,41 @@ class SafeHttpClient:
                 response.raise_for_status()
             except httpx.HTTPStatusError as exc:
                 raise HttpRequestError(
-                    f"GET failed: {url}: HTTP {response.status_code}",
+                    f"GET failed: {url}: HTTP {response.status_code}"
+                    f"{self._robots_failure_diagnostics(response)}",
                     status_code=response.status_code,
                     api_error_reason=self._json_api_error_reason(response),
                 ) from exc
             return response
-        raise HttpRequestError(f"GET failed after retries: {url}: {last_error}") from last_error
+        diagnostics = ""
+        if isinstance(last_error, httpx.HTTPStatusError):
+            diagnostics = self._robots_failure_diagnostics(last_error.response)
+        raise HttpRequestError(
+            f"GET failed after retries: {url}: {last_error}{diagnostics}"
+        ) from last_error
+
+    @staticmethod
+    def _robots_failure_diagnostics(response: httpx.Response) -> str:
+        """Server-identifying headers of a failed robots.txt response, for diagnosis only.
+
+        Only an allowlist of header names is read and each value is reduced to a short
+        safe token string; the response body, cookies and other headers are never kept.
+        Adopted after the 2026-11-03/04 theindigo.co.kr robots.txt HTTP 415 failures,
+        whose cause the bare status code could not show.
+        """
+
+        if urlsplit(str(response.request.url)).path != "/robots.txt":
+            return ""
+        parts: list[str] = []
+        for name in ROBOTS_DIAGNOSTIC_VALUE_HEADERS:
+            value = response.headers.get(name)
+            if value:
+                safe = _UNSAFE_DIAGNOSTIC_CHARS.sub("_", value.strip())[:40]
+                parts.append(f"{name.lower()}={safe}")
+        for name in ROBOTS_DIAGNOSTIC_PRESENCE_HEADERS:
+            if name in response.headers:
+                parts.append(f"{name.lower()}=present")
+        return f" [{'; '.join(parts)}]" if parts else " [no server headers]"
 
     @staticmethod
     def _json_api_error_reason(response: httpx.Response) -> str | None:
