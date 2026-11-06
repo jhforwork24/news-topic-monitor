@@ -162,3 +162,12 @@ def test_subagent_rules_ban_delete_commands_and_routine_reports_stalls() -> None
     routine = _doc("daily-routine.md")
     assert "STALLS_DETECTED" in routine and "STALL" in routine
     assert "STALL" in _doc("operations.md")
+
+
+def test_routine_fixes_kst_date_by_command_and_reports_unpublished_runs() -> None:
+    # 2026-11-06 예약이 UTC 날짜를 report_date로 잡아 조용히 끝난 사례의 재발 방지 규칙.
+    routine = _doc("daily-routine.md")
+    stage0 = routine.split("### 0단계", 1)[1].split("### 1단계", 1)[0]
+    assert "TZ=Asia/Seoul date +%F" in stage0 and "TZ=Asia/Seoul date +%A" in stage0
+    report = routine.split("## 보고 원칙", 1)[1]
+    assert "- (g)" in report and "발행하지 않고" in report
