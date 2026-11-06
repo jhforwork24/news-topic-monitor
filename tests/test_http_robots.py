@@ -332,3 +332,47 @@ def test_rate_limiter_slot_keeps_one_request_in_flight_per_host() -> None:
     for thread in threads:
         thread.join()
     assert peak == 1
+
+
+def test_robots_failure_records_server_headers_without_body(tmp_path) -> None:
+    # 2026-11-03·04 더인디고 robots.txt HTTP 415: 상태 코드만으로는 원인을 알 수 없었다.
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            415,
+            text="<html>secret body</html>",
+            headers={
+                "Server": "nginx\r\nInjected: x",
+                "Content-Type": "text/html; charset=UTF-8",
+                "CF-Ray": "8abc-ICN",
+                "Set-Cookie": "session=secret",
+            },
+        )
+
+    with (
+        SafeHttpClient(
+            settings(tmp_path), transport=httpx.MockTransport(handler), sleeper=lambda _: None
+        ) as client,
+        pytest.raises(RobotsUnavailableError) as raised,
+    ):
+        client.get("https://example.test/article")
+    message = str(raised.value)
+    assert "HTTP 415" in message
+    assert "server=nginx" in message and "content-type=text/html" in message
+    assert "cf-ray=present" in message and "8abc" not in message
+    assert "secret" not in message and "\r" not in message and "\n" not in message
+
+
+def test_non_robots_failure_has_no_header_diagnostics(tmp_path) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nAllow: /\n")
+        return httpx.Response(415, headers={"Server": "nginx"})
+
+    with (
+        SafeHttpClient(
+            settings(tmp_path), transport=httpx.MockTransport(handler), sleeper=lambda _: None
+        ) as client,
+        pytest.raises(HttpRequestError) as raised,
+    ):
+        client.get("https://example.test/article")
+    assert "server=" not in str(raised.value)
