@@ -799,6 +799,9 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                     collect=collect_sources,
                     rounds=_queue_timeout_retry_rounds(),
                     delay_seconds=_queue_timeout_retry_delay_seconds(),
+                    robots_retry_sources=frozenset(
+                        briefing_policy.publish_gate.disability_press_census_required
+                    ),
                 )
                 if retry_notes:
                     storage.write_health(health.model_dump(mode="json"))
@@ -1569,6 +1572,10 @@ def _known_relevant_seed_discoveries(
 # 시간초과만 몇 분 간격으로 다시 시도한다 — robots.txt 판정을 우회하는 것이 아니라 같은 확인을
 # 새 클라이언트로 다시 하는 것이며, 403·429·5xx·파싱 불가 등 다른 실패는 재시도하지 않고
 # 기존대로 안전하게 중단(fail-closed)한다.
+# 예외: 장애언론 census 3곳(briefing-policy.yaml `disability_press_census_required`)은 robots.txt
+# 확인 실패(403·415·429·5xx·파싱 불가 등)도 같은 간격·횟수로 다시 확인한다(2026-11-06 사용자 승인).
+# 2026-11-03·04 더인디고 robots.txt HTTP 415로 관련 기사 14건이 편집에서 빠졌다. 재시도는
+# robots.txt를 새로 받아 허용될 때만 수집하며, 끝내 확인하지 못하면 종전대로 중단하고 보고한다.
 DEFAULT_QUEUE_TIMEOUT_RETRY_ROUNDS = 2
 DEFAULT_QUEUE_TIMEOUT_RETRY_DELAY_SECONDS = 180.0
 
@@ -1607,9 +1614,10 @@ def _timed_out_failed_sources(health: RunHealth) -> list[str]:
 
 
 def _is_robots_unavailable_failure(detail: SourceHealth) -> bool:
-    # robots.txt를 확인하지 못한 실패(403·415·429·5xx·파싱 불가 등)다. 대기열에서는 종전처럼
-    # 재시도하지 않고 안전하게 중단하지만, 발행 직전에는 robots.txt를 새로 확인해 허용될 때만
-    # 다시 수집한다(2026-11-03 더인디고 robots.txt HTTP 415로 관련 기사 8건이 편집에서 빠짐).
+    # robots.txt를 확인하지 못한 실패(403·415·429·5xx·파싱 불가 등)다. 대기열에서는 장애언론
+    # census 3곳만 몇 분 간격으로 다시 확인하고 나머지는 안전하게 중단하며, 발행 직전에는
+    # robots.txt를 새로 확인해 허용될 때만 다시 수집한다(2026-11-03 더인디고 robots.txt
+    # HTTP 415로 관련 기사 8건이 편집에서 빠짐).
     return not detail.success and any("robots.txt unavailable" in error for error in detail.errors)
 
 
@@ -1657,16 +1665,32 @@ def _retry_timed_out_sources(
     rounds: int,
     delay_seconds: float,
     sleeper: Callable[[float], None] = sleep,
+    robots_retry_sources: frozenset[str] = frozenset(),
 ) -> tuple[RunHealth, list[str]]:
-    """Re-collect only the sources that failed by timeout, a few minutes apart.
+    """Re-collect only the sources that failed transiently, a few minutes apart.
+
+    Timeouts are retried for every source. A robots.txt check failure is retried only
+    for ``robots_retry_sources`` (the disability-press census); each retry fetches
+    robots.txt afresh and collects only on a fresh allow, so nothing bypasses it.
 
     Returns the health with each retried source's latest entry swapped in, plus
     manifest notes: a recovered source is still reported (never silent), and a
-    source that keeps timing out is flagged as "missing from candidates", not
-    as "no articles".
+    source that keeps failing is flagged as "missing from candidates", not as
+    "no articles".
     """
 
-    pending = _timed_out_failed_sources(health)
+    def retry_reason(source: str, detail: SourceHealth) -> str | None:
+        if _is_timed_out_failure(detail):
+            return "응답 시간초과"
+        if source in robots_retry_sources and _is_robots_unavailable_failure(detail):
+            return "robots.txt 확인 실패"
+        return None
+
+    pending = {
+        source: reason
+        for source, detail in sorted(health.sources.items())
+        if (reason := retry_reason(source, detail)) is not None
+    }
     if not pending or rounds <= 0:
         return health, []
     sources = dict(health.sources)
@@ -1676,7 +1700,7 @@ def _retry_timed_out_sources(
         if not pending:
             break
         LOGGER.info(
-            "editorial queue: retrying timed-out sources=%s round=%d/%d",
+            "editorial queue: retrying transiently failed sources=%s round=%d/%d",
             ",".join(pending),
             round_number,
             rounds,
@@ -1684,24 +1708,24 @@ def _retry_timed_out_sources(
         sleeper(delay_seconds)
         retry_health = collect(set(pending))
         finished_at = max(finished_at, retry_health.run_finished_at)
-        still_pending: list[str] = []
-        for source in pending:
+        still_pending: dict[str, str] = {}
+        for source, first_reason in pending.items():
             detail = retry_health.sources.get(source)
             if detail is None:
-                still_pending.append(source)
+                still_pending[source] = first_reason
                 continue
             sources[source] = detail
             if detail.success:
                 notes.append(
-                    f"{source}: 응답 시간초과로 1차 수집이 실패했으나 재시도 {round_number}회차에 "
+                    f"{source}: {first_reason}로 1차 수집이 실패했으나 재시도 {round_number}회차에 "
                     "복구되어 후보에 포함됨"
                 )
-            elif _is_timed_out_failure(detail):
-                still_pending.append(source)
+            elif (reason := retry_reason(source, detail)) is not None:
+                still_pending[source] = reason
         pending = still_pending
-    for source in pending:
+    for source, reason in pending.items():
         notes.append(
-            f"{source}: 응답 시간초과가 재시도 {rounds}회 뒤에도 이어져 이 출처의 당일 기사가 "
+            f"{source}: {reason}가 재시도 {rounds}회 뒤에도 이어져 이 출처의 당일 기사가 "
             "후보에서 빠짐 — 기사 부재가 아님"
         )
     merged = health.model_copy(
