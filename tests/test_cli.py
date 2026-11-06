@@ -709,3 +709,70 @@ def test_routine_collection_throttles_last_seen_but_queue_and_finalize_do_not(
     assert _collection_storage(tmp_path).last_seen_refresh_interval is not None
     # 증거를 만드는 명령은 기본 저장소(매번 갱신)를 쓴다.
     assert JsonlStorage(tmp_path).last_seen_refresh_interval is None
+
+
+def test_census_source_robots_failure_is_retried_but_others_stay_fail_closed() -> None:
+    # 2026-11-03·04 더인디고 robots.txt HTTP 415: 장애언론 census 3곳만 대기열 단계에서
+    # 다시 확인한다.
+    now = datetime(2026, 11, 3, 0, tzinfo=UTC)
+    failed_415 = (
+        "all discovery paths failed: https://theindigo.co.kr/wp-json/wp/v2/posts: "
+        "robots.txt unavailable for theindigo.co.kr: GET failed: "
+        "https://theindigo.co.kr/robots.txt: HTTP 415"
+    )
+    blocked_403 = "robots.txt unavailable for www.example.com: robots.txt returned HTTP 403"
+    health = _run_health(
+        now,
+        {
+            "theindigo": _source_health("theindigo", now, errors=[failed_415]),
+            "chosun": _source_health("chosun", now, errors=[blocked_403]),
+            "hani": _source_health("hani", now),
+        },
+    )
+    calls: list[set[str]] = []
+
+    def collect(names: set[str]) -> RunHealth:
+        calls.append(names)
+        later = now + timedelta(minutes=3)
+        return _run_health(later, {name: _source_health(name, later) for name in names})
+
+    merged, notes = _retry_timed_out_sources(
+        health,
+        collect=collect,
+        rounds=2,
+        delay_seconds=0,
+        sleeper=lambda _seconds: None,
+        robots_retry_sources=frozenset({"beminor", "ablenews", "theindigo"}),
+    )
+
+    assert calls == [{"theindigo"}]
+    assert merged.sources["theindigo"].success
+    assert not merged.sources["chosun"].success
+    assert len(notes) == 1 and "robots.txt 확인 실패로" in notes[0] and "복구" in notes[0]
+
+
+def test_census_robots_failure_that_persists_is_reported_as_missing() -> None:
+    now = datetime(2026, 11, 3, 0, tzinfo=UTC)
+    failed = "robots.txt unavailable for theindigo.co.kr: GET failed: HTTP 415"
+    health = _run_health(now, {"theindigo": _source_health("theindigo", now, errors=[failed])})
+    rounds_seen: list[int] = []
+
+    def collect(names: set[str]) -> RunHealth:
+        rounds_seen.append(len(rounds_seen) + 1)
+        return _run_health(
+            now, {name: _source_health(name, now, errors=[failed]) for name in names}
+        )
+
+    merged, notes = _retry_timed_out_sources(
+        health,
+        collect=collect,
+        rounds=2,
+        delay_seconds=0,
+        sleeper=lambda _seconds: None,
+        robots_retry_sources=frozenset({"theindigo"}),
+    )
+
+    assert rounds_seen == [1, 2]
+    assert not merged.sources["theindigo"].success
+    assert len(notes) == 1
+    assert "robots.txt 확인 실패가 재시도 2회" in notes[0] and "기사 부재가 아님" in notes[0]
