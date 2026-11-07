@@ -4,7 +4,7 @@
     "chosun": {
       "schema_version": 1,
       "scope": "chosun",
-      "generated_at": "2026-11-06T01:50:22.361515Z",
+      "generated_at": "2026-11-07T01:17:08.882913Z",
       "check_hours": 48.0,
       "targets": {
         "specialist": 1.0,
@@ -16,17 +16,28 @@
         "chosun": {
           "status": "pass",
           "target": 0.99,
-          "rate": 1.0,
-          "listed": 797,
-          "captured": 797,
+          "rate": 0.9975,
+          "listed": 798,
+          "captured": 796,
           "undated": 0,
-          "judged_from": "2026-11-04T01:50:22.361515Z",
-          "judged_until": "2026-11-05T22:50:22.361515Z",
-          "paths_attempted": 26,
-          "paths_succeeded": 26,
+          "judged_from": "2026-11-05T01:17:08.882913Z",
+          "judged_until": "2026-11-06T22:17:08.882913Z",
+          "paths_attempted": 23,
+          "paths_succeeded": 23,
           "errors": [],
-          "missing_total": 0,
-          "missing": [],
+          "missing_total": 2,
+          "missing": [
+            {
+              "url": "https://www.chosun.com/economy/startup_story/2026/01/03/BRKLFFMG5JD6PCLQTOZ5W3R4SM",
+              "title": "현재 한국에서 가장 맛있는 사과를 기르는 사람",
+              "published_at": "2026-11-06T21:00:05.135000Z"
+            },
+            {
+              "url": "https://www.chosun.com/economy/startup_story/2026/01/19/SI4XCG2GGBF6NLNOLBOBPUR2L4",
+              "title": "매일 8시간 써도 전기요금 월 2만원대, 난방비 확 줄이는 카본 히터 5만원대 특가",
+              "published_at": "2026-11-06T08:51:11.392000Z"
+            }
+          ],
           "notes": []
         }
       }
