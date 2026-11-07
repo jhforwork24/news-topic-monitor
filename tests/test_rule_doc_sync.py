@@ -171,3 +171,12 @@ def test_routine_fixes_kst_date_by_command_and_reports_unpublished_runs() -> Non
     assert "TZ=Asia/Seoul date +%F" in stage0 and "TZ=Asia/Seoul date +%A" in stage0
     report = routine.split("## 보고 원칙", 1)[1]
     assert "- (g)" in report and "발행하지 않고" in report
+
+
+def test_issue_placement_layers_are_shared_by_editor_and_auditor() -> None:
+    # 2026-11-07 사용자 결정: 주간과 같은 층위 배치, 같은 층위 안에서는 비중 순.
+    editorial = _doc("claude-editorial-instructions.md")
+    assert "이슈 배치 기준" in editorial
+    assert "같은 층위 안에서는 비중" in editorial
+    assert "인사 소식(기관장 임명 등)은 맨 뒤" in editorial
+    assert "이슈 배치 기준" in _doc("claude-auditor-task.md")
