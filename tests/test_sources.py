@@ -26,11 +26,12 @@ def test_thirteen_designated_outlets_split_into_four_groups() -> None:
     assert len(progressive) == 5
 
 
-def test_disability_section_allows_eleven_designated_outlets() -> None:
-    assert len(DISABILITY_SECTION_ALLOWED_SOURCES) == 11
-    expected = DISABILITY_PRESS_SOURCES | PRIMARY_COMPARISON_SOURCES
+def test_disability_section_allows_thirteen_designated_outlets() -> None:
+    # 2026-11-07: 노동 전문지(매일노동뉴스·참세상)의 장애 사안 보도도 I절에 싣는다.
+    assert len(DISABILITY_SECTION_ALLOWED_SOURCES) == 13
+    expected = DISABILITY_PRESS_SOURCES | PRIMARY_COMPARISON_SOURCES | LABOR_ALTERNATIVE_SOURCES
     assert expected == DISABILITY_SECTION_ALLOWED_SOURCES
-    assert LABOR_ALTERNATIVE_SOURCES.isdisjoint(DISABILITY_SECTION_ALLOWED_SOURCES)
+    assert "mediaus" not in DISABILITY_SECTION_ALLOWED_SOURCES
 
 
 def test_labor_section_allows_eleven_designated_outlets() -> None:

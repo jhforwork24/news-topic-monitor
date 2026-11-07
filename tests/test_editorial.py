@@ -825,3 +825,43 @@ def test_queue_hint_flags_non_news_opinion_pages_but_not_fixed_columns() -> None
         )
     )
     assert _non_news_opinion_hint(fixed) is None
+
+
+def test_labor_press_disability_story_can_be_selected_in_disability_section() -> None:
+    # 2026-11-07 사용자 결정: 매일노동뉴스·참세상의 장애 사안 보도도 I절 당일 신규 선정에 쓴다.
+    from news_topic_monitor.editorial import validate_external_plan
+
+    for source in ("labortoday", "newscham"):
+        article = _article(source=source)
+        candidate = _candidate(article)
+        plan = EditorialPlan(
+            issues=[
+                EditorialIssueDecision(
+                    section=EditorialSection.DISABILITY,
+                    title="활동지원 시간 부족 문제 제기",
+                    keyword="활동지원",
+                    candidate_ids=[candidate.candidate_id],
+                    summary="장애인단체가 활동지원 시간 부족을 지적하고 제도 개편을 요구했다.",
+                    tone_analysis="보도는 정부의 구체적 시행 일정이 없다는 점을 짚었다.",
+                )
+            ],
+            exclusions=[],
+        )
+        validate_external_plan(plan, [candidate])
+
+    mediaus = _candidate(_article(source="mediaus"))
+    plan = EditorialPlan(
+        issues=[
+            EditorialIssueDecision(
+                section=EditorialSection.DISABILITY,
+                title="활동지원 시간 부족 문제 제기",
+                keyword="활동지원",
+                candidate_ids=[mediaus.candidate_id],
+                summary="장애인단체가 활동지원 시간 부족을 지적하고 제도 개편을 요구했다.",
+                tone_analysis="보도는 정부의 구체적 시행 일정이 없다는 점을 짚었다.",
+            )
+        ],
+        exclusions=[],
+    )
+    with pytest.raises(Exception, match="장애 섹션 신규 선정에 비지정 매체"):
+        validate_external_plan(plan, [mediaus])
