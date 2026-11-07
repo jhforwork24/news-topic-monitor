@@ -35,10 +35,13 @@ PRINT_DIGITAL_SOURCES = frozenset(
 )
 OPINION_FULL_SCAN_SOURCES = PRIMARY_COMPARISON_SOURCES
 
-# 장애 브리핑의 당일 신규 선정 기사는 장애 전문 언론 3사(비마이너·에이블뉴스·더인디고)와
-# 보수·진보 종합매체 8사(PRIMARY_COMPARISON_SOURCES)로 구성된 11개 지정매체로 한정한다.
-# 일반 전문 언론(매일노동뉴스·참세상)은 노동 섹션 전용이라 여기서 제외된다.
-DISABILITY_SECTION_ALLOWED_SOURCES = DISABILITY_PRESS_SOURCES | PRIMARY_COMPARISON_SOURCES
+# 장애 브리핑의 당일 신규 선정 기사는 장애 전문 언론 3사(비마이너·에이블뉴스·더인디고),
+# 보수·진보 종합매체 8사(PRIMARY_COMPARISON_SOURCES), 일반 전문 언론 2사(매일노동뉴스·참세상)로
+# 구성된 13개 지정매체로 한정한다. 노동 전문지의 장애 사안 보도는 I절에 싣는다(2026-11-07 사용자
+# 결정, 주간 브리핑 기준과 일치). 오피니언·기고면 기사는 종전대로 사실 보도 근거로 쓸 수 없다.
+DISABILITY_SECTION_ALLOWED_SOURCES = (
+    DISABILITY_PRESS_SOURCES | PRIMARY_COMPARISON_SOURCES | LABOR_ALTERNATIVE_SOURCES
+)
 
 # II절(노동·돌봄·빈곤·소수자)의 당일 신규 선정 기사는 일반 전문 언론 2사(매일노동뉴스·참세상)와
 # 보수·진보 종합매체 8사, 그리고 장애 전문 언론 가운데 비마이너 1사로 구성된 11개
