@@ -77,6 +77,9 @@ jobs:
       CHAT_EDITORIAL_CHUNK_SIZE: ${{ vars.CHAT_EDITORIAL_CHUNK_SIZE }}
       CHAT_EDITORIAL_EVIDENCE_CHARS: ${{ vars.CHAT_EDITORIAL_EVIDENCE_CHARS }}
       CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE: ${{ vars.CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE }}
+      # off | shadow (default when unset). Shadow only records what a model-free
+      # prescreen would remove; it never changes the queue or its queue_id.
+      QUEUE_PRESCREEN_MODE: ${{ vars.QUEUE_PRESCREEN_MODE }}
     steps:
       - uses: actions/checkout@v7
         with:

@@ -198,6 +198,7 @@ GitHub의 예약 실행은 정각에 정확히 시작된다고 보장되지 않�
 | `CHAT_EDITORIAL_CHUNK_SIZE` | 아니오 | `24` | Notion 임시 대기열 한 페이지의 후보 수(최대 24) |
 | `CHAT_EDITORIAL_EVIDENCE_CHARS` | 아니오 | `1600` | 후보별 임시 확인 근거 글자 상한(최대 1800) |
 | `CHAT_EDITORIAL_BODY_LIMIT_PER_SOURCE` | 아니오 | `24` | 보고 구간에서 출처별로 넓게 확인할 일반 기사 본문 상한. 규칙 후보는 상한 밖에서도 확인 |
+| `QUEUE_PRESCREEN_MODE` | 아니오 | `shadow` | 모델 없는 대기열 사전선별. `shadow`는 제외 *예정* 후보만 기록하고 대기열·queue_id를 바꾸지 않음, `off`는 기록 안 함. 적용 모드는 아직 없음(그 밖의 값은 `shadow`로 처리하고 기록) |
 
 `NOTION_TOKEN`은 환경 예제나 저장소 변수에 두지 않고 GitHub Actions repository secret으로만
 저장한다. 토큰을 만든 내부 통합에 브리핑 데이터베이스, `대기열 초안 감사 등` 데이터베이스,
@@ -272,6 +273,9 @@ census에 없는 잠재 누락이 발견되면 검색결과를 원문으로 간�
 - `health/editorial_queue/initial_health/YYYY-MM-DD.json`: 그 날짜의 대기열 생성에 실제 사용한
   전수 수집 health의 고정 스냅샷. `health/latest.json`은 이후의 정기 collect·backfill 실행으로
   계속 덮어써지므로, finalizer는 이 날짜별 스냅샷과 queue_id를 대조해 대기열 바인딩을 검증한다
+- `health/editorial_queue/prescreen_shadow/YYYY-MM-DD.json`: 그 날짜 대기열에 모델 없는 사전선별을
+  적용했다면 편집자 읽기에서 빠졌을 후보의 ID·출처·건수(그림자 모드, 대기열에는 적용하지 않음). 기사 제목·본문은
+  담지 않는다. `compare/YYYY-MM-DD.json`은 finalize 뒤 실제 발행 선정과 대조한 결과다
 - `health/publish_gate/latest.json`: 기계 판정 가능한 최종 발행 허용·차단 사유
 - `evidence/YYYY-MM-DD.json`: 기사별 provenance, census, gap, reverse-search, final-state 결과
 

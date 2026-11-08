@@ -98,6 +98,17 @@ jobs:
           if test "$INPUT_DRY_RUN" = "true"; then args+=(--dry-run); fi
           if test "$INPUT_ALLOW_STALE_REVALIDATION" = "true"; then args+=(--allow-stale-revalidation); fi
           news-topic-monitor "${args[@]}"
+      - name: Compare queue prescreen shadow with the published selection
+        # Observation only: a missing shadow record, missing evidence or a recall
+        # miss must never block publication or the output commit below.
+        if: ${{ always() && inputs.dry_run != true }}
+        continue-on-error: true
+        env:
+          INPUT_DATE: ${{ inputs.date }}
+        run: |
+          args=(--write)
+          if test -n "$INPUT_DATE"; then args+=(--date "$INPUT_DATE"); fi
+          python scripts/prescreen_shadow_compare.py "${args[@]}"
       - name: Commit metadata, briefing, and health outputs
         if: ${{ always() }}
         run: bash scripts/commit_outputs.sh

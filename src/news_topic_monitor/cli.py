@@ -27,7 +27,12 @@ from .assurance import (
 )
 from .briefing import BriefingDocument, build_briefing, build_editorial_briefing, write_briefing
 from .briefing_validation import BriefingValidationError, validate_briefing
-from .chat_bridge import ChatEditorialQueueManifest, validate_chat_editorial_bridge
+from .chat_bridge import (
+    ChatEditorialQueueManifest,
+    bounded_queue_candidate,
+    editorial_queue_id,
+    validate_chat_editorial_bridge,
+)
 from .classifier import RuleClassifier
 from .constants import project_root
 from .coverage import build_report as build_coverage_report
@@ -86,6 +91,7 @@ from .policy import (
     load_source_registry,
     validate_policy_contract,
 )
+from .prescreen import PRESCREEN_MODE_OFF, prescreen_mode, shadow_record, write_shadow_record
 from .previous_briefing import load_previous_briefing
 from .publication_calendar import load_skipped_publication_dates
 from .reporting import generate_report
@@ -869,6 +875,14 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                     },
                 )
                 if args.dry_run:
+                    shadow_preview = _prescreen_shadow(
+                        settings.root,
+                        candidates,
+                        report_date=report_date,
+                        queue_settings=queue_settings,
+                        labor_classifier=labor_classifier,
+                        expected_queue_id=None,
+                    )
                     write_editorial_queue_health(
                         settings.root,
                         report_date=report_date,
@@ -885,6 +899,7 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                                 "status": "dry_run",
                                 "report_date": report_date,
                                 "candidate_count": len(verified),
+                                "prescreen_shadow": _prescreen_summary(shadow_preview),
                             },
                             ensure_ascii=False,
                             indent=2,
@@ -913,6 +928,18 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                     queue_id=result.queue_id,
                     health=health,
                 )
+                if result.queue_id:
+                    shadow = _prescreen_shadow(
+                        settings.root,
+                        candidates,
+                        report_date=report_date,
+                        queue_settings=queue_settings,
+                        labor_classifier=labor_classifier,
+                        expected_queue_id=result.queue_id,
+                    )
+                    if shadow is not None:
+                        write_shadow_record(settings.root, shadow)
+                        LOGGER.info("queue prescreen shadow: %s", _prescreen_summary(shadow))
 
         write_editorial_queue_health(
             settings.root,
@@ -1360,6 +1387,77 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
         )
         _record_bridge_failure(settings.root, report_date, str(exc), "최종 검증")
         return 3
+
+
+def _prescreen_shadow(
+    root: Path,
+    candidates: list[EditorialCandidate],
+    *,
+    report_date: str,
+    queue_settings: EditorialQueueSettings,
+    labor_classifier: RuleClassifier,
+    expected_queue_id: str | None,
+) -> dict[str, object] | None:
+    """Record what a model-free prescreen *would* remove, without touching the queue.
+
+    The queue is rebuilt here with the same deterministic selection and bounding
+    as ``publish_editorial_queue`` so the record is bound to the exact
+    ``queue_id``. Any failure is logged and recorded but never stops the queue:
+    shadow mode must not become a new way for the day's pipeline to fail.
+    """
+
+    mode, mode_note = prescreen_mode()
+    if mode == PRESCREEN_MODE_OFF:
+        return None
+    try:
+        selected = select_chat_editorial_candidates(candidates, queue_settings.max_candidates)
+        bounded = [
+            bounded_queue_candidate(candidate, queue_settings.evidence_chars)
+            for candidate in selected
+        ]
+        queue_id = editorial_queue_id(bounded)
+        if expected_queue_id is not None and queue_id != expected_queue_id:
+            LOGGER.warning("queue prescreen shadow skipped: rebuilt queue_id differs")
+            return {
+                "schema_version": 1,
+                "mode": "shadow",
+                "applied": False,
+                "report_date": report_date,
+                "queue_id": expected_queue_id,
+                "error": "queue_id_mismatch",
+                "would_exclude_count": None,
+                "would_exclude": [],
+            }
+        return shadow_record(
+            bounded,
+            report_date=report_date,
+            queue_id=queue_id,
+            labor_classifier=labor_classifier,
+            topics_path=root / "config" / "topics.yml",
+            mode_note=mode_note,
+        )
+    except Exception as exc:  # shadow mode must never fail the queue
+        LOGGER.warning("queue prescreen shadow failed: %s", short_error(str(exc)))
+        return {
+            "schema_version": 1,
+            "mode": "shadow",
+            "applied": False,
+            "report_date": report_date,
+            "queue_id": expected_queue_id,
+            "error": short_error(f"{type(exc).__name__}: {exc}"),
+            "would_exclude_count": None,
+            "would_exclude": [],
+        }
+
+
+def _prescreen_summary(record: dict[str, object] | None) -> dict[str, object] | None:
+    if record is None:
+        return None
+    return {
+        "candidate_count": record.get("candidate_count"),
+        "would_exclude_count": record.get("would_exclude_count"),
+        "error": record.get("error"),
+    }
 
 
 def _initial_health_snapshot_path(root: Path, report_date: str) -> Path:
