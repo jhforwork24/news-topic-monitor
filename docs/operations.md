@@ -465,6 +465,24 @@ python3 scripts/subagent_token_report.py --since {UTC ISO-8601}
   `--preflight`로 finalize와 같은 스키마·계획·문형 검증을 제출 전에 돌린다. 감사는 이 결과를 먼저 보고
   의심 항목부터 근거로 확인한다. 이 검사는 힌트일 뿐 발행 판정이나 감사를 대체하지 않는다.
 
+### 대기열 사전선별 그림자 모드 (2026-11-08)
+
+`editorial-queue`는 대기열을 만든 뒤 같은 후보에 모델 없는 사전선별을 계산해
+`health/editorial_queue/prescreen_shadow/YYYY-MM-DD.json`에 **기록만** 한다. 대기열·묶음·queue_id·근거는 그대로이고
+편집자·감사자가 읽는 내용도 바뀌지 않는다. 이 기록을 선정·제외·서술의 근거로 쓰지 않는다.
+
+- 제외 예정 조건(모두 충족): 종합매체 8곳, 대기열 `읽기=앞부분` 대상(두 규칙 토픽 무관·고정 칼럼·인사 힌트 없음),
+  규칙 점수 0 이하, 본문 확인·정확한 발행시각, 오피니언·기고면 힌트 없음, 제목·요약·섹션·대기열 근거 전체에
+  넓은 단서가 하나도 없음. 단서 집합은 고정 목록에 `config/topics.yml` 두 토픽의 양수 용어와 II절 돌봄·빈곤·소수자
+  하위 주제 용어를 합친 것이라, 용어를 추가하면 단서도 자동으로 넓어진다. 자동 선정은 없다.
+- `editorial-finalize`는 발행 단계 뒤 `scripts/prescreen_shadow_compare.py --write`로 제외 예정 후보가
+  `evidence/YYYY-MM-DD.json`에서 실제 이슈(`issue_id`)에 쓰였는지 대조해 `compare/YYYY-MM-DD.json`에 남긴다. 이 단계는
+  `continue-on-error`라 발행과 출력 커밋을 막지 않는다. `recall_miss`면 run에 실패 표시만 남는다.
+- 누적 점검: `python scripts/prescreen_shadow_compare.py --all`. 적용 모드 검토 전에 최소 2주(화요일 대량 대기열 포함)
+  `recall_miss` 0을 확인한다. 하나라도 있으면 그 후보의 단서 누락을 고치고 `PRESCREEN_RULE_VERSION`을 올린 뒤
+  다시 센다. 적용 모드는 별도 사용자 승인 사항이며 아직 구현하지 않았다.
+- 끄기: repository variable `QUEUE_PRESCREEN_MODE=off`. 계산이 실패해도 대기열 생성은 계속되고 기록에 `error`만 남는다.
+
 ## Notion 쿼리 도구 한도 초과
 
 증상: 연결된 Notion 도구 `notion-query-data-sources`가 `usage_limit_reached`(Query Data Source usage
