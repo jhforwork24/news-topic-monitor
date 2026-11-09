@@ -29,40 +29,40 @@
       "last_complete_at": "2026-11-09T22:40:14.372504Z"
     },
     "hani": {
-      "last_run_at": "2026-11-09T22:41:10.521939Z",
+      "last_run_at": "2026-11-09T23:04:38.932385Z",
       "success": true,
-      "discovered": 345,
+      "discovered": 30,
       "errors": [],
-      "last_success_at": "2026-11-09T22:41:10.521939Z",
+      "last_success_at": "2026-11-09T23:04:38.932385Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:41:10.521939Z"
+      "last_complete_at": "2026-11-09T23:04:38.932385Z"
     },
     "khan": {
-      "last_run_at": "2026-11-09T22:42:54.890487Z",
+      "last_run_at": "2026-11-09T23:04:47.512067Z",
       "success": true,
-      "discovered": 250,
+      "discovered": 252,
       "errors": [],
-      "last_success_at": "2026-11-09T22:42:54.890487Z",
+      "last_success_at": "2026-11-09T23:04:47.512067Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:42:54.890487Z"
+      "last_complete_at": "2026-11-09T23:04:47.512067Z"
     },
     "ohmynews": {
-      "last_run_at": "2026-11-09T22:43:08.556531Z",
+      "last_run_at": "2026-11-09T23:04:30.783818Z",
       "success": true,
-      "discovered": 193,
+      "discovered": 194,
       "errors": [],
-      "last_success_at": "2026-11-09T22:43:08.556531Z",
+      "last_success_at": "2026-11-09T23:04:30.783818Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:43:08.556531Z"
+      "last_complete_at": "2026-11-09T23:04:30.783818Z"
     },
     "pressian": {
-      "last_run_at": "2026-11-09T22:43:49.564080Z",
+      "last_run_at": "2026-11-09T23:04:22.684625Z",
       "success": true,
       "discovered": 324,
       "errors": [],
-      "last_success_at": "2026-11-09T22:43:49.564080Z",
+      "last_success_at": "2026-11-09T23:04:22.684625Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:43:49.564080Z"
+      "last_complete_at": "2026-11-09T23:04:22.684625Z"
     },
     "newscham": {
       "last_run_at": "2026-11-09T22:43:35.479772Z",
@@ -74,40 +74,40 @@
       "last_complete_at": "2026-11-09T22:43:35.479772Z"
     },
     "labortoday": {
-      "last_run_at": "2026-11-09T22:44:00.814678Z",
+      "last_run_at": "2026-11-09T23:05:16.273675Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-11-09T22:44:00.814678Z",
+      "last_success_at": "2026-11-09T23:05:16.273675Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:44:00.814678Z"
+      "last_complete_at": "2026-11-09T23:05:16.273675Z"
     },
     "beminor": {
-      "last_run_at": "2026-11-09T22:43:57.565081Z",
+      "last_run_at": "2026-11-09T23:04:33.583084Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-11-09T22:43:57.565081Z",
+      "last_success_at": "2026-11-09T23:04:33.583084Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:43:57.565081Z"
+      "last_complete_at": "2026-11-09T23:04:33.583084Z"
     },
     "ablenews": {
-      "last_run_at": "2026-11-09T22:45:03.911747Z",
+      "last_run_at": "2026-11-09T23:04:37.984077Z",
       "success": true,
       "discovered": 100,
       "errors": [],
-      "last_success_at": "2026-11-09T22:45:03.911747Z",
+      "last_success_at": "2026-11-09T23:04:37.984077Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:45:03.911747Z"
+      "last_complete_at": "2026-11-09T23:04:37.984077Z"
     },
     "theindigo": {
-      "last_run_at": "2026-11-09T22:44:13.989080Z",
+      "last_run_at": "2026-11-09T23:04:42.599979Z",
       "success": true,
-      "discovered": 7,
+      "discovered": 1,
       "errors": [],
-      "last_success_at": "2026-11-09T22:44:13.989080Z",
+      "last_success_at": "2026-11-09T23:04:42.599979Z",
       "discovery_status": "complete",
-      "last_complete_at": "2026-11-09T22:44:13.989080Z"
+      "last_complete_at": "2026-11-09T23:04:42.599979Z"
     },
     "kbs": {
       "last_run_at": "2026-08-22T11:40:50.052534Z",
