@@ -609,6 +609,10 @@ def test_previous_coverage_regions_skip_economy_and_court_names() -> None:
     assert previous_coverage_regions("서울중앙지법, 발달장애인 투표보조 임시조치") == frozenset()
     assert previous_coverage_regions("경기장애인차별철폐연대 도청 농성") == frozenset({"경기"})
     assert previous_coverage_regions("경상남도·부산 활동지원 예산") == frozenset({"경남", "부산"})
+    assert previous_coverage_regions("추미애, 권리중심일자리 노동자 850명 해고하나") == frozenset(
+        {"경기"}
+    )
+    assert previous_coverage_regions("오세훈표 청년AI 예산 56억") == frozenset({"서울"})
 
 
 def test_labor_previous_history_uses_the_labor_classifier(topics_path) -> None:
