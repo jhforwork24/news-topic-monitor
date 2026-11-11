@@ -5,7 +5,7 @@ import os
 import re
 import sqlite3
 import time
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -14,6 +14,7 @@ from typing import Any
 import httpx
 from pydantic import ValidationError as PydanticValidationError
 
+from .classifier import RuleClassifier
 from .labor_subsections import (
     LABOR_SECTION_MAX_ISSUES,
     LABOR_SUBSECTION_LABELS,
@@ -23,6 +24,7 @@ from .labor_subsections import (
 )
 from .models import (
     ArticleRecord,
+    Classification,
     EditorialAssessment,
     EditorialAssessmentBatch,
     EditorialAudit,
@@ -128,8 +130,35 @@ class EditorialRun:
     audit: EditorialAudit
 
 
+def editorial_queue_priority(
+    labor_classifier: RuleClassifier | None = None,
+) -> Callable[[EditorialCandidate], bool]:
+    """Whether a candidate is rule-relevant to the briefing (disability or, if given, labor).
+
+    Every call site that rebuilds the queue (queue build, Notion publish, prescreen
+    shadow) must pass the same predicate so the queue_id stays reproducible.
+    """
+
+    def is_priority(candidate: EditorialCandidate) -> bool:
+        if candidate.rule_classification in (Classification.RELEVANT, Classification.REVIEW):
+            return True
+        if labor_classifier is None:
+            return False
+        result = labor_classifier.classify(
+            title=candidate.title,
+            summary=candidate.summary or candidate.evidence_text,
+            section=candidate.section,
+        )
+        return result.classification in (Classification.RELEVANT, Classification.REVIEW)
+
+    return is_priority
+
+
 def select_chat_editorial_candidates(
-    candidates: Iterable[EditorialCandidate], limit: int
+    candidates: Iterable[EditorialCandidate],
+    limit: int,
+    *,
+    priority: Callable[[EditorialCandidate], bool] | None = None,
 ) -> list[EditorialCandidate]:
     """Return date-verified candidates suitable for a connected Claude task.
 
@@ -145,6 +174,12 @@ def select_chat_editorial_candidates(
 
     Monitored-institution personnel news is seated the same way and for the same
     reason: an appointment story can run on any source, at any time in the window.
+
+    Rule-relevant candidates (``priority``) are seated first, balanced across
+    sources, and only the slots left over go to the rest. Slots were handed out
+    per source newest-first only, so on 2026-11-12 the 경향·한겨레 염전업주 실형 reports (both
+    rule-relevant) ranked 24/24 and 26/28 behind newer unrelated stories and fell
+    outside the 180-candidate cap without ever reaching the editor.
     """
 
     eligible: list[EditorialCandidate] = []
@@ -160,7 +195,16 @@ def select_chat_editorial_candidates(
     ]
     pinned_ids = {candidate.candidate_id for candidate in pinned}
     rest = [candidate for candidate in eligible if candidate.candidate_id not in pinned_ids]
-    return pinned[:limit] + _balanced_candidates(rest, max(0, limit - len(pinned)))
+    is_priority = priority or editorial_queue_priority()
+    remaining = max(0, limit - len(pinned))
+    relevant = _balanced_candidates(
+        [candidate for candidate in rest if is_priority(candidate)], remaining
+    )
+    others = _balanced_candidates(
+        [candidate for candidate in rest if not is_priority(candidate)],
+        remaining - len(relevant),
+    )
+    return pinned[:limit] + relevant + others
 
 
 def mandatory_opinion_candidate(candidate: EditorialCandidate) -> bool:
