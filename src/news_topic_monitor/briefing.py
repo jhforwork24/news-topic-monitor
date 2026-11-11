@@ -284,6 +284,60 @@ PREVIOUS_COVERAGE_MAX_AGE_DAYS = 180
 # 토글에 붙이는 이전 보도 상한. 근거가 약하면 0건이 정상 결과다.
 PREVIOUS_COVERAGE_MAX_ITEMS = 5
 
+# 광역 시·도 단위로 진행되는 사안(지자체 예산 삭감·조례·농성 등)의 이전 보도는 같은 지역
+# 보도로 한정한다. 2026-11-11 경기도 권리중심공공일자리 예산 삭감 농성 이슈에 '권리중심
+# 공공일자리' 고유명만 겹친 서울시의회 조례·충북 농성 보도가 딸려 들어갔다(사용자 지적).
+# 지역은 제목에서만 읽는다. 요약에는 행사 장소('서울 여의도 이룸센터')·관할 법원 같은
+# 부수적 지명이 섞여 사안의 지역으로 볼 수 없다. 현재 이슈 기사 제목에 지역이 있을 때,
+# 후보 제목이 다른 지역만 내세우면 제외하고, 지역이 없는 전국 단위 보도는 그대로 둔다.
+_REGION_BOUNDARY = r"(?<![가-힣])"
+PREVIOUS_COVERAGE_REGION_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = tuple(
+    (name, re.compile(_REGION_BOUNDARY + pattern))
+    for name, pattern in (
+        # '서울중앙지법'·'서울고법'처럼 관할 법원 이름의 '서울'은 사안의 지역이 아니다.
+        (
+            "서울",
+            r"서울(?!(?:중앙|고등|행정|가정|회생|남부|북부|동부|서부)?(?:지방)?(?:법원|지법|고법|지검|고검)"
+            r"|중앙지|남부지|북부지|동부지|서부지|대|역)",
+        ),
+        ("부산", r"부산"),
+        ("대구", r"대구"),
+        ("인천", r"인천(?!공항)"),
+        ("광주", r"광주(?:시|광역시|지역|\s|·|,|$)"),
+        ("대전", r"대전"),
+        ("울산", r"울산"),
+        ("세종", r"세종(?:시|특별자치시)"),
+        # '경기'는 경제 상황('경기 침체')·경기장과 겹치므로 행정구역 표기만 지역으로 본다.
+        (
+            "경기",
+            r"경기(?:도|지역|북부|남부|(?=장차연|장애)|(?=[\s·,])(?!\s?(?:침체|부양|회복|둔화|악화|불황|하강|전망|상황|흐름|변동|진작|활성화)))",
+        ),
+        ("강원", r"강원"),
+        ("충북", r"(?:충북|충청북도)"),
+        ("충남", r"(?:충남|충청남도)"),
+        ("전북", r"(?:전북|전라북도)"),
+        ("전남", r"(?:전남|전라남도)"),
+        ("경북", r"(?:경북|경상북도)"),
+        ("경남", r"(?:경남|경상남도)"),
+        ("제주", r"제주"),
+        # 광역단체장 이름만 제목에 나오는 보도('추미애, 권리중심일자리 노동자 850명 해고하나')도
+        # 그 지역 사안이다. 수집 기사 제목으로 직위를 확인한 이름만 올리며, 단체장이 바뀌면
+        # 함께 고친다(2026-11 기준: 오세훈 서울시장, 추미애 경기도지사, 박찬대 인천시장).
+        ("서울", r"오세훈"),
+        ("경기", r"추미애"),
+        ("인천", r"박찬대"),
+    )
+)
+
+
+def previous_coverage_regions(title: str) -> frozenset[str]:
+    """Province-level regions a headline names, for the same-region prior-coverage rule."""
+
+    return frozenset(
+        name for name, pattern in PREVIOUS_COVERAGE_REGION_PATTERNS if pattern.search(title)
+    )
+
+
 # 공유 토큰이 이력 풀에서 이 비율(최소 PREVIOUS_ANCHOR_MIN_DF건) 이하로만 나오면 사안을
 # 특정하는 말(앵커)로 본다. 2026-10 장애 이력 1,964건 실측에서 '반구대병원' 10건·'추미애'
 # 6건은 1% 미만이었고, 무관한 사안을 '피터팬 아빠' 기사로 묶은 '발달장애' 304건·
@@ -1081,6 +1135,9 @@ def previous_coverage_for(
     category_tokens = {term.lower() for term in CATEGORY_PREVIOUS_CONCEPTS} & tokens
     strong_tokens = proper_tokens | category_tokens
     current_urls = {article.canonical_url for article in articles}
+    current_regions = frozenset().union(
+        *(previous_coverage_regions(article.title) for article in articles)
+    )
     earliest = min(
         (article.published_at or article.first_seen_at for article in articles),
         default=None,
@@ -1093,6 +1150,10 @@ def previous_coverage_for(
             continue
         if is_routine_local_training_notice(article):
             continue
+        if current_regions:
+            candidate_regions = previous_coverage_regions(article.title)
+            if candidate_regions and not candidate_regions & current_regions:
+                continue
         published_at = article.published_at or article.first_seen_at
         if earliest is not None and published_at < earliest - timedelta(
             days=PREVIOUS_COVERAGE_MAX_AGE_DAYS

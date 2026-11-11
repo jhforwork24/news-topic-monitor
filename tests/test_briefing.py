@@ -19,6 +19,7 @@ from news_topic_monitor.briefing import (
     labor_previous_history,
     previous_coverage_for,
     previous_coverage_notes,
+    previous_coverage_regions,
     previous_coverage_tokens,
     render_briefing_markdown,
     summarize_issue,
@@ -557,6 +558,61 @@ def test_previous_coverage_accepts_three_shared_words_when_one_pins_the_topic() 
     matched = previous_coverage_for([current], [earlier])
     assert [item.url for item in matched] == [earlier.canonical_url]
     assert matched[0].match_rule == PREVIOUS_MATCH_ANCHORED
+
+
+def test_previous_coverage_keeps_a_regional_issue_to_the_same_region() -> None:
+    # 2026-11-11: 경기도 예산 삭감 농성에 서울시의회 조례·충북 농성 보도가 딸려 들어갔다.
+    current = _article(
+        "beminor",
+        "[속보] 경기 장애인들, 권리중심공공일자리 예산 삭감에 반발…결국 농성",
+        article_id="gg-current",
+    )
+    gyeonggi = _article(
+        "ablenews",
+        "내년 경기도 권리중심공공일자리 예산 0원, 880명 해고 위기",
+        article_id="gg-earlier",
+    )
+    seoul = _article(
+        "beminor",
+        "[속보] 서울시 권리중심공공일자리·이동권 조례, 본회의 통과",
+        article_id="seoul-earlier",
+    )
+    chungbuk = _article(
+        "beminor",
+        "충북 장애인들, 28일 농성 끝에 권리중심공공일자리 예산 약속 받아내",
+        article_id="cb-earlier",
+    )
+    national = _article(
+        "ablenews",
+        "권리중심공공일자리 국비 예산 확보 촉구 기자회견",
+        article_id="national-earlier",
+    )
+    for offset, item in enumerate((gyeonggi, seoul, chungbuk, national), start=1):
+        item.published_at = current.published_at - timedelta(days=offset)
+    previous = previous_coverage_for([current], [gyeonggi, seoul, chungbuk, national])
+    urls = {item.url for item in previous}
+    assert gyeonggi.canonical_url in urls
+    assert national.canonical_url in urls
+    assert seoul.canonical_url not in urls
+    assert chungbuk.canonical_url not in urls
+
+    # 지역이 없는 이슈는 지역 보도도 그대로 이전 보도 후보다.
+    unscoped = _article(
+        "beminor", "권리중심공공일자리 노동자 해고 반대 집회", article_id="unscoped-current"
+    )
+    unscoped_urls = {item.url for item in previous_coverage_for([unscoped], [seoul, chungbuk])}
+    assert unscoped_urls == {seoul.canonical_url, chungbuk.canonical_url}
+
+
+def test_previous_coverage_regions_skip_economy_and_court_names() -> None:
+    assert previous_coverage_regions("경기 침체에 장애인 고용 감소") == frozenset()
+    assert previous_coverage_regions("서울중앙지법, 발달장애인 투표보조 임시조치") == frozenset()
+    assert previous_coverage_regions("경기장애인차별철폐연대 도청 농성") == frozenset({"경기"})
+    assert previous_coverage_regions("경상남도·부산 활동지원 예산") == frozenset({"경남", "부산"})
+    assert previous_coverage_regions("추미애, 권리중심일자리 노동자 850명 해고하나") == frozenset(
+        {"경기"}
+    )
+    assert previous_coverage_regions("오세훈표 청년AI 예산 56억") == frozenset({"서울"})
 
 
 def test_labor_previous_history_uses_the_labor_classifier(topics_path) -> None:

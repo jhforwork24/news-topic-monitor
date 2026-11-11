@@ -1674,8 +1674,10 @@ def _known_relevant_seed_discoveries(
 # 확인 실패(403·415·429·5xx·파싱 불가 등)도 같은 간격·횟수로 다시 확인한다(2026-11-06 사용자 승인).
 # 2026-11-03·04 더인디고 robots.txt HTTP 415로 관련 기사 14건이 편집에서 빠졌다. 재시도는
 # robots.txt를 새로 받아 허용될 때만 수집하며, 끝내 확인하지 못하면 종전대로 중단하고 보고한다.
-DEFAULT_QUEUE_TIMEOUT_RETRY_ROUNDS = 2
-DEFAULT_QUEUE_TIMEOUT_RETRY_DELAY_SECONDS = 180.0
+# 2026-11-11 동아일보 robots.txt 시간초과는 약 15분 이어져 3분 간격 2회(약 6분) 재시도를 넘겼다
+# (앞뒤 정기 수집은 정상). 5분 간격 4회(약 20분)로 늘려 같은 길이의 일시 장애를 덮는다.
+DEFAULT_QUEUE_TIMEOUT_RETRY_ROUNDS = 4
+DEFAULT_QUEUE_TIMEOUT_RETRY_DELAY_SECONDS = 300.0
 
 
 def _queue_timeout_retry_rounds() -> int:
