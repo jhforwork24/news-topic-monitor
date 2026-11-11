@@ -46,6 +46,7 @@ from .editorial import (
     EditorialValidationError,
     OpenAIEditorialClient,
     OpenAIEditorialSettings,
+    editorial_queue_priority,
     select_chat_editorial_candidates,
     write_editorial_failure,
     write_editorial_health,
@@ -817,7 +818,9 @@ def _editorial_queue(args: argparse.Namespace, settings: Settings) -> int:
                     )
                 candidates = evidence_store.candidates(start=start, end=end)
                 verified = select_chat_editorial_candidates(
-                    candidates, queue_settings.max_candidates
+                    candidates,
+                    queue_settings.max_candidates,
+                    priority=editorial_queue_priority(labor_classifier),
                 )
                 if not verified:
                     raise EditorialQueueValidationError(
@@ -1410,7 +1413,11 @@ def _prescreen_shadow(
     if mode == PRESCREEN_MODE_OFF:
         return None
     try:
-        selected = select_chat_editorial_candidates(candidates, queue_settings.max_candidates)
+        selected = select_chat_editorial_candidates(
+            candidates,
+            queue_settings.max_candidates,
+            priority=editorial_queue_priority(labor_classifier),
+        )
         bounded = [
             bounded_queue_candidate(candidate, queue_settings.evidence_chars)
             for candidate in selected

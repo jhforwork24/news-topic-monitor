@@ -12,6 +12,7 @@ from news_topic_monitor.assurance import CheckStatus, GapDetectionResult
 from news_topic_monitor.chat_bridge import editorial_queue_payload_id
 from news_topic_monitor.classifier import RuleClassifier
 from news_topic_monitor.editorial import (
+    editorial_queue_priority,
     mandatory_opinion_candidate,
     select_chat_editorial_candidates,
 )
@@ -474,6 +475,49 @@ def test_mandatory_column_is_seated_before_the_per_source_balance_cap() -> None:
 
     assert selected[0].candidate_id == "khan-column"
     assert len(selected) == 60
+
+
+def test_queue_cap_seats_rule_relevant_candidates_before_newer_unrelated_ones(
+    topics_path: Path,
+) -> None:
+    # 2026-11-12: 경향·한겨레의 염전업주 실형 기사(규칙상 relevant)가 같은 매체의 더 최근
+    # 무관 기사에 밀려 매체별 24·26위가 되어 180개 상한 밖으로 빠졌다.
+    window_end = datetime(2026, 11, 11, 20, tzinfo=UTC)
+    pool: list[EditorialCandidate] = []
+    for source in ("khan", "hani"):
+        for index in range(10):
+            unrelated = _candidate(
+                f"{source}-unrelated-{index}",
+                source=source,
+                title="프로야구 결승전 관중 신기록",
+                published_at=window_end - timedelta(minutes=10 * (index + 1)),
+            )
+            pool.append(
+                unrelated.model_copy(update={"rule_classification": Classification.IRRELEVANT})
+            )
+        pool.append(
+            _candidate(
+                f"{source}-salt-farm",
+                source=source,
+                title="염전 노예 업주, 장애인 착취·학대에 1심 징역 4년6개월",
+                published_at=window_end - timedelta(hours=12),
+            )
+        )
+    labor_strike = _candidate(
+        "khan-strike",
+        source="khan",
+        title="철도노조 무기한 총파업 선언",
+        summary="철도노조가 안전인력 충원과 임금 인상을 요구하며 총파업을 선언했다.",
+        published_at=window_end - timedelta(hours=13),
+    ).model_copy(update={"rule_classification": Classification.IRRELEVANT})
+    pool.append(labor_strike)
+
+    labor = RuleClassifier(topics_path, topic="labor_care_poverty")
+    selected = select_chat_editorial_candidates(pool, 6, priority=editorial_queue_priority(labor))
+    ids = {candidate.candidate_id for candidate in selected}
+
+    assert {"khan-salt-farm", "hani-salt-farm", "khan-strike"} <= ids
+    assert len(selected) == 6
 
 
 def test_mandatory_column_match_does_not_fire_on_a_namesake() -> None:

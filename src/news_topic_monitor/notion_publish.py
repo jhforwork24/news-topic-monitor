@@ -39,7 +39,7 @@ from .chat_bridge import (
     editorial_queue_payload_id,
 )
 from .classifier import RuleClassifier
-from .editorial import select_chat_editorial_candidates
+from .editorial import editorial_queue_priority, select_chat_editorial_candidates
 from .models import AuditSeverity, Classification, EditorialCandidate
 from .previous_briefing import PreviousBriefing
 from .selection_review import NearMissTopic, ScoredArticle, SelectionReview
@@ -495,7 +495,11 @@ class NotionPublisher:
             if existing:
                 raise EditorialQueueAlreadyBuiltError(manifest_title)
 
-        selected = select_chat_editorial_candidates(candidates, queue_settings.max_candidates)
+        selected = select_chat_editorial_candidates(
+            candidates,
+            queue_settings.max_candidates,
+            priority=editorial_queue_priority(labor_classifier),
+        )
         if not selected:
             raise EditorialQueueValidationError(
                 "정확한 발행시각과 확인 가능한 본문이 있는 편집 후보가 없음"
