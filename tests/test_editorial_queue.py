@@ -467,7 +467,7 @@ def test_mandatory_column_is_seated_before_the_per_source_balance_cap() -> None:
                 f"{source}-{index}",
                 source=source,
                 published_at=window_end - timedelta(minutes=10 * (index + 1)),
-            )
+            ).model_copy(update={"rule_classification": Classification.IRRELEVANT})
             for index in range(24)
         )
 
@@ -520,6 +520,41 @@ def test_queue_cap_seats_rule_relevant_candidates_before_newer_unrelated_ones(
     assert len(selected) == 6
 
 
+def test_queue_cap_never_drops_rule_relevant_or_disability_press_candidates() -> None:
+    # 2026-11-12: 에이블뉴스 경기도청 농성 보도 등 관련 후보가 상한에 걸려 빠졌다.
+    window_end = datetime(2026, 11, 11, 20, tzinfo=UTC)
+    relevant = [
+        _candidate(
+            f"hani-relevant-{index}",
+            source="hani",
+            published_at=window_end - timedelta(minutes=index + 1),
+        )
+        for index in range(8)
+    ]
+    press = _candidate(
+        "ablenews-unscored",
+        source="ablenews",
+        title="경기도청서 내년도 예산 반영해달라 무기한 농성 돌입",
+        published_at=window_end - timedelta(hours=10),
+    ).model_copy(update={"rule_classification": Classification.IRRELEVANT})
+    unrelated = [
+        _candidate(
+            f"joongang-unrelated-{index}",
+            source="joongang",
+            title="프로야구 결승전 관중 신기록",
+            published_at=window_end - timedelta(minutes=index + 1),
+        ).model_copy(update={"rule_classification": Classification.IRRELEVANT})
+        for index in range(8)
+    ]
+
+    selected = select_chat_editorial_candidates([*relevant, press, *unrelated], 5)
+    ids = {candidate.candidate_id for candidate in selected}
+
+    assert {item.candidate_id for item in relevant} <= ids
+    assert "ablenews-unscored" in ids
+    assert not any(candidate_id.startswith("joongang") for candidate_id in ids)
+
+
 def test_mandatory_column_match_does_not_fire_on_a_namesake() -> None:
     # 미디어스 김민하 is a columnist, but an actress of the same name appears in
     # collected entertainment coverage. Requiring "칼럼" keeps the namesake out —
@@ -569,7 +604,7 @@ def test_monitored_personnel_candidate_is_seated_before_the_per_source_balance_c
                 f"{source}-{index}",
                 source=source,
                 published_at=window_end - timedelta(minutes=10 * (index + 1)),
-            )
+            ).model_copy(update={"rule_classification": Classification.IRRELEVANT})
             for index in range(24)
         )
 
