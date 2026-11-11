@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import sqlite3
@@ -36,7 +37,9 @@ from .models import (
     VerificationStatus,
 )
 from .sources import (
+    DISABILITY_PRESS_SOURCES,
     DISABILITY_SECTION_ALLOWED_SOURCES,
+    LABOR_ALTERNATIVE_SOURCES,
     LABOR_SECTION_ALLOWED_SOURCES,
     SOURCE_CAMP,
     PersonnelTarget,
@@ -130,6 +133,15 @@ class EditorialRun:
     audit: EditorialAudit
 
 
+LOGGER = logging.getLogger(__name__)
+
+# 규칙상 관련 후보가 일간 상한(180)을 넘어도 대기열에 남기되, 화요일 72시간 대기열의
+# 상한(QUEUE_MAX_CANDIDATES_CEILING)과 같은 값을 넘지 않게 해 편집 입력 크기를 묶는다.
+RELEVANT_QUEUE_CEILING = 360
+
+PRIORITY_QUEUE_SOURCES = DISABILITY_PRESS_SOURCES | LABOR_ALTERNATIVE_SOURCES
+
+
 def editorial_queue_priority(
     labor_classifier: RuleClassifier | None = None,
 ) -> Callable[[EditorialCandidate], bool]:
@@ -140,6 +152,10 @@ def editorial_queue_priority(
     """
 
     def is_priority(candidate: EditorialCandidate) -> bool:
+        # 장애언론 3곳과 노동 전문매체 2곳은 브리핑 의제를 다루는 매체라 규칙 분류기가 놓친
+        # 기사도 편집자가 직접 판단해야 한다(2026-11-12 사용자 지시: 해당 건 누락 방지).
+        if candidate.source in PRIORITY_QUEUE_SOURCES:
+            return True
         if candidate.rule_classification in (Classification.RELEVANT, Classification.REVIEW):
             return True
         if labor_classifier is None:
@@ -197,12 +213,24 @@ def select_chat_editorial_candidates(
     rest = [candidate for candidate in eligible if candidate.candidate_id not in pinned_ids]
     is_priority = priority or editorial_queue_priority()
     remaining = max(0, limit - len(pinned))
-    relevant = _balanced_candidates(
-        [candidate for candidate in rest if is_priority(candidate)], remaining
-    )
+    relevant_pool = [candidate for candidate in rest if is_priority(candidate)]
+    # 규칙상 관련 후보는 상한 때문에 잘리지 않는다. 상한은 무관 후보를 채우는 자리에만
+    # 적용하고, 관련 후보가 상한을 넘는 날에는 대기열이 그만큼 커진다. 편집 입력이 무한정
+    # 커지지 않도록 RELEVANT_QUEUE_CEILING을 넘는 몫만 자르고 그 사실을 남긴다.
+    relevant_limit = max(remaining, RELEVANT_QUEUE_CEILING - len(pinned))
+    relevant = _balanced_candidates(relevant_pool, relevant_limit)
+    if len(relevant_pool) > remaining:
+        LOGGER.warning(
+            "editorial queue: %d rule-relevant candidates exceed the %d-slot cap; "
+            "queue grows to keep them (ceiling %d, dropped %d)",
+            len(relevant_pool),
+            remaining,
+            RELEVANT_QUEUE_CEILING,
+            len(relevant_pool) - len(relevant),
+        )
     others = _balanced_candidates(
         [candidate for candidate in rest if not is_priority(candidate)],
-        remaining - len(relevant),
+        max(0, remaining - len(relevant)),
     )
     return pinned[:limit] + relevant + others
 
