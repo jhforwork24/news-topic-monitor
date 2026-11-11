@@ -1,20 +1,26 @@
 {
   "schema_version": 1,
-  "report_date": "2026-11-11",
-  "checked_at": "2026-11-10T23:20:57.682962Z",
+  "report_date": "2026-11-12",
+  "checked_at": "2026-11-11T22:57:05.336226Z",
   "allowed": true,
   "fatal_errors": [],
   "degraded_warnings": [
-    "donga: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 6건이 편집·감사를 거치지 않음 (“말 안 듣는다” 염전 노동자 상습 폭행, 60대 관리자 실형 / 겨울철 위기가구 40만명 발굴…내년부터 긴급생계비 30만원 지급 / 경찰 ‘지하철 출근길 이동권 시위’ 박경석 전장연 대표 송치 외 3건)"
+    "독립 검색에서 결정론적 수집에 없는 잠재 누락 2건"
   ],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
   "reporting_items": [
     {
-      "cause": "donga: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 6건이 편집·감사를 거치지 않음 (“말 안 듣는다” 염전 노동자 상습 폭행, 60대 관리자 실형 / 겨울철 위기가구 40만명 발굴…내년부터 긴급생계비 30만원 지급 / 경찰 ‘지하철 출근길 이동권 시위’ 박경석 전장연 대표 송치 외 3건)",
-      "fallback": "발행은 진행하되 해당 기사를 보고사항에 남김",
-      "result": "warning",
-      "next_action": "기사 원문을 확인해 필요하면 사후 보완하고 브리핑 정정 이력에 기록"
+      "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 안민석표 '벽깨기', 37개 대학으로 확대… 경기교육-대학 상생협력 본격... (https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CMPT_CD=P0010&CNTN_CD=A0003284137)",
+      "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
+      "result": "potential_gap",
+      "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
+    },
+    {
+      "cause": "ohmynews: 결정론적 수집에 없는 검색 후보 다문화가족 우대 제도가 문제? 대통령 발언 따져보니 [오마이팩트] (https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CMPT_CD=P0010&CNTN_CD=A0003283601)",
+      "fallback": "검색 결과 URL을 provenance에 보존하되 본문 확인 근거로 사용하지 않음",
+      "result": "potential_gap",
+      "next_action": "등록된 공식 경로에서 같은 원문을 재수집하고 adapter 누락 여부를 점검"
     }
   ]
 }
