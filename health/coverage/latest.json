@@ -4,7 +4,7 @@
     "chosun": {
       "schema_version": 1,
       "scope": "chosun",
-      "generated_at": "2026-11-12T02:33:18.087864Z",
+      "generated_at": "2026-11-13T02:10:17.968586Z",
       "check_hours": 48.0,
       "targets": {
         "specialist": 1.0,
@@ -16,23 +16,17 @@
         "chosun": {
           "status": "pass",
           "target": 0.99,
-          "rate": 0.9986,
-          "listed": 738,
-          "captured": 737,
+          "rate": 1.0,
+          "listed": 816,
+          "captured": 816,
           "undated": 0,
-          "judged_from": "2026-11-10T02:33:18.087864Z",
-          "judged_until": "2026-11-11T23:33:18.087864Z",
-          "paths_attempted": 26,
-          "paths_succeeded": 26,
+          "judged_from": "2026-11-11T02:10:17.968586Z",
+          "judged_until": "2026-11-12T23:10:17.968586Z",
+          "paths_attempted": 25,
+          "paths_succeeded": 25,
           "errors": [],
-          "missing_total": 1,
-          "missing": [
-            {
-              "url": "https://www.chosun.com/video_photo/2026/11/12/7Y5PBJ2UCNB2BNO22QTMI5DBMU",
-              "title": "[더 한장] 짧아서 더 아쉬운 남도의 가을",
-              "published_at": "2026-11-11T22:00:00Z"
-            }
-          ],
+          "missing_total": 0,
+          "missing": [],
           "notes": []
         }
       }
