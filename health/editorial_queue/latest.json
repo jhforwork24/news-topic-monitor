@@ -1,11 +1,11 @@
 {
-  "report_date": "2026-11-13",
-  "checked_at": "2026-11-13T01:07:56.602977Z",
-  "status": "already_built",
-  "candidate_count": null,
-  "part_count": null,
-  "queue_id": null,
-  "gap_detection_status": null,
-  "gap_potential_count": null,
+  "report_date": "2026-11-14",
+  "checked_at": "2026-11-13T22:42:56.482345Z",
+  "status": "ready",
+  "candidate_count": 180,
+  "part_count": 9,
+  "queue_id": "117a8ff6ed86609fe051a7fe8fec523e019421d086594b8a118141d194e309b4",
+  "gap_detection_status": "complete",
+  "gap_potential_count": 0,
   "error": null
 }
