@@ -1,20 +1,11 @@
 {
   "schema_version": 1,
-  "report_date": "2026-11-17",
-  "checked_at": "2026-11-17T01:34:19.129436Z",
+  "report_date": "2026-11-18",
+  "checked_at": "2026-11-17T23:02:14.697051Z",
   "allowed": true,
   "fatal_errors": [],
-  "degraded_warnings": [
-    "pressian: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 10건이 편집·감사를 거치지 않음 (내가 훔쳤다는 그 지갑이 어떻게 생겼는지, 나는 아직도 모른다 / '외국인 노동자가 크게 도움 안된다'는 대통령에게 <딸기이론>을 소개합니다 / 박영림 강원도의원 \"장애인 편의시설, 사후 땜질식 보완 없어야\" 외 7건)"
-  ],
+  "degraded_warnings": [],
   "validator_fatal_errors": 0,
   "unclassified_failures": 0,
-  "reporting_items": [
-    {
-      "cause": "pressian: 대기열 생성 때 응답 시간초과로 빠진 출처의 관련 기사 10건이 편집·감사를 거치지 않음 (내가 훔쳤다는 그 지갑이 어떻게 생겼는지, 나는 아직도 모른다 / '외국인 노동자가 크게 도움 안된다'는 대통령에게 <딸기이론>을 소개합니다 / 박영림 강원도의원 \"장애인 편의시설, 사후 땜질식 보완 없어야\" 외 7건)",
-      "fallback": "발행은 진행하되 해당 기사를 보고사항에 남김",
-      "result": "warning",
-      "next_action": "기사 원문을 확인해 필요하면 사후 보완하고 브리핑 정정 이력에 기록"
-    }
-  ]
+  "reporting_items": []
 }
