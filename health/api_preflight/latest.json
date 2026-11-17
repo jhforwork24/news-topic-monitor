@@ -1,5 +1,5 @@
 {
-  "report_date": "2026-11-17",
+  "report_date": "2026-11-18",
   "openai": {
     "status": "not_required",
     "error": null,
@@ -12,5 +12,5 @@
     "queries_completed": 5,
     "potential_gap_count": 0
   },
-  "checked_at": "2026-11-17T03:02:02.524605Z"
+  "checked_at": "2026-11-17T22:42:28.552405Z"
 }
