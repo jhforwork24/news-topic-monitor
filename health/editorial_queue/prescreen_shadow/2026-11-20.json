@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "rule_version": 1,
+  "mode": "shadow",
+  "applied": false,
+  "mode_note": null,
+  "report_date": "2026-11-20",
+  "queue_id": "e97ef0d64734aace71a495780af2e92215b769a3748576f1e26db8f70a419100",
+  "generated_at": "2026-11-19T22:43:02.764113Z",
+  "candidate_count": 180,
+  "would_exclude_count": 15,
+  "keep_reason_counts": {
+    "keep:designated_or_specialist_source": 77,
+    "keep:full_reading_tier": 2,
+    "keep:recall_clue": 5,
+    "keep:rule_signal": 81
+  },
+  "would_exclude_by_source": {
+    "chosun": 3,
+    "hani": 3,
+    "joongang": 3,
+    "khan": 1,
+    "ohmynews": 2,
+    "pressian": 1,
+    "sisain": 2
+  },
+  "clue_count": 226,
+  "clue_set_sha256": "769c8b32cdf38a59a8edbd06ca31b44f933453d9417f52322016a27d096a1d64",
+  "would_exclude": [
+    {
+      "candidate_id": "8c962976af1498c4d7dfb5260cfba8bfdae0d0609b94c40d66759aaf5019507c",
+      "source": "chosun"
+    },
+    {
+      "candidate_id": "1b7983f28fcbd12dcb67f3eb40e4cb9e553172ebfcb1be1ecbe584abe543ab55",
+      "source": "hani"
+    },
+    {
+      "candidate_id": "040bdc0a59fe0056b9d802e16a46e0665bc812fd229826d0cf2c21b45560c9cf",
+      "source": "joongang"
+    },
+    {
+      "candidate_id": "714602a5f29538dcf1b3d90c606b93dfc61283b64b10d68518fb5228e483ab62",
+      "source": "ohmynews"
+    },
+    {
+      "candidate_id": "64c0b0e8813d38638d992b34b4973cf507647b915138bd7603494ad97b35fac2",
+      "source": "pressian"
+    },
+    {
+      "candidate_id": "8d564566759ff56324d237052829d19679e3cd335f09646ed950299c1d1eba3a",
+      "source": "sisain"
+    },
+    {
+      "candidate_id": "29a44fdfec9018d8eb63cc4b815067f48f69355720a2419b54c7d590b515c401",
+      "source": "chosun"
+    },
+    {
+      "candidate_id": "4c941a18434ff08b039f4c0005fdcad884325cf7d02ed001718afb98f1a2d54f",
+      "source": "hani"
+    },
+    {
+      "candidate_id": "16b2ba88d1bbbeaafde2556ddd65548aa747e833086c8c36afc16a29f1857ada",
+      "source": "joongang"
+    },
+    {
+      "candidate_id": "2f1d48db5d01c6f4d341338f01c87792d0824ffe1f0256b8b6e211d57a71d73a",
+      "source": "khan"
+    },
+    {
+      "candidate_id": "7f9733eb839cd4762f39432495a61f0240b4c52570700892e9573f228c9f7328",
+      "source": "ohmynews"
+    },
+    {
+      "candidate_id": "72a989ac63ee2aac7c4d87dce26434141801f397090eee504c40f4fdd85f665c",
+      "source": "sisain"
+    },
+    {
+      "candidate_id": "c6e234387bd18daa0172eb1eeb67719cd4192025486bb1789a659086a56f0439",
+      "source": "chosun"
+    },
+    {
+      "candidate_id": "80499a4c3ee979c7e27107ae6de4e4ac9855e7f7b646b3f5ae4d15a251887cff",
+      "source": "hani"
+    },
+    {
+      "candidate_id": "403d76e6a449404824bd3760b3eb33d641c7bf6b7151192c59527bc3d350aea2",
+      "source": "joongang"
+    }
+  ]
+}
