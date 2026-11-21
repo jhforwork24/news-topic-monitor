@@ -376,3 +376,138 @@ def test_non_robots_failure_has_no_header_diagnostics(tmp_path) -> None:
     ):
         client.get("https://example.test/article")
     assert "server=" not in str(raised.value)
+
+
+# 2026-11-21 승인(A안): robots.txt를 받지 못했을 때 6시간 이내 정상 사본으로 판단한다.
+def _copy_store(tmp_path, *, hours_ago: float, text: str = "User-agent: *\nDisallow: /private\n"):
+    from datetime import UTC, datetime, timedelta
+
+    from news_topic_monitor.robots_copies import RobotsCopyStore
+
+    store = RobotsCopyStore(tmp_path / "data" / "state" / "robots_copies.json")
+    store.record(
+        "https://example.test",
+        "https://example.test/robots.txt",
+        text,
+        fetched_at=datetime.now(UTC) - timedelta(hours=hours_ago),
+    )
+    return store
+
+
+def _timeout_robots(requested: list[str]):
+    def handler(request: httpx.Request) -> httpx.Response:
+        requested.append(request.url.path)
+        if request.url.path == "/robots.txt":
+            raise httpx.ConnectTimeout("timed out", request=request)
+        return httpx.Response(200, text="ok")
+
+    return handler
+
+
+def test_unreachable_robots_is_judged_from_a_recent_copy(tmp_path) -> None:
+    requested: list[str] = []
+    store = _copy_store(tmp_path, hours_ago=3)
+    with SafeHttpClient(
+        settings(tmp_path),
+        transport=httpx.MockTransport(_timeout_robots(requested)),
+        sleeper=lambda _: None,
+        robots_copies=store,
+    ) as client:
+        assert client.get("https://example.test/public").text == "ok"
+        with pytest.raises(RobotsDeniedError):
+            client.get("https://example.test/private/article")
+        assert set(client.robots_copy_origins) == {"https://example.test"}
+    assert requested == ["/robots.txt", "/public"]
+
+
+def test_server_error_robots_also_uses_a_recent_copy(tmp_path) -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(503, text="unavailable")
+        return httpx.Response(200, text="ok")
+
+    with SafeHttpClient(
+        settings(tmp_path),
+        transport=httpx.MockTransport(handler),
+        sleeper=lambda _: None,
+        robots_copies=_copy_store(tmp_path, hours_ago=1),
+    ) as client:
+        assert client.get("https://example.test/public").text == "ok"
+
+
+def test_expired_copy_still_fails_closed(tmp_path) -> None:
+    requested: list[str] = []
+    with (
+        SafeHttpClient(
+            settings(tmp_path),
+            transport=httpx.MockTransport(_timeout_robots(requested)),
+            sleeper=lambda _: None,
+            robots_copies=_copy_store(tmp_path, hours_ago=6.5),
+        ) as client,
+        pytest.raises(RobotsUnavailableError),
+    ):
+        client.get("https://example.test/public")
+    assert requested == ["/robots.txt"]
+
+
+@pytest.mark.parametrize("status", [403, 429])
+def test_refusals_never_fall_back_to_a_copy(tmp_path, status) -> None:
+    requested: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requested.append(request.url.path)
+        return httpx.Response(status, text="no")
+
+    with (
+        SafeHttpClient(
+            settings(tmp_path),
+            transport=httpx.MockTransport(handler),
+            sleeper=lambda _: None,
+            robots_copies=_copy_store(tmp_path, hours_ago=1),
+        ) as client,
+        pytest.raises(RobotsUnavailableError),
+    ):
+        client.get("https://example.test/public")
+    assert requested == ["/robots.txt"]
+
+
+def test_fresh_robots_is_kept_as_a_copy_without_rewriting_every_run(tmp_path) -> None:
+    from news_topic_monitor.robots_copies import RobotsCopyStore
+
+    path = tmp_path / "data" / "state" / "robots_copies.json"
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nAllow: /\n")
+        return httpx.Response(200, text="ok")
+
+    for _ in range(2):
+        with SafeHttpClient(
+            settings(tmp_path),
+            transport=httpx.MockTransport(handler),
+            sleeper=lambda _: None,
+            robots_copies=RobotsCopyStore(path),
+        ) as client:
+            client.get("https://example.test/public")
+        if _ == 0:
+            first = path.read_text(encoding="utf-8")
+    assert path.read_text(encoding="utf-8") == first
+    saved = RobotsCopyStore(path).get("https://example.test")
+    assert saved is not None and saved.text == "User-agent: *\nAllow: /\n"
+    assert "ok" not in first
+
+
+def test_final_state_client_never_judges_from_a_copy(tmp_path) -> None:
+    from news_topic_monitor.cli import _RecordOnlyRobotsCopies
+
+    requested: list[str] = []
+    with (
+        SafeHttpClient(
+            settings(tmp_path),
+            transport=httpx.MockTransport(_timeout_robots(requested)),
+            sleeper=lambda _: None,
+            robots_copies=_RecordOnlyRobotsCopies(_copy_store(tmp_path, hours_ago=1)),
+        ) as client,
+        pytest.raises(RobotsUnavailableError),
+    ):
+        client.get("https://example.test/public")

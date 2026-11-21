@@ -96,11 +96,12 @@ from .prescreen import PRESCREEN_MODE_OFF, prescreen_mode, shadow_record, write_
 from .previous_briefing import load_previous_briefing
 from .publication_calendar import load_skipped_publication_dates
 from .reporting import generate_report
+from .robots_copies import RobotsCopyStore
 from .selection_review import build_selection_review
 from .settings import ContactRequiredError, Settings
 from .sources import SOURCE_LABELS
 from .storage import JsonlStorage
-from .utils import KST, parse_datetime, short_error
+from .utils import KST, kst_display, parse_datetime, short_error
 
 LOGGER = logging.getLogger(__name__)
 
@@ -511,7 +512,7 @@ def _editorial_publish(args: argparse.Namespace, settings: Settings) -> int:
                 )
                 phase_started = perf_counter()
                 revalidation_adapters = _build_adapters(settings, storage, selected_sources)
-                with _http_client(settings) as http:
+                with _http_client(settings, allow_robots_copy=False) as http:
                     revalidation_health = Collector(
                         http=http,
                         storage=storage,
@@ -1142,7 +1143,7 @@ def _editorial_finalize(args: argparse.Namespace, settings: Settings) -> int:
                     ",".join(sorted(selected_sources)),
                 )
                 phase_started = perf_counter()
-                with _http_client(settings) as http:
+                with _http_client(settings, allow_robots_copy=False) as http:
                     revalidation_health = Collector(
                         http=http,
                         storage=storage,
@@ -1537,13 +1538,32 @@ def _build_adapters(
     return adapters
 
 
-def _http_client(settings: Settings) -> SafeHttpClient:
-    """Build the crawler client with the registry's approved robots.txt-absent opt-ins."""
+def _http_client(settings: Settings, *, allow_robots_copy: bool = True) -> SafeHttpClient:
+    """Build the crawler client with the registry's approved robots.txt-absent opt-ins.
+
+    Every HTTP 200 robots.txt is kept in ``data/state/robots_copies.json``. With
+    ``allow_robots_copy`` an unreachable robots.txt is judged from a copy no older than six
+    hours (2026-11-21 approval). The pre-publication final-state recrawl passes False so
+    publication always rests on a robots.txt fetched afresh.
+    """
 
     registry = load_source_registry(settings.root / "config" / "source-registry.yaml")
+    copies = RobotsCopyStore(settings.root / "data" / "state" / "robots_copies.json")
     return SafeHttpClient(
-        settings, robots_absent_allowed_hosts=registry.robots_absent_allowed_hosts()
+        settings,
+        robots_absent_allowed_hosts=registry.robots_absent_allowed_hosts(),
+        robots_copies=copies if allow_robots_copy else _RecordOnlyRobotsCopies(copies),
     )
+
+
+class _RecordOnlyRobotsCopies(RobotsCopyStore):
+    """Keeps refreshing copies from fresh fetches but never judges from one."""
+
+    def __init__(self, store: RobotsCopyStore) -> None:
+        super().__init__(store.path)
+
+    def usable(self, origin: str, *, now: datetime | None = None) -> None:
+        return None
 
 
 def _collect_single_source(
@@ -1962,6 +1982,12 @@ def _run_source_failures(health: RunHealth) -> list[str]:
             # Not a failure, but never silent: the approved per-source policy read a
             # 404/410 robots.txt as "no robots.txt, no rules" for this origin.
             failures.append(f"{source}: robots.txt 없음(404/410) — 승인된 정책으로 {origin} 수집")
+        for origin, fetched_at in detail.robots_copy_origins.items():
+            # Also never silent: robots.txt was unreachable and a recent copy decided.
+            failures.append(
+                f"{source}: robots.txt 응답 없음 — {origin}을 "
+                f"{kst_display(fetched_at)} 정상 사본(6시간 이내)으로 판단해 수집"
+            )
         if detail.success:
             continue
         message = detail.errors[0] if detail.errors else detail.discovery_status.value

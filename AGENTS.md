@@ -6,6 +6,12 @@
   allow_if_absent`를 둔 출처의 robots.txt **404/410**(robots.txt 없음)이며, 이 경우만 제한 없음으로
   해석하고 health `robots_absent_origins`에 남긴다. 403·429·5xx·시간초과·파싱 불가는 모든
   출처에서 fail-closed다. 새 출처에 이 opt-in을 추가하려면 사용자 승인이 먼저 필요하다.
+  단, 2026-11-21 사용자 승인(A안)으로 robots.txt가 **시간초과·연결 오류·5xx로 응답하지 않을 때**
+  (RFC 9309 §2.3.1.4 unreachable)만 `data/state/robots_copies.json`에 남긴 **6시간 이내 HTTP 200
+  사본**으로 허용 여부를 판단한다(§2.4 캐시 허용 범위 안에서 좁힌 기간). 사본이 금지한 경로는
+  그대로 막고, 403·429·파싱 불가·사본 없음·6시간 초과는 fail-closed다. 사본으로 판단한 origin은
+  health `robots_copy_origins`와 보고사항에 남기며, 발행 직전 final-state 재수집은 사본을 쓰지
+  않고 robots.txt를 새로 받는다. 기간 연장이나 대상 상태 확대는 사용자 승인이 먼저 필요하다.
 - 브라우저 자동제어, 프록시·IP 우회, CAPTCHA·로그인·유료기사 우회, User-Agent 위장을 금지한다.
 - 기사 본문·원본 HTML을 장기 저장하거나 fixture·로그·보고서에 복제하지 않는다.
 - 출처별 파서나 선택자를 바꾸면 최소 fixture와 단위시험을 함께 갱신한다.
