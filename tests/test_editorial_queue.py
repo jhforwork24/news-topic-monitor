@@ -755,3 +755,31 @@ def test_run_source_failures_surfaces_an_absent_robots_file_without_calling_it_a
     assert _run_source_failures(health) == [
         "newscham: robots.txt 없음(404/410) — 승인된 정책으로 https://www.newscham.net 수집"
     ]
+
+
+def test_run_source_failures_surfaces_a_robots_copy_decision() -> None:
+    from news_topic_monitor.cli import _run_source_failures
+    from news_topic_monitor.models import RunHealth, SourceHealth
+
+    started = datetime(2026, 11, 20, 22, 37, tzinfo=UTC)
+    health = RunHealth(
+        run_started_at=started,
+        run_finished_at=started,
+        window_start=started,
+        window_end=started,
+        all_sources_failed=False,
+        sources={
+            "pressian": SourceHealth(
+                source="pressian",
+                success=True,
+                started_at=started,
+                robots_copy_origins={
+                    "https://www.pressian.com": datetime(2026, 11, 20, 20, 24, tzinfo=UTC)
+                },
+            ),
+        },
+    )
+    assert _run_source_failures(health) == [
+        "pressian: robots.txt 응답 없음 — https://www.pressian.com을 2026-11-21 05:24 "
+        "정상 사본(6시간 이내)으로 판단해 수집"
+    ]

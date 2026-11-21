@@ -175,6 +175,13 @@ class Collector:
                 for origin in getattr(self.http, "robots_absent_origins", frozenset())
                 if urlsplit(origin).hostname in source_hosts
             )
+            health.robots_copy_origins = {
+                origin: fetched_at
+                for origin, fetched_at in sorted(
+                    getattr(self.http, "robots_copy_origins", {}).items()
+                )
+                if urlsplit(origin).hostname in source_hosts
+            }
             if health.success:
                 health.discovery_status = (
                     DiscoveryStatus.PARTIAL if health.errors else DiscoveryStatus.COMPLETE

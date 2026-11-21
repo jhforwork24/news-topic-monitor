@@ -14,6 +14,7 @@ from urllib.robotparser import RobotFileParser
 
 import httpx
 
+from .robots_copies import RobotsCopyStore
 from .settings import Settings
 
 LOGGER = logging.getLogger(__name__)
@@ -70,6 +71,8 @@ class CachedRobots:
     error: str | None
     robots_url: str
     absent: bool = False
+    # 새로 받지 못해(unreachable) 최근 정상 사본으로 판단한 경우 그 사본을 받은 시각.
+    copy_fetched_at: datetime | None = None
 
 
 class DomainRateLimiter:
@@ -124,6 +127,12 @@ class SafeHttpClient:
     as allow-all and reported through ``robots_absent_origins``. The per-domain concurrency
     limit is one even when sources are collected in parallel threads: DomainRateLimiter
     keeps a request in flight per host exclusive and enforces spacing between requests.
+
+    With ``robots_copies``, every HTTP 200 robots.txt is also kept as that origin's latest
+    copy, and a robots.txt that is unreachable (timeout, connection error, 5xx; RFC 9309
+    §2.3.1.4) is judged from a copy no older than ``ROBOTS_COPY_MAX_AGE`` instead of
+    failing closed. 403, 429, unparsable answers and a missing or expired copy still fail
+    closed, and origins judged from a copy are reported through ``robots_copy_origins``.
     """
 
     def __init__(
@@ -133,8 +142,10 @@ class SafeHttpClient:
         transport: httpx.BaseTransport | None = None,
         sleeper=time.sleep,
         robots_absent_allowed_hosts: frozenset[str] = frozenset(),
+        robots_copies: RobotsCopyStore | None = None,
     ) -> None:
         self.settings = settings
+        self.robots_copies = robots_copies
         self.robots_absent_allowed_hosts = frozenset(
             host.lower() for host in robots_absent_allowed_hosts
         )
@@ -177,6 +188,18 @@ class SafeHttpClient:
         with self._robots_guard:
             snapshot = list(self._robots.items())
         return frozenset(origin for origin, cached in snapshot if cached.absent)
+
+    @property
+    def robots_copy_origins(self) -> dict[str, datetime]:
+        """Origins judged this run from a recent copy, with the copy's fetch time."""
+
+        with self._robots_guard:
+            snapshot = list(self._robots.items())
+        return {
+            origin: cached.copy_fetched_at
+            for origin, cached in snapshot
+            if cached.copy_fetched_at is not None
+        }
 
     def robots_decision(self, url: str) -> RobotsDecision:
         origin, robots_url = self._origin_and_robots(url)
@@ -263,6 +286,11 @@ class SafeHttpClient:
             parser = RobotFileParser()
             parser.set_url(robots_url)
             parser.parse(response.text.splitlines())
+            if self.robots_copies is not None:
+                try:
+                    self.robots_copies.record(origin, str(response.url), response.text)
+                except OSError as exc:  # a copy is a fallback aid; never block collection
+                    LOGGER.warning("robots.txt copy for %s not saved: %s", origin, exc)
             return CachedRobots(
                 parser=parser,
                 fetched_at=datetime.now(UTC),
@@ -289,6 +317,8 @@ class SafeHttpClient:
                     robots_url=robots_url,
                     absent=True,
                 )
+            if _robots_unreachable(exc) and (copy := self._usable_copy(origin)):
+                return copy
             LOGGER.warning("robots.txt unavailable for %s: %s", origin, exc)
             return CachedRobots(
                 parser=None,
@@ -297,6 +327,8 @@ class SafeHttpClient:
                 robots_url=robots_url,
             )
         except httpx.HTTPError as exc:
+            if isinstance(exc, httpx.TransportError) and (copy := self._usable_copy(origin)):
+                return copy
             LOGGER.warning("robots.txt unavailable for %s: %s", origin, exc)
             return CachedRobots(
                 parser=None,
@@ -304,6 +336,28 @@ class SafeHttpClient:
                 error=str(exc),
                 robots_url=robots_url,
             )
+
+    def _usable_copy(self, origin: str) -> CachedRobots | None:
+        if self.robots_copies is None:
+            return None
+        copy = self.robots_copies.usable(origin)
+        if copy is None:
+            return None
+        LOGGER.warning(
+            "robots.txt unreachable for %s; judging from the copy fetched at %s",
+            origin,
+            copy.fetched_at.isoformat(),
+        )
+        parser = RobotFileParser()
+        parser.set_url(copy.robots_url)
+        parser.parse(copy.text.splitlines())
+        return CachedRobots(
+            parser=parser,
+            fetched_at=datetime.now(UTC),
+            error="robots.txt unreachable; judged from a recent copy",
+            robots_url=copy.robots_url,
+            copy_fetched_at=copy.fetched_at,
+        )
 
     def _request_with_retries(
         self, url: str, *, headers: Mapping[str, str] | None = None
@@ -415,3 +469,15 @@ class SafeHttpClient:
             raise ValueError(f"invalid URL: {url}")
         origin = f"{parts.scheme.lower()}://{parts.netloc.lower()}"
         return origin, f"{origin}/robots.txt"
+
+
+def _robots_unreachable(exc: HttpRequestError) -> bool:
+    """RFC 9309 §2.3.1.4 "unreachable": a network error or a 5xx, never 403/429 or a redirect."""
+
+    status = exc.status_code
+    cause = exc.__cause__
+    if isinstance(cause, httpx.HTTPStatusError):
+        status = cause.response.status_code
+    if status is not None:
+        return 500 <= status <= 599
+    return isinstance(cause, httpx.TransportError)
