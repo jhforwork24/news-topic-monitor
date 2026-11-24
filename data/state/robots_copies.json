@@ -4,42 +4,42 @@
   "origins": {
     "https://newscham.net": {
       "robots_url": "https://newscham.net/robots.txt",
-      "fetched_at": "2026-11-24T04:49:53.446219+00:00",
+      "fetched_at": "2026-11-24T13:46:36.423264+00:00",
       "text": "User-agent: *\nDisallow: /wp/wp-admin/\nAllow: /wp/wp-admin/admin-ajax.php\n\nSitemap: https://newscham.net/sitemap_index.xml\n"
     },
     "https://rss.donga.com": {
       "robots_url": "https://rss.donga.com/robots.txt",
-      "fetched_at": "2026-11-24T05:18:18.283987+00:00",
+      "fetched_at": "2026-11-24T13:45:57.644875+00:00",
       "text": "User-agent: *\nAllow: /news/Sports/article/\nDisallow: /search\nDisallow: /news/search\nDisallow: /news/View\nDisallow: /news/dongaars\nDisallow: /NEWS\nDisallow: /HUB\nDisallow: /VOICE\nDisallow: /ISSUE\nDisallow: /BIZN\nDisallow: /STUDIO\nDisallow: /SPORTS\nDisallow: /VODA\nDisallow: /WEEKLY\nDisallow: /WOMAN\nDisallow: /SHINDONGA\n\n"
     },
     "https://theindigo.co.kr": {
       "robots_url": "https://theindigo.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T04:50:36.173608+00:00",
+      "fetched_at": "2026-11-24T13:46:51.857288+00:00",
       "text": "User-agent: *\r\nDisallow: /wp-admin/\r\nAllow: /wp-admin/admin-ajax.php\r\nAllow: /\r\nDisallow: /wp-includes/\r\nDisallow: /reports/\r\nDisallow: /doc/\r\n\r\nUser-agent: AhrefsBot\r\nDisallow: /\r\n\r\nUser-agent: SemrushBot\r\nDisallow: /\r\n\r\nUser-agent: Semrush\r\nDisallow: /\r\n\r\nUser-agent: oBot\r\nDisallow: /\r\n\r\nUser-agent: MJ12bot\r\nDisallow: /\r\n\r\nSitemap: https://theindigo.co.kr/sitemap.xml\r\nSitemap: https://theindigo.co.kr/sitemap.rss\n"
     },
     "https://www.ablenews.co.kr": {
       "robots_url": "https://www.ablenews.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T04:50:34.946053+00:00",
+      "fetched_at": "2026-11-24T13:46:43.806500+00:00",
       "text": "User-agent: *\nDisallow: /admin/\n\n\nUser-agent: bingbot\nCrawl-delay: 30\n\nSitemap: https://www.ablenews.co.kr/sitemap.xml\n"
     },
     "https://www.beminor.com": {
       "robots_url": "https://www.beminor.com/robots.txt",
-      "fetched_at": "2026-11-24T04:50:16.193655+00:00",
+      "fetched_at": "2026-11-24T13:46:41.531013+00:00",
       "text": "User-agent: *\nDisallow: /admin/\n\nSitemap: https://www.beminor.com/sitemap.xml\n"
     },
     "https://www.chosun.com": {
       "robots_url": "https://www.chosun.com/robots.txt",
-      "fetched_at": "2026-11-24T05:18:18.306287+00:00",
+      "fetched_at": "2026-11-24T13:45:57.513557+00:00",
       "text": "User-agent: *\nDisallow: /main/bosi*\nDisallow: /test*\nDisallow: /search\nDisallow: /nsearch\nDisallow: /earlybird\nDisallow: /economy/realty/\nDisallow: /jp/nsearch\nDisallow: /english/nsearch\n\nUser-agent: GPTBot\nDisallow: /\n\nUser-agent: DeepSeekBot\nDisallow: /\n\nUser-agent: ChosunResearchArchiveCollector\nDisallow: /\n\nSitemap: https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml\nSitemap: https://www.chosun.com/arc/outboundfeeds/sitemap/section/index/?outputType=xml"
     },
     "https://www.donga.com": {
       "robots_url": "https://www.donga.com/robots.txt",
-      "fetched_at": "2026-11-24T05:18:20.520417+00:00",
+      "fetched_at": "2026-11-24T13:45:59.944379+00:00",
       "text": "User-agent: *\nAllow: /news/Sports/article/\nDisallow: /search\nDisallow: /news/search\nDisallow: /news/View\nDisallow: /news/dongaars\nDisallow: /NEWS\nDisallow: /HUB\nDisallow: /VOICE\nDisallow: /ISSUE\nDisallow: /BIZN\nDisallow: /STUDIO\nDisallow: /SPORTS\nDisallow: /VODA\nDisallow: /WEEKLY\nDisallow: /WOMAN\nDisallow: /SHINDONGA\n\n#DaumWebMasterTool:6af926b3c34377464b5bd427ad530c7c714d0d5950fa49080ae66373d9c6e7cb:xUUuR78FZ7e9iXukGuOVLQ==\n\nSitemap: https://www.donga.com/sitemap/donga-newsmap.xml\nSitemap: https://image.donga.com/sitemap/donga-sitemap.xml\nSitemap: https://www.donga.com/sitemap/foreign-newsmap.xml\nSitemap: https://image.donga.com/sitemap/foreign-sitemap.xml"
     },
     "https://www.hani.co.kr": {
       "robots_url": "https://www.hani.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T05:18:18.136224+00:00",
+      "fetched_at": "2026-11-24T13:45:57.704080+00:00",
       "text": "User-agent: *\nDisallow: /arti/PRINT/\nDisallow: /arti/PREVIEW/\nDisallow: /api/\nDisallow: /fortunes/result\nDisallow: /test/\n\nUser-agent: 01-AI-Bot\nUser-agent: AddSearchBot\nUser-agent: AgentTimes\nUser-agent: Ai2Bot\nUser-agent: Ai2Bot-Dolma\nUser-agent: AI2Bot-DeepResearchEval\nUser-agent: aiHitBot\nUser-agent: AIWebIndex\nUser-agent: AhrefsBot\nUser-agent: amazon-kendra\nUser-agent: amazon-QBusiness\nUser-agent: Amazonbot\nUser-agent: AmazonBuyForMe\nUser-agent: Amzn-SearchBot\nUser-agent: Amzn-User\nUser-agent: Andibot\nUser-agent: Anomura\nUser-agent: anthropic-ai\nUser-agent: ApifyBot\nUser-agent: ApifyWebsiteContentCrawler\nUser-agent: Applebot-Extended\nUser-agent: Aranet-SearchBot\nUser-agent: Awario\nUser-agent: AzureAI-SearchBot\nUser-agent: bedrockbot\nUser-agent: bigsur.ai\nUser-agent: BLP_bbot\nUser-agent: Brightbot\nUser-agent: Brightbot 1.0\nUser-agent: BuddyBot\nUser-agent: Bytespider\nUser-agent: CCBot\nUser-agent: Channel3Bot\nUser-agent: ChatGLM-Spider\nUser-agent: ChatGPT Agent\nUser-agent: ClaudeBot\nUser-agent: Claude-Code\nUser-agent: Claude-User\nUser-agent: Claude-Web\nUser-agent: Cloudflare-AutoRAG\nUser-agent: CloudVertexBot\nUser-agent: cohere-ai\nUser-agent: cohere-training-data-crawler\nUser-agent: Cotoyogi\nUser-agent: CragCrawler\nUser-agent: Crawl4AI\nUser-agent: Crawlspace\nUser-agent: Datenbank Crawler\nUser-agent: DeepSeekBot\nUser-agent: Diffbot\nUser-agent: DuckAssistBot\nUser-agent: Echobot Bot\nUser-agent: EchoboxBot\nUser-agent: ExaBot\nUser-agent: Factset_spyderbot\nUser-agent: FirecrawlAgent\nUser-agent: FriendlyCrawler\nUser-agent: GeistHaus-PageFetcher\nUser-agent: GPTBot\nUser-agent: HenkBot\nUser-agent: iAskBot\nUser-agent: iaskspider\nUser-agent: iaskspider/2.0\nUser-agent: IbouBot\nUser-agent: ICC-Crawler\nUser-agent: ImagesiftBot\nUser-agent: imageSpider\nUser-agent: img2dataset\nUser-agent: ISSCyberRiskCrawler\nUser-agent: kagi-fetcher\nUser-agent: Kangaroo Bot\nUser-agent: KlaviyoAIBot\nUser-agent: KunatoCrawler\nUser-agent: laion-huggingface-processor\nUser-agent: LAIONDownloader\nUser-agent: LCC\nUser-agent: LinerBot\nUser-agent: LinkupBot\nUser-agent: meta-externalagent\nUser-agent: meta-externalfetcher\nUser-agent: meta-webindexer\nUser-agent: Mozilla-Tabstack\nUser-agent: MyCentralAIScraperBot\nUser-agent: NagetBot\nUser-agent: netEstate Imprint Crawler\nUser-agent: newsai\nUser-agent: NotebookLM\nUser-agent: NovaAct\nUser-agent: omgili\nUser-agent: omgilibot\nUser-agent: OpenAI\nUser-agent: PanguBot\nUser-agent: Panscient\nUser-agent: panscient.com\nUser-agent: PetalBot\nUser-agent: PhindBot\nUser-agent: Poggio-Citations\nUser-agent: Poseidon Research Crawler\nUser-agent: QualifiedBot\nUser-agent: Querit-SearchBot\nUser-agent: QueritBot\nUser-agent: QuillBot\nUser-agent: QuillBot.com\nUser-agent: SBIntuitionsBot\nUser-agent: Scrapy\nUser-agent: SemrushBot-OCOB\nUser-agent: SemrushBot-SWA\nUser-agent: Shap-User\nUser-agent: ShapBot\nUser-agent: Sidetrade indexer bot\nUser-agent: Spider\nUser-agent: TavilyBot\nUser-agent: Terra Cotta\nUser-agent: TerraCotta\nUser-agent: Thinkbot\nUser-agent: TikTokSpider\nUser-agent: Timpibot\nUser-agent: TongyiBot\nUser-agent: TwinAgent\nUser-agent: UseAI\nUser-agent: VelenPublicWebCrawler\nUser-agent: WARDBot\nUser-agent: Webzio-Extended\nUser-agent: wpbot\nUser-agent: WRTNBot\nUser-agent: YaK\nUser-agent: YandexAdditional\nUser-agent: YandexAdditionalBot\nUser-agent: YiyanBot\nUser-agent: YouBot\nUser-agent: ZanistaBot\nDisallow: /\n\nUser-agent: ChatGPT-User\nUser-agent: OAI-SearchBot\nUser-agent: Claude-SearchBot\nUser-agent: Gemini-Deep-Research\nUser-agent: GoogleAgent-URLContext\nUser-agent: MistralAI-User\nUser-agent: MistralAI-User/1.0\nUser-agent: Kimi-User\nUser-agent: Manus-User\nUser-agent: Operator\nAllow: /arti/\nAllow: /sitemap/\nDisallow: /arti/PRINT/\nDisallow: /arti/PREVIEW/\nDisallow: /\n\nSitemap: https://www.hani.co.kr/sitemap/sections\nSitemap: https://www.hani.co.kr/sitemap/latest-articles\n"
     },
     "https://www.joongang.co.kr": {
@@ -49,32 +49,32 @@
     },
     "https://www.khan.co.kr": {
       "robots_url": "https://www.khan.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T05:18:47.615426+00:00",
+      "fetched_at": "2026-11-24T13:46:23.872521+00:00",
       "text": "# ====================================================\n# AI Data Collection Policy\n#\n# Crawling or use of content from this site for\n# AI training, LLM development, or machine learning\n# purposes is prohibited without prior written consent.\n#\n# Contact: https://www.khan.co.kr/help/help_digital.html\n# ====================================================\n\n# Block AI Learning Bots & Scrapers\nUser-agent: GPTBot\nUser-agent: ClaudeBot\nUser-agent: Claude-Web\nUser-agent: anthropic-ai\nUser-agent: Google-Extended\nUser-agent: GoogleOther\nUser-agent: GoogleOther-Image\nUser-agent: Bytespider\nUser-agent: TikTokSpider\nUser-agent: Applebot-Extended\nUser-agent: CCBot\nUser-agent: DeepSeekBot\nUser-agent: cohere-ai\nUser-agent: meta-externalagent\nUser-agent: Meta-ExternalAds\nUser-agent: Diffbot\nUser-agent: Omgilibot\nUser-agent: Omgili\nUser-agent: PetalBot\nUser-agent: PanguBot\nUser-agent: WRTNBot\nUser-agent: YouBot\nUser-agent: FriendlyCrawler\nUser-agent: ICC-Crawler\nUser-agent: ImagesiftBot\nUser-agent: img2dataset\nUser-agent: Scrapy\nUser-agent: 01-AI-Bot\nUser-agent: ChatGLM-Spider\nUser-agent: TongyiBot\nUser-agent: YiyanBot\nUser-agent: ExaSearchBot\nDisallow: /\n\n# Block SEO & Marketing Bots\nUser-agent: AhrefsBot\nUser-agent: SemrushBot\nUser-agent: dotbot\nUser-agent: DataForSeoBot\nDisallow: /\n\n# Allow AI Search Bots - block non-public pages only\nUser-agent: ChatGPT-User\nUser-agent: OAI-SearchBot\nUser-agent: Operator\nUser-agent: PerplexityBot\nUser-agent: Perplexity-User\nUser-agent: Claude-SearchBot\nUser-agent: Gemini-Deep-Research\nUser-agent: GoogleAgent-URLContext\nUser-agent: MistralAI-User\nUser-agent: Kimi-User\nUser-agent: Manus-User\nUser-agent: Meta-WebIndexer\nUser-agent: FacebookExternalHit\nUser-agent: Meta-ExternalFetcher\nUser-agent: Claude-User\nUser-agent: Googlebot\nDisallow: /login\nDisallow: /SecListData.html\nDisallow: /print.html\nDisallow: /article/201709021732001\nDisallow: /national/national-general/article/201709021732001\nDisallow: /article/201609241422011\nDisallow: /national/national-general/article/201609241422011\n\n# Default Rules for General Search Engines\nUser-agent: *\nDisallow: /login\nDisallow: /SecListData.html\nDisallow: /article/201709021732001\nDisallow: /national/national-general/article/201709021732001\nDisallow: /print.html?art_id=201709021732001&media=khan&type=basic\nDisallow: /article/201609241422011\nDisallow: /national/national-general/article/201609241422011\nDisallow: /print.html?art_id=201609241422011&media=khan&type=basic\n\n# Sitemap and RSS Feed Locations\nSitemap: https://www.khan.co.kr/sitemap.xml\nSitemap: https://www.khan.co.kr/sitemap/latest-articles.xml\nSitemap: https://www.khan.co.kr/sitemap/daily-images.xml\nSitemap: https://www.khan.co.kr/sitemap/daily-videos.xml\nSitemap: https://www.khan.co.kr/sitemap/authors.xml\nSitemap: https://www.khan.co.kr/rss/rssdata/english_news.xml\nSitemap: https://www.khan.co.kr/rss/rssdata/newsletter_news.xml\nSitemap: https://www.khan.co.kr/rss/rssdata/interactive_news.xml\nSitemap: https://www.khan.co.kr/rss/rssdata/video_news.xml\n\n#DaumWebMasterTool:35bc55071cd98ae09fdf97e6c96768225c02c9f6ab5b8fe3c1118aefe5139d74:gbyst4GwRZz3X/sV/51MJQ=="
     },
     "https://www.labortoday.co.kr": {
       "robots_url": "https://www.labortoday.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T04:49:56.227922+00:00",
+      "fetched_at": "2026-11-24T13:46:37.426755+00:00",
       "text": "User-agent: *\nDisallow: /admin/\n\nSitemap: http://www.labortoday.co.kr/sitemap.xml\n"
     },
     "https://www.mediaus.co.kr": {
       "robots_url": "https://www.mediaus.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T04:50:10.999568+00:00",
+      "fetched_at": "2026-11-24T13:46:39.963229+00:00",
       "text": "User-agent: *\nDisallow: /admin/\n\n\nUser-agent: bingbot\nCrawl-delay: 30\n\nSitemap: http://www.mediaus.co.kr/sitemap.xml\n"
     },
     "https://www.ohmynews.com": {
       "robots_url": "https://www.ohmynews.com/robots.txt",
-      "fetched_at": "2026-11-24T05:18:50.268508+00:00",
+      "fetched_at": "2026-11-24T13:46:30.287889+00:00",
       "text": "User-agent: *\r\nAllow: /$\r\nAllow: /ads.txt\r\n\r\nDisallow: /NWS_Web/Mem/\r\nDisallow: /NWS_Web/Common/Pages/Livere.aspx\r\nDisallow: /NWS_Web/Common/Pages/CommSNS.aspx\r\nDisallow: /NWS_Web/Common/Pages/CommAjaxFunction.aspx\r\nDisallow: /NWS_Web/Common/Pages/atcntninfo.aspx\r\nDisallow: /NWS_Web/i_Room/Closed/\r\nDisallow: /NWS_Web/Mobile/i_Room/Closed/\r\nDisallow: /NWS_Web/Articleview/article_goodfee_write.aspx\r\nDisallow: /NWS_WEB/ajax/\r\nDisallow: /NWS_Web/payment/\r\nDisallow: /NWS_Web/Mobile/pay_ini/\r\nDisallow: /NWS_Web/CSch/Payment/\r\nDisallow: /NWS_Web/view/raw_list.aspx\r\nDisallow: /NWS_Web/view/raw_pg.aspx\r\nDisallow: /NWS_Web/Mobile/raw_list.aspx\r\nDisallow: /NWS_Web/Mobile/raw_pg.aspx\r\nDisallow: /NWS_Web/view/ss_pg.aspx\r\nDisallow: /NWS_Web/help/srv/h_help_gpt.aspx\r\nDisallow: /NWS_Web/Search/\r\nDisallow: /NWS_Web/Common/Pages/LogOut.aspx\r\nDisallow: /NWS_Web/Mobile/logout.aspx\r\n\r\nSitemap: https://www.ohmynews.com/sitemap.xml\r\nSitemap: https://m.ohmynews.com/sitemap_mobile.xml\r\nSitemap: https://star.ohmynews.com/sitemap_star.xml\r\nSitemap: https://www.ohmynews.com/NWS_Web/View/latestnews.aspx\r\nSitemap: https://www.ohmynews.com/NWS_Web/View/latestmovie.aspx\r\n"
     },
     "https://www.pressian.com": {
       "robots_url": "https://www.pressian.com/robots.txt",
-      "fetched_at": "2026-11-24T05:19:07.396319+00:00",
+      "fetched_at": "2026-11-24T13:46:31.287112+00:00",
       "text": "User-agent: Googlebot\nUser-agent: googlebot-image\nUser-agent: googlebot-mobile\nUser-agent: googlebot-news\nUser-agent: naverbot\nUser-agent: yeti\nUser-agent: Twitterbot\nUser-agent: Mediapartners-Google\nUser-Agent: facebookexternalhit\nallow: /\nDisallow: /admin/\nDisallow: /psArticlesComment/articleCommentList\nDisallow: /m/psArticlesComment/articleCommentList\nDisallow: /pages/search\nDisallow: /m/pages/search\n\n\nUser-agent: *\nallow: /\nDisallow: /admin/\nDisallow: /psArticlesComment/articleCommentList\nDisallow: /m/psArticlesComment/articleCommentList\nDisallow: /pages/search\nDisallow: /m/pages/search\n\nSitemap: https://www.pressian.com/sitemap.xml"
     },
     "https://www.sisain.co.kr": {
       "robots_url": "https://www.sisain.co.kr/robots.txt",
-      "fetched_at": "2026-11-24T04:49:47.178839+00:00",
+      "fetched_at": "2026-11-24T13:46:35.331424+00:00",
       "text": "# robots.txt generated at http://www.adop.cc\r\n\r\nUser-agent: Mediapartners-Google\r\nDisallow: \r\n\r\nUser-agent: Daumoa-image\r\nDisallow: \r\n\r\nUser-agent: *\r\nDisallow: /admin/\r\nDisallow: /bbs/\r\nDisallow: /subscribe/\r\nDisallow: /*?*mod=bbs\r\nDisallow: /*?*mod=subscribe\r\n\r\nUser-agent: Googlebot\r\nDisallow: /bbs/\r\nDisallow: /subscribe/\r\nDisallow: /*?*mod=bbs\r\nDisallow: /*?*mod=subscribe\r\n\r\nUser-agent: Googlebot-News\r\nDisallow: /bbs/\r\nDisallow: /subscribe/\r\nDisallow: /*?*mod=bbs\r\nDisallow: /*?*mod=subscribe\r\n\r\nsitemap: http://www.sisain.co.kr/sitemap.xml"
     }
   }
