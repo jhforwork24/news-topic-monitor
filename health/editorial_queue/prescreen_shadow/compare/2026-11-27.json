@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-11-27",
+  "checked_at": "2026-11-26T22:59:47.614315Z",
+  "status": "no_overlap",
+  "queue_id": "513afcfcea6ee6edeaa86fb8c4d64652de18277c1bf45905a7a6b372d9ca5907",
+  "would_exclude_count": 30,
+  "published_candidate_count": 20,
+  "missing_from_evidence_count": 0,
+  "overlap": []
+}
