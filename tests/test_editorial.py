@@ -491,7 +491,7 @@ def test_editorial_briefing_rejects_summary_in_formal_register(tmp_path) -> None
         validate_briefing(document)
 
 
-def test_editorial_briefing_reorders_labor_section_care_then_poverty_then_labor(
+def test_editorial_briefing_reorders_labor_section_poverty_then_care_then_labor(
     tmp_path,
 ) -> None:
     labor_article = _article(source="labortoday")
@@ -542,11 +542,11 @@ def test_editorial_briefing_reorders_labor_section_care_then_poverty_then_labor(
     )
 
     labor_section = next(
-        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤·소수자"
+        section for section in document.sections if section.title == "II. 빈곤·돌봄·소수자·노동"
     )
     assert [issue.title for issue in labor_section.issues] == [
-        "요양보호사 처우 개선 요구",
         "기초생활보장 부양의무자 기준 논란",
+        "요양보호사 처우 개선 요구",
         "사업장 산업재해 은폐 논란",
     ]
 
@@ -711,7 +711,7 @@ def test_explicit_subsection_overrides_term_matching_in_order(tmp_path) -> None:
     )
 
     labor_section = next(
-        section for section in document.sections if section.title == "II. 노동·돌봄·빈곤·소수자"
+        section for section in document.sections if section.title == "II. 빈곤·돌봄·소수자·노동"
     )
     assert [issue.title for issue in labor_section.issues] == [
         "지역 서비스 종사자 처우 논란",
