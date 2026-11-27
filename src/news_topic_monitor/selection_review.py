@@ -15,7 +15,7 @@ from .models import (
 # (topic name in config/topics.yml, display label)
 REVIEW_TOPICS: tuple[tuple[str, str], ...] = (
     ("disability_rights", "I절 장애정책·장애인운동"),
-    ("labor_care_poverty", "II절 노동·돌봄·빈곤·소수자"),
+    ("labor_care_poverty", "II절 빈곤·돌봄·소수자·노동"),
 )
 
 

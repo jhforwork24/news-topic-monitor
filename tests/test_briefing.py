@@ -97,13 +97,13 @@ def test_three_section_briefing_and_opinion_column(tmp_path, topics_path) -> Non
     )
     assert [section.title for section in document.sections] == [
         "I. 장애정책·장애인운동",
-        "II. 노동·돌봄·빈곤·소수자",
+        "II. 빈곤·돌봄·소수자·노동",
         "III. 주요 칼럼",
     ]
     assert document.sections[1].issues
     assert document.sections[2].issues
     text = render_briefing_markdown(document, crpd_url="https://notion.example/crpd")
-    assert text.index("I. 장애정책") < text.index("II. 노동") < text.index("III. 주요 칼럼")
+    assert text.index("I. 장애정책") < text.index("II. 빈곤") < text.index("III. 주요 칼럼")
     assert "### 이슈 요약·보도 논조" in text
     assert "### 기사 요약" not in text
     assert "### 보도 논조" not in text
@@ -741,7 +741,7 @@ def test_column_section_is_completely_omitted_when_no_column_exists(tmp_path, to
     )
     assert [section.title for section in document.sections] == [
         "I. 장애정책·장애인운동",
-        "II. 노동·돌봄·빈곤·소수자",
+        "II. 빈곤·돌봄·소수자·노동",
     ]
     assert "주요 칼럼" not in document.overview
     assert "칼럼 0" not in document.overview
@@ -1139,7 +1139,7 @@ def test_previous_coverage_notes_are_capped() -> None:
     assert notes[-1].endswith("5건을 생략함")
 
 
-def test_labor_subsection_orders_care_then_poverty_then_labor() -> None:
+def test_labor_subsection_orders_poverty_then_care_then_labor() -> None:
     from news_topic_monitor.briefing import _sort_labor_subsection
 
     labor_issue = BriefingIssue(
@@ -1167,8 +1167,8 @@ def test_labor_subsection_orders_care_then_poverty_then_labor() -> None:
     ordered = _sort_labor_subsection([labor_issue, poverty_issue, care_issue])
 
     assert [issue.title for issue in ordered] == [
-        "요양보호사 처우 개선 요구",
         "기초생활보장 부양의무자 기준 논란",
+        "요양보호사 처우 개선 요구",
         "사업장 산업재해 은폐 논란",
     ]
 
@@ -1225,7 +1225,7 @@ def test_select_labor_issues_applies_subsection_and_total_caps_in_rank_order() -
     assert len(selected) == 8
     titles = [issue.title for issue in selected]
     # Walking in rank order fills 노동 3 → 빈곤 3 → 소수자 2 before the total cap (8) stops
-    # it, and the section is then presented 돌봄 → 빈곤 → 소수자 → 노동.
+    # it, and the section is then presented 빈곤 → 돌봄 → 소수자 → 노동.
     assert titles == [
         "빈곤 0",
         "빈곤 1",
@@ -1270,7 +1270,7 @@ def test_render_marks_empty_section_instead_of_leaving_a_bare_heading() -> None:
         end=datetime(2026, 8, 16, tzinfo=UTC),
         overview="총평.",
         telegram_summary="요약.",
-        sections=[BriefingSection("II. 노동·돌봄·빈곤·소수자", [])],
+        sections=[BriefingSection("II. 빈곤·돌봄·소수자·노동", [])],
         source_failures=[],
         editorial_notes=[],
     )
@@ -1278,7 +1278,7 @@ def test_render_marks_empty_section_instead_of_leaving_a_bare_heading() -> None:
     markdown = render_briefing_markdown(document, crpd_url=None)
 
     assert (
-        "# II. 노동·돌봄·빈곤·소수자\n\n이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다."
+        "# II. 빈곤·돌봄·소수자·노동\n\n이번 브리핑에는 편집 기준에 따라 선정한 이슈가 없다."
         in markdown
     )
 
@@ -1336,9 +1336,9 @@ def test_issue_summary_must_not_name_an_outlet_in_news_sections() -> None:
 
     unattributed = "서울시가 정류장 120곳의 단차를 올해 안에 정비하겠다고 밝혔다."
     validate_briefing(_summary_document("I. 장애정책·장애인운동", unattributed))
-    validate_briefing(_summary_document("II. 노동·돌봄·빈곤·소수자", unattributed))
+    validate_briefing(_summary_document("II. 빈곤·돌봄·소수자·노동", unattributed))
 
-    for title in ("I. 장애정책·장애인운동", "II. 노동·돌봄·빈곤·소수자"):
+    for title in ("I. 장애정책·장애인운동", "II. 빈곤·돌봄·소수자·노동"):
         for outlet in ("에이블뉴스", "매일노동뉴스", "한겨레"):
             with pytest.raises(BriefingValidationError, match=f"이슈 요약에 언론사\\({outlet}\\)"):
                 validate_briefing(
