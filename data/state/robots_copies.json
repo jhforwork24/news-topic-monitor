@@ -9,7 +9,7 @@
     },
     "https://rss.donga.com": {
       "robots_url": "https://rss.donga.com/robots.txt",
-      "fetched_at": "2026-11-27T22:37:52.207771+00:00",
+      "fetched_at": "2026-11-27T23:28:37.338296+00:00",
       "text": "User-agent: *\nAllow: /news/Sports/article/\nDisallow: /search\nDisallow: /news/search\nDisallow: /news/View\nDisallow: /news/dongaars\nDisallow: /NEWS\nDisallow: /HUB\nDisallow: /VOICE\nDisallow: /ISSUE\nDisallow: /BIZN\nDisallow: /STUDIO\nDisallow: /SPORTS\nDisallow: /VODA\nDisallow: /WEEKLY\nDisallow: /WOMAN\nDisallow: /SHINDONGA\n\n"
     },
     "https://theindigo.co.kr": {
@@ -34,7 +34,7 @@
     },
     "https://www.donga.com": {
       "robots_url": "https://www.donga.com/robots.txt",
-      "fetched_at": "2026-11-27T22:37:54.577270+00:00",
+      "fetched_at": "2026-11-27T23:28:39.688505+00:00",
       "text": "User-agent: *\nAllow: /news/Sports/article/\nDisallow: /search\nDisallow: /news/search\nDisallow: /news/View\nDisallow: /news/dongaars\nDisallow: /NEWS\nDisallow: /HUB\nDisallow: /VOICE\nDisallow: /ISSUE\nDisallow: /BIZN\nDisallow: /STUDIO\nDisallow: /SPORTS\nDisallow: /VODA\nDisallow: /WEEKLY\nDisallow: /WOMAN\nDisallow: /SHINDONGA\n\n#DaumWebMasterTool:6af926b3c34377464b5bd427ad530c7c714d0d5950fa49080ae66373d9c6e7cb:xUUuR78FZ7e9iXukGuOVLQ==\n\nSitemap: https://www.donga.com/sitemap/donga-newsmap.xml\nSitemap: https://image.donga.com/sitemap/donga-sitemap.xml\nSitemap: https://www.donga.com/sitemap/foreign-newsmap.xml\nSitemap: https://image.donga.com/sitemap/foreign-sitemap.xml"
     },
     "https://www.hani.co.kr": {
@@ -74,7 +74,7 @@
     },
     "https://www.sisain.co.kr": {
       "robots_url": "https://www.sisain.co.kr/robots.txt",
-      "fetched_at": "2026-11-27T22:39:58.575337+00:00",
+      "fetched_at": "2026-11-27T23:28:53.027389+00:00",
       "text": "# robots.txt generated at http://www.adop.cc\r\n\r\nUser-agent: Mediapartners-Google\r\nDisallow: \r\n\r\nUser-agent: Daumoa-image\r\nDisallow: \r\n\r\nUser-agent: *\r\nDisallow: /admin/\r\nDisallow: /bbs/\r\nDisallow: /subscribe/\r\nDisallow: /*?*mod=bbs\r\nDisallow: /*?*mod=subscribe\r\n\r\nUser-agent: Googlebot\r\nDisallow: /bbs/\r\nDisallow: /subscribe/\r\nDisallow: /*?*mod=bbs\r\nDisallow: /*?*mod=subscribe\r\n\r\nUser-agent: Googlebot-News\r\nDisallow: /bbs/\r\nDisallow: /subscribe/\r\nDisallow: /*?*mod=bbs\r\nDisallow: /*?*mod=subscribe\r\n\r\nsitemap: http://www.sisain.co.kr/sitemap.xml"
     }
   }
