@@ -1,24 +1,24 @@
 {
   "prompt_version": 1,
-  "report_date": "2026-11-27",
+  "report_date": "2026-11-28",
   "status": "completed",
   "model": "connected_claude_editor",
   "auditor_model": "connected_claude_independent_auditor",
   "candidate_count": 180,
   "included_after_first_pass": 0,
-  "published_issue_count": 13,
+  "published_issue_count": 19,
   "validator_fatal_errors": 0,
   "phase_durations_seconds": {
-    "api_preflight": 1.633,
+    "api_preflight": 1.576,
     "assurance": 0.002,
-    "bridge_import_validation": 5.825,
-    "census_retry": 0.0,
-    "final_state_recrawl": 81.0,
-    "gap_reverse_search": 105.695,
+    "bridge_import_validation": 6.225,
+    "census_retry": 14.541,
+    "final_state_recrawl": 294.088,
+    "gap_reverse_search": 155.511,
     "late_recovered_sources": 0.0,
-    "render_briefing": 15.998,
-    "total": 226.998
+    "render_briefing": 17.299,
+    "total": 507.308
   },
   "error": null,
-  "completed_at": "2026-11-26T22:59:39.138772Z"
+  "completed_at": "2026-11-27T23:20:35.491043Z"
 }
