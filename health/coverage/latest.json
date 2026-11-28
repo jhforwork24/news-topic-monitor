@@ -4,7 +4,7 @@
     "chosun": {
       "schema_version": 1,
       "scope": "chosun",
-      "generated_at": "2026-11-27T03:49:22.969170Z",
+      "generated_at": "2026-11-28T03:34:04.160539Z",
       "check_hours": 48.0,
       "targets": {
         "specialist": 1.0,
@@ -16,17 +16,28 @@
         "chosun": {
           "status": "pass",
           "target": 0.99,
-          "rate": 1.0,
-          "listed": 786,
-          "captured": 786,
+          "rate": 0.9971,
+          "listed": 691,
+          "captured": 689,
           "undated": 0,
-          "judged_from": "2026-11-25T03:49:22.969170Z",
-          "judged_until": "2026-11-27T00:49:22.969170Z",
-          "paths_attempted": 25,
-          "paths_succeeded": 25,
+          "judged_from": "2026-11-26T03:34:04.160539Z",
+          "judged_until": "2026-11-28T00:34:04.160539Z",
+          "paths_attempted": 23,
+          "paths_succeeded": 23,
           "errors": [],
-          "missing_total": 0,
-          "missing": [],
+          "missing_total": 2,
+          "missing": [
+            {
+              "url": "https://www.chosun.com/economy/startup_story/2026/05/26/RCOEWVOF3VDI7MQQJNMDQADWNA",
+              "title": "뽁뽁이 대체 초가성비 투명 단열 시트, 바깥 훤히 보이고 난방비 30% 절감",
+              "published_at": "2026-11-27T20:10:00.600000Z"
+            },
+            {
+              "url": "https://www.chosun.com/economy/startup_story/2025/10/21/JRDENJFXKRHBPBU4JWOEMUT3EU",
+              "title": "이게 진짜 원조, 1975년 문 연 ‘큰아들집’ 양평특해장국 1인분 4700원 초특가",
+              "published_at": "2026-11-27T08:49:40.049000Z"
+            }
+          ],
           "notes": []
         }
       }

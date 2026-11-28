@@ -29,7 +29,7 @@
     },
     "https://www.chosun.com": {
       "robots_url": "https://www.chosun.com/robots.txt",
-      "fetched_at": "2026-11-28T02:39:49.569983+00:00",
+      "fetched_at": "2026-11-28T03:34:09.647869+00:00",
       "text": "User-agent: *\nDisallow: /main/bosi*\nDisallow: /test*\nDisallow: /search\nDisallow: /nsearch\nDisallow: /earlybird\nDisallow: /economy/realty/\nDisallow: /jp/nsearch\nDisallow: /english/nsearch\n\nUser-agent: GPTBot\nDisallow: /\n\nUser-agent: DeepSeekBot\nDisallow: /\n\nUser-agent: ChosunResearchArchiveCollector\nDisallow: /\n\nSitemap: https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml\nSitemap: https://www.chosun.com/arc/outboundfeeds/sitemap/section/index/?outputType=xml"
     },
     "https://www.donga.com": {
